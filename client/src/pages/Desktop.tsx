@@ -258,7 +258,7 @@ export const Desktop = (): JSX.Element => {
             </div>
 
             <div className="flex flex-col items-center gap-8 max-w-screen-xl w-full px-8 py-0">
-              <div className="w-full h-[400px] rounded-2xl bg-[url(/figmaAssets/content-1.svg)] bg-cover bg-center" />
+              <div className="w-full h-[400px] rounded-2xl bg-cover bg-center" style={{ backgroundImage: `url(${newYorkAerialView})` }} />
             </div>
           </div>
 
