@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { FeaturesBox } from "@/components/FeaturesBox";
 import officeBuildingImg from "@assets/office-building_1761587957783.webp";
 import businessAddressBg from "@assets/business-address-bg_1761590800705.webp";
+import bgCtaImg from "@assets/bg-cta_1761591194000.webp";
 import man_holding_tablet from "@assets/man-holding-tablet.webp";
 
 const includedFeatures = [
@@ -335,7 +336,7 @@ export const Desktop = (): JSX.Element => {
           </div>
         </section>
 
-        <section className="flex flex-col items-center justify-center gap-6 px-0 py-20 w-full bg-[linear-gradient(0deg,rgba(241,241,241,1)_0%,rgba(241,241,241,1)_100%)] bg-building-bg">
+        <section className="flex flex-col items-center justify-center gap-6 px-0 py-20 w-full bg-cover bg-center" style={{ backgroundImage: `url(${bgCtaImg})` }}>
           <h2 className="[font-family:'Inter',Helvetica] font-semibold text-[#181d27] text-3xl tracking-[0] leading-[38px] whitespace-nowrap">
             Over 650 Locations Across the USA
           </h2>
