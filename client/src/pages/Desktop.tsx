@@ -159,23 +159,8 @@ export const Desktop = (): JSX.Element => {
             <div className="flex items-end gap-8 max-w-screen-xl w-full px-8 py-0">
               <div className="flex flex-col flex-1 items-start justify-between">
                 <div className="flex flex-col items-start gap-6 w-full">
-                  <h1 className="font-normal text-gray-900 text-5xl leading-[60px] w-full [font-family:'Inter',Helvetica]">
-                    <span className="text-[#0f1728] tracking-[-0.46px] leading-[60px]">
-                      The Ultimate Virtual Office Solution.{" "}
-                    </span>
-                    <span className="font-bold text-[#36bff9] tracking-[-0.46px] leading-[60px]">
-                      All-Inclusive
-                    </span>
-                    <span className="text-[#0f1728] tracking-[-0.46px] leading-[60px]">
-                      {" "}
-                      with no long-term contracts for only{" "}
-                    </span>
-                    <span className="font-bold text-[#36bff9] tracking-[-0.46px] leading-[60px]">
-                      $99
-                    </span>
-                    <span className="text-[#0f1728] tracking-[-0.46px] leading-[60px]">
-                      /month.
-                    </span>
+                  <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-5xl tracking-[-0.46px] leading-[60px] w-full">
+                    The Ultimate Virtual Office Solution. <span className="font-bold text-[#36bff9]">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-[#36bff9]">$99</span>/month.
                   </h1>
 
                   <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-xl tracking-[0] leading-[30px]">
