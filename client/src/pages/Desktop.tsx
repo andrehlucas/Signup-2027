@@ -365,7 +365,7 @@ export const Desktop = (): JSX.Element => {
               </div>
             </div>
 
-            <div className="flex flex-col w-[500px] h-full items-center justify-center gap-[29px] p-[30px] bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})` }}>
+            <div className="flex flex-col w-[500px] self-stretch items-center justify-center gap-[29px] p-[30px] bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})` }}>
               {featureCards.map((card, index) => (
                 <Card
                   key={index}
