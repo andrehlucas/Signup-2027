@@ -9,6 +9,7 @@ import { FeaturesBox } from "@/components/FeaturesBox";
 import officeBuildingImg from "@assets/office-building_1761587957783.webp";
 import businessAddressBg from "@assets/business-address-bg_1761590800705.webp";
 import bgCtaImg from "@assets/bg-cta_1761591194000.webp";
+import bgCtaPromoImg from "@assets/bg-cta-promo_1761591480531.webp";
 import man_holding_tablet from "@assets/man-holding-tablet.webp";
 
 const includedFeatures = [
@@ -558,7 +559,7 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
 
         <section className="flex flex-col w-full items-center justify-center gap-16 px-0 py-[60px] bg-basewhite">
           <div className="items-center justify-center flex max-w-screen-xl w-full px-8 py-0">
-            <div className="flex items-start justify-between px-10 py-0 flex-1 rounded-2xl overflow-hidden shadow-shadows-shadow-md bg-[linear-gradient(135deg,rgba(255,255,255,1)_10%,rgba(255,255,255,0)_100%),url(/figmaAssets/content.png)] bg-cover bg-center relative">
+            <div className="flex items-start justify-between px-10 py-0 flex-1 rounded-2xl overflow-hidden shadow-shadows-shadow-md bg-cover bg-center relative" style={{ backgroundImage: `linear-gradient(135deg, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0) 100%), url(${bgCtaPromoImg})` }}>
               <div className="flex flex-col items-start justify-center gap-5 px-16 py-5 flex-1">
                 <div className="flex flex-col gap-5 w-full">
                   <Badge
