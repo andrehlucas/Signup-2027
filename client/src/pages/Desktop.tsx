@@ -165,22 +165,22 @@ const reviews = [
 
 export const Desktop = (): JSX.Element => {
   return (
-    <div className="w-full min-w-[1440px] min-h-[4351px] flex">
+    <div className="w-full flex">
       <div className="flex w-full h-full flex-col items-start">
         <section className="flex flex-col items-center w-full bg-basewhite">
-          <div className="flex flex-col w-full items-center gap-8 px-0 py-10">
-            <div className="flex items-end gap-[32px] max-w-screen-xl w-full px-8 py-0">
-              <div className="flex flex-col flex-1 items-start justify-between">
-                <div className="flex flex-col items-start gap-6 w-full">
-                  <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-5xl tracking-[-0.46px] leading-[60px] w-full">The Ultimate Virtual Office Solution. <span className="font-bold text-blue-light400">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-blue-light400">$99</span>/month.</h1>
+          <div className="flex flex-col w-full items-center gap-4 sm:gap-6 md:gap-8 px-0 py-6 sm:py-8 md:py-10">
+            <div className="flex flex-col lg:flex-row items-start lg:items-end gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
+              <div className="flex flex-col flex-1 items-start justify-between w-full">
+                <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
+                  <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[-0.46px] leading-tight sm:leading-[1.2] md:leading-[1.25] lg:leading-[60px] w-full">The Ultimate Virtual Office Solution. <span className="font-bold text-blue-light400">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-blue-light400">$99</span>/month.</h1>
 
-                  <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-xl tracking-[0] leading-[30px]">
+                  <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed md:leading-[30px]">
                     With 650+ locations throughout the USA
                   </p>
                 </div>
 
-                <div className="flex max-w-[800px] w-full items-start gap-4 mt-6">
-                  <div className="flex flex-col items-start gap-3 flex-1 max-w-[400px]">
+                <div className="flex flex-col sm:flex-row max-w-[800px] w-full items-start gap-3 sm:gap-4 mt-4 sm:mt-6">
+                  <div className="flex flex-col items-start gap-3 flex-1 w-full sm:max-w-[400px]">
                     <div className="flex flex-col items-start gap-1.5 w-full">
                       <div className="flex items-center gap-2 px-3.5 py-3 w-full bg-basewhite rounded-lg border border-solid border-[#cfd4dc] shadow-shadows-shadow-xs">
                         <MapPinIcon className="w-5 h-5 text-gray-500" />
@@ -195,28 +195,31 @@ export const Desktop = (): JSX.Element => {
                     </p>
                   </div>
 
-                  <Button className="h-auto gap-1.5 px-[18px] py-3 bg-blue-light400 rounded-lg border border-solid border-[#36bff9] shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]">
+                  <Button className="h-auto gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 rounded-lg border border-solid border-[#36bff9] shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-get-started">
                     Get Started
                   </Button>
                 </div>
               </div>
 
-              <FeaturesBox features={includedFeatures} />
+              <div className="w-full lg:w-auto">
+                <FeaturesBox features={includedFeatures} />
+              </div>
             </div>
 
-            <div className="inline-flex flex-col items-start justify-center gap-2 w-full">
-              <div className="flex max-w-[1280px] w-full h-[152px] items-center justify-between p-8 mx-auto">
+            <div className="flex flex-col items-start justify-center gap-2 w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 max-w-[1280px] w-full px-4 sm:px-6 md:px-8 mx-auto">
                 {interactiveCards.map((card, index) => (
                   <div
                     key={index}
-                    className="flex max-w-[220px] w-full items-start h-[130px]"
+                    className="flex w-full items-start h-[130px]"
+                    data-testid={`card-interactive-${index}`}
                   >
                     <div
                       className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center`}
                       style={card.bgImage ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` } : undefined}
                     >
-                      <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px]">
-                        <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] whitespace-nowrap [font-style:var(--text-sm-text-md-bold-font-style)]">
+                      <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2">
+                        <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] [font-style:var(--text-sm-text-md-bold-font-style)] text-xs sm:text-sm">
                           {card.text}
                         </p>
                       </div>
@@ -236,22 +239,22 @@ export const Desktop = (): JSX.Element => {
                   </div>
                 ))}
 
-                <div className="flex max-w-[220px] w-full items-start h-[130px]">
+                <div className="flex w-full items-start h-[130px]" data-testid="card-pricing">
                   <div className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative">
                     <div className="absolute top-0 inset-x-0 flex items-center justify-center pt-3">
-                      <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-sm text-center tracking-[0] leading-5 whitespace-nowrap">
+                      <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-xs sm:text-sm text-center tracking-[0] leading-5 whitespace-nowrap">
                         ALL-INCLUSIVE
                       </p>
                     </div>
                     
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-[48px]">
+                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-3xl sm:text-4xl lg:text-[48px]">
                         $99/mo
                       </p>
                     </div>
 
-                    <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px]">
-                      <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] whitespace-nowrap [font-style:var(--text-sm-text-md-bold-font-style)]">
+                    <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2">
+                      <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] [font-style:var(--text-sm-text-md-bold-font-style)] text-xs sm:text-sm">
                         Sign Up Now
                       </p>
                     </div>
@@ -260,13 +263,13 @@ export const Desktop = (): JSX.Element => {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-8 max-w-screen-xl w-full px-8 py-0">
-              <div className="w-full h-[400px] rounded-2xl bg-cover bg-center" style={{ backgroundImage: `url(${newYorkAerialView})` }} />
+            <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
+              <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] rounded-2xl bg-cover bg-center" style={{ backgroundImage: `url(${newYorkAerialView})` }} />
             </div>
           </div>
 
-          <div className="inline-flex flex-col items-center">
-            <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] text-center tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] whitespace-nowrap [font-style:var(--text-xl-regular-font-style)]">
+          <div className="inline-flex flex-col items-center px-4">
+            <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] text-center tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-sm sm:text-base md:text-xl">
               See below if a virtual office is a good fit for you
             </p>
             <img
@@ -280,58 +283,58 @@ export const Desktop = (): JSX.Element => {
           </div>
         </section>
 
-        <section className="flex flex-col items-center justify-center gap-[81px] px-0 py-10 w-full bg-[#ffffff]">
-          <div className="flex max-w-screen-xl items-center justify-center gap-8 px-8 py-0 w-full">
-            <div className="flex flex-wrap items-center gap-[26px_24px] flex-1">
-              <div className="flex flex-col items-start gap-5 flex-1">
-                <Badge
-                  variant="secondary"
-                  className="font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#016aa2] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)] bg-transparent border-0 p-0 h-auto"
-                >
-                  Success Seekers
-                </Badge>
+        <section className="flex flex-col items-center justify-center gap-12 sm:gap-16 md:gap-20 lg:gap-[81px] px-0 py-6 sm:py-8 md:py-10 w-full bg-[#ffffff]">
+          <div className="flex flex-col lg:flex-row max-w-screen-xl items-start justify-center gap-6 md:gap-8 px-4 sm:px-6 md:px-8 py-0 w-full">
+            <div className="flex flex-col items-start gap-5 flex-1 w-full">
+              <Badge
+                variant="secondary"
+                className="font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#016aa2] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)] bg-transparent border-0 p-0 h-auto"
+              >
+                Success Seekers
+              </Badge>
 
-                <div className="inline-flex flex-col items-start gap-5">
-                  <h2 className="font-display-md-semibold font-[number:var(--display-md-semibold-font-weight)] text-[#181d27] text-[length:var(--display-md-semibold-font-size)] tracking-[var(--display-md-semibold-letter-spacing)] leading-[var(--display-md-semibold-line-height)] whitespace-nowrap [font-style:var(--display-md-semibold-font-style)]">
-                    Who Truly Benefits
-                    <br />
-                    from a Virtual Office?
-                  </h2>
+              <div className="inline-flex flex-col items-start gap-4 sm:gap-5">
+                <h2 className="font-display-md-semibold font-[number:var(--display-md-semibold-font-weight)] text-[#181d27] text-[length:var(--display-md-semibold-font-size)] tracking-[var(--display-md-semibold-letter-spacing)] leading-[var(--display-md-semibold-line-height)] [font-style:var(--display-md-semibold-font-style)] text-2xl sm:text-3xl md:text-4xl">
+                  Who Truly Benefits
+                  <br />
+                  from a Virtual Office?
+                </h2>
 
-                  <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]">
-                    From budding entrepreneurs to established enterprises, a
-                    virtual office elevates professionalism and flexibility,
-                    setting the stage for success.
-                  </p>
-                </div>
+                <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-base sm:text-lg md:text-xl">
+                  From budding entrepreneurs to established enterprises, a
+                  virtual office elevates professionalism and flexibility,
+                  setting the stage for success.
+                </p>
+              </div>
 
-                <div className="grid grid-cols-2 grid-rows-3 w-full gap-[8px_32px]">
-                  {benefitTypes.map((benefit, index) => (
-                    <div
-                      key={index}
-                      className={`${benefit.position} w-full h-full flex flex-col items-start`}
-                    >
-                      <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)]">
-                        {benefit.title}
-                      </h3>
-                      <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]">
-                        {benefit.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4 sm:gap-6 md:gap-[8px_32px]">
+                {benefitTypes.map((benefit, index) => (
+                  <div
+                    key={index}
+                    className="w-full h-full flex flex-col items-start gap-1"
+                    data-testid={`benefit-${index}`}
+                  >
+                    <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)] text-lg sm:text-xl md:text-2xl">
+                      {benefit.title}
+                    </h3>
+                    <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-sm sm:text-base md:text-lg">
+                      {benefit.description}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="flex flex-col w-[500px] self-stretch items-center justify-center gap-[29px] p-[30px] bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})` }}>
+            <div className="flex flex-col w-full lg:w-[500px] self-stretch items-center justify-center gap-5 sm:gap-[29px] p-5 sm:p-[30px] bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})` }}>
               {featureCards.map((card, index) => (
                 <Card
                   key={index}
-                  className={`flex flex-col items-start justify-center gap-[17px] p-[30px] flex-1 w-full ${card.bgClass} rounded-lg shadow-[0px_4px_4px_#00000040] border-0`}
+                  className={`flex flex-col items-start justify-center gap-3 sm:gap-[17px] p-5 sm:p-[30px] flex-1 w-full ${card.bgClass} rounded-lg shadow-[0px_4px_4px_#00000040] border-0`}
+                  data-testid={`feature-card-${index}`}
                 >
                   <CardContent className="flex flex-col items-start gap-2 w-full p-0">
                     <div className="inline-flex flex-col items-start gap-3.5">
-                      <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] whitespace-nowrap [font-style:var(--display-xs-semibold-font-style)]">
+                      <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)] text-lg sm:text-xl md:text-2xl">
                         {card.title}
                       </h3>
                       <img
@@ -343,7 +346,7 @@ export const Desktop = (): JSX.Element => {
                         loading="eager"
                       />
                     </div>
-                    <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]">
+                    <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-sm sm:text-base md:text-lg">
                       {card.description}
                     </p>
                   </CardContent>
@@ -353,61 +356,61 @@ export const Desktop = (): JSX.Element => {
           </div>
         </section>
 
-        <section className="flex flex-col items-center justify-center gap-6 px-0 py-20 w-full bg-cover bg-center" style={{ backgroundImage: `url(${bgCtaImg})` }}>
-          <h2 className="[font-family:'Inter',Helvetica] font-semibold text-[#181d27] text-3xl tracking-[0] leading-[38px] whitespace-nowrap">
+        <section className="flex flex-col items-center justify-center gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 w-full bg-cover bg-center" style={{ backgroundImage: `url(${bgCtaImg})` }}>
+          <h2 className="[font-family:'Inter',Helvetica] font-semibold text-[#181d27] text-xl sm:text-2xl md:text-3xl tracking-[0] leading-tight sm:leading-[38px] text-center">
             Over 650 Locations Across the USA
           </h2>
 
-          <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] whitespace-nowrap [font-style:var(--text-xl-regular-font-style)]">
+          <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-base sm:text-lg md:text-xl text-center">
             All-Inclusive Virtual Office Services for Only $99/mo.
           </p>
 
-          <Button className="h-auto gap-1.5 px-[18px] py-3 bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]">
+          <Button className="h-auto gap-1.5 px-[18px] py-3 bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]" data-testid="button-sign-up">
             Sign Up Now
           </Button>
         </section>
 
-        <section className="flex flex-col w-full gap-16 px-0 py-[60px] bg-basewhite items-center">
-          <div className="flex flex-wrap items-start gap-[64px_64px] max-w-screen-xl w-full px-8 py-0">
-            <div className="flex flex-col min-w-[480px] max-w-screen-md items-start gap-5 flex-1">
+        <section className="flex flex-col w-full gap-8 sm:gap-12 md:gap-16 px-0 py-10 sm:py-12 md:py-[60px] bg-basewhite items-center">
+          <div className="flex flex-col lg:flex-row items-start gap-8 sm:gap-12 md:gap-16 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
+            <div className="flex flex-col w-full lg:max-w-screen-md items-start gap-4 sm:gap-5 flex-1">
               <div className="flex flex-col items-start gap-3 w-full">
-                <h2 className="font-[number:var(--display-sm-display-md-semibold-font-weight)] text-[#181d27] text-[length:var(--display-sm-display-md-semibold-font-size)] tracking-[var(--display-sm-display-md-semibold-letter-spacing)] leading-[var(--display-sm-display-md-semibold-line-height)] font-display-sm-display-md-semibold [font-style:var(--display-sm-display-md-semibold-font-style)]">
+                <h2 className="font-[number:var(--display-sm-display-md-semibold-font-weight)] text-[#181d27] text-[length:var(--display-sm-display-md-semibold-font-size)] tracking-[var(--display-sm-display-md-semibold-letter-spacing)] leading-[var(--display-sm-display-md-semibold-line-height)] font-display-sm-display-md-semibold [font-style:var(--display-sm-display-md-semibold-font-style)] text-2xl sm:text-3xl md:text-4xl">
                   Curious About Renting a<br />
                   Virtual Office?
                 </h2>
               </div>
 
               <p
-                className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-
-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]"
+                className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-base sm:text-lg md:text-xl"
               >
                 Explore how a virtual office can elevate your business presence
                 while offering unparalleled flexibility. Tailored solutions
                 await you.
               </p>
 
-              <div className="inline-flex gap-5 items-center">
-                <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center w-full">
+                <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]" data-testid="button-talk-expert">
                   Talk to an expert
                 </Button>
 
                 <div className="gap-2 inline-flex items-center justify-center">
-                  <span className="font-text-xl-semibold font-[number:var(--text-xl-semibold-font-weight)] text-gray-600 text-[length:var(--text-xl-semibold-font-size)] tracking-[var(--text-xl-semibold-letter-spacing)] leading-[var(--text-xl-semibold-line-height)] whitespace-nowrap [font-style:var(--text-xl-semibold-font-style)]">
+                  <span className="font-text-xl-semibold font-[number:var(--text-xl-semibold-font-weight)] text-gray-600 text-[length:var(--text-xl-semibold-font-size)] tracking-[var(--text-xl-semibold-letter-spacing)] leading-[var(--text-xl-semibold-line-height)] [font-style:var(--text-xl-semibold-font-style)] text-base sm:text-lg md:text-xl">
                     1 (888) 898 - 9868
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col min-w-[480px] items-start gap-8 flex-1">
+            <div className="flex flex-col w-full items-start gap-6 sm:gap-8 flex-1">
               {faqItems.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col min-w-80 w-full items-center"
+                  className="flex flex-col w-full items-center"
+                  data-testid={`faq-${index}`}
                 >
-                  <div className="flex items-start gap-6 w-full">
+                  <div className="flex items-start gap-4 sm:gap-6 w-full">
                     <div className="flex flex-col items-start gap-2 flex-1">
-                      <p className="font-text-xl-medium font-[number:var(--text-xl-medium-font-weight)] text-[#181d27] text-[length:var(--text-xl-medium-font-size)] tracking-[var(--text-xl-medium-letter-spacing)] leading-[var(--text-xl-medium-line-height)] [font-style:var(--text-xl-medium-font-style)]">
+                      <p className="font-text-xl-medium font-[number:var(--text-xl-medium-font-weight)] text-[#181d27] text-[length:var(--text-xl-medium-font-size)] tracking-[var(--text-xl-medium-letter-spacing)] leading-[var(--text-xl-medium-line-height)] [font-style:var(--text-xl-medium-font-style)] text-base sm:text-lg md:text-xl">
                         {item.question}
                       </p>
                     </div>
@@ -428,12 +431,12 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
           </div>
         </section>
 
-        <section className="w-full gap-16 px-0 py-10 bg-basewhite flex flex-col items-center">
-          <div className="flex flex-col items-center gap-8 max-w-screen-xl w-full px-8 py-0">
-            <div className="flex flex-col items-center gap-8 w-full">
-              <div className="max-w-screen-md items-center flex flex-col gap-5 w-full">
+        <section className="w-full gap-8 sm:gap-12 md:gap-16 px-0 py-8 sm:py-10 bg-basewhite flex flex-col items-center">
+          <div className="flex flex-col items-center gap-6 sm:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
+            <div className="flex flex-col items-center gap-6 sm:gap-8 w-full">
+              <div className="max-w-screen-md items-center flex flex-col gap-4 sm:gap-5 w-full">
                 <div className="flex flex-col items-center gap-3 w-full">
-                  <h2 className="font-[number:var(--display-md-semibold-font-weight)] text-gray-900 text-[length:var(--display-md-semibold-font-size)] text-center tracking-[var(--display-md-semibold-letter-spacing)] leading-[var(--display-md-semibold-line-height)] font-display-md-semibold [font-style:var(--display-md-semibold-font-style)]">
+                  <h2 className="font-[number:var(--display-md-semibold-font-weight)] text-gray-900 text-[length:var(--display-md-semibold-font-size)] text-center tracking-[var(--display-md-semibold-letter-spacing)] leading-[var(--display-md-semibold-line-height)] font-display-md-semibold [font-style:var(--display-md-semibold-font-style)] text-2xl sm:text-3xl md:text-4xl">
                     Most Popular Locations
                   </h2>
                 </div>
@@ -441,32 +444,29 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
             </div>
           </div>
 
-          <div className="flex flex-col items-start gap-6 max-w-screen-xl w-full px-8 py-0">
-            <div className="flex flex-wrap items-start gap-[48px_32px] w-full">
+          <div className="flex flex-col items-start gap-6 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 w-full">
               {popularLocations.map((location, index) => (
                 <div
                   key={index}
-                  className="flex flex-col min-w-60 items-start gap-6 flex-1"
+                  className="flex flex-col items-start gap-4 sm:gap-6"
+                  data-testid={`location-${index}`}
                 >
                   <div 
                     className="w-full h-[200px] rounded-lg bg-cover bg-center"
                     style={{ backgroundImage: `url(${location.image})` }}
                   />
-                  <div className="flex flex-col items-start gap-6 w-full">
-                    <div className="flex flex-col items-start gap-4 w-full">
-                      <div className="flex flex-col items-start gap-1 w-full">
-                        <h3 className="[font-family:'Inter',Helvetica] font-semibold text-gray-900 text-xl tracking-[0] leading-[30px]">
-                          {location.name}
-                        </h3>
-                      </div>
-                    </div>
+                  <div className="flex flex-col items-start w-full">
+                    <h3 className="[font-family:'Inter',Helvetica] font-semibold text-gray-900 text-lg sm:text-xl tracking-[0] leading-relaxed sm:leading-[30px]">
+                      {location.name}
+                    </h3>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="max-w-screen-xl justify-center gap-2 px-8 py-0 w-full flex flex-col items-center">
-              <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-xl tracking-[0] leading-5 whitespace-nowrap">
+            <div className="max-w-screen-xl justify-center gap-2 px-0 py-0 w-full flex flex-col items-center">
+              <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-lg md:text-xl tracking-[0] leading-5 text-center">
                 <span className="font-text-xl-regular [font-style:var(--text-xl-regular-font-style)] tracking-[var(--text-xl-regular-letter-spacing)] text-[length:var(--text-xl-regular-font-size)] font-semibold">
                   View All Premium Locations
                 </span>
@@ -475,10 +475,10 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
           </div>
         </section>
 
-        <section className="w-full items-center gap-8 px-0 py-10 bg-[#ffffff] flex flex-col">
-          <div className="flex flex-col items-start gap-8 max-w-screen-xl w-full px-8 py-0">
-            <div className="flex flex-col items-start gap-8 w-full">
-              <div className="max-w-[800px] items-start flex flex-col gap-5 w-full">
+        <section className="w-full items-center gap-6 sm:gap-8 px-0 py-8 sm:py-10 bg-[#ffffff] flex flex-col">
+          <div className="flex flex-col items-start gap-6 sm:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
+            <div className="flex flex-col items-start gap-6 sm:gap-8 w-full">
+              <div className="max-w-[800px] items-start flex flex-col gap-4 sm:gap-5 w-full">
                 <div className="flex flex-col items-start gap-3 w-full">
                   <Badge
                     variant="secondary"
@@ -487,7 +487,7 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                     Customer Reviews
                   </Badge>
 
-                  <h2 className="font-[number:var(--display-md-semibold-font-weight)] text-gray-900 text-[length:var(--display-md-semibold-font-size)] tracking-[var(--display-md-semibold-letter-spacing)] leading-[var(--display-md-semibold-line-height)] font-display-md-semibold [font-style:var(--display-md-semibold-font-style)]">
+                  <h2 className="font-[number:var(--display-md-semibold-font-weight)] text-gray-900 text-[length:var(--display-md-semibold-font-size)] tracking-[var(--display-md-semibold-letter-spacing)] leading-[var(--display-md-semibold-line-height)] font-display-md-semibold [font-style:var(--display-md-semibold-font-style)] text-2xl sm:text-3xl md:text-4xl">
                     Opus Virtual Office Reviews
                   </h2>
                 </div>
@@ -495,12 +495,13 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
             </div>
           </div>
 
-          <div className="flex max-w-screen-xl items-center gap-[60px] px-8 py-0 w-full">
-            <div className="flex flex-wrap items-start gap-[24px_24px] flex-1">
+          <div className="flex max-w-screen-xl items-center gap-[60px] px-4 sm:px-6 md:px-8 py-0 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
               {reviews.map((review, index) => (
                 <Card
                   key={index}
-                  className="min-w-[280px] items-start justify-center gap-3 p-3 flex-1 bg-gray-50 rounded-lg border-[1.5px] border-solid border-[#eaecf0]"
+                  className="items-start justify-center gap-3 p-3 bg-gray-50 rounded-lg border-[1.5px] border-solid border-[#eaecf0]"
+                  data-testid={`review-${index}`}
                 >
                   <CardContent className="flex flex-col gap-3 p-0 w-full">
                     <div className="flex items-start gap-1 w-full">
@@ -565,10 +566,11 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
             </div>
           </div>
 
-          <div className="flex flex-col max-w-screen-xl items-start justify-center gap-2 px-8 py-0 w-full">
+          <div className="flex flex-col max-w-screen-xl items-start justify-center gap-2 px-4 sm:px-6 md:px-8 py-0 w-full">
             <Button
               variant="ghost"
               className="h-auto gap-1 pl-0 pr-3 py-0 rounded-lg overflow-hidden"
+              data-testid="button-more-reviews"
             >
               <span className="font-text-sm-semibold font-[number:var(--text-sm-semibold-font-weight)] text-gray-600 text-[length:var(--text-sm-semibold-font-size)] tracking-[var(--text-sm-semibold-letter-spacing)] leading-[var(--text-sm-semibold-line-height)] whitespace-nowrap [font-style:var(--text-sm-semibold-font-style)]">
                 Read More Reviews
@@ -585,11 +587,11 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
           </div>
         </section>
 
-        <section className="flex flex-col w-full items-center justify-center gap-16 px-0 py-[60px] bg-basewhite">
-          <div className="items-center justify-center flex max-w-screen-xl w-full px-8 py-0">
-            <div className="flex items-start justify-between px-10 py-0 flex-1 rounded-2xl overflow-hidden shadow-shadows-shadow-md bg-cover bg-center relative" style={{ backgroundImage: `linear-gradient(135deg, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0) 100%), url(${bgCtaPromoImg})` }}>
-              <div className="flex flex-col items-start justify-center gap-5 px-16 py-5 flex-1">
-                <div className="flex flex-col gap-5 w-full">
+        <section className="flex flex-col w-full items-center justify-center gap-8 sm:gap-12 md:gap-16 px-0 py-10 sm:py-12 md:py-[60px] bg-basewhite">
+          <div className="items-center justify-center flex max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
+            <div className="flex flex-col lg:flex-row items-start justify-between gap-6 sm:gap-8 p-6 sm:p-8 md:px-10 lg:px-16 md:py-5 flex-1 rounded-2xl overflow-hidden shadow-shadows-shadow-md bg-cover bg-center relative" style={{ backgroundImage: `linear-gradient(135deg, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0) 100%), url(${bgCtaPromoImg})` }}>
+              <div className="flex flex-col items-start justify-center gap-4 sm:gap-5 flex-1 w-full lg:w-auto">
+                <div className="flex flex-col gap-4 sm:gap-5 w-full">
                   <Badge
                     variant="secondary"
                     className="text-[#0085c9] font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)] bg-transparent border-0 p-0 h-auto w-fit"
@@ -597,19 +599,18 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                     Get your Free Ebook
                   </Badge>
 
-                  <h2 className="font-semibold text-[#3d455a] text-4xl tracking-[-0.72px] leading-[44px] [font-family:'Inter',Helvetica]">
+                  <h2 className="font-semibold text-[#3d455a] text-2xl sm:text-3xl md:text-4xl tracking-[-0.72px] leading-tight md:leading-[44px] [font-family:'Inter',Helvetica]">
                     6-Steps for Starting a Business
                   </h2>
 
-                  <p className="[font-family:'Inter',Helvetica] font-normal text-gray-900 text-xl tracking-[0] leading-[30px]">
+                  <p className="[font-family:'Inter',Helvetica] font-normal text-gray-900 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed md:leading-[30px]">
                     Your Complete Guide to Building a Successful Business
-                    <br />
                     Foundation with Confidence
                   </p>
                 </div>
 
-                <div className="flex max-w-[600px] w-full items-start gap-4">
-                  <div className="flex flex-col items-start gap-1.5 flex-1">
+                <div className="flex flex-col sm:flex-row max-w-[600px] w-full items-start gap-3 sm:gap-4">
+                  <div className="flex flex-col items-start gap-1.5 flex-1 w-full">
                     <div className="flex flex-col items-start gap-1.5 w-full">
                       <div className="flex items-center gap-2 px-3.5 py-3 w-full bg-[#ffffff] rounded-lg border border-solid shadow-[0px_1px_2px_#0a0c120d]">
                         <MailIcon className="w-5 h-5 text-gray-500" />
@@ -617,6 +618,7 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                           type="email"
                           placeholder="Enter your email"
                           className="flex-1 border-0 shadow-none p-0 h-auto [font-family:'Inter',Helvetica] font-normal text-[#717680] text-base tracking-[0] leading-6 focus-visible:ring-0 focus-visible:ring-offset-0"
+                          data-testid="input-email-ebook"
                         />
                       </div>
                     </div>
@@ -626,15 +628,15 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                     </p>
                   </div>
 
-                  <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] whitespace-nowrap [font-style:var(--text-md-semibold-font-style)]">
-                    Get your&nbsp;&nbsp;Ebook
+                  <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]" data-testid="button-get-ebook">
+                    Get your Ebook
                   </Button>
                 </div>
               </div>
 
-              <div className="w-[304px] h-[324px] relative">
+              <div className="w-full lg:w-[304px] h-[250px] sm:h-[300px] lg:h-[324px] relative flex-shrink-0">
                 <img
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[304px] h-[324px] object-cover"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full lg:w-[304px] h-full lg:h-[324px] object-cover"
                   alt="Asian man portrait"
                   src={man_holding_tablet}
                   width="304"
