@@ -12,6 +12,7 @@ import bgCtaImg from "@assets/bg-cta_1761591194000.webp";
 import bgCtaPromoImg from "@assets/bg-cta-promo_1761591480531.webp";
 import man_holding_tablet from "@assets/man-holding-tablet.webp";
 import receptionistCardBg from "@assets/receptionist-card-bg_1761593285326.webp";
+import cashHandsHoldingBg from "@assets/cash-hands-holding_1761593304143.webp";
 
 const includedFeatures = [
   "Prestigious Business Address",
@@ -32,7 +33,8 @@ const interactiveCards = [
   },
   {
     bgClass:
-      "bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(119,119,119,1)_100%),url(/figmaAssets/frame-411-1.png)] bg-cover bg-center",
+      "bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(119,119,119,1)_100%)]",
+    bgImage: cashHandsHoldingBg,
     text: "Bundle & Save",
     hasButton: false,
   },
