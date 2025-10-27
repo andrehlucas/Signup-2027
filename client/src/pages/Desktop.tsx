@@ -257,11 +257,11 @@ export const Desktop = (): JSX.Element => {
             </div>
 
             <div className="inline-flex flex-col items-start justify-center gap-2 w-full">
-              <div className="flex max-w-[1280px] w-full items-center justify-between p-8 mx-auto">
+              <div className="flex max-w-[1280px] w-full h-[152px] items-center justify-between p-8 mx-auto">
                 {interactiveCards.map((card, index) => (
                   <div
                     key={index}
-                    className="flex max-w-[220px] w-full items-start h-[200px]"
+                    className="flex max-w-[220px] w-full items-start h-[130px]"
                   >
                     <div
                       className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative`}
@@ -284,7 +284,7 @@ export const Desktop = (): JSX.Element => {
                   </div>
                 ))}
 
-                <div className="flex max-w-[220px] w-full items-start h-[200px]">
+                <div className="flex max-w-[220px] w-full items-start h-[130px]">
                   <div className="flex flex-col items-center justify-between bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg">
                     <div className="flex flex-col items-center justify-between px-0 py-3 flex-1 w-full">
                       <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-sm text-center tracking-[0] leading-5 whitespace-nowrap">
