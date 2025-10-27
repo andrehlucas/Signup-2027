@@ -14,6 +14,7 @@ import man_holding_tablet from "@assets/man-holding-tablet.webp";
 import receptionistCardBg from "@assets/receptionist-card-bg_1761593285326.webp";
 import cashHandsHoldingBg from "@assets/cash-hands-holding_1761593304143.webp";
 import multipleProfessionalsBg from "@assets/multiple-professionals_1761593320843.webp";
+import newYorkAerialView from "@assets/new-york-aerial-view_1761593422460.webp";
 
 const includedFeatures = [
   "Prestigious Business Address",
@@ -116,7 +117,7 @@ const popularLocations = [
   { name: "Houston, TX", image: "/houston.webp" },
   { name: "Los Angeles, CA", image: "/los-angeles.webp" },
   { name: "Miami, FL", image: "/miami.webp" },
-  { name: "New York, NY", image: "/new-york.webp" },
+  { name: "New York, NY", image: newYorkAerialView },
   { name: "Tampa, FL", image: "/tampa.webp" },
 ];
 
