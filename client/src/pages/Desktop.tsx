@@ -223,16 +223,20 @@ export const Desktop = (): JSX.Element => {
                 ))}
 
                 <div className="flex max-w-[220px] w-full items-start h-[130px]">
-                  <div className="flex flex-col items-center justify-between bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg">
-                    <div className="flex flex-col items-center justify-between px-0 py-3 flex-1 w-full">
+                  <div className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative">
+                    <div className="absolute top-0 inset-x-0 flex items-center justify-center pt-3">
                       <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-sm text-center tracking-[0] leading-5 whitespace-nowrap">
                         ALL-INCLUSIVE
                       </p>
-                      <p className="[font-family:'Inter',Helvetica] font-semibold text-[#ffffff] text-5xl text-center tracking-[-0.96px] leading-[60px] whitespace-nowrap">
+                    </div>
+                    
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-[56px] text-center tracking-[-0.96px] leading-[60px] whitespace-nowrap">
                         $99/mo
                       </p>
                     </div>
-                    <div className="w-full h-[50px] flex items-center justify-center">
+
+                    <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px]">
                       <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] whitespace-nowrap [font-style:var(--text-sm-text-md-bold-font-style)]">
                         Sign Up Now
                       </p>
