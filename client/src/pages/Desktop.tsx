@@ -204,7 +204,7 @@ export const Desktop = (): JSX.Element => {
                     <div
                       className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative`}
                     >
-                      <div className="absolute inset-x-0 bottom-0 flex items-center justify-center py-4">
+                      <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px]">
                         <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] whitespace-nowrap [font-style:var(--text-sm-text-md-bold-font-style)]">
                           {card.text}
                         </p>
