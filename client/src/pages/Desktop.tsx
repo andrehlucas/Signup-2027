@@ -257,7 +257,7 @@ export const Desktop = (): JSX.Element => {
             </div>
 
             <div className="inline-flex flex-col items-start justify-center gap-2 w-full">
-              <div className="flex w-full items-center justify-between px-8 py-0">
+              <div className="flex max-w-[1280px] w-full items-center justify-between p-8">
                 {interactiveCards.map((card, index) => (
                   <div
                     key={index}
