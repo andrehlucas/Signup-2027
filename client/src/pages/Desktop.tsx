@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import officeBuildingImg from "@assets/office-building_1761587957783.webp";
 
 const includedFeatures = [
   "Prestigious Business Address",
@@ -364,7 +365,7 @@ export const Desktop = (): JSX.Element => {
               </div>
             </div>
 
-            <div className="flex flex-col w-[500px] h-full items-center justify-center gap-[29px] p-[30px] bg-cover bg-center" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(/attached_assets/office-building_1761587957783.webp)' }}>
+            <div className="flex flex-col w-[500px] h-full items-center justify-center gap-[29px] p-[30px] bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})` }}>
               {featureCards.map((card, index) => (
                 <Card
                   key={index}
