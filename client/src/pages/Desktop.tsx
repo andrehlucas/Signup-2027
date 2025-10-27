@@ -156,7 +156,7 @@ export const Desktop = (): JSX.Element => {
       <div className="flex w-full h-full flex-col items-start">
         <section className="flex flex-col items-center w-full bg-basewhite">
           <div className="flex flex-col w-full items-center gap-8 px-0 py-10">
-            <div className="flex items-end gap-8 max-w-screen-xl w-full px-8 py-0">
+            <div className="flex items-end gap-[32px] max-w-screen-xl w-full px-8 py-0">
               <div className="flex flex-col flex-1 items-start justify-between">
                 <div className="flex flex-col items-start gap-6 w-full">
                   <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-5xl tracking-[-0.46px] leading-[60px] w-full">The Ultimate Virtual Office Solution. All-Inclusive with no long-term contracts for only $99/month.</h1>
