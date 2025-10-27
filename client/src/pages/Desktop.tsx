@@ -226,6 +226,9 @@ export const Desktop = (): JSX.Element => {
                             className="w-full h-full"
                             alt="Button"
                             src="/figmaAssets/button.svg"
+                            width="68"
+                            height="68"
+                            loading="eager"
                           />
                         </div>
                       )}
@@ -270,6 +273,9 @@ export const Desktop = (): JSX.Element => {
               className="w-5 h-5"
               alt="Section icon"
               src="/figmaAssets/section-icon.svg"
+              width="20"
+              height="20"
+              loading="eager"
             />
           </div>
         </section>
@@ -332,6 +338,9 @@ export const Desktop = (): JSX.Element => {
                         className="w-[53px] h-[3px]"
                         alt="Vector"
                         src="/figmaAssets/vector-3.svg"
+                        width="53"
+                        height="3"
+                        loading="eager"
                       />
                     </div>
                     <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]">
@@ -407,6 +416,9 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                         className="w-6 h-6"
                         alt="PlusIcon circle"
                         src="/figmaAssets/plus-circle.svg"
+                        width="24"
+                        height="24"
+                        loading="lazy"
                       />
                     </div>
                   </div>
@@ -496,6 +508,9 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                         className="w-[52px] h-[52px]"
                         alt="Google"
                         src="/figmaAssets/google.svg"
+                        width="52"
+                        height="52"
+                        loading="lazy"
                       />
 
                       <div className="flex flex-col items-start flex-1">
@@ -513,6 +528,9 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                                 className="w-full h-full"
                                 alt="Star"
                                 src="/figmaAssets/star-background.svg"
+                                width="18"
+                                height="18"
+                                loading="lazy"
                               />
                             </div>
                           ))}
@@ -559,6 +577,9 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                 className="w-5 h-5"
                 alt="Arrow narrow right"
                 src="/figmaAssets/arrow-narrow-right.svg"
+                width="20"
+                height="20"
+                loading="lazy"
               />
             </Button>
           </div>
@@ -615,7 +636,10 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                 <img
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[304px] h-[324px] object-cover"
                   alt="Asian man portrait"
-                  src={man_holding_tablet} />
+                  src={man_holding_tablet}
+                  width="304"
+                  height="324"
+                  loading="lazy" />
               </div>
             </div>
           </div>
