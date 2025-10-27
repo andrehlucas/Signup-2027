@@ -117,7 +117,7 @@ const popularLocations = [
   { name: "Houston, TX", image: "/houston.webp" },
   { name: "Los Angeles, CA", image: "/los-angeles.webp" },
   { name: "Miami, FL", image: "/miami.webp" },
-  { name: "New York, NY", image: newYorkAerialView },
+  { name: "New York, NY", image: "/new-york.webp" },
   { name: "Tampa, FL", image: "/tampa.webp" },
 ];
 
