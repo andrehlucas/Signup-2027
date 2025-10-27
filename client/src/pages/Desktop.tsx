@@ -157,7 +157,7 @@ export const Desktop = (): JSX.Element => {
         <section className="flex flex-col items-center w-full bg-basewhite">
           <div className="flex flex-col w-full items-center gap-8 px-0 py-10">
             <div className="flex items-end gap-8 max-w-screen-xl w-full px-8 py-0">
-              <div className="flex flex-col w-full items-start justify-between">
+              <div className="flex flex-col flex-1 items-start justify-between">
                 <div className="flex flex-col items-start gap-6 w-full">
                   <h1 className="font-normal text-gray-900 text-5xl leading-[60px] w-full [font-family:'Inter',Helvetica]">
                     <span className="text-[#0f1728] tracking-[-0.46px] leading-[60px]">
