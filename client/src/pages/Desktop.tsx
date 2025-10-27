@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { FeaturesBox } from "@/components/FeaturesBox";
 import officeBuildingImg from "@assets/office-building_1761587957783.webp";
-
+import businessAddressBg from "@assets/business-address-bg_1761590800705.webp";
 import man_holding_tablet from "@assets/man-holding-tablet.webp";
 
 const includedFeatures = [
@@ -41,6 +41,7 @@ const interactiveCards = [
   {
     bgClass:
       "bg-[linear-gradient(0deg,rgba(0,0,0,0.5)_0%,rgba(0,0,0,0.5)_100%),linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(119,119,119,1)_100%)]",
+    bgImage: businessAddressBg,
     text: "Address Only",
     hasButton: false,
   },
@@ -202,7 +203,8 @@ export const Desktop = (): JSX.Element => {
                     className="flex max-w-[220px] w-full items-start h-[130px]"
                   >
                     <div
-                      className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative`}
+                      className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center`}
+                      style={card.bgImage ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` } : undefined}
                     >
                       <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px]">
                         <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] whitespace-nowrap [font-style:var(--text-sm-text-md-bold-font-style)]">
