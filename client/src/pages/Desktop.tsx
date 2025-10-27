@@ -231,7 +231,7 @@ export const Desktop = (): JSX.Element => {
                     </div>
                     
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-[56px] text-center tracking-[-0.96px] leading-[60px] whitespace-nowrap">
+                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-[48px]">
                         $99/mo
                       </p>
                     </div>
