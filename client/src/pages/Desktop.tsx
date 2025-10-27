@@ -184,7 +184,7 @@ export const Desktop = (): JSX.Element => {
                 </div>
 
                 <div className="flex max-w-[800px] w-full items-start gap-4 mt-6">
-                  <div className="flex flex-col items-start gap-3 flex-1">
+                  <div className="flex flex-col items-start gap-3 flex-1 max-w-[400px]">
                     <div className="flex flex-col items-start gap-1.5 w-full">
                       <div className="flex items-center gap-2 px-3.5 py-3 w-full bg-basewhite rounded-lg border border-solid border-[#cfd4dc] shadow-shadows-shadow-xs">
                         <MapPinIcon className="w-5 h-5 text-gray-500" />
