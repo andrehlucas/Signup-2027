@@ -447,7 +447,7 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
 
             <div className="max-w-screen-xl justify-center gap-2 px-8 py-0 w-full flex flex-col items-center">
               <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-xl tracking-[0] leading-5 whitespace-nowrap">
-                <span className="font-[number:var(--text-xl-regular-font-weight)] leading-[var(--text-xl-regular-line-height)] font-text-xl-regular [font-style:var(--text-xl-regular-font-style)] tracking-[var(--text-xl-regular-letter-spacing)] text-[length:var(--text-xl-regular-font-size)]">
+                <span className="font-text-xl-regular [font-style:var(--text-xl-regular-font-style)] tracking-[var(--text-xl-regular-letter-spacing)] text-[length:var(--text-xl-regular-font-size)] font-semibold">
                   View All Premium Locations
                 </span>
               </p>
