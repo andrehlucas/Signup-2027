@@ -18,6 +18,9 @@ export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
               className="w-8 h-8"
               alt="Check icon"
               src="/figmaAssets/check-icon.svg"
+              width="32"
+              height="32"
+              loading="eager"
             />
             <div className="flex flex-col w-full items-start pt-0.5 pb-0 px-0">
               <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-lg tracking-[0] leading-7 whitespace-nowrap">
@@ -40,6 +43,9 @@ export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
             className="w-5 h-5"
             alt="Chevron right double"
             src="/figmaAssets/chevron-right-double.svg"
+            width="20"
+            height="20"
+            loading="eager"
           />
         </Button>
       </div>

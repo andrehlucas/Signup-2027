@@ -21,7 +21,7 @@ const includedFeatures = [
   "Professional Live Call Answering",
   "Personalized Call Transferring",
   "Business Phone/Fax Number",
-  "Professional MailIcon Receipt",
+  "Professional Mail Receipt",
   "Voicemail/Fax Converted to Email",
 ];
 
