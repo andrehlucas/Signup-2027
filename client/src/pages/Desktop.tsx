@@ -596,7 +596,7 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
               <div className="w-[304px] h-[324px]" />
 
               <img
-                className="absolute top-[-162px] left-[206px] w-[304px] h-[324px] object-cover"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[304px] h-[324px] object-cover"
                 alt="Asian man portrait"
                 src={man_holding_tablet} />
             </div>
