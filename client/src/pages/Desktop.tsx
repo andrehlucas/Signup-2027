@@ -101,14 +101,14 @@ const featureCards = [
 ];
 
 const popularLocations = [
-  "Atlanta, GA",
-  "Chicago, IL",
-  "Dallas, TX",
-  "Houston, TX",
-  "Los Angeles, CA",
-  "Miami, FL",
-  "New York, NY",
-  "Tampa, FL",
+  { name: "Atlanta, GA", image: "/atlanta.webp" },
+  { name: "Chicago, IL", image: "/chicago.webp" },
+  { name: "Dallas, TX", image: "/dallas.webp" },
+  { name: "Houston, TX", image: "/houston.webp" },
+  { name: "Los Angeles, CA", image: "/los-angeles.webp" },
+  { name: "Miami, FL", image: "/miami.webp" },
+  { name: "New York, NY", image: "/new-york.webp" },
+  { name: "Tampa, FL", image: "/tampa.webp" },
 ];
 
 const faqItems = [
@@ -421,12 +421,15 @@ regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[va
                   key={index}
                   className="flex flex-col min-w-60 items-start gap-6 flex-1"
                 >
-                  <div className="w-full h-[200px] rounded-lg bg-cover bg-center" />
+                  <div 
+                    className="w-full h-[200px] rounded-lg bg-cover bg-center"
+                    style={{ backgroundImage: `url(${location.image})` }}
+                  />
                   <div className="flex flex-col items-start gap-6 w-full">
                     <div className="flex flex-col items-start gap-4 w-full">
                       <div className="flex flex-col items-start gap-1 w-full">
                         <h3 className="[font-family:'Inter',Helvetica] font-semibold text-gray-900 text-xl tracking-[0] leading-[30px]">
-                          {location}
+                          {location.name}
                         </h3>
                       </div>
                     </div>
