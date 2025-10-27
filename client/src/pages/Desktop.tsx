@@ -364,7 +364,7 @@ export const Desktop = (): JSX.Element => {
               </div>
             </div>
 
-            <div className="flex flex-col w-[500px] items-center justify-center gap-[29px] p-[30px] backdrop-blur-[146.5px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(146.5px)_brightness(100%)] bg-cover">
+            <div className="flex flex-col w-[500px] h-full items-center justify-center gap-[29px] p-[30px] backdrop-blur-[146.5px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(146.5px)_brightness(100%)] bg-cover">
               {featureCards.map((card, index) => (
                 <Card
                   key={index}
