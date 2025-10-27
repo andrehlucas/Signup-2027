@@ -205,7 +205,7 @@ export const Desktop = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className="inline-flex flex-col max-w-[480px] items-start gap-3 pl-4 pr-0 py-0">
+              <div className="inline-flex flex-col max-w-[480px] self-stretch items-start gap-3 pl-4 pr-0 py-0">
                 <p className="font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-gray-600 text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] whitespace-nowrap [font-style:var(--text-sm-text-md-semibold-font-style)]">
                   <span className="leading-[var(--text-sm-text-md-semibold-line-height)] font-text-sm-text-md-semibold [font-style:var(--text-sm-text-md-semibold-font-style)] font-[number:var(--text-sm-text-md-semibold-font-weight)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] text-[length:var(--text-sm-text-md-semibold-font-size)]">
                     When We Say
