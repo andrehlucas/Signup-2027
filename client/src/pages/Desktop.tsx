@@ -159,7 +159,7 @@ export const Desktop = (): JSX.Element => {
             <div className="flex items-end gap-8 max-w-screen-xl w-full px-8 py-0">
               <div className="flex flex-col flex-1 items-start justify-between">
                 <div className="flex flex-col items-start gap-6 w-full">
-                  <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-5xl tracking-[-0.46px] leading-[60px] w-full">
+                  <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-5xl tracking-[-0.46px] leading-[60px] max-w-[650px]">
                     The Ultimate Virtual Office Solution. <span className="font-bold text-[#36bff9]">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-[#36bff9]">$99</span>/month.
                   </h1>
 
