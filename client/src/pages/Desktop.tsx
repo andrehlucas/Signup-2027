@@ -166,7 +166,7 @@ const reviews = [
 
 export const Desktop = (): JSX.Element => {
   return (
-    <div className="w-full flex">
+    <div className="w-full flex pt-[72px] lg:pt-[104px]">
       <div className="flex w-full h-full flex-col items-start">
         <section className="flex flex-col items-center w-full bg-basewhite">
           <div className="flex flex-col w-full items-center gap-4 sm:gap-6 md:gap-8 px-0 py-6 sm:py-8 md:py-10">
