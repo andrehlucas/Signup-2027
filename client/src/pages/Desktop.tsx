@@ -198,9 +198,9 @@ export const Desktop = (): JSX.Element => {
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
-                  <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[-0.46px] leading-[1.4] w-full">The Ultimate Virtual Office Solution. <span className="font-bold text-blue-light400">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-blue-light400">$99</span>/month.</h1>
+                  <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[-0.46px] leading-tight w-full">The Ultimate Virtual Office Solution. <span className="font-bold text-blue-light400">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-blue-light400">$99</span>/month.</h1>
 
-                  <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-lg md:text-xl tracking-[0] leading-[1.4]">
+                  <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed">
                     With 650+ locations throughout the USA
                   </p>
                 </div>
@@ -216,7 +216,7 @@ export const Desktop = (): JSX.Element => {
                       </div>
                     </div>
 
-                    <p className="[font-family:'Inter',Helvetica] font-bold text-gray-600 text-sm tracking-[0] leading-[1.4]">
+                    <p className="[font-family:'Inter',Helvetica] font-bold text-gray-600 text-sm tracking-[0] leading-normal">
                       Browse Our Top Locations
                     </p>
                   </div>
@@ -284,7 +284,7 @@ export const Desktop = (): JSX.Element => {
                 >
                   <div className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative">
                     <div className="absolute top-0 inset-x-0 flex items-center justify-center pt-3">
-                      <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-xs sm:text-sm text-center tracking-[0] leading-[1.4] whitespace-nowrap">
+                      <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-xs sm:text-sm text-center tracking-[0] leading-normal whitespace-nowrap">
                         ALL-INCLUSIVE
                       </p>
                     </div>
@@ -448,7 +448,7 @@ export const Desktop = (): JSX.Element => {
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
         >
-          <h2 className="[font-family:'Inter',Helvetica] font-semibold text-[#181d27] text-xl sm:text-2xl md:text-3xl tracking-[0] leading-[1.4] text-center">
+          <h2 className="[font-family:'Inter',Helvetica] font-semibold text-[#181d27] text-xl sm:text-2xl md:text-3xl tracking-[0] leading-tight text-center">
             Over 650 Locations Across the USA
           </h2>
 
@@ -573,7 +573,7 @@ export const Desktop = (): JSX.Element => {
                     style={{ backgroundImage: `url(${location.image})` }}
                   />
                   <div className="flex flex-col items-start w-full">
-                    <h3 className="[font-family:'Inter',Helvetica] font-semibold text-gray-900 text-lg sm:text-xl tracking-[0] leading-[1.4]">
+                    <h3 className="[font-family:'Inter',Helvetica] font-semibold text-gray-900 text-lg sm:text-xl tracking-[0] leading-normal">
                       {location.name}
                     </h3>
                   </div>
@@ -582,7 +582,7 @@ export const Desktop = (): JSX.Element => {
             </div>
 
             <div className="max-w-screen-xl justify-center gap-2 px-0 py-0 w-full flex flex-col items-center">
-              <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-lg md:text-xl tracking-[0] leading-[1.4] text-center">
+              <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed text-center">
                 <span className="font-text-xl-regular [font-style:var(--text-xl-regular-font-style)] tracking-[var(--text-xl-regular-letter-spacing)] text-[length:var(--text-xl-regular-font-size)] font-semibold">
                   View All Premium Locations
                 </span>
@@ -740,11 +740,11 @@ export const Desktop = (): JSX.Element => {
                     Get your Free Ebook
                   </Badge>
 
-                  <h2 className="font-semibold text-[#3d455a] text-2xl sm:text-3xl md:text-4xl tracking-[-0.72px] leading-[1.4] [font-family:'Inter',Helvetica]">
+                  <h2 className="font-semibold text-[#3d455a] text-2xl sm:text-3xl md:text-4xl tracking-[-0.72px] leading-tight [font-family:'Inter',Helvetica]">
                     6-Steps for Starting a Business
                   </h2>
 
-                  <p className="[font-family:'Inter',Helvetica] font-normal text-gray-900 text-base sm:text-lg md:text-xl tracking-[0] leading-[1.4]">
+                  <p className="[font-family:'Inter',Helvetica] font-normal text-gray-900 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed">
                     Your Complete Guide to Building a Successful Business
                     Foundation with Confidence
                   </p>
@@ -758,7 +758,7 @@ export const Desktop = (): JSX.Element => {
                         <Input
                           type="email"
                           placeholder="Enter your email"
-                          className="flex-1 border-0 shadow-none p-0 h-auto [font-family:'Inter',Helvetica] font-normal text-[#717680] text-base tracking-[0] leading-[1.4] focus-visible:ring-0 focus-visible:ring-offset-0"
+                          className="flex-1 border-0 shadow-none p-0 h-auto [font-family:'Inter',Helvetica] font-normal text-[#717680] text-base tracking-[0] leading-normal focus-visible:ring-0 focus-visible:ring-offset-0"
                           data-testid="input-email-ebook"
                         />
                       </div>
