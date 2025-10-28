@@ -589,7 +589,7 @@ export const Desktop = (): JSX.Element => {
 
         <section className="flex flex-col w-full items-center justify-center gap-8 sm:gap-12 md:gap-16 px-0 py-10 sm:py-12 md:py-[60px] bg-basewhite">
           <div className="items-center justify-center flex max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
-            <div className="flex flex-col lg:flex-row items-start justify-between gap-6 sm:gap-8 p-6 sm:p-8 md:px-10 lg:px-16 md:py-5 flex-1 rounded-2xl overflow-hidden shadow-shadows-shadow-md bg-cover bg-center relative" style={{ backgroundImage: `linear-gradient(135deg, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0) 100%), url(${bgCtaPromoImg})` }}>
+            <div className="flex flex-col lg:flex-row items-start justify-between gap-6 sm:gap-8 p-6 sm:p-8 md:px-10 lg:px-16 md:py-5 flex-1 rounded-2xl overflow-visible shadow-shadows-shadow-md bg-cover bg-center relative" style={{ backgroundImage: `linear-gradient(135deg, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0) 100%), url(${bgCtaPromoImg})` }}>
               <div className="flex flex-col items-start justify-center gap-4 sm:gap-5 flex-1 w-full lg:w-auto">
                 <div className="flex flex-col gap-4 sm:gap-5 w-full">
                   <Badge
@@ -634,9 +634,9 @@ export const Desktop = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className="w-full lg:w-[304px] h-[250px] sm:h-[300px] lg:h-[324px] relative flex-shrink-0 -mb-6 sm:-mb-8 lg:-mb-5">
+              <div className="absolute bottom-0 right-0 w-[280px] sm:w-[320px] lg:w-[380px] h-[280px] sm:h-[320px] lg:h-[400px] translate-y-[15%] lg:translate-y-[10%] translate-x-[5%]">
                 <img
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[120%] object-cover object-bottom"
+                  className="w-full h-full object-cover object-bottom"
                   alt="Asian man portrait"
                   src={man_holding_tablet}
                   width="304"
