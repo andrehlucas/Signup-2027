@@ -211,7 +211,7 @@ export const Desktop = (): JSX.Element => {
                 {interactiveCards.map((card, index) => (
                   <div
                     key={index}
-                    className="flex w-full items-start h-[130px]"
+                    className={`flex w-full items-start h-[130px] ${index === 0 ? 'hidden sm:flex' : ''}`}
                     data-testid={`card-interactive-${index}`}
                   >
                     <div
