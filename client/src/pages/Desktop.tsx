@@ -15,6 +15,7 @@ import receptionistCardBg from "@assets/receptionist-card-bg_1761593285326.webp"
 import cashHandsHoldingBg from "@assets/cash-hands-holding_1761593304143.webp";
 import multipleProfessionalsBg from "@assets/multiple-professionals_1761593320843.webp";
 import newYorkAerialView from "@assets/new-york-aerial-view_1761593422460.webp";
+import promoVideo from "@assets/Opus VO - 45 Sec Promo - 1920x1080_1761681440103.mp4";
 
 const includedFeatures = [
   "Prestigious Business Address",
@@ -260,6 +261,18 @@ export const Desktop = (): JSX.Element => {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className="sm:hidden w-full px-4 sm:px-6 md:px-8 mx-auto max-w-[1280px]" data-testid="video-promo-mobile">
+                <video
+                  className="w-full rounded-xl shadow-shadows-shadow-lg"
+                  controls
+                  preload="metadata"
+                  poster=""
+                >
+                  <source src={promoVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
 
