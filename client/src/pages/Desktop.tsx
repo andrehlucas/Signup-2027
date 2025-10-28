@@ -240,8 +240,7 @@ export const Desktop = (): JSX.Element => {
             <motion.div 
               className="flex flex-col items-start justify-center gap-2 w-full"
               initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, amount: 0.2 }}
+              animate="animate"
               variants={staggerContainer}
             >
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 max-w-[1280px] w-full px-4 sm:px-6 md:px-8 mx-auto">
