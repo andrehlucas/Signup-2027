@@ -634,9 +634,9 @@ export const Desktop = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className="w-full lg:w-[304px] h-[250px] sm:h-[300px] lg:h-[324px] relative flex-shrink-0">
+              <div className="w-full lg:w-[304px] h-[250px] sm:h-[300px] lg:h-[324px] relative flex-shrink-0 -mb-6 sm:-mb-8 lg:-mb-5">
                 <img
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full lg:w-[304px] h-full lg:h-[324px] object-cover"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[120%] object-cover object-bottom"
                   alt="Asian man portrait"
                   src={man_holding_tablet}
                   width="304"
