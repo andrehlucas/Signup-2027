@@ -430,7 +430,7 @@ export const Desktop = (): JSX.Element => {
                         loading="eager"
                       />
                     </div>
-                    <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-sm sm:text-base md:text-lg">
+                    <p className="font-text-lg-regular font-[number:var(--text-lg-regular-font-weight)] text-[#181d27] text-[length:var(--text-lg-regular-font-size)] tracking-[var(--text-lg-regular-letter-spacing)] leading-[var(--text-lg-regular-line-height)] [font-style:var(--text-lg-regular-font-style)] text-sm sm:text-base md:text-lg">
                       {card.description}
                     </p>
                   </CardContent>
