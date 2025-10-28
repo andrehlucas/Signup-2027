@@ -339,7 +339,7 @@ export const Desktop = (): JSX.Element => {
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] text-center tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-sm sm:text-base md:text-xl">
+            <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] text-center tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]">
               See below if a virtual office is a good fit for you
             </p>
             <img
@@ -379,7 +379,7 @@ export const Desktop = (): JSX.Element => {
                   from a Virtual Office?
                 </h2>
 
-                <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-base sm:text-lg md:text-xl">
+                <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]">
                   From budding entrepreneurs to established enterprises, a
                   virtual office elevates professionalism and flexibility,
                   setting the stage for success.
@@ -394,10 +394,10 @@ export const Desktop = (): JSX.Element => {
                     data-testid={`benefit-${index}`}
                     variants={fadeInUp}
                   >
-                    <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)] text-lg sm:text-xl md:text-2xl">
+                    <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)]">
                       {benefit.title}
                     </h3>
-                    <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-sm sm:text-base md:text-lg">
+                    <p className="font-text-lg-regular font-[number:var(--text-lg-regular-font-weight)] text-[#181d27] text-[length:var(--text-lg-regular-font-size)] tracking-[var(--text-lg-regular-letter-spacing)] leading-[var(--text-lg-regular-line-height)] [font-style:var(--text-lg-regular-font-style)]">
                       {benefit.description}
                     </p>
                   </motion.div>
@@ -418,7 +418,7 @@ export const Desktop = (): JSX.Element => {
                 >
                   <CardContent className="flex flex-col items-start gap-2 w-full p-0">
                     <div className="inline-flex flex-col items-start gap-3.5">
-                      <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)] text-lg sm:text-xl md:text-2xl">
+                      <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)]">
                         {card.title}
                       </h3>
                       <img
@@ -430,7 +430,7 @@ export const Desktop = (): JSX.Element => {
                         loading="eager"
                       />
                     </div>
-                    <p className="font-text-lg-regular font-[number:var(--text-lg-regular-font-weight)] text-[#181d27] text-[length:var(--text-lg-regular-font-size)] tracking-[var(--text-lg-regular-letter-spacing)] leading-[var(--text-lg-regular-line-height)] [font-style:var(--text-lg-regular-font-style)] text-sm sm:text-base md:text-lg">
+                    <p className="font-text-lg-regular font-[number:var(--text-lg-regular-font-weight)] text-[#181d27] text-[length:var(--text-lg-regular-font-size)] tracking-[var(--text-lg-regular-letter-spacing)] leading-[var(--text-lg-regular-line-height)] [font-style:var(--text-lg-regular-font-style)]">
                       {card.description}
                     </p>
                   </CardContent>
@@ -452,7 +452,7 @@ export const Desktop = (): JSX.Element => {
             Over 650 Locations Across the USA
           </h2>
 
-          <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-base sm:text-lg md:text-xl text-center">
+          <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-center">
             All-Inclusive Virtual Office Services for Only $99/mo.
           </p>
 
@@ -481,7 +481,7 @@ export const Desktop = (): JSX.Element => {
               </div>
 
               <p
-                className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)] text-base sm:text-lg md:text-xl"
+                className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]"
               >
                 Explore how a virtual office can elevate your business presence
                 while offering unparalleled flexibility. Tailored solutions
@@ -494,7 +494,7 @@ export const Desktop = (): JSX.Element => {
                 </Button>
 
                 <div className="gap-2 inline-flex items-center justify-center">
-                  <span className="font-text-xl-semibold font-[number:var(--text-xl-semibold-font-weight)] text-gray-600 text-[length:var(--text-xl-semibold-font-size)] tracking-[var(--text-xl-semibold-letter-spacing)] leading-[var(--text-xl-semibold-line-height)] [font-style:var(--text-xl-semibold-font-style)] text-base sm:text-lg md:text-xl">
+                  <span className="font-text-xl-semibold font-[number:var(--text-xl-semibold-font-weight)] text-gray-600 text-[length:var(--text-xl-semibold-font-size)] tracking-[var(--text-xl-semibold-letter-spacing)] leading-[var(--text-xl-semibold-line-height)] [font-style:var(--text-xl-semibold-font-style)]">
                     1 (888) 898 - 9868
                   </span>
                 </div>
@@ -513,7 +513,7 @@ export const Desktop = (): JSX.Element => {
                 >
                   <div className="flex items-start gap-4 sm:gap-6 w-full">
                     <div className="flex flex-col items-start gap-2 flex-1">
-                      <p className="font-text-xl-medium font-[number:var(--text-xl-medium-font-weight)] text-[#181d27] text-[length:var(--text-xl-medium-font-size)] tracking-[var(--text-xl-medium-letter-spacing)] leading-[var(--text-xl-medium-line-height)] [font-style:var(--text-xl-medium-font-style)] text-base sm:text-lg md:text-xl">
+                      <p className="font-text-xl-medium font-[number:var(--text-xl-medium-font-weight)] text-[#181d27] text-[length:var(--text-xl-medium-font-size)] tracking-[var(--text-xl-medium-letter-spacing)] leading-[var(--text-xl-medium-line-height)] [font-style:var(--text-xl-medium-font-style)]">
                         {item.question}
                       </p>
                     </div>
