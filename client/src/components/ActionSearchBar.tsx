@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Search, Send, Star } from "lucide-react";
+import { MapPin, Search, Send, Star, Flag } from "lucide-react";
 
 function useDebounce<T>(value: T, delay: number = 400): T {
   const [debounced, setDebounced] = useState<T>(value);
@@ -246,7 +246,11 @@ export function ActionSearchBar({
                       >
                         <div className="flex items-center gap-2 flex-1">
                           <span className="text-neutral-500">
-                            <MapPin className="h-4 w-4" />
+                            {loc.type === 'state' ? (
+                              <Flag className="h-4 w-4" />
+                            ) : (
+                              <MapPin className="h-4 w-4" />
+                            )}
                           </span>
                           <div className="flex flex-col gap-0.5 flex-1">
                             <div className="flex items-center gap-1.5">
