@@ -871,7 +871,7 @@ export const Desktop = (): JSX.Element => {
                 </div>
               </div>
 
-              <div className="w-full lg:w-[304px] h-[250px] sm:h-[300px] lg:h-[324px] relative flex-shrink-0 overflow-hidden flex items-end">
+              <div className="hidden lg:flex w-full lg:w-[304px] h-[250px] sm:h-[300px] lg:h-[324px] relative flex-shrink-0 overflow-hidden items-end">
                 <img
                   className="w-full h-full object-contain object-bottom lg:object-cover"
                   alt="Asian man portrait"
