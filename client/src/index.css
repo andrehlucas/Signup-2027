@@ -9,8 +9,6 @@
 }
 
 :root {
-  --backdrop-blurs-backdrop-blur-lg: ;
-  --backdrop-blurs-backdrop-blur-md: ;
   --basewhite: rgba(255, 255, 255, 1);
   --black-900: rgba(0, 0, 0, 1);
   --blue-light100: rgba(224, 242, 254, 1);
@@ -57,12 +55,9 @@
   --gray-800: rgba(24, 34, 48, 1);
   --gray-900: rgba(16, 24, 40, 1);
   --gray-light-mode300: rgba(213, 215, 218, 1);
-  --shadows-shadow-lg: 0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 12px 16px
-    -4px rgba(16, 24, 40, 0.08);
-  --shadows-shadow-md: 0px 2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px
-    rgba(16, 24, 40, 0.1);
-  --shadows-shadow-sm: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px
-    rgba(16, 24, 40, 0.1);
+  --shadows-shadow-lg: 0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+  --shadows-shadow-md: 0px 2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+  --shadows-shadow-sm: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
   --shadows-shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   --shadows-shadow-xs-skeuomorphic: 0px 1px 2px 0px rgba(10, 13, 18, 0.05);
   --text-lg-medium-font-family: "Inter", Helvetica;
@@ -176,9 +171,6 @@
   --warning-300: rgba(254, 200, 75, 1);
   --warning-400: rgba(253, 176, 34, 1);
   --white: rgba(255, 255, 255, 1);
-}
-
-:root {
   --animate-spin: spin 1s linear infinite;
 }
 
@@ -217,12 +209,10 @@
     opacity: 0;
     animation-timing-function: cubic-bezier(0.74, 0.25, 0.76, 1);
   }
-
   10% {
     opacity: 0.7;
     animation-timing-function: cubic-bezier(0.12, 0.01, 0.08, 0.99);
   }
-
   to {
     opacity: 0.4;
   }
@@ -233,7 +223,6 @@
     opacity: 0;
     transform: translateY(-10px);
   }
-
   to {
     opacity: 1;
     transform: none;
@@ -245,7 +234,6 @@
     opacity: 0;
     transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: none;
@@ -253,14 +241,10 @@
 }
 
 @keyframes shimmer {
-  0%,
-  90%,
-  to {
+  0%, 90%, to {
     background-position: calc(-100% - var(--shimmer-width)) 0;
   }
-
-  30%,
-  60% {
+  30%, 60% {
     background-position: calc(100% + var(--shimmer-width)) 0;
   }
 }
@@ -269,7 +253,6 @@
   0% {
     transform: translate(0);
   }
-
   to {
     transform: translateX(calc(-100% - var(--gap)));
   }
@@ -279,80 +262,55 @@
   0% {
     transform: translateY(0);
   }
-
   to {
     transform: translateY(calc(-100% - var(--gap)));
   }
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-
     --card: transparent;
     --card-foreground: 222.2 47.4% 11.2%;
-
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
-
     --ring: 215 20.2% 65.1%;
-
     --radius: 0.5rem;
   }
 
   .dark {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
-
     --muted: 223 47% 11%;
     --muted-foreground: 215.4 16.3% 56.9%;
-
     --accent: 216 34% 17%;
     --accent-foreground: 210 40% 98%;
-
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;
-
     --border: 216 34% 17%;
     --input: 216 34% 17%;
-
     --card: transparent;
     --card-foreground: 213 31% 91%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 1.2%;
-
     --secondary: 222.2 47.4% 11.2%;
     --secondary-foreground: 210 40% 98%;
-
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-
     --ring: 216 34% 17%;
-
     --radius: 0.5rem;
   }
 }
@@ -361,7 +319,6 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
