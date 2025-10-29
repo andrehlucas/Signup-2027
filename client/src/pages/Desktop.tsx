@@ -243,7 +243,7 @@ export const Desktop = (): JSX.Element => {
           <div className="flex flex-col w-full items-center gap-4 sm:gap-6 md:gap-8 px-0 py-6 sm:py-8 md:py-10">
             <div className="flex flex-col lg:flex-row items-start lg:items-end gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
               <motion.div 
-                className="flex flex-col flex-1 items-start justify-between w-full"
+                className="flex flex-col flex-1 items-start justify-start h-full w-full"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
