@@ -250,7 +250,7 @@ export function ActionSearchBar({
                           </span>
                           <div className="flex flex-col gap-0.5 flex-1">
                             <div className="flex items-center gap-1.5">
-                              <span className="text-sm font-medium text-gray-900">
+                              <span className={`text-sm font-medium ${loc.type === 'city' ? 'text-blue-700' : 'text-gray-500'}`}>
                                 {loc.city}
                               </span>
                               <TypeBadge type={loc.type} />
