@@ -254,15 +254,7 @@ export function ActionSearchBar({
                                 {loc.city}
                               </span>
                               <TypeBadge type={loc.type} />
-                              {loc.premium && <PremiumBadge />}
                             </div>
-                            {(loc.addressLine1 || loc.addressLine2) && (
-                              <span className="text-[11px] text-gray-600">
-                                {loc.addressLine1}
-                                {loc.addressLine1 && loc.addressLine2 && ", "}
-                                {loc.addressLine2}
-                              </span>
-                            )}
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
