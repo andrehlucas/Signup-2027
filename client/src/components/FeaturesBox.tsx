@@ -11,11 +11,11 @@ export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
         When We Say <span className="font-semibold">All-Inclusive,</span><br />We Mean <span className="font-semibold">ALL-INCLUSIVE:</span>
       </p>
 
-      <div className="inline-flex flex-col items-start gap-3 w-full">
+      <div className="inline-flex flex-col items-start gap-3.5 w-full">
         {features.map((feature, index) => (
-          <div key={index} className="inline-flex items-start gap-2 sm:gap-3" data-testid={`feature-${index}`}>
+          <div key={index} className="inline-flex items-start gap-2.5 sm:gap-3" data-testid={`feature-${index}`}>
             <img
-              className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0"
+              className="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0"
               alt="Check icon"
               src="/figmaAssets/check-icon.svg"
               width="32"
@@ -23,7 +23,7 @@ export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
               loading="eager"
             />
             <div className="flex flex-col w-full items-start pt-0.5 pb-0 px-0">
-              <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-sm sm:text-base md:text-lg tracking-[0] leading-normal">
+              <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-base md:text-lg tracking-[0] leading-normal">
                 {feature}
               </p>
             </div>
