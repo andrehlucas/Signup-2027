@@ -1,10 +1,11 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { MailIcon, MapPinIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FeaturesBox } from "@/components/FeaturesBox";
 import { ActionSearchBar, LocationItem } from "@/components/ActionSearchBar";
 import { Footer } from "@/components/Footer";
@@ -233,18 +234,7 @@ const staggerContainer = {
 };
 
 export const Desktop = (): JSX.Element => {
-  const [showVideo, setShowVideo] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const handleDemoClick = () => {
-    setShowVideo(true);
-    setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        videoRef.current.play();
-      }
-    }, 100);
-  };
+  const [isVideoDialogOpen, setIsVideoDialogOpen] = useState(false);
 
   return (
     <div className="w-full flex pt-[72px] lg:pt-[104px]">
@@ -320,7 +310,7 @@ export const Desktop = (): JSX.Element => {
                       style={card.bgImage ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` } : undefined}
                       whileHover={{ filter: "brightness(1.2)" }}
                       transition={{ duration: 0.3 }}
-                      onClick={card.hasButton ? handleDemoClick : undefined}
+                      onClick={card.hasButton ? () => setIsVideoDialogOpen(true) : undefined}
                     >
                       <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2">
                         <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] [font-style:var(--text-sm-text-md-bold-font-style)] text-xs sm:text-sm">
@@ -406,12 +396,11 @@ export const Desktop = (): JSX.Element => {
               </div>
 
               <motion.div 
-                className={`${showVideo ? '' : 'sm:hidden'} w-full px-4 sm:px-6 md:px-8 mx-auto max-w-[1280px]`}
+                className="sm:hidden w-full px-4 sm:px-6 md:px-8 mx-auto max-w-[1280px]"
                 data-testid="video-promo-mobile"
                 variants={fadeIn}
               >
                 <video
-                  ref={videoRef}
                   className="w-full rounded-xl shadow-shadows-shadow-lg"
                   controls
                   preload="metadata"
@@ -891,6 +880,21 @@ export const Desktop = (): JSX.Element => {
         
         <Footer />
       </div>
+
+      <Dialog open={isVideoDialogOpen} onOpenChange={setIsVideoDialogOpen}>
+        <DialogContent className="max-w-5xl w-[95vw] p-0 bg-black border-0">
+          <video
+            className="w-full h-auto"
+            controls
+            autoPlay
+            preload="metadata"
+            poster={playerCover}
+          >
+            <source src={promoVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
