@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { FeaturesBox } from "@/components/FeaturesBox";
 import { ActionSearchBar, LocationItem } from "@/components/ActionSearchBar";
+import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 import officeBuildingImg from "@assets/office-building_1761587957783.webp";
 import businessAddressBg from "@assets/business-address-bg_1761590800705.webp";
@@ -871,6 +872,8 @@ export const Desktop = (): JSX.Element => {
             </div>
           </motion.div>
         </section>
+        
+        <Footer />
       </div>
     </div>
   );
