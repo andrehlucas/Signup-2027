@@ -159,20 +159,7 @@ export function ActionSearchBar({
             </label>
           )}
           <div className="relative">
-            <Input
-              id="location-search"
-              type="text"
-              placeholder={placeholder}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={onKeyDown}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setTimeout(() => setIsFocused(false), 150)}
-              className="pl-3.5 pr-10 py-3 h-[50px] text-base bg-white rounded-lg border border-[#cfd4dc] shadow-shadows-shadow-xs focus-visible:ring-offset-0 [font-family:'Inter',Helvetica] font-normal text-gray-500"
-              autoComplete="off"
-              data-testid="input-location-search"
-            />
-            <div className="absolute right-3.5 top-1/2 -translate-y-1/2 h-5 w-5">
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 pointer-events-none">
               <AnimatePresence mode="popLayout">
                 {query.length > 0 ? (
                   <motion.div
@@ -197,6 +184,19 @@ export function ActionSearchBar({
                 )}
               </AnimatePresence>
             </div>
+            <Input
+              id="location-search"
+              type="text"
+              placeholder={placeholder}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={onKeyDown}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setTimeout(() => setIsFocused(false), 150)}
+              className="pl-10 pr-3.5 py-3 h-[50px] text-base bg-white rounded-lg border border-[#cfd4dc] shadow-shadows-shadow-xs focus-visible:ring-offset-0 [font-family:'Inter',Helvetica] font-normal text-gray-500"
+              autoComplete="off"
+              data-testid="input-location-search"
+            />
           </div>
         </div>
 
