@@ -124,11 +124,47 @@ const popularLocations = [
 ];
 
 const sampleLocations: LocationItem[] = [
-  { id: "1", city: "New York", state: "NY", type: "city", premium: true },
-  { id: "2", city: "Los Angeles", state: "CA", type: "city", premium: true },
-  { id: "3", city: "Chicago", state: "IL", type: "city", premium: true },
-  { id: "4", city: "California", type: "state" },
-  { id: "5", city: "Texas", type: "state" },
+  { 
+    id: "1", 
+    city: "New York", 
+    state: "NY", 
+    type: "city", 
+    premium: true,
+    addressLine1: "1345 Avenue of the Americas",
+    addressLine2: "Floor 2"
+  },
+  { 
+    id: "2", 
+    city: "Los Angeles", 
+    state: "CA", 
+    type: "city", 
+    premium: true,
+    addressLine1: "11601 Wilshire Blvd",
+    addressLine2: "Suite 500"
+  },
+  { 
+    id: "3", 
+    city: "Chicago", 
+    state: "IL", 
+    type: "city", 
+    premium: true,
+    addressLine1: "200 S Wacker Dr",
+    addressLine2: "Suite 3100"
+  },
+  { 
+    id: "4", 
+    city: "California", 
+    type: "state",
+    addressLine1: "Multiple locations available",
+    addressLine2: "Contact for details"
+  },
+  { 
+    id: "5", 
+    city: "Texas", 
+    type: "state",
+    addressLine1: "Multiple locations available",
+    addressLine2: "Contact for details"
+  },
 ];
 
 const faqItems = [

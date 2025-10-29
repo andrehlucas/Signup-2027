@@ -21,6 +21,8 @@ export interface LocationItem {
   type: LocationType;
   premium?: boolean;
   href?: string;
+  addressLine1?: string;
+  addressLine2?: string;
 }
 
 interface LocationSearchBarProps {
@@ -31,9 +33,12 @@ interface LocationSearchBarProps {
   label?: string;
 }
 
-function formatTitle(item: LocationItem) {
-  if (item.type === "state") return item.city;
-  return item.state ? `${item.city}, ${item.state}` : item.city;
+function TypeBadge({ type }: { type: LocationType }) {
+  return (
+    <span className="inline-flex items-center rounded-full bg-gray-100 text-gray-700 px-2 py-0.5 text-[10px] font-semibold uppercase">
+      {type}
+    </span>
+  );
 }
 
 function PremiumBadge() {
@@ -239,21 +244,33 @@ export function ActionSearchBar({
                         ].join(" ")}
                         data-testid={`location-item-${loc.id}`}
                       >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-1">
                           <span className="text-neutral-500">
                             <MapPin className="h-4 w-4" />
                           </span>
-                          <div className="flex flex-col">
-                            <span className="text-sm font-medium text-gray-900">
-                              {formatTitle(loc)}
-                            </span>
-                            <span className="text-[11px] text-gray-600">
-                              {loc.type === "city" ? "City" : "State"}
-                            </span>
+                          <div className="flex flex-col gap-0.5 flex-1">
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-sm font-medium text-gray-900">
+                                {loc.city}
+                              </span>
+                              <TypeBadge type={loc.type} />
+                              {loc.premium && <PremiumBadge />}
+                            </div>
+                            {(loc.addressLine1 || loc.addressLine2) && (
+                              <span className="text-[11px] text-gray-600">
+                                {loc.addressLine1}
+                                {loc.addressLine1 && loc.addressLine2 && ", "}
+                                {loc.addressLine2}
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          {loc.premium && <PremiumBadge />}
+                          {loc.state && (
+                            <span className="text-xs font-semibold text-gray-700 bg-gray-100 px-2 py-0.5 rounded">
+                              {loc.state}
+                            </span>
+                          )}
                         </div>
                       </motion.li>
                     ))}
