@@ -280,7 +280,7 @@ export function Footer() {
                 </div>
               </div>
               <Button
-                className="bg-[#0ba5ec] text-white px-4 py-2.5 rounded-lg font-semibold text-base border-2 border-white/12 hover:bg-[#0a95d6] w-full lg:w-auto"
+                className="h-[50px] gap-1.5 px-[18px] py-3 w-full lg:w-auto bg-blue-light400 rounded-lg border border-solid border-[#36bff9] shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]"
                 data-testid="button-subscribe"
               >
                 Subscribe
