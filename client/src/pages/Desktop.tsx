@@ -304,21 +304,28 @@ export const Desktop = (): JSX.Element => {
                       </p>
                     </motion.div>
                     
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
+                    <motion.div 
+                      className="absolute inset-0 flex flex-col items-center justify-center"
+                      variants={{
+                        rest: { gap: "0px" },
+                        hover: { gap: "4px" }
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
                       <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-3xl sm:text-4xl lg:text-[48px]">
                         $99/mo
                       </p>
                       <motion.p 
                         className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-xs sm:text-sm"
                         variants={{
-                          rest: { opacity: 0, y: -10 },
-                          hover: { opacity: 1, y: 0 }
+                          rest: { opacity: 0, height: 0 },
+                          hover: { opacity: 1, height: "auto" }
                         }}
                         transition={{ duration: 0.3 }}
                       >
                         NO HIDDEN FEES
                       </motion.p>
-                    </div>
+                    </motion.div>
 
                     <motion.div 
                       className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2"
