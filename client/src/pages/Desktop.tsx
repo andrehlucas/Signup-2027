@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { FeaturesBox } from "@/components/FeaturesBox";
+import { ActionSearchBar, LocationItem } from "@/components/ActionSearchBar";
 import { motion } from "framer-motion";
 import officeBuildingImg from "@assets/office-building_1761587957783.webp";
 import businessAddressBg from "@assets/business-address-bg_1761590800705.webp";
@@ -122,6 +123,37 @@ const popularLocations = [
   { name: "Tampa, FL", image: "/tampa.webp" },
 ];
 
+const sampleLocations: LocationItem[] = [
+  { id: "1", city: "New York", state: "NY", type: "city", premium: true },
+  { id: "2", city: "Los Angeles", state: "CA", type: "city", premium: true },
+  { id: "3", city: "Chicago", state: "IL", type: "city", premium: true },
+  { id: "4", city: "Houston", state: "TX", type: "city" },
+  { id: "5", city: "Phoenix", state: "AZ", type: "city" },
+  { id: "6", city: "Philadelphia", state: "PA", type: "city" },
+  { id: "7", city: "San Antonio", state: "TX", type: "city" },
+  { id: "8", city: "San Diego", state: "CA", type: "city" },
+  { id: "9", city: "Dallas", state: "TX", type: "city" },
+  { id: "10", city: "San Jose", state: "CA", type: "city" },
+  { id: "11", city: "Austin", state: "TX", type: "city" },
+  { id: "12", city: "Jacksonville", state: "FL", type: "city" },
+  { id: "13", city: "Fort Worth", state: "TX", type: "city" },
+  { id: "14", city: "Columbus", state: "OH", type: "city" },
+  { id: "15", city: "Charlotte", state: "NC", type: "city" },
+  { id: "16", city: "San Francisco", state: "CA", type: "city", premium: true },
+  { id: "17", city: "Indianapolis", state: "IN", type: "city" },
+  { id: "18", city: "Seattle", state: "WA", type: "city", premium: true },
+  { id: "19", city: "Denver", state: "CO", type: "city" },
+  { id: "20", city: "Boston", state: "MA", type: "city", premium: true },
+  { id: "21", city: "Miami", state: "FL", type: "city", premium: true },
+  { id: "22", city: "Atlanta", state: "GA", type: "city", premium: true },
+  { id: "23", city: "Tampa", state: "FL", type: "city" },
+  { id: "24", city: "Orlando", state: "FL", type: "city" },
+  { id: "25", city: "California", type: "state" },
+  { id: "26", city: "Texas", type: "state" },
+  { id: "27", city: "Florida", type: "state" },
+  { id: "28", city: "New York", type: "state" },
+];
+
 const faqItems = [
   {
     question:
@@ -208,12 +240,13 @@ export const Desktop = (): JSX.Element => {
                 <div className="flex flex-col sm:flex-row max-w-[800px] w-full items-start gap-3 sm:gap-4 mt-4 sm:mt-6">
                   <div className="flex flex-col items-start gap-3 flex-1 w-full sm:max-w-[400px]">
                     <div className="flex flex-col items-start gap-1.5 w-full">
-                      <div className="flex items-center gap-2 px-3.5 py-3 w-full bg-basewhite rounded-lg border border-solid border-[#cfd4dc] shadow-shadows-shadow-xs">
-                        <MapPinIcon className="w-5 h-5 text-gray-500" />
-                        <span className="flex-1 font-text-sm-text-md-regular font-[number:var(--text-sm-text-md-regular-font-weight)] text-gray-500 text-[length:var(--text-sm-text-md-regular-font-size)] tracking-[var(--text-sm-text-md-regular-letter-spacing)] leading-[var(--text-sm-text-md-regular-line-height)] [font-style:var(--text-sm-text-md-regular-font-style)]">
-                          Search for Zip, State, or City
-                        </span>
-                      </div>
+                      <ActionSearchBar
+                        initialResults={sampleLocations}
+                        placeholder="Search for Zip, State, or City"
+                        onSelect={(location) => {
+                          console.log("Selected location:", location);
+                        }}
+                      />
                     </div>
 
                     <p className="[font-family:'Inter',Helvetica] font-bold text-gray-600 text-sm tracking-[0] leading-normal">
