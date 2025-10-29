@@ -650,7 +650,7 @@ export const Desktop = (): JSX.Element => {
             viewport={{ once: true, amount: 0.1 }}
             variants={staggerContainer}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 w-full">
               {popularLocations.map((location, index) => (
                 <motion.div
                   key={index}
@@ -659,10 +659,16 @@ export const Desktop = (): JSX.Element => {
                   variants={fadeInUp}
                 >
                   <div 
-                    className="w-full h-[200px] rounded-lg bg-cover bg-center"
+                    className="w-full h-[200px] rounded-lg bg-cover bg-center relative overflow-hidden"
                     style={{ backgroundImage: `url(${location.image})` }}
-                  />
-                  <div className="flex flex-col items-start w-full">
+                  >
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-start p-3 sm:p-4" style={{ background: 'linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%)' }}>
+                      <h3 className="[font-family:'Inter',Helvetica] font-semibold text-white sm:text-gray-900 text-base sm:text-lg md:text-xl tracking-[0] leading-normal">
+                        {location.name}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="hidden sm:flex flex-col items-start w-full">
                     <h3 className="[font-family:'Inter',Helvetica] font-semibold text-gray-900 text-lg sm:text-xl tracking-[0] leading-normal">
                       {location.name}
                     </h3>
