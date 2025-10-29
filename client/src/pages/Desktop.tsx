@@ -17,6 +17,7 @@ import cashHandsHoldingBg from "@assets/cash-hands-holding_1761593304143.webp";
 import multipleProfessionalsBg from "@assets/multiple-professionals_1761593320843.webp";
 import newYorkAerialView from "@assets/new-york-aerial-view_1761593422460.webp";
 import promoVideo from "@assets/Opus VO - 45 Sec Promo - 1920x1080_1761681440103.mp4";
+import playerCover from "@assets/player-cover_1761748637474.webp";
 
 const includedFeatures = [
   "Prestigious Business Address",
@@ -397,7 +398,7 @@ export const Desktop = (): JSX.Element => {
                   className="w-full rounded-xl shadow-shadows-shadow-lg"
                   controls
                   preload="metadata"
-                  poster=""
+                  poster={playerCover}
                 >
                   <source src={promoVideo} type="video/mp4" />
                   Your browser does not support the video tag.
