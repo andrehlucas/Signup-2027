@@ -159,12 +159,12 @@ export function Navbar() {
                   <Menu className="h-6 w-6 text-[#344054]" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetContent side="top" className="w-full">
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <SheetDescription className="sr-only">
                   Navigate to different pages and access account options
                 </SheetDescription>
-                <div className="flex flex-col gap-6 mt-8">
+                <div className="flex flex-col gap-6 mt-4">
                   {/* Navigation Links */}
                   <div className="flex flex-col gap-2">
                     <Link href="/" data-testid="link-nav-home-mobile">
