@@ -250,10 +250,14 @@ export const Desktop = (): JSX.Element => {
                     className={`flex w-full items-start h-[130px] ${index === 0 ? 'hidden sm:flex' : ''}`}
                     data-testid={`card-interactive-${index}`}
                     variants={fadeInUp}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                   >
-                    <div
-                      className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center`}
+                    <motion.div
+                      className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center cursor-pointer`}
                       style={card.bgImage ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` } : undefined}
+                      whileHover={{ filter: "brightness(1.2)" }}
+                      transition={{ duration: 0.3 }}
                     >
                       <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2">
                         <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] [font-style:var(--text-sm-text-md-bold-font-style)] text-xs sm:text-sm">
@@ -272,7 +276,7 @@ export const Desktop = (): JSX.Element => {
                           />
                         </div>
                       )}
-                    </div>
+                    </motion.div>
                   </motion.div>
                 ))}
 
@@ -280,26 +284,64 @@ export const Desktop = (): JSX.Element => {
                   className="flex w-full items-start h-[130px]" 
                   data-testid="card-pricing"
                   variants={fadeInUp}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <div className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative">
-                    <div className="absolute top-0 inset-x-0 flex items-center justify-center pt-3">
+                  <motion.div 
+                    className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative cursor-pointer group"
+                    initial="rest"
+                    whileHover="hover"
+                  >
+                    <motion.div 
+                      className="absolute top-0 inset-x-0 flex items-center justify-center pt-3"
+                      variants={{
+                        rest: { opacity: 1 },
+                        hover: { opacity: 1 }
+                      }}
+                    >
                       <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-xs sm:text-sm text-center tracking-[0] leading-normal whitespace-nowrap">
                         ALL-INCLUSIVE
                       </p>
-                    </div>
+                    </motion.div>
                     
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.div 
+                      className="absolute inset-0 flex items-center justify-center"
+                      variants={{
+                        rest: { opacity: 1 },
+                        hover: { opacity: 0 }
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
                       <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-3xl sm:text-4xl lg:text-[48px]">
                         $99/mo
                       </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2">
+                    <motion.div 
+                      className="absolute inset-0 flex flex-col items-center justify-center px-3"
+                      variants={{
+                        rest: { opacity: 0 },
+                        hover: { opacity: 1 }
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center text-xs sm:text-sm leading-normal">
+                        Click to view pricing details and features included
+                      </p>
+                    </motion.div>
+
+                    <motion.div 
+                      className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2"
+                      variants={{
+                        rest: { opacity: 1 },
+                        hover: { opacity: 1 }
+                      }}
+                    >
                       <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] [font-style:var(--text-sm-text-md-bold-font-style)] text-xs sm:text-sm">
                         Sign Up Now
                       </p>
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 </motion.div>
               </div>
 
@@ -474,8 +516,7 @@ export const Desktop = (): JSX.Element => {
             >
               <div className="flex flex-col items-start gap-3 w-full">
                 <h2 className="font-[number:var(--display-sm-display-md-semibold-font-weight)] text-[#181d27] text-[length:var(--display-sm-display-md-semibold-font-size)] tracking-[var(--display-sm-display-md-semibold-letter-spacing)] leading-[var(--display-sm-display-md-semibold-line-height)] font-display-sm-display-md-semibold [font-style:var(--display-sm-display-md-semibold-font-style)] text-2xl sm:text-3xl md:text-4xl">
-                  Curious About Renting a<br />
-                  Virtual Office?
+                  Curious About Renting a Virtual Office?
                 </h2>
               </div>
 
