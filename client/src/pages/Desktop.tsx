@@ -155,15 +155,15 @@ const sampleLocations: LocationItem[] = [
     id: "4", 
     city: "California", 
     type: "state",
-    addressLine1: "150 Locations available",
-    addressLine2: "Contact for details"
+    addressLine1: "32 Locations available",
+    addressLine2: "Click to See locations"
   },
   { 
     id: "5", 
     city: "Texas", 
     type: "state",
-    addressLine1: "120 Locations available",
-    addressLine2: "Contact for details"
+    addressLine1: "20 Locations available",
+    addressLine2: "Click to See locations"
   },
 ];
 
