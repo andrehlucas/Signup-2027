@@ -6,16 +6,16 @@ interface FeaturesBoxProps {
 
 export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
   return (
-    <div className="inline-flex flex-col w-full lg:max-w-[418px] self-stretch items-start gap-3 pl-0 lg:pl-4 pr-0 py-0">
+    <div className="inline-flex flex-col w-full lg:max-w-[418px] self-stretch items-start gap-3 sm:gap-2.5 pl-0 lg:pl-4 pr-0 py-0">
       <p className="font-text-sm-text-md-regular font-[number:var(--text-sm-text-md-regular-font-weight)] text-gray-600 text-[length:var(--text-sm-text-md-regular-font-size)] tracking-[var(--text-sm-text-md-regular-letter-spacing)] leading-[var(--text-sm-text-md-regular-line-height)] [font-style:var(--text-sm-text-md-regular-font-style)]">
         When We Say <span className="font-semibold">All-Inclusive,</span><br />We Mean <span className="font-semibold">ALL-INCLUSIVE:</span>
       </p>
 
-      <div className="inline-flex flex-col items-start gap-3.5 w-full">
+      <div className="inline-flex flex-col items-start gap-3.5 sm:gap-3 w-full">
         {features.map((feature, index) => (
-          <div key={index} className="inline-flex items-start gap-2.5 sm:gap-3" data-testid={`feature-${index}`}>
+          <div key={index} className="inline-flex items-start gap-2.5 sm:gap-2.5" data-testid={`feature-${index}`}>
             <img
-              className="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0"
+              className="w-7 h-7 sm:w-7 sm:h-7 flex-shrink-0"
               alt="Check icon"
               src="/figmaAssets/check-icon.svg"
               width="32"
@@ -23,7 +23,7 @@ export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
               loading="eager"
             />
             <div className="flex flex-col w-full items-start pt-0.5 pb-0 px-0">
-              <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-base md:text-lg tracking-[0] leading-normal">
+              <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-sm md:text-base tracking-[0] leading-normal">
                 {feature}
               </p>
             </div>
