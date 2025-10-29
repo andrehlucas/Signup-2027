@@ -268,7 +268,7 @@ export const Desktop = (): JSX.Element => {
                     </p>
                   </div>
 
-                  <Button className="h-auto gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 rounded-lg border border-solid border-[#36bff9] shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-get-started">
+                  <Button className="h-[50px] gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 rounded-lg border border-solid border-[#36bff9] shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-get-started">
                     Get Started
                   </Button>
                 </div>

@@ -168,7 +168,7 @@ export function ActionSearchBar({
               onKeyDown={onKeyDown}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setTimeout(() => setIsFocused(false), 150)}
-              className="pl-3.5 pr-10 py-3 h-auto text-base bg-white rounded-lg border border-[#cfd4dc] shadow-shadows-shadow-xs focus-visible:ring-offset-0 [font-family:'Inter',Helvetica] font-normal text-gray-500"
+              className="pl-3.5 pr-10 py-3 h-[50px] text-base bg-white rounded-lg border border-[#cfd4dc] shadow-shadows-shadow-xs focus-visible:ring-offset-0 [font-family:'Inter',Helvetica] font-normal text-gray-500"
               autoComplete="off"
               data-testid="input-location-search"
             />
