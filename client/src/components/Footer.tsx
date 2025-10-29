@@ -93,32 +93,12 @@ export function Footer() {
               </div>
 
               {/* Credit Cards Accepted */}
-              <div className="bg-white rounded px-1 py-1 inline-flex gap-3 w-fit">
-                <img
-                  src="/figmaAssets/visa-logo.svg"
-                  alt="Visa"
-                  className="h-[11px] w-[35px]"
-                  data-testid="img-visa"
-                />
-                <img
-                  src="/figmaAssets/mastercard-logo.svg"
-                  alt="Mastercard"
-                  className="h-[21px] w-[35px]"
-                  data-testid="img-mastercard"
-                />
-                <img
-                  src="/figmaAssets/discover-logo.svg"
-                  alt="Discover"
-                  className="h-[22px] w-[35px]"
-                  data-testid="img-discover"
-                />
-                <img
-                  src="/figmaAssets/amex-logo.svg"
-                  alt="American Express"
-                  className="h-[22px] w-[35px]"
-                  data-testid="img-amex"
-                />
-              </div>
+              <img
+                src="/Credit-cards-accepted.svg"
+                alt="Credit cards accepted"
+                className="h-auto w-auto"
+                data-testid="img-credit-cards"
+              />
             </div>
 
             {/* Links Section - Desktop Only */}
