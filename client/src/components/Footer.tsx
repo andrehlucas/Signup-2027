@@ -61,7 +61,7 @@ export function Footer() {
               <div className="flex items-start gap-3.5">
                 <div className="relative h-[45px] w-[120px]">
                   <img
-                    src="/figmaAssets/bbb-badge.svg"
+                    src="/BBB.svg"
                     alt="BBB Accredited"
                     className="w-full h-full object-contain"
                     data-testid="img-bbb-badge"
