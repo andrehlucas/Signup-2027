@@ -188,13 +188,6 @@ export function Footer() {
                       {location}
                     </a>
                   ))}
-                  <a
-                    href="#"
-                    className="text-[#eaecf0] text-base font-semibold underline"
-                    data-testid="link-all-locations-mobile"
-                  >
-                    See Most Popular Locations
-                  </a>
                 </div>
                 <div className="flex flex-col gap-3 flex-1 min-w-[150px]">
                   {popularLocations.slice(4).map((location, index) => (
@@ -209,6 +202,13 @@ export function Footer() {
                   ))}
                 </div>
               </div>
+              <a
+                href="#"
+                className="text-[#eaecf0] text-base font-semibold underline w-full block"
+                data-testid="link-all-locations-mobile"
+              >
+                See Most Popular Locations
+              </a>
             </div>
 
             {/* Resources - Mobile */}
