@@ -216,17 +216,31 @@ export function Footer() {
               <h3 className="text-[#d0d5dd] text-xl font-bold" data-testid="heading-resources-mobile">
                 Resources
               </h3>
-              <div className="flex flex-col gap-3">
-                {resourceLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="text-[#eaecf0] text-base font-semibold hover:underline"
-                    data-testid={`link-resource-mobile-${index}`}
-                  >
-                    {link}
-                  </a>
-                ))}
+              <div className="flex flex-wrap gap-x-8 gap-y-3">
+                <div className="flex flex-col gap-3 flex-1 min-w-[150px]">
+                  {resourceLinks.slice(0, 4).map((link, index) => (
+                    <a
+                      key={index}
+                      href="#"
+                      className="text-[#eaecf0] text-base font-semibold hover:underline"
+                      data-testid={`link-resource-mobile-${index}`}
+                    >
+                      {link}
+                    </a>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-3 flex-1 min-w-[150px]">
+                  {resourceLinks.slice(4).map((link, index) => (
+                    <a
+                      key={index + 4}
+                      href="#"
+                      className="text-[#eaecf0] text-base font-semibold hover:underline"
+                      data-testid={`link-resource-mobile-${index + 4}`}
+                    >
+                      {link}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
 
