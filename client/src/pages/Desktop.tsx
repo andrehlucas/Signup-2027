@@ -304,31 +304,21 @@ export const Desktop = (): JSX.Element => {
                       </p>
                     </motion.div>
                     
-                    <motion.div 
-                      className="absolute inset-0 flex items-center justify-center"
-                      variants={{
-                        rest: { opacity: 1 },
-                        hover: { opacity: 0 }
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
                       <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-3xl sm:text-4xl lg:text-[48px]">
                         $99/mo
                       </p>
-                    </motion.div>
-
-                    <motion.div 
-                      className="absolute inset-0 flex flex-col items-center justify-center px-3"
-                      variants={{
-                        rest: { opacity: 0 },
-                        hover: { opacity: 1 }
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center text-xs sm:text-sm leading-normal">
-                        Click to view pricing details and features included
-                      </p>
-                    </motion.div>
+                      <motion.p 
+                        className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-xs sm:text-sm"
+                        variants={{
+                          rest: { opacity: 0, y: -10 },
+                          hover: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        NO HIDDEN FEES
+                      </motion.p>
+                    </div>
 
                     <motion.div 
                       className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2"
