@@ -58,7 +58,6 @@ export function ActionSearchBar({
   label,
 }: LocationSearchBarProps) {
   const [query, setQuery] = useState("");
-  const [displayValue, setDisplayValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<LocationItem[]>(initialResults);
@@ -69,14 +68,6 @@ export function ActionSearchBar({
   const isZipCode = (value: string): boolean => {
     return /^\d{5}$/.test(value);
   };
-
-  useEffect(() => {
-    if (isZipCode(query)) {
-      setDisplayValue(`search office locations in ${query}`);
-    } else {
-      setDisplayValue(query);
-    }
-  }, [query]);
 
   const localFilter = (q: string, all: LocationItem[]) => {
     const n = q.toLowerCase().trim();
@@ -201,26 +192,8 @@ export function ActionSearchBar({
               id="location-search"
               type="text"
               placeholder={placeholder}
-              value={displayValue}
-              onChange={(e) => {
-                const value = e.target.value;
-                const prefix = "search office locations in ";
-                
-                // If the new value still has the formatted prefix
-                if (value.startsWith(prefix)) {
-                  const zipPart = value.slice(prefix.length);
-                  // If user is appending non-digits, exit formatted mode by using just the suffix
-                  if (/[^\d]/.test(zipPart)) {
-                    setQuery(zipPart);
-                  } else {
-                    // Still in ZIP mode, keep only digits
-                    setQuery(zipPart);
-                  }
-                } else {
-                  // User is typing something else or replaced the entire text
-                  setQuery(value);
-                }
-              }}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               onKeyDown={onKeyDown}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setTimeout(() => setIsFocused(false), 150)}
@@ -251,12 +224,33 @@ export function ActionSearchBar({
                     </motion.li>
                   )}
 
-                  {!isLoading && results.length === 0 && (
+                  {!isLoading && results.length === 0 && !isZipCode(query) && (
                     <motion.li
                       variants={item}
                       className="px-3 py-3 text-xs text-gray-600"
                     >
                       No results. Try a different city, state, or ZIP.
+                    </motion.li>
+                  )}
+
+                  {!isLoading && isZipCode(query) && (
+                    <motion.li
+                      variants={item}
+                      layout
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => {
+                        console.log(`Search office locations in ${query}`);
+                        setIsFocused(false);
+                      }}
+                      className="px-3 py-3 flex items-center gap-2 cursor-pointer hover:bg-blue-50 border-b border-neutral-100"
+                      data-testid="zipcode-search-action"
+                    >
+                      <span className="text-blue-600">
+                        <Search className="h-5 w-5" />
+                      </span>
+                      <span className="text-sm font-semibold text-blue-700">
+                        Search office locations in {query}
+                      </span>
                     </motion.li>
                   )}
 
