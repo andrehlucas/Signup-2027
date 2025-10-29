@@ -276,7 +276,7 @@ export function ActionSearchBar({
                     ))}
                 </motion.ul>
 
-                <div className="px-3 py-2 border-t border-neutral-100">
+                <div className="px-3 py-2 border-t border-neutral-100 hidden sm:block">
                   <div className="flex items-center justify-between text-[11px] text-gray-600">
                     <span>Tip: Use ↑ ↓ to navigate</span>
                     <span>ESC to close</span>
