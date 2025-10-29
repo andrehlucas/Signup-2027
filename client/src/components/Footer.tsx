@@ -84,19 +84,11 @@ export function Footer() {
                   />
                 </a>
                 <a href="#" className="block" data-testid="link-google-play">
-                  <div className="bg-[#101828] border border-[#a6a6a6] rounded-[5px] h-[45px] w-[152px] flex items-center justify-center px-3 py-2">
-                    <div className="flex items-center gap-2">
-                      <img
-                        src="/figmaAssets/google-play-logo.svg"
-                        alt="Google Play"
-                        className="h-6 w-6"
-                      />
-                      <div className="flex flex-col">
-                        <span className="text-[10px] text-white/80">Get it on</span>
-                        <span className="text-sm text-white font-semibold">Google Play</span>
-                      </div>
-                    </div>
-                  </div>
+                  <img
+                    src="/google-play-download.svg"
+                    alt="Get it on Google Play"
+                    className="h-[45px] w-[152px]"
+                  />
                 </a>
               </div>
 
