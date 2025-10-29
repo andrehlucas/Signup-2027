@@ -659,11 +659,11 @@ export const Desktop = (): JSX.Element => {
                   variants={fadeInUp}
                 >
                   <div 
-                    className="w-full h-[200px] rounded-lg bg-cover bg-center relative overflow-hidden"
+                    className="w-full aspect-square sm:h-[200px] sm:aspect-auto rounded-lg bg-cover bg-center relative overflow-hidden"
                     style={{ backgroundImage: `url(${location.image})` }}
                   >
-                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-start p-3 sm:p-4" style={{ background: 'linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%)' }}>
-                      <h3 className="[font-family:'Inter',Helvetica] font-semibold text-white sm:text-gray-900 text-base sm:text-lg md:text-xl tracking-[0] leading-normal">
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-center sm:justify-start p-3 sm:p-4" style={{ background: 'linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%)' }}>
+                      <h3 className="[font-family:'Inter',Helvetica] font-semibold text-white sm:text-gray-900 text-base sm:text-lg md:text-xl tracking-[0] leading-normal text-center sm:text-left">
                         {location.name}
                       </h3>
                     </div>
