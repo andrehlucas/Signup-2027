@@ -9,7 +9,6 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FeaturesBox } from "@/components/FeaturesBox";
 import { ActionSearchBar, LocationItem } from "@/components/ActionSearchBar";
 import { Footer } from "@/components/Footer";
-import { motion } from "framer-motion";
 import officeBuildingImg from "@assets/office-building_1761587957783.webp";
 import businessAddressBg from "@assets/business-address-bg_1761590800705.webp";
 import bgCtaImg from "@assets/bg-cta_1761591194000.webp";
@@ -213,26 +212,6 @@ const reviews = [
   },
 ];
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: "easeOut" }
-};
-
-const fadeIn = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 0.6, ease: "easeOut" }
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
 export const Desktop = (): JSX.Element => {
   const [isVideoDialogOpen, setIsVideoDialogOpen] = useState(false);
 
@@ -242,11 +221,8 @@ export const Desktop = (): JSX.Element => {
         <section className="flex flex-col items-center w-full bg-basewhite">
           <div className="flex flex-col w-full items-center gap-4 sm:gap-6 md:gap-8 px-0 py-6 sm:py-8 md:py-10">
             <div className="flex flex-col lg:flex-row items-start gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
-              <motion.div 
-                className="flex flex-col flex-1 items-start justify-start h-full w-full"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+              <div 
+                className="flex flex-col flex-1 items-start justify-start h-full w-full"}}}
               >
                 <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
                   <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[-0.46px] leading-tight w-full">The Ultimate Virtual Office Solution. <span className="font-bold text-blue-light400">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-blue-light400">$99</span>/month.</h1>
@@ -277,39 +253,28 @@ export const Desktop = (): JSX.Element => {
                     Get Started
                   </Button>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div 
-                className="w-full lg:w-auto"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              <div 
+                className="w-full lg:w-auto"}}}
               >
                 <FeaturesBox features={includedFeatures} />
-              </motion.div>
+              </div>
             </div>
 
-            <motion.div 
+            <div 
               className="flex flex-col items-start justify-center gap-2 w-full"
-              initial="initial"
-              animate="animate"
-              variants={staggerContainer}
             >
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 max-w-[1280px] w-full px-4 sm:px-6 md:px-8 mx-auto">
                 {interactiveCards.map((card, index) => (
-                  <motion.div
+                  <div
                     key={index}
                     className={`flex w-full items-start h-[130px] ${index === 0 ? 'hidden sm:flex' : ''}`}
-                    data-testid={`card-interactive-${index}`}
-                    variants={fadeInUp}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    data-testid={`card-interactive-${index}`}}}
                   >
-                    <motion.div
+                    <div
                       className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center cursor-pointer`}
-                      style={card.bgImage ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` } : undefined}
-                      whileHover={{ filter: "brightness(1.2)" }}
-                      transition={{ duration: 0.3 }}
+                      style={card.bgImage ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` } : undefined}}}
                       onClick={card.hasButton ? () => setIsVideoDialogOpen(true) : undefined}
                     >
                       <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2">
@@ -329,76 +294,60 @@ export const Desktop = (): JSX.Element => {
                           />
                         </div>
                       )}
-                    </motion.div>
-                  </motion.div>
+                    </div>
+                  </div>
                 ))}
 
-                <motion.div 
+                <div 
                   className="flex w-full items-start h-[130px]" 
-                  data-testid="card-pricing"
-                  variants={fadeInUp}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  data-testid="card-pricing"}}
                 >
-                  <motion.div 
+                  <div 
                     className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative cursor-pointer group"
-                    initial="rest"
-                    whileHover="hover"
                   >
-                    <motion.div 
-                      className="absolute top-0 inset-x-0 flex items-center justify-center pt-3"
-                      variants={{
-                        rest: { opacity: 1 },
+                    <div 
+                      className="absolute top-0 inset-x-0 flex items-center justify-center pt-3",
                         hover: { opacity: 1 }
                       }}
                     >
                       <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-xs sm:text-sm text-center tracking-[0] leading-normal whitespace-nowrap">
                         ALL-INCLUSIVE
                       </p>
-                    </motion.div>
+                    </div>
                     
-                    <motion.div 
-                      className="absolute inset-0 flex flex-col items-center justify-center"
-                      variants={{
-                        rest: { gap: "0px" },
+                    <div 
+                      className="absolute inset-0 flex flex-col items-center justify-center",
                         hover: { gap: "4px" }
-                      }}
-                      transition={{ duration: 0.3 }}
+                      }}}
                     >
                       <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-3xl sm:text-4xl lg:text-[48px]">
                         $99/mo
                       </p>
-                      <motion.p 
-                        className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-xs sm:text-sm"
-                        variants={{
-                          rest: { opacity: 0, height: 0 },
+                      <p 
+                        className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-xs sm:text-sm",
                           hover: { opacity: 1, height: "auto" }
-                        }}
-                        transition={{ duration: 0.3 }}
+                        }}}
                       >
                         NO HIDDEN FEES
-                      </motion.p>
-                    </motion.div>
+                      </p>
+                    </div>
 
-                    <motion.div 
-                      className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2"
-                      variants={{
-                        rest: { opacity: 1 },
+                    <div 
+                      className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2",
                         hover: { opacity: 1 }
                       }}
                     >
                       <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] [font-style:var(--text-sm-text-md-bold-font-style)] text-xs sm:text-sm">
                         Sign Up Now
                       </p>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <motion.div 
+              <div 
                 className="sm:hidden w-full px-4 sm:px-6 md:px-8 mx-auto max-w-[1280px]"
                 data-testid="video-promo-mobile"
-                variants={fadeIn}
               >
                 <video
                   className="w-full rounded-xl shadow-shadows-shadow-lg"
@@ -409,26 +358,18 @@ export const Desktop = (): JSX.Element => {
                   <source src={promoVideo} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
-            <motion.div 
-              className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={fadeIn}
+            <div 
+              className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"}
             >
               <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] rounded-2xl bg-cover bg-center" style={{ backgroundImage: `url(${newYorkAerialView})` }} />
-            </motion.div>
+            </div>
           </div>
 
-          <motion.div 
-            className="inline-flex flex-col items-center px-4"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={fadeInUp}
+          <div 
+            className="inline-flex flex-col items-center px-4"}
           >
             <p className="font-text-xl-regular font-[number:var(--text-xl-regular-font-weight)] text-[#181d27] text-[length:var(--text-xl-regular-font-size)] text-center tracking-[var(--text-xl-regular-letter-spacing)] leading-[var(--text-xl-regular-line-height)] [font-style:var(--text-xl-regular-font-style)]">
               See below if a virtual office is a good fit for you
@@ -441,20 +382,15 @@ export const Desktop = (): JSX.Element => {
               height="20"
               loading="eager"
             />
-          </motion.div>
+          </div>
         </section>
 
         <section className="flex flex-col items-center justify-center gap-12 sm:gap-16 md:gap-20 lg:gap-[81px] px-0 py-6 sm:py-8 md:py-10 w-full bg-[#ffffff]">
-          <motion.div 
-            className="flex flex-col lg:flex-row max-w-screen-xl items-start justify-center gap-6 md:gap-8 px-4 sm:px-6 md:px-8 py-0 w-full"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
+          <div 
+            className="flex flex-col lg:flex-row max-w-screen-xl items-start justify-center gap-6 md:gap-8 px-4 sm:px-6 md:px-8 py-0 w-full"}
           >
-            <motion.div 
+            <div 
               className="flex flex-col items-start gap-5 flex-1 w-full"
-              variants={fadeInUp}
             >
               <Badge
                 variant="secondary"
@@ -479,11 +415,10 @@ export const Desktop = (): JSX.Element => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4 sm:gap-6 md:gap-[8px_32px]">
                 {benefitTypes.map((benefit, index) => (
-                  <motion.div
+                  <div
                     key={index}
                     className="w-full h-full flex flex-col items-start gap-1"
                     data-testid={`benefit-${index}`}
-                    variants={fadeInUp}
                   >
                     <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)]">
                       {benefit.title}
@@ -491,15 +426,14 @@ export const Desktop = (): JSX.Element => {
                     <p className="font-text-lg-regular font-[number:var(--text-lg-regular-font-weight)] text-[#181d27] text-[length:var(--text-lg-regular-font-size)] tracking-[var(--text-lg-regular-letter-spacing)] leading-[var(--text-lg-regular-line-height)] [font-style:var(--text-lg-regular-font-style)]">
                       {benefit.description}
                     </p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div 
+            <div 
               className="flex flex-col w-full lg:w-[500px] self-stretch items-center justify-center gap-5 sm:gap-[29px] p-5 sm:p-[30px] bg-cover bg-center" 
               style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})` }}
-              variants={fadeInUp}
             >
               {featureCards.map((card, index) => (
                 <Card
@@ -527,17 +461,13 @@ export const Desktop = (): JSX.Element => {
                   </CardContent>
                 </Card>
               ))}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </section>
 
-        <motion.section 
+        <section 
           className="flex flex-col items-center justify-center gap-4 sm:gap-6 px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 w-full bg-cover bg-center" 
-          style={{ backgroundImage: `url(${bgCtaImg})` }}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={fadeInUp}
+          style={{ backgroundImage: `url(${bgCtaImg})` }}}
         >
           <h2 className="[font-family:'Inter',Helvetica] font-semibold text-[#181d27] text-xl sm:text-2xl md:text-3xl tracking-[0] leading-tight text-center">
             Over 650 Locations Across the USA
@@ -550,19 +480,14 @@ export const Desktop = (): JSX.Element => {
           <Button className="h-auto gap-1.5 px-[18px] py-3 bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]" data-testid="button-sign-up">
             Sign Up Now
           </Button>
-        </motion.section>
+        </section>
 
         <section className="flex flex-col w-full gap-8 sm:gap-12 md:gap-16 px-0 py-10 sm:py-12 md:py-[60px] bg-basewhite items-center">
-          <motion.div 
-            className="flex flex-col lg:flex-row items-start gap-8 sm:gap-12 md:gap-16 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
+          <div 
+            className="flex flex-col lg:flex-row items-start gap-8 sm:gap-12 md:gap-16 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"}
           >
-            <motion.div 
+            <div 
               className="flex flex-col w-full lg:max-w-screen-md items-start gap-4 sm:gap-5 flex-1"
-              variants={fadeInUp}
             >
               <div className="flex flex-col items-start gap-3 w-full">
                 <h2 className="font-[number:var(--display-sm-display-md-semibold-font-weight)] text-[#181d27] text-[length:var(--display-sm-display-md-semibold-font-size)] tracking-[var(--display-sm-display-md-semibold-letter-spacing)] leading-[var(--display-sm-display-md-semibold-line-height)] font-display-sm-display-md-semibold [font-style:var(--display-sm-display-md-semibold-font-style)] text-2xl sm:text-3xl md:text-4xl">
@@ -589,11 +514,10 @@ export const Desktop = (): JSX.Element => {
                   </span>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div 
+            <div 
               className="flex flex-col w-full items-start gap-6 sm:gap-8 flex-1"
-              variants={fadeInUp}
             >
               {faqItems.map((item, index) => (
                 <div
@@ -620,17 +544,13 @@ export const Desktop = (): JSX.Element => {
                   </div>
                 </div>
               ))}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </section>
 
         <section className="w-full gap-8 sm:gap-12 md:gap-16 px-0 py-8 sm:py-10 bg-basewhite flex flex-col items-center">
-          <motion.div 
-            className="flex flex-col items-center gap-6 sm:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={fadeInUp}
+          <div 
+            className="flex flex-col items-center gap-6 sm:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"}
           >
             <div className="flex flex-col items-center gap-6 sm:gap-8 w-full">
               <div className="max-w-screen-md items-center flex flex-col gap-4 sm:gap-5 w-full">
@@ -641,22 +561,17 @@ export const Desktop = (): JSX.Element => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div 
-            className="flex flex-col items-start gap-6 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={staggerContainer}
+          <div 
+            className="flex flex-col items-start gap-6 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"}
           >
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 w-full">
               {popularLocations.map((location, index) => (
-                <motion.div
+                <div
                   key={index}
                   className="flex flex-col items-start gap-4 sm:gap-6"
                   data-testid={`location-${index}`}
-                  variants={fadeInUp}
                 >
                   <div 
                     className="w-full aspect-square sm:h-[200px] sm:aspect-auto rounded-lg bg-cover bg-center relative overflow-hidden"
@@ -673,7 +588,7 @@ export const Desktop = (): JSX.Element => {
                       {location.name}
                     </h3>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -684,16 +599,12 @@ export const Desktop = (): JSX.Element => {
                 </span>
               </p>
             </div>
-          </motion.div>
+          </div>
         </section>
 
         <section className="w-full items-center gap-6 sm:gap-8 px-0 py-8 sm:py-10 bg-[#ffffff] flex flex-col">
-          <motion.div 
-            className="flex flex-col items-start gap-6 sm:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={fadeInUp}
+          <div 
+            className="flex flex-col items-start gap-6 sm:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"}
           >
             <div className="flex flex-col items-start gap-6 sm:gap-8 w-full">
               <div className="max-w-[800px] items-start flex flex-col gap-4 sm:gap-5 w-full">
@@ -711,18 +622,14 @@ export const Desktop = (): JSX.Element => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div 
-            className="flex max-w-screen-xl items-center gap-[60px] px-4 sm:px-6 md:px-8 py-0 w-full"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={staggerContainer}
+          <div 
+            className="flex max-w-screen-xl items-center gap-[60px] px-4 sm:px-6 md:px-8 py-0 w-full"}
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
               {reviews.map((review, index) => (
-                <motion.div key={index} variants={fadeInUp}>
+                <div key={index}>
                   <Card
                     className="items-start justify-center gap-3 p-3 bg-gray-50 rounded-lg border-[1.5px] border-solid border-[#eaecf0]"
                     data-testid={`review-${index}`}
@@ -786,17 +693,13 @@ export const Desktop = (): JSX.Element => {
                       </div>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div 
-            className="flex flex-col max-w-screen-xl items-start justify-center gap-2 px-4 sm:px-6 md:px-8 py-0 w-full"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={fadeIn}
+          <div 
+            className="flex flex-col max-w-screen-xl items-start justify-center gap-2 px-4 sm:px-6 md:px-8 py-0 w-full"}
           >
             <Button
               variant="ghost"
@@ -815,16 +718,12 @@ export const Desktop = (): JSX.Element => {
                 loading="lazy"
               />
             </Button>
-          </motion.div>
+          </div>
         </section>
 
         <section className="flex flex-col w-full items-center justify-center gap-8 sm:gap-12 md:gap-16 px-0 py-10 sm:py-12 md:py-[60px] bg-basewhite">
-          <motion.div 
-            className="items-center justify-center flex max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
+          <div 
+            className="items-center justify-center flex max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"}
           >
             <div className="flex flex-col lg:flex-row items-start justify-between gap-6 sm:gap-8 p-6 sm:p-8 md:px-10 lg:px-16 md:py-5 flex-1 rounded-2xl overflow-hidden shadow-shadows-shadow-md bg-cover bg-center relative" style={{ backgroundImage: `linear-gradient(135deg, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0) 100%), url(${bgCtaPromoImg})` }}>
               <div className="flex flex-col items-start justify-center gap-4 sm:gap-5 flex-1 w-full lg:w-auto">
@@ -881,7 +780,7 @@ export const Desktop = (): JSX.Element => {
                   loading="lazy" />
               </div>
             </div>
-          </motion.div>
+          </div>
         </section>
         
         <Footer />
