@@ -1,0 +1,8 @@
+<svg width="35" height="11" viewBox="0 0 35 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="35" height="11" fill="white"/>
+  <path d="M13.5 1L11 9.5H8.5L11 1H13.5Z" fill="#1A1F71"/>
+  <path d="M19 1L16.5 9.5H14L16.5 1H19Z" fill="#1A1F71"/>
+  <path d="M25 1L22.5 9.5H20L21.5 5L22 3L22.5 1H25Z" fill="#1A1F71"/>
+  <path d="M30.5 1L28 9.5H25.5L28 1H30.5Z" fill="#1A1F71"/>
+  <text x="2" y="8" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#1A1F71">V</text>
+</svg>

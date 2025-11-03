@@ -551,11 +551,6 @@ body {
   margin-right: .875rem;
 }
 
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -581,10 +576,6 @@ body {
 
 .mb-1 {
   margin-bottom: .25rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
 }
 
 .ml-1 {
@@ -848,10 +839,6 @@ body {
   min-height: 80px;
 }
 
-.min-h-screen {
-  min-height: 100vh;
-}
-
 .min-h-svh {
   min-height: 100svh;
 }
@@ -1054,10 +1041,6 @@ body {
 
 .max-w-max {
   max-width: max-content;
-}
-
-.max-w-md {
-  max-width: 28rem;
 }
 
 .max-w-screen-md {
@@ -1972,10 +1955,6 @@ body {
   padding-top: 1rem;
 }
 
-.pt-6 {
-  padding-top: 1.5rem;
-}
-
 .pt-8 {
   padding-top: 2rem;
 }
@@ -2556,11 +2535,6 @@ body {
 
 .text-primary-foreground {
   color: hsl(var(--primary-foreground));
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity, 1));
 }
 
 .text-secondary-foreground {
