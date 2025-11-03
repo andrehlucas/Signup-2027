@@ -4320,12 +4320,20 @@ body {
     display: flex;
   }
 
+  .md\:h-\[180px\] {
+    height: 180px;
+  }
+
   .md\:w-\[var\(--radix-navigation-menu-viewport-width\)\] {
     width: var(--radix-navigation-menu-viewport-width);
   }
 
   .md\:w-auto {
     width: auto;
+  }
+
+  .md\:w-\[310px\] {
+    width: 310px;
   }
 
   .md\:max-w-\[420px\] {
