@@ -515,6 +515,16 @@ export default function Page() {
                 >
                   <CardContent className="flex flex-col items-start gap-2 w-full p-0">
                     <div className="inline-flex flex-col items-start gap-3.5">
+                      {index === 0 && (
+                        <img
+                          className="w-[35px] h-[37px]"
+                          alt="Headset icon"
+                          src="/headset-icon.svg"
+                          width="35"
+                          height="37"
+                          loading="eager"
+                        />
+                      )}
                       <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)]">
                         {card.title}
                       </h3>
