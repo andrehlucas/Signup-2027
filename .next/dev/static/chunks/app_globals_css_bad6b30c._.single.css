@@ -574,10 +574,6 @@ body {
   margin-left: -1rem;
 }
 
-.-ml-\[50px\] {
-  margin-left: -50px;
-}
-
 .-mr-16 {
   margin-right: -4rem;
 }
@@ -951,6 +947,10 @@ body {
   width: 1px;
 }
 
+.w-\[304px\] {
+  width: 304px;
+}
+
 .w-\[50px\] {
   width: 50px;
 }
@@ -989,10 +989,6 @@ body {
 
 .w-px {
   width: 1px;
-}
-
-.w-\[304px\] {
-  width: 304px;
 }
 
 .min-w-0 {
@@ -1740,11 +1736,6 @@ body {
 .object-cover {
   -o-object-fit: cover;
   object-fit: cover;
-}
-
-.object-bottom {
-  -o-object-position: bottom;
-  object-position: bottom;
 }
 
 .object-center {
@@ -4377,10 +4368,6 @@ body {
 
   .lg\:hidden {
     display: none;
-  }
-
-  .lg\:w-\[304px\] {
-    width: 304px;
   }
 
   .lg\:w-\[400px\] {
