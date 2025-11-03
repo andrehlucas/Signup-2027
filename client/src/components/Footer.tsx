@@ -297,7 +297,7 @@ export function Footer() {
             {/* Newsletter Form */}
             <div className="flex flex-col lg:flex-row gap-4 lg:w-[400px]">
               <div className="flex-1">
-                <div className="bg-white border border-[#d5d7da] rounded-lg px-3.5 py-2.5 flex items-center gap-2">
+                <div className="h-[50px] bg-white border border-[#d5d7da] rounded-lg px-3.5 py-2.5 flex items-center gap-2">
                   <MailIcon className="w-5 h-5 text-[#a4a7ae]" />
                   <Input
                     type="email"
