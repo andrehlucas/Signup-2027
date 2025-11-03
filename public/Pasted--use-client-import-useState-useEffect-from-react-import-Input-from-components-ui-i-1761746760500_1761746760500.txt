@@ -1,0 +1,288 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { motion, AnimatePresence } from "framer-motion";
+import { MapPin, Search, Send, Star } from "lucide-react";
+
+/** Debounce helper */
+function useDebounce<T>(value: T, delay: number = 400): T {
+  const [debounced, setDebounced] = useState<T>(value);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+}
+
+/** Location types for rendering */
+export type LocationType = "city" | "state";
+
+export interface LocationItem {
+  id: string;
+  city: string;        // e.g., "Orlando"
+  state?: string;      // e.g., "FL"
+  type: LocationType;  // "city" | "state"
+  premium?: boolean;   // premium flag
+  href?: string;       // optional link on select
+}
+
+/** Props allow you to plug in your API later */
+interface LocationSearchBarProps {
+  initialResults?: LocationItem[]; // optional curated list for empty state
+  fetchResults?: (query: string) => Promise<LocationItem[]>; // optional async source
+  onSelect?: (item: LocationItem) => void; // click/enter handler
+  placeholder?: string;
+  label?: string;
+}
+
+/** Simple title maker: "City, ST" or just "Florida" for states */
+function formatTitle(item: LocationItem) {
+  if (item.type === "state") return item.city; // store "Florida" in city field for states
+  return item.state ? `${item.city}, ${item.state}` : item.city;
+}
+
+function PremiumBadge() {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-2 py-0.5 text-[10px] font-semibold">
+      <Star className="h-3 w-3" />
+      Premium
+    </span>
+  );
+}
+
+export function ActionSearchBar({
+  initialResults = [],
+  fetchResults,
+  onSelect,
+  placeholder = "Search by city, state, or ZIP…",
+  label = "Find a Virtual Office",
+}: LocationSearchBarProps) {
+  const [query, setQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState<LocationItem[]>(initialResults);
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+
+  const debouncedQuery = useDebounce(query, 250);
+
+  /** Local fuzzy filter for the demo / fallback */
+  const localFilter = (q: string, all: LocationItem[]) => {
+    const n = q.toLowerCase().trim();
+    if (!n) return all;
+    return all.filter((r) => {
+      const text = `${r.city} ${r.state ?? ""} ${r.type}`.toLowerCase();
+      return text.includes(n);
+    });
+  };
+
+  /** Load results on query change */
+  useEffect(() => {
+    let ignore = false;
+
+    async function run() {
+      if (!isFocused) return;
+
+      // If you provided an async fetcher, use it; else fall back to local filter.
+      if (fetchResults) {
+        setIsLoading(true);
+        try {
+          const data = await fetchResults(debouncedQuery);
+          if (!ignore) setResults(data);
+        } finally {
+          if (!ignore) setIsLoading(false);
+        }
+      } else {
+        // Local filter against initialResults
+        const filtered = localFilter(debouncedQuery, initialResults);
+        if (!ignore) setResults(filtered);
+      }
+      setSelectedIndex(-1);
+    }
+
+    run();
+    return () => {
+      ignore = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedQuery, isFocused, fetchResults]);
+
+  /** Animations */
+  const container = {
+    hidden: { opacity: 0, height: 0 },
+    show: {
+      opacity: 1,
+      height: "auto",
+      transition: { height: { duration: 0.35 }, staggerChildren: 0.06 },
+    },
+    exit: {
+      opacity: 0,
+      height: 0,
+      transition: { height: { duration: 0.25 }, opacity: { duration: 0.2 } },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 12 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.22 } },
+    exit: { opacity: 0, y: -8, transition: { duration: 0.15 } },
+  };
+
+  /** Handlers */
+  const handleSelect = (loc: LocationItem) => {
+    if (onSelect) onSelect(loc);
+    if (loc.href) window.location.assign(loc.href);
+    setIsFocused(false);
+  };
+
+  const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (!isFocused) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setSelectedIndex((i) => Math.min(i + 1, results.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setSelectedIndex((i) => Math.max(i - 1, 0));
+    } else if (e.key === "Enter") {
+      if (selectedIndex >= 0 && selectedIndex < results.length) {
+        e.preventDefault();
+        handleSelect(results[selectedIndex]);
+      }
+    } else if (e.key === "Escape") {
+      setIsFocused(false);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-xl mx-auto">
+      <div className="relative flex flex-col justify-start items-center min-h-[260px]">
+        <div className="w-full max-w-sm sticky top-0 bg-background z-10 pt-4 pb-1">
+          <label
+            className="text-xs font-medium text-muted-foreground mb-1 block"
+            htmlFor="location-search"
+          >
+            {label}
+          </label>
+          <div className="relative">
+            <Input
+              id="location-search"
+              type="text"
+              placeholder={placeholder}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={onKeyDown}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setTimeout(() => setIsFocused(false), 150)}
+              className="pl-3 pr-9 py-1.5 h-9 text-sm rounded-lg focus-visible:ring-offset-0"
+              autoComplete="off"
+            />
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4">
+              <AnimatePresence mode="popLayout">
+                {query.length > 0 ? (
+                  <motion.div
+                    key="send"
+                    initial={{ y: -16, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 16, opacity: 0 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    <Send className="w-4 h-4 text-muted-foreground" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="search"
+                    initial={{ y: -16, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 16, opacity: 0 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    <Search className="w-4 h-4 text-muted-foreground" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full max-w-sm">
+          <AnimatePresence>
+            {isFocused && (
+              <motion.div
+                className="w-full border rounded-md shadow-sm overflow-hidden bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 mt-1"
+                variants={container}
+                initial="hidden"
+                animate="show"
+                exit="exit"
+              >
+                <motion.ul>
+                  {isLoading && (
+                    <motion.li
+                      variants={item}
+                      className="px-3 py-3 text-xs text-muted-foreground"
+                    >
+                      Searching…
+                    </motion.li>
+                  )}
+
+                  {!isLoading && results.length === 0 && (
+                    <motion.li
+                      variants={item}
+                      className="px-3 py-3 text-xs text-muted-foreground"
+                    >
+                      No results. Try a different city, state, or ZIP.
+                    </motion.li>
+                  )}
+
+                  {!isLoading &&
+                    results.map((loc, idx) => (
+                      <motion.li
+                        key={loc.id}
+                        variants={item}
+                        layout
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => handleSelect(loc)}
+                        className={[
+                          "px-3 py-2 flex items-center justify-between cursor-pointer",
+                          "hover:bg-neutral-100 dark:hover:bg-zinc-900",
+                          idx === selectedIndex
+                            ? "bg-neutral-100 dark:bg-zinc-900"
+                            : "",
+                        ].join(" ")}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="text-neutral-500">
+                            <MapPin className="h-4 w-4" />
+                          </span>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-medium text-foreground">
+                              {formatTitle(loc)}
+                            </span>
+                            <span className="text-[11px] text-muted-foreground">
+                              {loc.type === "city" ? "City" : "State"}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {loc.premium && <PremiumBadge />}
+                        </div>
+                      </motion.li>
+                    ))}
+                </motion.ul>
+
+                <div className="px-3 py-2 border-t border-neutral-100 dark:border-neutral-800">
+                  <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+                    <span>Tip: Use ↑ ↓ to navigate</span>
+                    <span>ESC to close</span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export type { LocationItem };
