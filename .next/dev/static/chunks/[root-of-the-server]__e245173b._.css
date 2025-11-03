@@ -4364,6 +4364,10 @@ body {
     gap: 8px 32px;
   }
 
+  .md\:gap-\[16px_32px\] {
+    gap: 16px 32px;
+  }
+
   .md\:px-10 {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
