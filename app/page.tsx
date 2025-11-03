@@ -312,7 +312,8 @@ export default function Page() {
                         filter: "brightness(1.1)", 
                         backgroundImage: card.bgImage ? `linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` : undefined,
                         scaleY: 1.1,
-                        backgroundSize: 'cover'
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
                       }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                       onClick={card.hasButton ? () => setIsVideoDialogOpen(true) : undefined}
