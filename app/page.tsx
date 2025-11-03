@@ -823,7 +823,7 @@ export default function Page() {
             variants={fadeInUp}
           >
             <div className="flex flex-col lg:flex-row items-start justify-between gap-6 sm:gap-8 p-6 sm:p-8 md:px-10 lg:px-16 md:py-5 flex-1 rounded-2xl overflow-hidden shadow-shadows-shadow-md bg-cover bg-center relative" style={{ backgroundImage: `linear-gradient(135deg, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0) 100%), url(${bgCtaPromoImg})` }}>
-              <div className="flex flex-col items-start justify-center gap-4 sm:gap-5 flex-1 w-full lg:w-auto">
+              <div className="flex flex-col items-start justify-center gap-4 sm:gap-5 flex-1 w-full lg:w-auto max-w-[830px]">
                 <div className="flex flex-col gap-4 sm:gap-5 w-full">
                   <Badge
                     variant="secondary"
