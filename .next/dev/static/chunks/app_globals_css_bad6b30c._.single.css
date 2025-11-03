@@ -1277,6 +1277,10 @@ body {
   justify-content: space-between;
 }
 
+.gap-0 {
+  gap: 0;
+}
+
 .gap-0\.5 {
   gap: .125rem;
 }
@@ -1331,10 +1335,6 @@ body {
 
 .gap-\[60px\] {
   gap: 60px;
-}
-
-.gap-0 {
-  gap: 0;
 }
 
 .gap-x-8 {
@@ -3312,6 +3312,15 @@ body {
 
 .hover\:bg-secondary\/80:hover {
   background-color: hsl(var(--secondary) / .8);
+}
+
+.hover\:bg-transparent:hover {
+  background-color: #0000;
+}
+
+.hover\:text-\[\#535862\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(83 88 98 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-accent-foreground:hover {
