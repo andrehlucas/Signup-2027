@@ -1853,24 +1853,24 @@ const benefitTypes = [
         position: "row-[1_/_2] col-[1_/_2]"
     },
     {
-        title: "Startups:",
-        description: "Young companies looking to save on overheads while establishing a professional image.",
-        position: "row-[2_/_3] col-[1_/_2]"
-    },
-    {
-        title: "Freelancers:",
-        description: "Independent professionals seeking a business address and phone number separate from their personal ones.",
-        position: "row-[3_/_4] col-[1_/_2]"
-    },
-    {
         title: "Remote Teams:",
         description: "Organizations with employees working from various locations, needing a centralized business address.",
         position: "row-[1_/_2] col-[2_/_3]"
     },
     {
+        title: "Startups:",
+        description: "Young companies looking to save on overheads while establishing a professional image.",
+        position: "row-[2_/_3] col-[1_/_2]"
+    },
+    {
         title: "International Companies:",
         description: "Firms wanting a presence in a new country or region without setting up a physical office.",
         position: "row-[2_/_3] col-[2_/_3]"
+    },
+    {
+        title: "Freelancers:",
+        description: "Independent professionals seeking a business address and phone number separate from their personal ones.",
+        position: "row-[3_/_4] col-[1_/_2]"
     },
     {
         title: "E-commerce Businesses:",
