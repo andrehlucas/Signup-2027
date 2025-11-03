@@ -1722,6 +1722,11 @@ body {
   object-fit: contain;
 }
 
+.object-cover {
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
 .object-bottom {
   -o-object-position: bottom;
   object-position: bottom;

@@ -1,5 +1,4 @@
 'use client';
-import { Button } from "@/app/components/ui/button";
 
 interface FeaturesBoxProps {
   features: string[];
@@ -33,9 +32,8 @@ export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
       </div>
 
       <div className="flex flex-col items-end gap-2 px-0 sm:px-5 py-0 w-full">
-        <Button
-          variant="ghost"
-          className="h-auto gap-2 p-0 overflow-hidden"
+        <div
+          className="flex items-center gap-2"
           data-testid="button-learn-more"
         >
           <span className="font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-gray-600 text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] whitespace-nowrap [font-style:var(--text-sm-text-md-semibold-font-style)]">
@@ -49,7 +47,7 @@ export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
             height="20"
             loading="eager"
           />
-        </Button>
+        </div>
       </div>
     </div>
   );
