@@ -184,7 +184,7 @@ export function ActionSearchBar({
                     exit={{ y: 16, opacity: 0 }}
                     transition={{ duration: 0.18 }}
                   >
-                    <MapPin className="w-5 h-5 text-gray-500" />
+                    <img src="/figmaAssets/google maps.svg" alt="Location" className="w-5 h-5" />
                   </motion.div>
                 )}
               </AnimatePresence>

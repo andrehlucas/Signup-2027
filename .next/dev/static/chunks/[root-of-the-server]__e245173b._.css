@@ -821,16 +821,16 @@ body {
   height: 1px;
 }
 
-.h-\[200px\] {
-  height: 200px;
-}
-
 .h-\[23px\] {
   height: 23px;
 }
 
 .h-\[27px\] {
   height: 27px;
+}
+
+.h-\[283px\] {
+  height: 283px;
 }
 
 .h-\[3px\] {
@@ -4096,10 +4096,6 @@ body {
     height: 200px;
   }
 
-  .sm\:h-\[300px\] {
-    height: 300px;
-  }
-
   .sm\:w-7 {
     width: 1.75rem;
   }
@@ -4298,10 +4294,6 @@ body {
 
   .md\:flex {
     display: flex;
-  }
-
-  .md\:h-\[400px\] {
-    height: 400px;
   }
 
   .md\:w-\[var\(--radix-navigation-menu-viewport-width\)\] {
