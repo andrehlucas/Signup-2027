@@ -712,6 +712,10 @@ body {
   margin-top: auto;
 }
 
+.-ml-\[50px\] {
+  margin-left: -50px;
+}
+
 .block {
   display: block;
 }
