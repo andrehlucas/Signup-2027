@@ -2376,7 +2376,8 @@ function Page() {
                                                                     backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})`
                                                                 } : undefined,
                                                                 whileHover: {
-                                                                    filter: "brightness(1.2)"
+                                                                    filter: "brightness(1.1)",
+                                                                    backgroundImage: card.bgImage ? `linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` : undefined
                                                                 },
                                                                 transition: {
                                                                     duration: 0.3

@@ -308,7 +308,7 @@ export default function Page() {
                     <motion.div
                       className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center cursor-pointer`}
                       style={card.bgImage ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` } : undefined}
-                      whileHover={{ filter: "brightness(1.2)" }}
+                      whileHover={{ filter: "brightness(1.1)", backgroundImage: card.bgImage ? `linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})` : undefined }}
                       transition={{ duration: 0.3 }}
                       onClick={card.hasButton ? () => setIsVideoDialogOpen(true) : undefined}
                     >
