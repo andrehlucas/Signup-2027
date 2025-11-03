@@ -244,9 +244,9 @@ export const Desktop = (): JSX.Element => {
             <div className="flex flex-col lg:flex-row items-start gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0">
               <motion.div 
                 className="flex flex-col flex-1 items-start justify-start h-full w-full"
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0 }}
               >
                 <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
                   <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[-0.46px] leading-tight w-full">The Ultimate Virtual Office Solution. <span className="font-bold text-blue-light400">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-blue-light400">$99</span>/month.</h1>
@@ -281,29 +281,21 @@ export const Desktop = (): JSX.Element => {
 
               <motion.div 
                 className="w-full lg:w-auto"
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 1, x: 0 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                transition={{ duration: 0 }}
               >
                 <FeaturesBox features={includedFeatures} />
               </motion.div>
             </div>
 
-            <motion.div 
-              className="flex flex-col items-start justify-center gap-2 w-full"
-              initial="initial"
-              animate="animate"
-              variants={staggerContainer}
-            >
+            <div className="flex flex-col items-start justify-center gap-2 w-full">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 max-w-[1280px] w-full px-4 sm:px-6 md:px-8 mx-auto">
                 {interactiveCards.map((card, index) => (
-                  <motion.div
+                  <div
                     key={index}
                     className={`flex w-full items-start h-[130px] ${index === 0 ? 'hidden sm:flex' : ''}`}
                     data-testid={`card-interactive-${index}`}
-                    variants={fadeInUp}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
                   >
                     <motion.div
                       className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center cursor-pointer`}
@@ -330,15 +322,12 @@ export const Desktop = (): JSX.Element => {
                         </div>
                       )}
                     </motion.div>
-                  </motion.div>
+                  </div>
                 ))}
 
-                <motion.div 
+                <div 
                   className="flex w-full items-start h-[130px]" 
                   data-testid="card-pricing"
-                  variants={fadeInUp}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
                 >
                   <motion.div 
                     className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative cursor-pointer group"
@@ -392,13 +381,12 @@ export const Desktop = (): JSX.Element => {
                       </p>
                     </motion.div>
                   </motion.div>
-                </motion.div>
+                </div>
               </div>
 
-              <motion.div 
+              <div 
                 className="sm:hidden w-full px-4 sm:px-6 md:px-8 mx-auto max-w-[1280px]"
                 data-testid="video-promo-mobile"
-                variants={fadeIn}
               >
                 <video
                   className="w-full rounded-xl shadow-shadows-shadow-lg"
@@ -409,8 +397,8 @@ export const Desktop = (): JSX.Element => {
                   <source src={promoVideo} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             <motion.div 
               className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
