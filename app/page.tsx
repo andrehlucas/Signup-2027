@@ -494,9 +494,9 @@ export default function Page() {
                     <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)]">
                       {benefit.title}
                     </h3>
-                    <div style={{width: '100%', color: 'var(--Colors-Text-text-primary-(900), #181D27)', fontSize: 20, fontFamily: 'Inter', fontWeight: '400', lineHeight: 30, wordWrap: 'break-word'}}>
+                    <p className="font-text-lg-regular font-[number:var(--text-lg-regular-font-weight)] text-[#181d27] text-[length:var(--text-lg-regular-font-size)] tracking-[var(--text-lg-regular-letter-spacing)] leading-[var(--text-lg-regular-line-height)] [font-style:var(--text-lg-regular-font-style)]">
                       {benefit.description}
-                    </div>
+                    </p>
                   </motion.div>
                 ))}
               </div>
