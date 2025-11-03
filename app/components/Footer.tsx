@@ -97,7 +97,7 @@ export function Footer() {
               <img
                 src="/Credit-cards-accepted.svg"
                 alt="Credit cards accepted"
-                className="h-[32px] w-auto self-center"
+                className="h-[32px] w-auto self-start"
                 data-testid="img-credit-cards"
               />
             </div>
