@@ -819,6 +819,10 @@ body {
   height: 100svh;
 }
 
+.h-\[37px\] {
+  height: 37px;
+}
+
 .max-h-\[--radix-context-menu-content-available-height\] {
   max-height: var(--radix-context-menu-content-available-height);
 }
@@ -989,6 +993,10 @@ body {
 
 .w-px {
   width: 1px;
+}
+
+.w-\[35px\] {
+  width: 35px;
 }
 
 .min-w-0 {

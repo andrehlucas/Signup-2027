@@ -525,6 +525,16 @@ export default function Page() {
                           loading="eager"
                         />
                       )}
+                      {index === 1 && (
+                        <img
+                          className="w-[35px] h-[34px]"
+                          alt="Star icon"
+                          src="/star-icon.svg"
+                          width="35"
+                          height="34"
+                          loading="eager"
+                        />
+                      )}
                       <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)]">
                         {card.title}
                       </h3>
