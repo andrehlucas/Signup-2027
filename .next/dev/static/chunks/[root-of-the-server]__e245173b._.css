@@ -570,6 +570,10 @@ body {
   top: 100%;
 }
 
+.z-0 {
+  z-index: 0;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -1357,10 +1361,6 @@ body {
 
 .justify-between {
   justify-content: space-between;
-}
-
-.gap-0 {
-  gap: 0;
 }
 
 .gap-0\.5 {
