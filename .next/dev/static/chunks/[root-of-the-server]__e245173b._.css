@@ -1605,6 +1605,11 @@ body {
   border-color: rgb(24 34 48 / var(--tw-border-opacity, 1));
 }
 
+.border-\[\#36bff9\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(54 191 249 / var(--tw-border-opacity, 1));
+}
+
 .border-\[\#cfd4dc\] {
   --tw-border-opacity: 1;
   border-color: rgb(207 212 220 / var(--tw-border-opacity, 1));
@@ -1622,10 +1627,6 @@ body {
 
 .border-\[--color-border\] {
   border-color: var(--color-border);
-}
-
-.border-blue-light700 {
-  border-color: var(--blue-light700);
 }
 
 .border-border\/50 {
@@ -3339,6 +3340,10 @@ body {
 
 .focus-within\:z-20:focus-within {
   z-index: 20;
+}
+
+.hover\:border-blue-light700:hover {
+  border-color: var(--blue-light700);
 }
 
 .hover\:bg-accent:hover {
