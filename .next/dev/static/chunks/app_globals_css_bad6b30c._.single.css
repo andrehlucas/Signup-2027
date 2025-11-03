@@ -566,8 +566,16 @@ body {
   margin-bottom: .25rem;
 }
 
+.-mb-5 {
+  margin-bottom: -1.25rem;
+}
+
 .-ml-4 {
   margin-left: -1rem;
+}
+
+.-mr-16 {
+  margin-right: -4rem;
 }
 
 .-mt-4 {
@@ -620,14 +628,6 @@ body {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.-mb-5 {
-  margin-bottom: -1.25rem;
-}
-
-.-mr-16 {
-  margin-right: -4rem;
 }
 
 .block {
@@ -749,10 +749,6 @@ body {
 
 .h-\[27px\] {
   height: 27px;
-}
-
-.h-\[324px\] {
-  height: 324px;
 }
 
 .h-\[3px\] {
@@ -1039,6 +1035,10 @@ body {
   max-width: 600px;
 }
 
+.max-w-\[730px\] {
+  max-width: 730px;
+}
+
 .max-w-\[800px\] {
   max-width: 800px;
 }
@@ -1057,14 +1057,6 @@ body {
 
 .max-w-screen-xl {
   max-width: 1280px;
-}
-
-.max-w-\[830px\] {
-  max-width: 830px;
-}
-
-.max-w-\[730px\] {
-  max-width: 730px;
 }
 
 .flex-1 {
@@ -1741,6 +1733,11 @@ body {
 .object-cover {
   -o-object-fit: cover;
   object-fit: cover;
+}
+
+.object-center {
+  -o-object-position: center;
+  object-position: center;
 }
 
 .object-bottom {

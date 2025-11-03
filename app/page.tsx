@@ -543,7 +543,7 @@ export default function Page() {
             All-Inclusive Virtual Office Services for Only $99/mo.
           </p>
 
-          <Button className="h-auto gap-1.5 px-[18px] py-3 bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]" data-testid="button-sign-up">
+          <Button className="h-auto gap-1.5 px-[18px] py-3 bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-sign-up">
             Sign Up Now
           </Button>
         </motion.section>
@@ -575,7 +575,7 @@ export default function Page() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center w-full">
-                <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]" data-testid="button-talk-expert">
+                <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-talk-expert">
                   Talk to an expert
                 </Button>
 
@@ -861,15 +861,15 @@ export default function Page() {
                     </p>
                   </div>
 
-                  <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-[#0ba4eb] rounded-lg border-[none] shadow-shadows-shadow-xs-skeuomorphic before:content-[''] before:absolute before:inset-0 before:p-0.5 before:rounded-lg before:[background:linear-gradient(180deg,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_100%)] before:[-webkit-mask:linear-gradient(#fff_0_0)_content-box,linear-gradient(#fff_0_0)] before:[-webkit-mask-composite:xor] before:[mask-composite:exclude] before:z-[1] before:pointer-events-none font-text-md-semibold font-[number:var(--text-md-semibold-font-weight)] text-[#ffffff] text-[length:var(--text-md-semibold-font-size)] tracking-[var(--text-md-semibold-letter-spacing)] leading-[var(--text-md-semibold-line-height)] [font-style:var(--text-md-semibold-font-style)]" data-testid="button-get-ebook">
+                  <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-get-ebook">
                     Get your Ebook
                   </Button>
                 </div>
               </div>
 
-              <div className="hidden lg:flex w-full lg:w-[304px] relative flex-shrink-0 overflow-hidden -mb-5 -mr-16 items-center justify-center">
+              <div className="hidden lg:flex w-full lg:w-[304px] relative flex-shrink-0 overflow-hidden -mb-5 -mr-16">
                 <img
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full object-cover object-bottom"
                   alt="Asian man portrait"
                   src={man_holding_tablet}
                   width="304"
