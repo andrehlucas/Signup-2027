@@ -47,12 +47,15 @@ export function Navbar() {
                 src="/opus-logo-icon.svg"
                 alt="Opus VO Logo"
                 className="h-[70px] w-auto"
+                loading="eager"
+                fetchPriority="high"
                 data-testid="img-logo-icon"
               />
               <img
                 src="/opus-logo-text.svg"
                 alt="Opus Virtual Offices"
                 className="h-[60px] w-auto"
+                loading="eager"
                 data-testid="img-logo-text"
               />
             </Link>
@@ -128,12 +131,15 @@ export function Navbar() {
               src="/opus-logo-icon.svg"
               alt="Opus VO Logo"
               className="h-[27px] w-auto"
+              loading="eager"
+              fetchPriority="high"
               data-testid="img-logo-icon-mobile"
             />
             <img
               src="/opus-logo-text.svg"
               alt="Opus Virtual Offices"
               className="h-[23px] w-auto"
+              loading="eager"
               data-testid="img-logo-text-mobile"
             />
           </Link>

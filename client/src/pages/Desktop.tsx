@@ -391,7 +391,7 @@ export const Desktop = (): JSX.Element => {
                 <video
                   className="w-full rounded-xl shadow-shadows-shadow-lg"
                   controls
-                  preload="metadata"
+                  preload="none"
                   poster={playerCover}
                 >
                   <source src={promoVideo} type="video/mp4" />
