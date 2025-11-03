@@ -338,27 +338,56 @@ export default function Page() {
                   data-testid="card-pricing"
                 >
                   <motion.div 
-                    className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative cursor-pointer"
-                    whileHover={{ filter: "brightness(1.2)" }}
-                    transition={{ duration: 0.3 }}
+                    className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative cursor-pointer group"
+                    initial="rest"
+                    whileHover="hover"
                   >
-                    <div className="absolute top-0 inset-x-0 flex items-center justify-center pt-3">
+                    <motion.div 
+                      className="absolute top-0 inset-x-0 flex items-center justify-center pt-3"
+                      variants={{
+                        rest: { opacity: 1 },
+                        hover: { opacity: 1 }
+                      }}
+                    >
                       <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-xs sm:text-sm text-center tracking-[0] leading-normal whitespace-nowrap">
                         ALL-INCLUSIVE
                       </p>
-                    </div>
+                    </motion.div>
                     
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-0">
+                    <motion.div 
+                      className="absolute inset-0 flex flex-col items-center justify-center"
+                      variants={{
+                        rest: { gap: "0px" },
+                        hover: { gap: "4px" }
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
                       <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-3xl sm:text-4xl lg:text-[48px]">
                         $99/mo
                       </p>
-                    </div>
+                      <motion.p 
+                        className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-xs sm:text-sm"
+                        variants={{
+                          rest: { opacity: 0, height: 0 },
+                          hover: { opacity: 1, height: "auto" }
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        NO HIDDEN FEES
+                      </motion.p>
+                    </motion.div>
 
-                    <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2">
+                    <motion.div 
+                      className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2"
+                      variants={{
+                        rest: { opacity: 1 },
+                        hover: { opacity: 1 }
+                      }}
+                    >
                       <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] [font-style:var(--text-sm-text-md-bold-font-style)] text-xs sm:text-sm">
                         Sign Up Now
                       </p>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 </div>
               </div>
