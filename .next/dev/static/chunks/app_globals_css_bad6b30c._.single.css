@@ -991,6 +991,10 @@ body {
   width: 1px;
 }
 
+.w-\[304px\] {
+  width: 304px;
+}
+
 .min-w-0 {
   min-width: 0;
 }
@@ -1741,6 +1745,11 @@ body {
 .object-bottom {
   -o-object-position: bottom;
   object-position: bottom;
+}
+
+.object-center {
+  -o-object-position: center;
+  object-position: center;
 }
 
 .p-0 {
