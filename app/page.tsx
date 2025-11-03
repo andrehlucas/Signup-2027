@@ -308,6 +308,8 @@ export default function Page() {
                     <motion.div
                       className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center cursor-pointer`}
                       style={card.bgImage ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%), url(${card.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+                      whileHover={{ filter: "brightness(1.2)" }}
+                      transition={{ duration: 0.3 }}
                       onClick={card.hasButton ? () => setIsVideoDialogOpen(true) : undefined}
                     >
                       <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2">
@@ -335,8 +337,10 @@ export default function Page() {
                   className="flex w-full items-start h-[130px]" 
                   data-testid="card-pricing"
                 >
-                  <div 
+                  <motion.div 
                     className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative cursor-pointer"
+                    whileHover={{ filter: "brightness(1.2)" }}
+                    transition={{ duration: 0.3 }}
                   >
                     <div className="absolute top-0 inset-x-0 flex items-center justify-center pt-3">
                       <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-xs sm:text-sm text-center tracking-[0] leading-normal whitespace-nowrap">
@@ -355,7 +359,7 @@ export default function Page() {
                         Sign Up Now
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
 
