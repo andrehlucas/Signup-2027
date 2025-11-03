@@ -751,6 +751,10 @@ body {
   height: 283px;
 }
 
+.h-\[32px\] {
+  height: 32px;
+}
+
 .h-\[3px\] {
   height: 3px;
 }
@@ -1362,6 +1366,10 @@ body {
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
+}
+
+.self-start {
+  align-self: flex-start;
 }
 
 .self-stretch {
