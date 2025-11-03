@@ -11,17 +11,18 @@ import { FeaturesBox } from "@/app/components/FeaturesBox";
 import { ActionSearchBar, LocationItem } from "@/app/components/ActionSearchBar";
 import { Footer } from "@/app/components/Footer";
 import { motion } from "framer-motion";
-import officeBuildingImg from "/office-building_1761587957783.webp";
-import businessAddressBg from "/business-address-bg_1761590800705.webp";
-import bgCtaImg from "/bg-cta_1761591194000.webp";
-import bgCtaPromoImg from "/bg-cta-promo_1761591480531.webp";
-import man_holding_tablet from "/man-holding-tablet.webp";
-import receptionistCardBg from "/receptionist-card-bg_1761593285326.webp";
-import cashHandsHoldingBg from "/cash-hands-holding_1761593304143.webp";
-import multipleProfessionalsBg from "/multiple-professionals_1761593320843.webp";
-import newYorkAerialView from "/new-york-aerial-view_1761593422460.webp";
-import promoVideo from "/Opus VO - 45 Sec Promo - 1920x1080_1761681440103.mp4";
-import playerCover from "/player-cover_1761748637474.webp";
+
+const officeBuildingImg = "/office-building_1761587957783.webp";
+const businessAddressBg = "/business-address-bg_1761590800705.webp";
+const bgCtaImg = "/bg-cta_1761591194000.webp";
+const bgCtaPromoImg = "/bg-cta-promo_1761591480531.webp";
+const man_holding_tablet = "/man-holding-tablet.webp";
+const receptionistCardBg = "/receptionist-card-bg_1761593285326.webp";
+const cashHandsHoldingBg = "/cash-hands-holding_1761593304143.webp";
+const multipleProfessionalsBg = "/multiple-professionals_1761593320843.webp";
+const newYorkAerialView = "/new-york-aerial-view_1761593422460.webp";
+const promoVideo = "/Opus VO - 45 Sec Promo - 1920x1080_1761681440103.mp4";
+const playerCover = "/player-cover_1761748637474.webp";
 
 const includedFeatures = [
   "Prestigious Business Address",
@@ -234,7 +235,7 @@ const staggerContainer = {
   }
 }
 
-export const Desktop = (): JSX.Element => {
+export default function Page() {
   const [isVideoDialogOpen, setIsVideoDialogOpen] = useState(false);
 
   return (

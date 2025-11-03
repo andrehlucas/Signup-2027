@@ -5,10 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
-  // Enable experimental optimizations
-  experimental: {
-    optimizeCss: true,
-  },
 };
 
 export default nextConfig;
