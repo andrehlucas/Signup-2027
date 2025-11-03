@@ -622,6 +622,14 @@ body {
   margin-top: auto;
 }
 
+.-mb-5 {
+  margin-bottom: -1.25rem;
+}
+
+.-mr-16 {
+  margin-right: -4rem;
+}
+
 .block {
   display: block;
 }

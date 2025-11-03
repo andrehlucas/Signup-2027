@@ -867,15 +867,15 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="hidden lg:flex w-full lg:w-[304px] h-[324px] relative flex-shrink-0 overflow-hidden">
+              <div className="hidden lg:flex w-full lg:w-[304px] relative flex-shrink-0 overflow-hidden -mb-5 -mr-16">
                 <img
-                  className="absolute inset-0 w-full h-full object-cover object-bottom"
+                  className="w-full h-full object-cover object-bottom"
                   alt="Asian man portrait"
                   src={man_holding_tablet}
                   width="304"
                   height="324"
                   loading="lazy"
-                  style={{ display: 'block', height: '100%' }} />
+                  style={{ display: 'block', minHeight: '324px' }} />
               </div>
             </div>
           </motion.div>
