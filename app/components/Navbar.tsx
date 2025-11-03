@@ -105,7 +105,7 @@ export function Navbar() {
               <div className="flex items-center gap-3">
                 <Button
                   variant="ghost"
-                  className="px-4 py-2.5 rounded-lg font-semibold text-base text-[#535862] hover:bg-gray-50"
+                  className="px-4 py-2.5 rounded-lg font-semibold text-base text-[#535862]"
                   data-testid="button-login"
                 >
                   Log in
@@ -219,7 +219,7 @@ export function Navbar() {
                   <div className="px-4">
                     <Button
                       variant="outline"
-                      className="w-full px-4 py-3 rounded-lg font-semibold text-base text-[#535862] hover:bg-gray-50"
+                      className="w-full px-4 py-3 rounded-lg font-semibold text-base text-[#535862]"
                       data-testid="button-login-mobile"
                     >
                       Log in
