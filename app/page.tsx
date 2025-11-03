@@ -483,7 +483,7 @@ export default function Page() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4 sm:gap-6 md:gap-[8px_32px]">
+              <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-2 md:gap-[8px_32px]">
                 {benefitTypes.map((benefit, index) => (
                   <motion.div
                     key={index}
