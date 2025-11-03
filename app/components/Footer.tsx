@@ -41,7 +41,7 @@ export function Footer() {
         <div className="max-w-[1280px] mx-auto">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
             {/* Logo and Supporting Content - Mobile & Desktop */}
-            <div className="flex flex-col gap-6 lg:max-w-[320px] lg:min-w-[320px]">
+            <div className="flex flex-col justify-between lg:max-w-[320px] lg:min-w-[320px]">
               {/* Logo */}
               <div className="flex items-center gap-2">
                 <img
