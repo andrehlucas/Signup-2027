@@ -12,6 +12,7 @@ const config: Config = {
         "black-900": "var(--black-900)",
         "blue-light100": "var(--blue-light100)",
         "blue-light400": "var(--blue-light400)",
+        "blue-light700": "var(--blue-light700)",
         "brand-100": "var(--brand-100)",
         "brand-50": "var(--brand-50)",
         "brand-500": "var(--brand-500)",

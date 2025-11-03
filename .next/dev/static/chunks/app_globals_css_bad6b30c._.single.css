@@ -2299,10 +2299,6 @@ body {
   line-height: 1.25;
 }
 
-.tracking-\[-0\.46px\] {
-  letter-spacing: -.46px;
-}
-
 .tracking-\[-0\.72px\] {
   letter-spacing: -.72px;
 }
@@ -2389,11 +2385,6 @@ body {
   color: rgb(1 106 162 / var(--tw-text-opacity, 1));
 }
 
-.text-\[\#0f1728\] {
-  --tw-text-opacity: 1;
-  color: rgb(15 23 40 / var(--tw-text-opacity, 1));
-}
-
 .text-\[\#181d27\] {
   --tw-text-opacity: 1;
   color: rgb(24 29 39 / var(--tw-text-opacity, 1));
@@ -2465,10 +2456,6 @@ body {
 .text-blue-700 {
   --tw-text-opacity: 1;
   color: rgb(29 78 216 / var(--tw-text-opacity, 1));
-}
-
-.text-blue-light400 {
-  color: var(--blue-light400);
 }
 
 .text-card-foreground {
@@ -2901,6 +2888,7 @@ body {
   --black-900: #000;
   --blue-light100: #e0f2fe;
   --blue-light400: #36bffa;
+  --blue-light700: #026aa2;
   --brand-100: #ffccce;
   --brand-50: #ffe5e6;
   --brand-500: #ff1e27;
@@ -3310,6 +3298,10 @@ body {
 .hover\:bg-blue-50:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(239 246 255 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-blue-light700:hover {
+  background-color: var(--blue-light700);
 }
 
 .hover\:bg-destructive\/80:hover {
@@ -4536,11 +4528,6 @@ body {
 
   .lg\:pt-\[104px\] {
     padding-top: 104px;
-  }
-
-  .lg\:text-5xl {
-    font-size: 3rem;
-    line-height: 1;
   }
 
   .lg\:text-\[48px\] {
