@@ -345,6 +345,11 @@ export default function Page() {
                     className="flex items-end gap-2 bg-[linear-gradient(180deg,rgba(54,191,250,1)_0%,rgba(3,137,209,1)_100%),linear-gradient(0deg,rgba(54,191,250,1)_0%,rgba(54,191,250,1)_100%)] flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative cursor-pointer group"
                     initial="rest"
                     whileHover="hover"
+                    variants={{
+                      rest: { scaleY: 1 },
+                      hover: { scaleY: 1.1 }
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
                     <motion.div 
                       className="absolute top-0 inset-x-0 flex items-center justify-center pt-3"
