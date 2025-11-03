@@ -1145,6 +1145,10 @@ body {
   max-width: 830px;
 }
 
+.max-w-\[730px\] {
+  max-width: 730px;
+}
+
 .flex-1 {
   flex: 1;
 }

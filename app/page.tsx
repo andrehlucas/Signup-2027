@@ -837,7 +837,7 @@ export default function Page() {
                   </h2>
 
                   <p className="[font-family:'Inter',Helvetica] font-normal text-gray-900 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed">
-                    Your Complete Guide to Building a Successful Business
+                    Your Complete Guide to Building a Successful Business<br></br>
                     Foundation with Confidence
                   </p>
                 </div>
@@ -867,9 +867,9 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="hidden lg:flex w-full lg:w-[304px] relative flex-shrink-0 overflow-hidden -mb-5 -mr-16">
+              <div className="hidden lg:flex w-full lg:w-[304px] relative flex-shrink-0 overflow-hidden -mb-5 -mr-16 items-center justify-center">
                 <img
-                  className="w-full h-full object-cover object-bottom"
+                  className="w-full h-full object-cover object-center"
                   alt="Asian man portrait"
                   src={man_holding_tablet}
                   width="304"

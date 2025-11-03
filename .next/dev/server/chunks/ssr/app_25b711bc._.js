@@ -3384,8 +3384,16 @@ function Page() {
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "[font-family:'Inter',Helvetica] font-normal text-gray-900 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed",
-                                                        children: "Your Complete Guide to Building a Successful Business Foundation with Confidence"
-                                                    }, void 0, false, {
+                                                        children: [
+                                                            "Your Complete Guide to Building a Successful Business",
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                                                fileName: "[project]/app/page.tsx",
+                                                                lineNumber: 840,
+                                                                columnNumber: 74
+                                                            }, this),
+                                                            "Foundation with Confidence"
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
                                                         lineNumber: 839,
                                                         columnNumber: 19
@@ -3471,9 +3479,9 @@ function Page() {
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "hidden lg:flex w-full lg:w-[304px] relative flex-shrink-0 overflow-hidden -mb-5 -mr-16",
+                                        className: "hidden lg:flex w-full lg:w-[304px] relative flex-shrink-0 overflow-hidden -mb-5 -mr-16 items-center justify-center",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                            className: "w-full h-full object-cover object-bottom",
+                                            className: "w-full h-full object-cover object-center",
                                             alt: "Asian man portrait",
                                             src: man_holding_tablet,
                                             width: "304",
