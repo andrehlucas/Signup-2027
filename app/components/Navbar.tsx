@@ -63,28 +63,28 @@ export function Navbar() {
             {/* Navigation Links */}
             <div className="flex-1 flex items-center justify-center gap-0.5">
               <Link href="/" data-testid="link-nav-home">
-                <div className="px-1.5 py-1 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="px-1.5 py-1 rounded-lg">
                   <span className="px-0.5 font-semibold text-base text-[#414651]">
                     Home
                   </span>
                 </div>
               </Link>
               <Link href="/services" data-testid="link-nav-services">
-                <div className="px-1.5 py-1 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="px-1.5 py-1 rounded-lg">
                   <span className="px-0.5 font-semibold text-base text-[#414651]">
                     Services
                   </span>
                 </div>
               </Link>
               <Link href="/locations" data-testid="link-nav-locations">
-                <div className="px-1.5 py-1 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="px-1.5 py-1 rounded-lg">
                   <span className="px-0.5 font-semibold text-base text-[#414651]">
                     Locations
                   </span>
                 </div>
               </Link>
               <Link href="/faq" data-testid="link-nav-faq">
-                <div className="px-1.5 py-1 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className="px-1.5 py-1 rounded-lg">
                   <span className="px-0.5 font-semibold text-base text-[#414651]">
                     FAQ
                   </span>
@@ -173,28 +173,28 @@ export function Navbar() {
                   {/* Navigation Links */}
                   <div className="flex flex-col gap-2">
                     <Link href="/" data-testid="link-nav-home-mobile">
-                      <div className="px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="px-4 py-3 rounded-lg">
                         <span className="font-semibold text-lg text-[#414651]">
                           Home
                         </span>
                       </div>
                     </Link>
                     <Link href="/services" data-testid="link-nav-services-mobile">
-                      <div className="px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="px-4 py-3 rounded-lg">
                         <span className="font-semibold text-lg text-[#414651]">
                           Services
                         </span>
                       </div>
                     </Link>
                     <Link href="/locations" data-testid="link-nav-locations-mobile">
-                      <div className="px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="px-4 py-3 rounded-lg">
                         <span className="font-semibold text-lg text-[#414651]">
                           Locations
                         </span>
                       </div>
                     </Link>
                     <Link href="/faq" data-testid="link-nav-faq-mobile">
-                      <div className="px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="px-4 py-3 rounded-lg">
                         <span className="font-semibold text-lg text-[#414651]">
                           FAQ
                         </span>
@@ -209,7 +209,7 @@ export function Navbar() {
                   <div className="px-4" data-testid="text-phone-mobile">
                     <a
                       href="tel:+18888989868"
-                      className="font-semibold text-base text-[#535862] hover:text-[#0ba5ec] transition-colors"
+                      className="font-semibold text-base text-[#535862]"
                     >
                       1 (888) 898-9868
                     </a>

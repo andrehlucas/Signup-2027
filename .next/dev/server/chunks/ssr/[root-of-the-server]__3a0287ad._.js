@@ -759,7 +759,7 @@ function Navbar() {
                                         href: "/",
                                         "data-testid": "link-nav-home",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "px-1.5 py-1 rounded-lg hover:bg-gray-50 transition-colors",
+                                            className: "px-1.5 py-1 rounded-lg",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "px-0.5 font-semibold text-base text-[#414651]",
                                                 children: "Home"
@@ -782,7 +782,7 @@ function Navbar() {
                                         href: "/services",
                                         "data-testid": "link-nav-services",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "px-1.5 py-1 rounded-lg hover:bg-gray-50 transition-colors",
+                                            className: "px-1.5 py-1 rounded-lg",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "px-0.5 font-semibold text-base text-[#414651]",
                                                 children: "Services"
@@ -805,7 +805,7 @@ function Navbar() {
                                         href: "/locations",
                                         "data-testid": "link-nav-locations",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "px-1.5 py-1 rounded-lg hover:bg-gray-50 transition-colors",
+                                            className: "px-1.5 py-1 rounded-lg",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "px-0.5 font-semibold text-base text-[#414651]",
                                                 children: "Locations"
@@ -828,7 +828,7 @@ function Navbar() {
                                         href: "/faq",
                                         "data-testid": "link-nav-faq",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "px-1.5 py-1 rounded-lg hover:bg-gray-50 transition-colors",
+                                            className: "px-1.5 py-1 rounded-lg",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "px-0.5 font-semibold text-base text-[#414651]",
                                                 children: "FAQ"
@@ -1028,7 +1028,7 @@ function Navbar() {
                                                                     href: "/",
                                                                     "data-testid": "link-nav-home-mobile",
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors",
+                                                                        className: "px-4 py-3 rounded-lg",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                             className: "font-semibold text-lg text-[#414651]",
                                                                             children: "Home"
@@ -1051,7 +1051,7 @@ function Navbar() {
                                                                     href: "/services",
                                                                     "data-testid": "link-nav-services-mobile",
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors",
+                                                                        className: "px-4 py-3 rounded-lg",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                             className: "font-semibold text-lg text-[#414651]",
                                                                             children: "Services"
@@ -1074,7 +1074,7 @@ function Navbar() {
                                                                     href: "/locations",
                                                                     "data-testid": "link-nav-locations-mobile",
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors",
+                                                                        className: "px-4 py-3 rounded-lg",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                             className: "font-semibold text-lg text-[#414651]",
                                                                             children: "Locations"
@@ -1097,7 +1097,7 @@ function Navbar() {
                                                                     href: "/faq",
                                                                     "data-testid": "link-nav-faq-mobile",
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors",
+                                                                        className: "px-4 py-3 rounded-lg",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                             className: "font-semibold text-lg text-[#414651]",
                                                                             children: "FAQ"
@@ -1134,7 +1134,7 @@ function Navbar() {
                                                             "data-testid": "text-phone-mobile",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                                 href: "tel:+18888989868",
-                                                                className: "font-semibold text-base text-[#535862] hover:text-[#0ba5ec] transition-colors",
+                                                                className: "font-semibold text-base text-[#535862]",
                                                                 children: "1 (888) 898-9868"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/components/Navbar.tsx",

@@ -3277,10 +3277,6 @@ body {
   background-color: hsl(var(--destructive) / .9);
 }
 
-.hover\:bg-gray-50:hover {
-  background-color: var(--gray-50);
-}
-
 .hover\:bg-muted:hover {
   background-color: hsl(var(--muted));
 }
@@ -3312,11 +3308,6 @@ body {
 
 .hover\:bg-secondary\/80:hover {
   background-color: hsl(var(--secondary) / .8);
-}
-
-.hover\:text-\[\#0ba5ec\]:hover {
-  --tw-text-opacity: 1;
-  color: rgb(11 165 236 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-accent-foreground:hover {
