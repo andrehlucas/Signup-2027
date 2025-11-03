@@ -48,7 +48,6 @@ export function Navbar() {
                 alt="Opus VO Logo"
                 className="h-[70px] w-auto"
                 loading="eager"
-                fetchPriority="high"
                 data-testid="img-logo-icon"
               />
               <img
@@ -132,7 +131,6 @@ export function Navbar() {
               alt="Opus VO Logo"
               className="h-[27px] w-auto"
               loading="eager"
-              fetchPriority="high"
               data-testid="img-logo-icon-mobile"
             />
             <img

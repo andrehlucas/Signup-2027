@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { MailIcon, MapPinIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,8 +8,9 @@ import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FeaturesBox } from "@/components/FeaturesBox";
 import { ActionSearchBar, LocationItem } from "@/components/ActionSearchBar";
-import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
+
+const Footer = lazy(() => import("@/components/Footer").then(module => ({ default: module.Footer })));
 import officeBuildingImg from "@assets/office-building_1761587957783.webp";
 import businessAddressBg from "@assets/business-address-bg_1761590800705.webp";
 import bgCtaImg from "@assets/bg-cta_1761591194000.webp";
@@ -872,7 +873,9 @@ export const Desktop = (): JSX.Element => {
           </motion.div>
         </section>
         
-        <Footer />
+        <Suspense fallback={<div className="w-full h-20" />}>
+          <Footer />
+        </Suspense>
       </div>
 
       <Dialog open={isVideoDialogOpen} onOpenChange={setIsVideoDialogOpen}>
