@@ -4242,10 +4242,6 @@ body {
     display: flex;
   }
 
-  .md\:h-\[180px\] {
-    height: 180px;
-  }
-
   .md\:w-\[310px\] {
     width: 310px;
   }
@@ -4260,6 +4256,10 @@ body {
 
   .md\:max-w-\[420px\] {
     max-width: 420px;
+  }
+
+  .md\:auto-rows-fr {
+    grid-auto-rows: minmax(0, 1fr);
   }
 
   .md\:grid-cols-2 {
