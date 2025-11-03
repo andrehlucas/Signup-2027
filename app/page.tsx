@@ -487,7 +487,7 @@ export default function Page() {
                 {benefitTypes.map((benefit, index) => (
                   <motion.div
                     key={index}
-                    className="w-full h-full flex flex-col items-start gap-1"
+                    className="w-full md:w-[310px] h-auto md:h-[180px] flex flex-col items-start gap-1"
                     data-testid={`benefit-${index}`}
                     variants={fadeInUp}
                   >
