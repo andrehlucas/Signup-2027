@@ -867,9 +867,9 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="hidden lg:flex w-full lg:w-[304px] relative flex-shrink-0 overflow-hidden -mb-5 -mr-16 -ml-[50px]">
+              <div className="hidden lg:flex flex-1 relative overflow-hidden -mb-5 -mr-16 items-center justify-center">
                 <img
-                  className="w-full h-full object-cover object-bottom"
+                  className="w-[304px] h-full object-cover object-center"
                   alt="Asian man portrait"
                   src={man_holding_tablet}
                   width="304"
