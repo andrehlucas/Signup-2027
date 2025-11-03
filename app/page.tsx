@@ -483,18 +483,18 @@ export default function Page() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-2 md:gap-[8px_32px]">
+              <div className="flex flex-col items-start justify-start w-full">
                 {benefitTypes.map((benefit, index) => (
                   <motion.div
                     key={index}
-                    className="w-full md:w-[310px] h-auto md:h-[180px] flex flex-col items-start gap-1"
+                    className="self-stretch flex flex-col items-start justify-start"
                     data-testid={`benefit-${index}`}
                     variants={fadeInUp}
                   >
-                    <h3 className="font-display-xs-semibold font-[number:var(--display-xs-semibold-font-weight)] text-[#181d27] text-[length:var(--display-xs-semibold-font-size)] tracking-[var(--display-xs-semibold-letter-spacing)] leading-[var(--display-xs-semibold-line-height)] [font-style:var(--display-xs-semibold-font-style)]">
+                    <h3 className="self-stretch text-[#181d27] text-2xl font-semibold leading-[32px] break-words" style={{ fontFamily: 'Inter' }}>
                       {benefit.title}
                     </h3>
-                    <p className="font-text-lg-regular font-[number:var(--text-lg-regular-font-weight)] text-[#181d27] text-[length:var(--text-lg-regular-font-size)] tracking-[var(--text-lg-regular-letter-spacing)] leading-[var(--text-lg-regular-line-height)] [font-style:var(--text-lg-regular-font-style)]">
+                    <p className="self-stretch text-[#181d27] text-xl font-normal leading-[30px] break-words" style={{ fontFamily: 'Inter' }}>
                       {benefit.description}
                     </p>
                   </motion.div>
