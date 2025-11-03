@@ -1333,6 +1333,10 @@ body {
   gap: 60px;
 }
 
+.gap-0 {
+  gap: 0;
+}
+
 .gap-x-8 {
   -moz-column-gap: 2rem;
   column-gap: 2rem;
