@@ -821,12 +821,12 @@ body {
   height: 23px;
 }
 
-.h-\[250px\] {
-  height: 250px;
-}
-
 .h-\[27px\] {
   height: 27px;
+}
+
+.h-\[324px\] {
+  height: 324px;
 }
 
 .h-\[3px\] {
@@ -4512,10 +4512,6 @@ body {
     display: none;
   }
 
-  .lg\:h-\[324px\] {
-    height: 324px;
-  }
-
   .lg\:w-\[304px\] {
     width: 304px;
   }
@@ -4582,11 +4578,6 @@ body {
 
   .lg\:gap-\[81px\] {
     gap: 81px;
-  }
-
-  .lg\:object-cover {
-    -o-object-fit: cover;
-    object-fit: cover;
   }
 
   .lg\:px-16 {
