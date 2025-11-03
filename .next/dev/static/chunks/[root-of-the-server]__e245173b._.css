@@ -4324,16 +4324,16 @@ body {
     height: 180px;
   }
 
+  .md\:w-\[310px\] {
+    width: 310px;
+  }
+
   .md\:w-\[var\(--radix-navigation-menu-viewport-width\)\] {
     width: var(--radix-navigation-menu-viewport-width);
   }
 
   .md\:w-auto {
     width: auto;
-  }
-
-  .md\:w-\[310px\] {
-    width: 310px;
   }
 
   .md\:max-w-\[420px\] {
@@ -4362,10 +4362,6 @@ body {
 
   .md\:gap-\[8px_32px\] {
     gap: 8px 32px;
-  }
-
-  .md\:gap-\[16px_32px\] {
-    gap: 16px 32px;
   }
 
   .md\:px-10 {
