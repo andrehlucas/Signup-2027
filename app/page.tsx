@@ -251,7 +251,13 @@ export default function Page() {
                 transition={{ duration: 0 }}
               >
                 <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
-                  <h1 className="[font-family:'Inter',Helvetica] font-normal text-[#0f1728] text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-[-0.46px] leading-tight w-full">The Ultimate Virtual Office Solution. <span className="font-bold text-blue-light400">All-Inclusive</span> with no long-term contracts for only <span className="font-bold text-blue-light400">$99</span>/month.</h1>
+                  <h1 style={{width: '100%'}}>
+                    <span style={{color: '#101828', fontSize: 48, fontFamily: 'Inter', fontWeight: '400', lineHeight: '60px', wordWrap: 'break-word'}}>The Ultimate Virtual Office Solution. </span>
+                    <span style={{color: '#36BFFA', fontSize: 48, fontFamily: 'Inter', fontWeight: '700', lineHeight: '60px', wordWrap: 'break-word'}}>All-Inclusive</span>
+                    <span style={{color: '#101828', fontSize: 48, fontFamily: 'Inter', fontWeight: '400', lineHeight: '60px', wordWrap: 'break-word'}}> with no long-term contracts for only </span>
+                    <span style={{color: '#36BFFA', fontSize: 48, fontFamily: 'Inter', fontWeight: '700', lineHeight: '60px', wordWrap: 'break-word'}}>$99</span>
+                    <span style={{color: '#101828', fontSize: 48, fontFamily: 'Inter', fontWeight: '400', lineHeight: '60px', wordWrap: 'break-word'}}>/month.</span>
+                  </h1>
 
                   <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed">
                     With 650+ locations throughout the USA
