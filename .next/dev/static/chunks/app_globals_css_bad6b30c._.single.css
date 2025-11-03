@@ -574,6 +574,10 @@ body {
   margin-left: -1rem;
 }
 
+.-ml-\[50px\] {
+  margin-left: -50px;
+}
+
 .-mr-16 {
   margin-right: -4rem;
 }
@@ -628,10 +632,6 @@ body {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.-ml-\[50px\] {
-  margin-left: -50px;
 }
 
 .block {
@@ -1374,10 +1374,6 @@ body {
 
 .self-start {
   align-self: flex-start;
-}
-
-.self-center {
-  align-self: center;
 }
 
 .self-stretch {
