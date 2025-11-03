@@ -855,7 +855,7 @@ function Navbar() {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "px-1.5 py-1 rounded-lg",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "px-0.5 font-semibold text-base text-[#414651]",
+                                                className: "px-0.5 font-semibold text-base text-[#414651] hover:text-[#181d27] transition-colors",
                                                 children: "Home"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -878,7 +878,7 @@ function Navbar() {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "px-1.5 py-1 rounded-lg",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "px-0.5 font-semibold text-base text-[#414651]",
+                                                className: "px-0.5 font-semibold text-base text-[#414651] hover:text-[#181d27] transition-colors",
                                                 children: "Services"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -901,7 +901,7 @@ function Navbar() {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "px-1.5 py-1 rounded-lg",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "px-0.5 font-semibold text-base text-[#414651]",
+                                                className: "px-0.5 font-semibold text-base text-[#414651] hover:text-[#181d27] transition-colors",
                                                 children: "Locations"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -924,7 +924,7 @@ function Navbar() {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "px-1.5 py-1 rounded-lg",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "px-0.5 font-semibold text-base text-[#414651]",
+                                                className: "px-0.5 font-semibold text-base text-[#414651] hover:text-[#181d27] transition-colors",
                                                 children: "FAQ"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -954,7 +954,7 @@ function Navbar() {
                                         className: "px-4 py-2.5 rounded-lg",
                                         "data-testid": "text-phone",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "font-semibold text-base text-[#535862]",
+                                            className: "font-semibold text-base text-[#535862] hover:text-[#181d27] transition-colors",
                                             children: "1 (888) 898-9868"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/Navbar.tsx",
@@ -971,7 +971,7 @@ function Navbar() {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                 variant: "ghost",
-                                                className: "px-4 py-2.5 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent",
+                                                className: "px-4 py-2.5 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent hover:text-[#181d27] transition-colors",
                                                 "data-testid": "button-login",
                                                 children: "Log in"
                                             }, void 0, false, {
@@ -1124,7 +1124,7 @@ function Navbar() {
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: "px-4 py-3 rounded-lg",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            className: "font-semibold text-lg text-[#414651]",
+                                                                            className: "font-semibold text-lg text-[#414651] hover:text-[#181d27] transition-colors",
                                                                             children: "Home"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/components/Navbar.tsx",
@@ -1147,7 +1147,7 @@ function Navbar() {
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: "px-4 py-3 rounded-lg",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            className: "font-semibold text-lg text-[#414651]",
+                                                                            className: "font-semibold text-lg text-[#414651] hover:text-[#181d27] transition-colors",
                                                                             children: "Services"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/components/Navbar.tsx",
@@ -1170,7 +1170,7 @@ function Navbar() {
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: "px-4 py-3 rounded-lg",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            className: "font-semibold text-lg text-[#414651]",
+                                                                            className: "font-semibold text-lg text-[#414651] hover:text-[#181d27] transition-colors",
                                                                             children: "Locations"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/components/Navbar.tsx",
@@ -1193,7 +1193,7 @@ function Navbar() {
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: "px-4 py-3 rounded-lg",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                            className: "font-semibold text-lg text-[#414651]",
+                                                                            className: "font-semibold text-lg text-[#414651] hover:text-[#181d27] transition-colors",
                                                                             children: "FAQ"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/components/Navbar.tsx",
@@ -1228,7 +1228,7 @@ function Navbar() {
                                                             "data-testid": "text-phone-mobile",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                                 href: "tel:+18888989868",
-                                                                className: "font-semibold text-base text-[#535862]",
+                                                                className: "font-semibold text-base text-[#535862] hover:text-[#181d27] transition-colors",
                                                                 children: "1 (888) 898-9868"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -1244,7 +1244,7 @@ function Navbar() {
                                                             className: "px-4",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                                 variant: "outline",
-                                                                className: "w-full px-4 py-3 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent hover:text-[#535862]",
+                                                                className: "w-full px-4 py-3 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent hover:text-[#181d27] transition-colors",
                                                                 "data-testid": "button-login-mobile",
                                                                 children: "Log in"
                                                             }, void 0, false, {

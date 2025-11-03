@@ -3400,9 +3400,9 @@ body {
   background-color: #0000;
 }
 
-.hover\:text-\[\#535862\]:hover {
+.hover\:text-\[\#181d27\]:hover {
   --tw-text-opacity: 1;
-  color: rgb(83 88 98 / var(--tw-text-opacity, 1));
+  color: rgb(24 29 39 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-accent-foreground:hover {
@@ -4240,11 +4240,6 @@ body {
 
   .sm\:p-\[30px\] {
     padding: 30px;
-  }
-
-  .sm\:px-5 {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
   }
 
   .sm\:px-6 {

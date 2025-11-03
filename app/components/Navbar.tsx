@@ -64,28 +64,28 @@ export function Navbar() {
             <div className="flex-1 flex items-center justify-center gap-0.5">
               <Link href="/" data-testid="link-nav-home">
                 <div className="px-1.5 py-1 rounded-lg">
-                  <span className="px-0.5 font-semibold text-base text-[#414651]">
+                  <span className="px-0.5 font-semibold text-base text-[#414651] hover:text-[#181d27] transition-colors">
                     Home
                   </span>
                 </div>
               </Link>
               <Link href="/services" data-testid="link-nav-services">
                 <div className="px-1.5 py-1 rounded-lg">
-                  <span className="px-0.5 font-semibold text-base text-[#414651]">
+                  <span className="px-0.5 font-semibold text-base text-[#414651] hover:text-[#181d27] transition-colors">
                     Services
                   </span>
                 </div>
               </Link>
               <Link href="/locations" data-testid="link-nav-locations">
                 <div className="px-1.5 py-1 rounded-lg">
-                  <span className="px-0.5 font-semibold text-base text-[#414651]">
+                  <span className="px-0.5 font-semibold text-base text-[#414651] hover:text-[#181d27] transition-colors">
                     Locations
                   </span>
                 </div>
               </Link>
               <Link href="/faq" data-testid="link-nav-faq">
                 <div className="px-1.5 py-1 rounded-lg">
-                  <span className="px-0.5 font-semibold text-base text-[#414651]">
+                  <span className="px-0.5 font-semibold text-base text-[#414651] hover:text-[#181d27] transition-colors">
                     FAQ
                   </span>
                 </div>
@@ -96,7 +96,7 @@ export function Navbar() {
             <div className="flex items-center gap-4">
               {/* Phone Number */}
               <div className="px-4 py-2.5 rounded-lg" data-testid="text-phone">
-                <span className="font-semibold text-base text-[#535862]">
+                <span className="font-semibold text-base text-[#535862] hover:text-[#181d27] transition-colors">
                   1 (888) 898-9868
                 </span>
               </div>
@@ -105,7 +105,7 @@ export function Navbar() {
               <div className="flex items-center gap-3">
                 <Button
                   variant="ghost"
-                  className="px-4 py-2.5 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent"
+                  className="px-4 py-2.5 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent hover:text-[#181d27] transition-colors"
                   data-testid="button-login"
                 >
                   Log in
@@ -174,28 +174,28 @@ export function Navbar() {
                   <div className="flex flex-col gap-2">
                     <Link href="/" data-testid="link-nav-home-mobile">
                       <div className="px-4 py-3 rounded-lg">
-                        <span className="font-semibold text-lg text-[#414651]">
+                        <span className="font-semibold text-lg text-[#414651] hover:text-[#181d27] transition-colors">
                           Home
                         </span>
                       </div>
                     </Link>
                     <Link href="/services" data-testid="link-nav-services-mobile">
                       <div className="px-4 py-3 rounded-lg">
-                        <span className="font-semibold text-lg text-[#414651]">
+                        <span className="font-semibold text-lg text-[#414651] hover:text-[#181d27] transition-colors">
                           Services
                         </span>
                       </div>
                     </Link>
                     <Link href="/locations" data-testid="link-nav-locations-mobile">
                       <div className="px-4 py-3 rounded-lg">
-                        <span className="font-semibold text-lg text-[#414651]">
+                        <span className="font-semibold text-lg text-[#414651] hover:text-[#181d27] transition-colors">
                           Locations
                         </span>
                       </div>
                     </Link>
                     <Link href="/faq" data-testid="link-nav-faq-mobile">
                       <div className="px-4 py-3 rounded-lg">
-                        <span className="font-semibold text-lg text-[#414651]">
+                        <span className="font-semibold text-lg text-[#414651] hover:text-[#181d27] transition-colors">
                           FAQ
                         </span>
                       </div>
@@ -209,7 +209,7 @@ export function Navbar() {
                   <div className="px-4" data-testid="text-phone-mobile">
                     <a
                       href="tel:+18888989868"
-                      className="font-semibold text-base text-[#535862]"
+                      className="font-semibold text-base text-[#535862] hover:text-[#181d27] transition-colors"
                     >
                       1 (888) 898-9868
                     </a>
@@ -219,7 +219,7 @@ export function Navbar() {
                   <div className="px-4">
                     <Button
                       variant="outline"
-                      className="w-full px-4 py-3 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent hover:text-[#535862]"
+                      className="w-full px-4 py-3 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent hover:text-[#181d27] transition-colors"
                       data-testid="button-login-mobile"
                     >
                       Log in
