@@ -9,7 +9,6 @@ export function Footer() {
     "Chicago",
     "Dallas",
     "Los Angeles",
-    "Houston",
     "Miami",
     "New York",
     "Tampa",
