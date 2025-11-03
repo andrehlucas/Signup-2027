@@ -415,7 +415,7 @@ export default function Page() {
               viewport={{ once: true, amount: 0.3 }}
               variants={fadeIn}
             >
-              <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] rounded-2xl bg-cover bg-center" style={{ backgroundImage: `url(${newYorkAerialView})` }} />
+              <div className="w-full h-[283px] rounded-2xl bg-cover bg-center" style={{ backgroundImage: `url(${newYorkAerialView})` }} />
             </motion.div>
           </div>
 
