@@ -31,7 +31,7 @@ export const FeaturesBox = ({ features }: FeaturesBoxProps) => {
         ))}
       </div>
 
-      <div className="flex flex-col items-end gap-2 px-0 sm:px-5 py-0 w-full">
+      <div className="flex flex-col items-end gap-2 w-full">
         <div
           className="flex items-center gap-2"
           data-testid="button-learn-more"
