@@ -251,12 +251,12 @@ export default function Page() {
                 transition={{ duration: 0 }}
               >
                 <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
-                  <h1 style={{width: '100%'}}>
-                    <span style={{color: '#101828', fontSize: 48, fontFamily: 'Inter', fontWeight: '400', lineHeight: '60px', wordWrap: 'break-word'}}>The Ultimate Virtual Office Solution. </span>
-                    <span style={{color: '#36BFFA', fontSize: 48, fontFamily: 'Inter', fontWeight: '700', lineHeight: '60px', wordWrap: 'break-word'}}>All-Inclusive</span>
-                    <span style={{color: '#101828', fontSize: 48, fontFamily: 'Inter', fontWeight: '400', lineHeight: '60px', wordWrap: 'break-word'}}> with no long-term contracts for only </span>
-                    <span style={{color: '#36BFFA', fontSize: 48, fontFamily: 'Inter', fontWeight: '700', lineHeight: '60px', wordWrap: 'break-word'}}>$99</span>
-                    <span style={{color: '#101828', fontSize: 48, fontFamily: 'Inter', fontWeight: '400', lineHeight: '60px', wordWrap: 'break-word'}}>/month.</span>
+                  <h1 className="w-full text-[24px] leading-[32px] font-medium sm:text-[48px] sm:leading-[60px] sm:font-normal">
+                    <span className="text-[#101828]">The Ultimate Virtual Office Solution. </span>
+                    <span className="font-bold text-blue-light400">All-Inclusive</span>
+                    <span className="text-[#101828]"> with no long-term contracts for only </span>
+                    <span className="font-bold text-blue-light400">$99</span>
+                    <span className="text-[#101828]">/month.</span>
                   </h1>
 
                   <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-base sm:text-lg md:text-xl tracking-[0] leading-relaxed">

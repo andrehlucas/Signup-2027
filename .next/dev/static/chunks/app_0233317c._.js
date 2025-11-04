@@ -2171,19 +2171,10 @@ function Page() {
                                                         className: "flex flex-col items-start gap-4 sm:gap-6 w-full",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                                                style: {
-                                                                    width: '100%'
-                                                                },
+                                                                className: "w-full text-[24px] leading-[32px] font-medium sm:text-[48px] sm:leading-[60px] sm:font-normal",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        style: {
-                                                                            color: '#101828',
-                                                                            fontSize: 48,
-                                                                            fontFamily: 'Inter',
-                                                                            fontWeight: '400',
-                                                                            lineHeight: '60px',
-                                                                            wordWrap: 'break-word'
-                                                                        },
+                                                                        className: "text-[#101828]",
                                                                         children: "The Ultimate Virtual Office Solution. "
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
@@ -2191,14 +2182,7 @@ function Page() {
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        style: {
-                                                                            color: '#36BFFA',
-                                                                            fontSize: 48,
-                                                                            fontFamily: 'Inter',
-                                                                            fontWeight: '700',
-                                                                            lineHeight: '60px',
-                                                                            wordWrap: 'break-word'
-                                                                        },
+                                                                        className: "font-bold text-blue-light400",
                                                                         children: "All-Inclusive"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
@@ -2206,14 +2190,7 @@ function Page() {
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        style: {
-                                                                            color: '#101828',
-                                                                            fontSize: 48,
-                                                                            fontFamily: 'Inter',
-                                                                            fontWeight: '400',
-                                                                            lineHeight: '60px',
-                                                                            wordWrap: 'break-word'
-                                                                        },
+                                                                        className: "text-[#101828]",
                                                                         children: " with no long-term contracts for only "
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
@@ -2221,14 +2198,7 @@ function Page() {
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        style: {
-                                                                            color: '#36BFFA',
-                                                                            fontSize: 48,
-                                                                            fontFamily: 'Inter',
-                                                                            fontWeight: '700',
-                                                                            lineHeight: '60px',
-                                                                            wordWrap: 'break-word'
-                                                                        },
+                                                                        className: "font-bold text-blue-light400",
                                                                         children: "$99"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
@@ -2236,14 +2206,7 @@ function Page() {
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        style: {
-                                                                            color: '#101828',
-                                                                            fontSize: 48,
-                                                                            fontFamily: 'Inter',
-                                                                            fontWeight: '400',
-                                                                            lineHeight: '60px',
-                                                                            wordWrap: 'break-word'
-                                                                        },
+                                                                        className: "text-[#101828]",
                                                                         children: "/month."
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
