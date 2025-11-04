@@ -11,6 +11,7 @@ import { FeaturesBox } from "@/app/components/FeaturesBox";
 import { ActionSearchBar, LocationItem } from "@/app/components/ActionSearchBar";
 import { Footer } from "@/app/components/Footer";
 import { motion } from "framer-motion";
+import { Autour_One } from "next/font/google";
 
 const officeBuildingImg = "/office-building_1761587957783.webp";
 const businessAddressBg = "/business-address-bg_1761590800705.webp";
@@ -303,7 +304,7 @@ export default function Page() {
                     <motion.div
                       className={`flex items-end gap-2 ${card.bgClass} flex-1 h-full rounded-xl overflow-hidden shadow-shadows-shadow-lg relative bg-cover bg-center cursor-pointer`}
                       style={card.bgImage ? { backgroundImage: `url(${card.bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
-                      whileHover={{ scaleY: 1.1 }}
+                      whileHover={{ scaleY: 1.1, scaleX: 1.1 }}
                       transition={{ duration: 0.3 }}
                       onClick={card.hasButton ? () => setIsVideoDialogOpen(true) : undefined}
                     >
@@ -346,8 +347,8 @@ export default function Page() {
                     initial="rest"
                     whileHover="hover"
                     variants={{
-                      rest: { scaleY: 1 },
-                      hover: { scaleY: 1.1 }
+                      rest: { scaleY: 1, scaleX: 1, },
+                      hover: { scaleY: 1.1, scaleX: 1.1 }
                     }}
                     transition={{ duration: 0.3 }}
                   >
@@ -375,11 +376,13 @@ export default function Page() {
 
                     {/* Desktop version - hover animation */}
                     <motion.div 
-                      className="hidden lg:flex absolute top-2 left-0 right-0 bottom-[12px] flex-col items-center justify-center"
+                      className="hidden lg:flex absolute top-2 left-0 right-0 bottom-[0px] flex-col items-center justify-center"
                       variants={{
-                        rest: { gap: "0px" },
-                        hover: { gap: "4px" }
+                        rest: { gap: 1, },
+                        hover: { gap: 12 }                        
+                        
                       }}
+                      
                       transition={{ duration: 0.3 }}
                     >
                       <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-[48px]">
@@ -388,8 +391,8 @@ export default function Page() {
                       <motion.p 
                         className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-sm"
                         variants={{
-                          rest: { opacity: 0, height: 0 },
-                          hover: { opacity: 1, height: "auto" }
+                          rest: { opacity: 0, height: "0px," },
+                          hover: { opacity: 1, height: "48px", }
                         }}
                         transition={{ duration: 0.3 }}
                       >
