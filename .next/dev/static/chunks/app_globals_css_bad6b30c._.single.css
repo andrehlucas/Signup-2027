@@ -400,8 +400,12 @@ body {
   top: -3rem;
 }
 
-.bottom-0, .bottom-\[0px\] {
+.bottom-0 {
   bottom: 0;
+}
+
+.bottom-\[42px\] {
+  bottom: 42px;
 }
 
 .left-0 {
@@ -474,6 +478,10 @@ body {
 
 .top-\[1px\] {
   top: 1px;
+}
+
+.top-\[24px\] {
+  top: 24px;
 }
 
 .top-\[50\%\] {

@@ -1,6 +1,6 @@
 'use client';
 import { useState } from "react";
-import { MailIcon, MapPinIcon, Star } from "lucide-react";
+import { MailIcon, MapPinIcon } from "lucide-react";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent } from "@/app/components/ui/card";
@@ -12,37 +12,6 @@ import { ActionSearchBar, LocationItem } from "@/app/components/ActionSearchBar"
 import { Footer } from "@/app/components/Footer";
 import { motion } from "framer-motion";
 import { Autour_One } from "next/font/google";
-
-const StarRating = ({ rating }: { rating: number }) => {
-  return (
-    <div className="inline-flex items-start gap-1">
-      {[1, 2, 3, 4, 5].map((starIndex) => {
-        const fillPercentage = Math.min(100, Math.max(0, (rating - starIndex + 1) * 100));
-        
-        return (
-          <div key={starIndex} className="w-[18px] h-[18px] relative">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id={`star-fill-${starIndex}`}>
-                  <stop offset={`${fillPercentage}%`} stopColor="#FDB022" />
-                  <stop offset={`${fillPercentage}%`} stopColor="#E0E0E0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M9 1.5L11.3175 6.195L16.5 6.9525L12.75 10.605L13.635 15.75L9 13.3275L4.365 15.75L5.25 10.605L1.5 6.9525L6.6825 6.195L9 1.5Z"
-                fill={`url(#star-fill-${starIndex})`}
-                stroke="#FDB022"
-                strokeWidth="0.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 const officeBuildingImg = "/office-building_1761587957783.webp";
 const businessAddressBg = "/business-address-bg_1761590800705.webp";
@@ -407,7 +376,7 @@ export default function Page() {
 
                     {/* Desktop version - hover animation */}
                     <motion.div 
-                      className="hidden lg:flex absolute top-2 left-0 right-0 bottom-[0px] flex-col items-center justify-center"
+                      className="hidden lg:flex absolute top-[24px] left-0 right-0 bottom-[42px] flex-col items-center justify-center"
                       variants={{
                         rest: { gap: 1, },
                         hover: { gap: 12 }                        
@@ -422,8 +391,8 @@ export default function Page() {
                       <motion.p 
                         className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-sm"
                         variants={{
-                          rest: { opacity: 0, height: "0px," },
-                          hover: { opacity: 1, height: "48px", }
+                          rest: { opacity: 0, height: "0px" },
+                          hover: { opacity: 1, height: "auto", }
                         }}
                         transition={{ duration: 0.3 }}
                       >
@@ -816,7 +785,23 @@ export default function Page() {
                             Google Review
                           </p>
 
-                          <StarRating rating={review.rating} />
+                          <div className="inline-flex items-start gap-1">
+                            {[...Array(5)].map((_, starIndex) => (
+                              <div
+                                key={starIndex}
+                                className="w-[18px] h-[18px] overflow-hidden"
+                              >
+                                <img
+                                  className="w-full h-full"
+                                  alt="Star"
+                                  src="/figmaAssets/star-background.svg"
+                                  width="18"
+                                  height="18"
+                                  loading="lazy"
+                                />
+                              </div>
+                            ))}
+                          </div>
                         </div>
 
                         <div className="inline-flex items-end justify-center gap-2">
