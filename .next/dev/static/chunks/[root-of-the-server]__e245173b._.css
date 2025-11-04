@@ -837,6 +837,10 @@ body {
   height: 283px;
 }
 
+.h-\[284px\] {
+  height: 284px;
+}
+
 .h-\[32px\] {
   height: 32px;
 }
@@ -2347,6 +2351,10 @@ body {
 
 .leading-\[32px\] {
   line-height: 32px;
+}
+
+.leading-\[38px\] {
+  line-height: 38px;
 }
 
 .leading-\[var\(--display-md-semibold-line-height\)\] {
@@ -4340,6 +4348,10 @@ body {
     line-height: 60px;
   }
 
+  .sm\:leading-tight {
+    line-height: 1.25;
+  }
+
   .data-\[state\=open\]\:sm\:slide-in-from-bottom-full[data-state="open"] {
     --tw-enter-translate-y: 100%;
   }
@@ -4508,6 +4520,10 @@ body {
 
   .lg\:hidden {
     display: none;
+  }
+
+  .lg\:h-auto {
+    height: auto;
   }
 
   .lg\:w-\[400px\] {
