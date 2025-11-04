@@ -2168,7 +2168,7 @@ function Page() {
                                                 },
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "flex flex-col items-start gap-4 sm:gap-6 w-full",
+                                                        className: "flex flex-col items-start gap-4 sm:gap-6 w-full lg:max-w-[780px]",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                                                                 className: "w-full text-[24px] leading-[32px] font-medium sm:text-[48px] sm:leading-[60px] sm:font-normal",

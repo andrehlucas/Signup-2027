@@ -250,7 +250,7 @@ export default function Page() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0 }}
               >
-                <div className="flex flex-col items-start gap-4 sm:gap-6 w-full">
+                <div className="flex flex-col items-start gap-4 sm:gap-6 w-full lg:max-w-[780px]">
                   <h1 className="w-full text-[24px] leading-[32px] font-medium sm:text-[48px] sm:leading-[60px] sm:font-normal">
                     <span className="text-[#101828]">The Ultimate Virtual Office Solution. </span>
                     <span className="font-bold text-blue-light400">All-Inclusive</span>
