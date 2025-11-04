@@ -3,39 +3,11 @@ import Link from "next/link";
 import { Button } from "@/app/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetDescription, SheetTrigger } from "@/app/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { useState, useEffect } from "react";
 
 export function Navbar() {
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY < 10) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY) {
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollY) {
-        setIsVisible(true);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollY]);
-
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 w-full bg-white border-b border-gray-200 shadow-sm transition-transform duration-300 z-50 ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`} 
+      className="fixed top-0 left-0 right-0 w-full bg-white border-b border-gray-200 shadow-sm z-50" 
       data-testid="navbar"
     >
       {/* Desktop Navigation */}
