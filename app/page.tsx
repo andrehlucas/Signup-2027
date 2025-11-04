@@ -516,7 +516,7 @@ export default function Page() {
             </motion.div>
 
             <motion.div 
-              className="flex flex-col w-full lg:w-[500px] self-stretch items-center justify-center gap-5 sm:gap-[29px] p-5 sm:p-[30px] bg-cover bg-center" 
+              className="flex flex-col w-full lg:w-[500px] self-stretch items-center justify-center gap-5 sm:gap-[29px] p-0 lg:p-[30px] bg-cover bg-center" 
               style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})` }}
               variants={fadeInUp}
             >

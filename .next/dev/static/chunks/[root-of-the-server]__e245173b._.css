@@ -4601,6 +4601,10 @@ body {
     gap: 81px;
   }
 
+  .lg\:p-\[30px\] {
+    padding: 30px;
+  }
+
   .lg\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
