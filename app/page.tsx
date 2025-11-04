@@ -287,14 +287,9 @@ export default function Page() {
                 </div>
               </motion.div>
 
-              <motion.div 
-                className="hidden lg:flex w-full lg:w-auto"
-                initial={{ opacity: 1, x: 0 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0 }}
-              >
+              <div className="hidden lg:flex w-full lg:w-auto">
                 <FeaturesBox features={includedFeatures} />
-              </motion.div>
+              </div>
             </div>
 
             <div className="flex flex-col items-start justify-center gap-2 w-full">
