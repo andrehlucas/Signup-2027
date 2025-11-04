@@ -486,6 +486,10 @@ body {
   bottom: 0;
 }
 
+.bottom-\[42px\] {
+  bottom: 42px;
+}
+
 .left-0 {
   left: 0;
 }

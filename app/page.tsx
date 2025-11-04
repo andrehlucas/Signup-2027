@@ -375,7 +375,7 @@ export default function Page() {
 
                     {/* Desktop version - hover animation */}
                     <motion.div 
-                      className="hidden lg:flex absolute inset-0 flex-col items-center justify-center"
+                      className="hidden lg:flex absolute top-0 left-0 right-0 bottom-[42px] flex-col items-center justify-center"
                       variants={{
                         rest: { gap: "0px" },
                         hover: { gap: "4px" }
