@@ -364,7 +364,7 @@ export default function Page() {
                     </motion.div>
                     
                     {/* Mobile version - always visible */}
-                    <div className="lg:hidden absolute inset-0 flex flex-col items-center justify-center gap-1">
+                    <div className="lg:hidden absolute top-0 left-0 right-0 bottom-[42px] flex flex-col items-center justify-center gap-1">
                       <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-5xl">
                         $99/mo
                       </p>
