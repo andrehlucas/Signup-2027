@@ -567,7 +567,7 @@ export default function Page() {
           viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
         >
-          <h2 className="[font-family:'Inter',Helvetica] font-semibold text-[#181d27] text-xl sm:text-2xl md:text-3xl tracking-[0] leading-tight text-center">
+          <h2 className="[font-family:'Inter',Helvetica] font-semibold text-[#181d27] text-[30px] leading-[38px] sm:text-2xl sm:leading-tight md:text-3xl tracking-[0] text-center">
             Over 650 Locations Across the USA
           </h2>
 
