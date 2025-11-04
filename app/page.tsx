@@ -298,11 +298,11 @@ export default function Page() {
             </div>
 
             <div className="flex flex-col items-start justify-center gap-2 w-full">
-              <div className="hidden sm:grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 max-w-[1280px] w-full px-4 sm:px-6 md:px-8 mx-auto">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6 max-w-[1280px] w-full px-4 sm:px-6 md:px-8 mx-auto">
                 {interactiveCards.map((card, index) => (
                   <div
                     key={index}
-                    className="flex w-full items-start h-[130px]"
+                    className={`flex w-full items-start h-[130px] ${index === 0 ? 'hidden sm:flex' : ''}`}
                     data-testid={`card-interactive-${index}`}
                   >
                     <motion.div
