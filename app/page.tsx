@@ -418,7 +418,7 @@ export default function Page() {
             </div>
 
             <motion.div 
-              className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
+              className="hidden lg:flex flex-col items-center gap-4 sm:gap-6 md:gap-8 max-w-screen-xl w-full px-4 sm:px-6 md:px-8 py-0"
               initial="initial"
               whileInView="animate"
               viewport={{ once: true, amount: 0.3 }}
