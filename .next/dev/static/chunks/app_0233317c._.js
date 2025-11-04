@@ -2446,7 +2446,7 @@ function Page() {
                                                                     className: "lg:hidden absolute inset-0 flex flex-col items-center justify-center gap-1",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                            className: "[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-5xl",
+                                                                            className: "[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-4xl",
                                                                             children: "$99/mo"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/page.tsx",
@@ -2468,7 +2468,7 @@ function Page() {
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                                                                    className: "hidden lg:flex absolute top-0 left-0 right-0 bottom-[42px] flex-col items-center justify-center",
+                                                                    className: "hidden lg:flex absolute top-2 left-0 right-0 bottom-[12px] flex-col items-center justify-center",
                                                                     variants: {
                                                                         rest: {
                                                                             gap: "0px"
@@ -2771,7 +2771,7 @@ function Page() {
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                                    className: "hidden lg:flex flex-col w-full lg:w-[500px] self-stretch items-center justify-center gap-5 sm:gap-[29px] p-5 sm:p-[30px] bg-cover bg-center",
+                                    className: "flex flex-col w-full lg:w-[500px] self-stretch items-center justify-center gap-5 sm:gap-[29px] p-5 sm:p-[30px] bg-cover bg-center",
                                     style: {
                                         backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})`
                                     },

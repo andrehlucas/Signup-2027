@@ -365,7 +365,7 @@ export default function Page() {
                     
                     {/* Mobile version - always visible */}
                     <div className="lg:hidden absolute inset-0 flex flex-col items-center justify-center gap-1">
-                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-5xl">
+                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-4xl">
                         $99/mo
                       </p>
                       <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-xs">
@@ -375,7 +375,7 @@ export default function Page() {
 
                     {/* Desktop version - hover animation */}
                     <motion.div 
-                      className="hidden lg:flex absolute top-0 left-0 right-0 bottom-[42px] flex-col items-center justify-center"
+                      className="hidden lg:flex absolute top-2 left-0 right-0 bottom-[12px] flex-col items-center justify-center"
                       variants={{
                         rest: { gap: "0px" },
                         hover: { gap: "4px" }
@@ -516,7 +516,7 @@ export default function Page() {
             </motion.div>
 
             <motion.div 
-              className="hidden lg:flex flex-col w-full lg:w-[500px] self-stretch items-center justify-center gap-5 sm:gap-[29px] p-5 sm:p-[30px] bg-cover bg-center" 
+              className="flex flex-col w-full lg:w-[500px] self-stretch items-center justify-center gap-5 sm:gap-[29px] p-5 sm:p-[30px] bg-cover bg-center" 
               style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(${officeBuildingImg})` }}
               variants={fadeInUp}
             >
