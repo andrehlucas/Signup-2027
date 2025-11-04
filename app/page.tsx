@@ -385,14 +385,21 @@ export default function Page() {
                       
                       transition={{ duration: 0.3 }}
                     >
-                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-[48px]">
+                      <motion.p 
+                        className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-[48px]"
+                        variants={{
+                          rest: { y: 0 },
+                          hover: { y: 4 }
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
                         $99/mo
-                      </p>
+                      </motion.p>
                       <motion.p 
                         className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-sm"
                         variants={{
-                          rest: { opacity: 0, height: "0px" },
-                          hover: { opacity: 1, height: "auto", }
+                          rest: { opacity: 0, height: "0px", y: 0 },
+                          hover: { opacity: 1, height: "auto", y: -4 }
                         }}
                         transition={{ duration: 0.3 }}
                       >
