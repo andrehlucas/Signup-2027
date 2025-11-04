@@ -2080,9 +2080,9 @@ body {
   line-height: 2rem;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .text-\[0\.8rem\] {
@@ -2103,6 +2103,10 @@ body {
 
 .text-\[30px\] {
   font-size: 30px;
+}
+
+.text-\[48px\] {
+  font-size: 48px;
 }
 
 .text-\[length\:var\(--display-md-semibold-font-size\)\] {
@@ -4234,11 +4238,6 @@ body {
     line-height: 2.25rem;
   }
 
-  .sm\:text-4xl {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-  }
-
   .sm\:text-\[48px\] {
     font-size: 48px;
   }
@@ -4542,10 +4541,6 @@ body {
 
   .lg\:pt-\[104px\] {
     padding-top: 104px;
-  }
-
-  .lg\:text-\[48px\] {
-    font-size: 48px;
   }
 
   .lg\:text-xl {

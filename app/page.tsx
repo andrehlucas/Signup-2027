@@ -363,19 +363,30 @@ export default function Page() {
                       </p>
                     </motion.div>
                     
+                    {/* Mobile version - always visible */}
+                    <div className="lg:hidden absolute inset-0 flex flex-col items-center justify-center gap-1">
+                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-5xl">
+                        $99/mo
+                      </p>
+                      <p className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-xs">
+                        No Hidden Fees
+                      </p>
+                    </div>
+
+                    {/* Desktop version - hover animation */}
                     <motion.div 
-                      className="absolute inset-0 flex flex-col items-center justify-center"
+                      className="hidden lg:flex absolute inset-0 flex-col items-center justify-center"
                       variants={{
                         rest: { gap: "0px" },
                         hover: { gap: "4px" }
                       }}
                       transition={{ duration: 0.3 }}
                     >
-                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-3xl sm:text-4xl lg:text-[48px]">
+                      <p className="[font-family:'Inter',Helvetica] font-bold text-[#ffffff] text-center tracking-[-0.96px] whitespace-nowrap text-[48px]">
                         $99/mo
                       </p>
                       <motion.p 
-                        className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-xs sm:text-sm"
+                        className="[font-family:'Inter',Helvetica] font-medium text-[#ffffff] text-center tracking-[0] leading-normal whitespace-nowrap text-sm"
                         variants={{
                           rest: { opacity: 0, height: 0 },
                           hover: { opacity: 1, height: "auto" }
