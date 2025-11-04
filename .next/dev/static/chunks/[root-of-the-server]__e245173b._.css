@@ -2175,6 +2175,10 @@ body {
   font-size: 11px;
 }
 
+.text-\[24px\] {
+  font-size: 24px;
+}
+
 .text-\[30px\] {
   font-size: 30px;
 }
@@ -2341,6 +2345,10 @@ body {
   font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
 }
 
+.leading-\[32px\] {
+  line-height: 32px;
+}
+
 .leading-\[var\(--display-md-semibold-line-height\)\] {
   line-height: var(--display-md-semibold-line-height);
 }
@@ -2499,6 +2507,11 @@ body {
   color: rgb(1 106 162 / var(--tw-text-opacity, 1));
 }
 
+.text-\[\#101828\] {
+  --tw-text-opacity: 1;
+  color: rgb(16 24 40 / var(--tw-text-opacity, 1));
+}
+
 .text-\[\#181d27\] {
   --tw-text-opacity: 1;
   color: rgb(24 29 39 / var(--tw-text-opacity, 1));
@@ -2570,6 +2583,10 @@ body {
 .text-blue-700 {
   --tw-text-opacity: 1;
   color: rgb(29 78 216 / var(--tw-text-opacity, 1));
+}
+
+.text-blue-light400 {
+  color: var(--blue-light400);
 }
 
 .text-card-foreground {
@@ -4296,6 +4313,10 @@ body {
     line-height: 2.5rem;
   }
 
+  .sm\:text-\[48px\] {
+    font-size: 48px;
+  }
+
   .sm\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
@@ -4309,6 +4330,14 @@ body {
   .sm\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .sm\:font-normal {
+    font-weight: 400;
+  }
+
+  .sm\:leading-\[60px\] {
+    line-height: 60px;
   }
 
   .data-\[state\=open\]\:sm\:slide-in-from-bottom-full[data-state="open"] {
