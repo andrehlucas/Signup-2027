@@ -309,13 +309,24 @@ export default function Page() {
                       onClick={card.hasButton ? () => setIsVideoDialogOpen(true) : undefined}
                     >
                       {card.bgImage && (
-                        <motion.div 
-                          className="absolute inset-0 z-0"
-                          style={{ background: 'linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%)' }}
-                          initial={{ opacity: 1 }}
-                          whileHover={{ opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                        />
+                        <>
+                          {/* Mobile overlay - lighter */}
+                          <motion.div 
+                            className="lg:hidden absolute inset-0 z-0"
+                            style={{ background: 'linear-gradient(0deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%)' }}
+                            initial={{ opacity: 1 }}
+                            whileHover={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                          />
+                          {/* Desktop overlay - original */}
+                          <motion.div 
+                            className="hidden lg:block absolute inset-0 z-0"
+                            style={{ background: 'linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(119,119,119,1) 100%)' }}
+                            initial={{ opacity: 1 }}
+                            whileHover={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        </>
                       )}
                       <div className="absolute inset-x-0 bottom-0 flex items-center justify-center h-[42px] px-2 z-10">
                         <p className="font-text-sm-text-md-bold font-[number:var(--text-sm-text-md-bold-font-weight)] text-[#ffffff] text-[length:var(--text-sm-text-md-bold-font-size)] text-center tracking-[var(--text-sm-text-md-bold-letter-spacing)] leading-[var(--text-sm-text-md-bold-line-height)] [font-style:var(--text-sm-text-md-bold-font-style)] text-xs sm:text-sm">
