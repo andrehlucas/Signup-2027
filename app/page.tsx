@@ -288,7 +288,7 @@ export default function Page() {
               </motion.div>
 
               <motion.div 
-                className="w-full lg:w-auto"
+                className="hidden lg:flex w-full lg:w-auto"
                 initial={{ opacity: 1, x: 0 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0 }}
