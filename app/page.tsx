@@ -402,7 +402,7 @@ export default function Page() {
               </div>
 
               <div 
-                className="sm:hidden w-full px-4 sm:px-6 md:px-8 mx-auto max-w-[1280px]"
+                className="sm:hidden w-full px-4 sm:px-6 md:px-8 mx-auto max-w-[1280px] flex flex-col items-center gap-3"
                 data-testid="video-promo-mobile"
               >
                 <video
@@ -414,6 +414,9 @@ export default function Page() {
                   <source src={promoVideo} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
+                <p className="font-semibold text-gray-600 text-center">
+                  Click to view demo
+                </p>
               </div>
             </div>
 
