@@ -4452,7 +4452,15 @@ body {
     max-width: 418px;
   }
 
-  .lg\:max-w-\[768px\], .lg\:max-w-screen-md {
+  .lg\:max-w-\[768px\] {
+    max-width: 768px;
+  }
+
+  .lg\:max-w-\[780px\] {
+    max-width: 780px;
+  }
+
+  .lg\:max-w-screen-md {
     max-width: 768px;
   }
 
