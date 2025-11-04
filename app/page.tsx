@@ -287,7 +287,7 @@ export default function Page() {
                 </div>
               </motion.div>
 
-              <div className="hidden lg:flex w-full lg:w-auto">
+              <div className="flex w-full lg:w-auto">
                 <FeaturesBox features={includedFeatures} />
               </div>
             </div>
