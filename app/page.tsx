@@ -283,8 +283,7 @@ export default function Page() {
                   </div>
 
                   <Button 
-                    className="hidden sm:flex w-full sm:w-auto gap-1.5 px-[18px] py-3 bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg shadow-[0px_1px_2px_rgba(10,12.67,18,0.05)] text-white text-base font-semibold leading-6"
-                    style={{ outline: '2px white solid', outlineOffset: '-2px' }}
+                    className="hidden sm:flex w-full sm:w-auto gap-1.5 px-[18px] py-3 bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg shadow-[0px_1px_2px_rgba(10,12.67,18,0.05)] text-white text-base font-semibold leading-6 border-2 border-[rgba(255,255,255,0.2)]"
                     data-testid="button-get-started"
                   >
                     Get Started
@@ -601,8 +600,7 @@ export default function Page() {
           </p>
 
           <Button 
-            className="h-auto gap-1.5 px-[18px] py-3 bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg shadow-[0px_1px_2px_rgba(10,12.67,18,0.05)] text-white text-base font-semibold leading-6"
-            style={{ outline: '2px white solid', outlineOffset: '-2px' }}
+            className="h-auto gap-1.5 px-[18px] py-3 bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg shadow-[0px_1px_2px_rgba(10,12.67,18,0.05)] text-white text-base font-semibold leading-6 border-2 border-[rgba(255,255,255,0.2)]"
             data-testid="button-sign-up"
           >
             Sign Up Now
@@ -637,8 +635,7 @@ export default function Page() {
 
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center w-full">
                 <Button 
-                  className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg shadow-[0px_1px_2px_rgba(10,12.67,18,0.05)] text-white text-base font-semibold leading-6"
-                  style={{ outline: '2px white solid', outlineOffset: '-2px' }}
+                  className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg shadow-[0px_1px_2px_rgba(10,12.67,18,0.05)] text-white text-base font-semibold leading-6 border-2 border-[rgba(255,255,255,0.2)]"
                   data-testid="button-talk-expert"
                 >
                   Talk to an expert

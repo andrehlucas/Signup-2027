@@ -1595,6 +1595,10 @@ body {
   border-color: #0000;
 }
 
+.border-\[rgba\(255\,255\,255\,0\.2\)\] {
+  border-color: #fff3;
+}
+
 .border-l-transparent {
   border-left-color: #0000;
 }
