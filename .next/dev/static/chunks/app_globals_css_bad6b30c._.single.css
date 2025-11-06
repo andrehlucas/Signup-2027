@@ -1622,6 +1622,11 @@ body {
   background-color: rgb(24 34 48 / var(--tw-bg-opacity, 1));
 }
 
+.bg-\[\#36BFFA\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(54 191 250 / var(--tw-bg-opacity, 1));
+}
+
 .bg-\[\#ffffff9e\] {
   background-color: #ffffff9e;
 }
@@ -2282,6 +2287,10 @@ body {
   font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
 }
 
+.leading-6 {
+  line-height: 1.5rem;
+}
+
 .leading-\[32px\] {
   line-height: 32px;
 }
@@ -2646,6 +2655,12 @@ body {
 
 .shadow-\[0px_1px_2px_\#0a0c120d\] {
   --tw-shadow: 0px 1px 2px #0a0c120d;
+  --tw-shadow-colored: 0px 1px 2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-\[0px_1px_2px_rgba\(10\,12\.67\,18\,0\.05\)\] {
+  --tw-shadow: 0px 1px 2px #0a0d120d;
   --tw-shadow-colored: 0px 1px 2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
