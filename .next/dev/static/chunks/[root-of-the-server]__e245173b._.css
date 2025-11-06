@@ -1681,6 +1681,10 @@ body {
   border-color: #fff3;
 }
 
+.border-\[rgba\(255\,255\,255\,0\.12\)\] {
+  border-color: #ffffff1f;
+}
+
 .border-l-transparent {
   border-left-color: #0000;
 }
