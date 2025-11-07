@@ -14,19 +14,19 @@ export function NavigationProgress() {
     setIsLoading(true);
     setProgress(0);
 
-    // Simulate progress
-    const timer1 = setTimeout(() => setProgress(30), 50);
-    const timer2 = setTimeout(() => setProgress(60), 150);
-    const timer3 = setTimeout(() => setProgress(80), 300);
+    // Simulate progress with faster initial movement
+    const timer1 = setTimeout(() => setProgress(40), 100);
+    const timer2 = setTimeout(() => setProgress(70), 300);
+    const timer3 = setTimeout(() => setProgress(90), 600);
 
-    // Complete loading
+    // Complete loading after minimum visibility time
     const completeTimer = setTimeout(() => {
       setProgress(100);
       setTimeout(() => {
         setIsLoading(false);
         setProgress(0);
-      }, 200);
-    }, 500);
+      }, 300);
+    }, 800);
 
     return () => {
       clearTimeout(timer1);
@@ -42,11 +42,11 @@ export function NavigationProgress() {
 
   return (
     <div
-      className="fixed top-0 left-0 h-1 bg-blue-light400 transition-all duration-300 ease-out shadow-lg z-50"
+      className="fixed top-0 left-0 right-0 h-[3px] bg-blue-light400 transition-all duration-200 ease-out z-[9999]"
       data-testid="navigation-progress-bar"
       style={{
         width: `${progress}%`,
-        boxShadow: '0 0 10px rgba(54, 191, 249, 0.5)',
+        boxShadow: '0 0 10px rgba(54, 191, 249, 0.8), 0 0 5px rgba(54, 191, 249, 0.6)',
       }}
     />
   );

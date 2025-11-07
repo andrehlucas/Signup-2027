@@ -1315,17 +1315,17 @@ function NavigationProgress() {
             // Start loading animation
             setIsLoading(true);
             setProgress(0);
-            // Simulate progress
+            // Simulate progress with faster initial movement
             const timer1 = setTimeout({
-                "NavigationProgress.useEffect.timer1": ()=>setProgress(30)
-            }["NavigationProgress.useEffect.timer1"], 50);
+                "NavigationProgress.useEffect.timer1": ()=>setProgress(40)
+            }["NavigationProgress.useEffect.timer1"], 100);
             const timer2 = setTimeout({
-                "NavigationProgress.useEffect.timer2": ()=>setProgress(60)
-            }["NavigationProgress.useEffect.timer2"], 150);
+                "NavigationProgress.useEffect.timer2": ()=>setProgress(70)
+            }["NavigationProgress.useEffect.timer2"], 300);
             const timer3 = setTimeout({
-                "NavigationProgress.useEffect.timer3": ()=>setProgress(80)
-            }["NavigationProgress.useEffect.timer3"], 300);
-            // Complete loading
+                "NavigationProgress.useEffect.timer3": ()=>setProgress(90)
+            }["NavigationProgress.useEffect.timer3"], 600);
+            // Complete loading after minimum visibility time
             const completeTimer = setTimeout({
                 "NavigationProgress.useEffect.completeTimer": ()=>{
                     setProgress(100);
@@ -1334,9 +1334,9 @@ function NavigationProgress() {
                             setIsLoading(false);
                             setProgress(0);
                         }
-                    }["NavigationProgress.useEffect.completeTimer"], 200);
+                    }["NavigationProgress.useEffect.completeTimer"], 300);
                 }
-            }["NavigationProgress.useEffect.completeTimer"], 500);
+            }["NavigationProgress.useEffect.completeTimer"], 800);
             return ({
                 "NavigationProgress.useEffect": ()=>{
                     clearTimeout(timer1);
@@ -1354,11 +1354,11 @@ function NavigationProgress() {
         return null;
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed top-0 left-0 h-1 bg-blue-light400 transition-all duration-300 ease-out shadow-lg z-50",
+        className: "fixed top-0 left-0 right-0 h-[3px] bg-blue-light400 transition-all duration-200 ease-out z-[9999]",
         "data-testid": "navigation-progress-bar",
         style: {
             width: `${progress}%`,
-            boxShadow: '0 0 10px rgba(54, 191, 249, 0.5)'
+            boxShadow: '0 0 10px rgba(54, 191, 249, 0.8), 0 0 5px rgba(54, 191, 249, 0.6)'
         }
     }, void 0, false, {
         fileName: "[project]/app/components/NavigationProgress.tsx",

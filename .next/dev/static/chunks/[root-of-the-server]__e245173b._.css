@@ -602,6 +602,10 @@ body {
   z-index: 1;
 }
 
+.z-\[9999\] {
+  z-index: 9999;
+}
+
 .order-1 {
   order: 1;
 }
@@ -775,10 +779,6 @@ body {
 .size-4 {
   width: 1rem;
   height: 1rem;
-}
-
-.h-1 {
-  height: .25rem;
 }
 
 .h-1\.5 {
@@ -2936,10 +2936,6 @@ body {
   transition-duration: .2s;
 }
 
-.duration-300 {
-  transition-duration: .3s;
-}
-
 .ease-in-out {
   transition-timing-function: cubic-bezier(.4, 0, .2, 1);
 }
@@ -2994,10 +2990,6 @@ body {
 
 .duration-200 {
   animation-duration: .2s;
-}
-
-.duration-300 {
-  animation-duration: .3s;
 }
 
 .ease-in-out {
