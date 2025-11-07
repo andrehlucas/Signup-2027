@@ -1557,6 +1557,10 @@ body {
   border-color: var(--color-border);
 }
 
+.border-\[rgba\(255\,255\,255\,0\.12\)\] {
+  border-color: #ffffff1f;
+}
+
 .border-border\/50 {
   border-color: hsl(var(--border) / .5);
 }
@@ -1593,14 +1597,6 @@ body {
 
 .border-transparent {
   border-color: #0000;
-}
-
-.border-\[rgba\(255\,255\,255\,0\.2\)\] {
-  border-color: #fff3;
-}
-
-.border-\[rgba\(255\,255\,255\,0\.12\)\] {
-  border-color: #ffffff1f;
 }
 
 .border-l-transparent {
@@ -2663,12 +2659,6 @@ body {
 
 .shadow-\[0px_1px_2px_\#0a0c120d\] {
   --tw-shadow: 0px 1px 2px #0a0c120d;
-  --tw-shadow-colored: 0px 1px 2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-\[0px_1px_2px_rgba\(10\,12\.67\,18\,0\.05\)\] {
-  --tw-shadow: 0px 1px 2px #0a0d120d;
   --tw-shadow-colored: 0px 1px 2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
