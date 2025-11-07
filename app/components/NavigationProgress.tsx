@@ -42,16 +42,12 @@ export function NavigationProgress() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 h-1 bg-transparent"
+      className="fixed top-0 left-0 h-1 bg-blue-light400 transition-all duration-300 ease-out shadow-lg z-50"
       data-testid="navigation-progress-bar"
-    >
-      <div
-        className="h-full bg-blue-light400 transition-all duration-300 ease-out shadow-lg"
-        style={{
-          width: `${progress}%`,
-          boxShadow: '0 0 10px rgba(54, 191, 249, 0.5)',
-        }}
-      />
-    </div>
+      style={{
+        width: `${progress}%`,
+        boxShadow: '0 0 10px rgba(54, 191, 249, 0.5)',
+      }}
+    />
   );
 }
