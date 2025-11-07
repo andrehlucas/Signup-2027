@@ -42,7 +42,7 @@ export function NavigationProgress() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 h-[3px] bg-blue-light400 transition-all duration-200 ease-out z-[9999]"
+      className="fixed top-0 left-0 right-0 h-[6px] bg-blue-light400 transition-all duration-200 ease-out z-[9999]"
       data-testid="navigation-progress-bar"
       style={{
         width: `${progress}%`,
