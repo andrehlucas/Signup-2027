@@ -179,6 +179,75 @@
   --warning-400: rgba(253, 176, 34, 1);
   --white: rgba(255, 255, 255, 1);
   --animate-spin: spin 1s linear infinite;
+
+  /* Design tokens for Button component */
+  --bg-brand-solid: rgba(54, 191, 250, 1);
+  --bg-brand-solid_hover: rgba(2, 106, 162, 1);
+  --bg-primary: rgba(255, 255, 255, 1);
+  --bg-primary_hover: rgba(249, 250, 251, 1);
+  --bg-disabled: rgba(242, 244, 247, 1);
+  --bg-error-solid: rgba(217, 45, 32, 1);
+  --bg-error-primary: rgba(254, 243, 242, 1);
+  
+  --text-white: rgba(255, 255, 255, 1);
+  --text-secondary: rgba(52, 64, 84, 1);
+  --text-secondary_hover: rgba(24, 34, 48, 1);
+  --text-tertiary: rgba(52, 64, 84, 1);
+  --text-tertiary_hover: rgba(24, 34, 48, 1);
+  --text-brand-secondary: rgba(54, 191, 250, 1);
+  --text-brand-secondary_hover: rgba(2, 106, 162, 1);
+  --text-error-primary: rgba(217, 45, 32, 1);
+  --text-error-primary_hover: rgba(180, 35, 24, 1);
+  
+  --fg-disabled: rgba(152, 162, 179, 1);
+  --fg-disabled_subtle: rgba(208, 213, 221, 1);
+  --fg-quaternary: rgba(102, 112, 133, 1);
+  --fg-quaternary_hover: rgba(71, 84, 103, 1);
+  --fg-brand-secondary_alt: rgba(54, 191, 250, 1);
+  --fg-brand-secondary_hover: rgba(2, 106, 162, 1);
+  --fg-error-secondary: rgba(217, 45, 32, 1);
+  --fg-error-primary: rgba(180, 35, 24, 1);
+  
+  --ring-primary: rgba(208, 213, 221, 1);
+  --ring-disabled_subtle: rgba(234, 236, 240, 1);
+  --ring-error_subtle: rgba(254, 228, 226, 1);
+  
+  --button-primary-icon: rgba(255, 255, 255, 0.9);
+  --button-primary-icon_hover: rgba(255, 255, 255, 1);
+  --button-destructive-primary-icon: rgba(255, 255, 255, 0.9);
+  --button-destructive-primary-icon_hover: rgba(255, 255, 255, 1);
+  
+  --outline-brand: rgba(54, 191, 250, 1);
+  --outline-error: rgba(217, 45, 32, 1);
+  
+  /* Shadow effects for skeumorphic design */
+  --shadow-skeumorphic-inner-border: rgba(10, 13, 18, 0.18);
+  --shadow-skeumorphic-inner: rgba(10, 13, 18, 0.05);
+  --shadow-skeuomorphic-ambient: rgba(10, 13, 18, 0.05);
+  
+  /* Spacing tokens */
+  --spacing-sm: 6px;
+  --spacing-lg: 12px;
+  
+  /* Radius tokens */
+  --radius-md: 8px;
+}
+
+@layer utilities {
+  /* Skeuomorphic button shadow utility with increased specificity */
+  button.shadow-xs-skeumorphic,
+  .shadow-xs-skeumorphic {
+    box-shadow: 0 0 0 1px var(--shadow-skeumorphic-inner-border) inset, 
+                0 -2px 0 0 var(--shadow-skeumorphic-inner) inset, 
+                0 1px 2px 0 var(--shadow-skeuomorphic-ambient) !important;
+  }
+  
+  /* Ensure buttons with this class always have the shadow */
+  button[class*="shadow-xs-skeumorphic"] {
+    box-shadow: 0 0 0 1px var(--shadow-skeumorphic-inner-border) inset, 
+                0 -2px 0 0 var(--shadow-skeumorphic-inner) inset, 
+                0 1px 2px 0 var(--shadow-skeuomorphic-ambient) !important;
+  }
 }
 
 .animate-fade-in {

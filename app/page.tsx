@@ -283,8 +283,9 @@ export default function Page() {
                   </div>
 
                   <Button 
-                    className="hidden sm:flex w-full sm:w-auto gap-1.5 px-[18px] py-3 bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg text-white text-base font-semibold leading-6 border-2 border-[rgba(255,255,255,0.12)]"
-                    style={{ boxShadow: '0 0 0 1px rgba(10, 13, 18, 0.18) inset, 0 -2px 0 0 rgba(10, 13, 18, 0.05) inset, 0 1px 2px 0 rgba(10, 13, 18, 0.05)' }}
+                    size="xl"
+                    color="primary"
+                    className="hidden sm:flex w-full sm:w-auto"
                     data-testid="button-get-started"
                   >
                     Get Started
@@ -601,8 +602,8 @@ export default function Page() {
           </p>
 
           <Button 
-            className="h-auto gap-1.5 px-[18px] py-3 bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg text-white text-base font-semibold leading-6 border-2 border-[rgba(255,255,255,0.12)]"
-            style={{ boxShadow: '0 0 0 1px rgba(10, 13, 18, 0.18) inset, 0 -2px 0 0 rgba(10, 13, 18, 0.05) inset, 0 1px 2px 0 rgba(10, 13, 18, 0.05)' }}
+            size="xl"
+            color="primary"
             data-testid="button-sign-up"
           >
             Sign Up Now
@@ -637,8 +638,9 @@ export default function Page() {
 
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center w-full">
                 <Button 
-                  className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-[#36BFFA] hover:bg-blue-light700 transition-colors rounded-lg text-white text-base font-semibold leading-6 border-2 border-[rgba(255,255,255,0.12)]"
-                  style={{ boxShadow: '0 0 0 1px rgba(10, 13, 18, 0.18) inset, 0 -2px 0 0 rgba(10, 13, 18, 0.05) inset, 0 1px 2px 0 rgba(10, 13, 18, 0.05)' }}
+                  size="xl"
+                  color="primary"
+                  className="w-full sm:w-auto"
                   data-testid="button-talk-expert"
                 >
                   Talk to an expert
@@ -860,8 +862,9 @@ export default function Page() {
             variants={fadeIn}
           >
             <Button
-              variant="ghost"
-              className="h-auto gap-1 pl-0 pr-3 py-0 rounded-lg overflow-hidden"
+              color="tertiary"
+              size="sm"
+              className="h-auto pl-0 pr-3 py-0"
               data-testid="button-more-reviews"
             >
               <span className="font-text-sm-semibold font-[number:var(--text-sm-semibold-font-weight)] text-gray-600 text-[length:var(--text-sm-semibold-font-size)] tracking-[var(--text-sm-semibold-letter-spacing)] leading-[var(--text-sm-semibold-line-height)] whitespace-nowrap [font-style:var(--text-sm-semibold-font-style)]">
@@ -926,7 +929,12 @@ export default function Page() {
                     </p>
                   </div>
 
-                  <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] hover:border-blue-light700 shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-get-ebook">
+                  <Button 
+                    size="xl"
+                    color="primary"
+                    className="w-full sm:w-auto"
+                    data-testid="button-get-ebook"
+                  >
                     Get your Ebook
                   </Button>
                 </div>

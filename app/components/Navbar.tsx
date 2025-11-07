@@ -76,14 +76,15 @@ export function Navbar() {
               {/* Action Buttons */}
               <div className="flex items-center gap-3">
                 <Button
-                  variant="ghost"
-                  className="px-4 py-2.5 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent hover:text-[#181d27] transition-colors"
+                  color="tertiary"
+                  size="lg"
                   data-testid="button-login"
                 >
                   Log in
                 </Button>
                 <Button
-                  className="h-auto gap-1.5 px-[18px] py-3 bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] hover:border-blue-light700 shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]"
+                  size="xl"
+                  color="primary"
                   data-testid="button-signup"
                 >
                   Click to sign up
@@ -118,7 +119,9 @@ export function Navbar() {
           {/* Right Actions */}
           <div className="flex items-center gap-2">
             <Button
-              className="h-auto gap-1.5 px-3 py-2 bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] hover:border-blue-light700 shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]"
+              size="md"
+              color="primary"
+              className="px-3 py-2"
               data-testid="button-signup-mobile"
             >
               Tap to sign up
@@ -128,9 +131,9 @@ export function Navbar() {
             <Sheet>
               <SheetTrigger asChild>
                 <Button
-                  variant="ghost"
-                  size="icon"
-                  className="p-2 rounded-lg"
+                  color="tertiary"
+                  size="sm"
+                  className="p-2"
                   data-testid="button-menu"
                 >
                   <Menu className="h-6 w-6 text-[#344054]" />
@@ -190,8 +193,9 @@ export function Navbar() {
                   {/* Login Button */}
                   <div className="px-4">
                     <Button
-                      variant="outline"
-                      className="w-full px-4 py-3 rounded-lg font-semibold text-base text-[#535862] hover:bg-transparent hover:text-[#181d27] transition-colors"
+                      color="secondary"
+                      size="md"
+                      className="w-full px-4 py-3"
                       data-testid="button-login-mobile"
                     >
                       Log in
@@ -201,7 +205,9 @@ export function Navbar() {
                   {/* Signup Button */}
                   <div className="px-4">
                     <Button
-                      className="w-full h-auto gap-1.5 px-4 py-3 bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] hover:border-blue-light700 shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]"
+                      size="md"
+                      color="primary"
+                      className="w-full px-4 py-3"
                       data-testid="button-signup-mobile-menu"
                     >
                       Tap to sign up
