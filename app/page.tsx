@@ -282,12 +282,7 @@ export default function Page() {
                     </p>
                   </div>
 
-                  <Button 
-                    size="xl"
-                    color="primary"
-                    className="hidden sm:flex w-full sm:w-auto"
-                    data-testid="button-get-started"
-                  >
+                  <Button className="hidden sm:flex h-[50px] gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] hover:border-blue-light700 shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-get-started">
                     Get Started
                   </Button>
                 </div>
@@ -601,11 +596,7 @@ export default function Page() {
             All-Inclusive Virtual Office Services for Only $99/mo.
           </p>
 
-          <Button 
-            size="xl"
-            color="primary"
-            data-testid="button-sign-up"
-          >
+          <Button className="h-auto gap-1.5 px-[18px] py-3 bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] hover:border-blue-light700 shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-sign-up">
             Sign Up Now
           </Button>
         </motion.section>
@@ -637,12 +628,7 @@ export default function Page() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start sm:items-center w-full">
-                <Button 
-                  size="xl"
-                  color="primary"
-                  className="w-full sm:w-auto"
-                  data-testid="button-talk-expert"
-                >
+                <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] hover:border-blue-light700 shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-talk-expert">
                   Talk to an expert
                 </Button>
 
@@ -862,9 +848,8 @@ export default function Page() {
             variants={fadeIn}
           >
             <Button
-              color="tertiary"
-              size="sm"
-              className="h-auto pl-0 pr-3 py-0"
+              variant="ghost"
+              className="h-auto gap-1 pl-0 pr-3 py-0 rounded-lg overflow-hidden"
               data-testid="button-more-reviews"
             >
               <span className="font-text-sm-semibold font-[number:var(--text-sm-semibold-font-weight)] text-gray-600 text-[length:var(--text-sm-semibold-font-size)] tracking-[var(--text-sm-semibold-letter-spacing)] leading-[var(--text-sm-semibold-line-height)] whitespace-nowrap [font-style:var(--text-sm-semibold-font-style)]">
@@ -929,12 +914,7 @@ export default function Page() {
                     </p>
                   </div>
 
-                  <Button 
-                    size="xl"
-                    color="primary"
-                    className="w-full sm:w-auto"
-                    data-testid="button-get-ebook"
-                  >
+                  <Button className="h-auto inline-flex items-center justify-center gap-1.5 px-[18px] py-3 w-full sm:w-auto bg-blue-light400 hover:bg-blue-light700 transition-colors rounded-lg border border-solid border-[#36bff9] hover:border-blue-light700 shadow-shadows-shadow-xs font-text-sm-text-md-semibold font-[number:var(--text-sm-text-md-semibold-font-weight)] text-basewhite text-[length:var(--text-sm-text-md-semibold-font-size)] tracking-[var(--text-sm-text-md-semibold-letter-spacing)] leading-[var(--text-sm-text-md-semibold-line-height)] [font-style:var(--text-sm-text-md-semibold-font-style)]" data-testid="button-get-ebook">
                     Get your Ebook
                   </Button>
                 </div>
