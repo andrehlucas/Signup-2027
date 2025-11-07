@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from './providers';
 import { Toaster } from '@/app/components/ui/toaster';
 import { Navbar } from '@/app/components/Navbar';
+import { NavigationProgress } from '@/app/components/NavigationProgress';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body>
         <Providers>
+          <NavigationProgress />
           <Navbar />
           {children}
           <Toaster />
