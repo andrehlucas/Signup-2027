@@ -28,31 +28,31 @@ const navItems: NavItem[] = [
     label: 'My Office',
     icon: <Building2 className="h-5 w-5" />,
     children: [
-      { label: 'Locations', href: '/portal' },
-      { label: 'Addons', href: '/portal/addons' },
+      { label: 'Locations', href: '/' },
+      { label: 'Addons', href: '/addons' },
     ],
   },
   {
     label: 'Account',
     icon: <User className="h-5 w-5" />,
     children: [
-      { label: 'Account Details', href: '/portal/account' },
-      { label: 'Billing', href: '/portal/billing' },
+      { label: 'Account Details', href: '/account' },
+      { label: 'Billing', href: '/billing' },
     ],
   },
   {
     label: 'How to / Videos',
-    href: '/portal/videos',
+    href: '/videos',
     icon: <PlayCircle className="h-5 w-5" />,
   },
   {
     label: 'Meeting Rooms',
-    href: '/portal/meeting-rooms',
+    href: '/meeting-rooms',
     icon: <DoorOpen className="h-5 w-5" />,
   },
   {
     label: 'Support',
-    href: '/portal/support',
+    href: '/support',
     icon: <HelpCircle className="h-5 w-5" />,
   },
 ];

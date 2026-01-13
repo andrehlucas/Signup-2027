@@ -5,9 +5,9 @@ import { MapPin, Phone, User, MoreVertical, CreditCard, FileEdit, Users, Mail, C
 import { Card, CardContent } from '@/app/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
 import { Badge } from '@/app/components/ui/badge';
-import { LocationMedia } from './components/LocationMedia';
-import { QuickActionCard } from './components/QuickActionCard';
-import { FeatureItem } from './components/FeatureItem';
+import { LocationMedia } from './portal-components/LocationMedia';
+import { QuickActionCard } from './portal-components/QuickActionCard';
+import { FeatureItem } from './portal-components/FeatureItem';
 
 const locations = [
   {

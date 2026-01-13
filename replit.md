@@ -90,31 +90,30 @@ Preferred communication style: Simple, everyday language.
 ### Project Structure
 
 **Next.js App Router Layout**
-- `app/` - Next.js application with App Router
-  - `(marketing)/` - Route group for marketing pages (with top Navbar)
-    - `page.tsx` - Homepage
-    - `faq/` - FAQ page
-    - `locations/` - Locations page
-    - `services/` - Services page
-    - `layout.tsx` - Marketing layout with Navbar
-  - `(portal)/` - Route group for customer portal (sidebar-only navigation)
-    - `portal/` - Portal pages
-      - `page.tsx` - Portal dashboard
-      - `components/` - Portal-specific reusable components
-    - `layout.tsx` - Portal layout with PortalSidebar
+- `app/` - Next.js application with App Router (portal-only)
+  - `page.tsx` - Portal dashboard (main page at /)
+  - `portal-components/` - Portal-specific reusable components
   - `components/` - Shared UI components
     - `ui/` - shadcn/ui components
-    - `Navbar.tsx` - Top navigation (marketing pages only)
     - `NavigationProgress.tsx` - Page loading indicator
-  - `layout.tsx` - Root layout (Providers, Toaster, NavigationProgress)
+  - `layout.tsx` - Root layout (Providers, PortalSidebar, NavigationProgress, Toaster)
 - `server/` - Backend Express application
 - `shared/` - Shared TypeScript code (schemas, types)
 - `attached_assets/` - Static image assets
 - `public/` - Public static assets (images, SVGs)
 - `migrations/` - Database migration files
 
+**Portal Routes**
+- `/` - Portal dashboard (locations overview)
+- `/addons` - Addons page
+- `/account` - Account details page
+- `/billing` - Billing page
+- `/videos` - How to / Videos page
+- `/meeting-rooms` - Meeting rooms page
+- `/support` - Support page
+
 **Portal Reusable Components**
-Located in `app/(portal)/portal/components/`:
+Located in `app/portal-components/`:
 - `PromoBanner.tsx` - Dismissible promotional CTA banner
 - `QuickActionCard.tsx` - Action card with icon, title, description
 - `FeatureItem.tsx` - Package feature row with icon and label
