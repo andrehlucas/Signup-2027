@@ -72,7 +72,7 @@ export default function PortalDashboard() {
 
   return (
     <div className="p-4 md:p-8" data-testid="portal-dashboard">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6" data-testid="heading-welcome">
+      <h1 className="text-xl md:text-3xl font-bold text-gray-900 mb-6" data-testid="heading-welcome">
         Welcome, {'{business-name}'}
       </h1>
 
@@ -125,7 +125,7 @@ export default function PortalDashboard() {
                 </div>
               </div>
 
-              <div>
+              <div className="hidden lg:block">
                 <Card className="border-0 shadow-sm" data-testid="card-package-features">
                   <CardContent className="p-6">
                     <h3 className="font-semibold text-gray-900 mb-4">Your Office Package Includes:</h3>
