@@ -85,15 +85,15 @@ function SidebarContent({
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#1a1f2e] text-white">
-      <div className="p-4 border-b border-white/10">
+    <div className="flex flex-col h-screen sticky top-0 bg-[#1a1f2e] text-white overflow-hidden">
+      <div className="p-4 border-b border-white/10 shrink-0">
         <Link href="/" className="flex items-center gap-2" data-testid="link-sidebar-logo" onClick={handleNavClick}>
           <img src="/opus-logo-icon.svg" alt="Opus" className="h-8 w-8" />
           <span className="text-xl font-bold text-white">opus</span>
         </Link>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 shrink-0">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input 
@@ -104,7 +104,7 @@ function SidebarContent({
         </div>
       </div>
 
-      <nav className="flex-1 px-2 overflow-y-auto">
+      <nav className="flex-1 px-2 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         {navItems.map((item) => (
           <NavSection
             key={item.label}
@@ -121,7 +121,7 @@ function SidebarContent({
       </nav>
 
       {showPromo && (
-        <div className="mx-3 mb-4">
+        <div className="mx-3 mb-4 shrink-0">
           <PromoBanner
             title="5 Free hours of"
             subtitle="Conference Room available!"
@@ -133,7 +133,7 @@ function SidebarContent({
         </div>
       )}
 
-      <div className="p-4 border-t border-white/10 flex items-center justify-between">
+      <div className="p-4 border-t border-white/10 flex items-center justify-between shrink-0">
         <span className="text-sm text-gray-300" data-testid="text-username">{'{User-name}'}</span>
         <button className="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors" data-testid="button-logout">
           Logout <LogOut className="h-4 w-4" />
