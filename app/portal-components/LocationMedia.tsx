@@ -23,7 +23,7 @@ export function LocationMedia({
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="relative rounded-xl overflow-hidden h-[360px] group md:col-span-2">
+        <div className="relative rounded-xl overflow-hidden h-48 md:h-[360px] group md:col-span-2">
           <img
             src={buildingImage}
             alt="Office Building"
