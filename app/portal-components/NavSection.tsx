@@ -18,6 +18,7 @@ interface NavSectionProps {
   onToggle?: () => void;
   isActive?: (href: string) => boolean;
   testIdPrefix?: string;
+  onNavigate?: () => void;
 }
 
 export function NavSection({
@@ -29,6 +30,7 @@ export function NavSection({
   onToggle,
   isActive = () => false,
   testIdPrefix = 'nav',
+  onNavigate,
 }: NavSectionProps) {
   const slugLabel = label.toLowerCase().replace(/\s+/g, '-');
 
@@ -56,6 +58,7 @@ export function NavSection({
               <Link
                 key={child.href}
                 href={child.href}
+                onClick={onNavigate}
                 className={cn(
                   "block px-3 py-2 rounded-lg text-sm transition-colors",
                   isActive(child.href)
@@ -77,6 +80,7 @@ export function NavSection({
     <div className="mb-1">
       <Link
         href={href!}
+        onClick={onNavigate}
         className={cn(
           "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors",
           isActive(href!)

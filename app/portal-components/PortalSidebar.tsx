@@ -10,9 +10,11 @@ import {
   PlayCircle, 
   DoorOpen, 
   HelpCircle,
-  LogOut
+  LogOut,
+  Menu
 } from 'lucide-react';
 import { Input } from '@/app/components/ui/input';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/app/components/ui/sheet';
 import { NavSection } from './NavSection';
 import { PromoBanner } from './PromoBanner';
 
@@ -57,7 +59,11 @@ const navItems: NavItem[] = [
   },
 ];
 
-export function PortalSidebar() {
+function SidebarContent({ 
+  onNavigate 
+}: { 
+  onNavigate?: () => void 
+}) {
   const pathname = usePathname();
   const [expandedItems, setExpandedItems] = useState<string[]>(['My Office', 'Account']);
   const [showPromo, setShowPromo] = useState(true);
@@ -72,10 +78,16 @@ export function PortalSidebar() {
 
   const isActive = (href: string) => pathname === href;
 
+  const handleNavClick = () => {
+    if (onNavigate) {
+      onNavigate();
+    }
+  };
+
   return (
-    <aside className="w-64 min-h-screen bg-[#1a1f2e] text-white flex flex-col" data-testid="portal-sidebar">
+    <div className="flex flex-col h-full bg-[#1a1f2e] text-white">
       <div className="p-4 border-b border-white/10">
-        <Link href="/" className="flex items-center gap-2" data-testid="link-portal-logo">
+        <Link href="/" className="flex items-center gap-2" data-testid="link-sidebar-logo" onClick={handleNavClick}>
           <img src="/opus-logo-icon.svg" alt="Opus" className="h-8 w-8" />
           <span className="text-xl font-bold text-white">opus</span>
         </Link>
@@ -103,6 +115,7 @@ export function PortalSidebar() {
             isExpanded={expandedItems.includes(item.label)}
             onToggle={() => toggleExpanded(item.label)}
             isActive={isActive}
+            onNavigate={handleNavClick}
           />
         ))}
       </nav>
@@ -126,6 +139,41 @@ export function PortalSidebar() {
           Logout <LogOut className="h-4 w-4" />
         </button>
       </div>
-    </aside>
+    </div>
+  );
+}
+
+export function PortalSidebar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  return (
+    <>
+      <aside className="hidden lg:flex w-64 min-h-screen flex-col" data-testid="portal-sidebar">
+        <SidebarContent />
+      </aside>
+
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between" data-testid="mobile-header">
+        <Link href="/" className="flex items-center gap-2" data-testid="link-mobile-logo">
+          <img src="/opus-logo-icon.svg" alt="Opus" className="h-8 w-8" />
+          <span className="text-xl font-bold text-[#1a1f2e]">opus</span>
+        </Link>
+        
+        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetTrigger asChild>
+            <button 
+              className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+              data-testid="button-mobile-menu"
+              aria-label="Open menu"
+            >
+              <Menu className="h-6 w-6 text-[#1a1f2e]" />
+            </button>
+          </SheetTrigger>
+          <SheetContent side="right" className="p-0 w-80 bg-[#1a1f2e] border-l-0">
+            <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+            <SidebarContent onNavigate={() => setMobileOpen(false)} />
+          </SheetContent>
+        </Sheet>
+      </div>
+    </>
   );
 }
