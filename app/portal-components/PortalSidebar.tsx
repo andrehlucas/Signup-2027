@@ -125,7 +125,7 @@ function SidebarContent({
           <PromoBanner
             title="5 Free hours of"
             subtitle="Conference Room available!"
-            buttonText="Book your conference room now!"
+            buttonText="Book Now"
             imageUrl="/receptionist-card-bg_1761593285326.webp"
             imageAlt="Conference Room"
             onClose={() => setShowPromo(false)}
