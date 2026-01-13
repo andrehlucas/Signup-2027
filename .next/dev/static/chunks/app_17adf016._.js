@@ -1237,10 +1237,7 @@ const navItems = [
 function SidebarContent({ onNavigate }) {
     _s();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
-    const [expandedItems, setExpandedItems] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([
-        'My Office',
-        'Account'
-    ]);
+    const [expandedItems, setExpandedItems] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [showPromo, setShowPromo] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const toggleExpanded = (label)=>{
         setExpandedItems((prev)=>prev.includes(label) ? prev.filter((item)=>item !== label) : [
@@ -1408,7 +1405,7 @@ function SidebarContent({ onNavigate }) {
         columnNumber: 5
     }, this);
 }
-_s(SidebarContent, "amezEfY+DnBs6Dstt+WHd1lALJE=", false, function() {
+_s(SidebarContent, "mYmvUpg6wDAcHWXyX8ncrGs9dWA=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"]
     ];
@@ -1494,20 +1491,21 @@ function PortalSidebar() {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$sheet$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SheetContent"], {
                                 side: "right",
                                 className: "p-0 w-[calc(100%-48px)] bg-[#1a1f2e] border-l-0",
+                                onOpenAutoFocus: (e)=>e.preventDefault(),
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$sheet$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SheetTitle"], {
                                         className: "sr-only",
                                         children: "Navigation Menu"
                                     }, void 0, false, {
                                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                        lineNumber: 172,
+                                        lineNumber: 176,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SidebarContent, {
                                         onNavigate: ()=>setMobileOpen(false)
                                     }, void 0, false, {
                                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                        lineNumber: 173,
+                                        lineNumber: 177,
                                         columnNumber: 13
                                     }, this)
                                 ]

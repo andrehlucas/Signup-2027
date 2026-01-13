@@ -65,7 +65,7 @@ function SidebarContent({
   onNavigate?: () => void 
 }) {
   const pathname = usePathname();
-  const [expandedItems, setExpandedItems] = useState<string[]>(['My Office', 'Account']);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [showPromo, setShowPromo] = useState(true);
 
   const toggleExpanded = (label: string) => {
@@ -168,7 +168,11 @@ export function PortalSidebar() {
               <Menu className="h-6 w-6 text-[#1a1f2e]" />
             </button>
           </SheetTrigger>
-          <SheetContent side="right" className="p-0 w-[calc(100%-48px)] bg-[#1a1f2e] border-l-0">
+          <SheetContent 
+            side="right" 
+            className="p-0 w-[calc(100%-48px)] bg-[#1a1f2e] border-l-0"
+            onOpenAutoFocus={(e) => e.preventDefault()}
+          >
             <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
             <SidebarContent onNavigate={() => setMobileOpen(false)} />
           </SheetContent>
