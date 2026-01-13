@@ -23,7 +23,7 @@ export function LocationMedia({
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="relative rounded-xl overflow-hidden h-[400px] group md:col-span-2">
+        <div className="relative rounded-xl overflow-hidden h-[360px] group md:col-span-2">
           <img
             src={buildingImage}
             alt="Office Building"
@@ -38,7 +38,7 @@ export function LocationMedia({
             <p className="text-gray-300 text-xs">{city}</p>
           </div>
         </div>
-        <div className="hidden md:block rounded-xl overflow-hidden h-[400px] bg-gray-200">
+        <div className="hidden md:block rounded-xl overflow-hidden h-[360px] bg-gray-200">
           <iframe
             src={mapEmbedUrl}
             width="100%"
