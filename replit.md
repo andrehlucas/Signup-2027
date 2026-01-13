@@ -89,16 +89,41 @@ Preferred communication style: Simple, everyday language.
 
 ### Project Structure
 
-**Monorepo Layout**
-- `client/` - Frontend React application
+**Next.js App Router Layout**
+- `app/` - Next.js application with App Router
+  - `(marketing)/` - Route group for marketing pages (with top Navbar)
+    - `page.tsx` - Homepage
+    - `faq/` - FAQ page
+    - `locations/` - Locations page
+    - `services/` - Services page
+    - `layout.tsx` - Marketing layout with Navbar
+  - `(portal)/` - Route group for customer portal (sidebar-only navigation)
+    - `portal/` - Portal pages
+      - `page.tsx` - Portal dashboard
+      - `components/` - Portal-specific reusable components
+    - `layout.tsx` - Portal layout with PortalSidebar
+  - `components/` - Shared UI components
+    - `ui/` - shadcn/ui components
+    - `Navbar.tsx` - Top navigation (marketing pages only)
+    - `NavigationProgress.tsx` - Page loading indicator
+  - `layout.tsx` - Root layout (Providers, Toaster, NavigationProgress)
 - `server/` - Backend Express application
 - `shared/` - Shared TypeScript code (schemas, types)
 - `attached_assets/` - Static image assets
+- `public/` - Public static assets (images, SVGs)
 - `migrations/` - Database migration files
 
+**Portal Reusable Components**
+Located in `app/(portal)/portal/components/`:
+- `PromoBanner.tsx` - Dismissible promotional CTA banner
+- `QuickActionCard.tsx` - Action card with icon, title, description
+- `FeatureItem.tsx` - Package feature row with icon and label
+- `LocationMedia.tsx` - Building image + map + address + action buttons
+- `NavSection.tsx` - Collapsible sidebar navigation section
+- `PortalSidebar.tsx` - Main portal sidebar navigation
+
 **Build Process**
-- Client builds to `dist/public` (served as static files in production)
-- Server bundles to `dist/index.js` using esbuild
+- Next.js handles client and server builds
 - TypeScript compilation checks without emit
 - Separate dev and production scripts
 
