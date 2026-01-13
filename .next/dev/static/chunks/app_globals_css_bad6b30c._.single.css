@@ -736,10 +736,6 @@ body {
   height: 1.5rem;
 }
 
-.h-60 {
-  height: 15rem;
-}
-
 .h-7 {
   height: 1.75rem;
 }
@@ -762,6 +758,10 @@ body {
 
 .h-\[32px\] {
   height: 32px;
+}
+
+.h-\[400px\] {
+  height: 400px;
 }
 
 .h-\[44px\] {
