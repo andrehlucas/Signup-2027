@@ -71,7 +71,7 @@ export default function PortalDashboard() {
   const [activeLocation, setActiveLocation] = useState('location-01');
 
   return (
-    <div className="p-8" data-testid="portal-dashboard">
+    <div className="p-4 md:p-8" data-testid="portal-dashboard">
       <h1 className="text-3xl font-bold text-gray-900 mb-6" data-testid="heading-welcome">
         Welcome, {'{business-name}'}
       </h1>
