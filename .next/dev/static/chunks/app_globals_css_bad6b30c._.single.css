@@ -916,10 +916,6 @@ body {
   width: 2rem;
 }
 
-.w-80 {
-  width: 20rem;
-}
-
 .w-9 {
   width: 2.25rem;
 }
@@ -950,6 +946,10 @@ body {
 
 .w-\[50px\] {
   width: 50px;
+}
+
+.w-\[calc\(100\%-24px\)\] {
+  width: calc(100% - 24px);
 }
 
 .w-auto {
