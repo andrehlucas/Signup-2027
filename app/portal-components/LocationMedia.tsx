@@ -31,7 +31,7 @@ export function LocationMedia({
             data-testid="img-building"
           />
         </div>
-        <div className="rounded-xl overflow-hidden h-48 bg-gray-200">
+        <div className="hidden md:block rounded-xl overflow-hidden h-48 bg-gray-200">
           <iframe
             src={mapEmbedUrl}
             width="100%"
