@@ -1,4 +1,4 @@
-import { PortalSidebar } from './components/PortalSidebar';
+import { PortalSidebar } from './portal/components/PortalSidebar';
 
 export default function PortalLayout({
   children,
