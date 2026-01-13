@@ -1238,18 +1238,18 @@ function NavigationProgress() {
         // Start loading animation
         setIsLoading(true);
         setProgress(0);
-        // Simulate progress
-        const timer1 = setTimeout(()=>setProgress(30), 50);
-        const timer2 = setTimeout(()=>setProgress(60), 150);
-        const timer3 = setTimeout(()=>setProgress(80), 300);
-        // Complete loading
+        // Simulate progress with faster initial movement
+        const timer1 = setTimeout(()=>setProgress(40), 100);
+        const timer2 = setTimeout(()=>setProgress(70), 300);
+        const timer3 = setTimeout(()=>setProgress(90), 600);
+        // Complete loading after minimum visibility time
         const completeTimer = setTimeout(()=>{
             setProgress(100);
             setTimeout(()=>{
                 setIsLoading(false);
                 setProgress(0);
-            }, 200);
-        }, 500);
+            }, 300);
+        }, 800);
         return ()=>{
             clearTimeout(timer1);
             clearTimeout(timer2);
@@ -1264,19 +1264,12 @@ function NavigationProgress() {
         return null;
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed top-0 left-0 right-0 z-50 h-1 bg-transparent",
+        className: "fixed top-0 left-0 right-0 h-[6px] bg-blue-light400 transition-all duration-200 ease-out z-[9999]",
         "data-testid": "navigation-progress-bar",
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "h-full bg-blue-light400 transition-all duration-300 ease-out shadow-lg",
-            style: {
-                width: `${progress}%`,
-                boxShadow: '0 0 10px rgba(54, 191, 249, 0.5)'
-            }
-        }, void 0, false, {
-            fileName: "[project]/app/components/NavigationProgress.tsx",
-            lineNumber: 48,
-            columnNumber: 7
-        }, this)
+        style: {
+            width: `${progress}%`,
+            boxShadow: '0 0 10px rgba(54, 191, 249, 0.8), 0 0 5px rgba(54, 191, 249, 0.6)'
+        }
     }, void 0, false, {
         fileName: "[project]/app/components/NavigationProgress.tsx",
         lineNumber: 44,
