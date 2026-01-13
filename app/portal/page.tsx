@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MapPin, Phone, User, Navigation, Share2, MoreVertical, CreditCard, FileEdit, CheckCircle } from 'lucide-react';
+import { MapPin, Phone, User, Navigation, Share2, MoreVertical, CreditCard, FileEdit, Users, Mail, Calendar, Settings } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent } from '@/app/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
@@ -55,11 +55,11 @@ const packageFeatures = [
 
 const quickActions = [
   { icon: CreditCard, title: 'Update Payment Method', description: 'Add yourself or import from CSV' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
+  { icon: Users, title: 'Manage Team Members', description: 'Add or remove team access and roles' },
+  { icon: Mail, title: 'Mail Preferences', description: 'Configure mail forwarding settings' },
+  { icon: Calendar, title: 'Book Meeting Room', description: 'Reserve a conference room' },
+  { icon: Phone, title: 'Call Forwarding', description: 'Set up call routing preferences' },
+  { icon: Settings, title: 'Account Settings', description: 'Manage your account preferences' },
 ];
 
 export default function PortalDashboard() {
@@ -90,7 +90,7 @@ export default function PortalDashboard() {
           <TabsContent key={location.id} value={location.id} className="mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2">
-                <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div className="rounded-xl overflow-hidden h-48">
                     <img
                       src={location.buildingImage}
