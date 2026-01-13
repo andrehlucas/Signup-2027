@@ -118,8 +118,15 @@ Located in `app/portal-components/`:
 - `QuickActionCard.tsx` - Action card with icon, title, description
 - `FeatureItem.tsx` - Package feature row with icon and label
 - `LocationMedia.tsx` - Building image + map + address + action buttons
-- `NavSection.tsx` - Collapsible sidebar navigation section
-- `PortalSidebar.tsx` - Main portal sidebar navigation
+- `NavSection.tsx` - Collapsible sidebar navigation section with onNavigate callback
+- `PortalSidebar.tsx` - Responsive sidebar with desktop view (lg+) and mobile drawer
+
+**Mobile Responsiveness**
+- Breakpoint: lg (1024px) separates desktop and mobile views
+- Desktop (lg+): Fixed sidebar always visible on the left
+- Mobile (below lg): Fixed header bar with hamburger menu, sidebar content in right-side Sheet drawer
+- Drawer auto-closes when navigation links are clicked
+- Main content has top padding (pt-16) on mobile to account for fixed header
 
 **Build Process**
 - Next.js handles client and server builds
