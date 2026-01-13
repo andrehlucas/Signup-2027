@@ -948,8 +948,8 @@ body {
   width: 50px;
 }
 
-.w-\[calc\(100\%-24px\)\] {
-  width: calc(100% - 24px);
+.w-\[calc\(100\%-48px\)\] {
+  width: calc(100% - 48px);
 }
 
 .w-auto {
