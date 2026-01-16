@@ -23,8 +23,17 @@ import {
   CreditCard,
   FileText
 } from 'lucide-react';
+import { Input } from '@/app/components/ui/input';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/app/components/ui/sheet';
+import { NavSection } from './NavSection';
+import { PromoBanner } from './PromoBanner';
 
-// ... (skipping some lines for context)
+interface NavItem {
+  label: string;
+  href?: string;
+  icon: React.ReactNode;
+  children?: { label: string; href: string }[];
+}
 
 const navItems: NavItem[] = [
   {
