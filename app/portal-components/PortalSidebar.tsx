@@ -42,11 +42,6 @@ const navItems: NavItem[] = [
     icon: <Home className="h-5 w-5" />,
   },
   {
-    label: 'Download App',
-    href: '/download',
-    icon: <Download className="h-5 w-5" />,
-  },
-  {
     label: 'My Account',
     icon: <User className="h-5 w-5" />,
     children: [

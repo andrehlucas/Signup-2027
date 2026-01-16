@@ -866,7 +866,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/log-out.js [app-ssr] (ecmascript) <export default as LogOut>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$menu$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Menu$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/menu.js [app-ssr] (ecmascript) <export default as Menu>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$house$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Home$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/house.js [app-ssr] (ecmascript) <export default as Home>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/download.js [app-ssr] (ecmascript) <export default as Download>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/phone.js [app-ssr] (ecmascript) <export default as Phone>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$gift$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Gift$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/gift.js [app-ssr] (ecmascript) <export default as Gift>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/users.js [app-ssr] (ecmascript) <export default as Users>");
@@ -899,23 +898,12 @@ const navItems = [
         }, ("TURBOPACK compile-time value", void 0))
     },
     {
-        label: 'Download App',
-        href: '/download',
-        icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
-            className: "h-5 w-5"
-        }, void 0, false, {
-            fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 47,
-            columnNumber: 11
-        }, ("TURBOPACK compile-time value", void 0))
-    },
-    {
         label: 'My Account',
         icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 51,
+            lineNumber: 46,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0)),
         children: [
@@ -967,7 +955,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 67,
+            lineNumber: 62,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0)),
         children: [
@@ -991,7 +979,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 76,
+            lineNumber: 71,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0)),
         children: [
@@ -1039,7 +1027,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 91,
+            lineNumber: 86,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0)),
         children: [
@@ -1060,7 +1048,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 100,
+            lineNumber: 95,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1071,7 +1059,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 105,
+            lineNumber: 100,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1082,7 +1070,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 110,
+            lineNumber: 105,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1093,7 +1081,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 115,
+            lineNumber: 110,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1104,7 +1092,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 120,
+            lineNumber: 115,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1115,7 +1103,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 125,
+            lineNumber: 120,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1126,7 +1114,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 130,
+            lineNumber: 125,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0))
     },
@@ -1137,7 +1125,7 @@ const navItems = [
             className: "h-5 w-5"
         }, void 0, false, {
             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-            lineNumber: 135,
+            lineNumber: 130,
             columnNumber: 11
         }, ("TURBOPACK compile-time value", void 0))
     }
@@ -1175,7 +1163,7 @@ function SidebarContent({ onNavigate }) {
                             className: "h-8 w-8"
                         }, void 0, false, {
                             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                            lineNumber: 168,
+                            lineNumber: 163,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1183,18 +1171,18 @@ function SidebarContent({ onNavigate }) {
                             children: "opus"
                         }, void 0, false, {
                             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                            lineNumber: 169,
+                            lineNumber: 164,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                    lineNumber: 167,
+                    lineNumber: 162,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                lineNumber: 166,
+                lineNumber: 161,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1206,7 +1194,7 @@ function SidebarContent({ onNavigate }) {
                             className: "absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"
                         }, void 0, false, {
                             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                            lineNumber: 175,
+                            lineNumber: 170,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1215,18 +1203,18 @@ function SidebarContent({ onNavigate }) {
                             "data-testid": "input-portal-search"
                         }, void 0, false, {
                             fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                            lineNumber: 176,
+                            lineNumber: 171,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                    lineNumber: 174,
+                    lineNumber: 169,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                lineNumber: 173,
+                lineNumber: 168,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -1242,12 +1230,12 @@ function SidebarContent({ onNavigate }) {
                         onNavigate: handleNavClick
                     }, item.label, false, {
                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                        lineNumber: 186,
+                        lineNumber: 181,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                lineNumber: 184,
+                lineNumber: 179,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1259,7 +1247,7 @@ function SidebarContent({ onNavigate }) {
                         children: '{User-name}'
                     }, void 0, false, {
                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                        lineNumber: 201,
+                        lineNumber: 196,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1271,25 +1259,25 @@ function SidebarContent({ onNavigate }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                lineNumber: 203,
+                                lineNumber: 198,
                                 columnNumber: 18
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                        lineNumber: 202,
+                        lineNumber: 197,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                lineNumber: 200,
+                lineNumber: 195,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-        lineNumber: 165,
+        lineNumber: 160,
         columnNumber: 5
     }, this);
 }
@@ -1302,12 +1290,12 @@ function PortalSidebar() {
                 "data-testid": "portal-sidebar",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SidebarContent, {}, void 0, false, {
                     fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                    lineNumber: 216,
+                    lineNumber: 211,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                lineNumber: 215,
+                lineNumber: 210,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1325,7 +1313,7 @@ function PortalSidebar() {
                                 className: "h-8 w-8"
                             }, void 0, false, {
                                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                lineNumber: 221,
+                                lineNumber: 216,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1333,13 +1321,13 @@ function PortalSidebar() {
                                 children: "opus"
                             }, void 0, false, {
                                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                lineNumber: 222,
+                                lineNumber: 217,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                        lineNumber: 220,
+                        lineNumber: 215,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$sheet$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Sheet"], {
@@ -1356,17 +1344,17 @@ function PortalSidebar() {
                                         className: "h-6 w-6 text-[#1a1f2e]"
                                     }, void 0, false, {
                                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                        lineNumber: 232,
+                                        lineNumber: 227,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                    lineNumber: 227,
+                                    lineNumber: 222,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                lineNumber: 226,
+                                lineNumber: 221,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$sheet$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SheetContent"], {
@@ -1379,32 +1367,32 @@ function PortalSidebar() {
                                         children: "Navigation Menu"
                                     }, void 0, false, {
                                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                        lineNumber: 240,
+                                        lineNumber: 235,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SidebarContent, {
                                         onNavigate: ()=>setMobileOpen(false)
                                     }, void 0, false, {
                                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                        lineNumber: 241,
+                                        lineNumber: 236,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                                lineNumber: 235,
+                                lineNumber: 230,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                        lineNumber: 225,
+                        lineNumber: 220,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/portal-components/PortalSidebar.tsx",
-                lineNumber: 219,
+                lineNumber: 214,
                 columnNumber: 7
             }, this)
         ]
