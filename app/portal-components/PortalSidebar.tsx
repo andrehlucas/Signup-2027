@@ -197,19 +197,6 @@ function SidebarContent({
         ))}
       </nav>
 
-      {showPromo && (
-        <div className="mx-3 mb-4 shrink-0">
-          <PromoBanner
-            title="5 Free hours of"
-            subtitle="Conference Room available!"
-            buttonText="Book Now"
-            imageUrl="/receptionist-card-bg_1761593285326.webp"
-            imageAlt="Conference Room"
-            onClose={() => setShowPromo(false)}
-          />
-        </div>
-      )}
-
       <div className="p-4 border-t border-white/10 flex items-center justify-between shrink-0">
         <span className="text-sm text-gray-300" data-testid="text-username">{'{User-name}'}</span>
         <button className="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors" data-testid="button-logout">
