@@ -212,7 +212,7 @@ export function PortalSidebar() {
 
   return (
     <>
-      <aside className="hidden lg:flex w-64 min-h-screen flex-col" data-testid="portal-sidebar">
+      <aside className="hidden lg:flex w-72 min-h-screen flex-col" data-testid="portal-sidebar">
         <SidebarContent />
       </aside>
 
