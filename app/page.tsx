@@ -8,6 +8,12 @@ import { Badge } from '@/app/components/ui/badge';
 import { LocationMedia } from './portal-components/LocationMedia';
 import { QuickActionCard } from './portal-components/QuickActionCard';
 import { FeatureItem } from './portal-components/FeatureItem';
+import { NotificationToast } from './portal-components/NotificationToast';
+
+const initialNotifications = [
+  { id: '1', type: 'info' as const, title: 'New Mail Received', message: 'You have 3 new pieces of mail waiting at your office location.' },
+  { id: '2', type: 'success' as const, title: 'Payment Processed', message: 'Your monthly subscription has been renewed successfully.' },
+];
 
 const packageFeatures = [
   { icon: MapPin, label: 'Prestigious Business Address' },
@@ -37,6 +43,11 @@ export default function PortalDashboard() {
   });
   
   const [activeLocation, setActiveLocation] = useState<string | null>(null);
+  const [notifications, setNotifications] = useState(initialNotifications);
+
+  const dismissNotification = (id: string) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
 
   const displayLocations = (locations && locations.length > 0) ? locations : [
     { id: '1', name: 'Manhattan Office', address: '848 Brickell Avenue, Penthouse 5', imageUrl: '/office-building_1761587957783.webp' },
@@ -130,6 +141,11 @@ export default function PortalDashboard() {
           ))}
         </div>
       </div>
+
+      <NotificationToast 
+        notifications={notifications} 
+        onDismiss={dismissNotification} 
+      />
     </div>
   );
 }
