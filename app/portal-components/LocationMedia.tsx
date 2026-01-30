@@ -46,10 +46,10 @@ export function LocationMedia({
               {address}
             </p>
             <div className="flex items-center gap-3 mt-1">
-              <p className="text-white/80 text-xs">{city}</p>
-              <span className="text-white/40">|</span>
+              <p className="text-white text-xs">{city}</p>
+              <span className="text-white/60">|</span>
               <button 
-                className="flex items-center text-white/90 hover:text-white text-xs font-medium transition-colors"
+                className="flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors"
                 onClick={onGetDirections}
                 data-testid="button-get-directions"
               >

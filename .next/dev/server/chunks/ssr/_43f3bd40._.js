@@ -98,7 +98,7 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                                     className: "flex items-center gap-3 mt-1",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-white/80 text-xs",
+                                            className: "text-white text-xs",
                                             children: city
                                         }, void 0, false, {
                                             fileName: "[project]/app/portal-components/LocationMedia.tsx",
@@ -106,7 +106,7 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-white/40",
+                                            className: "text-white/60",
                                             children: "|"
                                         }, void 0, false, {
                                             fileName: "[project]/app/portal-components/LocationMedia.tsx",
@@ -114,7 +114,7 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                            className: "flex items-center text-white/90 hover:text-white text-xs font-medium transition-colors",
+                                            className: "flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors",
                                             onClick: onGetDirections,
                                             "data-testid": "button-get-directions",
                                             children: [
