@@ -10,6 +10,7 @@ import { Badge } from '@/app/components/ui/badge';
 import { LocationMedia } from './portal-components/LocationMedia';
 import { QuickActionCard } from './portal-components/QuickActionCard';
 import { FeatureItem } from './portal-components/FeatureItem';
+import { Button } from '@/app/components/ui/button';
 
 const packageFeatures = [
   { icon: MapPin, label: 'Prestigious Business Address' },
@@ -21,12 +22,12 @@ const packageFeatures = [
 ];
 
 const quickActions = [
-  { icon: CreditCard, title: 'Update Payment Method', description: 'Add yourself or import from CSV' },
-  { icon: Users, title: 'Manage Team Members', description: 'Add or remove team access and roles' },
-  { icon: Mail, title: 'Mail Preferences', description: 'Configure mail forwarding settings' },
-  { icon: Calendar, title: 'Book Meeting Room', description: 'Reserve a conference room' },
-  { icon: Phone, title: 'Call Forwarding', description: 'Set up call routing preferences' },
-  { icon: Settings, title: 'Account Settings', description: 'Manage your account preferences' },
+  { icon: User, title: 'Update Payment Method', description: 'Add yourself or import from CSV' },
+  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
+  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
+  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
+  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
+  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
 ];
 
 export default function PortalDashboard() {
@@ -67,69 +68,81 @@ export default function PortalDashboard() {
       </h1>
 
       <Tabs value={activeLocation || locations[0].id} onValueChange={setActiveLocation} className="mb-8">
-        <TabsList className="bg-white border border-gray-200 p-1 h-auto flex-wrap">
-          {locations.map((location) => (
-            <TabsTrigger
-              key={location.id}
-              value={location.id}
-              className="data-[state=active]:bg-[#1a1f2e] data-[state=active]:text-white px-4 py-2 rounded-md"
-              data-testid={`tab-${location.id}`}
-            >
-              {location.name}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <div className="flex items-start justify-between gap-8">
+          <div className="flex-1">
+            <TabsList className="bg-white border border-gray-200 p-1 h-auto flex-wrap mb-6">
+              {locations.map((location) => (
+                <TabsTrigger
+                  key={location.id}
+                  value={location.id}
+                  className="data-[state=active]:bg-[#1a1f2e] data-[state=active]:text-white px-4 py-2 rounded-md"
+                  data-testid={`tab-${location.id}`}
+                >
+                  {location.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
 
-        <TabsContent value={currentLocation.id} className="mt-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <LocationMedia
-                buildingImage={currentLocation.imageUrl || '/office-building_1761587957783.webp'}
-                mapEmbedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.6595159366707!2d-80.19180492441!3d25.76168277735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b69c20e3f7c9%3A0x9e9b2d99b7c12d83!2s848%20Brickell%20Ave%2C%20Miami%2C%20FL%2033131!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
-                address={currentLocation.address}
-                city=""
-              />
+            <TabsContent value={currentLocation.id} className="mt-0">
+              <div className="space-y-6">
+                <LocationMedia
+                  buildingImage={currentLocation.imageUrl || '/office-building_1761587957783.webp'}
+                  mapEmbedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.6595159366707!2d-80.19180492441!3d25.76168277735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b69c20e3f7c9%3A0x9e9b2d99b7c12d83!2s848%20Brickell%20Ave%2C%20Miami%2C%20FL%2033131!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                  address={currentLocation.address}
+                  city=""
+                />
 
-              <div className="mb-2">
-                <span className="font-medium text-gray-900">Phone Number:</span>
-                <span className="text-gray-600 ml-2" data-testid="text-phone">(xxx) xxx - xxxx</span>
-              </div>
+                <div className="space-y-2">
+                  <div className="text-lg font-medium text-gray-900">{currentLocation.address}</div>
+                  <div className="text-gray-600">Miami FL 33131</div>
+                  
+                  <div className="flex gap-3 pt-2">
+                    <Button className="bg-[#36bff9] hover:bg-[#2da9e0] text-white">
+                      Get Directions <MapPin className="h-4 w-4 ml-2" />
+                    </Button>
+                    <Button className="bg-[#36bff9] hover:bg-[#2da9e0] text-white">
+                      Share <ChevronRight className="rotate-[-90deg] h-4 w-4 ml-2" />
+                    </Button>
+                  </div>
 
-              <div className="flex flex-wrap items-center gap-4">
-                <span className="font-medium text-gray-900">Extension(s):</span>
-                <div className="flex items-center gap-2">
-                  <User className="h-4 w-4 text-gray-400" />
-                  <span className="text-gray-700">Primary Contact</span>
-                  <Badge 
-                    variant="outline" 
-                    className="text-xs border-green-500 text-green-600"
-                    data-testid="badge-extension-0"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5" />
-                    Active
-                  </Badge>
+                  <div className="pt-4">
+                    <span className="font-medium text-gray-900">Phone Number:</span>
+                    <span className="text-gray-600 ml-2" data-testid="text-phone">(xxx) xxx - xxxx</span>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-6 pt-2">
+                    <span className="font-medium text-gray-900">Extension(s):</span>
+                    <div className="flex items-center gap-2">
+                      <User className="h-4 w-4 text-gray-400" />
+                      <span className="text-gray-700">John Smith</span>
+                      <Badge variant="outline" className="bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9] rounded-full px-3">Marketing</Badge>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <User className="h-4 w-4 text-gray-400" />
+                      <span className="text-gray-700">Sam Smith</span>
+                      <Badge variant="outline" className="bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9] rounded-full px-3">Sales</Badge>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </TabsContent>
+          </div>
 
-            <div className="hidden lg:block">
-              <Card className="border-0 shadow-sm" data-testid="card-package-features">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-gray-900 mb-4">Your Office Package Includes:</h3>
-                  <div className="space-y-3">
-                    {packageFeatures.map((feature, idx) => (
-                      <FeatureItem
-                        key={idx}
-                        icon={feature.icon}
-                        label={feature.label}
-                      />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="w-80 shrink-0">
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">Your Office Package Includes:</h3>
+              <div className="space-y-3">
+                {packageFeatures.map((feature, idx) => (
+                  <FeatureItem
+                    key={idx}
+                    icon={feature.icon}
+                    label={feature.label}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </TabsContent>
+        </div>
       </Tabs>
 
       <div className="mb-8">
@@ -140,7 +153,7 @@ export default function PortalDashboard() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {quickActions.map((action, idx) => (
             <QuickActionCard
               key={idx}
