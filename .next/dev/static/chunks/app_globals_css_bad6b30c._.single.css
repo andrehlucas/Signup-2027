@@ -630,10 +630,6 @@ body {
   margin-top: 6rem;
 }
 
-.mt-3 {
-  margin-top: .75rem;
-}
-
 .mt-4 {
   margin-top: 1rem;
 }
@@ -2888,6 +2884,11 @@ body {
 
 .hover\:bg-secondary\/80:hover {
   background-color: hsl(var(--secondary) / .8);
+}
+
+.hover\:text-\[\#5dd0ff\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(93 208 255 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-accent-foreground:hover {

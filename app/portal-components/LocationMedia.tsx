@@ -1,7 +1,6 @@
 'use client';
 
 import { Navigation, Share2 } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
 
 interface LocationMediaProps {
   buildingImage: string;
@@ -48,26 +47,23 @@ export function LocationMedia({
             </p>
             <p className="text-white/80 text-xs mt-0.5">{city}</p>
           </div>
-          <div className="flex gap-2 mt-3">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="text-white border-white/50 bg-white/10 hover:bg-white/20 hover:border-white/70 text-xs px-3"
+          <div className="flex gap-4 mt-2">
+            <button 
+              className="flex items-center text-white/90 hover:text-white text-xs font-medium transition-colors"
               onClick={onGetDirections}
               data-testid="button-get-directions"
             >
               <Navigation className="h-3.5 w-3.5 mr-1.5" />
               Get Directions
-            </Button>
-            <Button 
-              size="sm"
-              className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-xs px-3"
+            </button>
+            <button 
+              className="flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors"
               onClick={onShare}
               data-testid="button-share"
             >
               <Share2 className="h-3.5 w-3.5 mr-1.5" />
               Share
-            </Button>
+            </button>
           </div>
         </div>
       </div>
