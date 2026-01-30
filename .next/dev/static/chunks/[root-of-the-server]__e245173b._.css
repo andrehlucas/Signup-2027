@@ -624,11 +624,6 @@ body {
   margin-right: .5rem;
 }
 
-.mx-3 {
-  margin-left: .75rem;
-  margin-right: .75rem;
-}
-
 .mx-3\.5 {
   margin-left: .875rem;
   margin-right: .875rem;
@@ -1420,6 +1415,12 @@ body {
 
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+
+.truncate {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .whitespace-nowrap {

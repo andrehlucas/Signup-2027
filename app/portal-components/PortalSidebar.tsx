@@ -11,7 +11,17 @@ import {
   DoorOpen, 
   HelpCircle,
   LogOut,
-  Menu
+  Menu,
+  Home,
+  Download,
+  Phone,
+  Gift,
+  Users,
+  MessageSquare,
+  BookOpen,
+  Info,
+  CreditCard,
+  FileText
 } from 'lucide-react';
 import { Input } from '@/app/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/app/components/ui/sheet';
@@ -27,35 +37,97 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    label: 'My Office',
-    icon: <Building2 className="h-5 w-5" />,
-    children: [
-      { label: 'Locations', href: '/' },
-      { label: 'Addons', href: '/addons' },
-    ],
+    label: 'Home',
+    href: '/',
+    icon: <Home className="h-5 w-5" />,
   },
   {
-    label: 'Account',
+    label: 'My Account',
     icon: <User className="h-5 w-5" />,
     children: [
-      { label: 'Account Details', href: '/account' },
+      { label: 'Update Login Details', href: '/account/login-details' },
+      { label: 'Update Company Name', href: '/account/company-name' },
+      { label: 'Manage Services', href: '/account/services' },
+      { label: 'Verification Letter', href: '/account/verification-letter' },
+      { label: 'Upload Documents', href: '/account/documents' },
+      { label: 'Setup/Edit Mail Forwarding', href: '/account/mail-forwarding' },
+      { label: 'Setup/Edit Mail Scanning', href: '/account/mail-scanning' },
+      { label: 'Update Payment Method', href: '/billing' },
       { label: 'Billing', href: '/billing' },
+      { label: 'Cancel Services', href: '/account/cancel' },
     ],
   },
   {
-    label: 'How to / Videos',
-    href: '/videos',
-    icon: <PlayCircle className="h-5 w-5" />,
+    label: 'My Opus VO Locations',
+    icon: <Building2 className="h-5 w-5" />,
+    children: [
+      { label: 'My Current Opus Mailing Address(es)', href: '/' },
+      { label: 'Add Locations', href: '/locations/add' },
+      { label: 'Location Change Request', href: '/locations/change' },
+    ],
   },
   {
-    label: 'Meeting Rooms',
+    label: 'My Phone System',
+    icon: <Phone className="h-5 w-5" />,
+    children: [
+      { label: 'After Hours/Company Extension', href: '/phone/after-hours' },
+      { label: 'Business Hours/Individual Extension', href: '/phone/business-hours' },
+      { label: 'Fax to Email', href: '/phone/fax-to-email' },
+      { label: 'Call Out', href: '/phone/call-out' },
+      { label: 'Texting', href: '/phone/texting' },
+      { label: 'Conference Bridge', href: '/phone/conference' },
+      { label: 'Faxout', href: '/phone/faxout' },
+      { label: 'Incoming Call Logs', href: '/phone/logs' },
+      { label: 'Bypass Live Answer', href: '/phone/bypass' },
+    ],
+  },
+  {
+    label: 'Customer Support',
+    icon: <HelpCircle className="h-5 w-5" />,
+    children: [
+      { label: 'Contact Support', href: '/support' },
+      { label: 'Submit Ticket', href: '/support/ticket' },
+    ],
+  },
+  {
+    label: 'Meeting Rooms/Office Time',
     href: '/meeting-rooms',
     icon: <DoorOpen className="h-5 w-5" />,
   },
   {
-    label: 'Support',
-    href: '/support',
-    icon: <HelpCircle className="h-5 w-5" />,
+    label: 'Support Videos',
+    href: '/videos',
+    icon: <PlayCircle className="h-5 w-5" />,
+  },
+  {
+    label: 'My Benefits',
+    href: '/benefits',
+    icon: <Gift className="h-5 w-5" />,
+  },
+  {
+    label: 'Refer a Client',
+    href: '/referral',
+    icon: <Users className="h-5 w-5" />,
+  },
+  {
+    label: 'FAQ',
+    href: '/faq',
+    icon: <Info className="h-5 w-5" />,
+  },
+  {
+    label: 'Credit Reporting',
+    href: '/credit-reporting',
+    icon: <FileText className="h-5 w-5" />,
+  },
+  {
+    label: 'Messages',
+    href: '/messages',
+    icon: <MessageSquare className="h-5 w-5" />,
+  },
+  {
+    label: 'How To',
+    href: '/how-to',
+    icon: <BookOpen className="h-5 w-5" />,
   },
 ];
 
@@ -120,19 +192,6 @@ function SidebarContent({
         ))}
       </nav>
 
-      {showPromo && (
-        <div className="mx-3 mb-4 shrink-0">
-          <PromoBanner
-            title="5 Free hours of"
-            subtitle="Conference Room available!"
-            buttonText="Book Now"
-            imageUrl="/receptionist-card-bg_1761593285326.webp"
-            imageAlt="Conference Room"
-            onClose={() => setShowPromo(false)}
-          />
-        </div>
-      )}
-
       <div className="p-4 border-t border-white/10 flex items-center justify-between shrink-0">
         <span className="text-sm text-gray-300" data-testid="text-username">{'{User-name}'}</span>
         <button className="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors" data-testid="button-logout">
@@ -148,7 +207,7 @@ export function PortalSidebar() {
 
   return (
     <>
-      <aside className="hidden lg:flex w-64 min-h-screen flex-col" data-testid="portal-sidebar">
+      <aside className="hidden lg:flex w-72 min-h-screen flex-col" data-testid="portal-sidebar">
         <SidebarContent />
       </aside>
 
