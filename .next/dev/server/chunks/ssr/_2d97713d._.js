@@ -175,57 +175,30 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$b
 ;
 function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirections, onShare }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "space-y-4",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-1 md:grid-cols-3 gap-4 mb-6",
+                className: "grid grid-cols-2 gap-4",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "relative rounded-xl overflow-hidden h-48 md:h-[360px] group md:col-span-2",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                src: buildingImage,
-                                alt: "Office Building",
-                                className: "w-full h-full object-cover",
-                                "data-testid": "img-building"
-                            }, void 0, false, {
-                                fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                lineNumber: 27,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4 md:hidden",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-white font-semibold text-sm leading-tight",
-                                        "data-testid": "text-address-mobile",
-                                        children: address
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                        lineNumber: 35,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-gray-300 text-xs",
-                                        children: city
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                        lineNumber: 38,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                lineNumber: 34,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                        className: "relative rounded-xl overflow-hidden h-[220px]",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                            src: buildingImage,
+                            alt: "Office Building",
+                            className: "w-full h-full object-cover",
+                            "data-testid": "img-building"
+                        }, void 0, false, {
+                            fileName: "[project]/app/portal-components/LocationMedia.tsx",
+                            lineNumber: 27,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/app/portal-components/LocationMedia.tsx",
                         lineNumber: 26,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "hidden md:block rounded-xl overflow-hidden h-[360px] bg-gray-200",
+                        className: "rounded-xl overflow-hidden h-[220px] bg-gray-100",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("iframe", {
                             src: mapEmbedUrl,
                             width: "100%",
@@ -240,12 +213,12 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                             "data-testid": "map-iframe"
                         }, void 0, false, {
                             fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                            lineNumber: 42,
+                            lineNumber: 35,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                        lineNumber: 41,
+                        lineNumber: 34,
                         columnNumber: 9
                     }, this)
                 ]
@@ -255,40 +228,40 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex flex-wrap items-start justify-between gap-4 mb-4",
+                className: "flex flex-wrap items-center justify-between gap-4",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "hidden md:block",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-lg font-semibold text-gray-900",
+                                className: "text-base font-semibold text-gray-900",
                                 "data-testid": "text-address",
                                 children: address
                             }, void 0, false, {
                                 fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                lineNumber: 58,
+                                lineNumber: 51,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-gray-600",
+                                className: "text-gray-500 text-sm",
                                 children: city
                             }, void 0, false, {
                                 fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                lineNumber: 61,
+                                lineNumber: 54,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                        lineNumber: 57,
+                        lineNumber: 50,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex gap-2 w-full md:w-auto",
+                        className: "flex gap-2",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                 variant: "outline",
-                                className: "flex-1 md:flex-none text-[#36bff9] border-[#36bff9] hover:bg-[#36bff9]/10",
+                                size: "sm",
+                                className: "text-[#36bff9] border-[#36bff9] hover:bg-[#36bff9]/10",
                                 onClick: onGetDirections,
                                 "data-testid": "button-get-directions",
                                 children: [
@@ -296,18 +269,19 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                                         className: "h-4 w-4 mr-2"
                                     }, void 0, false, {
                                         fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                        lineNumber: 70,
+                                        lineNumber: 64,
                                         columnNumber: 13
                                     }, this),
                                     "Get Directions"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                lineNumber: 64,
+                                lineNumber: 57,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                                className: "flex-1 md:flex-none bg-[#36bff9] hover:bg-[#2aa8e0] text-white",
+                                size: "sm",
+                                className: "bg-[#36bff9] hover:bg-[#2aa8e0] text-white",
                                 onClick: onShare,
                                 "data-testid": "button-share",
                                 children: [
@@ -315,26 +289,26 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                                         className: "h-4 w-4 mr-2"
                                     }, void 0, false, {
                                         fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                        lineNumber: 78,
+                                        lineNumber: 73,
                                         columnNumber: 13
                                     }, this),
                                     "Share"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                lineNumber: 73,
+                                lineNumber: 67,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                        lineNumber: 63,
+                        lineNumber: 56,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                lineNumber: 56,
+                lineNumber: 49,
                 columnNumber: 7
             }, this)
         ]

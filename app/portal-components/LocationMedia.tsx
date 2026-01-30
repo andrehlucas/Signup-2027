@@ -21,24 +21,17 @@ export function LocationMedia({
   onShare,
 }: LocationMediaProps) {
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="relative rounded-xl overflow-hidden h-48 md:h-[360px] group md:col-span-2">
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="relative rounded-xl overflow-hidden h-[220px]">
           <img
             src={buildingImage}
             alt="Office Building"
             className="w-full h-full object-cover"
             data-testid="img-building"
           />
-          {/* Mobile Overlay Address */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4 md:hidden">
-            <p className="text-white font-semibold text-sm leading-tight" data-testid="text-address-mobile">
-              {address}
-            </p>
-            <p className="text-gray-300 text-xs">{city}</p>
-          </div>
         </div>
-        <div className="hidden md:block rounded-xl overflow-hidden h-[360px] bg-gray-200">
+        <div className="rounded-xl overflow-hidden h-[220px] bg-gray-100">
           <iframe
             src={mapEmbedUrl}
             width="100%"
@@ -53,17 +46,18 @@ export function LocationMedia({
         </div>
       </div>
 
-      <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
-        <div className="hidden md:block">
-          <p className="text-lg font-semibold text-gray-900" data-testid="text-address">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="text-base font-semibold text-gray-900" data-testid="text-address">
             {address}
           </p>
-          <p className="text-gray-600">{city}</p>
+          <p className="text-gray-500 text-sm">{city}</p>
         </div>
-        <div className="flex gap-2 w-full md:w-auto">
+        <div className="flex gap-2">
           <Button 
             variant="outline" 
-            className="flex-1 md:flex-none text-[#36bff9] border-[#36bff9] hover:bg-[#36bff9]/10"
+            size="sm"
+            className="text-[#36bff9] border-[#36bff9] hover:bg-[#36bff9]/10"
             onClick={onGetDirections}
             data-testid="button-get-directions"
           >
@@ -71,7 +65,8 @@ export function LocationMedia({
             Get Directions
           </Button>
           <Button 
-            className="flex-1 md:flex-none bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
+            size="sm"
+            className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
             onClick={onShare}
             data-testid="button-share"
           >
