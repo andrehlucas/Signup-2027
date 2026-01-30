@@ -80,7 +80,7 @@ export default function PortalDashboard() {
                 <span className="text-gray-700">Michael Torres</span>
                 <Badge variant="outline" className="bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9] rounded-full px-2.5 py-0.5 text-xs font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#4caf50] mr-1.5 inline-block" />
-                  Ext. 101
+                  Marketing
                 </Badge>
               </div>
               <span className="text-gray-300 mx-2">|</span>
@@ -89,7 +89,7 @@ export default function PortalDashboard() {
                 <span className="text-gray-700">Sarah Chen</span>
                 <Badge variant="outline" className="bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9] rounded-full px-2.5 py-0.5 text-xs font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#4caf50] mr-1.5 inline-block" />
-                  Ext. 102
+                  Sales
                 </Badge>
               </div>
             </div>

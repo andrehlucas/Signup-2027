@@ -631,7 +631,7 @@ function PortalDashboard() {
                                                                 lineNumber: 82,
                                                                 columnNumber: 19
                                                             }, this),
-                                                            "Ext. 101"
+                                                            "Marketing"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
@@ -681,7 +681,7 @@ function PortalDashboard() {
                                                                 lineNumber: 91,
                                                                 columnNumber: 19
                                                             }, this),
-                                                            "Ext. 102"
+                                                            "Sales"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
