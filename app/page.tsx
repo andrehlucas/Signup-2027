@@ -70,26 +70,26 @@ export default function PortalDashboard() {
           <div className="mt-4 space-y-3">
             <div className="flex items-center gap-2">
               <span className="font-medium text-gray-900">Phone Number:</span>
-              <span className="text-gray-600" data-testid="text-phone">(xxx) xxx - xxxx</span>
+              <span className="text-gray-600" data-testid="text-phone">(305) 555 - 1234</span>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-medium text-gray-900">Extension(s):</span>
               <div className="flex items-center gap-2 ml-2">
                 <User className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-700">John Smith</span>
+                <span className="text-gray-700">Michael Torres</span>
                 <Badge variant="outline" className="bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9] rounded-full px-2.5 py-0.5 text-xs font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#4caf50] mr-1.5 inline-block" />
-                  Marketing
+                  Ext. 101
                 </Badge>
               </div>
               <span className="text-gray-300 mx-2">|</span>
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-700">Sam Smith</span>
+                <span className="text-gray-700">Sarah Chen</span>
                 <Badge variant="outline" className="bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9] rounded-full px-2.5 py-0.5 text-xs font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#4caf50] mr-1.5 inline-block" />
-                  Sales
+                  Ext. 102
                 </Badge>
               </div>
             </div>
