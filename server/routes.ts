@@ -4,17 +4,27 @@ import { storage } from "./storage";
 
 export function registerRoutes(app: Express): Server {
   app.get("/api/locations", async (_req, res) => {
-    const locations = await storage.getLocations();
-    res.json(locations);
+    try {
+      const locations = await storage.getLocations();
+      res.json(locations);
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
   });
 
   app.get("/api/locations/:id", async (req, res) => {
-    const location = await storage.getLocation(req.params.id);
-    if (!location) {
-      res.status(404).json({ message: "Location not found" });
-      return;
+    try {
+      const location = await storage.getLocation(req.params.id);
+      if (!location) {
+        res.status(404).json({ message: "Location not found" });
+        return;
+      }
+      res.json(location);
+    } catch (error) {
+      console.error("Error fetching location:", error);
+      res.status(500).json({ message: "Internal server error" });
     }
-    res.json(location);
   });
 
   const httpServer = createServer(app);

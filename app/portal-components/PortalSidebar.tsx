@@ -119,13 +119,15 @@ const mockLocations: Location[] = [
 ];
 
 function LocationSwitcher() {
-  const { data: locations = mockLocations } = useQuery<Location[]>({ 
+  const { data: locations, isLoading } = useQuery<Location[]>({ 
     queryKey: ['/api/locations'] 
   });
-  const [selectedLocation, setSelectedLocation] = useState(locations[0]?.id);
+  
+  const displayLocations = (locations && locations.length > 0) ? locations : mockLocations;
+  const [selectedLocation, setSelectedLocation] = useState(displayLocations[0]?.id);
 
   return (
-    <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+    <Select value={selectedLocation || displayLocations[0]?.id} onValueChange={setSelectedLocation}>
       <SelectTrigger 
         className="w-full bg-[#252b3d] border-0 text-white focus:ring-1 focus:ring-blue-500"
         data-testid="select-location-switcher"
@@ -136,7 +138,7 @@ function LocationSwitcher() {
         </div>
       </SelectTrigger>
       <SelectContent className="bg-[#252b3d] border-white/10">
-        {mockLocations.map((location) => (
+        {displayLocations.map((location) => (
           <SelectItem 
             key={location.id} 
             value={location.id}

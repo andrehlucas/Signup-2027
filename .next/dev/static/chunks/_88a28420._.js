@@ -621,6 +621,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-client] (ecmascript) <export default as User>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$ellipsis$2d$vertical$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MoreVertical$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/ellipsis-vertical.js [app-client] (ecmascript) <export default as MoreVertical>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$pen$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileEdit$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/file-pen.js [app-client] (ecmascript) <export default as FileEdit>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-client] (ecmascript) <export default as ChevronRight>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/components/ui/tabs.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/components/ui/badge.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$portal$2d$components$2f$LocationMedia$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/portal-components/LocationMedia.tsx [app-client] (ecmascript)");
@@ -699,75 +700,38 @@ const quickActions = [
 ];
 function PortalDashboard() {
     _s();
-    const { data: locations, isLoading } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
+    const { data: locations, isLoading, error } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"])({
         queryKey: [
             '/api/locations'
         ]
     });
     const [activeLocation, setActiveLocation] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    // Set default active location once data is loaded
-    if (!activeLocation && locations && locations.length > 0) {
-        setActiveLocation(locations[0].id);
+    // Use dummy locations if API fails or is loading to ensure preview
+    const displayLocations = locations && locations.length > 0 ? locations : [
+        {
+            id: '1',
+            name: 'Manhattan Office',
+            address: '123 5th Avenue, New York, NY',
+            imageUrl: '/attached_assets/manhattan.jpg'
+        },
+        {
+            id: '2',
+            name: 'Brooklyn Hub',
+            address: '456 Atlantic Ave, Brooklyn, NY',
+            imageUrl: '/attached_assets/brooklyn.jpg'
+        },
+        {
+            id: '3',
+            name: 'Los Angeles Office',
+            address: '789 Wilshire Blvd, LA, CA',
+            imageUrl: '/attached_assets/la.jpg'
+        }
+    ];
+    // Set default active location once data is loaded or if using dummies
+    if (!activeLocation && displayLocations.length > 0) {
+        setActiveLocation(displayLocations[0].id);
     }
-    if (isLoading) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "p-4 md:p-8 animate-pulse",
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "h-8 w-64 bg-gray-200 rounded mb-6"
-                }, void 0, false, {
-                    fileName: "[project]/app/page.tsx",
-                    lineNumber: 48,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "h-10 w-full bg-gray-200 rounded mb-8"
-                }, void 0, false, {
-                    fileName: "[project]/app/page.tsx",
-                    lineNumber: 49,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "grid grid-cols-1 lg:grid-cols-3 gap-6",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "lg:col-span-2 h-[400px] bg-gray-200 rounded"
-                        }, void 0, false, {
-                            fileName: "[project]/app/page.tsx",
-                            lineNumber: 51,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "h-[400px] bg-gray-200 rounded"
-                        }, void 0, false, {
-                            fileName: "[project]/app/page.tsx",
-                            lineNumber: 52,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/app/page.tsx",
-                    lineNumber: 50,
-                    columnNumber: 9
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/app/page.tsx",
-            lineNumber: 47,
-            columnNumber: 7
-        }, this);
-    }
-    if (!locations || locations.length === 0) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "p-8",
-            children: "No locations found."
-        }, void 0, false, {
-            fileName: "[project]/app/page.tsx",
-            lineNumber: 59,
-            columnNumber: 12
-        }, this);
-    }
-    const currentLocation = locations.find((loc)=>loc.id === activeLocation) || locations[0];
+    const currentLocation = displayLocations.find((loc)=>loc.id === activeLocation) || displayLocations[0];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "p-4 md:p-8",
         "data-testid": "portal-dashboard",
@@ -781,11 +745,11 @@ function PortalDashboard() {
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 66,
+                lineNumber: 56,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Tabs"], {
-                value: activeLocation || locations[0].id,
+                value: activeLocation || displayLocations[0].id,
                 onValueChange: setActiveLocation,
                 className: "mb-8",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -796,19 +760,19 @@ function PortalDashboard() {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsList"], {
                                     className: "bg-white border border-gray-200 p-1 h-auto flex-wrap mb-6",
-                                    children: locations.map((location)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
+                                    children: displayLocations.map((location)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
                                             value: location.id,
                                             className: "data-[state=active]:bg-[#1a1f2e] data-[state=active]:text-white px-4 py-2 rounded-md",
                                             "data-testid": `tab-${location.id}`,
                                             children: location.name
                                         }, location.id, false, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 75,
+                                            lineNumber: 65,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 73,
+                                    lineNumber: 63,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -824,7 +788,7 @@ function PortalDashboard() {
                                                 city: ""
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 88,
+                                                lineNumber: 78,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -835,7 +799,7 @@ function PortalDashboard() {
                                                         children: currentLocation.address
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 96,
+                                                        lineNumber: 86,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -843,7 +807,7 @@ function PortalDashboard() {
                                                         children: "Miami FL 33131"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 97,
+                                                        lineNumber: 87,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -857,36 +821,36 @@ function PortalDashboard() {
                                                                         className: "h-4 w-4 ml-2"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 101,
+                                                                        lineNumber: 91,
                                                                         columnNumber: 38
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 100,
+                                                                lineNumber: 90,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                                 className: "bg-[#36bff9] hover:bg-[#2da9e0] text-white",
                                                                 children: [
                                                                     "Share ",
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ChevronRight, {
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
                                                                         className: "rotate-[-90deg] h-4 w-4 ml-2"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 104,
+                                                                        lineNumber: 94,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 103,
+                                                                lineNumber: 93,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 99,
+                                                        lineNumber: 89,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -897,7 +861,7 @@ function PortalDashboard() {
                                                                 children: "Phone Number:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 109,
+                                                                lineNumber: 99,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -906,13 +870,13 @@ function PortalDashboard() {
                                                                 children: "(xxx) xxx - xxxx"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 110,
+                                                                lineNumber: 100,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 108,
+                                                        lineNumber: 98,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -923,7 +887,7 @@ function PortalDashboard() {
                                                                 children: "Extension(s):"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 114,
+                                                                lineNumber: 104,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -933,7 +897,7 @@ function PortalDashboard() {
                                                                         className: "h-4 w-4 text-gray-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 116,
+                                                                        lineNumber: 106,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -941,7 +905,7 @@ function PortalDashboard() {
                                                                         children: "John Smith"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 117,
+                                                                        lineNumber: 107,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -950,13 +914,13 @@ function PortalDashboard() {
                                                                         children: "Marketing"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 118,
+                                                                        lineNumber: 108,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 115,
+                                                                lineNumber: 105,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -966,7 +930,7 @@ function PortalDashboard() {
                                                                         className: "h-4 w-4 text-gray-400"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 121,
+                                                                        lineNumber: 111,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -974,7 +938,7 @@ function PortalDashboard() {
                                                                         children: "Sam Smith"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 122,
+                                                                        lineNumber: 112,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -983,42 +947,42 @@ function PortalDashboard() {
                                                                         children: "Sales"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 123,
+                                                                        lineNumber: 113,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 120,
+                                                                lineNumber: 110,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 113,
+                                                        lineNumber: 103,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 95,
+                                                lineNumber: 85,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 87,
+                                        lineNumber: 77,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 86,
+                                    lineNumber: 76,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 72,
+                            lineNumber: 62,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1031,7 +995,7 @@ function PortalDashboard() {
                                         children: "Your Office Package Includes:"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 133,
+                                        lineNumber: 123,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1041,34 +1005,34 @@ function PortalDashboard() {
                                                 label: feature.label
                                             }, idx, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 136,
+                                                lineNumber: 126,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 134,
+                                        lineNumber: 124,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 132,
+                                lineNumber: 122,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 131,
+                            lineNumber: 121,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 71,
+                    lineNumber: 61,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 70,
+                lineNumber: 60,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1083,7 +1047,7 @@ function PortalDashboard() {
                                 children: "Quick Actions"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 150,
+                                lineNumber: 140,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1093,18 +1057,18 @@ function PortalDashboard() {
                                     className: "h-5 w-5"
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 152,
+                                    lineNumber: 142,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 151,
+                                lineNumber: 141,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 149,
+                        lineNumber: 139,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1116,28 +1080,28 @@ function PortalDashboard() {
                                 testId: `card-quick-action-${idx}`
                             }, idx, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 158,
+                                lineNumber: 148,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 156,
+                        lineNumber: 146,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 148,
+                lineNumber: 138,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 65,
+        lineNumber: 55,
         columnNumber: 5
     }, this);
 }
-_s(PortalDashboard, "9TlFG6tmD7D7pLuccHuKn3aGhu8=", false, function() {
+_s(PortalDashboard, "meUsojZJ1x6i5jEdIlejkuJ+Ops=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$tanstack$2f$react$2d$query$2f$build$2f$modern$2f$useQuery$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useQuery"]
     ];

@@ -766,10 +766,6 @@ body {
   height: 360px;
 }
 
-.h-\[400px\] {
-  height: 400px;
-}
-
 .h-\[44px\] {
   height: 44px;
 }
@@ -1740,10 +1736,6 @@ body {
 
 .p-6 {
   padding: 1.5rem;
-}
-
-.p-8 {
-  padding: 2rem;
 }
 
 .p-\[1px\] {
@@ -3844,10 +3836,6 @@ body {
 
   .lg\:order-2 {
     order: 2;
-  }
-
-  .lg\:col-span-2 {
-    grid-column: span 2 / span 2;
   }
 
   .lg\:flex {
