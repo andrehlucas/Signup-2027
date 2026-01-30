@@ -3333,11 +3333,6 @@ body {
   background-color: hsl(var(--accent));
 }
 
-.data-\[state\=active\]\:bg-\[\#1a1f2e\][data-state="active"] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(26 31 46 / var(--tw-bg-opacity, 1));
-}
-
 .data-\[state\=active\]\:bg-background[data-state="active"] {
   background-color: hsl(var(--background));
 }
@@ -3380,10 +3375,6 @@ body {
 
 .data-\[state\=active\]\:text-foreground[data-state="active"] {
   color: hsl(var(--foreground));
-}
-
-.data-\[state\=active\]\:text-white[data-state="active"] {
-  color: var(--white);
 }
 
 .data-\[state\=checked\]\:text-primary-foreground[data-state="checked"] {

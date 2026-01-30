@@ -60,19 +60,6 @@ export default function PortalDashboard() {
       <Tabs value={activeLocation || displayLocations[0].id} onValueChange={setActiveLocation} className="mb-8">
         <div className="flex items-start justify-between gap-8">
           <div className="flex-1">
-            <TabsList className="bg-white border border-gray-200 p-1 h-auto flex-wrap mb-6">
-              {displayLocations.map((location) => (
-                <TabsTrigger
-                  key={location.id}
-                  value={location.id}
-                  className="data-[state=active]:bg-[#1a1f2e] data-[state=active]:text-white px-4 py-2 rounded-md"
-                  data-testid={`tab-${location.id}`}
-                >
-                  {location.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
             <TabsContent value={currentLocation.id} className="mt-0">
               <div className="space-y-6">
                 <LocationMedia
