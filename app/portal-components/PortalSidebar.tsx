@@ -183,9 +183,8 @@ function SidebarContent({
   return (
     <div className="flex flex-col h-screen sticky top-0 bg-[#1a1f2e] text-white overflow-hidden">
       <div className="p-4 border-b border-white/10 shrink-0">
-        <Link href="/" className="flex items-center gap-2" data-testid="link-sidebar-logo" onClick={handleNavClick}>
-          <img src="/opus-logo-icon.svg" alt="Opus" className="h-8 w-8" />
-          <span className="text-xl font-bold text-white">opus</span>
+        <Link href="/" className="flex items-center" data-testid="link-sidebar-logo" onClick={handleNavClick}>
+          <img src="/opus-vo-main-logo-white.svg" alt="Opus VO" className="h-8" />
         </Link>
       </div>
 
@@ -237,9 +236,8 @@ export function PortalSidebar() {
       </aside>
 
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between" data-testid="mobile-header">
-        <Link href="/" className="flex items-center gap-2" data-testid="link-mobile-logo">
-          <img src="/opus-logo-icon.svg" alt="Opus" className="h-8 w-8" />
-          <span className="text-xl font-bold text-[#1a1f2e]">opus</span>
+        <Link href="/" className="flex items-center" data-testid="link-mobile-logo">
+          <img src="/opus-vo-main-logo-white.svg" alt="Opus VO" className="h-8 brightness-0" />
         </Link>
         
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
