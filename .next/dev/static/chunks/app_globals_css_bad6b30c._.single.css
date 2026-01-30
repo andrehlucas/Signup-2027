@@ -767,6 +767,10 @@ body {
   height: 360px;
 }
 
+.h-\[400px\] {
+  height: 400px;
+}
+
 .h-\[44px\] {
   height: 44px;
 }
@@ -817,10 +821,6 @@ body {
 
 .h-svh {
   height: 100svh;
-}
-
-.h-\[400px\] {
-  height: 400px;
 }
 
 .max-h-\[--radix-context-menu-content-available-height\] {
@@ -1720,12 +1720,12 @@ body {
   padding: 1.5rem;
 }
 
-.p-\[1px\] {
-  padding: 1px;
-}
-
 .p-8 {
   padding: 2rem;
+}
+
+.p-\[1px\] {
+  padding: 1px;
 }
 
 .px-0 {
