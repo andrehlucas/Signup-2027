@@ -8,25 +8,30 @@ import {
   Building2, 
   User, 
   PlayCircle, 
-  DoorOpen, 
   HelpCircle,
   LogOut,
   Menu,
   Home,
-  Download,
   Phone,
   Gift,
   Users,
   MessageSquare,
   BookOpen,
-  Info,
+  Bell,
   CreditCard,
-  FileText
+  ChevronDown,
+  MapPin
 } from 'lucide-react';
 import { Input } from '@/app/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/app/components/ui/sheet';
 import { NavSection } from './NavSection';
-import { PromoBanner } from './PromoBanner';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/app/components/ui/select';
 
 interface NavItem {
   label: string;
@@ -42,94 +47,106 @@ const navItems: NavItem[] = [
     icon: <Home className="h-5 w-5" />,
   },
   {
-    label: 'My Account',
-    icon: <User className="h-5 w-5" />,
+    label: 'My Office',
+    icon: <Building2 className="h-5 w-5" />,
     children: [
-      { label: 'Update Login Details', href: '/account/login-details' },
-      { label: 'Update Company Name', href: '/account/company-name' },
-      { label: 'Manage Services', href: '/account/services' },
-      { label: 'Verification Letter', href: '/account/verification-letter' },
-      { label: 'Upload Documents', href: '/account/documents' },
-      { label: 'Setup/Edit Mail Forwarding', href: '/account/mail-forwarding' },
-      { label: 'Setup/Edit Mail Scanning', href: '/account/mail-scanning' },
-      { label: 'Update Payment Method', href: '/billing' },
-      { label: 'Billing', href: '/billing' },
+      { label: 'Meeting Rooms/Office Time', href: '/meeting-rooms' },
+      { label: 'Mail Forwarding', href: '/office/mail-forwarding' },
+      { label: 'Mail Scanning', href: '/office/mail-scanning' },
+      { label: 'Add/Change Locations', href: '/office/locations' },
+      { label: 'Upload Documents', href: '/office/documents' },
+      { label: 'Verification Letter', href: '/office/verification-letter' },
+    ],
+  },
+  {
+    label: 'Phone System',
+    icon: <Phone className="h-5 w-5" />,
+    children: [
+      { label: 'Extensions & Voicemail', href: '/phone/extensions' },
+      { label: 'Fax Services', href: '/phone/fax' },
+      { label: 'Texting', href: '/phone/texting' },
+      { label: 'Conference Calls', href: '/phone/conference' },
+      { label: 'Call Logs & Settings', href: '/phone/logs' },
+    ],
+  },
+  {
+    label: 'Notifications',
+    icon: <Bell className="h-5 w-5" />,
+    children: [
+      { label: 'Messages', href: '/notifications/messages' },
+      { label: 'Alerts & Preferences', href: '/notifications/alerts' },
+    ],
+  },
+  {
+    label: 'Account & Billing',
+    icon: <CreditCard className="h-5 w-5" />,
+    children: [
+      { label: 'Login Details', href: '/account/login' },
+      { label: 'Company Name', href: '/account/company' },
+      { label: 'Payment Methods', href: '/account/payment' },
+      { label: 'Billing History', href: '/account/billing' },
+      { label: 'Credit Reporting', href: '/account/credit-reporting' },
       { label: 'Cancel Services', href: '/account/cancel' },
     ],
   },
   {
-    label: 'My Opus VO Locations',
-    icon: <Building2 className="h-5 w-5" />,
-    children: [
-      { label: 'My Current Opus Mailing Address(es)', href: '/' },
-      { label: 'Add Locations', href: '/locations/add' },
-      { label: 'Location Change Request', href: '/locations/change' },
-    ],
-  },
-  {
-    label: 'My Phone System',
-    icon: <Phone className="h-5 w-5" />,
-    children: [
-      { label: 'After Hours/Company Extension', href: '/phone/after-hours' },
-      { label: 'Business Hours/Individual Extension', href: '/phone/business-hours' },
-      { label: 'Fax to Email', href: '/phone/fax-to-email' },
-      { label: 'Call Out', href: '/phone/call-out' },
-      { label: 'Texting', href: '/phone/texting' },
-      { label: 'Conference Bridge', href: '/phone/conference' },
-      { label: 'Faxout', href: '/phone/faxout' },
-      { label: 'Incoming Call Logs', href: '/phone/logs' },
-      { label: 'Bypass Live Answer', href: '/phone/bypass' },
-    ],
-  },
-  {
-    label: 'Customer Support',
+    label: 'Help & Support',
     icon: <HelpCircle className="h-5 w-5" />,
     children: [
-      { label: 'Contact Support', href: '/support' },
-      { label: 'Submit Ticket', href: '/support/ticket' },
+      { label: 'Contact Support', href: '/support/contact' },
+      { label: 'Support Videos', href: '/support/videos' },
+      { label: 'FAQ', href: '/support/faq' },
+      { label: 'How To Guides', href: '/support/guides' },
     ],
   },
   {
-    label: 'Meeting Rooms/Office Time',
-    href: '/meeting-rooms',
-    icon: <DoorOpen className="h-5 w-5" />,
-  },
-  {
-    label: 'Support Videos',
-    href: '/videos',
-    icon: <PlayCircle className="h-5 w-5" />,
-  },
-  {
-    label: 'My Benefits',
-    href: '/benefits',
+    label: 'Rewards',
     icon: <Gift className="h-5 w-5" />,
-  },
-  {
-    label: 'Refer a Client',
-    href: '/referral',
-    icon: <Users className="h-5 w-5" />,
-  },
-  {
-    label: 'FAQ',
-    href: '/faq',
-    icon: <Info className="h-5 w-5" />,
-  },
-  {
-    label: 'Credit Reporting',
-    href: '/credit-reporting',
-    icon: <FileText className="h-5 w-5" />,
-  },
-  {
-    label: 'Messages',
-    href: '/messages',
-    icon: <MessageSquare className="h-5 w-5" />,
-  },
-  {
-    label: 'How To',
-    href: '/how-to',
-    icon: <BookOpen className="h-5 w-5" />,
+    children: [
+      { label: 'My Benefits', href: '/rewards/benefits' },
+      { label: 'Refer a Client', href: '/rewards/referral' },
+    ],
   },
 ];
+
+const mockLocations = [
+  { id: '1', name: 'Manhattan Office', address: '123 5th Avenue, New York, NY' },
+  { id: '2', name: 'Brooklyn Hub', address: '456 Atlantic Ave, Brooklyn, NY' },
+  { id: '3', name: 'Los Angeles Office', address: '789 Wilshire Blvd, LA, CA' },
+];
+
+function LocationSwitcher() {
+  const [selectedLocation, setSelectedLocation] = useState(mockLocations[0].id);
+
+  return (
+    <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+      <SelectTrigger 
+        className="w-full bg-[#252b3d] border-0 text-white focus:ring-1 focus:ring-blue-500"
+        data-testid="select-location-switcher"
+      >
+        <div className="flex items-center gap-2 overflow-hidden">
+          <MapPin className="h-4 w-4 text-[#36bff9] shrink-0" />
+          <SelectValue placeholder="Select location" />
+        </div>
+      </SelectTrigger>
+      <SelectContent className="bg-[#252b3d] border-white/10">
+        {mockLocations.map((location) => (
+          <SelectItem 
+            key={location.id} 
+            value={location.id}
+            className="text-white focus:bg-white/10 focus:text-white"
+            data-testid={`option-location-${location.id}`}
+          >
+            <div className="flex flex-col">
+              <span className="font-medium">{location.name}</span>
+              <span className="text-xs text-gray-400 truncate">{location.address}</span>
+            </div>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
 
 function SidebarContent({ 
   onNavigate 
@@ -138,7 +155,6 @@ function SidebarContent({
 }) {
   const pathname = usePathname();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
-  const [showPromo, setShowPromo] = useState(true);
 
   const toggleExpanded = (label: string) => {
     setExpandedItems(prev => 
@@ -165,7 +181,8 @@ function SidebarContent({
         </Link>
       </div>
 
-      <div className="p-4 shrink-0">
+      <div className="p-4 space-y-3 shrink-0">
+        <LocationSwitcher />
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input 
