@@ -7,6 +7,11 @@ export function registerRoutes(app: Express): Server {
     try {
       // For now, return the first seeded user as "current user"
       const user = await storage.getUser("1");
+      if (!user) {
+        // Fallback user if not found
+        res.json({ id: "1", username: "demo", businessName: "Acme Corporation" });
+        return;
+      }
       res.json(user);
     } catch (error) {
       console.error("Error fetching user:", error);

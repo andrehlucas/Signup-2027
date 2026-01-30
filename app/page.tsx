@@ -50,10 +50,12 @@ export default function PortalDashboard() {
 
   const currentLocation = displayLocations.find(loc => loc.id === activeLocation) || displayLocations[0];
 
+  const businessName = user?.businessName || 'Acme Corporation';
+
   return (
     <div className="p-4 lg:p-8" data-testid="portal-dashboard">
       <h1 className="text-2xl font-bold text-gray-900 mb-6" data-testid="heading-welcome">
-        Welcome, {user?.businessName || '{business-name}'}
+        Welcome, {businessName}
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
