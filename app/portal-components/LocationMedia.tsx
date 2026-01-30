@@ -45,25 +45,26 @@ export function LocationMedia({
             <p className="text-sm font-semibold text-white" data-testid="text-address">
               {address}
             </p>
-            <div className="flex items-center gap-3 mt-1">
+            <div className="flex items-center justify-between mt-1">
               <p className="text-white text-xs">{city}</p>
-              <span className="text-white/60">|</span>
-              <button 
-                className="flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors"
-                onClick={onGetDirections}
-                data-testid="button-get-directions"
-              >
-                <Navigation className="h-3 w-3 mr-1" />
-                Get Directions
-              </button>
-              <button 
-                className="flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors"
-                onClick={onShare}
-                data-testid="button-share"
-              >
-                <Share2 className="h-3 w-3 mr-1" />
-                Share
-              </button>
+              <div className="flex items-center gap-3">
+                <button 
+                  className="flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors"
+                  onClick={onGetDirections}
+                  data-testid="button-get-directions"
+                >
+                  <Navigation className="h-3 w-3 mr-1" />
+                  Get Directions
+                </button>
+                <button 
+                  className="flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors"
+                  onClick={onShare}
+                  data-testid="button-share"
+                >
+                  <Share2 className="h-3 w-3 mr-1" />
+                  Share
+                </button>
+              </div>
             </div>
           </div>
         </div>
