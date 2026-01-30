@@ -819,6 +819,10 @@ body {
   height: 100svh;
 }
 
+.h-\[400px\] {
+  height: 400px;
+}
+
 .max-h-\[--radix-context-menu-content-available-height\] {
   max-height: var(--radix-context-menu-content-available-height);
 }
@@ -1718,6 +1722,10 @@ body {
 
 .p-\[1px\] {
   padding: 1px;
+}
+
+.p-8 {
+  padding: 2rem;
 }
 
 .px-0 {

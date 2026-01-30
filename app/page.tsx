@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Location } from '../shared/schema';
 import { MapPin, Phone, User, MoreVertical, CreditCard, FileEdit, Users, Mail, Calendar, Settings } from 'lucide-react';
 import { Card, CardContent } from '@/app/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
@@ -8,46 +10,6 @@ import { Badge } from '@/app/components/ui/badge';
 import { LocationMedia } from './portal-components/LocationMedia';
 import { QuickActionCard } from './portal-components/QuickActionCard';
 import { FeatureItem } from './portal-components/FeatureItem';
-
-const locations = [
-  {
-    id: 'location-01',
-    name: 'Location 01',
-    address: '848 Brickell Avenue, Penthouse 5',
-    city: 'Miami FL 33131',
-    phone: '(xxx) xxx - xxxx',
-    extensions: [
-      { name: 'John Smith', department: 'Marketing' },
-      { name: 'Sam Smith', department: 'Sales' },
-    ],
-    buildingImage: '/office-building_1761587957783.webp',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.6595159366707!2d-80.19180492441!3d25.76168277735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b69c20e3f7c9%3A0x9e9b2d99b7c12d83!2s848%20Brickell%20Ave%2C%20Miami%2C%20FL%2033131!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus',
-  },
-  {
-    id: 'location-02',
-    name: 'Location 02',
-    address: '1234 Corporate Plaza, Suite 100',
-    city: 'New York NY 10001',
-    phone: '(xxx) xxx - xxxx',
-    extensions: [
-      { name: 'Jane Doe', department: 'Support' },
-    ],
-    buildingImage: '/new-york-aerial-view_1761593422460.webp',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1841!2d-73.9897!3d40.7484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ0JzU0LjIiTiA3M8KwNTknMjIuOSJX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus',
-  },
-  {
-    id: 'location-03',
-    name: 'Location 03',
-    address: '5678 Business Center Dr',
-    city: 'Los Angeles CA 90001',
-    phone: '(xxx) xxx - xxxx',
-    extensions: [
-      { name: 'Bob Johnson', department: 'Operations' },
-    ],
-    buildingImage: '/multiple-professionals_1761593320843.webp',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.7!2d-118.2437!3d34.0522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus',
-  },
-];
 
 const packageFeatures = [
   { icon: MapPin, label: 'Prestigious Business Address' },
@@ -68,7 +30,35 @@ const quickActions = [
 ];
 
 export default function PortalDashboard() {
-  const [activeLocation, setActiveLocation] = useState('location-01');
+  const { data: locations, isLoading } = useQuery<Location[]>({ 
+    queryKey: ['/api/locations'] 
+  });
+  
+  const [activeLocation, setActiveLocation] = useState<string | null>(null);
+
+  // Set default active location once data is loaded
+  if (!activeLocation && locations && locations.length > 0) {
+    setActiveLocation(locations[0].id);
+  }
+
+  if (isLoading) {
+    return (
+      <div className="p-4 md:p-8 animate-pulse">
+        <div className="h-8 w-64 bg-gray-200 rounded mb-6" />
+        <div className="h-10 w-full bg-gray-200 rounded mb-8" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 h-[400px] bg-gray-200 rounded" />
+          <div className="h-[400px] bg-gray-200 rounded" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!locations || locations.length === 0) {
+    return <div className="p-8">No locations found.</div>;
+  }
+
+  const currentLocation = locations.find(loc => loc.id === activeLocation) || locations[0];
 
   return (
     <div className="p-4 md:p-8" data-testid="portal-dashboard">
@@ -76,8 +66,8 @@ export default function PortalDashboard() {
         Welcome, {'{business-name}'}
       </h1>
 
-      <Tabs value={activeLocation} onValueChange={setActiveLocation} className="mb-8">
-        <TabsList className="bg-white border border-gray-200 p-1 h-auto">
+      <Tabs value={activeLocation || locations[0].id} onValueChange={setActiveLocation} className="mb-8">
+        <TabsList className="bg-white border border-gray-200 p-1 h-auto flex-wrap">
           {locations.map((location) => (
             <TabsTrigger
               key={location.id}
@@ -90,60 +80,56 @@ export default function PortalDashboard() {
           ))}
         </TabsList>
 
-        {locations.map((location) => (
-          <TabsContent key={location.id} value={location.id} className="mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
-                <LocationMedia
-                  buildingImage={location.buildingImage}
-                  mapEmbedUrl={location.mapUrl}
-                  address={location.address}
-                  city={location.city}
-                />
+        <TabsContent value={currentLocation.id} className="mt-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <LocationMedia
+                buildingImage={currentLocation.imageUrl || '/office-building_1761587957783.webp'}
+                mapEmbedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.6595159366707!2d-80.19180492441!3d25.76168277735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b69c20e3f7c9%3A0x9e9b2d99b7c12d83!2s848%20Brickell%20Ave%2C%20Miami%2C%20FL%2033131!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                address={currentLocation.address}
+                city=""
+              />
 
-                <div className="mb-2">
-                  <span className="font-medium text-gray-900">Phone Number:</span>
-                  <span className="text-gray-600 ml-2" data-testid="text-phone">{location.phone}</span>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-4">
-                  <span className="font-medium text-gray-900">Extension(s):</span>
-                  {location.extensions.map((ext, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-700">{ext.name}</span>
-                      <Badge 
-                        variant="outline" 
-                        className="text-xs border-green-500 text-green-600"
-                        data-testid={`badge-extension-${idx}`}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5" />
-                        {ext.department}
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
+              <div className="mb-2">
+                <span className="font-medium text-gray-900">Phone Number:</span>
+                <span className="text-gray-600 ml-2" data-testid="text-phone">(xxx) xxx - xxxx</span>
               </div>
 
-              <div className="hidden lg:block">
-                <Card className="border-0 shadow-sm" data-testid="card-package-features">
-                  <CardContent className="p-6">
-                    <h3 className="font-semibold text-gray-900 mb-4">Your Office Package Includes:</h3>
-                    <div className="space-y-3">
-                      {packageFeatures.map((feature, idx) => (
-                        <FeatureItem
-                          key={idx}
-                          icon={feature.icon}
-                          label={feature.label}
-                        />
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+              <div className="flex flex-wrap items-center gap-4">
+                <span className="font-medium text-gray-900">Extension(s):</span>
+                <div className="flex items-center gap-2">
+                  <User className="h-4 w-4 text-gray-400" />
+                  <span className="text-gray-700">Primary Contact</span>
+                  <Badge 
+                    variant="outline" 
+                    className="text-xs border-green-500 text-green-600"
+                    data-testid="badge-extension-0"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5" />
+                    Active
+                  </Badge>
+                </div>
               </div>
             </div>
-          </TabsContent>
-        ))}
+
+            <div className="hidden lg:block">
+              <Card className="border-0 shadow-sm" data-testid="card-package-features">
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-4">Your Office Package Includes:</h3>
+                  <div className="space-y-3">
+                    {packageFeatures.map((feature, idx) => (
+                      <FeatureItem
+                        key={idx}
+                        icon={feature.icon}
+                        label={feature.label}
+                      />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </TabsContent>
       </Tabs>
 
       <div className="mb-8">
@@ -169,3 +155,4 @@ export default function PortalDashboard() {
     </div>
   );
 }
+

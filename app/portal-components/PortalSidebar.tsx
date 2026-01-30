@@ -109,14 +109,20 @@ const navItems: NavItem[] = [
   },
 ];
 
-const mockLocations = [
-  { id: '1', name: 'Manhattan Office', address: '123 5th Avenue, New York, NY' },
-  { id: '2', name: 'Brooklyn Hub', address: '456 Atlantic Ave, Brooklyn, NY' },
-  { id: '3', name: 'Los Angeles Office', address: '789 Wilshire Blvd, LA, CA' },
+import { useQuery } from '@tanstack/react-query';
+import { Location } from "../../shared/schema";
+
+const mockLocations: Location[] = [
+  { id: '1', name: 'Manhattan Office', address: '123 5th Avenue, New York, NY', imageUrl: '/attached_assets/manhattan.jpg' },
+  { id: '2', name: 'Brooklyn Hub', address: '456 Atlantic Ave, Brooklyn, NY', imageUrl: '/attached_assets/brooklyn.jpg' },
+  { id: '3', name: 'Los Angeles Office', address: '789 Wilshire Blvd, LA, CA', imageUrl: '/attached_assets/la.jpg' },
 ];
 
 function LocationSwitcher() {
-  const [selectedLocation, setSelectedLocation] = useState(mockLocations[0].id);
+  const { data: locations = mockLocations } = useQuery<Location[]>({ 
+    queryKey: ['/api/locations'] 
+  });
+  const [selectedLocation, setSelectedLocation] = useState(locations[0]?.id);
 
   return (
     <Select value={selectedLocation} onValueChange={setSelectedLocation}>
