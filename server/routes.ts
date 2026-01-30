@@ -3,6 +3,17 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 
 export function registerRoutes(app: Express): Server {
+  app.get("/api/user", async (_req, res) => {
+    try {
+      // For now, return the first seeded user as "current user"
+      const user = await storage.getUser("1");
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.get("/api/locations", async (_req, res) => {
     try {
       const locations = await storage.getLocations();

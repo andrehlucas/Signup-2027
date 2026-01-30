@@ -1,4 +1,4 @@
-import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -6,6 +6,7 @@ export const users = pgTable("users", {
   id: varchar("id").primaryKey(),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  businessName: text("business_name").notNull().default("Opus Business"),
 });
 
 export const locations = pgTable("locations", {
@@ -18,7 +19,7 @@ export const locations = pgTable("locations", {
 export const insertUserSchema = createInsertSchema(users);
 export const insertLocationSchema = createInsertSchema(locations);
 
-export type User = typeof users.$inferSelect;
+export type UserType = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Location = typeof locations.$inferSelect;
 export type InsertLocation = z.infer<typeof insertLocationSchema>;

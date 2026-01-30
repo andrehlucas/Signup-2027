@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Location } from '../shared/schema';
-import { MapPin, Phone, User, MoreVertical, CreditCard, FileEdit, Users, Mail, Calendar, Settings } from 'lucide-react';
+import { Location, UserType } from '../shared/schema';
+import { MapPin, Phone, User, MoreVertical, CreditCard, FileEdit, Users, Mail, Calendar, Settings, ChevronRight } from 'lucide-react';
 import { Badge } from '@/app/components/ui/badge';
 import { LocationMedia } from './portal-components/LocationMedia';
 import { QuickActionCard } from './portal-components/QuickActionCard';
@@ -28,6 +28,10 @@ const quickActions = [
 ];
 
 export default function PortalDashboard() {
+  const { data: user } = useQuery<UserType>({
+    queryKey: ['/api/user']
+  });
+
   const { data: locations, isLoading } = useQuery<Location[]>({ 
     queryKey: ['/api/locations'] 
   });
@@ -49,7 +53,7 @@ export default function PortalDashboard() {
   return (
     <div className="p-4 lg:p-8" data-testid="portal-dashboard">
       <h1 className="text-2xl font-bold text-gray-900 mb-6" data-testid="heading-welcome">
-        Welcome, {'{business-name}'}
+        Welcome, {user?.businessName || '{business-name}'}
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
