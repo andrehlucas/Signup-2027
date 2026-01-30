@@ -42,9 +42,9 @@ export function NavSection({
           className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-300 hover:bg-white/5 transition-colors"
           data-testid={`button-${testIdPrefix}-${slugLabel}`}
         >
-          <div className="flex items-center gap-3 overflow-hidden">
-            <div className="shrink-0">{icon}</div>
-            <span className="font-medium truncate">{label}</span>
+          <div className="flex items-center gap-3">
+            {icon}
+            <span className="font-medium">{label}</span>
           </div>
           {isExpanded ? (
             <ChevronDown className="h-4 w-4" />
@@ -82,15 +82,15 @@ export function NavSection({
         href={href!}
         onClick={onNavigate}
         className={cn(
-          "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors overflow-hidden",
+          "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors",
           isActive(href!)
             ? "bg-white/10 text-white font-medium"
             : "text-gray-300 hover:bg-white/5"
         )}
         data-testid={`link-${testIdPrefix}-${slugLabel}`}
       >
-        <div className="shrink-0">{icon}</div>
-        <span className="font-medium truncate">{label}</span>
+        {icon}
+        <span className="font-medium">{label}</span>
       </Link>
     </div>
   );
