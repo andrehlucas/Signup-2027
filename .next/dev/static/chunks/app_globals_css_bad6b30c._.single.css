@@ -598,16 +598,16 @@ body {
   margin-left: auto;
 }
 
+.mr-1 {
+  margin-right: .25rem;
+}
+
 .mr-1\.5 {
   margin-right: .375rem;
 }
 
 .mr-2 {
   margin-right: .5rem;
-}
-
-.mt-0\.5 {
-  margin-top: .125rem;
 }
 
 .mt-1 {
