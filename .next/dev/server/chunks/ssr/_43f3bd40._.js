@@ -55,7 +55,31 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 'use client';
 ;
 ;
-function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirections, onShare }) {
+function LocationMedia({ buildingImage, mapEmbedUrl, address, city }) {
+    const fullAddress = `${address}, ${city}`;
+    const handleGetDirections = ()=>{
+        const encodedAddress = encodeURIComponent(fullAddress);
+        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+        window.open(mapsUrl, '_blank');
+    };
+    const handleShare = async ()=>{
+        const shareData = {
+            title: 'Office Location',
+            text: `Check out our office at ${fullAddress}`,
+            url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`
+        };
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    navigator.clipboard.writeText(`${fullAddress}\n${shareData.url}`);
+                }
+            }
+        } else {
+            navigator.clipboard.writeText(`${fullAddress}\n${shareData.url}`);
+        }
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "grid grid-cols-1 md:grid-cols-2 gap-4",
         children: [
@@ -69,7 +93,7 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                         "data-testid": "img-building"
                     }, void 0, false, {
                         fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                        lineNumber: 25,
+                        lineNumber: 48,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -91,7 +115,7 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                                     children: address
                                 }, void 0, false, {
                                     fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                    lineNumber: 45,
+                                    lineNumber: 68,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -102,7 +126,7 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                                             children: city
                                         }, void 0, false, {
                                             fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                            lineNumber: 49,
+                                            lineNumber: 72,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -110,69 +134,69 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                     className: "flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors",
-                                                    onClick: onGetDirections,
+                                                    onClick: handleGetDirections,
                                                     "data-testid": "button-get-directions",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Navigation$3e$__["Navigation"], {
                                                             className: "h-3 w-3 mr-1"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                                            lineNumber: 56,
+                                                            lineNumber: 79,
                                                             columnNumber: 19
                                                         }, this),
                                                         "Get Directions"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                                    lineNumber: 51,
+                                                    lineNumber: 74,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                     className: "flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors",
-                                                    onClick: onShare,
+                                                    onClick: handleShare,
                                                     "data-testid": "button-share",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$share$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Share2$3e$__["Share2"], {
                                                             className: "h-3 w-3 mr-1"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                                            lineNumber: 64,
+                                                            lineNumber: 87,
                                                             columnNumber: 19
                                                         }, this),
                                                         "Share"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                                    lineNumber: 59,
+                                                    lineNumber: 82,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                            lineNumber: 50,
+                                            lineNumber: 73,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                                    lineNumber: 48,
+                                    lineNumber: 71,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                            lineNumber: 37,
+                            lineNumber: 60,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                        lineNumber: 31,
+                        lineNumber: 54,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                lineNumber: 24,
+                lineNumber: 47,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -191,18 +215,18 @@ function LocationMedia({ buildingImage, mapEmbedUrl, address, city, onGetDirecti
                     "data-testid": "map-iframe"
                 }, void 0, false, {
                     fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                    lineNumber: 73,
+                    lineNumber: 96,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/LocationMedia.tsx",
-                lineNumber: 72,
+                lineNumber: 95,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/portal-components/LocationMedia.tsx",
-        lineNumber: 23,
+        lineNumber: 46,
         columnNumber: 5
     }, this);
 }

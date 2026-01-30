@@ -7,8 +7,6 @@ interface LocationMediaProps {
   mapEmbedUrl: string;
   address: string;
   city: string;
-  onGetDirections?: () => void;
-  onShare?: () => void;
 }
 
 export function LocationMedia({
@@ -16,9 +14,34 @@ export function LocationMedia({
   mapEmbedUrl,
   address,
   city,
-  onGetDirections,
-  onShare,
 }: LocationMediaProps) {
+  const fullAddress = `${address}, ${city}`;
+
+  const handleGetDirections = () => {
+    const encodedAddress = encodeURIComponent(fullAddress);
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+    window.open(mapsUrl, '_blank');
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Office Location',
+      text: `Check out our office at ${fullAddress}`,
+      url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          navigator.clipboard.writeText(`${fullAddress}\n${shareData.url}`);
+        }
+      }
+    } else {
+      navigator.clipboard.writeText(`${fullAddress}\n${shareData.url}`);
+    }
+  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="relative rounded-xl overflow-hidden h-[320px]">
@@ -50,7 +73,7 @@ export function LocationMedia({
               <div className="flex items-center gap-3">
                 <button 
                   className="flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors"
-                  onClick={onGetDirections}
+                  onClick={handleGetDirections}
                   data-testid="button-get-directions"
                 >
                   <Navigation className="h-3 w-3 mr-1" />
@@ -58,7 +81,7 @@ export function LocationMedia({
                 </button>
                 <button 
                   className="flex items-center text-[#36bff9] hover:text-[#5dd0ff] text-xs font-medium transition-colors"
-                  onClick={onShare}
+                  onClick={handleShare}
                   data-testid="button-share"
                 >
                   <Share2 className="h-3 w-3 mr-1" />
