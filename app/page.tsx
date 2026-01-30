@@ -22,12 +22,12 @@ const packageFeatures = [
 ];
 
 const quickActions = [
-  { icon: User, title: 'Update Payment Method', description: 'Add yourself or import from CSV' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
-  { icon: FileEdit, title: 'Create a new post', description: 'Dive into the editor and start creating' },
+  { icon: CreditCard, title: 'Update Payment Method', description: 'Manage your credit cards and billing information' },
+  { icon: Calendar, title: 'Book a Meeting Room', description: 'Reserve professional office space or conference rooms' },
+  { icon: Mail, title: 'Mail Preferences', description: 'Set up mail forwarding or scanning instructions' },
+  { icon: Phone, title: 'Call Forwarding', description: 'Configure how your business calls are routed' },
+  { icon: Users, title: 'Refer a Client', description: 'Earn rewards by referring new businesses to Opus VO' },
+  { icon: Settings, title: 'Account Settings', description: 'Update your company profile and login details' },
 ];
 
 export default function PortalDashboard() {
