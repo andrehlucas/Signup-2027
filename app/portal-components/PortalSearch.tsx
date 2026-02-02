@@ -13,18 +13,41 @@ interface SearchableItem {
   category: string;
 }
 
+/**
+ * SEARCHABLE PAGES INDEX
+ * 
+ * To add a new page to the search index:
+ * 1. Add a new object to this array with the following structure:
+ *    - title: Display name shown in search results
+ *    - href: Route path for navigation
+ *    - keywords: Array of single words that users might search for (whole words only)
+ *    - description: Brief description shown in search results preview
+ *    - category: Group label for the result (e.g., 'Office', 'Phone System')
+ * 
+ * Example:
+ * {
+ *   title: 'New Feature Page',
+ *   href: '/new-feature',
+ *   keywords: ['feature', 'new', 'example'],
+ *   description: 'Description of what this page does',
+ *   category: 'Category Name',
+ * }
+ * 
+ * Note: Search matches complete words only. If you add 'form' as a keyword,
+ * it will match searches for "form" but not "information".
+ */
 const searchablePages: SearchableItem[] = [
   {
     title: 'Home',
     href: '/',
-    keywords: ['home', 'dashboard', 'overview', 'welcome', 'quick actions'],
+    keywords: ['home', 'dashboard', 'overview', 'welcome', 'quick', 'actions'],
     description: 'Your portal dashboard with location overview and quick actions',
     category: 'Main',
   },
   {
     title: 'My Office',
     href: '/office',
-    keywords: ['office', 'address', 'mail', 'forwarding', 'scanning', 'documents', 'upload', '1583', 'usps', 'directions', 'share', 'location'],
+    keywords: ['office', 'address', 'mail', 'forwarding', 'scanning', 'documents', 'upload', '1583', 'usps', 'directions', 'share', 'location', 'form'],
     description: 'Manage your virtual office address, mail forwarding, mail scanning, and document uploads',
     category: 'Office',
   },
@@ -185,6 +208,12 @@ export function PortalSearch({ onNavigate }: { onNavigate?: () => void }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
+  // Helper to check if a word matches the query (whole word match)
+  const matchesWord = (text: string, queryWord: string): boolean => {
+    const words = text.toLowerCase().split(/\s+/);
+    return words.some(word => word === queryWord);
+  };
+
   useEffect(() => {
     if (query.length < 2) {
       setResults([]);
@@ -192,11 +221,19 @@ export function PortalSearch({ onNavigate }: { onNavigate?: () => void }) {
       return;
     }
 
-    const lowerQuery = query.toLowerCase();
+    const lowerQuery = query.toLowerCase().trim();
+    
+    // Match complete words only
     const filtered = searchablePages.filter(page => {
-      const titleMatch = page.title.toLowerCase().includes(lowerQuery);
-      const keywordMatch = page.keywords.some(k => k.toLowerCase().includes(lowerQuery));
-      const descMatch = page.description.toLowerCase().includes(lowerQuery);
+      // Check if title contains the exact word
+      const titleMatch = matchesWord(page.title, lowerQuery);
+      
+      // Check if any keyword matches exactly
+      const keywordMatch = page.keywords.some(k => k.toLowerCase() === lowerQuery);
+      
+      // Check if description contains the exact word
+      const descMatch = matchesWord(page.description, lowerQuery);
+      
       return titleMatch || keywordMatch || descMatch;
     });
 
