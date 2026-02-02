@@ -9,6 +9,7 @@ import { LocationMedia } from './portal-components/LocationMedia';
 import { QuickActionCard } from './portal-components/QuickActionCard';
 import { FeatureItem } from './portal-components/FeatureItem';
 import { AlertComponent, Alert } from './portal-components/AlertComponent';
+import { ExpandLocationBanner } from './portal-components/ExpandLocationBanner';
 
 const alertQueue: Alert[] = [
   { id: '1', type: 'info', title: 'New Mail Received', message: 'You have 3 new pieces of mail waiting at your office location.' },
@@ -70,6 +71,8 @@ export default function PortalDashboard() {
       <h1 className="text-2xl font-bold text-gray-900 mb-6" data-testid="heading-welcome">
         Welcome, {businessName}
       </h1>
+
+      <ExpandLocationBanner onAddLocation={() => console.log('Add location clicked')} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div className="lg:col-span-2">
