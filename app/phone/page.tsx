@@ -516,30 +516,29 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg" data-testid="edit-extension-modal">
+      <DialogContent className="sm:max-w-2xl" data-testid="edit-extension-modal">
         <DialogHeader>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-              <Phone className="h-5 w-5 text-gray-600" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                <Phone className="h-5 w-5 text-gray-600" />
+              </div>
+              <div>
+                <DialogTitle className="text-lg font-semibold">Edit extension</DialogTitle>
+                <DialogDescription className="text-sm text-gray-500">{formData.firstName} {formData.lastName} (Ext. {formData.id})</DialogDescription>
+              </div>
             </div>
-            <div>
-              <DialogTitle className="text-lg font-semibold">Edit extension</DialogTitle>
-              <DialogDescription className="text-sm text-gray-500">{formData.firstName} {formData.lastName} (Ext. {formData.id})</DialogDescription>
-            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onEditVoicemailGreeting}
+              data-testid="button-edit-voicemail-greeting"
+            >
+              <Voicemail className="h-4 w-4 mr-1.5" />
+              Edit Voicemail Greeting
+            </Button>
           </div>
         </DialogHeader>
-        
-        <div className="flex justify-end mb-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onEditVoicemailGreeting}
-            data-testid="button-edit-voicemail-greeting"
-          >
-            <Voicemail className="h-4 w-4 mr-1.5" />
-            Edit Voicemail Greeting
-          </Button>
-        </div>
         
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -550,7 +549,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                 placeholder="First Name"
                 value={formData.firstName}
                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                className="mt-1.5"
+                className="mt-1.5 h-10"
                 data-testid="input-first-name"
               />
             </div>
@@ -561,7 +560,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                 placeholder="Last Name"
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                className="mt-1.5"
+                className="mt-1.5 h-10"
                 data-testid="input-last-name"
               />
             </div>
@@ -575,7 +574,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                 placeholder="Type Department"
                 value={formData.department}
                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                className="mt-1.5"
+                className="mt-1.5 h-10"
                 data-testid="input-department"
               />
             </div>
@@ -587,7 +586,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                 placeholder="Type email"
                 value={formData.voicemailEmail}
                 onChange={(e) => setFormData({ ...formData, voicemailEmail: e.target.value })}
-                className="mt-1.5"
+                className="mt-1.5 h-10"
                 data-testid="input-voicemail-email"
               />
             </div>
@@ -601,7 +600,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                   <Label className="text-sm text-gray-500">Forwarding Number {idx + 1}</Label>
                   <div className="flex gap-2 mt-1">
                     <Select defaultValue="US">
-                      <SelectTrigger className="w-20" data-testid={`select-country-${idx}`}>
+                      <SelectTrigger className="w-20 h-10" data-testid={`select-country-${idx}`}>
                         <SelectValue placeholder="US" />
                       </SelectTrigger>
                       <SelectContent>
@@ -615,6 +614,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                       value={formData.forwardingNumbers[idx] || ''}
                       onChange={(e) => updateForwardingNumber(idx, e.target.value)}
                       disabled={disableForwarding}
+                      className="h-10"
                       data-testid={`input-forwarding-${idx}`}
                     />
                   </div>

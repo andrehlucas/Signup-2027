@@ -4046,8 +4046,8 @@ body {
     width: 1.75rem;
   }
 
-  .sm\:max-w-lg {
-    max-width: 32rem;
+  .sm\:max-w-2xl {
+    max-width: 42rem;
   }
 
   .sm\:max-w-md {
