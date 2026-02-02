@@ -288,7 +288,7 @@ export default function OfficePage() {
               </button>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between border-t border-gray-100 pt-4">
               <h3 className="font-medium text-gray-900">Mail Scanning</h3>
               <button
                 className="text-sm text-gray-900 hover:text-[#36bff9] font-medium"
