@@ -243,7 +243,7 @@ function PhoneDetails() {
             </Button>
             <Button
               onClick={handleSaveEmail}
-              className="bg-[#E53935] hover:bg-[#C62828] text-white"
+              className="bg-[#E53935] hover:bg-[#C62828] text-white font-medium"
               data-testid="button-save-email"
             >
               Save
