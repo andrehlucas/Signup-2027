@@ -48,15 +48,8 @@ const navItems: NavItem[] = [
   },
   {
     label: 'My Office',
+    href: '/office',
     icon: <Building2 className="h-5 w-5" />,
-    children: [
-      { label: 'Meeting Rooms/Office Time', href: '/meeting-rooms' },
-      { label: 'Mail Forwarding', href: '/office/mail-forwarding' },
-      { label: 'Mail Scanning', href: '/office/mail-scanning' },
-      { label: 'Add/Change Locations', href: '/office/locations' },
-      { label: 'Upload Documents', href: '/office/documents' },
-      { label: 'Verification Letter', href: '/office/verification-letter' },
-    ],
   },
   {
     label: 'Phone System',
