@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
-  Search, 
   Building2, 
   User, 
   PlayCircle, 
@@ -22,9 +21,9 @@ import {
   ChevronDown,
   MapPin
 } from 'lucide-react';
-import { Input } from '@/app/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/app/components/ui/sheet';
 import { NavSection } from './NavSection';
+import { PortalSearch } from './PortalSearch';
 import {
   Select,
   SelectContent,
@@ -183,14 +182,7 @@ function SidebarContent({
 
       <div className="p-4 space-y-3 shrink-0">
         <LocationSwitcher />
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input 
-            placeholder="Search" 
-            className="pl-10 bg-[#252b3d] border-0 text-white placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-blue-500"
-            data-testid="input-portal-search"
-          />
-        </div>
+        <PortalSearch onNavigate={handleNavClick} />
       </div>
 
       <nav className="flex-1 px-2 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
