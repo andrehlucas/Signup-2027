@@ -347,7 +347,7 @@ export default function OfficePage() {
                 </button>
                 {' '}or drag and drop
               </p>
-              <p className="text-xs text-gray-500 mt-1">SVG, PNG, JPG or GIF (max. 800×400px)</p>
+              <p className="text-xs text-gray-500 mt-1">SVG, PNG, JPG, GIF or PDF (max. 800×400px)</p>
               <input
                 ref={fileInputRef}
                 type="file"
