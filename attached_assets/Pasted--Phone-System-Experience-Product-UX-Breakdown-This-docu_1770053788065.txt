@@ -1,0 +1,214 @@
+# Phone System Experience – Product & UX Breakdown
+
+This document explains the **Phone System experience** from a product and UX perspective, focusing on **intent, hierarchy, and multi-step flows**.
+
+---
+
+## What This Page Is (Mental Model)
+
+This screen functions as a **Phone System Control Center** for a specific office location.
+
+It combines three product modes in a single experience:
+
+1. **Status / Summary** – what the user has and what’s active  
+2. **Operations / Configuration** – how calls are routed, answered, and logged  
+3. **Commerce / Expansion** – add-ons discovery and purchase  
+
+This is powerful but requires strong hierarchy to avoid cognitive overload.
+
+---
+
+## Top Navigation (Context Switching)
+
+Buttons:
+- **Phone System**
+- **Add-ons**
+- **My Plan**
+
+These establish three distinct areas:
+
+- **Phone System** → configuration and operational control
+- **Add-ons** → purchasing and enabling new capabilities
+- **My Plan** → billing, package, and entitlements
+
+Note: The presence of “Explore Addons” inside Phone System slightly blurs boundaries. This is acceptable but must be visually secondary.
+
+---
+
+## Phone Details (Summary Layer)
+
+**Purpose**
+- Confirms which office/location the user is managing
+- Displays authoritative business numbers
+
+**UX Role**
+- Reference-only
+- Trust and orientation
+
+**Potential Enhancements**
+- Copy-to-clipboard actions
+- Micro-help for terms like “For Mail Call”
+
+---
+
+## Your Extensions (Core Control Panel)
+
+Each extension card exposes:
+
+- Identity (name + department)
+- Up to 4 forwarding numbers
+- **Live Answering toggle**
+- **Edit**
+- **Voicemail**
+- **Call Log**
+
+### Mental Model
+Each extension behaves like a **mini phone system**, composed of:
+
+1. **Routing** – forwarding numbers and call flow
+2. **Answering Mode** – receptionist vs direct ring
+3. **Messaging** – voicemail and greeting
+4. **Monitoring** – call logs
+
+This aligns well with how business users think about phone systems.
+
+---
+
+## Live Answering Toggle (Critical Control)
+
+**Behavior**
+- ON → calls answered by live receptionist, then transferred
+- OFF → receptionist bypassed, calls ring customer phones or go to voicemail
+
+This toggle fundamentally changes customer experience and should be treated as a **high-impact control**.
+
+**UX Recommendation**
+- Inline explanation on first interaction:
+  - “ON: Receptionist answers calls”
+  - “OFF: Calls ring your phones directly”
+
+---
+
+## Active Add-ons (Installed Capabilities)
+
+This section reflects **enabled software features**.
+
+Two action types exist:
+- **View Instructions** → education and usage
+- **Edit** → configuration
+
+This distinction is correct and sets clear expectations.
+
+---
+
+## Explore Add-ons (Marketplace Layer)
+
+Functions as an upsell and expansion surface.
+
+### Two Contexts
+- Inline cards (browse)
+- Modal experience (learn + purchase)
+
+### Implied Flow
+1. Browse
+2. Learn details
+3. Purchase
+4. Activate / Configure
+
+**Critical Requirement**
+Each add-on must clearly state:
+- What changes after purchase
+- Whether setup is required
+- Whether activation is immediate
+
+---
+
+## Multi-Step Flow: Edit Extension → Voicemail Greeting
+
+### Step 1: Edit Extension Modal
+
+**Actions**
+- Edit extension details
+- Edit voicemail greeting
+- Save changes
+
+**Responsibilities Bundled**
+- Identity metadata
+- Routing configuration
+- Voicemail delivery settings
+
+**Primary CTA**
+- **Save Changes** (commit state)
+
+User expectation: changes apply immediately.
+
+---
+
+### Step 2: Voicemail Greeting Modal
+
+**Actions**
+- Listen to current greeting
+- Record new greeting
+- Close
+
+Purpose:
+- Confidence check before change
+- Clear transition to recording
+
+---
+
+### Step 3: Record Voicemail Greeting (Call-Based)
+
+**Actions**
+- Select number to receive call
+- **Call Me Now**
+
+This reveals a system constraint: greetings are recorded via phone call.
+
+**User Needs Clear Assurance**
+- Which number will be called
+- What will happen during the call
+- How to confirm success afterward
+
+**UX Recommendation**
+- “Waiting for your recording…” state
+- Retry option if call fails
+- Clear post-recording confirmation
+
+---
+
+## End-to-End User Jobs Supported
+
+1. Confirm phone system setup
+2. Change call routing quickly
+3. Maintain professional voicemail
+4. Monitor call activity
+5. Expand phone capabilities
+
+---
+
+## Primary Product Risk
+
+Not feature complexity — **mixed intent**.
+
+Users often arrive to perform a single task (e.g., update a forwarding number) but are exposed to:
+- Add-ons
+- Instructions
+- Multi-step voicemail flows
+
+**Mitigation**
+- Visually prioritize Extensions
+- Treat Add-ons as a secondary “Upgrade” layer
+
+---
+
+## Summary
+
+This is a strong, enterprise-grade phone system UI that mirrors real-world telephony behavior.  
+Success depends on:
+
+- Clear hierarchy
+- Strong confirmation states
+- Explicit explanations for high-impact actions
+
+When these are reinforced, the experience feels powerful rather than overwhelming.
