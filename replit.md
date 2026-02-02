@@ -116,10 +116,12 @@ Preferred communication style: Simple, everyday language.
 **Portal Search**
 - Located in `app/portal-components/PortalSearch.tsx`
 - Searchable index includes all portal pages with keywords and descriptions
+- Matches complete words only (not partial strings) - e.g., "form" matches but "for" only matches if "for" is a standalone word
 - Minimum 2 characters to trigger search
 - Displays results with page title, category, and description preview
 - Supports keyboard navigation (arrow keys, enter, escape)
 - Shows "No results found" message for zero matches
+- To add new pages: add an entry to the `searchablePages` array with title, href, keywords array, description, and category
 
 **Portal Reusable Components**
 Located in `app/portal-components/`:
