@@ -643,10 +643,10 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
         
         <Button
           onClick={handleSave}
-          className="w-full mt-4 bg-[#E53935] hover:bg-[#D32F2F] text-white"
+          className="w-full mt-4 bg-[#E53935] hover:bg-[#C62828] text-white"
           data-testid="button-save-extension"
         >
-          Save Changes
+          Save
         </Button>
       </DialogContent>
     </Dialog>
