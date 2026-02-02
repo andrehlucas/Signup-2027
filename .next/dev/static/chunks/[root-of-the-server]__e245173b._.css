@@ -3369,6 +3369,10 @@ body {
   color: hsl(var(--foreground));
 }
 
+.hover\:text-gray-300:hover {
+  color: var(--gray-300);
+}
+
 .hover\:text-gray-600:hover {
   color: var(--gray-600);
 }
@@ -3391,10 +3395,6 @@ body {
 
 .hover\:text-white:hover {
   color: var(--white);
-}
-
-.hover\:text-gray-300:hover {
-  color: var(--gray-300);
 }
 
 .hover\:underline:hover {
