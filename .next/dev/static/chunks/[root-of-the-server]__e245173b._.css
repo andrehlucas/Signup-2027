@@ -756,6 +756,13 @@ body {
   margin-top: auto;
 }
 
+.line-clamp-1 {
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
 .line-clamp-2 {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -2161,6 +2168,10 @@ body {
   text-transform: uppercase;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .tabular-nums {
   --tw-numeric-spacing: tabular-nums;
   font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
@@ -2223,6 +2234,10 @@ body {
 .text-\[\#36bff9\] {
   --tw-text-opacity: 1;
   color: rgb(54 191 249 / var(--tw-text-opacity, 1));
+}
+
+.text-\[\#36bff9\]\/70 {
+  color: #36bff9b3;
 }
 
 .text-\[\#4caf50\] {

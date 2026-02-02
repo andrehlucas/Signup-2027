@@ -301,6 +301,36 @@ export function PortalSearch({ onNavigate }: { onNavigate?: () => void }) {
     );
   };
 
+  // Find where the match occurred and return a preview snippet
+  const getMatchPreview = (page: SearchableItem): string | null => {
+    const lowerQuery = query.toLowerCase().trim();
+    
+    // Check keywords first
+    const matchedKeyword = page.keywords.find(k => k.toLowerCase() === lowerQuery);
+    if (matchedKeyword) {
+      return `Keyword: "${matchedKeyword}"`;
+    }
+    
+    // Check title
+    if (matchesWord(page.title, lowerQuery)) {
+      return `Title: "${page.title}"`;
+    }
+    
+    // Check description - show snippet around the matched word
+    if (matchesWord(page.description, lowerQuery)) {
+      const words = page.description.split(/\s+/);
+      const matchIndex = words.findIndex(w => w.toLowerCase().replace(/[.,!?;:]/g, '') === lowerQuery);
+      if (matchIndex !== -1) {
+        const start = Math.max(0, matchIndex - 3);
+        const end = Math.min(words.length, matchIndex + 4);
+        const snippet = words.slice(start, end).join(' ');
+        return `"...${snippet}..."`;
+      }
+    }
+    
+    return null;
+  };
+
   return (
     <div className="relative">
       <div className="relative">
@@ -344,9 +374,14 @@ export function PortalSearch({ onNavigate }: { onNavigate?: () => void }) {
                     {result.category}
                   </span>
                 </div>
-                <p className="text-sm text-gray-400 mt-0.5 line-clamp-2">
+                <p className="text-sm text-gray-400 mt-0.5 line-clamp-1">
                   {renderHighlightedText(result.description)}
                 </p>
+                {getMatchPreview(result) && (
+                  <p className="text-xs text-[#36bff9]/70 mt-1 italic">
+                    Found: {renderHighlightedText(getMatchPreview(result) || '')}
+                  </p>
+                )}
               </div>
               <ArrowRight className="h-4 w-4 text-gray-500 mt-1 shrink-0" />
             </button>
