@@ -105,12 +105,21 @@ Preferred communication style: Simple, everyday language.
 
 **Portal Routes**
 - `/` - Portal dashboard (locations overview)
+- `/office` - My Office page (mail forwarding, document upload, scanning setup)
 - `/addons` - Addons page
 - `/account` - Account details page
 - `/billing` - Billing page
 - `/videos` - How to / Videos page
 - `/meeting-rooms` - Meeting rooms page
 - `/support` - Support page
+
+**Portal Search**
+- Located in `app/portal-components/PortalSearch.tsx`
+- Searchable index includes all portal pages with keywords and descriptions
+- Minimum 2 characters to trigger search
+- Displays results with page title, category, and description preview
+- Supports keyboard navigation (arrow keys, enter, escape)
+- Shows "No results found" message for zero matches
 
 **Portal Reusable Components**
 Located in `app/portal-components/`:
@@ -120,6 +129,7 @@ Located in `app/portal-components/`:
 - `LocationMedia.tsx` - Building image + map + address + action buttons
 - `NavSection.tsx` - Collapsible sidebar navigation section with onNavigate callback
 - `PortalSidebar.tsx` - Responsive sidebar with desktop view (lg+) and mobile drawer
+- `PortalSearch.tsx` - Portal-wide search with searchable page index and dropdown results
 
 **Mobile Responsiveness**
 - Breakpoint: lg (1024px) separates desktop and mobile views
