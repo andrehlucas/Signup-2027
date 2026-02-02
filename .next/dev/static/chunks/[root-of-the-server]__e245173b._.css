@@ -760,6 +760,10 @@ body {
   margin-top: 1rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .mt-8 {
   margin-top: 2rem;
 }
@@ -3273,6 +3277,11 @@ body {
 .hover\:bg-\[\#2aa8e0\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(42 168 224 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-\[\#C62828\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(198 40 40 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-\[\#D32F2F\]:hover {

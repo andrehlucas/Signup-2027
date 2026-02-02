@@ -129,6 +129,9 @@ type TabType = 'phone-system' | 'add-ons' | 'my-plan';
 // Sub-components
 function PhoneDetails() {
   const { toast } = useToast();
+  const [editEmailOpen, setEditEmailOpen] = useState(false);
+  const [email, setEmail] = useState(faxToEmail);
+  const [editingEmail, setEditingEmail] = useState(faxToEmail);
   
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -138,54 +141,117 @@ function PhoneDetails() {
     });
   };
 
+  const handleOpenEditEmail = () => {
+    setEditingEmail(email);
+    setEditEmailOpen(true);
+  };
+
+  const handleSaveEmail = () => {
+    setEmail(editingEmail);
+    setEditEmailOpen(false);
+    toast({
+      title: 'Email Updated',
+      description: 'Fax to email address has been updated.',
+    });
+  };
+
   return (
-    <Card className="p-5" data-testid="phone-details-card">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4" data-testid="heading-phone-details">Phone Details</h2>
-      
-      <div className="space-y-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="text-sm font-medium text-gray-700">Business Phone Number</p>
-            <p className="text-sm text-gray-500">{businessPhoneNumber}</p>
-          </div>
-          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200" data-testid="badge-business-hours">
-            Business Hours Line
-          </Badge>
-        </div>
+    <>
+      <Card className="p-5" data-testid="phone-details-card">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4" data-testid="heading-phone-details">Phone Details</h2>
         
-        <div className="flex gap-8">
-          <div>
-            <p className="text-sm font-medium text-gray-700">Business Fax Number</p>
-            <p className="text-sm text-gray-500">{businessFaxNumber}</p>
-          </div>
-          <div className="flex items-center gap-2">
+        <div className="space-y-4">
+          <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-700">Fax to Email</p>
-              <p className="text-sm text-gray-500">{faxToEmail}</p>
+              <p className="text-sm font-medium text-gray-700">Business Phone Number</p>
+              <p className="text-sm text-gray-500">{businessPhoneNumber}</p>
             </div>
-            <button
-              onClick={() => copyToClipboard(faxToEmail)}
-              className="text-gray-400 hover:text-gray-600"
-              aria-label="Copy fax email address"
-              data-testid="button-copy-fax-email"
-            >
-              <Copy className="h-4 w-4" />
-            </button>
-            <button className="text-[#E53935] text-sm font-medium hover:underline" data-testid="button-edit-fax-email">
-              Edit
-            </button>
+            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200" data-testid="badge-business-hours">
+              Business Hours Line
+            </Badge>
           </div>
-        </div>
+          
+          <div className="flex gap-8">
+            <div>
+              <p className="text-sm font-medium text-gray-700">Business Fax Number</p>
+              <p className="text-sm text-gray-500">{businessFaxNumber}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div>
+                <p className="text-sm font-medium text-gray-700">Fax to Email</p>
+                <p className="text-sm text-gray-500">{email}</p>
+              </div>
+              <button
+                onClick={() => copyToClipboard(email)}
+                className="text-gray-400 hover:text-gray-600"
+                aria-label="Copy fax email address"
+                data-testid="button-copy-fax-email"
+              >
+                <Copy className="h-4 w-4" />
+              </button>
+              <button 
+                onClick={handleOpenEditEmail}
+                className="text-[#E53935] text-sm font-medium hover:underline" 
+                data-testid="button-edit-fax-email"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
         
-        <div>
-          <div className="flex items-center gap-1">
-            <p className="text-sm font-medium text-gray-700">For Mail Call:</p>
-            <HelpCircle className="h-3.5 w-3.5 text-gray-400" aria-label="Help about Mail Call" />
+          <div>
+            <div className="flex items-center gap-1">
+              <p className="text-sm font-medium text-gray-700">For Mail Call:</p>
+              <button aria-label="Help about Mail Call" className="cursor-pointer">
+                <HelpCircle className="h-3.5 w-3.5 text-gray-400 hover:text-gray-600" />
+              </button>
+            </div>
+            <p className="text-sm text-gray-500">{mailCallNumber}</p>
           </div>
-          <p className="text-sm text-gray-500">{mailCallNumber}</p>
         </div>
-      </div>
-    </Card>
+      </Card>
+
+      <Dialog open={editEmailOpen} onOpenChange={setEditEmailOpen}>
+        <DialogContent className="sm:max-w-md" data-testid="edit-email-modal">
+          <DialogHeader>
+            <DialogTitle>Edit Fax to Email</DialogTitle>
+            <DialogDescription>Update the email address where faxes will be sent.</DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 mt-4">
+            <div>
+              <Label htmlFor="fax-email">Email Address</Label>
+              <Input
+                id="fax-email"
+                type="email"
+                value={editingEmail}
+                onChange={(e) => setEditingEmail(e.target.value)}
+                placeholder="Enter email address"
+                className="mt-1.5"
+                data-testid="input-fax-email"
+              />
+            </div>
+          </div>
+          
+          <div className="flex justify-end gap-3 mt-6">
+            <Button
+              variant="outline"
+              onClick={() => setEditEmailOpen(false)}
+              data-testid="button-cancel-email"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSaveEmail}
+              className="bg-[#E53935] hover:bg-[#C62828] text-white"
+              data-testid="button-save-email"
+            >
+              Save
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
