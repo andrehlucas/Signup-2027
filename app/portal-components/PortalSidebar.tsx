@@ -52,14 +52,8 @@ const navItems: NavItem[] = [
   },
   {
     label: 'Phone System',
+    href: '/phone',
     icon: <Phone className="h-5 w-5" />,
-    children: [
-      { label: 'Extensions & Voicemail', href: '/phone/extensions' },
-      { label: 'Fax Services', href: '/phone/fax' },
-      { label: 'Texting', href: '/phone/texting' },
-      { label: 'Conference Calls', href: '/phone/conference' },
-      { label: 'Call Logs & Settings', href: '/phone/logs' },
-    ],
   },
   {
     label: 'Notifications',
