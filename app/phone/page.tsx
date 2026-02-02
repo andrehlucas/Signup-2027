@@ -243,7 +243,7 @@ function PhoneDetails() {
             </Button>
             <Button
               onClick={handleSaveEmail}
-              className="bg-[#E53935] hover:bg-[#C62828] text-white font-medium"
+              className="bg-[var(--blue-light700)] hover:bg-[#015A89] text-white font-medium"
               data-testid="button-save-email"
             >
               Save
@@ -643,7 +643,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
         
         <Button
           onClick={handleSave}
-          className="w-full mt-4 bg-[#E53935] hover:bg-[#C62828] text-white"
+          className="w-full mt-4 bg-[var(--blue-light700)] hover:bg-[#015A89] text-white"
           data-testid="button-save-extension"
         >
           Save
@@ -719,7 +719,7 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }: Voice
           
           <Button
             onClick={onRecordNew}
-            className="w-full bg-[#E53935] hover:bg-[#C62828] text-white"
+            className="w-full bg-[var(--blue-light700)] hover:bg-[#015A89] text-white"
             data-testid="button-record-new-greeting"
           >
             <Mic className="h-4 w-4 mr-2" />
@@ -817,7 +817,7 @@ function RecordVoicemailModal({ open, onClose, extension }: RecordVoicemailModal
         
         <Button
           onClick={handleCallMeNow}
-          className="w-full mt-4 bg-[#E53935] hover:bg-[#C62828] text-white"
+          className="w-full mt-4 bg-[var(--blue-light700)] hover:bg-[#015A89] text-white"
           data-testid="button-call-me-now"
         >
           <Phone className="h-4 w-4 mr-2" />

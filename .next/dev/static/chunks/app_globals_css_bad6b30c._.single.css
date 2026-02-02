@@ -1721,6 +1721,10 @@ body {
   background-color: var(--color-bg);
 }
 
+.bg-\[var\(--blue-light700\)\] {
+  background-color: var(--blue-light700);
+}
+
 .bg-accent {
   background-color: hsl(var(--accent));
 }
@@ -3192,14 +3196,14 @@ body {
   border-color: var(--gray-400);
 }
 
+.hover\:bg-\[\#015A89\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(1 90 137 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:bg-\[\#2aa8e0\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(42 168 224 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-\[\#C62828\]:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(198 40 40 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-\[\#c8e6c9\]:hover {
