@@ -316,7 +316,7 @@ export default function OfficePage() {
           </p>
           
           <p className="text-sm text-[#36bff9] mb-4 cursor-pointer hover:underline" data-testid="link-1583">
-            Click here to use our onboarding system and fillup the 1583 digitally
+            Click here to use our onboarding system and fillup the 1583 digitally. Once completed, download the file and upload using the option below.
           </p>
 
           <div
