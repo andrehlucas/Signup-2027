@@ -3202,11 +3202,6 @@ body {
   background-color: rgb(198 40 40 / var(--tw-bg-opacity, 1));
 }
 
-.hover\:bg-\[\#D32F2F\]:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(211 47 47 / var(--tw-bg-opacity, 1));
-}
-
 .hover\:bg-\[\#c8e6c9\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(200 230 201 / var(--tw-bg-opacity, 1));

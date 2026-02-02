@@ -719,7 +719,7 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }: Voice
           
           <Button
             onClick={onRecordNew}
-            className="w-full bg-[#E53935] hover:bg-[#D32F2F] text-white"
+            className="w-full bg-[#E53935] hover:bg-[#C62828] text-white"
             data-testid="button-record-new-greeting"
           >
             <Mic className="h-4 w-4 mr-2" />
@@ -817,7 +817,7 @@ function RecordVoicemailModal({ open, onClose, extension }: RecordVoicemailModal
         
         <Button
           onClick={handleCallMeNow}
-          className="w-full mt-4 bg-[#E53935] hover:bg-[#D32F2F] text-white"
+          className="w-full mt-4 bg-[#E53935] hover:bg-[#C62828] text-white"
           data-testid="button-call-me-now"
         >
           <Phone className="h-4 w-4 mr-2" />
