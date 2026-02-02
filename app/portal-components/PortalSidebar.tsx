@@ -170,7 +170,7 @@ function SidebarContent({
     <div className="flex flex-col h-screen sticky top-0 bg-[#1a1f2e] text-white overflow-hidden">
       <div className="p-4 border-b border-white/10 shrink-0">
         <Link href="/" className="block" data-testid="link-sidebar-logo" onClick={handleNavClick}>
-          <img src="/opus-vo-main-logo-white.svg" alt="Opus VO" className="w-full h-auto" />
+          <img src="/opus-vo-main-logo-white.svg" alt="Opus VO" className="w-3/4 h-auto" />
         </Link>
       </div>
 
