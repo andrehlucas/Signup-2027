@@ -439,7 +439,7 @@ interface ExploreAddonsProps {
 function ExploreAddons({ addons, onAdd }: ExploreAddonsProps) {
   return (
     <Card className="p-5" data-testid="explore-addons-card">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4" data-testid="heading-explore-addons">Explore Addons</h2>
+      <h2 className="text-lg font-semibold text-gray-900 mb-4" data-testid="heading-explore-addons">Trending Addons</h2>
       
       <div className="space-y-4">
         {addons.map((addon) => (
@@ -957,10 +957,10 @@ export default function PhoneSystemPage() {
               onViewInstructions={handleViewInstructions}
               onEdit={handleEditAddon}
             />
-            <ExploreAddons
-              addons={exploreAddons}
-              onAdd={handleAddAddon}
-            />
+        <ExploreAddons
+          addons={exploreAddons}
+          onAdd={handleAddAddon}
+        />
           </div>
           
           {/* Right Column - 2/3 width */}
