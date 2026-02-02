@@ -882,9 +882,9 @@ export default function PhoneSystemPage() {
       </div>
       
       {activeTab === 'phone-system' && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Column */}
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column - 1/3 width */}
+          <div className="lg:col-span-1 space-y-6">
             <PhoneDetails />
             <ActiveAddons
               addons={activeAddons}
@@ -897,8 +897,8 @@ export default function PhoneSystemPage() {
             />
           </div>
           
-          {/* Right Column */}
-          <div>
+          {/* Right Column - 2/3 width */}
+          <div className="lg:col-span-2">
             <YourExtensions
               extensions={extensions}
               onEdit={handleEditExtension}
