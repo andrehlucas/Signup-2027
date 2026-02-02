@@ -315,8 +315,11 @@ export default function OfficePage() {
             Also upload the USPS 1583 Form to authorize mail handling.
           </p>
           
-          <p className="text-sm text-[#36bff9] mb-4 cursor-pointer hover:underline" data-testid="link-1583">
-            Click here to use our onboarding system and fillup the 1583 digitally. Once completed, download the file and upload using the option below.
+          <p className="text-sm text-[#36bff9] cursor-pointer hover:underline" data-testid="link-1583">
+            Click here to use our onboarding system and fillup the 1583 digitally
+          </p>
+          <p className="text-xs text-gray-500 mb-4">
+            Once completed, download the file and upload using the option below.
           </p>
 
           <div
