@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { UserType } from '../../shared/schema';
 import { 
   MapPin, 
   Phone, 
@@ -54,6 +56,10 @@ const packageFeatures = [
 ];
 
 export default function OfficePage() {
+  const { data: user } = useQuery<UserType>({
+    queryKey: ['/api/user']
+  });
+
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [highlightUpload, setHighlightUpload] = useState(false);
@@ -70,7 +76,7 @@ export default function OfficePage() {
   const officeAddress = '848 Brickell Avenue, Penthouse 5';
   const officeCity = 'Miami FL 33131';
   const fullAddress = `${officeAddress}, ${officeCity}`;
-  const companyName = '{company-name}';
+  const companyName = user?.businessName || 'Acme Corporation';
 
   const handleGetDirections = () => {
     const encodedAddress = encodeURIComponent(fullAddress);
