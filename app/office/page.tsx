@@ -297,6 +297,16 @@ export default function OfficePage() {
                 Setup
               </button>
             </div>
+
+            <div className="flex items-center justify-between border-t border-gray-100 pt-4">
+              <h3 className="font-medium text-gray-900">Need a Verification Letter?</h3>
+              <button
+                className="text-sm text-gray-900 hover:text-[#36bff9] font-medium"
+                data-testid="button-download-verification-letter"
+              >
+                Click here to download
+              </button>
+            </div>
           </div>
         </div>
 

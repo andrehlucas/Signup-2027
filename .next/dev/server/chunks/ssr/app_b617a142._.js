@@ -815,6 +815,32 @@ function OfficePage() {
                                         fileName: "[project]/app/office/page.tsx",
                                         lineNumber: 290,
                                         columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center justify-between border-t border-gray-100 pt-4",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                className: "font-medium text-gray-900",
+                                                children: "Need a Verification Letter?"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/office/page.tsx",
+                                                lineNumber: 302,
+                                                columnNumber: 15
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                className: "text-sm text-gray-900 hover:text-[#36bff9] font-medium",
+                                                "data-testid": "button-download-verification-letter",
+                                                children: "Click here to download"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/office/page.tsx",
+                                                lineNumber: 303,
+                                                columnNumber: 15
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/app/office/page.tsx",
+                                        lineNumber: 301,
+                                        columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
@@ -838,7 +864,7 @@ function OfficePage() {
                                 children: "Document Upload"
                             }, void 0, false, {
                                 fileName: "[project]/app/office/page.tsx",
-                                lineNumber: 312,
+                                lineNumber: 322,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -846,7 +872,7 @@ function OfficePage() {
                                 children: "Upload two forms of ID: one primary with a photo and one secondary showing your address. Also upload the USPS 1583 Form to authorize mail handling."
                             }, void 0, false, {
                                 fileName: "[project]/app/office/page.tsx",
-                                lineNumber: 313,
+                                lineNumber: 323,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -855,7 +881,7 @@ function OfficePage() {
                                 children: "Click here to use our onboarding system and fillup the 1583 digitally"
                             }, void 0, false, {
                                 fileName: "[project]/app/office/page.tsx",
-                                lineNumber: 318,
+                                lineNumber: 328,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -863,7 +889,7 @@ function OfficePage() {
                                 children: "Once completed, download the file and upload using the option below."
                             }, void 0, false, {
                                 fileName: "[project]/app/office/page.tsx",
-                                lineNumber: 321,
+                                lineNumber: 331,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -881,12 +907,12 @@ function OfficePage() {
                                                 className: "h-5 w-5 text-gray-500"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/office/page.tsx",
-                                                lineNumber: 338,
+                                                lineNumber: 348,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 337,
+                                            lineNumber: 347,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -899,7 +925,7 @@ function OfficePage() {
                                                     children: "Click to upload"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 341,
+                                                    lineNumber: 351,
                                                     columnNumber: 17
                                                 }, this),
                                                 ' ',
@@ -907,7 +933,7 @@ function OfficePage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 340,
+                                            lineNumber: 350,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -915,7 +941,7 @@ function OfficePage() {
                                             children: "SVG, PNG, JPG, GIF or PDF (max. 800×400px)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 350,
+                                            lineNumber: 360,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -928,18 +954,18 @@ function OfficePage() {
                                             "data-testid": "input-file"
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 351,
+                                            lineNumber: 361,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 336,
+                                    lineNumber: 346,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/office/page.tsx",
-                                lineNumber: 325,
+                                lineNumber: 335,
                                 columnNumber: 11
                             }, this),
                             uploadingFiles.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -954,12 +980,12 @@ function OfficePage() {
                                                     className: "h-5 w-5 text-[#dc2626]"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 372,
+                                                    lineNumber: 382,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/office/page.tsx",
-                                                lineNumber: 371,
+                                                lineNumber: 381,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -970,7 +996,7 @@ function OfficePage() {
                                                         children: file.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/office/page.tsx",
-                                                        lineNumber: 375,
+                                                        lineNumber: 385,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -980,7 +1006,7 @@ function OfficePage() {
                                                                 children: formatFileSize(file.size)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/office/page.tsx",
-                                                                lineNumber: 377,
+                                                                lineNumber: 387,
                                                                 columnNumber: 23
                                                             }, this),
                                                             file.status === 'uploading' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -989,21 +1015,21 @@ function OfficePage() {
                                                                         children: "•"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/office/page.tsx",
-                                                                        lineNumber: 380,
+                                                                        lineNumber: 390,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__["Upload"], {
                                                                         className: "h-3 w-3 animate-pulse"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/office/page.tsx",
-                                                                        lineNumber: 381,
+                                                                        lineNumber: 391,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         children: "Uploading..."
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/office/page.tsx",
-                                                                        lineNumber: 382,
+                                                                        lineNumber: 392,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
@@ -1011,7 +1037,7 @@ function OfficePage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/office/page.tsx",
-                                                        lineNumber: 376,
+                                                        lineNumber: 386,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1022,7 +1048,7 @@ function OfficePage() {
                                                                 className: "h-1.5 flex-1"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/office/page.tsx",
-                                                                lineNumber: 387,
+                                                                lineNumber: 397,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1033,19 +1059,19 @@ function OfficePage() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/office/page.tsx",
-                                                                lineNumber: 388,
+                                                                lineNumber: 398,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/office/page.tsx",
-                                                        lineNumber: 386,
+                                                        lineNumber: 396,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/office/page.tsx",
-                                                lineNumber: 374,
+                                                lineNumber: 384,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1056,29 +1082,29 @@ function OfficePage() {
                                                     className: "h-4 w-4 text-gray-500"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 398,
+                                                    lineNumber: 408,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/office/page.tsx",
-                                                lineNumber: 393,
+                                                lineNumber: 403,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, file.id, true, {
                                         fileName: "[project]/app/office/page.tsx",
-                                        lineNumber: 366,
+                                        lineNumber: 376,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/app/office/page.tsx",
-                                lineNumber: 364,
+                                lineNumber: 374,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/office/page.tsx",
-                        lineNumber: 303,
+                        lineNumber: 313,
                         columnNumber: 9
                     }, this)
                 ]
@@ -1100,20 +1126,20 @@ function OfficePage() {
                                     children: "Mail Scanning Setup"
                                 }, void 0, false, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 410,
+                                    lineNumber: 420,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Configure your mail scanning preferences to receive digital copies of your mail."
                                 }, void 0, false, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 411,
+                                    lineNumber: 421,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/office/page.tsx",
-                            lineNumber: 409,
+                            lineNumber: 419,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1130,7 +1156,7 @@ function OfficePage() {
                                                     children: "Auto-Scan All Mail"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 419,
+                                                    lineNumber: 429,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1138,13 +1164,13 @@ function OfficePage() {
                                                     children: "Automatically scan all incoming mail"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 420,
+                                                    lineNumber: 430,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 418,
+                                            lineNumber: 428,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$switch$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Switch"], {
@@ -1157,13 +1183,13 @@ function OfficePage() {
                                             "data-testid": "switch-auto-scan"
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 422,
+                                            lineNumber: 432,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 417,
+                                    lineNumber: 427,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1177,7 +1203,7 @@ function OfficePage() {
                                                     children: "Email Notifications"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 434,
+                                                    lineNumber: 444,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1185,13 +1211,13 @@ function OfficePage() {
                                                     children: "Get notified when mail is scanned"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 435,
+                                                    lineNumber: 445,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 433,
+                                            lineNumber: 443,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$switch$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Switch"], {
@@ -1204,13 +1230,13 @@ function OfficePage() {
                                             "data-testid": "switch-email-notifications"
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 437,
+                                            lineNumber: 447,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 432,
+                                    lineNumber: 442,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1220,7 +1246,7 @@ function OfficePage() {
                                             children: "Scanning Frequency"
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 448,
+                                            lineNumber: 458,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Select"], {
@@ -1234,12 +1260,12 @@ function OfficePage() {
                                                     "data-testid": "select-scan-frequency",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                         fileName: "[project]/app/office/page.tsx",
-                                                        lineNumber: 456,
+                                                        lineNumber: 466,
                                                         columnNumber: 19
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 455,
+                                                    lineNumber: 465,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1249,7 +1275,7 @@ function OfficePage() {
                                                             children: "Immediate"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/office/page.tsx",
-                                                            lineNumber: 459,
+                                                            lineNumber: 469,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -1257,7 +1283,7 @@ function OfficePage() {
                                                             children: "Daily"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/office/page.tsx",
-                                                            lineNumber: 460,
+                                                            lineNumber: 470,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -1265,25 +1291,25 @@ function OfficePage() {
                                                             children: "Weekly"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/office/page.tsx",
-                                                            lineNumber: 461,
+                                                            lineNumber: 471,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/office/page.tsx",
-                                                    lineNumber: 458,
+                                                    lineNumber: 468,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 449,
+                                            lineNumber: 459,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 447,
+                                    lineNumber: 457,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1294,7 +1320,7 @@ function OfficePage() {
                                             children: "Current Plan"
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 467,
+                                            lineNumber: 477,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1302,7 +1328,7 @@ function OfficePage() {
                                             children: "Basic Plan - 10 scans/month included"
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 468,
+                                            lineNumber: 478,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1311,19 +1337,19 @@ function OfficePage() {
                                             children: "Upgrade for unlimited scanning"
                                         }, void 0, false, {
                                             fileName: "[project]/app/office/page.tsx",
-                                            lineNumber: 469,
+                                            lineNumber: 479,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 466,
+                                    lineNumber: 476,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/office/page.tsx",
-                            lineNumber: 416,
+                            lineNumber: 426,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1336,7 +1362,7 @@ function OfficePage() {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 476,
+                                    lineNumber: 486,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1346,24 +1372,24 @@ function OfficePage() {
                                     children: "Save Preferences"
                                 }, void 0, false, {
                                     fileName: "[project]/app/office/page.tsx",
-                                    lineNumber: 479,
+                                    lineNumber: 489,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/office/page.tsx",
-                            lineNumber: 475,
+                            lineNumber: 485,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/office/page.tsx",
-                    lineNumber: 408,
+                    lineNumber: 418,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/office/page.tsx",
-                lineNumber: 407,
+                lineNumber: 417,
                 columnNumber: 7
             }, this)
         ]
