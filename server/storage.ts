@@ -1,4 +1,4 @@
-import { UserType, InsertUser, Location } from "../shared/schema";
+import { UserType, InsertUser, Location, Mail, MailSettings, MailAction } from "../shared/schema";
 
 export interface IStorage {
   getUser(id: string): Promise<UserType | undefined>;
@@ -7,15 +7,26 @@ export interface IStorage {
   
   getLocations(): Promise<Location[]>;
   getLocation(id: string): Promise<Location | undefined>;
+
+  getPendingMail(): Promise<Mail[]>;
+  getMail(id: string): Promise<Mail | undefined>;
+  updateMailStatus(id: string, action: MailAction): Promise<Mail | undefined>;
+
+  getMailSettings(userId: string): Promise<MailSettings | undefined>;
+  updateMailSettings(userId: string, defaultAction: string): Promise<MailSettings>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, UserType>;
   private locations: Map<string, Location>;
+  private mailItems: Map<string, Mail>;
+  private mailSettings: Map<string, MailSettings>;
 
   constructor() {
     this.users = new Map();
     this.locations = new Map();
+    this.mailItems = new Map();
+    this.mailSettings = new Map();
     
     // Seed mock data
     this.seed();
@@ -36,6 +47,53 @@ export class MemStorage implements IStorage {
       { id: '3', name: 'Los Angeles Office', address: '789 Wilshire Blvd, LA, CA', imageUrl: '/attached_assets/la.jpg' },
     ];
     mockLocations.forEach(loc => this.locations.set(loc.id, loc));
+
+    const mockMail: Mail[] = [
+      {
+        id: '1',
+        name: 'Mail 01',
+        receivedDate: '02/12/2025',
+        thumbnailUrl: null,
+        envelopeImageUrl: null,
+        status: 'pending',
+        senderName: 'General John Doe',
+        senderAddress: '123 Long Street Apt. 45, Radstock, FL 32178',
+        recipientName: 'PFC Harry Dobson',
+        recipientAddress: '45th ENG 2nd PLT - B CO, APO AE 34566-2367',
+      },
+      {
+        id: '2',
+        name: 'Mail 02',
+        receivedDate: '03/12/2025',
+        thumbnailUrl: null,
+        envelopeImageUrl: null,
+        status: 'pending',
+        senderName: 'Sarah Williams',
+        senderAddress: '456 Oak Avenue, Boston, MA 02115',
+        recipientName: 'PFC Harry Dobson',
+        recipientAddress: '45th ENG 2nd PLT - B CO, APO AE 34566-2367',
+      },
+      {
+        id: '3',
+        name: 'Mail 03',
+        receivedDate: '04/12/2025',
+        thumbnailUrl: null,
+        envelopeImageUrl: null,
+        status: 'pending',
+        senderName: 'IRS Department',
+        senderAddress: '1111 Constitution Ave NW, Washington, DC 20224',
+        recipientName: 'PFC Harry Dobson',
+        recipientAddress: '45th ENG 2nd PLT - B CO, APO AE 34566-2367',
+      },
+    ];
+    mockMail.forEach(m => this.mailItems.set(m.id, m));
+
+    const defaultSettings: MailSettings = {
+      id: '1',
+      userId: '1',
+      defaultAction: 'keep',
+    };
+    this.mailSettings.set('1', defaultSettings);
   }
 
   async getUser(id: string): Promise<UserType | undefined> {
@@ -64,6 +122,44 @@ export class MemStorage implements IStorage {
 
   async getLocation(id: string): Promise<Location | undefined> {
     return this.locations.get(id);
+  }
+
+  async getPendingMail(): Promise<Mail[]> {
+    return Array.from(this.mailItems.values()).filter(m => m.status === 'pending');
+  }
+
+  async getMail(id: string): Promise<Mail | undefined> {
+    return this.mailItems.get(id);
+  }
+
+  async updateMailStatus(id: string, action: MailAction): Promise<Mail | undefined> {
+    const mail = this.mailItems.get(id);
+    if (mail) {
+      const updatedMail = { ...mail, status: action };
+      this.mailItems.set(id, updatedMail);
+      return updatedMail;
+    }
+    return undefined;
+  }
+
+  async getMailSettings(userId: string): Promise<MailSettings | undefined> {
+    return Array.from(this.mailSettings.values()).find(s => s.userId === userId);
+  }
+
+  async updateMailSettings(userId: string, defaultAction: string): Promise<MailSettings> {
+    let settings = await this.getMailSettings(userId);
+    if (settings) {
+      settings = { ...settings, defaultAction };
+      this.mailSettings.set(settings.id, settings);
+      return settings;
+    }
+    const newSettings: MailSettings = {
+      id: Math.random().toString(36).substr(2, 9),
+      userId,
+      defaultAction,
+    };
+    this.mailSettings.set(newSettings.id, newSettings);
+    return newSettings;
   }
 }
 

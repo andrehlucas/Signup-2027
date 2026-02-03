@@ -105,7 +105,7 @@ Preferred communication style: Simple, everyday language.
 
 **Portal Routes**
 - `/` - Portal dashboard (locations overview)
-- `/office` - My Office page (mail forwarding, document upload, scanning setup)
+- `/office` - My Office page (mail forwarding, document upload, scanning setup, My Mail section)
 - `/addons` - Addons page
 - `/account` - Account details page
 - `/billing` - Billing page
@@ -132,6 +132,16 @@ Located in `app/portal-components/`:
 - `NavSection.tsx` - Collapsible sidebar navigation section with onNavigate callback
 - `PortalSidebar.tsx` - Responsive sidebar with desktop view (lg+) and mobile drawer
 - `PortalSearch.tsx` - Portal-wide search with searchable page index and dropdown results
+- `MyMailSection.tsx` - Mail notification section with pending mail list, review modal, and action buttons
+
+**My Mail Feature**
+The My Mail section on the Office page allows customers to manage incoming mail:
+- View pending mail items with thumbnails, names, and received dates
+- Click "Review" to open a modal with envelope visualization
+- Take actions: Scan, Forward, Keep, Shred, or Not My Mail
+- Confirmation dialog before executing actions
+- Configure default action for new mail (Keep, Scan, Forward, Shred)
+- API endpoints: GET /api/mail, GET /api/mail/:id, POST /api/mail/:id/action, GET/PATCH /api/mail-settings
 
 **Mobile Responsiveness**
 - Breakpoint: lg (1024px) separates desktop and mobile views

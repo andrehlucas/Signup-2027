@@ -1,6 +1,7 @@
 import { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { MailAction } from "../shared/schema";
 
 export function registerRoutes(app: Express): Server {
   app.get("/api/user", async (_req, res) => {
@@ -39,6 +40,80 @@ export function registerRoutes(app: Express): Server {
       res.json(location);
     } catch (error) {
       console.error("Error fetching location:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/mail", async (_req, res) => {
+    try {
+      const pendingMail = await storage.getPendingMail();
+      res.json(pendingMail);
+    } catch (error) {
+      console.error("Error fetching mail:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/mail/:id", async (req, res) => {
+    try {
+      const mail = await storage.getMail(req.params.id);
+      if (!mail) {
+        res.status(404).json({ message: "Mail not found" });
+        return;
+      }
+      res.json(mail);
+    } catch (error) {
+      console.error("Error fetching mail:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/mail/:id/action", async (req, res) => {
+    try {
+      const { action } = req.body as { action: MailAction };
+      const validActions: MailAction[] = ['scan', 'forward', 'keep', 'shred', 'not_my_mail'];
+      
+      if (!validActions.includes(action)) {
+        res.status(400).json({ message: "Invalid action" });
+        return;
+      }
+
+      const updatedMail = await storage.updateMailStatus(req.params.id, action);
+      if (!updatedMail) {
+        res.status(404).json({ message: "Mail not found" });
+        return;
+      }
+      res.json(updatedMail);
+    } catch (error) {
+      console.error("Error updating mail:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/mail-settings", async (_req, res) => {
+    try {
+      const settings = await storage.getMailSettings("1");
+      res.json(settings || { defaultAction: "keep" });
+    } catch (error) {
+      console.error("Error fetching mail settings:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.patch("/api/mail-settings", async (req, res) => {
+    try {
+      const { defaultAction } = req.body as { defaultAction: string };
+      const validActions = ['scan', 'forward', 'keep', 'shred'];
+      
+      if (!validActions.includes(defaultAction)) {
+        res.status(400).json({ message: "Invalid default action" });
+        return;
+      }
+
+      const settings = await storage.updateMailSettings("1", defaultAction);
+      res.json(settings);
+    } catch (error) {
+      console.error("Error updating mail settings:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
