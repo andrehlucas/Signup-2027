@@ -127,7 +127,7 @@ const mockExploreAddons: ExploreAddon[] = [
 ];
 
 // Tab type
-type TabType = 'phone-system' | 'add-ons' | 'my-plan';
+type TabType = 'phone-system' | 'add-ons';
 
 // Sub-components
 function PhoneDetails() {
@@ -1093,14 +1093,6 @@ export default function PhoneSystemPage() {
         >
           Add-ons
         </Button>
-        <Button
-          variant={activeTab === 'my-plan' ? 'default' : 'outline'}
-          onClick={() => setActiveTab('my-plan')}
-          className={activeTab === 'my-plan' ? 'bg-gray-900 text-white' : ''}
-          data-testid="tab-my-plan"
-        >
-          My Plan
-        </Button>
       </div>
       
       {activeTab === 'phone-system' && (
@@ -1136,13 +1128,6 @@ export default function PhoneSystemPage() {
         <div className="text-center py-12">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Add-ons Marketplace</h2>
           <p className="text-gray-500">Browse and purchase additional features for your phone system.</p>
-        </div>
-      )}
-      
-      {activeTab === 'my-plan' && (
-        <div className="text-center py-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">My Plan</h2>
-          <p className="text-gray-500">View and manage your billing, package, and entitlements.</p>
         </div>
       )}
       
