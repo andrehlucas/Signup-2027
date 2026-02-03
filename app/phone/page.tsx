@@ -305,7 +305,23 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog, onToggleLive
               ))}
             </div>
             
-            <div className="flex flex-col items-end gap-3">
+            <div className="flex items-center gap-2 mt-3">
+              <Switch
+                checked={extension.liveAnswering}
+                onCheckedChange={(checked) => onToggleLiveAnswering(extension, checked)}
+                className="data-[state=checked]:bg-green-500"
+                aria-label={`Toggle live answering for ${extension.firstName} ${extension.lastName}`}
+                data-testid={`switch-live-answering-${extension.id}`}
+              />
+              <span className="text-sm text-gray-600">Live Answering</span>
+              <button aria-label="Learn more about Live Answering" className="cursor-pointer">
+                <HelpCircle className="h-3.5 w-3.5 text-gray-400 hover:text-gray-600" />
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex flex-col items-end gap-3">
           <button
             onClick={() => onEdit(extension)}
             className="text-sm text-gray-600 hover:text-gray-900"
@@ -353,6 +369,9 @@ function YourExtensions({ extensions, onEdit, onVoicemail, onCallLog, onToggleLi
   return (
     <Card className="p-5" data-testid="your-extensions-card">
       <h2 className="text-lg font-semibold text-gray-900 mb-1" data-testid="heading-your-extensions">Your Extensions</h2>
+      <p className="text-sm text-gray-500 mb-4">
+        *To get a verification call or bypass live answering, simply turn off live answering.
+      </p>
       
       <div>
         {extensions.map((ext) => (
