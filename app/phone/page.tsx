@@ -45,7 +45,8 @@ interface Extension {
   lastName: string;
   department: string;
   departmentColor: string;
-  forwardingNumbers: string[];
+  businessHoursForwarding: string[];
+  afterHoursForwarding: string[];
   liveAnswering: boolean;
   voicemailEmail: string;
   voicemailGreetingUrl?: string;
@@ -80,7 +81,8 @@ const mockExtensions: Extension[] = [
     lastName: 'Smith',
     department: 'Marketing',
     departmentColor: 'green',
-    forwardingNumbers: ['(561) 000 - 0000', '(561) 000 - 0000', '(561) 000 - 0000', '(561) 000 - 0000'],
+    businessHoursForwarding: ['(561) 000 - 0000'],
+    afterHoursForwarding: [],
     liveAnswering: true,
     voicemailEmail: 'john.smith@example.com',
     voicemailGreetingUrl: '/sample-greeting.mp3',
@@ -91,7 +93,8 @@ const mockExtensions: Extension[] = [
     lastName: 'Smith',
     department: 'Sales',
     departmentColor: 'green',
-    forwardingNumbers: ['(561) 000 - 0000', '(561) 000 - 0000', '(561) 000 - 0000', '(561) 000 - 0000'],
+    businessHoursForwarding: ['(561) 000 - 0000', '(561) 111 - 1111'],
+    afterHoursForwarding: ['(561) 222 - 2222'],
     liveAnswering: true,
     voicemailEmail: 'john.sales@example.com',
     voicemailGreetingUrl: '/sample-greeting.mp3',
@@ -288,9 +291,15 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog, onToggleLive
             </div>
             
             <div className="flex items-center gap-3 mt-2 flex-wrap">
-              {extension.forwardingNumbers.map((num, idx) => (
-                <div key={idx} className="flex items-center gap-1">
+              {extension.businessHoursForwarding.map((num, idx) => (
+                <div key={`bh-${idx}`} className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                  <span className="text-sm text-gray-600">{num}</span>
+                </div>
+              ))}
+              {extension.afterHoursForwarding.map((num, idx) => (
+                <div key={`ah-${idx}`} className="flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
                   <span className="text-sm text-gray-600">{num}</span>
                 </div>
               ))}
@@ -494,20 +503,63 @@ interface EditExtensionModalProps {
 function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailGreeting }: EditExtensionModalProps) {
   const [formData, setFormData] = useState<Extension | null>(null);
   const [disableForwarding, setDisableForwarding] = useState(false);
+  const [afterHoursExpanded, setAfterHoursExpanded] = useState(false);
 
   useEffect(() => {
     if (extension) {
       setFormData({ ...extension });
+      setAfterHoursExpanded(extension.afterHoursForwarding.length > 0);
     }
   }, [extension]);
 
   if (!formData) return null;
 
-  const updateForwardingNumber = (index: number, value: string) => {
-    const newNumbers = [...formData.forwardingNumbers];
+  const updateBusinessHoursNumber = (index: number, value: string) => {
+    const newNumbers = [...formData.businessHoursForwarding];
     newNumbers[index] = value;
-    setFormData({ ...formData, forwardingNumbers: newNumbers });
+    setFormData({ ...formData, businessHoursForwarding: newNumbers });
   };
+
+  const updateAfterHoursNumber = (index: number, value: string) => {
+    const newNumbers = [...formData.afterHoursForwarding];
+    newNumbers[index] = value;
+    setFormData({ ...formData, afterHoursForwarding: newNumbers });
+  };
+
+  const addBusinessHoursNumber = () => {
+    if (formData.businessHoursForwarding.length < 4) {
+      setFormData({ ...formData, businessHoursForwarding: [...formData.businessHoursForwarding, ''] });
+    }
+  };
+
+  const addAfterHoursNumber = () => {
+    if (formData.afterHoursForwarding.length < 4) {
+      setFormData({ ...formData, afterHoursForwarding: [...formData.afterHoursForwarding, ''] });
+    }
+  };
+
+  const removeBusinessHoursNumber = (index: number) => {
+    const newNumbers = formData.businessHoursForwarding.filter((_, i) => i !== index);
+    setFormData({ ...formData, businessHoursForwarding: newNumbers.length > 0 ? newNumbers : [''] });
+  };
+
+  const removeAfterHoursNumber = (index: number) => {
+    const newNumbers = formData.afterHoursForwarding.filter((_, i) => i !== index);
+    setFormData({ ...formData, afterHoursForwarding: newNumbers });
+    if (newNumbers.length === 0) {
+      setAfterHoursExpanded(false);
+    }
+  };
+
+  const expandAfterHours = () => {
+    setAfterHoursExpanded(true);
+    if (formData.afterHoursForwarding.length === 0) {
+      setFormData({ ...formData, afterHoursForwarding: [''] });
+    }
+  };
+
+  const hasBusinessHours = formData.businessHoursForwarding.some(n => n.trim() !== '');
+  const hasAfterHours = formData.afterHoursForwarding.some(n => n.trim() !== '');
 
   const handleSave = () => {
     onSave(formData);
@@ -516,7 +568,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl" data-testid="edit-extension-modal">
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto" data-testid="edit-extension-modal">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -524,7 +576,19 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                 <Phone className="h-5 w-5 text-gray-600" />
               </div>
               <div>
-                <DialogTitle className="text-lg font-semibold">Edit extension</DialogTitle>
+                <div className="flex items-center gap-2">
+                  <DialogTitle className="text-lg font-semibold">Edit extension</DialogTitle>
+                  {hasBusinessHours && (
+                    <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200" data-testid="badge-has-business-hours">
+                      Business Hours
+                    </Badge>
+                  )}
+                  {hasAfterHours && (
+                    <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200" data-testid="badge-has-after-hours">
+                      After Hours
+                    </Badge>
+                  )}
+                </div>
                 <DialogDescription className="text-sm text-gray-500">{formData.firstName} {formData.lastName} (Ext. {formData.id})</DialogDescription>
               </div>
             </div>
@@ -592,34 +656,126 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
             </div>
           </div>
           
-          <div>
-            <Label className="font-medium">Forwarding Numbers</Label>
-            <div className="grid grid-cols-2 gap-4 mt-2">
-              {[0, 1, 2, 3].map((idx) => (
-                <div key={idx}>
-                  <Label className="text-sm text-gray-500">Forwarding Number {idx + 1}</Label>
-                  <div className="flex gap-2 mt-1">
-                    <Select defaultValue="US">
-                      <SelectTrigger className="w-20 h-10" data-testid={`select-country-${idx}`}>
-                        <SelectValue placeholder="US" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="US">US</SelectItem>
-                        <SelectItem value="UK">UK</SelectItem>
-                        <SelectItem value="CA">CA</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Input
-                      placeholder="+1 (555) 000-0000"
-                      value={formData.forwardingNumbers[idx] || ''}
-                      onChange={(e) => updateForwardingNumber(idx, e.target.value)}
-                      disabled={disableForwarding}
-                      className="h-10"
-                      data-testid={`input-forwarding-${idx}`}
-                    />
+          <div className="space-y-4">
+            <div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="font-medium text-green-700">Business Hours Forwarding Numbers</Label>
+                  <p className="text-sm text-gray-500 mt-0.5">Numbers that receive calls during your business hours</p>
+                </div>
+                {formData.businessHoursForwarding.length < 4 && (
+                  <button
+                    onClick={addBusinessHoursNumber}
+                    className="flex items-center gap-1 text-sm text-[var(--blue-light700)] hover:underline"
+                    data-testid="button-add-business-hours-number"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add Number
+                  </button>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-3">
+                {formData.businessHoursForwarding.map((num, idx) => (
+                  <div key={idx}>
+                    <Label className="text-sm text-gray-500">Forwarding Number {idx + 1}</Label>
+                    <div className="flex gap-2 mt-1">
+                      <Select defaultValue="US">
+                        <SelectTrigger className="w-20 h-10" data-testid={`select-business-country-${idx}`}>
+                          <SelectValue placeholder="US" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="US">US</SelectItem>
+                          <SelectItem value="UK">UK</SelectItem>
+                          <SelectItem value="CA">CA</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Input
+                        placeholder="(561) 000 - 0000"
+                        value={num}
+                        onChange={(e) => updateBusinessHoursNumber(idx, e.target.value)}
+                        disabled={disableForwarding}
+                        className="h-10"
+                        data-testid={`input-business-forwarding-${idx}`}
+                      />
+                      {formData.businessHoursForwarding.length > 1 && (
+                        <button
+                          onClick={() => removeBusinessHoursNumber(idx)}
+                          className="text-gray-400 hover:text-red-500"
+                          data-testid={`button-remove-business-${idx}`}
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="border-t pt-4">
+              {!afterHoursExpanded ? (
+                <button
+                  onClick={expandAfterHours}
+                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                  data-testid="button-expand-after-hours"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>Add After Hours Forwarding Numbers</span>
+                </button>
+              ) : (
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label className="font-medium text-blue-700">After Hours Forwarding Numbers</Label>
+                      <p className="text-sm text-gray-500 mt-0.5">Numbers that receive calls outside of business hours</p>
+                    </div>
+                    {formData.afterHoursForwarding.length < 4 && (
+                      <button
+                        onClick={addAfterHoursNumber}
+                        className="flex items-center gap-1 text-sm text-[var(--blue-light700)] hover:underline"
+                        data-testid="button-add-after-hours-number"
+                      >
+                        <Plus className="h-4 w-4" />
+                        Add Number
+                      </button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 mt-3">
+                    {formData.afterHoursForwarding.map((num, idx) => (
+                      <div key={idx}>
+                        <Label className="text-sm text-gray-500">Forwarding Number {idx + 1}</Label>
+                        <div className="flex gap-2 mt-1">
+                          <Select defaultValue="US">
+                            <SelectTrigger className="w-20 h-10" data-testid={`select-after-hours-country-${idx}`}>
+                              <SelectValue placeholder="US" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="US">US</SelectItem>
+                              <SelectItem value="UK">UK</SelectItem>
+                              <SelectItem value="CA">CA</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Input
+                            placeholder="(561) 000 - 0000"
+                            value={num}
+                            onChange={(e) => updateAfterHoursNumber(idx, e.target.value)}
+                            disabled={disableForwarding}
+                            className="h-10"
+                            data-testid={`input-after-hours-forwarding-${idx}`}
+                          />
+                          <button
+                            onClick={() => removeAfterHoursNumber(idx)}
+                            className="text-gray-400 hover:text-red-500"
+                            data-testid={`button-remove-after-hours-${idx}`}
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
           
@@ -787,7 +943,7 @@ function RecordVoicemailModal({ open, onClose, extension }: RecordVoicemailModal
                 <div className="w-2 h-2 rounded-full bg-[#E53935]" />
               )}
             </div>
-            <span className="text-gray-700">{extension?.forwardingNumbers[0] || businessPhoneNumber}</span>
+            <span className="text-gray-700">{extension?.businessHoursForwarding[0] || businessPhoneNumber}</span>
           </div>
           
           <div
