@@ -219,20 +219,6 @@ export default function OfficePage() {
             </div>
           </div>
         </div>
-
-        <div className="hidden lg:block">
-          <h3 className="text-sm font-medium text-gray-500 mb-4">Your Office Package Includes:</h3>
-          <div className="space-y-3">
-            {packageFeatures.map((feature, idx) => (
-              <div key={idx} className="flex items-center gap-3" data-testid={`feature-${idx}`}>
-                <div className="w-8 h-8 rounded-full bg-[#e8f5e9] flex items-center justify-center">
-                  <feature.icon className="h-4 w-4 text-[#2e7d32]" />
-                </div>
-                <span className="text-sm text-gray-700">{feature.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

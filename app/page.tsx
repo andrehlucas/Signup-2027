@@ -111,19 +111,6 @@ export default function PortalDashboard() {
             </div>
           </div>
         </div>
-
-        <div className="hidden lg:block">
-          <h3 className="text-sm font-medium text-gray-500 mb-4">Your Office Package Includes:</h3>
-          <div className="space-y-3">
-            {packageFeatures.map((feature, idx) => (
-              <FeatureItem
-                key={idx}
-                icon={feature.icon}
-                label={feature.label}
-              />
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="mt-8">
