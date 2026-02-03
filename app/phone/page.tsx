@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Card } from '@/app/components/ui/card';
-import { Switch } from '@/app/components/ui/switch';
 import { Badge } from '@/app/components/ui/badge';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
@@ -47,7 +46,6 @@ interface Extension {
   departmentColor: string;
   businessHoursForwarding: string[];
   afterHoursForwarding: string[];
-  liveAnswering: boolean;
   voicemailEmail: string;
   voicemailGreetingUrl?: string;
 }
@@ -83,7 +81,6 @@ const mockExtensions: Extension[] = [
     departmentColor: 'green',
     businessHoursForwarding: ['(561) 000 - 0000'],
     afterHoursForwarding: [],
-    liveAnswering: true,
     voicemailEmail: 'john.smith@example.com',
     voicemailGreetingUrl: '/sample-greeting.mp3',
   },
@@ -95,7 +92,6 @@ const mockExtensions: Extension[] = [
     departmentColor: 'green',
     businessHoursForwarding: ['(561) 000 - 0000', '(561) 111 - 1111'],
     afterHoursForwarding: ['(561) 222 - 2222'],
-    liveAnswering: true,
     voicemailEmail: 'john.sales@example.com',
     voicemailGreetingUrl: '/sample-greeting.mp3',
   },
@@ -263,10 +259,9 @@ interface ExtensionCardProps {
   onEdit: (ext: Extension) => void;
   onVoicemail: (ext: Extension) => void;
   onCallLog: (ext: Extension) => void;
-  onToggleLiveAnswering: (ext: Extension, enabled: boolean) => void;
 }
 
-function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog, onToggleLiveAnswering }: ExtensionCardProps) {
+function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }: ExtensionCardProps) {
   const departmentColors: Record<string, string> = {
     green: 'bg-green-500',
     blue: 'bg-blue-500',
@@ -303,20 +298,6 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog, onToggleLive
                   <span className="text-sm text-gray-600">{num}</span>
                 </div>
               ))}
-            </div>
-            
-            <div className="flex items-center gap-2 mt-3">
-              <Switch
-                checked={extension.liveAnswering}
-                onCheckedChange={(checked) => onToggleLiveAnswering(extension, checked)}
-                className="data-[state=checked]:bg-green-500"
-                aria-label={`Toggle live answering for ${extension.firstName} ${extension.lastName}`}
-                data-testid={`switch-live-answering-${extension.id}`}
-              />
-              <span className="text-sm text-gray-600">Live Answering</span>
-              <button aria-label="Learn more about Live Answering" className="cursor-pointer">
-                <HelpCircle className="h-3.5 w-3.5 text-gray-400 hover:text-gray-600" />
-              </button>
             </div>
           </div>
         </div>
@@ -362,16 +343,12 @@ interface YourExtensionsProps {
   onEdit: (ext: Extension) => void;
   onVoicemail: (ext: Extension) => void;
   onCallLog: (ext: Extension) => void;
-  onToggleLiveAnswering: (ext: Extension, enabled: boolean) => void;
 }
 
-function YourExtensions({ extensions, onEdit, onVoicemail, onCallLog, onToggleLiveAnswering }: YourExtensionsProps) {
+function YourExtensions({ extensions, onEdit, onVoicemail, onCallLog }: YourExtensionsProps) {
   return (
     <Card className="p-5" data-testid="your-extensions-card">
-      <h2 className="text-lg font-semibold text-gray-900 mb-1" data-testid="heading-your-extensions">Your Extensions</h2>
-      <p className="text-sm text-gray-500 mb-4">
-        *To get a verification call or bypass live answering, simply turn off live answering.
-      </p>
+      <h2 className="text-lg font-semibold text-gray-900 mb-4" data-testid="heading-your-extensions">Your Extensions</h2>
       
       <div>
         {extensions.map((ext) => (
@@ -381,7 +358,6 @@ function YourExtensions({ extensions, onEdit, onVoicemail, onCallLog, onToggleLi
             onEdit={onEdit}
             onVoicemail={onVoicemail}
             onCallLog={onCallLog}
-            onToggleLiveAnswering={onToggleLiveAnswering}
           />
         ))}
       </div>
@@ -1017,17 +993,6 @@ export default function PhoneSystemPage() {
     });
   };
 
-  const handleToggleLiveAnswering = (ext: Extension, enabled: boolean) => {
-    setExtensions(prev => prev.map(e => 
-      e.id === ext.id ? { ...e, liveAnswering: enabled } : e
-    ));
-    toast({
-      title: enabled ? 'Live Answering Enabled' : 'Live Answering Disabled',
-      description: enabled 
-        ? 'Calls will be answered by a live receptionist.'
-        : 'Calls will ring your phones directly or go to voicemail.',
-    });
-  };
 
   const handleSaveExtension = (ext: Extension) => {
     setExtensions(prev => prev.map(e => e.id === ext.id ? ext : e));
@@ -1118,7 +1083,6 @@ export default function PhoneSystemPage() {
               onEdit={handleEditExtension}
               onVoicemail={handleVoicemail}
               onCallLog={handleCallLog}
-              onToggleLiveAnswering={handleToggleLiveAnswering}
             />
           </div>
         </div>
