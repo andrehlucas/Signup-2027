@@ -1134,10 +1134,6 @@ export default function PhoneSystemPage() {
               onViewInstructions={handleViewInstructions}
               onEdit={handleEditAddon}
             />
-        <ExploreAddons
-          addons={exploreAddons}
-          onAdd={handleAddAddon}
-        />
           </div>
           
           {/* Right Column - 2/3 width */}
