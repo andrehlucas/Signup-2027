@@ -288,7 +288,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }: ExtensionC
             <div className="mt-2 space-y-2">
               {extension.businessHoursForwarding.length > 0 && (
                 <div className="flex items-center gap-2 flex-wrap" data-testid={`business-hours-group-${extension.id}`}>
-                  <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded">Business Hours</span>
+                  <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded">Business Hours Forwarding Numbers</span>
                   {extension.businessHoursForwarding.map((num, idx) => (
                     <div key={`bh-${idx}`} className="flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
@@ -299,7 +299,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }: ExtensionC
               )}
               {extension.afterHoursForwarding.length > 0 && (
                 <div className="flex items-center gap-2 flex-wrap" data-testid={`after-hours-group-${extension.id}`}>
-                  <span className="text-xs font-medium text-blue-700 bg-blue-50 px-2 py-0.5 rounded">After Hours</span>
+                  <span className="text-xs font-medium text-blue-700 bg-blue-50 px-2 py-0.5 rounded">After Hours Forwarding Numbers</span>
                   {extension.afterHoursForwarding.map((num, idx) => (
                     <div key={`ah-${idx}`} className="flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />

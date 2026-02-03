@@ -1009,7 +1009,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded",
-                                                    children: "Business Hours"
+                                                    children: "Business Hours Forwarding Numbers"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
                                                     lineNumber: 291,
@@ -1051,7 +1051,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-xs font-medium text-blue-700 bg-blue-50 px-2 py-0.5 rounded",
-                                                    children: "After Hours"
+                                                    children: "After Hours Forwarding Numbers"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
                                                     lineNumber: 302,
