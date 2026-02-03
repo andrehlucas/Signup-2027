@@ -133,12 +133,84 @@ const mockExploreAddons: ExploreAddon[] = [
 type TabType = 'phone-system' | 'add-ons';
 
 // Sub-components
+const BYPASS_DURATION_SECONDS = 15 * 60; // 15 minutes
+
 function PhoneDetails() {
   const { toast } = useToast();
   const [editEmailOpen, setEditEmailOpen] = useState(false);
   const [email, setEmail] = useState(faxToEmail);
   const [editingEmail, setEditingEmail] = useState(faxToEmail);
   const [bypassLiveAnswering, setBypassLiveAnswering] = useState(false);
+  const [bypassTimeRemaining, setBypassTimeRemaining] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const hasExpiredRef = useRef(false);
+  
+  // Timer effect for bypass countdown
+  useEffect(() => {
+    if (bypassLiveAnswering) {
+      hasExpiredRef.current = false;
+      intervalRef.current = setInterval(() => {
+        setBypassTimeRemaining((prev) => {
+          if (prev <= 1) {
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }
+    
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [bypassLiveAnswering]);
+  
+  // Handle auto-disable when timer reaches 0 (only after it was previously > 0)
+  useEffect(() => {
+    if (bypassLiveAnswering && bypassTimeRemaining === 0 && hasExpiredRef.current === false) {
+      // Check if we actually had a timer running (not initial state)
+      // hasExpiredRef is set to false when bypass is enabled, so if timer reaches 0 
+      // and bypass is still on, it means the timer expired
+      if (intervalRef.current !== null) {
+        hasExpiredRef.current = true;
+        setBypassLiveAnswering(false);
+        toast({
+          title: 'Bypass Live Answering Disabled',
+          description: 'The 15-minute bypass period has ended. Live answering is now active again.',
+        });
+      }
+    }
+  }, [bypassLiveAnswering, bypassTimeRemaining, toast]);
+  
+  const handleBypassToggle = (checked: boolean) => {
+    setBypassLiveAnswering(checked);
+    if (checked) {
+      setBypassTimeRemaining(BYPASS_DURATION_SECONDS);
+      toast({
+        title: 'Bypass Live Answering Enabled',
+        description: 'Calls will go directly to you for the next 15 minutes.',
+      });
+    } else {
+      setBypassTimeRemaining(0);
+      toast({
+        title: 'Bypass Live Answering Disabled',
+        description: 'Live answering is now active.',
+      });
+    }
+  };
+  
+  const formatTimeRemaining = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
   
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -178,7 +250,7 @@ function PhoneDetails() {
                 <Switch
                   id="bypass-live-answering"
                   checked={bypassLiveAnswering}
-                  onCheckedChange={setBypassLiveAnswering}
+                  onCheckedChange={handleBypassToggle}
                   data-testid="switch-bypass-live-answering"
                 />
                 <Label 
@@ -188,6 +260,14 @@ function PhoneDetails() {
                 >
                   Bypass Live Answering
                 </Label>
+                {bypassLiveAnswering && bypassTimeRemaining > 0 && (
+                  <span 
+                    className="text-sm font-medium text-orange-600"
+                    data-testid="text-bypass-timer"
+                  >
+                    ({formatTimeRemaining(bypassTimeRemaining)})
+                  </span>
+                )}
               </div>
               <TooltipProvider>
                 <Tooltip>
@@ -209,6 +289,9 @@ function PhoneDetails() {
                     </p>
                     <p className="text-sm mt-2">
                       This is commonly used when you need to receive verification codes via phone call, such as 2-step authentication for banking, services, or account verification.
+                    </p>
+                    <p className="text-sm mt-2 text-orange-600 font-medium">
+                      Note: This feature automatically turns off after 15 minutes to ensure you don't miss important calls from being answered by our receptionists.
                     </p>
                   </TooltipContent>
                 </Tooltip>

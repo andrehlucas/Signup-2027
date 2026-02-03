@@ -2598,6 +2598,11 @@ body {
   color: rgb(115 115 115 / var(--tw-text-opacity, 1));
 }
 
+.text-orange-600 {
+  --tw-text-opacity: 1;
+  color: rgb(234 88 12 / var(--tw-text-opacity, 1));
+}
+
 .text-popover-foreground {
   color: hsl(var(--popover-foreground));
 }
@@ -2897,6 +2902,10 @@ body {
 
 .ease-out {
   animation-timing-function: cubic-bezier(0, 0, .2, 1);
+}
+
+.running {
+  animation-play-state: running;
 }
 
 .\[font-family\:\'Inter\'\,Helvetica\] {

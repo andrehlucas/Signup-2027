@@ -623,6 +623,7 @@ const mockExploreAddons = [
     }
 ];
 // Sub-components
+const BYPASS_DURATION_SECONDS = 15 * 60; // 15 minutes
 function PhoneDetails() {
     _s();
     const { toast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"])();
@@ -630,6 +631,87 @@ function PhoneDetails() {
     const [email, setEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(faxToEmail);
     const [editingEmail, setEditingEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(faxToEmail);
     const [bypassLiveAnswering, setBypassLiveAnswering] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [bypassTimeRemaining, setBypassTimeRemaining] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const intervalRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const hasExpiredRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(false);
+    // Timer effect for bypass countdown
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "PhoneDetails.useEffect": ()=>{
+            if (bypassLiveAnswering) {
+                hasExpiredRef.current = false;
+                intervalRef.current = setInterval({
+                    "PhoneDetails.useEffect": ()=>{
+                        setBypassTimeRemaining({
+                            "PhoneDetails.useEffect": (prev)=>{
+                                if (prev <= 1) {
+                                    return 0;
+                                }
+                                return prev - 1;
+                            }
+                        }["PhoneDetails.useEffect"]);
+                    }
+                }["PhoneDetails.useEffect"], 1000);
+            } else {
+                if (intervalRef.current) {
+                    clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                }
+            }
+            return ({
+                "PhoneDetails.useEffect": ()=>{
+                    if (intervalRef.current) {
+                        clearInterval(intervalRef.current);
+                        intervalRef.current = null;
+                    }
+                }
+            })["PhoneDetails.useEffect"];
+        }
+    }["PhoneDetails.useEffect"], [
+        bypassLiveAnswering
+    ]);
+    // Handle auto-disable when timer reaches 0 (only after it was previously > 0)
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "PhoneDetails.useEffect": ()=>{
+            if (bypassLiveAnswering && bypassTimeRemaining === 0 && hasExpiredRef.current === false) {
+                // Check if we actually had a timer running (not initial state)
+                // hasExpiredRef is set to false when bypass is enabled, so if timer reaches 0 
+                // and bypass is still on, it means the timer expired
+                if (intervalRef.current !== null) {
+                    hasExpiredRef.current = true;
+                    setBypassLiveAnswering(false);
+                    toast({
+                        title: 'Bypass Live Answering Disabled',
+                        description: 'The 15-minute bypass period has ended. Live answering is now active again.'
+                    });
+                }
+            }
+        }
+    }["PhoneDetails.useEffect"], [
+        bypassLiveAnswering,
+        bypassTimeRemaining,
+        toast
+    ]);
+    const handleBypassToggle = (checked)=>{
+        setBypassLiveAnswering(checked);
+        if (checked) {
+            setBypassTimeRemaining(BYPASS_DURATION_SECONDS);
+            toast({
+                title: 'Bypass Live Answering Enabled',
+                description: 'Calls will go directly to you for the next 15 minutes.'
+            });
+        } else {
+            setBypassTimeRemaining(0);
+            toast({
+                title: 'Bypass Live Answering Disabled',
+                description: 'Live answering is now active.'
+            });
+        }
+    };
+    const formatTimeRemaining = (seconds)=>{
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
     const copyToClipboard = (text)=>{
         navigator.clipboard.writeText(text);
         toast({
@@ -661,7 +743,7 @@ function PhoneDetails() {
                         children: "Phone Details"
                     }, void 0, false, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 168,
+                        lineNumber: 240,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -677,7 +759,7 @@ function PhoneDetails() {
                                                 children: "Business Phone Number"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 173,
+                                                lineNumber: 245,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -685,13 +767,13 @@ function PhoneDetails() {
                                                 children: businessPhoneNumber
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 174,
+                                                lineNumber: 246,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 172,
+                                        lineNumber: 244,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -703,11 +785,11 @@ function PhoneDetails() {
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$switch$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Switch"], {
                                                         id: "bypass-live-answering",
                                                         checked: bypassLiveAnswering,
-                                                        onCheckedChange: setBypassLiveAnswering,
+                                                        onCheckedChange: handleBypassToggle,
                                                         "data-testid": "switch-bypass-live-answering"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 178,
+                                                        lineNumber: 250,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
@@ -717,13 +799,26 @@ function PhoneDetails() {
                                                         children: "Bypass Live Answering"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 184,
+                                                        lineNumber: 256,
                                                         columnNumber: 17
+                                                    }, this),
+                                                    bypassLiveAnswering && bypassTimeRemaining > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-sm font-medium text-orange-600",
+                                                        "data-testid": "text-bypass-timer",
+                                                        children: [
+                                                            "(",
+                                                            formatTimeRemaining(bypassTimeRemaining),
+                                                            ")"
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/app/phone/page.tsx",
+                                                        lineNumber: 264,
+                                                        columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 177,
+                                                lineNumber: 249,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$tooltip$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TooltipProvider"], {
@@ -737,12 +832,12 @@ function PhoneDetails() {
                                                                 children: "What is this?"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                lineNumber: 195,
+                                                                lineNumber: 275,
                                                                 columnNumber: 21
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 194,
+                                                            lineNumber: 274,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$tooltip$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TooltipContent"], {
@@ -757,14 +852,14 @@ function PhoneDetails() {
                                                                             children: "Bypass Live Answering"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/phone/page.tsx",
-                                                                            lineNumber: 208,
+                                                                            lineNumber: 288,
                                                                             columnNumber: 23
                                                                         }, this),
                                                                         " allows calls to go directly to you without being answered by a live receptionist first."
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 207,
+                                                                    lineNumber: 287,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -772,36 +867,44 @@ function PhoneDetails() {
                                                                     children: "This is commonly used when you need to receive verification codes via phone call, such as 2-step authentication for banking, services, or account verification."
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 210,
+                                                                    lineNumber: 290,
+                                                                    columnNumber: 21
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-sm mt-2 text-orange-600 font-medium",
+                                                                    children: "Note: This feature automatically turns off after 15 minutes to ensure you don't miss important calls from being answered by our receptionists."
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/app/phone/page.tsx",
+                                                                    lineNumber: 293,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 202,
+                                                            lineNumber: 282,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 193,
+                                                    lineNumber: 273,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 192,
+                                                lineNumber: 272,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 176,
+                                        lineNumber: 248,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 171,
+                                lineNumber: 243,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -814,7 +917,7 @@ function PhoneDetails() {
                                                 children: "Business Fax Number"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 221,
+                                                lineNumber: 304,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -822,13 +925,13 @@ function PhoneDetails() {
                                                 children: businessFaxNumber
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 222,
+                                                lineNumber: 305,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 220,
+                                        lineNumber: 303,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -841,7 +944,7 @@ function PhoneDetails() {
                                                         children: "Fax to Email"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 226,
+                                                        lineNumber: 309,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -849,13 +952,13 @@ function PhoneDetails() {
                                                         children: email
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 227,
+                                                        lineNumber: 310,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 225,
+                                                lineNumber: 308,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -867,12 +970,12 @@ function PhoneDetails() {
                                                     className: "h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 235,
+                                                    lineNumber: 318,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 229,
+                                                lineNumber: 312,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -882,19 +985,19 @@ function PhoneDetails() {
                                                 children: "Edit"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 237,
+                                                lineNumber: 320,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 307,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 219,
+                                lineNumber: 302,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -907,7 +1010,7 @@ function PhoneDetails() {
                                                 children: "For Mail Call:"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 249,
+                                                lineNumber: 332,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -917,18 +1020,18 @@ function PhoneDetails() {
                                                     className: "h-3.5 w-3.5 text-gray-400 hover:text-gray-600"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 251,
+                                                    lineNumber: 334,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 250,
+                                                lineNumber: 333,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 248,
+                                        lineNumber: 331,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -936,25 +1039,25 @@ function PhoneDetails() {
                                         children: mailCallNumber
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 337,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 247,
+                                lineNumber: 330,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 170,
+                        lineNumber: 242,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 167,
+                lineNumber: 239,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -970,20 +1073,20 @@ function PhoneDetails() {
                                     children: "Edit Fax to Email"
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 262,
+                                    lineNumber: 345,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Update the email address where faxes will be sent."
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 263,
+                                    lineNumber: 346,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 261,
+                            lineNumber: 344,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -995,7 +1098,7 @@ function PhoneDetails() {
                                         children: "Email Address"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 268,
+                                        lineNumber: 351,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1008,18 +1111,18 @@ function PhoneDetails() {
                                         "data-testid": "input-fax-email"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 269,
+                                        lineNumber: 352,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 267,
+                                lineNumber: 350,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 266,
+                            lineNumber: 349,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1032,7 +1135,7 @@ function PhoneDetails() {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 282,
+                                    lineNumber: 365,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1042,30 +1145,30 @@ function PhoneDetails() {
                                     children: "Save"
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 289,
+                                    lineNumber: 372,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 281,
+                            lineNumber: 364,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 260,
+                    lineNumber: 343,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 259,
+                lineNumber: 342,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true);
 }
-_s(PhoneDetails, "jHv90K4z0oC/EXMnxebyjVFnY7o=", false, function() {
+_s(PhoneDetails, "pBgNqor3bQtyseSqgRNiXr3D4MU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"]
     ];
@@ -1091,7 +1194,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                             className: "h-5 w-5 text-gray-400 mt-0.5"
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 322,
+                            lineNumber: 405,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1108,7 +1211,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 325,
+                                            lineNumber: 408,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1118,7 +1221,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                                     className: `w-2 h-2 rounded-full ${departmentColors[extension.departmentColor]}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 329,
+                                                    lineNumber: 412,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1126,19 +1229,19 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                                     children: extension.department
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 330,
+                                                    lineNumber: 413,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 328,
+                                            lineNumber: 411,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 324,
+                                    lineNumber: 407,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1154,12 +1257,12 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                                         children: "Business Hours Forwarding Numbers"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 338,
+                                                        lineNumber: 421,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 337,
+                                                    lineNumber: 420,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1171,7 +1274,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                                                     className: "w-1.5 h-1.5 rounded-full bg-green-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 343,
+                                                                    lineNumber: 426,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1179,24 +1282,24 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                                                     children: num
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 344,
+                                                                    lineNumber: 427,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, `bh-${idx}`, true, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 342,
+                                                            lineNumber: 425,
                                                             columnNumber: 23
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 340,
+                                                    lineNumber: 423,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 336,
+                                            lineNumber: 419,
                                             columnNumber: 17
                                         }, this),
                                         extension.afterHoursForwarding.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1209,12 +1312,12 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                                         children: "After Hours Forwarding Numbers"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 353,
+                                                        lineNumber: 436,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 352,
+                                                    lineNumber: 435,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1226,7 +1329,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                                                     className: "w-1.5 h-1.5 rounded-full bg-blue-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 358,
+                                                                    lineNumber: 441,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1234,42 +1337,42 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                                                     children: num
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 359,
+                                                                    lineNumber: 442,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, `ah-${idx}`, true, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 357,
+                                                            lineNumber: 440,
                                                             columnNumber: 23
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 355,
+                                                    lineNumber: 438,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 351,
+                                            lineNumber: 434,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 334,
+                                    lineNumber: 417,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 323,
+                            lineNumber: 406,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 321,
+                    lineNumber: 404,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1282,7 +1385,7 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                             children: "Edit"
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 370,
+                            lineNumber: 453,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1299,14 +1402,14 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                             className: "h-4 w-4 mr-1.5"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 385,
+                                            lineNumber: 468,
                                             columnNumber: 15
                                         }, this),
                                         "Voicemail"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 378,
+                                    lineNumber: 461,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1320,37 +1423,37 @@ function ExtensionCard({ extension, onEdit, onVoicemail, onCallLog }) {
                                             className: "h-4 w-4 mr-1.5"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 395,
+                                            lineNumber: 478,
                                             columnNumber: 15
                                         }, this),
                                         "Call Log"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 388,
+                                    lineNumber: 471,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 377,
+                            lineNumber: 460,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 369,
+                    lineNumber: 452,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/phone/page.tsx",
-            lineNumber: 320,
+            lineNumber: 403,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/phone/page.tsx",
-        lineNumber: 319,
+        lineNumber: 402,
         columnNumber: 5
     }, this);
 }
@@ -1366,7 +1469,7 @@ function YourExtensions({ extensions, onEdit, onVoicemail, onCallLog }) {
                 children: "Your Extensions"
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 415,
+                lineNumber: 498,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1377,18 +1480,18 @@ function YourExtensions({ extensions, onEdit, onVoicemail, onCallLog }) {
                         onCallLog: onCallLog
                     }, ext.id, false, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 419,
+                        lineNumber: 502,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 417,
+                lineNumber: 500,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/phone/page.tsx",
-        lineNumber: 414,
+        lineNumber: 497,
         columnNumber: 5
     }, this);
 }
@@ -1404,7 +1507,7 @@ function ActiveAddons({ addons, onViewInstructions, onEdit }) {
                 children: "Active Addons"
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 441,
+                lineNumber: 524,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1421,20 +1524,20 @@ function ActiveAddons({ addons, onViewInstructions, onEdit }) {
                                         children: addon.name
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 451,
+                                        lineNumber: 534,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         className: "w-2 h-2 rounded-full bg-green-500"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 452,
+                                        lineNumber: 535,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 450,
+                                lineNumber: 533,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1452,13 +1555,13 @@ function ActiveAddons({ addons, onViewInstructions, onEdit }) {
                                                 "aria-hidden": "true"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 463,
+                                                lineNumber: 546,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 456,
+                                        lineNumber: 539,
                                         columnNumber: 17
                                     }, this),
                                     addon.hasEdit && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1468,30 +1571,30 @@ function ActiveAddons({ addons, onViewInstructions, onEdit }) {
                                         children: "Edit"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 467,
+                                        lineNumber: 550,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 454,
+                                lineNumber: 537,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, addon.id, true, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 445,
+                        lineNumber: 528,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 443,
+                lineNumber: 526,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/phone/page.tsx",
-        lineNumber: 440,
+        lineNumber: 523,
         columnNumber: 5
     }, this);
 }
@@ -1507,7 +1610,7 @@ function ExploreAddons({ addons, onAdd }) {
                 children: "Trending Addons"
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 491,
+                lineNumber: 574,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1526,7 +1629,7 @@ function ExploreAddons({ addons, onAdd }) {
                                 className: "absolute inset-0 bg-gradient-to-r from-[#1a1a2e] via-[#1a1a2e]/80 to-transparent"
                             }, void 0, false, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 506,
+                                lineNumber: 589,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1542,7 +1645,7 @@ function ExploreAddons({ addons, onAdd }) {
                                                         children: addon.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 510,
+                                                        lineNumber: 593,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1552,18 +1655,18 @@ function ExploreAddons({ addons, onAdd }) {
                                                             className: "h-3.5 w-3.5 text-gray-400 hover:text-gray-300"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 512,
+                                                            lineNumber: 595,
                                                             columnNumber: 21
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 511,
+                                                        lineNumber: 594,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 509,
+                                                lineNumber: 592,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1571,13 +1674,13 @@ function ExploreAddons({ addons, onAdd }) {
                                                 children: addon.description
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 515,
+                                                lineNumber: 598,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 508,
+                                        lineNumber: 591,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1592,36 +1695,36 @@ function ExploreAddons({ addons, onAdd }) {
                                                 className: "h-4 w-4 ml-1"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 524,
+                                                lineNumber: 607,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 517,
+                                        lineNumber: 600,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 507,
+                                lineNumber: 590,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, addon.id, true, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 495,
+                        lineNumber: 578,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 493,
+                lineNumber: 576,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/phone/page.tsx",
-        lineNumber: 490,
+        lineNumber: 573,
         columnNumber: 5
     }, this);
 }
@@ -1742,12 +1845,12 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             className: "h-5 w-5 text-gray-600"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 616,
+                                            lineNumber: 699,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 615,
+                                        lineNumber: 698,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1760,7 +1863,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                         children: "Edit extension"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 620,
+                                                        lineNumber: 703,
                                                         columnNumber: 19
                                                     }, this),
                                                     hasBusinessHours && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1770,7 +1873,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                         children: "Business Hours"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 622,
+                                                        lineNumber: 705,
                                                         columnNumber: 21
                                                     }, this),
                                                     hasAfterHours && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1780,13 +1883,13 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                         children: "After Hours"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 627,
+                                                        lineNumber: 710,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 619,
+                                                lineNumber: 702,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -1801,19 +1904,19 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 632,
+                                                lineNumber: 715,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 618,
+                                        lineNumber: 701,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 614,
+                                lineNumber: 697,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1826,25 +1929,25 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                         className: "h-4 w-4 mr-1.5"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 641,
+                                        lineNumber: 724,
                                         columnNumber: 15
                                     }, this),
                                     "Edit Voicemail Greeting"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 635,
+                                lineNumber: 718,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 613,
+                        lineNumber: 696,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 612,
+                    lineNumber: 695,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1860,7 +1963,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             children: "First Name*"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 650,
+                                            lineNumber: 733,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1875,13 +1978,13 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             "data-testid": "input-first-name"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 651,
+                                            lineNumber: 734,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 649,
+                                    lineNumber: 732,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1891,7 +1994,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             children: "Last Name*"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 661,
+                                            lineNumber: 744,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1906,19 +2009,19 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             "data-testid": "input-last-name"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 662,
+                                            lineNumber: 745,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 660,
+                                    lineNumber: 743,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 648,
+                            lineNumber: 731,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1931,7 +2034,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             children: "Department:"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 675,
+                                            lineNumber: 758,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1946,13 +2049,13 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             "data-testid": "input-department"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 676,
+                                            lineNumber: 759,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 674,
+                                    lineNumber: 757,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1962,7 +2065,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             children: "Voicemail to email address:"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 686,
+                                            lineNumber: 769,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1978,19 +2081,19 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             "data-testid": "input-voicemail-email"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 687,
+                                            lineNumber: 770,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 685,
+                                    lineNumber: 768,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 673,
+                            lineNumber: 756,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2008,7 +2111,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                             children: "Business Hours Forwarding Numbers"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 703,
+                                                            lineNumber: 786,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2016,13 +2119,13 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                             children: "Numbers that receive calls during your business hours"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 704,
+                                                            lineNumber: 787,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 702,
+                                                    lineNumber: 785,
                                                     columnNumber: 17
                                                 }, this),
                                                 formData.businessHoursForwarding.length < 4 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2034,20 +2137,20 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                             className: "h-4 w-4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 712,
+                                                            lineNumber: 795,
                                                             columnNumber: 21
                                                         }, this),
                                                         "Add Number"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 707,
+                                                    lineNumber: 790,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 701,
+                                            lineNumber: 784,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2062,7 +2165,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 720,
+                                                            lineNumber: 803,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2078,12 +2181,12 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                                 placeholder: "US"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                                lineNumber: 724,
+                                                                                lineNumber: 807,
                                                                                 columnNumber: 27
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/phone/page.tsx",
-                                                                            lineNumber: 723,
+                                                                            lineNumber: 806,
                                                                             columnNumber: 25
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2093,7 +2196,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                                     children: "US"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                                    lineNumber: 727,
+                                                                                    lineNumber: 810,
                                                                                     columnNumber: 27
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -2101,7 +2204,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                                     children: "UK"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                                    lineNumber: 728,
+                                                                                    lineNumber: 811,
                                                                                     columnNumber: 27
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -2109,19 +2212,19 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                                     children: "CA"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                                    lineNumber: 729,
+                                                                                    lineNumber: 812,
                                                                                     columnNumber: 27
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/app/phone/page.tsx",
-                                                                            lineNumber: 726,
+                                                                            lineNumber: 809,
                                                                             columnNumber: 25
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 722,
+                                                                    lineNumber: 805,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2133,7 +2236,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                     "data-testid": `input-business-forwarding-${idx}`
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 732,
+                                                                    lineNumber: 815,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 formData.businessHoursForwarding.length > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2144,35 +2247,35 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                         className: "h-4 w-4"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/phone/page.tsx",
-                                                                        lineNumber: 746,
+                                                                        lineNumber: 829,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                    lineNumber: 741,
+                                                                    lineNumber: 824,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/phone/page.tsx",
-                                                            lineNumber: 721,
+                                                            lineNumber: 804,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, idx, true, {
                                                     fileName: "[project]/app/phone/page.tsx",
-                                                    lineNumber: 719,
+                                                    lineNumber: 802,
                                                     columnNumber: 19
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 717,
+                                            lineNumber: 800,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 700,
+                                    lineNumber: 783,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2186,20 +2289,20 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                 className: "h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 762,
+                                                lineNumber: 845,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: "Add After Hours Forwarding Numbers"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 763,
+                                                lineNumber: 846,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 757,
+                                        lineNumber: 840,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         children: [
@@ -2213,7 +2316,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                 children: "After Hours Forwarding Numbers"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                lineNumber: 769,
+                                                                lineNumber: 852,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2221,13 +2324,13 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                 children: "Numbers that receive calls outside of business hours"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                lineNumber: 770,
+                                                                lineNumber: 853,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 768,
+                                                        lineNumber: 851,
                                                         columnNumber: 21
                                                     }, this),
                                                     formData.afterHoursForwarding.length < 4 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2239,20 +2342,20 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                 className: "h-4 w-4"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                lineNumber: 778,
+                                                                lineNumber: 861,
                                                                 columnNumber: 25
                                                             }, this),
                                                             "Add Number"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 773,
+                                                        lineNumber: 856,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 767,
+                                                lineNumber: 850,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2267,7 +2370,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                lineNumber: 786,
+                                                                lineNumber: 869,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2283,12 +2386,12 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                                     placeholder: "US"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/phone/page.tsx",
-                                                                                    lineNumber: 790,
+                                                                                    lineNumber: 873,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                                lineNumber: 789,
+                                                                                lineNumber: 872,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2298,7 +2401,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                                         children: "US"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/phone/page.tsx",
-                                                                                        lineNumber: 793,
+                                                                                        lineNumber: 876,
                                                                                         columnNumber: 31
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -2306,7 +2409,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                                         children: "UK"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/phone/page.tsx",
-                                                                                        lineNumber: 794,
+                                                                                        lineNumber: 877,
                                                                                         columnNumber: 31
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -2314,19 +2417,19 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                                         children: "CA"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/phone/page.tsx",
-                                                                                        lineNumber: 795,
+                                                                                        lineNumber: 878,
                                                                                         columnNumber: 31
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                                lineNumber: 792,
+                                                                                lineNumber: 875,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/phone/page.tsx",
-                                                                        lineNumber: 788,
+                                                                        lineNumber: 871,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2338,7 +2441,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                         "data-testid": `input-after-hours-forwarding-${idx}`
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/phone/page.tsx",
-                                                                        lineNumber: 798,
+                                                                        lineNumber: 881,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2349,46 +2452,46 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                                                             className: "h-4 w-4"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/phone/page.tsx",
-                                                                            lineNumber: 811,
+                                                                            lineNumber: 894,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/phone/page.tsx",
-                                                                        lineNumber: 806,
+                                                                        lineNumber: 889,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/phone/page.tsx",
-                                                                lineNumber: 787,
+                                                                lineNumber: 870,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, idx, true, {
                                                         fileName: "[project]/app/phone/page.tsx",
-                                                        lineNumber: 785,
+                                                        lineNumber: 868,
                                                         columnNumber: 23
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/app/phone/page.tsx",
-                                                lineNumber: 783,
+                                                lineNumber: 866,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 766,
+                                        lineNumber: 849,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 755,
+                                    lineNumber: 838,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 699,
+                            lineNumber: 782,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2401,7 +2504,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                     "data-testid": "checkbox-disable-forwarding"
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 823,
+                                    lineNumber: 906,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2412,7 +2515,7 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             children: "Disable Call Forwarding"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 830,
+                                            lineNumber: 913,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2420,25 +2523,25 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                                             children: "(When disabled, transferred calls will go straight to voicemail)"
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 833,
+                                            lineNumber: 916,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 829,
+                                    lineNumber: 912,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 822,
+                            lineNumber: 905,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 647,
+                    lineNumber: 730,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2448,18 +2551,18 @@ function EditExtensionModal({ open, onClose, extension, onSave, onEditVoicemailG
                     children: "Save"
                 }, void 0, false, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 840,
+                    lineNumber: 923,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/phone/page.tsx",
-            lineNumber: 611,
+            lineNumber: 694,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/phone/page.tsx",
-        lineNumber: 610,
+        lineNumber: 693,
         columnNumber: 5
     }, this);
 }
@@ -2496,20 +2599,20 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }) {
                                     className: "h-5 w-5 text-gray-600"
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 881,
+                                    lineNumber: 964,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTitle"], {
                                     children: "Voicemail Greeting"
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 882,
+                                    lineNumber: 965,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 880,
+                            lineNumber: 963,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -2517,13 +2620,13 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }) {
                             children: "Listen to or record a new voicemail greeting"
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 884,
+                            lineNumber: 967,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 879,
+                    lineNumber: 962,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2541,18 +2644,18 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }) {
                                         className: "h-4 w-4 text-gray-700"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 896,
+                                        lineNumber: 979,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$play$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Play$3e$__["Play"], {
                                         className: "h-4 w-4 text-gray-700"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 898,
+                                        lineNumber: 981,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 889,
+                                    lineNumber: 972,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2566,23 +2669,23 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }) {
                                             }
                                         }, void 0, false, {
                                             fileName: "[project]/app/phone/page.tsx",
-                                            lineNumber: 903,
+                                            lineNumber: 986,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 902,
+                                        lineNumber: 985,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 901,
+                                    lineNumber: 984,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 888,
+                            lineNumber: 971,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2592,20 +2695,20 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }) {
                                     children: formatTime(currentTime)
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 912,
+                                    lineNumber: 995,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     children: formatTime(duration)
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 913,
+                                    lineNumber: 996,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 911,
+                            lineNumber: 994,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2617,14 +2720,14 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }) {
                                     className: "h-4 w-4 mr-2"
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 921,
+                                    lineNumber: 1004,
                                     columnNumber: 13
                                 }, this),
                                 "Record New Greeting"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 916,
+                            lineNumber: 999,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2635,24 +2738,24 @@ function VoicemailGreetingModal({ open, onClose, extension, onRecordNew }) {
                             children: "Close"
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 925,
+                            lineNumber: 1008,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 887,
+                    lineNumber: 970,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/phone/page.tsx",
-            lineNumber: 878,
+            lineNumber: 961,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/phone/page.tsx",
-        lineNumber: 877,
+        lineNumber: 960,
         columnNumber: 5
     }, this);
 }
@@ -2686,12 +2789,12 @@ function RecordVoicemailModal({ open, onClose, extension }) {
                                 className: "h-6 w-6 text-gray-600"
                             }, void 0, false, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 963,
+                                lineNumber: 1046,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 962,
+                            lineNumber: 1045,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTitle"], {
@@ -2699,7 +2802,7 @@ function RecordVoicemailModal({ open, onClose, extension }) {
                             children: "Record Your Voicemail Greeting"
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 965,
+                            lineNumber: 1048,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -2707,13 +2810,13 @@ function RecordVoicemailModal({ open, onClose, extension }) {
                             children: 'Please select or enter the phone number you would like the system to call you to change your company greeting. Once you click the Call Me button below, wait a few seconds. When your phone rings, answer it, listen to the prompt and record your message. When finished, simply hang up. Please wait 30 seconds before checking your greeting on the "Listen to my current voicemail greeting button"'
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 966,
+                            lineNumber: 1049,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 961,
+                    lineNumber: 1044,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2730,12 +2833,12 @@ function RecordVoicemailModal({ open, onClose, extension }) {
                                         className: "w-2 h-2 rounded-full bg-[#E53935]"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 983,
+                                        lineNumber: 1066,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 979,
+                                    lineNumber: 1062,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2743,13 +2846,13 @@ function RecordVoicemailModal({ open, onClose, extension }) {
                                     children: extension?.businessHoursForwarding[0] || businessPhoneNumber
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 986,
+                                    lineNumber: 1069,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 972,
+                            lineNumber: 1055,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2763,12 +2866,12 @@ function RecordVoicemailModal({ open, onClose, extension }) {
                                         className: "w-2 h-2 rounded-full bg-[#E53935]"
                                     }, void 0, false, {
                                         fileName: "[project]/app/phone/page.tsx",
-                                        lineNumber: 1000,
+                                        lineNumber: 1083,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 996,
+                                    lineNumber: 1079,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2780,19 +2883,19 @@ function RecordVoicemailModal({ open, onClose, extension }) {
                                     "data-testid": "input-other-number"
                                 }, void 0, false, {
                                     fileName: "[project]/app/phone/page.tsx",
-                                    lineNumber: 1003,
+                                    lineNumber: 1086,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 989,
+                            lineNumber: 1072,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 971,
+                    lineNumber: 1054,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2804,25 +2907,25 @@ function RecordVoicemailModal({ open, onClose, extension }) {
                             className: "h-4 w-4 mr-2"
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 1019,
+                            lineNumber: 1102,
                             columnNumber: 11
                         }, this),
                         "Call Me Now"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/phone/page.tsx",
-                    lineNumber: 1014,
+                    lineNumber: 1097,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/phone/page.tsx",
-            lineNumber: 960,
+            lineNumber: 1043,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/phone/page.tsx",
-        lineNumber: 959,
+        lineNumber: 1042,
         columnNumber: 5
     }, this);
 }
@@ -2905,7 +3008,7 @@ function PhoneSystemPage() {
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 1103,
+                lineNumber: 1186,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2919,7 +3022,7 @@ function PhoneSystemPage() {
                         children: "Phone System"
                     }, void 0, false, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 1109,
+                        lineNumber: 1192,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2930,13 +3033,13 @@ function PhoneSystemPage() {
                         children: "Add-ons"
                     }, void 0, false, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 1117,
+                        lineNumber: 1200,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 1108,
+                lineNumber: 1191,
                 columnNumber: 7
             }, this),
             activeTab === 'phone-system' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2947,7 +3050,7 @@ function PhoneSystemPage() {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(PhoneDetails, {}, void 0, false, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 1131,
+                                lineNumber: 1214,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ActiveAddons, {
@@ -2956,13 +3059,13 @@ function PhoneSystemPage() {
                                 onEdit: handleEditAddon
                             }, void 0, false, {
                                 fileName: "[project]/app/phone/page.tsx",
-                                lineNumber: 1132,
+                                lineNumber: 1215,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 1130,
+                        lineNumber: 1213,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2974,18 +3077,18 @@ function PhoneSystemPage() {
                             onCallLog: handleCallLog
                         }, void 0, false, {
                             fileName: "[project]/app/phone/page.tsx",
-                            lineNumber: 1141,
+                            lineNumber: 1224,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 1140,
+                        lineNumber: 1223,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 1128,
+                lineNumber: 1211,
                 columnNumber: 9
             }, this),
             activeTab === 'add-ons' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2996,7 +3099,7 @@ function PhoneSystemPage() {
                         children: "Add-ons Marketplace"
                     }, void 0, false, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 1153,
+                        lineNumber: 1236,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3004,13 +3107,13 @@ function PhoneSystemPage() {
                         children: "Browse and purchase additional features for your phone system."
                     }, void 0, false, {
                         fileName: "[project]/app/phone/page.tsx",
-                        lineNumber: 1154,
+                        lineNumber: 1237,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 1152,
+                lineNumber: 1235,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(EditExtensionModal, {
@@ -3021,7 +3124,7 @@ function PhoneSystemPage() {
                 onEditVoicemailGreeting: handleEditVoicemailGreeting
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 1159,
+                lineNumber: 1242,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(VoicemailGreetingModal, {
@@ -3031,7 +3134,7 @@ function PhoneSystemPage() {
                 onRecordNew: handleRecordNew
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 1167,
+                lineNumber: 1250,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(RecordVoicemailModal, {
@@ -3040,13 +3143,13 @@ function PhoneSystemPage() {
                 extension: selectedExtension
             }, void 0, false, {
                 fileName: "[project]/app/phone/page.tsx",
-                lineNumber: 1174,
+                lineNumber: 1257,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/phone/page.tsx",
-        lineNumber: 1101,
+        lineNumber: 1184,
         columnNumber: 5
     }, this);
 }
