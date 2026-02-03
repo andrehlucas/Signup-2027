@@ -173,7 +173,7 @@ function PhoneDetails() {
               <p className="text-sm font-medium text-gray-700">Business Phone Number</p>
               <p className="text-sm text-gray-500">{businessPhoneNumber}</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col items-end gap-1">
               <div className="flex items-center gap-2">
                 <Switch
                   id="bypass-live-answering"
