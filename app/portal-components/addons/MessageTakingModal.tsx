@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -32,6 +32,14 @@ export function MessageTakingModal({
   const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>(initialDeliveryMethod);
   const [termsAccepted, setTermsAccepted] = useState(initialTermsAccepted);
   const [showError, setShowError] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setDeliveryMethod(initialDeliveryMethod);
+      setTermsAccepted(initialTermsAccepted);
+      setShowError(false);
+    }
+  }, [isOpen, initialDeliveryMethod, initialTermsAccepted]);
 
   const handleSave = () => {
     if (!termsAccepted) {

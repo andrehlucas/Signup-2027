@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -28,6 +28,12 @@ export function SupervisedTransferModal({
   const [availableForCalls, setAvailableForCalls] = useState<string>(
     initialValue ? 'yes' : 'no'
   );
+
+  useEffect(() => {
+    if (isOpen) {
+      setAvailableForCalls(initialValue ? 'yes' : 'no');
+    }
+  }, [isOpen, initialValue]);
 
   const handleSave = () => {
     onSave(availableForCalls === 'yes');
