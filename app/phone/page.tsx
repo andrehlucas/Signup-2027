@@ -260,14 +260,6 @@ function PhoneDetails() {
                 >
                   Bypass Live Answering
                 </Label>
-                {bypassLiveAnswering && bypassTimeRemaining > 0 && (
-                  <span 
-                    className="text-sm font-medium text-orange-600"
-                    data-testid="text-bypass-timer"
-                  >
-                    ({formatTimeRemaining(bypassTimeRemaining)})
-                  </span>
-                )}
               </div>
               <TooltipProvider>
                 <Tooltip>
@@ -289,9 +281,6 @@ function PhoneDetails() {
                     </p>
                     <p className="text-sm mt-2">
                       This is commonly used when you need to receive verification codes via phone call, such as 2-step authentication for banking, services, or account verification.
-                    </p>
-                    <p className="text-sm mt-2 text-orange-600 font-medium">
-                      Note: This feature automatically turns off after 15 minutes to ensure you don't miss important calls from being answered by our receptionists.
                     </p>
                   </TooltipContent>
                 </Tooltip>
