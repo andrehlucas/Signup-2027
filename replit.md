@@ -142,6 +142,7 @@ The My Mail section on the Office page allows customers to manage incoming mail:
 - Confirmation dialog before executing actions
 - Configure default action for new mail (Keep, Scan, Forward, Shred)
 - API endpoints: GET /api/mail, GET /api/mail/:id, POST /api/mail/:id/action, GET/PATCH /api/mail-settings
+- Feature flag: Set `NEXT_PUBLIC_MAILX_ENABLED=true` to enable (disabled by default)
 
 **Mobile Responsiveness**
 - Breakpoint: lg (1024px) separates desktop and mobile views

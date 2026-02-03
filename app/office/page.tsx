@@ -39,6 +39,7 @@ import { Switch } from '@/app/components/ui/switch';
 import { Label } from '@/app/components/ui/label';
 import { ExpandLocationBanner } from '@/app/portal-components/ExpandLocationBanner';
 import { MyMailSection } from '@/app/portal-components/MyMailSection';
+import { featureFlags } from '@/app/lib/featureFlags';
 
 interface UploadingFile {
   id: string;
@@ -374,7 +375,7 @@ export default function OfficePage() {
         </div>
       </div>
 
-      <MyMailSection />
+      {featureFlags.mailxEnabled && <MyMailSection />}
 
       <div className="mt-8">
         <ExpandLocationBanner onAddLocation={() => console.log('Add location clicked')} />
