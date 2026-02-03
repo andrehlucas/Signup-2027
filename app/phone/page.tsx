@@ -104,6 +104,12 @@ const mockExtensions: Extension[] = [
   },
 ];
 
+import { 
+  ActiveAddonsList, 
+  Addon as ReusableAddon,
+  sampleAddons 
+} from '../portal-components/addons';
+
 const mockActiveAddons: ActiveAddon[] = [
   {
     id: '1',
@@ -1102,6 +1108,7 @@ export default function PhoneSystemPage() {
   const [extensions, setExtensions] = useState<Extension[]>(mockExtensions);
   const [activeAddons] = useState<ActiveAddon[]>(mockActiveAddons);
   const [exploreAddons] = useState<ExploreAddon[]>(mockExploreAddons);
+  const [reusableAddons, setReusableAddons] = useState<ReusableAddon[]>(sampleAddons);
   
   // Modal states
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -1149,6 +1156,25 @@ export default function PhoneSystemPage() {
     toast({
       title: 'Edit Add-on',
       description: `Editing ${addon.name}`,
+    });
+  };
+
+  const handleReusableAddonUpdate = (addonId: string, config: ReusableAddon['config']) => {
+    setReusableAddons((prev) =>
+      prev.map((addon) =>
+        addon.id === addonId ? { ...addon, config } : addon
+      )
+    );
+    toast({
+      title: 'Settings Updated',
+      description: 'Your add-on settings have been saved.',
+    });
+  };
+
+  const handleReusableViewInstructions = (addon: ReusableAddon) => {
+    toast({
+      title: 'Instructions',
+      description: `Viewing instructions for ${addon.name}`,
     });
   };
 
@@ -1201,10 +1227,12 @@ export default function PhoneSystemPage() {
           {/* Left Column - 50% width */}
           <div className="space-y-6">
             <PhoneDetails />
-            <ActiveAddons
-              addons={activeAddons}
-              onViewInstructions={handleViewInstructions}
-              onEdit={handleEditAddon}
+            <ActiveAddonsList
+              addons={reusableAddons}
+              onAddonUpdate={handleReusableAddonUpdate}
+              onViewInstructions={handleReusableViewInstructions}
+              title="Active Add-ons"
+              showOnlyActive={true}
             />
           </div>
           
@@ -1221,9 +1249,22 @@ export default function PhoneSystemPage() {
       )}
       
       {activeTab === 'add-ons' && (
-        <div className="text-center py-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Add-ons Marketplace</h2>
-          <p className="text-gray-500">Browse and purchase additional features for your phone system.</p>
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <ExploreAddons
+              addons={exploreAddons}
+              onAdd={handleAddAddon}
+            />
+          </div>
+          {reusableAddons.filter(a => a.status === 'inactive').length > 0 && (
+            <ActiveAddonsList
+              addons={reusableAddons}
+              onAddonUpdate={handleReusableAddonUpdate}
+              onViewInstructions={handleReusableViewInstructions}
+              title="Available Add-ons"
+              showOnlyActive={false}
+            />
+          )}
         </div>
       )}
       
