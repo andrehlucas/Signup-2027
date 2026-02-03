@@ -21,6 +21,13 @@ import { Badge } from '@/app/components/ui/badge';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Checkbox } from '@/app/components/ui/checkbox';
+import { Switch } from '@/app/components/ui/switch';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/app/components/ui/tooltip';
 import {
   Dialog,
   DialogContent,
@@ -131,6 +138,7 @@ function PhoneDetails() {
   const [editEmailOpen, setEditEmailOpen] = useState(false);
   const [email, setEmail] = useState(faxToEmail);
   const [editingEmail, setEditingEmail] = useState(faxToEmail);
+  const [bypassLiveAnswering, setBypassLiveAnswering] = useState(false);
   
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -165,9 +173,47 @@ function PhoneDetails() {
               <p className="text-sm font-medium text-gray-700">Business Phone Number</p>
               <p className="text-sm text-gray-500">{businessPhoneNumber}</p>
             </div>
-            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200" data-testid="badge-business-hours">
-              Business Hours Line
-            </Badge>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="bypass-live-answering"
+                  checked={bypassLiveAnswering}
+                  onCheckedChange={setBypassLiveAnswering}
+                  data-testid="switch-bypass-live-answering"
+                />
+                <Label 
+                  htmlFor="bypass-live-answering" 
+                  className="text-sm font-medium text-gray-700 cursor-pointer"
+                  data-testid="label-bypass-live-answering"
+                >
+                  Bypass Live Answering
+                </Label>
+              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button 
+                      className="text-sm text-gray-500 hover:text-gray-700 underline cursor-help"
+                      data-testid="button-bypass-tooltip"
+                    >
+                      What is this?
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent 
+                    side="bottom" 
+                    className="max-w-xs p-3"
+                    data-testid="tooltip-bypass-explanation"
+                  >
+                    <p className="text-sm">
+                      <strong>Bypass Live Answering</strong> allows calls to go directly to you without being answered by a live receptionist first.
+                    </p>
+                    <p className="text-sm mt-2">
+                      This is commonly used when you need to receive verification codes via phone call, such as 2-step authentication for banking, services, or account verification.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </div>
           
           <div className="flex gap-8">

@@ -1219,6 +1219,10 @@ body {
   max-width: max-content;
 }
 
+.max-w-xs {
+  max-width: 20rem;
+}
+
 .flex-1 {
   flex: 1;
 }
@@ -1341,6 +1345,10 @@ body {
 
 .cursor-default {
   cursor: default;
+}
+
+.cursor-help {
+  cursor: help;
 }
 
 .cursor-pointer {
