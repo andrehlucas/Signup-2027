@@ -1,3 +1,7 @@
 {
+  "/api/mail-settings/route": "app/api/mail-settings/route.js",
+  "/api/mail/route": "app/api/mail/route.js",
+  "/office/page": "app/office/page.js",
+  "/page": "app/page.js",
   "/phone/page": "app/phone/page.js"
 }
