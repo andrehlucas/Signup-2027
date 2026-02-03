@@ -133,6 +133,33 @@ Located in `app/portal-components/`:
 - `PortalSidebar.tsx` - Responsive sidebar with desktop view (lg+) and mobile drawer
 - `PortalSearch.tsx` - Portal-wide search with searchable page index and dropdown results
 - `MyMailSection.tsx` - Mail notification section with pending mail list, review modal, and action buttons
+- `addons/` - Active Addons component system (API-ready, reusable)
+  - `types.ts` - TypeScript types for Addon data structure
+  - `ActiveAddonItem.tsx` - Individual addon row with Edit/View Instructions button
+  - `ActiveAddonsList.tsx` - Container component that filters and displays addons
+  - `SupervisedTransferModal.tsx` - Yes/No availability toggle modal
+  - `MessageTakingModal.tsx` - Email/SMS/Both delivery selection + terms checkbox
+  - `sampleAddons.ts` - Sample addon data for development
+
+**Active Addons Feature**
+The Active Addons component system on the Phone page allows customers to manage phone add-ons:
+- Displays active addons with Edit or View Instructions buttons
+- Supervised Transfer Edit: Modal with Yes/No availability toggle for receiving incoming calls
+- Message Taking Edit: Modal with Email/SMS/Both delivery method selection + terms authorization checkbox
+- Terms link points to https://www.opusvirtualoffices.com/opus-virtual-offices-terms-of-use/
+- API-ready: Designed to receive addon data from an API with active/inactive status
+- Component usage:
+  ```tsx
+  import { ActiveAddonsList, Addon } from './portal-components/addons';
+  
+  <ActiveAddonsList
+    addons={addonsArray}
+    onAddonUpdate={(addonId, config) => handleUpdate(addonId, config)}
+    onViewInstructions={(addon) => handleViewInstructions(addon)}
+    title="Active Add-ons"
+    showOnlyActive={true}
+  />
+  ```
 
 **My Mail Feature**
 The My Mail section on the Office page allows customers to manage incoming mail:
