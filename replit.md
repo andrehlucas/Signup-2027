@@ -135,17 +135,20 @@ Located in `app/portal-components/`:
 - `MyMailSection.tsx` - Mail notification section with pending mail list, review modal, and action buttons
 - `addons/` - Active Addons component system (API-ready, reusable)
   - `types.ts` - TypeScript types for Addon data structure
-  - `ActiveAddonItem.tsx` - Individual addon row with Edit/View Instructions button
+  - `ActiveAddonItem.tsx` - Individual addon row with green status dot and Edit/View Instructions button
   - `ActiveAddonsList.tsx` - Container component that filters and displays addons
   - `SupervisedTransferModal.tsx` - Yes/No availability toggle modal
   - `MessageTakingModal.tsx` - Email/SMS/Both delivery selection + terms checkbox
+  - `PhoneNumberModal.tsx` - Reusable phone number selection modal
   - `sampleAddons.ts` - Sample addon data for development
 
 **Active Addons Feature**
 The Active Addons component system on the Phone page allows customers to manage phone add-ons:
-- Displays active addons with Edit or View Instructions buttons
+- Displays active addons with green status dots and Edit or View Instructions buttons
 - Supervised Transfer Edit: Modal with Yes/No availability toggle for receiving incoming calls
 - Message Taking Edit: Modal with Email/SMS/Both delivery method selection + terms authorization checkbox
+- Toll-Free Edit: Modal to select from available toll-free numbers (1-800, 1-888 prefixed)
+- Additional Phone Number Edit: Modal to select from available local phone numbers
 - Terms link points to https://www.opusvirtualoffices.com/opus-virtual-offices-terms-of-use/
 - API-ready: Designed to receive addon data from an API with active/inactive status
 - Component usage:

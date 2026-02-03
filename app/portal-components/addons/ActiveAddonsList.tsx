@@ -5,6 +5,7 @@ import { Addon, DeliveryMethod } from './types';
 import { ActiveAddonItem } from './ActiveAddonItem';
 import { SupervisedTransferModal } from './SupervisedTransferModal';
 import { MessageTakingModal } from './MessageTakingModal';
+import { PhoneNumberModal } from './PhoneNumberModal';
 
 interface ActiveAddonsListProps {
   addons: Addon[];
@@ -23,6 +24,8 @@ export function ActiveAddonsList({
 }: ActiveAddonsListProps) {
   const [supervisedTransferOpen, setSupervisedTransferOpen] = useState(false);
   const [messageTakingOpen, setMessageTakingOpen] = useState(false);
+  const [tollFreeOpen, setTollFreeOpen] = useState(false);
+  const [additionalPhoneOpen, setAdditionalPhoneOpen] = useState(false);
   const [currentAddon, setCurrentAddon] = useState<Addon | null>(null);
 
   const filteredAddons = showOnlyActive
@@ -38,6 +41,12 @@ export function ActiveAddonsList({
         break;
       case 'message-taking':
         setMessageTakingOpen(true);
+        break;
+      case 'toll-free':
+        setTollFreeOpen(true);
+        break;
+      case 'additional-phone':
+        setAdditionalPhoneOpen(true);
         break;
       default:
         break;
@@ -67,6 +76,20 @@ export function ActiveAddonsList({
       onAddonUpdate(currentAddon.id, {
         ...currentAddon.config,
         messageTaking: { deliveryMethod, termsAccepted },
+      });
+    }
+    setCurrentAddon(null);
+  };
+
+  const handlePhoneNumberSave = (selectedNumber: string) => {
+    if (currentAddon && onAddonUpdate) {
+      onAddonUpdate(currentAddon.id, {
+        ...currentAddon.config,
+        phoneNumber: {
+          ...currentAddon.config?.phoneNumber,
+          selectedNumber,
+          availableNumbers: currentAddon.config?.phoneNumber?.availableNumbers || [],
+        },
       });
     }
     setCurrentAddon(null);
@@ -111,6 +134,30 @@ export function ActiveAddonsList({
         initialDeliveryMethod={currentAddon?.config?.messageTaking?.deliveryMethod}
         initialTermsAccepted={currentAddon?.config?.messageTaking?.termsAccepted}
         onSave={handleMessageTakingSave}
+      />
+
+      <PhoneNumberModal
+        isOpen={tollFreeOpen}
+        onClose={() => {
+          setTollFreeOpen(false);
+          setCurrentAddon(null);
+        }}
+        title="Select Toll-Free Number"
+        availableNumbers={currentAddon?.config?.phoneNumber?.availableNumbers || []}
+        selectedNumber={currentAddon?.config?.phoneNumber?.selectedNumber}
+        onSave={handlePhoneNumberSave}
+      />
+
+      <PhoneNumberModal
+        isOpen={additionalPhoneOpen}
+        onClose={() => {
+          setAdditionalPhoneOpen(false);
+          setCurrentAddon(null);
+        }}
+        title="Select Additional Phone Number"
+        availableNumbers={currentAddon?.config?.phoneNumber?.availableNumbers || []}
+        selectedNumber={currentAddon?.config?.phoneNumber?.selectedNumber}
+        onSave={handlePhoneNumberSave}
       />
     </div>
   );

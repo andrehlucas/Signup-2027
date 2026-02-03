@@ -6,12 +6,11 @@ export const sampleAddons: Addon[] = [
     name: 'Toll-Free',
     status: 'active',
     actionType: 'edit',
-    description: 'Select a number from offered options',
-    modalType: 'phone-number',
+    modalType: 'toll-free',
     config: {
       phoneNumber: {
         selectedNumber: null,
-        availableNumbers: [],
+        availableNumbers: ['1-800-555-0101', '1-800-555-0102', '1-800-555-0103', '1-888-555-0201', '1-888-555-0202'],
       },
     },
   },
@@ -20,12 +19,11 @@ export const sampleAddons: Addon[] = [
     name: 'Additional Phone Number',
     status: 'active',
     actionType: 'edit',
-    description: 'Select a number from offered options',
-    modalType: 'phone-number',
+    modalType: 'additional-phone',
     config: {
       phoneNumber: {
         selectedNumber: null,
-        availableNumbers: [],
+        availableNumbers: ['(212) 555-0101', '(212) 555-0102', '(310) 555-0201', '(310) 555-0202', '(415) 555-0301'],
       },
     },
   },
@@ -119,7 +117,6 @@ export const sampleAddons: Addon[] = [
     name: 'Supervised Transfer',
     status: 'active',
     actionType: 'edit',
-    description: 'Select a number from offered options',
     modalType: 'supervised-transfer',
     config: {
       supervisedTransfer: {

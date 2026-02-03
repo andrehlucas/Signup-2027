@@ -549,29 +549,24 @@ function ActiveAddonItem({ addon, onEdit, onViewInstructions }) {
         "data-testid": `addon-item-${addon.id}`,
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex-1",
+                className: "flex items-center flex-1",
                 children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: "w-2 h-2 rounded-full bg-green-500 mr-2 flex-shrink-0",
+                        "data-testid": `addon-status-dot-${addon.id}`
+                    }, void 0, false, {
+                        fileName: "[project]/app/portal-components/addons/ActiveAddonItem.tsx",
+                        lineNumber: 31,
+                        columnNumber: 9
+                    }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                         className: "text-sm text-gray-800",
                         "data-testid": `addon-name-${addon.id}`,
                         children: addon.name
                     }, void 0, false, {
                         fileName: "[project]/app/portal-components/addons/ActiveAddonItem.tsx",
-                        lineNumber: 31,
-                        columnNumber: 9
-                    }, this),
-                    addon.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "text-sm text-gray-500 ml-1",
-                        "data-testid": `addon-description-${addon.id}`,
-                        children: [
-                            "(",
-                            addon.description,
-                            ")"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/portal-components/addons/ActiveAddonItem.tsx",
                         lineNumber: 35,
-                        columnNumber: 11
+                        columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
@@ -588,7 +583,7 @@ function ActiveAddonItem({ addon, onEdit, onViewInstructions }) {
                 children: addon.actionType === 'edit' ? 'Edit' : 'View Instructions'
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/addons/ActiveAddonItem.tsx",
-                lineNumber: 40,
+                lineNumber: 39,
                 columnNumber: 7
             }, this)
         ]
@@ -1188,6 +1183,8 @@ function ActiveAddonsList({ addons, onAddonUpdate, onViewInstructions, title = '
     _s();
     const [supervisedTransferOpen, setSupervisedTransferOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [messageTakingOpen, setMessageTakingOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [tollFreeOpen, setTollFreeOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [additionalPhoneOpen, setAdditionalPhoneOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [currentAddon, setCurrentAddon] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const filteredAddons = showOnlyActive ? addons.filter((addon)=>addon.status === 'active') : addons;
     const handleEdit = (addon)=>{
@@ -1198,6 +1195,12 @@ function ActiveAddonsList({ addons, onAddonUpdate, onViewInstructions, title = '
                 break;
             case 'message-taking':
                 setMessageTakingOpen(true);
+                break;
+            case 'toll-free':
+                setTollFreeOpen(true);
+                break;
+            case 'additional-phone':
+                setAdditionalPhoneOpen(true);
                 break;
             default:
                 break;
@@ -1233,6 +1236,19 @@ function ActiveAddonsList({ addons, onAddonUpdate, onViewInstructions, title = '
         }
         setCurrentAddon(null);
     };
+    const handlePhoneNumberSave = (selectedNumber)=>{
+        if (currentAddon && onAddonUpdate) {
+            onAddonUpdate(currentAddon.id, {
+                ...currentAddon.config,
+                phoneNumber: {
+                    ...currentAddon.config?.phoneNumber,
+                    selectedNumber,
+                    availableNumbers: currentAddon.config?.phoneNumber?.availableNumbers || []
+                }
+            });
+        }
+        setCurrentAddon(null);
+    };
     if (filteredAddons.length === 0) {
         return null;
     }
@@ -1246,7 +1262,7 @@ function ActiveAddonsList({ addons, onAddonUpdate, onViewInstructions, title = '
                 children: title
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/addons/ActiveAddonsList.tsx",
-                lineNumber: 81,
+                lineNumber: 104,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1257,12 +1273,12 @@ function ActiveAddonsList({ addons, onAddonUpdate, onViewInstructions, title = '
                         onViewInstructions: handleViewInstructions
                     }, addon.id, false, {
                         fileName: "[project]/app/portal-components/addons/ActiveAddonsList.tsx",
-                        lineNumber: 86,
+                        lineNumber: 109,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/addons/ActiveAddonsList.tsx",
-                lineNumber: 84,
+                lineNumber: 107,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$portal$2d$components$2f$addons$2f$SupervisedTransferModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SupervisedTransferModal"], {
@@ -1275,7 +1291,7 @@ function ActiveAddonsList({ addons, onAddonUpdate, onViewInstructions, title = '
                 onSave: handleSupervisedTransferSave
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/addons/ActiveAddonsList.tsx",
-                lineNumber: 95,
+                lineNumber: 118,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$portal$2d$components$2f$addons$2f$MessageTakingModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MessageTakingModal"], {
@@ -1289,17 +1305,17 @@ function ActiveAddonsList({ addons, onAddonUpdate, onViewInstructions, title = '
                 onSave: handleMessageTakingSave
             }, void 0, false, {
                 fileName: "[project]/app/portal-components/addons/ActiveAddonsList.tsx",
-                lineNumber: 105,
+                lineNumber: 128,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/portal-components/addons/ActiveAddonsList.tsx",
-        lineNumber: 80,
+        lineNumber: 103,
         columnNumber: 5
     }, this);
 }
-_s(ActiveAddonsList, "osbTgvAWltntLFfE8dxPeaWWPX8=");
+_s(ActiveAddonsList, "TdcWny+eUMtyF/eLedTVAjfiFb8=");
 _c = ActiveAddonsList;
 var _c;
 __turbopack_context__.k.register(_c, "ActiveAddonsList");
@@ -1320,12 +1336,17 @@ const sampleAddons = [
         name: 'Toll-Free',
         status: 'active',
         actionType: 'edit',
-        description: 'Select a number from offered options',
-        modalType: 'phone-number',
+        modalType: 'toll-free',
         config: {
             phoneNumber: {
                 selectedNumber: null,
-                availableNumbers: []
+                availableNumbers: [
+                    '1-800-555-0101',
+                    '1-800-555-0102',
+                    '1-800-555-0103',
+                    '1-888-555-0201',
+                    '1-888-555-0202'
+                ]
             }
         }
     },
@@ -1334,12 +1355,17 @@ const sampleAddons = [
         name: 'Additional Phone Number',
         status: 'active',
         actionType: 'edit',
-        description: 'Select a number from offered options',
-        modalType: 'phone-number',
+        modalType: 'additional-phone',
         config: {
             phoneNumber: {
                 selectedNumber: null,
-                availableNumbers: []
+                availableNumbers: [
+                    '(212) 555-0101',
+                    '(212) 555-0102',
+                    '(310) 555-0201',
+                    '(310) 555-0202',
+                    '(415) 555-0301'
+                ]
             }
         }
     },
@@ -1433,7 +1459,6 @@ const sampleAddons = [
         name: 'Supervised Transfer',
         status: 'active',
         actionType: 'edit',
-        description: 'Select a number from offered options',
         modalType: 'supervised-transfer',
         config: {
             supervisedTransfer: {

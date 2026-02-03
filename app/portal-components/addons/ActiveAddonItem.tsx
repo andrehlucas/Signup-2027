@@ -27,15 +27,14 @@ export function ActiveAddonItem({
       className="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0"
       data-testid={`addon-item-${addon.id}`}
     >
-      <div className="flex-1">
+      <div className="flex items-center flex-1">
+        <span 
+          className="w-2 h-2 rounded-full bg-green-500 mr-2 flex-shrink-0" 
+          data-testid={`addon-status-dot-${addon.id}`}
+        />
         <span className="text-sm text-gray-800" data-testid={`addon-name-${addon.id}`}>
           {addon.name}
         </span>
-        {addon.description && (
-          <span className="text-sm text-gray-500 ml-1" data-testid={`addon-description-${addon.id}`}>
-            ({addon.description})
-          </span>
-        )}
       </div>
       <Button
         variant="link"

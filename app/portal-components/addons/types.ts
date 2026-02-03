@@ -23,7 +23,7 @@ export interface Addon {
   actionType: AddonActionType;
   description?: string;
   config?: AddonConfig;
-  modalType?: 'supervised-transfer' | 'message-taking' | 'phone-number' | 'extension' | 'none';
+  modalType?: 'supervised-transfer' | 'message-taking' | 'toll-free' | 'additional-phone' | 'extension' | 'none';
   instructionsUrl?: string;
 }
 
