@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { CreditCard, Download, Plus, Trash2, Check, AlertCircle, FileText, Calendar } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
@@ -64,6 +65,7 @@ function getCardIcon(type: PaymentMethod['type']) {
 }
 
 export default function BillingPage() {
+  const router = useRouter();
   const { toast } = useToast();
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(initialPaymentMethods);
@@ -214,7 +216,11 @@ export default function BillingPage() {
           </div>
 
           <div className="mt-4 pt-4 border-t border-gray-100">
-            <Button variant="outline" data-testid="button-change-plan">
+            <Button
+              variant="outline"
+              onClick={() => router.push('/billing/plans')}
+              data-testid="button-change-plan"
+            >
               Change Plan
             </Button>
           </div>
