@@ -3,5 +3,6 @@
   "/billing/page": "app/billing/page.js",
   "/billing/plans/page": "app/billing/plans/page.js",
   "/office/page": "app/office/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/phone/page": "app/phone/page.js"
 }
