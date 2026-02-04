@@ -482,7 +482,7 @@ export default function AccountPage() {
       </div>
 
       <Dialog open={emailModalOpen} onOpenChange={handleEmailModalClose}>
-        <DialogContent className="sm:max-w-md" data-testid="modal-change-email">
+        <DialogContent className="sm:max-w-lg" data-testid="modal-change-email">
           <DialogHeader>
             <DialogTitle>Update Email Address</DialogTitle>
           </DialogHeader>
