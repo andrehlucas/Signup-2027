@@ -1538,13 +1538,6 @@ const sampleAddons = [
         actionType: 'view',
         modalType: 'none',
         instructionsUrl: '#texting-instructions'
-    },
-    {
-        id: 'additional-extensions',
-        name: 'Additional Extensions',
-        status: 'active',
-        actionType: 'edit',
-        modalType: 'extension'
     }
 ];
 }),
