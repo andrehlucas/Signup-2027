@@ -1394,7 +1394,7 @@ __turbopack_context__.s([
     ()=>featureFlags
 ]);
 const featureFlags = {
-    mailxEnabled: ("TURBOPACK compile-time value", "false") === 'true'
+    mailxEnabled: ("TURBOPACK compile-time value", "true") === 'true'
 };
 }),
 "[project]/app/office/page.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {

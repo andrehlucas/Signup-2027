@@ -161,6 +161,15 @@ class MemStorage {
     async getLocation(id) {
         return this.locations.get(id);
     }
+    async createLocation(location) {
+        const id = Math.random().toString(36).substr(2, 9);
+        const newLocation = {
+            id,
+            ...location
+        };
+        this.locations.set(id, newLocation);
+        return newLocation;
+    }
     async getPendingMail() {
         return Array.from(this.mailItems.values()).filter((m)=>m.status === 'pending');
     }

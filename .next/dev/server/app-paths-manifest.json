@@ -1,8 +1,8 @@
 {
   "/add-location/page": "app/add-location/page.js",
+  "/api/mail-settings/route": "app/api/mail-settings/route.js",
+  "/api/mail/route": "app/api/mail/route.js",
   "/billing/page": "app/billing/page.js",
-  "/billing/plans/page": "app/billing/plans/page.js",
   "/office/page": "app/office/page.js",
-  "/page": "app/page.js",
-  "/phone/page": "app/phone/page.js"
+  "/page": "app/page.js"
 }
