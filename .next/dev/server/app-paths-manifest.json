@@ -1,3 +1,6 @@
 {
-  "/billing/page": "app/billing/page.js"
+  "/add-location/page": "app/add-location/page.js",
+  "/billing/page": "app/billing/page.js",
+  "/office/page": "app/office/page.js",
+  "/page": "app/page.js"
 }
