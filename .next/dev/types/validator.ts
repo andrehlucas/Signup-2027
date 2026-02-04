@@ -137,6 +137,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../app/api/locations/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/locations">> = Specific
+  const handler = {} as typeof import("../../../app/api/locations/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../app/api/mail-settings/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/mail-settings">> = Specific
