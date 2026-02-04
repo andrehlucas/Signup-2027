@@ -44,6 +44,27 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  app.post("/api/locations", async (req, res) => {
+    try {
+      const { name, address, imageUrl } = req.body as { name: string; address: string; imageUrl?: string };
+      
+      if (!name || !address) {
+        res.status(400).json({ message: "Name and address are required" });
+        return;
+      }
+
+      const newLocation = await storage.createLocation({
+        name,
+        address,
+        imageUrl: imageUrl || null,
+      });
+      res.status(201).json(newLocation);
+    } catch (error) {
+      console.error("Error creating location:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.get("/api/mail", async (_req, res) => {
     try {
       const pendingMail = await storage.getPendingMail();

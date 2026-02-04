@@ -3694,6 +3694,11 @@ body {
   background-color: hsl(var(--primary));
 }
 
+.focus\:text-\[\#36bff9\]:focus {
+  --tw-text-opacity: 1;
+  color: rgb(54 191 249 / var(--tw-text-opacity, 1));
+}
+
 .focus\:text-accent-foreground:focus {
   color: hsl(var(--accent-foreground));
 }

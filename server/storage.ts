@@ -7,6 +7,7 @@ export interface IStorage {
   
   getLocations(): Promise<Location[]>;
   getLocation(id: string): Promise<Location | undefined>;
+  createLocation(location: Omit<Location, 'id'>): Promise<Location>;
 
   getPendingMail(): Promise<Mail[]>;
   getMail(id: string): Promise<Mail | undefined>;
@@ -122,6 +123,13 @@ export class MemStorage implements IStorage {
 
   async getLocation(id: string): Promise<Location | undefined> {
     return this.locations.get(id);
+  }
+
+  async createLocation(location: Omit<Location, 'id'>): Promise<Location> {
+    const id = Math.random().toString(36).substr(2, 9);
+    const newLocation: Location = { id, ...location };
+    this.locations.set(id, newLocation);
+    return newLocation;
   }
 
   async getPendingMail(): Promise<Mail[]> {

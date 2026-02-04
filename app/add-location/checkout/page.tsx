@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
@@ -31,6 +32,7 @@ function getBundleIncludedAddons(bundle: Bundle): { name: string; label: string 
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
   const { order, removeAddon, setExtensionCount, setAgreementAccepted, getCartTotal } = useOrder();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -69,9 +71,34 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
     
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    router.push('/add-location/thank-you');
+    try {
+      const response = await fetch('/api/locations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: order.location!.name,
+          address: `${order.location!.address}, ${order.location!.city}, ${order.location!.stateCode} ${order.location!.zipCode}`,
+          imageUrl: null,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create location');
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['/api/locations'] });
+      
+      router.push('/add-location/thank-you');
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to complete your order. Please try again.',
+        variant: 'destructive',
+      });
+      setIsProcessing(false);
+    }
   };
 
   if (!order.location || !order.bundle || !order.phoneNumber) {
