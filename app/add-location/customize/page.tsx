@@ -40,7 +40,7 @@ function getTierColor(tier: string) {
 
 export default function CustomizePage() {
   const router = useRouter();
-  const { order, setBundle, setPhoneNumber, addAddon, removeAddon, getCartTotal } = useOrder();
+  const { order, setBundle, setPhoneNumber, addAddon, removeAddon, setExtensionCount, getCartTotal } = useOrder();
   const [selectedBundle, setSelectedBundle] = useState<Bundle | null>(order.bundle);
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
@@ -156,11 +156,10 @@ export default function CustomizePage() {
             {bundles.map((bundle) => (
               <div
                 key={bundle.id}
-                onClick={() => handleBundleSelect(bundle)}
-                className={`bg-white rounded-xl border-2 overflow-hidden flex flex-col cursor-pointer transition-all ${
+                className={`bg-white rounded-xl border-2 overflow-hidden flex flex-col transition-all ${
                   selectedBundle?.id === bundle.id
                     ? 'border-[#36bff9] ring-2 ring-[#36bff9] ring-opacity-30'
-                    : 'border-gray-200 hover:border-gray-300'
+                    : 'border-gray-200'
                 }`}
                 data-testid={`bundle-card-${bundle.id}`}
               >
@@ -168,7 +167,7 @@ export default function CustomizePage() {
                   {bundle.badge}
                 </div>
 
-                <div className="p-4">
+                <div className="p-4 flex flex-col flex-1">
                   <div className="mb-3">
                     <h3 className="text-base font-medium text-gray-900">
                       {bundle.name}
@@ -188,7 +187,7 @@ export default function CustomizePage() {
                     <span className="text-gray-500 text-sm ml-1">/mo</span>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-2 flex-1">
                     {Object.entries(bundle.features).map(([key, enabled]) => (
                       <div key={key} className="flex items-center gap-2 text-sm">
                         {enabled ? (
@@ -206,6 +205,25 @@ export default function CustomizePage() {
                       </div>
                     ))}
                   </div>
+
+                  <Button
+                    onClick={() => handleBundleSelect(bundle)}
+                    className={`mt-4 w-full ${
+                      selectedBundle?.id === bundle.id
+                        ? 'bg-green-600 hover:bg-green-700'
+                        : 'bg-[#36bff9] hover:bg-[#2aa8e0]'
+                    }`}
+                    data-testid={`button-select-bundle-${bundle.id}`}
+                  >
+                    {selectedBundle?.id === bundle.id ? (
+                      <>
+                        <Check className="h-4 w-4 mr-2" />
+                        Selected
+                      </>
+                    ) : (
+                      'Select this bundle'
+                    )}
+                  </Button>
                 </div>
               </div>
             ))}
@@ -254,7 +272,7 @@ export default function CustomizePage() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {availableAddons.map((addon) => {
+              {availableAddons.filter(addon => addon.id !== 'additional-extensions').map((addon) => {
                 const isIncluded = isAddonIncluded(addon);
                 const isInCart = order.addons.find(a => a.id === addon.id);
 
@@ -307,6 +325,52 @@ export default function CustomizePage() {
                   </div>
                 );
               })}
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <div
+                className={`rounded-lg border p-4 ${
+                  order.extensionCount > 0 ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 bg-white'
+                }`}
+                data-testid="addon-card-additional-extensions"
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-medium text-gray-900">Additional Extensions</h4>
+                  <span className="font-semibold text-gray-900">$10/mo each</span>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Add more extensions to your phone system. Further customization available from the Phone System page after setup.
+                </p>
+                <div className="flex items-center gap-3">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setExtensionCount(order.extensionCount - 1)}
+                    disabled={order.extensionCount === 0}
+                    className="h-8 w-8 p-0"
+                    data-testid="button-extension-decrease"
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                  <span className="font-medium text-gray-900 min-w-[2rem] text-center" data-testid="extension-count">
+                    {order.extensionCount}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setExtensionCount(order.extensionCount + 1)}
+                    className="h-8 w-8 p-0"
+                    data-testid="button-extension-increase"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                  {order.extensionCount > 0 && (
+                    <span className="text-sm text-gray-600 ml-2">
+                      = ${order.extensionCount * 10}/mo
+                    </span>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         )}

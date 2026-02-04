@@ -10,10 +10,11 @@ interface OrderContextType {
   setPhoneNumber: (phoneNumber: PhoneNumber | null) => void;
   addAddon: (addon: Addon) => void;
   removeAddon: (addonId: string) => void;
+  setExtensionCount: (count: number) => void;
   setAgreementAccepted: (accepted: boolean) => void;
   clearOrder: () => void;
   getCartTotal: () => { monthly: number; oneTime: number };
-  getCartItems: () => Array<{ id: string; name: string; price: number; type: string }>;
+  getCartItems: () => Array<{ id: string; name: string; price: number; type: string; quantity?: number }>;
 }
 
 const initialOrder: OrderState = {
@@ -21,6 +22,7 @@ const initialOrder: OrderState = {
   bundle: null,
   phoneNumber: null,
   addons: [],
+  extensionCount: 0,
   agreementAccepted: false,
 };
 
@@ -55,6 +57,10 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const setExtensionCount = (count: number) => {
+    setOrder(prev => ({ ...prev, extensionCount: Math.max(0, count) }));
+  };
+
   const setAgreementAccepted = (accepted: boolean) => {
     setOrder(prev => ({ ...prev, agreementAccepted: accepted }));
   };
@@ -79,11 +85,15 @@ export function OrderProvider({ children }: { children: ReactNode }) {
       }
     });
 
+    if (order.extensionCount > 0) {
+      monthly += order.extensionCount * 10;
+    }
+
     return { monthly, oneTime };
   };
 
   const getCartItems = () => {
-    const items: Array<{ id: string; name: string; price: number; type: string }> = [];
+    const items: Array<{ id: string; name: string; price: number; type: string; quantity?: number }> = [];
 
     if (order.location) {
       items.push({
@@ -112,6 +122,16 @@ export function OrderProvider({ children }: { children: ReactNode }) {
       });
     });
 
+    if (order.extensionCount > 0) {
+      items.push({
+        id: 'additional-extensions',
+        name: 'Additional Extensions',
+        price: order.extensionCount * 10,
+        type: 'addon',
+        quantity: order.extensionCount,
+      });
+    }
+
     return items;
   };
 
@@ -124,6 +144,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         setPhoneNumber,
         addAddon,
         removeAddon,
+        setExtensionCount,
         setAgreementAccepted,
         clearOrder,
         getCartTotal,

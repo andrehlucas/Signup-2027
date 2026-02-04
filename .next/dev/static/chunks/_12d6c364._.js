@@ -392,7 +392,7 @@ function ThankYouPage() {
                                     lineNumber: 113,
                                     columnNumber: 15
                                 }, this),
-                                order.addons.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                (order.addons.length > 0 || order.extensionCount > 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "pt-4 border-t border-gray-100",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -405,15 +405,29 @@ function ThankYouPage() {
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex flex-wrap gap-2",
-                                            children: order.addons.map((addon)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            children: [
+                                                order.addons.map((addon)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-sm text-gray-700",
+                                                        children: addon.name
+                                                    }, addon.id, false, {
+                                                        fileName: "[project]/app/add-location/thank-you/page.tsx",
+                                                        lineNumber: 129,
+                                                        columnNumber: 21
+                                                    }, this)),
+                                                order.extensionCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-sm text-gray-700",
-                                                    children: addon.name
-                                                }, addon.id, false, {
+                                                    children: [
+                                                        "Additional Extensions (",
+                                                        order.extensionCount,
+                                                        ")"
+                                                    ]
+                                                }, void 0, true, {
                                                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                                    lineNumber: 129,
+                                                    lineNumber: 137,
                                                     columnNumber: 21
-                                                }, this))
-                                        }, void 0, false, {
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
                                             fileName: "[project]/app/add-location/thank-you/page.tsx",
                                             lineNumber: 127,
                                             columnNumber: 17
@@ -445,7 +459,7 @@ function ThankYouPage() {
                             children: "Next Steps"
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                            lineNumber: 143,
+                            lineNumber: 148,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -453,7 +467,7 @@ function ThankYouPage() {
                             children: "Complete these steps to get the most out of your new virtual office location."
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                            lineNumber: 144,
+                            lineNumber: 149,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -472,12 +486,12 @@ function ThankYouPage() {
                                                 className: "h-5 w-5 text-gray-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                                lineNumber: 160,
+                                                lineNumber: 165,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                            lineNumber: 159,
+                                            lineNumber: 164,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -488,7 +502,7 @@ function ThankYouPage() {
                                                     children: step.title
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                                    lineNumber: 163,
+                                                    lineNumber: 168,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -496,7 +510,7 @@ function ThankYouPage() {
                                                     children: step.description
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                                    lineNumber: 164,
+                                                    lineNumber: 169,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -507,36 +521,36 @@ function ThankYouPage() {
                                                             className: "h-3 w-3"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                                            lineNumber: 167,
+                                                            lineNumber: 172,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                                    lineNumber: 165,
+                                                    lineNumber: 170,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                            lineNumber: 162,
+                                            lineNumber: 167,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, step.title, true, {
                                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                    lineNumber: 150,
+                                    lineNumber: 155,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                            lineNumber: 148,
+                            lineNumber: 153,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                    lineNumber: 142,
+                    lineNumber: 147,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -548,7 +562,7 @@ function ThankYouPage() {
                             children: "Onboarding Support"
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                            lineNumber: 176,
+                            lineNumber: 181,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -556,7 +570,7 @@ function ThankYouPage() {
                             children: "Our team will reach out within 24 hours to help you get started. In the meantime, you can explore your new dashboard or watch our tutorial videos."
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                            lineNumber: 177,
+                            lineNumber: 182,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -572,7 +586,7 @@ function ThankYouPage() {
                                     children: "Watch Tutorials"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                    lineNumber: 181,
+                                    lineNumber: 186,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -585,19 +599,19 @@ function ThankYouPage() {
                                     children: "Contact Support"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                    lineNumber: 191,
+                                    lineNumber: 196,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                            lineNumber: 180,
+                            lineNumber: 185,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                    lineNumber: 175,
+                    lineNumber: 180,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -611,7 +625,7 @@ function ThankYouPage() {
                             children: "Set Up My Office"
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                            lineNumber: 205,
+                            lineNumber: 210,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -624,19 +638,19 @@ function ThankYouPage() {
                                     className: "h-4 w-4 ml-2"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                                    lineNumber: 219,
+                                    lineNumber: 224,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/thank-you/page.tsx",
-                            lineNumber: 213,
+                            lineNumber: 218,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/thank-you/page.tsx",
-                    lineNumber: 204,
+                    lineNumber: 209,
                     columnNumber: 9
                 }, this)
             ]

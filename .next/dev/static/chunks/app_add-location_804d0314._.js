@@ -19,6 +19,7 @@ const initialOrder = {
     bundle: null,
     phoneNumber: null,
     addons: [],
+    extensionCount: 0,
     agreementAccepted: false
 };
 const OrderContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(undefined);
@@ -61,6 +62,12 @@ function OrderProvider({ children }) {
                 addons: prev.addons.filter((a)=>a.id !== addonId)
             }));
     };
+    const setExtensionCount = (count)=>{
+        setOrder((prev)=>({
+                ...prev,
+                extensionCount: Math.max(0, count)
+            }));
+    };
     const setAgreementAccepted = (accepted)=>{
         setOrder((prev)=>({
                 ...prev,
@@ -83,6 +90,9 @@ function OrderProvider({ children }) {
                 oneTime += addon.price;
             }
         });
+        if (order.extensionCount > 0) {
+            monthly += order.extensionCount * 10;
+        }
         return {
             monthly,
             oneTime
@@ -114,6 +124,15 @@ function OrderProvider({ children }) {
                 type: 'addon'
             });
         });
+        if (order.extensionCount > 0) {
+            items.push({
+                id: 'additional-extensions',
+                name: 'Additional Extensions',
+                price: order.extensionCount * 10,
+                type: 'addon',
+                quantity: order.extensionCount
+            });
+        }
         return items;
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(OrderContext.Provider, {
@@ -124,6 +143,7 @@ function OrderProvider({ children }) {
             setPhoneNumber,
             addAddon,
             removeAddon,
+            setExtensionCount,
             setAgreementAccepted,
             clearOrder,
             getCartTotal,
@@ -132,7 +152,7 @@ function OrderProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/app/add-location/context.tsx",
-        lineNumber: 119,
+        lineNumber: 139,
         columnNumber: 5
     }, this);
 }

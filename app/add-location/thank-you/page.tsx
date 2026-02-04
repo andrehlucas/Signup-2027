@@ -121,7 +121,7 @@ export default function ThankYouPage() {
               </div>
             )}
 
-            {order.addons.length > 0 && (
+            {(order.addons.length > 0 || order.extensionCount > 0) && (
               <div className="pt-4 border-t border-gray-100">
                 <p className="text-sm font-medium text-gray-700 mb-2">Add-ons included:</p>
                 <div className="flex flex-wrap gap-2">
@@ -133,6 +133,11 @@ export default function ThankYouPage() {
                       {addon.name}
                     </span>
                   ))}
+                  {order.extensionCount > 0 && (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-sm text-gray-700">
+                      Additional Extensions ({order.extensionCount})
+                    </span>
+                  )}
                 </div>
               </div>
             )}

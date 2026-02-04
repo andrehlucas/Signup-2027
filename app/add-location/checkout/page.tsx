@@ -12,7 +12,7 @@ import { useToast } from '@/app/hooks/use-toast';
 export default function CheckoutPage() {
   const router = useRouter();
   const { toast } = useToast();
-  const { order, removeAddon, setAgreementAccepted, getCartTotal } = useOrder();
+  const { order, removeAddon, setExtensionCount, setAgreementAccepted, getCartTotal } = useOrder();
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
@@ -44,9 +44,8 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
     
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
-    setIsProcessing(false);
     router.push('/add-location/thank-you');
   };
 
@@ -141,7 +140,7 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                {order.addons.length > 0 && (
+                {(order.addons.length > 0 || order.extensionCount > 0) && (
                   <div className="pt-2">
                     <p className="font-medium text-gray-900 mb-3 flex items-center gap-2">
                       <Plus className="h-4 w-4" />
@@ -168,6 +167,26 @@ export default function CheckoutPage() {
                           </div>
                         </div>
                       ))}
+                      {order.extensionCount > 0 && (
+                        <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                          <div>
+                            <p className="font-medium text-gray-900">Additional Extensions</p>
+                            <p className="text-sm text-gray-500">{order.extensionCount} extension(s) @ $10/mo each</p>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <p className="font-semibold text-gray-900">${order.extensionCount * 10}/mo</p>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                              onClick={() => setExtensionCount(0)}
+                              data-testid="button-remove-extensions"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}

@@ -365,7 +365,31 @@ const availableAddons = [
         id: 'toll-free',
         name: 'Toll Free Number',
         description: 'Get a professional 1-800 number for your business',
-        price: 15,
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'additional-phone',
+        name: 'Additional Phone Number',
+        description: 'Add an extra local phone number to your account',
+        price: 25,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'call-log',
+        name: 'Call Logs',
+        description: 'Detailed logs of all incoming and outgoing calls',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'call-recording',
+        name: 'Call Recording',
+        description: 'Record incoming and outgoing calls for your records',
+        price: 10,
         billingCycle: 'monthly',
         category: 'phone'
     },
@@ -378,6 +402,70 @@ const availableAddons = [
         category: 'phone'
     },
     {
+        id: 'conf-bridge',
+        name: 'Conference Bridge',
+        description: 'Host conference calls with multiple participants',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'dba',
+        name: 'DBA',
+        description: 'Register a "Doing Business As" name for your company',
+        price: 59,
+        billingCycle: 'monthly',
+        category: 'business'
+    },
+    {
+        id: 'fax-out',
+        name: 'Fax Out',
+        description: 'Send faxes from your business number',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'int-transfer',
+        name: 'International Transfer',
+        description: 'Transfer calls to international numbers',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'ivr',
+        name: 'IVR',
+        description: 'Interactive Voice Response system for call routing',
+        price: 25,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'message-taking',
+        name: 'Message Taking',
+        description: 'Professional message taking service',
+        price: 50,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'message-transcription',
+        name: 'Message Transcription',
+        description: 'Voicemail messages transcribed to text',
+        price: 5,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'supervised-transfer',
+        name: 'Supervised Transfer',
+        description: 'Announce callers before transferring',
+        price: 50,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
         id: 'texting',
         name: 'Texting',
         description: 'Send and receive text messages from your business number',
@@ -386,50 +474,10 @@ const availableAddons = [
         category: 'phone'
     },
     {
-        id: 'audio-conference',
-        name: 'Audio Conference Bridge',
-        description: 'Host conference calls with multiple participants',
-        price: 25,
-        billingCycle: 'monthly',
-        category: 'phone'
-    },
-    {
-        id: 'additional-extension',
-        name: 'Additional Extension',
-        description: 'Add more extensions or voice boxes to your account',
+        id: 'additional-extensions',
+        name: 'Additional Extensions',
+        description: 'Add more extensions to your phone system. Further customization available from Phone System page.',
         price: 10,
-        billingCycle: 'monthly',
-        category: 'phone'
-    },
-    {
-        id: 'call-recording',
-        name: 'Call Recording',
-        description: 'Record incoming and outgoing calls for your records',
-        price: 15,
-        billingCycle: 'monthly',
-        category: 'phone'
-    },
-    {
-        id: 'call-log',
-        name: 'Incoming Call Log Feature',
-        description: 'Detailed logs of all incoming calls',
-        price: 10,
-        billingCycle: 'monthly',
-        category: 'phone'
-    },
-    {
-        id: 'supervised-transfer',
-        name: 'Supervised Call Transfer',
-        description: 'Announce callers before transferring',
-        price: 15,
-        billingCycle: 'monthly',
-        category: 'phone'
-    },
-    {
-        id: 'message-taking',
-        name: 'Message Taking',
-        description: 'Professional message taking service',
-        price: 20,
         billingCycle: 'monthly',
         category: 'phone'
     }
@@ -686,7 +734,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$map$2d$pin$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MapPin$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/map-pin.js [app-client] (ecmascript) <export default as MapPin>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/star.js [app-client] (ecmascript) <export default as Star>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/building-2.js [app-client] (ecmascript) <export default as Building2>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-client] (ecmascript) <export default as ChevronRight>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/components/ui/select.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$components$2f$ProgressIndicator$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/add-location/components/ProgressIndicator.tsx [app-client] (ecmascript)");
@@ -709,7 +756,6 @@ function LocationSelectionPage() {
     const { setLocation } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useOrder"])();
     const [selectedState, setSelectedState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [selectedCity, setSelectedCity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
-    const [selectedLocation, setSelectedLocation] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const states = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "LocationSelectionPage.useMemo[states]": ()=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getStates"])()
     }["LocationSelectionPage.useMemo[states]"], []);
@@ -726,20 +772,13 @@ function LocationSelectionPage() {
     const handleStateChange = (state)=>{
         setSelectedState(state);
         setSelectedCity('');
-        setSelectedLocation(null);
     };
     const handleCityChange = (city)=>{
         setSelectedCity(city);
-        setSelectedLocation(null);
     };
     const handleLocationSelect = (location)=>{
-        setSelectedLocation(location);
-    };
-    const handleContinue = ()=>{
-        if (selectedLocation) {
-            setLocation(selectedLocation);
-            router.push('/add-location/customize');
-        }
+        setLocation(location);
+        router.push('/add-location/customize');
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "min-h-screen bg-gray-50 p-4 lg:p-8",
@@ -755,14 +794,14 @@ function LocationSelectionPage() {
                         className: "h-4 w-4 mr-2"
                     }, void 0, false, {
                         fileName: "[project]/app/add-location/page.tsx",
-                        lineNumber: 70,
+                        lineNumber: 61,
                         columnNumber: 9
                     }, this),
                     "Back to Dashboard"
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/add-location/page.tsx",
-                lineNumber: 64,
+                lineNumber: 55,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -774,12 +813,12 @@ function LocationSelectionPage() {
                             currentStep: 1
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/page.tsx",
-                            lineNumber: 76,
+                            lineNumber: 67,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/add-location/page.tsx",
-                        lineNumber: 75,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -791,7 +830,7 @@ function LocationSelectionPage() {
                                 children: "Add New Location"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 80,
+                                lineNumber: 71,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -799,13 +838,13 @@ function LocationSelectionPage() {
                                 children: "Expand your business with a new prestigious address"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 83,
+                                lineNumber: 74,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/page.tsx",
-                        lineNumber: 79,
+                        lineNumber: 70,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -816,7 +855,7 @@ function LocationSelectionPage() {
                                 children: "Select Your Location"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 89,
+                                lineNumber: 80,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -829,7 +868,7 @@ function LocationSelectionPage() {
                                                 children: "State"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/page.tsx",
-                                                lineNumber: 93,
+                                                lineNumber: 84,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -842,12 +881,12 @@ function LocationSelectionPage() {
                                                             placeholder: "Select a state"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/page.tsx",
-                                                            lineNumber: 98,
+                                                            lineNumber: 89,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/page.tsx",
-                                                        lineNumber: 97,
+                                                        lineNumber: 88,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -857,24 +896,24 @@ function LocationSelectionPage() {
                                                                 children: state
                                                             }, state, false, {
                                                                 fileName: "[project]/app/add-location/page.tsx",
-                                                                lineNumber: 102,
+                                                                lineNumber: 93,
                                                                 columnNumber: 21
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/page.tsx",
-                                                        lineNumber: 100,
+                                                        lineNumber: 91,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/page.tsx",
-                                                lineNumber: 96,
+                                                lineNumber: 87,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 92,
+                                        lineNumber: 83,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -884,7 +923,7 @@ function LocationSelectionPage() {
                                                 children: "City"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/page.tsx",
-                                                lineNumber: 111,
+                                                lineNumber: 102,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -898,12 +937,12 @@ function LocationSelectionPage() {
                                                             placeholder: selectedState ? 'Select a city' : 'Select state first'
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/page.tsx",
-                                                            lineNumber: 120,
+                                                            lineNumber: 111,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/page.tsx",
-                                                        lineNumber: 119,
+                                                        lineNumber: 110,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -913,30 +952,30 @@ function LocationSelectionPage() {
                                                                 children: city
                                                             }, city, false, {
                                                                 fileName: "[project]/app/add-location/page.tsx",
-                                                                lineNumber: 124,
+                                                                lineNumber: 115,
                                                                 columnNumber: 21
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/page.tsx",
-                                                        lineNumber: 122,
+                                                        lineNumber: 113,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/page.tsx",
-                                                lineNumber: 114,
+                                                lineNumber: 105,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 110,
+                                        lineNumber: 101,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 91,
+                                lineNumber: 82,
                                 columnNumber: 11
                             }, this),
                             selectedCity && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -951,12 +990,11 @@ function LocationSelectionPage() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 135,
+                                        lineNumber: 126,
                                         columnNumber: 15
                                     }, this),
                                     locations.map((location)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            onClick: ()=>handleLocationSelect(location),
-                                            className: `flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedLocation?.id === location.id ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}`,
+                                            className: "flex items-center gap-4 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all",
                                             "data-testid": `location-card-${location.id}`,
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -965,12 +1003,12 @@ function LocationSelectionPage() {
                                                         className: "h-8 w-8 text-gray-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/page.tsx",
-                                                        lineNumber: 150,
+                                                        lineNumber: 136,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/add-location/page.tsx",
-                                                    lineNumber: 149,
+                                                    lineNumber: 135,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -984,7 +1022,7 @@ function LocationSelectionPage() {
                                                                     children: location.name
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/page.tsx",
-                                                                    lineNumber: 154,
+                                                                    lineNumber: 140,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 location.isPremium && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -994,20 +1032,20 @@ function LocationSelectionPage() {
                                                                             className: "h-3 w-3 fill-amber-500"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/add-location/page.tsx",
-                                                                            lineNumber: 157,
+                                                                            lineNumber: 143,
                                                                             columnNumber: 27
                                                                         }, this),
                                                                         "Premium Location"
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/add-location/page.tsx",
-                                                                    lineNumber: 156,
+                                                                    lineNumber: 142,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/add-location/page.tsx",
-                                                            lineNumber: 153,
+                                                            lineNumber: 139,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1017,7 +1055,7 @@ function LocationSelectionPage() {
                                                                     className: "h-3.5 w-3.5"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/page.tsx",
-                                                                    lineNumber: 163,
+                                                                    lineNumber: 149,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 location.address,
@@ -1030,32 +1068,35 @@ function LocationSelectionPage() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/add-location/page.tsx",
-                                                            lineNumber: 162,
+                                                            lineNumber: 148,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/add-location/page.tsx",
-                                                    lineNumber: 152,
+                                                    lineNumber: 138,
                                                     columnNumber: 19
                                                 }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
-                                                    className: `h-5 w-5 flex-shrink-0 ${selectedLocation?.id === location.id ? 'text-[#36bff9]' : 'text-gray-400'}`
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                    onClick: ()=>handleLocationSelect(location),
+                                                    className: "bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0",
+                                                    "data-testid": `button-select-location-${location.id}`,
+                                                    children: "Select"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/add-location/page.tsx",
-                                                    lineNumber: 167,
+                                                    lineNumber: 153,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, location.id, true, {
                                             fileName: "[project]/app/add-location/page.tsx",
-                                            lineNumber: 139,
+                                            lineNumber: 130,
                                             columnNumber: 17
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 134,
+                                lineNumber: 125,
                                 columnNumber: 13
                             }, this),
                             !selectedState && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1065,20 +1106,20 @@ function LocationSelectionPage() {
                                         className: "h-12 w-12 mx-auto mb-3 text-gray-300"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 177,
+                                        lineNumber: 167,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "Select a state to view available locations"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 178,
+                                        lineNumber: 168,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 176,
+                                lineNumber: 166,
                                 columnNumber: 13
                             }, this),
                             selectedState && !selectedCity && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1088,174 +1129,42 @@ function LocationSelectionPage() {
                                         className: "h-12 w-12 mx-auto mb-3 text-gray-300"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 184,
+                                        lineNumber: 174,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "Select a city to view available locations"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 185,
+                                        lineNumber: 175,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 183,
+                                lineNumber: 173,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/page.tsx",
-                        lineNumber: 88,
-                        columnNumber: 9
-                    }, this),
-                    selectedLocation && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-white rounded-xl border border-gray-200 p-6 mb-6",
-                        "data-testid": "selected-location-preview",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "text-lg font-semibold text-gray-900 mb-4",
-                                children: "Selected Location"
-                            }, void 0, false, {
-                                fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 192,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex items-start gap-4",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"], {
-                                            className: "h-12 w-12 text-gray-400"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/add-location/page.tsx",
-                                            lineNumber: 195,
-                                            columnNumber: 17
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 194,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-center gap-2 mb-2",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                        className: "text-lg font-medium text-gray-900",
-                                                        children: selectedLocation.name
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/add-location/page.tsx",
-                                                        lineNumber: 199,
-                                                        columnNumber: 19
-                                                    }, this),
-                                                    selectedLocation.isPremium && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__["Star"], {
-                                                                className: "h-3 w-3 fill-amber-500"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/add-location/page.tsx",
-                                                                lineNumber: 202,
-                                                                columnNumber: 23
-                                                            }, this),
-                                                            "Premium"
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/app/add-location/page.tsx",
-                                                        lineNumber: 201,
-                                                        columnNumber: 21
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/add-location/page.tsx",
-                                                lineNumber: 198,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-gray-600 mb-1",
-                                                children: selectedLocation.address
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/add-location/page.tsx",
-                                                lineNumber: 207,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-gray-600",
-                                                children: [
-                                                    selectedLocation.city,
-                                                    ", ",
-                                                    selectedLocation.stateCode,
-                                                    " ",
-                                                    selectedLocation.zipCode
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/add-location/page.tsx",
-                                                lineNumber: 208,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/app/add-location/page.tsx",
-                                        lineNumber: 197,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/app/add-location/page.tsx",
-                                lineNumber: 193,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/add-location/page.tsx",
-                        lineNumber: 191,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex justify-end",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                            onClick: handleContinue,
-                            disabled: !selectedLocation,
-                            className: "bg-[#36bff9] hover:bg-[#2aa8e0] text-white px-8",
-                            "data-testid": "button-continue-customize",
-                            children: [
-                                "Continue to Customize",
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
-                                    className: "h-4 w-4 ml-2"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/add-location/page.tsx",
-                                    lineNumber: 224,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/add-location/page.tsx",
-                            lineNumber: 217,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/app/add-location/page.tsx",
-                        lineNumber: 216,
+                        lineNumber: 79,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/add-location/page.tsx",
-                lineNumber: 74,
+                lineNumber: 65,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/add-location/page.tsx",
-        lineNumber: 63,
+        lineNumber: 54,
         columnNumber: 5
     }, this);
 }
-_s(LocationSelectionPage, "Mg29MrCxpV9aHqleCm+RI0OrhDE=", false, function() {
+_s(LocationSelectionPage, "FNzqUX0hr1VYIA9m2gqqVax7lQo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useOrder"]

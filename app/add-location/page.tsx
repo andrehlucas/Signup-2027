@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, MapPin, Star, Building2, ChevronRight } from 'lucide-react';
+import { ArrowLeft, MapPin, Star, Building2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import {
   Select,
@@ -25,7 +25,6 @@ export default function LocationSelectionPage() {
   const { setLocation } = useOrder();
   const [selectedState, setSelectedState] = useState<string>('');
   const [selectedCity, setSelectedCity] = useState<string>('');
-  const [selectedLocation, setSelectedLocation] = useState<AvailableLocation | null>(null);
 
   const states = useMemo(() => getStates(), []);
   const cities = useMemo(
@@ -40,23 +39,15 @@ export default function LocationSelectionPage() {
   const handleStateChange = (state: string) => {
     setSelectedState(state);
     setSelectedCity('');
-    setSelectedLocation(null);
   };
 
   const handleCityChange = (city: string) => {
     setSelectedCity(city);
-    setSelectedLocation(null);
   };
 
   const handleLocationSelect = (location: AvailableLocation) => {
-    setSelectedLocation(location);
-  };
-
-  const handleContinue = () => {
-    if (selectedLocation) {
-      setLocation(selectedLocation);
-      router.push('/add-location/customize');
-    }
+    setLocation(location);
+    router.push('/add-location/customize');
   };
 
   return (
@@ -138,12 +129,7 @@ export default function LocationSelectionPage() {
               {locations.map((location) => (
                 <div
                   key={location.id}
-                  onClick={() => handleLocationSelect(location)}
-                  className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                    selectedLocation?.id === location.id
-                      ? 'border-[#36bff9] bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                  }`}
+                  className="flex items-center gap-4 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all"
                   data-testid={`location-card-${location.id}`}
                 >
                   <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -164,9 +150,13 @@ export default function LocationSelectionPage() {
                       {location.address}, {location.city}, {location.stateCode} {location.zipCode}
                     </p>
                   </div>
-                  <ChevronRight className={`h-5 w-5 flex-shrink-0 ${
-                    selectedLocation?.id === location.id ? 'text-[#36bff9]' : 'text-gray-400'
-                  }`} />
+                  <Button
+                    onClick={() => handleLocationSelect(location)}
+                    className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0"
+                    data-testid={`button-select-location-${location.id}`}
+                  >
+                    Select
+                  </Button>
                 </div>
               ))}
             </div>
@@ -187,43 +177,6 @@ export default function LocationSelectionPage() {
           )}
         </div>
 
-        {selectedLocation && (
-          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="selected-location-preview">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Selected Location</h3>
-            <div className="flex items-start gap-4">
-              <div className="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Building2 className="h-12 w-12 text-gray-400" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <h4 className="text-lg font-medium text-gray-900">{selectedLocation.name}</h4>
-                  {selectedLocation.isPremium && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold">
-                      <Star className="h-3 w-3 fill-amber-500" />
-                      Premium
-                    </span>
-                  )}
-                </div>
-                <p className="text-gray-600 mb-1">{selectedLocation.address}</p>
-                <p className="text-gray-600">
-                  {selectedLocation.city}, {selectedLocation.stateCode} {selectedLocation.zipCode}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="flex justify-end">
-          <Button
-            onClick={handleContinue}
-            disabled={!selectedLocation}
-            className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white px-8"
-            data-testid="button-continue-customize"
-          >
-            Continue to Customize
-            <ChevronRight className="h-4 w-4 ml-2" />
-          </Button>
-        </div>
       </div>
     </div>
   );
