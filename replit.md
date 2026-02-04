@@ -113,6 +113,46 @@ Preferred communication style: Simple, everyday language.
 - `/videos` - How to / Videos page
 - `/meeting-rooms` - Meeting rooms page
 - `/support` - Support page
+- `/add-location` - Add New Location wizard (multi-step flow)
+  - `/add-location` - Step 1: Location Selection
+  - `/add-location/customize` - Step 2: Service Customization
+  - `/add-location/checkout` - Step 3: Checkout
+  - `/add-location/thank-you` - Order Confirmation
+
+**Add New Location Feature**
+Multi-step wizard for business expansion located at `/add-location`:
+
+*Step 1: Location Selection*
+- State → City → Location drill-down selection
+- Premium Location badge for qualifying locations
+- Location preview with address details
+- Progress indicator showing current step
+
+*Step 2: Service Customization*
+- Bundle selection cards (Essentials $99, Plus $119, Pro $149, Premium $179)
+- Auto-assigned phone number with Change option (modal picker)
+- Add-ons section with "Add to Cart" / "Remove" toggle
+- Addons already included in bundle show "Included" badge
+- Cart summary with running monthly total
+
+*Step 3: Checkout*
+- Order summary (location, bundle, phone, addons)
+- Remove addon capability
+- Agreement checkbox (required to proceed)
+- Payment summary with monthly and one-time totals
+- Complete Checkout button (disabled until agreement checked)
+
+*Thank You Page*
+- Order confirmation with details
+- Next Steps action cards (Mail, Phone, Documents, Team)
+- Onboarding info and support links
+- Go to Dashboard / Set Up Office buttons
+
+*Technical Notes*
+- State management via React Context (`OrderProvider` in layout.tsx)
+- Types defined in `app/add-location/types.ts`
+- Sample data included for locations, bundles, phone numbers, addons
+- Navigation guards prevent accessing steps without prerequisites
 
 **Account Page Features**
 Located at `/account`, the Account page provides:
