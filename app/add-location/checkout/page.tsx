@@ -1,13 +1,33 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight } from 'lucide-react';
+import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useToast } from '@/app/hooks/use-toast';
+import { Bundle, featureLabels } from '../types';
+
+function getBundleIncludedAddons(bundle: Bundle): { name: string; label: string }[] {
+  const included: { name: string; label: string }[] = [];
+  const addonFeatures: (keyof Bundle['features'])[] = [
+    'tollFreeNumber',
+    'calloutFeature',
+    'callLog',
+    'supervisedCallTransfer',
+    'messageTaking',
+  ];
+  
+  for (const feature of addonFeatures) {
+    if (bundle.features[feature]) {
+      included.push({ name: feature, label: featureLabels[feature] });
+    }
+  }
+  
+  return included;
+}
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -23,6 +43,11 @@ export default function CheckoutPage() {
 
   const { monthly, oneTime } = getCartTotal();
   const totalDueToday = monthly + oneTime;
+  
+  const bundleIncludedAddons = useMemo(() => {
+    if (!order.bundle) return [];
+    return getBundleIncludedAddons(order.bundle);
+  }, [order.bundle]);
 
   const handleRemoveAddon = (addonId: string) => {
     removeAddon(addonId);
@@ -140,56 +165,66 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                {(order.addons.length > 0 || order.extensionCount > 0) && (
-                  <div className="pt-2">
-                    <p className="font-medium text-gray-900 mb-3 flex items-center gap-2">
-                      <Plus className="h-4 w-4" />
-                      Add-ons
-                    </p>
-                    <div className="space-y-3">
-                      {order.addons.map((addon) => (
-                        <div key={addon.id} className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                <div className="pt-2">
+                  <p className="font-medium text-gray-900 mb-3 flex items-center gap-2">
+                    <Plus className="h-4 w-4" />
+                    Add-ons
+                  </p>
+                  <div className="space-y-3">
+                    {bundleIncludedAddons.map((addon) => (
+                      <div key={addon.name} className="flex items-center justify-between bg-green-50 rounded-lg p-3">
+                        <div className="flex items-center gap-2">
+                          <Check className="h-4 w-4 text-green-600" />
                           <div>
-                            <p className="font-medium text-gray-900">{addon.name}</p>
-                            <p className="text-sm text-gray-500">{addon.description}</p>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <p className="font-semibold text-gray-900">${addon.price}/mo</p>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                              onClick={() => handleRemoveAddon(addon.id)}
-                              data-testid={`button-remove-addon-${addon.id}`}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
+                            <p className="font-medium text-gray-900">{addon.label}</p>
+                            <p className="text-sm text-green-600">Included with {order.bundle?.tier}</p>
                           </div>
                         </div>
-                      ))}
-                      {order.extensionCount > 0 && (
-                        <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                          <div>
-                            <p className="font-medium text-gray-900">Additional Extensions</p>
-                            <p className="text-sm text-gray-500">{order.extensionCount} extension(s) @ $10/mo each</p>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <p className="font-semibold text-gray-900">${order.extensionCount * 10}/mo</p>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                              onClick={() => setExtensionCount(0)}
-                              data-testid="button-remove-extensions"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
+                        <p className="font-semibold text-green-600">Included</p>
+                      </div>
+                    ))}
+                    {order.addons.map((addon) => (
+                      <div key={addon.id} className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                        <div>
+                          <p className="font-medium text-gray-900">{addon.name}</p>
+                          <p className="text-sm text-gray-500">{addon.description}</p>
                         </div>
-                      )}
-                    </div>
+                        <div className="flex items-center gap-3">
+                          <p className="font-semibold text-gray-900">${addon.price}/mo</p>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            onClick={() => handleRemoveAddon(addon.id)}
+                            data-testid={`button-remove-addon-${addon.id}`}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                    {order.extensionCount > 0 && (
+                      <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                        <div>
+                          <p className="font-medium text-gray-900">Additional Extensions</p>
+                          <p className="text-sm text-gray-500">{order.extensionCount} extension(s) @ $10/mo each</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <p className="font-semibold text-gray-900">${order.extensionCount * 10}/mo</p>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            onClick={() => setExtensionCount(0)}
+                            data-testid="button-remove-extensions"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
 
@@ -204,30 +239,16 @@ export default function CheckoutPage() {
                   id="agreement"
                   checked={order.agreementAccepted}
                   onCheckedChange={(checked) => setAgreementAccepted(checked as boolean)}
+                  className="mt-1"
                   data-testid="checkbox-agreement"
                 />
-                <label htmlFor="agreement" className="text-sm text-gray-600 cursor-pointer">
-                  I have read and agree to the{' '}
-                  <a
-                    href="https://www.opusvirtualoffices.com/opus-virtual-offices-terms-of-use/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#36bff9] hover:underline"
-                    data-testid="link-terms"
-                  >
-                    Terms of Service
-                  </a>{' '}
-                  and{' '}
-                  <a
-                    href="https://www.opusvirtualoffices.com/privacy-policy/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#36bff9] hover:underline"
-                    data-testid="link-privacy"
-                  >
-                    Privacy Policy
-                  </a>
-                  . I authorize Opus Virtual Offices to charge my payment method for the selected services.
+                <label htmlFor="agreement" className="text-sm text-gray-600 cursor-pointer space-y-3">
+                  <p>
+                    I, <span className="font-medium">(Full name)</span> of <span className="font-medium">(Company Name)</span> agree to subscribe to the OPUS VIRTUAL OFFICES VIRTUAL OFFICE PROGRAM as stated above. I understand that my monthly recurring charges must be paid in advance and that services will be billed 5 business days prior to its monthly due date. Late payment may result in suspension of service and may be subject to a US$50 reinstatement fee.
+                  </p>
+                  <p>
+                    This agreement is for an initial 3 months term. After the initial 3 months term this agreement shall automatically renew on a month to month basis provided CLIENT does not give OPUS written notice of cancellation at least 30 days prior to the monthly term renewal. In the event Opus Virtual Offices is required to employ an attorney to enforce any provision of this Agreement; Client shall pay to Opus Virtual Offices, all attorney fees and court costs incurred.
+                  </p>
                 </label>
               </div>
             </div>

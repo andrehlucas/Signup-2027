@@ -156,10 +156,11 @@ export default function CustomizePage() {
             {bundles.map((bundle) => (
               <div
                 key={bundle.id}
-                className={`bg-white rounded-xl border-2 overflow-hidden flex flex-col transition-all ${
+                onClick={() => handleBundleSelect(bundle)}
+                className={`bg-white rounded-xl border-2 overflow-hidden flex flex-col transition-all cursor-pointer hover:shadow-md ${
                   selectedBundle?.id === bundle.id
                     ? 'border-[#36bff9] ring-2 ring-[#36bff9] ring-opacity-30'
-                    : 'border-gray-200'
+                    : 'border-gray-200 hover:border-gray-300'
                 }`}
                 data-testid={`bundle-card-${bundle.id}`}
               >
@@ -207,7 +208,10 @@ export default function CustomizePage() {
                   </div>
 
                   <Button
-                    onClick={() => handleBundleSelect(bundle)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleBundleSelect(bundle);
+                    }}
                     className={`mt-4 w-full ${
                       selectedBundle?.id === bundle.id
                         ? 'bg-green-600 hover:bg-green-700'
@@ -376,21 +380,24 @@ export default function CustomizePage() {
         )}
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="cart-summary">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
               <ShoppingCart className="h-5 w-5 text-gray-600" />
-              <div>
-                <p className="font-medium text-gray-900">Cart Summary</p>
-                <p className="text-sm text-gray-600">
-                  {selectedBundle ? selectedBundle.tier : 'No bundle selected'}
-                  {order.addons.length > 0 && ` + ${order.addons.length} add-on(s)`}
-                </p>
-              </div>
+              <p className="font-medium text-gray-900">Cart Summary</p>
             </div>
             <div className="text-right">
               <p className="text-2xl font-bold text-gray-900">${monthly}/mo</p>
               <p className="text-sm text-gray-500">Monthly total</p>
             </div>
+          </div>
+          <div className="text-sm text-gray-600 space-y-1">
+            <p>{selectedBundle ? `${selectedBundle.name} ${selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : ''} - $${selectedBundle.price}/mo` : 'No bundle selected'}</p>
+            {order.addons.map((addon) => (
+              <p key={addon.id}>{addon.name} - ${addon.price}/mo</p>
+            ))}
+            {order.extensionCount > 0 && (
+              <p>Additional Extensions ({order.extensionCount}) - ${order.extensionCount * 10}/mo</p>
+            )}
           </div>
         </div>
 
