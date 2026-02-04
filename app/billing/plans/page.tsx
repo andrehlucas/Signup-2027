@@ -14,6 +14,7 @@ import {
   DialogFooter,
 } from '@/app/components/ui/dialog';
 import { useToast } from '@/app/hooks/use-toast';
+import { useSubscription } from '@/app/contexts/SubscriptionContext';
 
 interface Plan {
   id: string;
@@ -152,11 +153,10 @@ function getTierColor(tier: string) {
 export default function PlansPage() {
   const router = useRouter();
   const { toast } = useToast();
+  const { currentPlanId, updatePlan } = useSubscription();
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const currentPlanId = 'essentials';
 
   const handleSelectPlan = (plan: Plan) => {
     if (plan.id === currentPlanId) {
@@ -181,6 +181,8 @@ export default function PlansPage() {
     setConfirmOpen(false);
     
     const isUpgrade = plans.findIndex(p => p.id === selectedPlan.id) > plans.findIndex(p => p.id === currentPlanId);
+    
+    updatePlan(selectedPlan);
     
     toast({
       title: isUpgrade ? 'Plan Upgraded!' : 'Plan Changed',

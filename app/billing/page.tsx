@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from '@/app/components/ui/select';
 import { useToast } from '@/app/hooks/use-toast';
+import { useSubscription } from '@/app/contexts/SubscriptionContext';
 
 interface PaymentMethod {
   id: string;
@@ -67,6 +68,7 @@ function getCardIcon(type: PaymentMethod['type']) {
 export default function BillingPage() {
   const router = useRouter();
   const { toast } = useToast();
+  const { currentPlanName, monthlyAmount } = useSubscription();
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(initialPaymentMethods);
   const [addCardOpen, setAddCardOpen] = useState(false);
@@ -184,8 +186,6 @@ export default function BillingPage() {
   };
 
   const nextBillingDate = 'March 1, 2026';
-  const currentPlan = 'Virtual Office Pro';
-  const monthlyAmount = 99.00;
 
   return (
     <div className="p-4 lg:p-8" data-testid="billing-page">
@@ -203,7 +203,7 @@ export default function BillingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <p className="text-sm text-gray-500">Plan</p>
-              <p className="text-lg font-medium text-gray-900" data-testid="text-current-plan">{currentPlan}</p>
+              <p className="text-lg font-medium text-gray-900" data-testid="text-current-plan">{currentPlanName}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Monthly Amount</p>

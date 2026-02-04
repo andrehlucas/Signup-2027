@@ -337,9 +337,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$l
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/components/ui/badge.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/components/ui/dialog.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/hooks/use-toast.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$contexts$2f$SubscriptionContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/contexts/SubscriptionContext.tsx [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
+;
 ;
 ;
 ;
@@ -410,7 +412,7 @@ function getCardIcon(type) {
                 children: "VISA"
             }, void 0, false, {
                 fileName: "[project]/app/billing/page.tsx",
-                lineNumber: 59,
+                lineNumber: 60,
                 columnNumber: 14
             }, this);
         case 'mastercard':
@@ -419,7 +421,7 @@ function getCardIcon(type) {
                 children: "MC"
             }, void 0, false, {
                 fileName: "[project]/app/billing/page.tsx",
-                lineNumber: 61,
+                lineNumber: 62,
                 columnNumber: 14
             }, this);
         case 'amex':
@@ -428,7 +430,7 @@ function getCardIcon(type) {
                 children: "AMEX"
             }, void 0, false, {
                 fileName: "[project]/app/billing/page.tsx",
-                lineNumber: 63,
+                lineNumber: 64,
                 columnNumber: 14
             }, this);
     }
@@ -437,6 +439,7 @@ function BillingPage() {
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const { toast } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"])();
+    const { currentPlanName, monthlyAmount } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$contexts$2f$SubscriptionContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSubscription"])();
     const [paymentMethods, setPaymentMethods] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialPaymentMethods);
     const [addCardOpen, setAddCardOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [deleteCardOpen, setDeleteCardOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -539,7 +542,7 @@ function BillingPage() {
                     children: "Paid"
                 }, void 0, false, {
                     fileName: "[project]/app/billing/page.tsx",
-                    lineNumber: 178,
+                    lineNumber: 180,
                     columnNumber: 16
                 }, this);
             case 'pending':
@@ -548,7 +551,7 @@ function BillingPage() {
                     children: "Pending"
                 }, void 0, false, {
                     fileName: "[project]/app/billing/page.tsx",
-                    lineNumber: 180,
+                    lineNumber: 182,
                     columnNumber: 16
                 }, this);
             case 'failed':
@@ -557,14 +560,12 @@ function BillingPage() {
                     children: "Failed"
                 }, void 0, false, {
                     fileName: "[project]/app/billing/page.tsx",
-                    lineNumber: 182,
+                    lineNumber: 184,
                     columnNumber: 16
                 }, this);
         }
     };
     const nextBillingDate = 'March 1, 2026';
-    const currentPlan = 'Virtual Office Pro';
-    const monthlyAmount = 99.00;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "p-4 lg:p-8",
         "data-testid": "billing-page",
@@ -618,7 +619,7 @@ function BillingPage() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 className: "text-lg font-medium text-gray-900",
                                                 "data-testid": "text-current-plan",
-                                                children: currentPlan
+                                                children: currentPlanName
                                             }, void 0, false, {
                                                 fileName: "[project]/app/billing/page.tsx",
                                                 lineNumber: 206,
@@ -1446,10 +1447,11 @@ function BillingPage() {
         columnNumber: 5
     }, this);
 }
-_s(BillingPage, "cUaJNfmxVNSvUzj31VMrN86xIYY=", false, function() {
+_s(BillingPage, "sAlz5/b7ziVTlEjhMKcPrb6Oga0=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useToast"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$contexts$2f$SubscriptionContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSubscription"]
     ];
 });
 _c = BillingPage;
