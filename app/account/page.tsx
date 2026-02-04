@@ -6,6 +6,7 @@ import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Checkbox } from '@/app/components/ui/checkbox';
+import { Switch } from '@/app/components/ui/switch';
 import {
   Dialog,
   DialogContent,
@@ -15,6 +16,14 @@ import {
   DialogFooter,
 } from '@/app/components/ui/dialog';
 import { useToast } from '@/app/hooks/use-toast';
+
+interface EmailUpdateOption {
+  id: string;
+  label: string;
+  description: string;
+  currentEmail: string;
+  enabled: boolean;
+}
 
 interface PasswordValidation {
   minLength: boolean;
@@ -44,10 +53,15 @@ export default function AccountPage() {
   const [companyName, setCompanyName] = useState('Acme Corporation');
 
   const [emailModalOpen, setEmailModalOpen] = useState(false);
-  const [emailStep, setEmailStep] = useState<'enter' | 'verify' | 'success'>('enter');
   const [newEmail, setNewEmail] = useState('');
-  const [emailPassword, setEmailPassword] = useState('');
+  const [confirmNewEmail, setConfirmNewEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [emailUpdateOptions, setEmailUpdateOptions] = useState<EmailUpdateOption[]>([
+    { id: 'login', label: 'Login', description: 'Use this email to log into your account', currentEmail: currentEmail, enabled: false },
+    { id: 'billing', label: 'Billing', description: 'Receive invoices and payment notifications here', currentEmail: currentEmail, enabled: false },
+    { id: 'fax', label: 'Fax', description: 'Where fax messages will be forwarded', currentEmail: currentEmail, enabled: false },
+    { id: 'main-extension', label: 'Main Extension', description: '', currentEmail: currentEmail, enabled: false },
+  ]);
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -82,11 +96,17 @@ export default function AccountPage() {
     newPassword.length > 0;
 
   const handleChangeEmail = () => {
-    setEmailStep('enter');
     setNewEmail('');
-    setEmailPassword('');
+    setConfirmNewEmail('');
     setEmailError('');
+    setEmailUpdateOptions(prev => prev.map(opt => ({ ...opt, enabled: false, currentEmail: currentEmail })));
     setEmailModalOpen(true);
+  };
+
+  const toggleEmailOption = (id: string) => {
+    setEmailUpdateOptions(prev => prev.map(opt => 
+      opt.id === id ? { ...opt, enabled: !opt.enabled } : opt
+    ));
   };
 
   const handleEmailSubmit = () => {
@@ -94,27 +114,30 @@ export default function AccountPage() {
       setEmailError('Please enter a valid email address');
       return;
     }
-    if (emailPassword.length < 1) {
-      setEmailError('Please enter your current password');
+    if (newEmail !== confirmNewEmail) {
+      setEmailError('Email addresses do not match');
       return;
     }
+    const hasSelection = emailUpdateOptions.some(opt => opt.enabled);
+    if (!hasSelection) {
+      setEmailError('Please select at least one option to update');
+      return;
+    }
+    
     setEmailError('');
-    setEmailStep('verify');
-  };
-
-  const handleEmailVerified = () => {
-    setEmailStep('success');
-    setCurrentEmail(newEmail);
+    const updatedOptions = emailUpdateOptions.filter(opt => opt.enabled).map(opt => opt.label);
+    if (emailUpdateOptions.find(opt => opt.id === 'login')?.enabled) {
+      setCurrentEmail(newEmail);
+    }
+    setEmailModalOpen(false);
+    toast({
+      title: 'Email Updated',
+      description: `Email updated for: ${updatedOptions.join(', ')}`,
+    });
   };
 
   const handleEmailModalClose = () => {
     setEmailModalOpen(false);
-    if (emailStep === 'success') {
-      toast({
-        title: 'Email Updated',
-        description: 'Your login email has been updated successfully.',
-      });
-    }
   };
 
   const handleUpdatePassword = () => {
@@ -461,111 +484,81 @@ export default function AccountPage() {
       <Dialog open={emailModalOpen} onOpenChange={handleEmailModalClose}>
         <DialogContent className="sm:max-w-md" data-testid="modal-change-email">
           <DialogHeader>
-            <DialogTitle>
-              {emailStep === 'enter' && 'Change Email Address'}
-              {emailStep === 'verify' && 'Verify Your Email'}
-              {emailStep === 'success' && 'Email Updated'}
-            </DialogTitle>
-            <DialogDescription>
-              {emailStep === 'enter' && 'Enter your new email address and confirm with your password.'}
-              {emailStep === 'verify' && `We've sent a verification link to ${newEmail}. Please check your inbox.`}
-              {emailStep === 'success' && 'Your email address has been successfully updated.'}
-            </DialogDescription>
+            <DialogTitle>Update Email Address</DialogTitle>
           </DialogHeader>
 
-          {emailStep === 'enter' && (
-            <div className="space-y-4 py-4">
-              <div>
-                <Label htmlFor="new-email">New Email Address</Label>
-                <Input
-                  id="new-email"
-                  type="email"
-                  value={newEmail}
-                  onChange={(e) => setNewEmail(e.target.value)}
-                  placeholder="Enter new email"
-                  className="mt-1"
-                  data-testid="input-new-email"
-                />
-              </div>
-              <div>
-                <Label htmlFor="email-password">Confirm Your Password</Label>
-                <Input
-                  id="email-password"
-                  type="password"
-                  value={emailPassword}
-                  onChange={(e) => setEmailPassword(e.target.value)}
-                  placeholder="Enter your password"
-                  className="mt-1"
-                  data-testid="input-email-password"
-                />
-              </div>
-              {emailError && (
-                <p className="text-sm text-red-500 flex items-center gap-1" data-testid="text-email-error">
-                  <AlertCircle className="h-4 w-4" />
-                  {emailError}
-                </p>
-              )}
-            </div>
-          )}
+          <div className="space-y-4 py-2">
+            <p className="text-sm text-gray-600">
+              Your current email address is: <span className="font-medium">{currentEmail}</span>
+            </p>
 
-          {emailStep === 'verify' && (
-            <div className="py-6 text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="h-8 w-8 text-[#36bff9]" />
+            <div>
+              <Input
+                type="email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder="Enter your new email address"
+                data-testid="input-new-email"
+              />
+            </div>
+
+            <div>
+              <Input
+                type="email"
+                value={confirmNewEmail}
+                onChange={(e) => setConfirmNewEmail(e.target.value)}
+                placeholder="Confirm your new email address"
+                data-testid="input-confirm-email"
+              />
+            </div>
+
+            <div className="pt-2">
+              <p className="text-sm font-medium text-gray-700 mb-3">Update email for:</p>
+              <div className="space-y-4">
+                {emailUpdateOptions.map((option) => (
+                  <div key={option.id} className="flex items-start gap-3">
+                    <Switch
+                      checked={option.enabled}
+                      onCheckedChange={() => toggleEmailOption(option.id)}
+                      data-testid={`switch-email-${option.id}`}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-gray-900">{option.label}</span>
+                        <span className="text-sm text-gray-500">Current: {option.currentEmail}</span>
+                      </div>
+                      {option.description && (
+                        <p className="text-sm text-gray-500">{option.description}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
-              <p className="text-sm text-gray-600">
-                Click the verification link in the email we sent to complete the process.
+            </div>
+
+            <p className="text-sm text-gray-500 pt-2">
+              Review your choices. These changes can't be undone.
+            </p>
+
+            {emailError && (
+              <p className="text-sm text-red-500 flex items-center gap-1" data-testid="text-email-error">
+                <AlertCircle className="h-4 w-4" />
+                {emailError}
               </p>
-              <Button
-                variant="link"
-                className="text-[#36bff9] mt-2"
-                onClick={handleEmailVerified}
-                data-testid="button-simulate-verify"
-              >
-                (Simulate: I've verified)
-              </Button>
-            </div>
-          )}
-
-          {emailStep === 'success' && (
-            <div className="py-6 text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Check className="h-8 w-8 text-green-600" />
-              </div>
-              <p className="text-gray-900 font-medium">Your new email is now active:</p>
-              <p className="text-[#36bff9]" data-testid="text-new-email">{currentEmail}</p>
-            </div>
-          )}
+            )}
+          </div>
 
           <DialogFooter>
-            {emailStep === 'enter' && (
-              <>
-                <Button variant="outline" onClick={() => setEmailModalOpen(false)} data-testid="button-cancel-email">
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleEmailSubmit}
-                  className="bg-[#36bff9] hover:bg-[#2aa8e0]"
-                  data-testid="button-continue-email"
-                >
-                  Continue
-                </Button>
-              </>
-            )}
-            {emailStep === 'verify' && (
-              <Button variant="outline" onClick={() => setEmailModalOpen(false)} data-testid="button-close-verify">
-                Close
-              </Button>
-            )}
-            {emailStep === 'success' && (
-              <Button
-                onClick={handleEmailModalClose}
-                className="bg-[#36bff9] hover:bg-[#2aa8e0]"
-                data-testid="button-done-email"
-              >
-                Done
-              </Button>
-            )}
+            <Button variant="outline" onClick={() => setEmailModalOpen(false)} data-testid="button-cancel-email">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleEmailSubmit}
+              className="bg-[#d92d20] hover:bg-[#b91c1c] text-white"
+              data-testid="button-save-email"
+            >
+              Save Changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
