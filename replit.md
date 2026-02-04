@@ -128,6 +128,24 @@ Located at `/account`, the Account page provides:
 - Confirmation modal before submission
 - Toast notifications for all success/error states
 
+**Billing Page Features**
+Located at `/billing`, the Billing page provides:
+
+*Current Subscription Section:*
+- Plan name, monthly amount, and next billing date display
+- Change Plan button
+
+*Payment Methods Section:*
+- List of saved cards with type icon, last 4 digits, expiry
+- Default card badge and "Set as Default" action
+- Add Card modal with cardholder name, card number, expiry, CVC
+- Delete card with confirmation modal
+
+*Billing History Section:*
+- Invoice table with ID, date, description, amount, status
+- Download PDF button for each invoice
+- Status badges (Paid, Pending, Failed)
+
 **Portal Search**
 - Located in `app/portal-components/PortalSearch.tsx`
 - Searchable index includes all portal pages with keywords and descriptions

@@ -64,16 +64,14 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    label: 'Account & Billing',
+    label: 'Account',
+    href: '/account',
+    icon: <User className="h-5 w-5" />,
+  },
+  {
+    label: 'Billing',
+    href: '/billing',
     icon: <CreditCard className="h-5 w-5" />,
-    children: [
-      { label: 'Login Details', href: '/account/login' },
-      { label: 'Company Name', href: '/account/company' },
-      { label: 'Payment Methods', href: '/account/payment' },
-      { label: 'Billing History', href: '/account/billing' },
-      { label: 'Credit Reporting', href: '/account/credit-reporting' },
-      { label: 'Cancel Services', href: '/account/cancel' },
-    ],
   },
   {
     label: 'Help & Support',
