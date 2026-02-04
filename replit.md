@@ -106,12 +106,27 @@ Preferred communication style: Simple, everyday language.
 **Portal Routes**
 - `/` - Portal dashboard (locations overview)
 - `/office` - My Office page (mail forwarding, document upload, scanning setup, My Mail section)
+- `/phone` - Phone page (active add-ons management)
 - `/addons` - Addons page
-- `/account` - Account details page
+- `/account` - Account settings page (email, password, phone, company details)
 - `/billing` - Billing page
 - `/videos` - How to / Videos page
 - `/meeting-rooms` - Meeting rooms page
 - `/support` - Support page
+
+**Account Page Features**
+Located at `/account`, the Account page provides:
+
+*Login & Security Section:*
+- Email display with Change Email button → opens 3-step modal (enter → verify → success)
+- Password change with live validation checklist (8+ chars, uppercase, number, symbol)
+- Phone display with inline edit mode and formatting
+
+*Company Details Section:*
+- Company name change with $30 fee notice
+- Required checkbox for fee acknowledgment
+- Confirmation modal before submission
+- Toast notifications for all success/error states
 
 **Portal Search**
 - Located in `app/portal-components/PortalSearch.tsx`
