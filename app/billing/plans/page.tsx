@@ -41,8 +41,8 @@ const plans: Plan[] = [
     name: 'The Ultimate Office Solution',
     tier: 'The Essentials',
     price: 99,
-    badge: undefined,
-    badgeColor: undefined,
+    badge: 'The Essentials',
+    badgeColor: 'bg-[#36bff9]',
     features: {
       businessAddress: true,
       liveCallAnswering: true,
@@ -80,7 +80,7 @@ const plans: Plan[] = [
     price: 149,
     originalPrice: 179,
     badge: 'The Professional',
-    badgeColor: 'bg-[#4a5568]',
+    badgeColor: 'bg-[#36bff9]',
     features: {
       businessAddress: true,
       liveCallAnswering: true,
@@ -99,7 +99,7 @@ const plans: Plan[] = [
     price: 179,
     originalPrice: 229,
     badge: 'The Best Value',
-    badgeColor: 'bg-[#c53030]',
+    badgeColor: 'bg-[#36bff9]',
     features: {
       businessAddress: true,
       liveCallAnswering: true,
@@ -211,25 +211,18 @@ export default function PlansPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-12 max-w-6xl mx-auto">
         {plans.map((plan) => (
           <div
             key={plan.id}
             className={`bg-white rounded-xl border-2 ${
               plan.id === currentPlanId ? 'border-[#36bff9]' : 'border-gray-200'
-            } overflow-hidden`}
+            } overflow-hidden flex flex-col`}
             data-testid={`plan-card-${plan.id}`}
           >
-            {plan.badge && (
-              <div className={`${plan.badgeColor} text-white text-center py-2 text-sm font-medium`}>
-                {plan.badge}
-              </div>
-            )}
-            {!plan.badge && (
-              <div className="bg-gray-100 text-gray-700 text-center py-2 text-sm font-medium">
-                {plan.tier}
-              </div>
-            )}
+            <div className={`${plan.badgeColor} text-white text-center py-2 text-sm font-medium`}>
+              {plan.badge}
+            </div>
 
             <div className="p-6">
               <div className="mb-4">

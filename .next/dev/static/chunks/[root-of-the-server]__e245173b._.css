@@ -1215,6 +1215,10 @@ body {
   max-width: 42rem;
 }
 
+.max-w-6xl {
+  max-width: 72rem;
+}
+
 .max-w-\[--skeleton-width\] {
   max-width: var(--skeleton-width);
 }
@@ -1849,11 +1853,6 @@ body {
   background-color: rgb(59 89 152 / var(--tw-bg-opacity, 1));
 }
 
-.bg-\[\#4a5568\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(74 85 104 / var(--tw-bg-opacity, 1));
-}
-
 .bg-\[\#4caf50\] {
   --tw-bg-opacity: 1;
   background-color: rgb(76 175 80 / var(--tw-bg-opacity, 1));
@@ -1862,11 +1861,6 @@ body {
 .bg-\[\#E53935\] {
   --tw-bg-opacity: 1;
   background-color: rgb(229 57 53 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#c53030\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(197 48 48 / var(--tw-bg-opacity, 1));
 }
 
 .bg-\[\#e0f7fa\] {
@@ -4403,6 +4397,10 @@ body {
     max-width: 24rem;
   }
 
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .sm\:flex-row {
     flex-direction: row;
   }
@@ -4421,6 +4419,10 @@ body {
 
   .sm\:gap-3 {
     gap: .75rem;
+  }
+
+  .sm\:gap-6 {
+    gap: 1.5rem;
   }
 
   .sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -4628,10 +4630,6 @@ body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .lg\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
   .lg\:flex-row {
     flex-direction: row;
   }
@@ -4687,6 +4685,12 @@ body {
   .lg\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 

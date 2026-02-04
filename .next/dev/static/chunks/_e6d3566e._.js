@@ -309,8 +309,8 @@ const plans = [
         name: 'The Ultimate Office Solution',
         tier: 'The Essentials',
         price: 99,
-        badge: undefined,
-        badgeColor: undefined,
+        badge: 'The Essentials',
+        badgeColor: 'bg-[#36bff9]',
         features: {
             businessAddress: true,
             liveCallAnswering: true,
@@ -348,7 +348,7 @@ const plans = [
         price: 149,
         originalPrice: 179,
         badge: 'The Professional',
-        badgeColor: 'bg-[#4a5568]',
+        badgeColor: 'bg-[#36bff9]',
         features: {
             businessAddress: true,
             liveCallAnswering: true,
@@ -367,7 +367,7 @@ const plans = [
         price: 179,
         originalPrice: 229,
         badge: 'The Best Value',
-        badgeColor: 'bg-[#c53030]',
+        badgeColor: 'bg-[#36bff9]',
         features: {
             businessAddress: true,
             liveCallAnswering: true,
@@ -496,26 +496,18 @@ function PlansPage() {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12",
+                className: "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-12 max-w-6xl mx-auto",
                 children: plans.map((plan)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: `bg-white rounded-xl border-2 ${plan.id === currentPlanId ? 'border-[#36bff9]' : 'border-gray-200'} overflow-hidden`,
+                        className: `bg-white rounded-xl border-2 ${plan.id === currentPlanId ? 'border-[#36bff9]' : 'border-gray-200'} overflow-hidden flex flex-col`,
                         "data-testid": `plan-card-${plan.id}`,
                         children: [
-                            plan.badge && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: `${plan.badgeColor} text-white text-center py-2 text-sm font-medium`,
                                 children: plan.badge
                             }, void 0, false, {
                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                lineNumber: 224,
-                                columnNumber: 15
-                            }, this),
-                            !plan.badge && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-gray-100 text-gray-700 text-center py-2 text-sm font-medium",
-                                children: plan.tier
-                            }, void 0, false, {
-                                fileName: "[project]/app/billing/plans/page.tsx",
-                                lineNumber: 229,
-                                columnNumber: 15
+                                lineNumber: 223,
+                                columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "p-6",
@@ -534,18 +526,18 @@ function PlansPage() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/billing/plans/page.tsx",
-                                                    lineNumber: 239,
+                                                    lineNumber: 232,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/billing/plans/page.tsx",
-                                            lineNumber: 236,
+                                            lineNumber: 229,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                        lineNumber: 235,
+                                        lineNumber: 228,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -559,7 +551,7 @@ function PlansPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                                lineNumber: 245,
+                                                lineNumber: 238,
                                                 columnNumber: 17
                                             }, this),
                                             plan.originalPrice && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -570,7 +562,7 @@ function PlansPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                                lineNumber: 247,
+                                                lineNumber: 240,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -578,13 +570,13 @@ function PlansPage() {
                                                 children: "per month"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                                lineNumber: 251,
+                                                lineNumber: 244,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                        lineNumber: 244,
+                                        lineNumber: 237,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -595,7 +587,7 @@ function PlansPage() {
                                         children: plan.id === currentPlanId ? 'Current Plan' : 'Select Bundle'
                                     }, void 0, false, {
                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 247,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -609,12 +601,12 @@ function PlansPage() {
                                                             className: "h-3 w-3 text-white"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/billing/plans/page.tsx",
-                                                            lineNumber: 272,
+                                                            lineNumber: 265,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                                        lineNumber: 271,
+                                                        lineNumber: 264,
                                                         columnNumber: 23
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "w-5 h-5 flex items-center justify-center flex-shrink-0",
@@ -622,12 +614,12 @@ function PlansPage() {
                                                             className: "h-4 w-4 text-gray-300"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/billing/plans/page.tsx",
-                                                            lineNumber: 276,
+                                                            lineNumber: 269,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                                        lineNumber: 275,
+                                                        lineNumber: 268,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -635,24 +627,24 @@ function PlansPage() {
                                                         children: featureLabels[key]
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                                        lineNumber: 279,
+                                                        lineNumber: 272,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, key, true, {
                                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                                lineNumber: 269,
+                                                lineNumber: 262,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                        lineNumber: 267,
+                                        lineNumber: 260,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                lineNumber: 234,
+                                lineNumber: 227,
                                 columnNumber: 13
                             }, this)
                         ]
@@ -675,7 +667,7 @@ function PlansPage() {
                         children: "OPTIONAL FEATURES AVAILABLE"
                     }, void 0, false, {
                         fileName: "[project]/app/billing/plans/page.tsx",
-                        lineNumber: 291,
+                        lineNumber: 284,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -687,18 +679,18 @@ function PlansPage() {
                                 children: feature
                             }, feature, false, {
                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                lineNumber: 296,
+                                lineNumber: 289,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/billing/plans/page.tsx",
-                        lineNumber: 294,
+                        lineNumber: 287,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/billing/plans/page.tsx",
-                lineNumber: 290,
+                lineNumber: 283,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -714,7 +706,7 @@ function PlansPage() {
                                     children: "Confirm Plan Change"
                                 }, void 0, false, {
                                     fileName: "[project]/app/billing/plans/page.tsx",
-                                    lineNumber: 311,
+                                    lineNumber: 304,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -729,7 +721,7 @@ function PlansPage() {
                                                 children: selectedPlan.tier === 'The Essentials' ? 'The Essentials' : `Office ${selectedPlan.tier}`
                                             }, void 0, false, {
                                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                                lineNumber: 320,
+                                                lineNumber: 313,
                                                 columnNumber: 19
                                             }, this),
                                             ' ',
@@ -743,7 +735,7 @@ function PlansPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                                lineNumber: 323,
+                                                lineNumber: 316,
                                                 columnNumber: 22
                                             }, this),
                                             "."
@@ -751,13 +743,13 @@ function PlansPage() {
                                     }, void 0, true)
                                 }, void 0, false, {
                                     fileName: "[project]/app/billing/plans/page.tsx",
-                                    lineNumber: 312,
+                                    lineNumber: 305,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/billing/plans/page.tsx",
-                            lineNumber: 310,
+                            lineNumber: 303,
                             columnNumber: 11
                         }, this),
                         selectedPlan && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -773,7 +765,7 @@ function PlansPage() {
                                                 children: "New Monthly Rate"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                                lineNumber: 333,
+                                                lineNumber: 326,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -785,13 +777,13 @@ function PlansPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                                lineNumber: 334,
+                                                lineNumber: 327,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                        lineNumber: 332,
+                                        lineNumber: 325,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -799,18 +791,18 @@ function PlansPage() {
                                         children: "Changes will take effect on your next billing cycle. You won't be charged until then."
                                     }, void 0, false, {
                                         fileName: "[project]/app/billing/plans/page.tsx",
-                                        lineNumber: 336,
+                                        lineNumber: 329,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/billing/plans/page.tsx",
-                                lineNumber: 331,
+                                lineNumber: 324,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/billing/plans/page.tsx",
-                            lineNumber: 330,
+                            lineNumber: 323,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogFooter"], {
@@ -823,7 +815,7 @@ function PlansPage() {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/billing/plans/page.tsx",
-                                    lineNumber: 344,
+                                    lineNumber: 337,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -834,24 +826,24 @@ function PlansPage() {
                                     children: isSubmitting ? 'Processing...' : 'Confirm Change'
                                 }, void 0, false, {
                                     fileName: "[project]/app/billing/plans/page.tsx",
-                                    lineNumber: 352,
+                                    lineNumber: 345,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/billing/plans/page.tsx",
-                            lineNumber: 343,
+                            lineNumber: 336,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/billing/plans/page.tsx",
-                    lineNumber: 309,
+                    lineNumber: 302,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/billing/plans/page.tsx",
-                lineNumber: 308,
+                lineNumber: 301,
                 columnNumber: 7
             }, this)
         ]
