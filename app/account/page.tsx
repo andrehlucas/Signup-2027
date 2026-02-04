@@ -525,7 +525,7 @@ export default function AccountPage() {
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <span className="font-medium text-gray-900">{option.label}</span>
-                        <span className="text-sm text-gray-500">Current: {option.currentEmail}</span>
+                        <span className="text-sm text-[#36bff9]">Current: {option.currentEmail}</span>
                       </div>
                       {option.description && (
                         <p className="text-sm text-gray-500">{option.description}</p>
