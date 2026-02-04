@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   Building2, 
   User, 
@@ -19,7 +19,8 @@ import {
   Bell,
   CreditCard,
   ChevronDown,
-  MapPin
+  MapPin,
+  Plus
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/app/components/ui/sheet';
 import { NavSection } from './NavSection';
@@ -103,6 +104,7 @@ const mockLocations: Location[] = [
 ];
 
 function LocationSwitcher() {
+  const router = useRouter();
   const { data: locations, isLoading } = useQuery<Location[]>({ 
     queryKey: ['/api/locations'] 
   });
@@ -110,8 +112,16 @@ function LocationSwitcher() {
   const displayLocations = (locations && locations.length > 0) ? locations : mockLocations;
   const [selectedLocation, setSelectedLocation] = useState(displayLocations[0]?.id);
 
+  const handleValueChange = (value: string) => {
+    if (value === 'add-location') {
+      router.push('/add-location');
+    } else {
+      setSelectedLocation(value);
+    }
+  };
+
   return (
-    <Select value={selectedLocation || displayLocations[0]?.id} onValueChange={setSelectedLocation}>
+    <Select value={selectedLocation || displayLocations[0]?.id} onValueChange={handleValueChange}>
       <SelectTrigger 
         className="w-full bg-[#252b3d] border-0 text-white focus:ring-1 focus:ring-blue-500"
         data-testid="select-location-switcher"
@@ -135,6 +145,18 @@ function LocationSwitcher() {
             </div>
           </SelectItem>
         ))}
+        <div className="border-t border-white/10 mt-1 pt-1">
+          <SelectItem 
+            value="add-location"
+            className="text-[#36bff9] focus:bg-white/10 focus:text-[#36bff9]"
+            data-testid="option-add-location"
+          >
+            <div className="flex items-center gap-2">
+              <Plus className="h-4 w-4" />
+              <span className="font-medium">Add Location</span>
+            </div>
+          </SelectItem>
+        </div>
       </SelectContent>
     </Select>
   );
