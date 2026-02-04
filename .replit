@@ -41,4 +41,4 @@ waitForPort = 5000
 [userenv]
 
 [userenv.shared]
-NEXT_PUBLIC_MAILX_ENABLED = "true"
+NEXT_PUBLIC_MAILX_ENABLED = "false"
