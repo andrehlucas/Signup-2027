@@ -90,7 +90,7 @@ export default function CheckoutPage() {
         Back to Customize
       </Button>
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={3} />
         </div>
@@ -172,53 +172,44 @@ export default function CheckoutPage() {
                   </p>
                   <div className="space-y-3">
                     {bundleIncludedAddons.map((addon) => (
-                      <div key={addon.name} className="flex items-center justify-between bg-green-50 rounded-lg p-3">
+                      <div key={addon.name} className="flex items-center justify-between bg-green-50 rounded-lg px-3 py-2">
                         <div className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-green-600" />
-                          <div>
-                            <p className="font-medium text-gray-900">{addon.label}</p>
-                            <p className="text-sm text-green-600">Included with {order.bundle?.tier}</p>
-                          </div>
+                          <Check className="h-3.5 w-3.5 text-green-600" />
+                          <p className="text-sm font-medium text-gray-900">{addon.label}</p>
                         </div>
-                        <p className="font-semibold text-green-600">Included</p>
+                        <p className="text-sm font-medium text-green-600">Included</p>
                       </div>
                     ))}
                     {order.addons.map((addon) => (
-                      <div key={addon.id} className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                        <div>
-                          <p className="font-medium text-gray-900">{addon.name}</p>
-                          <p className="text-sm text-gray-500">{addon.description}</p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <p className="font-semibold text-gray-900">${addon.price}/mo</p>
+                      <div key={addon.id} className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                        <p className="text-sm font-medium text-gray-900">{addon.name}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-medium text-gray-900">${addon.price}/mo</p>
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            className="h-7 w-7 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
                             onClick={() => handleRemoveAddon(addon.id)}
                             data-testid={`button-remove-addon-${addon.id}`}
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-3.5 w-3.5" />
                           </Button>
                         </div>
                       </div>
                     ))}
                     {order.extensionCount > 0 && (
-                      <div className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
-                        <div>
-                          <p className="font-medium text-gray-900">Additional Extensions</p>
-                          <p className="text-sm text-gray-500">{order.extensionCount} extension(s) @ $10/mo each</p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <p className="font-semibold text-gray-900">${order.extensionCount * 10}/mo</p>
+                      <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                        <p className="text-sm font-medium text-gray-900">Additional Extensions ({order.extensionCount})</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-medium text-gray-900">${order.extensionCount * 10}/mo</p>
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            className="h-7 w-7 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
                             onClick={() => setExtensionCount(0)}
                             data-testid="button-remove-extensions"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-3.5 w-3.5" />
                           </Button>
                         </div>
                       </div>
