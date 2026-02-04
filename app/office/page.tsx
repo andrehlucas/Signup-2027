@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { UserType } from '../../shared/schema';
 import { 
@@ -59,6 +60,7 @@ const packageFeatures = [
 ];
 
 export default function OfficePage() {
+  const router = useRouter();
   const { data: user } = useQuery<UserType>({
     queryKey: ['/api/user']
   });
@@ -378,7 +380,7 @@ export default function OfficePage() {
       {featureFlags.mailxEnabled && <MyMailSection />}
 
       <div className="mt-8">
-        <ExpandLocationBanner onAddLocation={() => console.log('Add location clicked')} />
+        <ExpandLocationBanner onAddLocation={() => router.push('/add-location')} />
       </div>
 
       <Dialog open={mailScanningOpen} onOpenChange={setMailScanningOpen}>

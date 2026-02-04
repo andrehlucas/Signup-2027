@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { Location, UserType } from '../shared/schema';
 import { MapPin, Phone, User, MoreVertical, CreditCard, FileEdit, Users, Mail, Calendar, Settings, ChevronRight } from 'lucide-react';
@@ -35,6 +36,7 @@ const quickActions = [
 ];
 
 export default function PortalDashboard() {
+  const router = useRouter();
   const { data: user } = useQuery<UserType>({
     queryKey: ['/api/user']
   });
@@ -72,7 +74,7 @@ export default function PortalDashboard() {
         Welcome, {businessName}
       </h1>
 
-      <ExpandLocationBanner onAddLocation={() => console.log('Add location clicked')} />
+      <ExpandLocationBanner onAddLocation={() => router.push('/add-location')} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div className="lg:col-span-2">
