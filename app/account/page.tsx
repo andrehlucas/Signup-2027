@@ -554,7 +554,7 @@ export default function AccountPage() {
             </Button>
             <Button
               onClick={handleEmailSubmit}
-              className="bg-[#d92d20] hover:bg-[#b91c1c] text-white"
+              className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
               data-testid="button-save-email"
             >
               Save Changes
