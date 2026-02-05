@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -45,6 +45,7 @@ export default function CustomizePage() {
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
   const [tempSelectedPhone, setTempSelectedPhone] = useState<PhoneNumber | null>(null);
+  const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
 
   const phoneNumbers = useMemo(() => {
     if (!order.location) return [];
@@ -107,6 +108,29 @@ export default function CustomizePage() {
     }
     return false;
   };
+
+  const toggleAddonExpanded = (addonId: string) => {
+    setExpandedAddons(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(addonId)) {
+        newSet.delete(addonId);
+      } else {
+        newSet.add(addonId);
+      }
+      return newSet;
+    });
+  };
+
+  const sortedAddons = useMemo(() => {
+    const addonsToSort = availableAddons.filter(addon => addon.id !== 'additional-extensions');
+    return addonsToSort.sort((a, b) => {
+      const aIncluded = isAddonIncluded(a);
+      const bIncluded = isAddonIncluded(b);
+      if (aIncluded && !bIncluded) return -1;
+      if (!aIncluded && bIncluded) return 1;
+      return 0;
+    });
+  }, [selectedBundle]);
 
   const handleContinue = () => {
     if (selectedBundle && selectedPhone) {
@@ -276,14 +300,15 @@ export default function CustomizePage() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {availableAddons.filter(addon => addon.id !== 'additional-extensions').map((addon) => {
+              {sortedAddons.map((addon) => {
                 const isIncluded = isAddonIncluded(addon);
                 const isInCart = order.addons.find(a => a.id === addon.id);
+                const isExpanded = expandedAddons.has(addon.id);
 
                 return (
                   <div
                     key={addon.id}
-                    className={`rounded-lg border p-4 ${
+                    className={`rounded-lg border transition-all ${
                       isIncluded
                         ? 'border-green-200 bg-green-50'
                         : isInCart
@@ -292,40 +317,70 @@ export default function CustomizePage() {
                     }`}
                     data-testid={`addon-card-${addon.id}`}
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-medium text-gray-900">{addon.name}</h4>
-                      {isIncluded ? (
-                        <Badge className="bg-green-100 text-green-700 border-0">
-                          Included
-                        </Badge>
-                      ) : (
-                        <span className="font-semibold text-gray-900">
-                          ${addon.price}/mo
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm text-gray-600 mb-3">{addon.description}</p>
-                    {!isIncluded && (
-                      <Button
-                        variant={isInCart ? 'outline' : 'default'}
-                        size="sm"
-                        className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'bg-[#36bff9] hover:bg-[#2aa8e0]'}
-                        onClick={() => handleAddonToggle(addon)}
-                        data-testid={`button-addon-${addon.id}`}
+                    <div className="p-4">
+                      <div className="flex items-start justify-between mb-1">
+                        <h4 className="font-medium text-gray-900">{addon.name}</h4>
+                        {isIncluded ? (
+                          <Badge className="bg-green-100 text-green-700 border-0">
+                            Included
+                          </Badge>
+                        ) : (
+                          <span className="font-semibold text-gray-900">
+                            ${addon.price}/mo
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600 mb-2">{addon.description}</p>
+                      
+                      <button
+                        onClick={() => toggleAddonExpanded(addon.id)}
+                        className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1 mb-2"
+                        data-testid={`button-learn-more-${addon.id}`}
                       >
-                        {isInCart ? (
+                        {isExpanded ? (
                           <>
-                            <X className="h-3 w-3 mr-1" />
-                            Remove
+                            Show less
+                            <ChevronUp className="h-3 w-3" />
                           </>
                         ) : (
                           <>
-                            <Plus className="h-3 w-3 mr-1" />
-                            Add to Cart
+                            Learn more
+                            <ChevronDown className="h-3 w-3" />
                           </>
                         )}
-                      </Button>
-                    )}
+                      </button>
+
+                      {isExpanded && addon.detailedDescription && (
+                        <div 
+                          className="text-sm text-gray-600 bg-gray-50 rounded-md p-3 mb-3 border border-gray-100"
+                          data-testid={`addon-details-${addon.id}`}
+                        >
+                          {addon.detailedDescription}
+                        </div>
+                      )}
+
+                      {!isIncluded && (
+                        <Button
+                          variant={isInCart ? 'outline' : 'default'}
+                          size="sm"
+                          className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'bg-[#36bff9] hover:bg-[#2aa8e0]'}
+                          onClick={() => handleAddonToggle(addon)}
+                          data-testid={`button-addon-${addon.id}`}
+                        >
+                          {isInCart ? (
+                            <>
+                              <X className="h-3 w-3 mr-1" />
+                              Remove
+                            </>
+                          ) : (
+                            <>
+                              <Plus className="h-3 w-3 mr-1" />
+                              Add to Cart
+                            </>
+                          )}
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 );
               })}

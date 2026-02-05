@@ -3595,6 +3595,11 @@ body {
   background-color: rgb(254 249 195 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:text-\[\#2aa8e0\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(42 168 224 / var(--tw-text-opacity, 1));
+}
+
 .hover\:text-\[\#2ba8e0\]:hover {
   --tw-text-opacity: 1;
   color: rgb(43 168 224 / var(--tw-text-opacity, 1));
