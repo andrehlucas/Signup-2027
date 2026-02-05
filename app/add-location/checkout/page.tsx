@@ -3,9 +3,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check } from 'lucide-react';
+import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
+import { Input } from '@/app/components/ui/input';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useToast } from '@/app/hooks/use-toast';
@@ -36,6 +37,11 @@ export default function CheckoutPage() {
   const { toast } = useToast();
   const { order, removeAddon, setExtensionCount, setAgreementAccepted, getCartTotal } = useOrder();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [cvv, setCvv] = useState('');
+  const [cardholderName, setCardholderName] = useState('');
+  const [saveCard, setSaveCard] = useState(false);
 
   useEffect(() => {
     if (!order.location || !order.bundle || !order.phoneNumber) {
@@ -243,6 +249,107 @@ export default function CheckoutPage() {
                     )}
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="payment-information-section">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <CreditCard className="h-5 w-5" />
+                Payment Information
+              </h2>
+
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="cardholderName" className="block text-sm font-medium text-gray-700 mb-1">
+                    Cardholder Name
+                  </label>
+                  <Input
+                    id="cardholderName"
+                    type="text"
+                    placeholder="John Doe"
+                    value={cardholderName}
+                    onChange={(e) => setCardholderName(e.target.value)}
+                    className="w-full"
+                    data-testid="input-cardholder-name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                    Card Number
+                  </label>
+                  <div className="relative">
+                    <Input
+                      id="cardNumber"
+                      type="text"
+                      placeholder="1234 5678 9012 3456"
+                      value={cardNumber}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '').slice(0, 16);
+                        const formatted = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+                        setCardNumber(formatted);
+                      }}
+                      className="w-full pr-10"
+                      data-testid="input-card-number"
+                    />
+                    <Lock className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700 mb-1">
+                      Expiry Date
+                    </label>
+                    <Input
+                      id="expiryDate"
+                      type="text"
+                      placeholder="MM/YY"
+                      value={expiryDate}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '').slice(0, 4);
+                        if (value.length >= 2) {
+                          setExpiryDate(value.slice(0, 2) + '/' + value.slice(2));
+                        } else {
+                          setExpiryDate(value);
+                        }
+                      }}
+                      className="w-full"
+                      data-testid="input-expiry-date"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="cvv" className="block text-sm font-medium text-gray-700 mb-1">
+                      CVV
+                    </label>
+                    <Input
+                      id="cvv"
+                      type="text"
+                      placeholder="123"
+                      value={cvv}
+                      onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                      className="w-full"
+                      data-testid="input-cvv"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 pt-2">
+                  <Checkbox
+                    id="saveCard"
+                    checked={saveCard}
+                    onCheckedChange={(checked) => setSaveCard(checked as boolean)}
+                    data-testid="checkbox-save-card"
+                  />
+                  <label htmlFor="saveCard" className="text-sm text-gray-600 cursor-pointer">
+                    Save this card for future purchases
+                  </label>
+                </div>
+
+                <p className="text-xs text-gray-500 flex items-center gap-1 mt-2">
+                  <Lock className="h-3 w-3" />
+                  Your payment information is encrypted and secure
+                </p>
               </div>
             </div>
 
