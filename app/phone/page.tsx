@@ -51,10 +51,19 @@ import {
   SelectValue,
 } from '@/app/components/ui/select';
 import { useToast } from '@/app/hooks/use-toast';
-import { availableAddons, Addon as MarketplaceAddon, AddonStatus } from '@/app/add-location/types';
+import { 
+  availableAddons, 
+  Addon as MarketplaceAddon, 
+  AddonStatus,
+  addonToFeatureMap,
+  calculatePriceAfterRemoval,
+  featureIndividualPrices,
+  ESSENTIALS_PLAN,
+  Bundle
+} from '@/app/add-location/types';
 import { useAddons } from '@/app/contexts/AddonsContext';
 import { useSubscription } from '@/app/contexts/SubscriptionContext';
-import { Trash2, Lock } from 'lucide-react';
+import { Trash2, Lock, AlertTriangle } from 'lucide-react';
 
 // Types
 interface Extension {
@@ -676,6 +685,7 @@ interface MarketplaceAddonsGridProps {
   activeAddonIds: string[];
   onAddToPlan: (addon: MarketplaceAddon) => void;
   onRemoveFromPlan: (addon: MarketplaceAddon) => void;
+  onRemoveBundleFeature: (addon: MarketplaceAddon) => void;
   currentPlanName: string;
 }
 
@@ -685,6 +695,7 @@ function MarketplaceAddonsGrid({
   activeAddonIds,
   onAddToPlan, 
   onRemoveFromPlan,
+  onRemoveBundleFeature,
   currentPlanName,
 }: MarketplaceAddonsGridProps) {
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
@@ -829,12 +840,24 @@ function MarketplaceAddonsGrid({
                   )}
 
                   {status === 'included' ? (
-                    <div 
-                      className="w-full py-2 px-3 bg-blue-100 text-blue-700 text-sm text-center rounded-md flex items-center justify-center gap-2"
-                      data-testid={`included-notice-${addon.id}`}
-                    >
-                      <Lock className="h-3 w-3" />
-                      Included in {currentPlanName}
+                    <div className="space-y-2">
+                      <div 
+                        className="w-full py-2 px-3 bg-blue-100 text-blue-700 text-sm text-center rounded-md flex items-center justify-center gap-2"
+                        data-testid={`included-notice-${addon.id}`}
+                      >
+                        <Lock className="h-3 w-3" />
+                        Included in {currentPlanName}
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onRemoveBundleFeature(addon)}
+                        className="w-full border-amber-200 text-amber-600 hover:bg-amber-50"
+                        data-testid={`button-remove-bundle-feature-${addon.id}`}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Remove Feature
+                      </Button>
                     </div>
                   ) : status === 'active' ? (
                     <div className="flex gap-2">
@@ -1009,6 +1032,108 @@ function RemoveAddonDialog({ open, onClose, addon, onConfirm, isLoading }: Remov
             data-testid="button-confirm-remove"
           >
             {isLoading ? 'Removing...' : 'Remove from Plan'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// Bundle Feature Removal Warning Dialog
+interface BundleRemovalWarningDialogProps {
+  open: boolean;
+  onClose: () => void;
+  addon: MarketplaceAddon | null;
+  currentBundle: Bundle | null;
+  currentPlanName: string;
+  currentPlanPrice: number;
+  onConfirm: () => void;
+  isLoading: boolean;
+}
+
+function BundleRemovalWarningDialog({ 
+  open, 
+  onClose, 
+  addon, 
+  currentBundle,
+  currentPlanName,
+  currentPlanPrice,
+  onConfirm, 
+  isLoading 
+}: BundleRemovalWarningDialogProps) {
+  if (!addon || !currentBundle) return null;
+
+  const featureKey = addonToFeatureMap[addon.id];
+  if (!featureKey) return null;
+
+  const { newPrice, breakdown } = calculatePriceAfterRemoval(currentBundle, featureKey);
+  const priceDifference = newPrice - currentPlanPrice;
+
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-lg" data-testid="bundle-removal-warning-dialog">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-amber-600">
+            <AlertTriangle className="h-5 w-5" />
+            Important: Plan Change Required
+          </DialogTitle>
+          <DialogDescription>
+            This feature is included in your current plan. Removing it will change your pricing.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="py-4 space-y-4">
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <h4 className="font-medium text-amber-800 mb-2">What will happen:</h4>
+            <ul className="text-sm text-amber-700 space-y-1 list-disc list-inside">
+              <li>Your plan will change from <strong>{currentPlanName}</strong> to <strong>The Essentials</strong></li>
+              <li>The <strong>{addon.name}</strong> feature will be removed</li>
+              <li>Other bundle features will be added as individual add-ons</li>
+            </ul>
+          </div>
+
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h4 className="font-medium text-gray-900 mb-3">New Monthly Pricing</h4>
+            <div className="space-y-2">
+              {breakdown.map((item, index) => (
+                <div key={index} className="flex justify-between text-sm">
+                  <span className="text-gray-600">{item.name}</span>
+                  <span className="font-medium text-gray-900">${item.price}/mo</span>
+                </div>
+              ))}
+              <div className="border-t pt-2 mt-2 flex justify-between">
+                <span className="font-medium text-gray-900">New Total</span>
+                <span className="font-bold text-gray-900">${newPrice}/mo</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-sm bg-gray-100 rounded-lg p-3">
+            <div>
+              <span className="text-gray-600">Current: </span>
+              <span className="font-medium">${currentPlanPrice}/mo</span>
+            </div>
+            <div>
+              <span className="text-gray-600">New: </span>
+              <span className="font-medium">${newPrice}/mo</span>
+            </div>
+            <div className={priceDifference > 0 ? 'text-red-600' : 'text-green-600'}>
+              {priceDifference > 0 ? '+' : ''}{priceDifference === 0 ? 'No change' : `$${priceDifference}/mo`}
+            </div>
+          </div>
+        </div>
+
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button variant="outline" onClick={onClose} disabled={isLoading} data-testid="button-cancel-bundle-removal">
+            Keep My Plan
+          </Button>
+          <Button 
+            onClick={onConfirm} 
+            disabled={isLoading}
+            variant="destructive"
+            data-testid="button-confirm-bundle-removal"
+          >
+            {isLoading ? 'Processing...' : 'Remove Feature & Change Plan'}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -1519,7 +1644,7 @@ export default function PhoneSystemPage() {
   
   // Use contexts for add-ons and subscription
   const { activeAddons: contextAddons, addAddon, removeAddon, isAddonActive, getAddonStatus } = useAddons();
-  const { includedAddonIds, currentPlanName, isAddonIncluded } = useSubscription();
+  const { includedAddonIds, currentPlanName, currentBundle, basePlanAmount, isAddonIncluded, updatePlan } = useSubscription();
   
   // Derive activeAddonIds from context (separately purchased add-ons, not included in bundle)
   const activeAddonIds = useMemo(() => {
@@ -1554,6 +1679,11 @@ export default function PhoneSystemPage() {
   const [removePlanDialogOpen, setRemovePlanDialogOpen] = useState(false);
   const [addonToRemove, setAddonToRemove] = useState<MarketplaceAddon | null>(null);
   const [isRemovingFromPlan, setIsRemovingFromPlan] = useState(false);
+  
+  // Bundle feature removal dialog states
+  const [bundleRemovalDialogOpen, setBundleRemovalDialogOpen] = useState(false);
+  const [bundleFeatureToRemove, setBundleFeatureToRemove] = useState<MarketplaceAddon | null>(null);
+  const [isRemovingBundleFeature, setIsRemovingBundleFeature] = useState(false);
   
   const { toast } = useToast();
 
@@ -1697,6 +1827,67 @@ export default function PhoneSystemPage() {
     });
   };
 
+  // Bundle feature removal handlers
+  const handleRemoveBundleFeature = (addon: MarketplaceAddon) => {
+    setBundleFeatureToRemove(addon);
+    setBundleRemovalDialogOpen(true);
+  };
+
+  const handleConfirmRemoveBundleFeature = async () => {
+    if (!bundleFeatureToRemove || !currentBundle) return;
+    
+    setIsRemovingBundleFeature(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Get the feature key for this addon
+    const featureKey = addonToFeatureMap[bundleFeatureToRemove.id];
+    if (!featureKey) {
+      setIsRemovingBundleFeature(false);
+      return;
+    }
+    
+    // Get remaining bundle features (excluding the one being removed)
+    const remainingBundleFeatures = Object.entries(currentBundle.features)
+      .filter(([key, value]) => 
+        value === true && 
+        key !== featureKey &&
+        featureIndividualPrices[key as keyof Bundle['features']] > 0
+      );
+    
+    // Convert remaining features to active add-ons
+    remainingBundleFeatures.forEach(([key]) => {
+      // Find the addon ID for this feature
+      const addonEntry = Object.entries(addonToFeatureMap).find(([_, fKey]) => fKey === key);
+      if (addonEntry) {
+        const [addonId] = addonEntry;
+        const addonData = availableAddons.find(a => a.id === addonId);
+        if (addonData) {
+          addAddon(addonData);
+        }
+      }
+    });
+    
+    // Downgrade to Essentials plan
+    updatePlan({
+      id: ESSENTIALS_PLAN.id,
+      name: ESSENTIALS_PLAN.name,
+      tier: 'The Essentials',
+      price: ESSENTIALS_PLAN.price,
+    });
+    
+    setIsRemovingBundleFeature(false);
+    setBundleRemovalDialogOpen(false);
+    
+    toast({
+      title: 'Plan Changed',
+      description: `${bundleFeatureToRemove.name} has been removed. Your plan has been updated to The Essentials with individual add-ons.`,
+    });
+    
+    setBundleFeatureToRemove(null);
+  };
+
   return (
     <div className="p-4 lg:p-8" data-testid="phone-system-page">
       {/* Header */}
@@ -1804,6 +1995,7 @@ export default function PhoneSystemPage() {
             activeAddonIds={activeAddonIds}
             onAddToPlan={handleAddToPlan}
             onRemoveFromPlan={handleRemoveFromPlan}
+            onRemoveBundleFeature={handleRemoveBundleFeature}
             currentPlanName={currentPlanName}
           />
         </div>
@@ -1853,6 +2045,21 @@ export default function PhoneSystemPage() {
         addon={addonToRemove}
         onConfirm={handleConfirmRemoveFromPlan}
         isLoading={isRemovingFromPlan}
+      />
+      
+      {/* Bundle Feature Removal Warning Dialog */}
+      <BundleRemovalWarningDialog
+        open={bundleRemovalDialogOpen}
+        onClose={() => {
+          setBundleRemovalDialogOpen(false);
+          setBundleFeatureToRemove(null);
+        }}
+        addon={bundleFeatureToRemove}
+        currentBundle={currentBundle}
+        currentPlanName={currentPlanName}
+        currentPlanPrice={basePlanAmount}
+        onConfirm={handleConfirmRemoveBundleFeature}
+        isLoading={isRemovingBundleFeature}
       />
     </div>
   );

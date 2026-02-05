@@ -63,12 +63,18 @@ TooltipContent.displayName = __TURBOPACK__imported__module__$5b$project$5d2f$nod
 "use strict";
 
 __turbopack_context__.s([
+    "ESSENTIALS_PLAN",
+    ()=>ESSENTIALS_PLAN,
     "addonToFeatureMap",
     ()=>addonToFeatureMap,
     "availableAddons",
     ()=>availableAddons,
     "bundles",
     ()=>bundles,
+    "calculatePriceAfterRemoval",
+    ()=>calculatePriceAfterRemoval,
+    "featureIndividualPrices",
+    ()=>featureIndividualPrices,
     "featureLabels",
     ()=>featureLabels,
     "getBundleById",
@@ -184,6 +190,47 @@ const addonToFeatureMap = {
     'supervised-transfer': 'supervisedCallTransfer',
     'message-taking': 'messageTaking'
 };
+const featureIndividualPrices = {
+    businessAddress: 0,
+    liveCallAnswering: 0,
+    callTransferring: 0,
+    calloutFeature: 10,
+    tollFreeNumber: 10,
+    callLog: 10,
+    supervisedCallTransfer: 50,
+    messageTaking: 50
+};
+const ESSENTIALS_PLAN = {
+    id: 'essentials',
+    name: 'The Essentials',
+    price: 99
+};
+function calculatePriceAfterRemoval(currentBundle, featureToRemove) {
+    const breakdown = [
+        {
+            name: 'The Essentials (Base Plan)',
+            price: ESSENTIALS_PLAN.price
+        }
+    ];
+    // Get all features that are currently included in the bundle (excluding the one being removed)
+    const remainingFeatures = Object.entries(currentBundle.features).filter(([key, value])=>value === true && key !== featureToRemove && featureIndividualPrices[key] > 0);
+    // Add each remaining feature with its individual price
+    remainingFeatures.forEach(([key])=>{
+        const featureKey = key;
+        const price = featureIndividualPrices[featureKey];
+        if (price > 0) {
+            breakdown.push({
+                name: featureLabels[key] || key,
+                price
+            });
+        }
+    });
+    const newPrice = breakdown.reduce((sum, item)=>sum + item.price, 0);
+    return {
+        newPrice,
+        breakdown
+    };
+}
 function getBundleById(bundleId) {
     return bundles.find((b)=>b.id === bundleId);
 }

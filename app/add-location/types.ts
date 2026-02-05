@@ -178,6 +178,61 @@ export const addonToFeatureMap: Record<string, keyof Bundle['features']> = {
 // Add-on status types
 export type AddonStatus = 'available' | 'active' | 'included';
 
+// Individual feature prices - used when calculating price after removing bundle features
+// These are the a-la-carte prices if someone wants a feature without a bundle
+export const featureIndividualPrices: Record<keyof Bundle['features'], number> = {
+  businessAddress: 0,  // Always included in base
+  liveCallAnswering: 0,  // Always included in base
+  callTransferring: 0,  // Always included in base
+  calloutFeature: 10,
+  tollFreeNumber: 10,
+  callLog: 10,
+  supervisedCallTransfer: 50,
+  messageTaking: 50,
+};
+
+// Essentials plan (base plan) information
+export const ESSENTIALS_PLAN = {
+  id: 'essentials',
+  name: 'The Essentials',
+  price: 99,
+};
+
+// Helper function to calculate new price when removing a bundle feature
+// Returns: Essentials base price + sum of individual prices for remaining features
+export function calculatePriceAfterRemoval(
+  currentBundle: Bundle,
+  featureToRemove: keyof Bundle['features']
+): { newPrice: number; breakdown: { name: string; price: number }[] } {
+  const breakdown: { name: string; price: number }[] = [
+    { name: 'The Essentials (Base Plan)', price: ESSENTIALS_PLAN.price }
+  ];
+
+  // Get all features that are currently included in the bundle (excluding the one being removed)
+  const remainingFeatures = Object.entries(currentBundle.features)
+    .filter(([key, value]) => 
+      value === true && 
+      key !== featureToRemove &&
+      featureIndividualPrices[key as keyof Bundle['features']] > 0
+    );
+
+  // Add each remaining feature with its individual price
+  remainingFeatures.forEach(([key]) => {
+    const featureKey = key as keyof Bundle['features'];
+    const price = featureIndividualPrices[featureKey];
+    if (price > 0) {
+      breakdown.push({
+        name: featureLabels[key] || key,
+        price
+      });
+    }
+  });
+
+  const newPrice = breakdown.reduce((sum, item) => sum + item.price, 0);
+
+  return { newPrice, breakdown };
+}
+
 // Helper function to get bundle by ID
 export function getBundleById(bundleId: string): Bundle | undefined {
   return bundles.find(b => b.id === bundleId);

@@ -1392,6 +1392,14 @@ body {
   resize: both;
 }
 
+.list-inside {
+  list-style-position: inside;
+}
+
+.list-disc {
+  list-style-type: disc;
+}
+
 .list-none {
   list-style-type: none;
 }
@@ -2740,6 +2748,11 @@ body {
   color: hsl(var(--accent-foreground));
 }
 
+.text-amber-600 {
+  --tw-text-opacity: 1;
+  color: rgb(217 119 6 / var(--tw-text-opacity, 1));
+}
+
 .text-amber-700 {
   --tw-text-opacity: 1;
   color: rgb(180 83 9 / var(--tw-text-opacity, 1));
@@ -3616,6 +3629,11 @@ body {
 
 .hover\:bg-accent:hover {
   background-color: hsl(var(--accent));
+}
+
+.hover\:bg-amber-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 251 235 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-blue-100:hover {
@@ -4548,6 +4566,10 @@ body {
 
   .sm\:justify-end {
     justify-content: flex-end;
+  }
+
+  .sm\:gap-0 {
+    gap: 0;
   }
 
   .sm\:gap-2\.5 {
