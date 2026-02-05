@@ -318,7 +318,7 @@ export default function CustomizePage() {
                     data-testid={`addon-card-${addon.id}`}
                   >
                     <div className="p-4">
-                      <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-start justify-between mb-1">
                         <h4 className="font-medium text-gray-900">{addon.name}</h4>
                         {isIncluded ? (
                           <Badge className="bg-green-100 text-green-700 border-0">
@@ -330,6 +330,7 @@ export default function CustomizePage() {
                           </span>
                         )}
                       </div>
+                      <p className="text-sm text-gray-600 mb-2">{addon.description}</p>
                       
                       <button
                         onClick={() => toggleAddonExpanded(addon.id)}
