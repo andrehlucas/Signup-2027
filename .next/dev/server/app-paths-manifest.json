@@ -1,5 +1,6 @@
 {
   "/add-location/page": "app/add-location/page.js",
   "/office/page": "app/office/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/phone/page": "app/phone/page.js"
 }
