@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TooltipProvider } from '@/app/components/ui/tooltip';
 import { useState } from 'react';
 import { SubscriptionProvider } from '@/app/contexts/SubscriptionContext';
+import { AddonsProvider } from '@/app/contexts/AddonsContext';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -21,9 +22,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <SubscriptionProvider>
-          {children}
-        </SubscriptionProvider>
+        <AddonsProvider>
+          <SubscriptionProvider>
+            {children}
+          </SubscriptionProvider>
+        </AddonsProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import { useAddons } from './AddonsContext';
 
 interface Plan {
   id: string;
@@ -12,6 +13,8 @@ interface Plan {
 interface SubscriptionContextType {
   currentPlanId: string;
   currentPlanName: string;
+  basePlanAmount: number;
+  addonsCost: number;
   monthlyAmount: number;
   updatePlan: (plan: Plan) => void;
 }
@@ -27,16 +30,31 @@ const SubscriptionContext = createContext<SubscriptionContextType | undefined>(u
 export function SubscriptionProvider({ children }: { children: ReactNode }) {
   const [currentPlanId, setCurrentPlanId] = useState(defaultPlan.id);
   const [currentPlanName, setCurrentPlanName] = useState(defaultPlan.name);
-  const [monthlyAmount, setMonthlyAmount] = useState(defaultPlan.price);
+  const [basePlanAmount, setBasePlanAmount] = useState(defaultPlan.price);
+  
+  const { totalAddonsCost } = useAddons();
+
+  const monthlyAmount = useMemo(() => {
+    return basePlanAmount + totalAddonsCost;
+  }, [basePlanAmount, totalAddonsCost]);
 
   const updatePlan = (plan: Plan) => {
     setCurrentPlanId(plan.id);
     setCurrentPlanName(plan.tier === 'The Essentials' ? 'The Essentials' : `Office ${plan.tier}`);
-    setMonthlyAmount(plan.price);
+    setBasePlanAmount(plan.price);
   };
 
   return (
-    <SubscriptionContext.Provider value={{ currentPlanId, currentPlanName, monthlyAmount, updatePlan }}>
+    <SubscriptionContext.Provider 
+      value={{ 
+        currentPlanId, 
+        currentPlanName, 
+        basePlanAmount,
+        addonsCost: totalAddonsCost,
+        monthlyAmount, 
+        updatePlan 
+      }}
+    >
       {children}
     </SubscriptionContext.Provider>
   );

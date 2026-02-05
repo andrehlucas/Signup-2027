@@ -24,6 +24,7 @@ import {
 } from '@/app/components/ui/select';
 import { useToast } from '@/app/hooks/use-toast';
 import { useSubscription } from '@/app/contexts/SubscriptionContext';
+import { useAddons } from '@/app/contexts/AddonsContext';
 
 interface PaymentMethod {
   id: string;
@@ -68,7 +69,8 @@ function getCardIcon(type: PaymentMethod['type']) {
 export default function BillingPage() {
   const router = useRouter();
   const { toast } = useToast();
-  const { currentPlanName, monthlyAmount } = useSubscription();
+  const { currentPlanName, basePlanAmount, addonsCost, monthlyAmount } = useSubscription();
+  const { activeAddons } = useAddons();
 
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(initialPaymentMethods);
   const [addCardOpen, setAddCardOpen] = useState(false);
@@ -200,13 +202,13 @@ export default function BillingPage() {
             Current Subscription
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
               <p className="text-sm text-gray-500">Plan</p>
               <p className="text-lg font-medium text-gray-900" data-testid="text-current-plan">{currentPlanName}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Monthly Amount</p>
+              <p className="text-sm text-gray-500">Monthly Total</p>
               <p className="text-lg font-medium text-gray-900" data-testid="text-monthly-amount">${monthlyAmount.toFixed(2)}</p>
             </div>
             <div>
@@ -214,14 +216,60 @@ export default function BillingPage() {
               <p className="text-lg font-medium text-gray-900" data-testid="text-next-billing">{nextBillingDate}</p>
             </div>
           </div>
+          
+          {/* Billing Breakdown */}
+          <div className="bg-gray-50 rounded-lg p-4 mb-4" data-testid="billing-breakdown">
+            <h3 className="text-sm font-medium text-gray-700 mb-3">Monthly Breakdown</h3>
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-600">{currentPlanName} (Base Plan)</span>
+                <span className="text-gray-900">${basePlanAmount.toFixed(2)}</span>
+              </div>
+              
+              {activeAddons.filter(a => a.status === 'active').length > 0 && (
+                <>
+                  <div className="border-t border-gray-200 my-2 pt-2">
+                    <p className="text-xs text-gray-500 mb-2">Active Add-ons</p>
+                    {activeAddons
+                      .filter(a => a.status === 'active')
+                      .map(addon => (
+                        <div key={addon.id} className="flex justify-between text-sm py-1" data-testid={`addon-line-${addon.id}`}>
+                          <span className="text-gray-600">{addon.name}</span>
+                          <span className="text-gray-900">${addon.price.toFixed(2)}</span>
+                        </div>
+                      ))
+                    }
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-500">
+                    <span>Add-ons Subtotal</span>
+                    <span>${addonsCost.toFixed(2)}</span>
+                  </div>
+                </>
+              )}
+              
+              <div className="border-t border-gray-300 pt-2 mt-2">
+                <div className="flex justify-between font-medium">
+                  <span className="text-gray-900">Monthly Total</span>
+                  <span className="text-gray-900">${monthlyAmount.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="flex gap-3 pt-4 border-t border-gray-100">
             <Button
               variant="outline"
               onClick={() => router.push('/billing/plans')}
               data-testid="button-change-plan"
             >
               Change Plan
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => router.push('/phone?tab=addons')}
+              data-testid="button-manage-addons"
+            >
+              Manage Add-ons
             </Button>
           </div>
         </div>
@@ -259,12 +307,14 @@ export default function BillingPage() {
                   <div className="flex items-center gap-4">
                     {getCardIcon(card.type)}
                     <div>
-                      <p className="font-medium text-gray-900">
-                        •••• •••• •••• {card.last4}
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-gray-900">
+                          •••• •••• •••• {card.last4}
+                        </span>
                         {card.isDefault && (
-                          <Badge className="ml-2 bg-blue-100 text-blue-700 hover:bg-blue-100">Default</Badge>
+                          <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">Default</Badge>
                         )}
-                      </p>
+                      </div>
                       <p className="text-sm text-gray-500">Expires {card.expiry}</p>
                     </div>
                   </div>

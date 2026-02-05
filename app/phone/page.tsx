@@ -52,6 +52,8 @@ import {
 } from '@/app/components/ui/select';
 import { useToast } from '@/app/hooks/use-toast';
 import { availableAddons, Addon as MarketplaceAddon } from '@/app/add-location/types';
+import { useAddons } from '@/app/contexts/AddonsContext';
+import { Trash2 } from 'lucide-react';
 
 // Types
 interface Extension {
@@ -671,6 +673,7 @@ interface MarketplaceAddonsGridProps {
   addons: MarketplaceAddon[];
   subscribedAddonIds: string[];
   onAddToPlan: (addon: MarketplaceAddon) => void;
+  onRemoveFromPlan: (addon: MarketplaceAddon) => void;
   onManage: (addon: MarketplaceAddon) => void;
 }
 
@@ -678,6 +681,7 @@ function MarketplaceAddonsGrid({
   addons, 
   subscribedAddonIds, 
   onAddToPlan, 
+  onRemoveFromPlan,
   onManage 
 }: MarketplaceAddonsGridProps) {
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
@@ -806,15 +810,18 @@ function MarketplaceAddonsGrid({
                   )}
 
                   {isSubscribed ? (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onManage(addon)}
-                      className="w-full"
-                      data-testid={`button-manage-${addon.id}`}
-                    >
-                      Manage Add-on
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onRemoveFromPlan(addon)}
+                        className="flex-1 border-red-200 text-red-600 hover:bg-red-50"
+                        data-testid={`button-remove-${addon.id}`}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Remove
+                      </Button>
+                    </div>
                   ) : (
                     <Button
                       size="sm"
@@ -906,6 +913,75 @@ function AddToPlanDialog({ open, onClose, addon, onConfirm, isLoading }: AddToPl
             data-testid="button-confirm-add"
           >
             {isLoading ? 'Adding...' : 'Add to Plan'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// Remove Addon Confirmation Dialog
+interface RemoveAddonDialogProps {
+  open: boolean;
+  onClose: () => void;
+  addon: MarketplaceAddon | null;
+  onConfirm: () => void;
+  isLoading: boolean;
+}
+
+function RemoveAddonDialog({ open, onClose, addon, onConfirm, isLoading }: RemoveAddonDialogProps) {
+  if (!addon) return null;
+
+  const price = addon.packages && addon.packages.length > 0 ? addon.packages[0].price : addon.price;
+
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-md" data-testid="remove-addon-dialog">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <Trash2 className="h-5 w-5 text-red-500" />
+            Remove {addon.name}?
+          </DialogTitle>
+          <DialogDescription>
+            This add-on will be removed from your monthly subscription.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="py-4">
+          <div className="bg-red-50 border border-red-100 rounded-lg p-4 mb-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-medium text-gray-900">{addon.name}</span>
+              <span className="font-semibold text-red-600">
+                -${price}/mo
+              </span>
+            </div>
+            <p className="text-sm text-gray-600">{addon.description}</p>
+          </div>
+
+          <div className="border-t pt-4">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-600">Monthly Savings</span>
+              <span className="font-semibold text-green-600">
+                -${price}/mo
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Changes will take effect immediately. You can re-add this add-on anytime from the marketplace.
+            </p>
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose} disabled={isLoading} data-testid="button-cancel-remove">
+            Keep Add-on
+          </Button>
+          <Button 
+            onClick={onConfirm} 
+            disabled={isLoading}
+            variant="destructive"
+            data-testid="button-confirm-remove"
+          >
+            {isLoading ? 'Removing...' : 'Remove from Plan'}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -1414,21 +1490,23 @@ export default function PhoneSystemPage() {
   const [activeAddons] = useState<ActiveAddon[]>(mockActiveAddons);
   const [exploreAddons] = useState<ExploreAddon[]>(mockExploreAddons);
   
-  // Initialize reusableAddons with only some set to active (syncs with marketplace)
-  const [reusableAddons, setReusableAddons] = useState<ReusableAddon[]>(() => {
-    const initialActiveIds = ['toll-free', 'callout', 'supervised-transfer'];
-    return sampleAddons.map(addon => ({
-      ...addon,
-      status: initialActiveIds.includes(addon.id) ? 'active' : 'inactive'
-    })) as ReusableAddon[];
-  });
+  // Use AddonsContext as single source of truth
+  const { activeAddons: contextAddons, addAddon, removeAddon, isAddonActive } = useAddons();
   
-  // Derive subscribedAddonIds from reusableAddons - single source of truth
+  // Derive subscribedAddonIds from context
   const subscribedAddonIds = useMemo(() => {
-    return reusableAddons
+    return contextAddons
       .filter(addon => addon.status === 'active')
       .map(addon => addon.id);
-  }, [reusableAddons]);
+  }, [contextAddons]);
+  
+  // Derive reusableAddons for ActiveAddonsList (synced with context)
+  const reusableAddons = useMemo(() => {
+    return sampleAddons.map(addon => ({
+      ...addon,
+      status: isAddonActive(addon.id) ? 'active' : 'inactive'
+    })) as ReusableAddon[];
+  }, [isAddonActive]);
   
   // Modal states
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -1440,6 +1518,11 @@ export default function PhoneSystemPage() {
   const [addToPlanDialogOpen, setAddToPlanDialogOpen] = useState(false);
   const [selectedMarketplaceAddon, setSelectedMarketplaceAddon] = useState<MarketplaceAddon | null>(null);
   const [isAddingToPlan, setIsAddingToPlan] = useState(false);
+  
+  // Remove from plan dialog states
+  const [removePlanDialogOpen, setRemovePlanDialogOpen] = useState(false);
+  const [addonToRemove, setAddonToRemove] = useState<MarketplaceAddon | null>(null);
+  const [isRemovingFromPlan, setIsRemovingFromPlan] = useState(false);
   
   const { toast } = useToast();
 
@@ -1538,28 +1621,14 @@ export default function PhoneSystemPage() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Update reusableAddons to mark this addon as active
-    // This syncs with the Phone System tab's Active Add-ons list
-    setReusableAddons(prev => {
-      // Check if addon already exists in the list
-      const existingAddon = prev.find(a => a.id === selectedMarketplaceAddon.id);
-      if (existingAddon) {
-        // Update existing addon to active
-        return prev.map(addon => 
-          addon.id === selectedMarketplaceAddon.id 
-            ? { ...addon, status: 'active' as const } 
-            : addon
-        );
-      } else {
-        // Add new addon to the list
-        return [...prev, {
-          id: selectedMarketplaceAddon.id,
-          name: selectedMarketplaceAddon.name,
-          status: 'active' as const,
-          actionType: 'view' as const,
-          modalType: 'none' as const,
-        }];
-      }
+    // Use context to add addon
+    const price = selectedMarketplaceAddon.packages && selectedMarketplaceAddon.packages.length > 0 
+      ? selectedMarketplaceAddon.packages[0].price 
+      : selectedMarketplaceAddon.price;
+    addAddon({
+      id: selectedMarketplaceAddon.id,
+      name: selectedMarketplaceAddon.name,
+      price: price,
     });
     
     setIsAddingToPlan(false);
@@ -1571,6 +1640,34 @@ export default function PhoneSystemPage() {
     });
     
     setSelectedMarketplaceAddon(null);
+  };
+
+  // Remove from plan handlers
+  const handleRemoveFromPlan = (addon: MarketplaceAddon) => {
+    setAddonToRemove(addon);
+    setRemovePlanDialogOpen(true);
+  };
+
+  const handleConfirmRemoveFromPlan = async () => {
+    if (!addonToRemove) return;
+    
+    setIsRemovingFromPlan(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Use context to remove addon
+    removeAddon(addonToRemove.id);
+    
+    setIsRemovingFromPlan(false);
+    setRemovePlanDialogOpen(false);
+    
+    toast({
+      title: 'Add-on Removed',
+      description: `${addonToRemove.name} has been removed from your plan.`,
+    });
+    
+    setAddonToRemove(null);
   };
 
   const handleManageAddon = (addon: MarketplaceAddon) => {
@@ -1670,6 +1767,7 @@ export default function PhoneSystemPage() {
             addons={availableAddons}
             subscribedAddonIds={subscribedAddonIds}
             onAddToPlan={handleAddToPlan}
+            onRemoveFromPlan={handleRemoveFromPlan}
             onManage={handleManageAddon}
           />
         </div>
@@ -1707,6 +1805,18 @@ export default function PhoneSystemPage() {
         addon={selectedMarketplaceAddon}
         onConfirm={handleConfirmAddToPlan}
         isLoading={isAddingToPlan}
+      />
+      
+      {/* Remove from Plan Confirmation Dialog */}
+      <RemoveAddonDialog
+        open={removePlanDialogOpen}
+        onClose={() => {
+          setRemovePlanDialogOpen(false);
+          setAddonToRemove(null);
+        }}
+        addon={addonToRemove}
+        onConfirm={handleConfirmRemoveFromPlan}
+        isLoading={isRemovingFromPlan}
       />
     </div>
   );

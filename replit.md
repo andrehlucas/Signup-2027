@@ -31,7 +31,9 @@ The application employs a Next.js App Router layout for the portal, with distinc
 -   **Account Page:** Allows users to manage login credentials, security settings, and company details with validation and confirmation flows.
 -   **Billing Page:** Displays current subscriptions, payment methods management (add, set default, delete cards), and a history of invoices with PDF download options.
 -   **Portal Search:** A comprehensive search functionality across all portal pages, supporting keyword matching and keyboard navigation.
--   **Active Add-ons and Marketplace:** Components for managing active phone add-ons and a marketplace grid to discover and add new services.
+-   **Active Add-ons and Marketplace:** Components for managing active phone add-ons and a marketplace grid to discover and add new services. Includes Add to Plan and Remove from Plan flows with confirmation dialogs.
+-   **Add-ons Context (AddonsContext):** Global state management for add-ons across the application, tracking active status and prices.
+-   **Billing Integration:** Real-time billing integration that calculates monthly totals from base plan + add-on costs. Billing page shows detailed breakdown with individual add-on line items.
 -   **My Mail Feature:** Enables users to review pending mail items, view envelope thumbnails, and take actions like scanning, forwarding, keeping, or shredding mail.
 -   **Mobile Responsiveness:** Designed with an `lg` breakpoint for desktop/mobile views, featuring a fixed sidebar for desktop and a hamburger menu with a drawer for mobile.
 
