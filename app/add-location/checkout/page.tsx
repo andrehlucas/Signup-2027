@@ -41,6 +41,10 @@ export default function CheckoutPage() {
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
   const [cardholderName, setCardholderName] = useState('');
+  const [billingAddress, setBillingAddress] = useState('');
+  const [billingCity, setBillingCity] = useState('');
+  const [billingState, setBillingState] = useState('');
+  const [billingZip, setBillingZip] = useState('');
   const [saveCard, setSaveCard] = useState(false);
 
   useEffect(() => {
@@ -331,6 +335,73 @@ export default function CheckoutPage() {
                       className="w-full"
                       data-testid="input-cvv"
                     />
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-200 pt-4 mt-4">
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Billing Address</h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label htmlFor="billingAddress" className="block text-sm font-medium text-gray-700 mb-1">
+                        Street Address
+                      </label>
+                      <Input
+                        id="billingAddress"
+                        type="text"
+                        placeholder="123 Main Street"
+                        value={billingAddress}
+                        onChange={(e) => setBillingAddress(e.target.value)}
+                        className="w-full"
+                        data-testid="input-billing-address"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="billingCity" className="block text-sm font-medium text-gray-700 mb-1">
+                          City
+                        </label>
+                        <Input
+                          id="billingCity"
+                          type="text"
+                          placeholder="New York"
+                          value={billingCity}
+                          onChange={(e) => setBillingCity(e.target.value)}
+                          className="w-full"
+                          data-testid="input-billing-city"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="billingState" className="block text-sm font-medium text-gray-700 mb-1">
+                          State
+                        </label>
+                        <Input
+                          id="billingState"
+                          type="text"
+                          placeholder="NY"
+                          value={billingState}
+                          onChange={(e) => setBillingState(e.target.value.toUpperCase().slice(0, 2))}
+                          className="w-full"
+                          data-testid="input-billing-state"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-1/2">
+                      <label htmlFor="billingZip" className="block text-sm font-medium text-gray-700 mb-1">
+                        ZIP Code
+                      </label>
+                      <Input
+                        id="billingZip"
+                        type="text"
+                        placeholder="10001"
+                        value={billingZip}
+                        onChange={(e) => setBillingZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
+                        className="w-full"
+                        data-testid="input-billing-zip"
+                      />
+                    </div>
                   </div>
                 </div>
 

@@ -718,6 +718,20 @@ const samplePhoneNumbers = [
         type: 'local',
         areaCode: '713',
         isAvailable: true
+    },
+    {
+        id: 'pn-11',
+        number: '(312) 555-1234',
+        type: 'local',
+        areaCode: '312',
+        isAvailable: true
+    },
+    {
+        id: 'pn-12',
+        number: '(312) 555-5678',
+        type: 'local',
+        areaCode: '312',
+        isAvailable: true
     }
 ];
 function getStates() {

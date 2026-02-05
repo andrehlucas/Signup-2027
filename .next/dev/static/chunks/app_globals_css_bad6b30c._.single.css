@@ -981,6 +981,10 @@ body {
   width: .375rem;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .w-10 {
   width: 2.5rem;
 }
