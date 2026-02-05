@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   Phone, 
   User, 
@@ -13,7 +14,13 @@ import {
   X,
   Play,
   Pause,
-  Mic
+  Mic,
+  ChevronDown,
+  ChevronUp,
+  ArrowRight,
+  Sparkles,
+  Check,
+  Package
 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Card } from '@/app/components/ui/card';
@@ -34,6 +41,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter,
 } from '@/app/components/ui/dialog';
 import {
   Select,
@@ -43,6 +51,7 @@ import {
   SelectValue,
 } from '@/app/components/ui/select';
 import { useToast } from '@/app/hooks/use-toast';
+import { availableAddons, Addon as MarketplaceAddon } from '@/app/add-location/types';
 
 // Types
 interface Extension {
@@ -609,6 +618,301 @@ function ExploreAddons({ addons, onAdd }: ExploreAddonsProps) {
   );
 }
 
+// Bundle Promotion Banner Component
+interface BundlePromoBannerProps {
+  onViewBundles: () => void;
+}
+
+function BundlePromoBanner({ onViewBundles }: BundlePromoBannerProps) {
+  return (
+    <div 
+      className="relative rounded-xl overflow-hidden bg-gradient-to-r from-[#1a1a2e] via-[#2d2d4a] to-[#1a1a2e] p-6 mb-6"
+      data-testid="bundle-promo-banner"
+    >
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#36bff9] rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
+      </div>
+      
+      <div className="relative z-10 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="bg-[#36bff9]/20 p-3 rounded-lg">
+            <Package className="h-8 w-8 text-[#36bff9]" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="text-lg font-semibold text-white">Save More with Bundles</h3>
+              <Badge className="bg-green-500/20 text-green-400 border-0 text-xs">
+                <Sparkles className="h-3 w-3 mr-1" />
+                Up to 30% Off
+              </Badge>
+            </div>
+            <p className="text-gray-300 text-sm">
+              Upgrade your plan to unlock premium add-ons and save up to $50/month with our bundle packages.
+            </p>
+          </div>
+        </div>
+        
+        <Button
+          onClick={onViewBundles}
+          className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white shrink-0"
+          data-testid="button-view-bundles"
+        >
+          View Bundles
+          <ArrowRight className="h-4 w-4 ml-2" />
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+// Marketplace Addons Grid Component
+interface MarketplaceAddonsGridProps {
+  addons: MarketplaceAddon[];
+  subscribedAddonIds: string[];
+  onAddToPlan: (addon: MarketplaceAddon) => void;
+  onManage: (addon: MarketplaceAddon) => void;
+}
+
+function MarketplaceAddonsGrid({ 
+  addons, 
+  subscribedAddonIds, 
+  onAddToPlan, 
+  onManage 
+}: MarketplaceAddonsGridProps) {
+  const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
+  const [showAll, setShowAll] = useState(false);
+
+  const toggleExpanded = (addonId: string) => {
+    setExpandedAddons(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(addonId)) {
+        newSet.delete(addonId);
+      } else {
+        newSet.add(addonId);
+      }
+      return newSet;
+    });
+  };
+
+  const sortedAddons = useMemo(() => {
+    const priorityOrder: Record<string, number> = {
+      'callout': 1,
+      'toll-free': 2,
+      'supervised-transfer': 3,
+      'message-taking': 4,
+      'appointment-scheduling': 5,
+      'texting': 6,
+      'call-recording': 7,
+      'additional-extensions': 8,
+      'fax-out': 9,
+      'conf-bridge': 10,
+      'int-transfer': 11,
+      'call-log': 12,
+    };
+
+    return [...addons]
+      .filter(addon => addon.category === 'phone')
+      .sort((a, b) => {
+        const aSubscribed = subscribedAddonIds.includes(a.id);
+        const bSubscribed = subscribedAddonIds.includes(b.id);
+        if (aSubscribed !== bSubscribed) return aSubscribed ? -1 : 1;
+        
+        const aPriority = priorityOrder[a.id] ?? 999;
+        const bPriority = priorityOrder[b.id] ?? 999;
+        return aPriority - bPriority;
+      });
+  }, [addons, subscribedAddonIds]);
+
+  const displayedAddons = showAll ? sortedAddons : sortedAddons.slice(0, 6);
+
+  return (
+    <div data-testid="marketplace-addons-section">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-gray-900" data-testid="heading-marketplace-addons">
+          Phone System Add-ons
+        </h2>
+        <span className="text-sm text-gray-500">
+          {subscribedAddonIds.length} active
+        </span>
+      </div>
+
+      <div className="relative">
+        <div 
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300 ${
+            !showAll && sortedAddons.length > 6 ? 'max-h-[600px] overflow-hidden' : ''
+          }`}
+          data-testid="marketplace-addons-grid"
+        >
+          {displayedAddons.map((addon) => {
+            const isSubscribed = subscribedAddonIds.includes(addon.id);
+            const isExpanded = expandedAddons.has(addon.id);
+
+            return (
+              <div
+                key={addon.id}
+                className={`rounded-lg border transition-all ${
+                  isSubscribed
+                    ? 'border-green-200 bg-green-50'
+                    : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
+                }`}
+                data-testid={`marketplace-addon-card-${addon.id}`}
+              >
+                <div className="p-4">
+                  <div className="flex items-start justify-between mb-1">
+                    <h4 className="font-medium text-gray-900">{addon.name}</h4>
+                    {isSubscribed ? (
+                      <Badge className="bg-green-100 text-green-700 border-0">
+                        <Check className="h-3 w-3 mr-1" />
+                        Active
+                      </Badge>
+                    ) : addon.packages && addon.packages.length > 0 ? (
+                      <span className="font-semibold text-gray-900">
+                        From ${addon.packages[0].price}/mo
+                      </span>
+                    ) : (
+                      <span className="font-semibold text-gray-900">
+                        ${addon.price}/mo
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-600 mb-2">{addon.description}</p>
+                  
+                  <button
+                    onClick={() => toggleExpanded(addon.id)}
+                    className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1 mb-3"
+                    data-testid={`button-learn-more-${addon.id}`}
+                  >
+                    {isExpanded ? (
+                      <>
+                        Show less
+                        <ChevronUp className="h-3 w-3" />
+                      </>
+                    ) : (
+                      <>
+                        Learn more
+                        <ChevronDown className="h-3 w-3" />
+                      </>
+                    )}
+                  </button>
+
+                  {isExpanded && addon.detailedDescription && (
+                    <div 
+                      className="text-sm text-gray-600 bg-gray-50 rounded-md p-3 mb-3 border border-gray-100"
+                      data-testid={`addon-details-${addon.id}`}
+                    >
+                      {addon.detailedDescription}
+                    </div>
+                  )}
+
+                  {isSubscribed ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onManage(addon)}
+                      className="w-full"
+                      data-testid={`button-manage-${addon.id}`}
+                    >
+                      Manage Add-on
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      className="w-full bg-[#36bff9] hover:bg-[#2aa8e0]"
+                      onClick={() => onAddToPlan(addon)}
+                      data-testid={`button-add-to-plan-${addon.id}`}
+                    >
+                      <Plus className="h-3 w-3 mr-1" />
+                      Add to Plan
+                    </Button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {sortedAddons.length > 6 && (
+          <div className={`${!showAll ? 'absolute bottom-0 left-0 right-0 pt-16 pb-4 bg-gradient-to-t from-white via-white to-transparent' : 'mt-4'} flex justify-center`}>
+            <Button
+              variant="outline"
+              onClick={() => setShowAll(!showAll)}
+              data-testid="button-show-more-addons"
+            >
+              {showAll ? 'Show Less' : `Show All ${sortedAddons.length} Add-ons`}
+              {showAll ? <ChevronUp className="h-4 w-4 ml-2" /> : <ChevronDown className="h-4 w-4 ml-2" />}
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Add to Plan Confirmation Dialog
+interface AddToPlanDialogProps {
+  open: boolean;
+  onClose: () => void;
+  addon: MarketplaceAddon | null;
+  onConfirm: () => void;
+  isLoading: boolean;
+}
+
+function AddToPlanDialog({ open, onClose, addon, onConfirm, isLoading }: AddToPlanDialogProps) {
+  if (!addon) return null;
+
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-md" data-testid="add-to-plan-dialog">
+        <DialogHeader>
+          <DialogTitle>Add {addon.name} to Your Plan</DialogTitle>
+          <DialogDescription>
+            This add-on will be added to your monthly subscription.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="py-4">
+          <div className="bg-gray-50 rounded-lg p-4 mb-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-medium text-gray-900">{addon.name}</span>
+              <span className="font-semibold text-gray-900">
+                ${addon.packages && addon.packages.length > 0 ? addon.packages[0].price : addon.price}/mo
+              </span>
+            </div>
+            <p className="text-sm text-gray-600">{addon.description}</p>
+          </div>
+
+          <div className="border-t pt-4">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-600">Monthly Impact</span>
+              <span className="font-semibold text-green-600">
+                +${addon.packages && addon.packages.length > 0 ? addon.packages[0].price : addon.price}/mo
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Changes will take effect immediately and be reflected on your next billing cycle.
+            </p>
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose} disabled={isLoading} data-testid="button-cancel-add">
+            Cancel
+          </Button>
+          <Button 
+            onClick={onConfirm} 
+            disabled={isLoading}
+            className="bg-[#36bff9] hover:bg-[#2aa8e0]"
+            data-testid="button-confirm-add"
+          >
+            {isLoading ? 'Adding...' : 'Add to Plan'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 // Modals
 interface EditExtensionModalProps {
   open: boolean;
@@ -1104,17 +1408,28 @@ function RecordVoicemailModal({ open, onClose, extension }: RecordVoicemailModal
 
 // Main Page Component
 export default function PhoneSystemPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabType>('phone-system');
   const [extensions, setExtensions] = useState<Extension[]>(mockExtensions);
   const [activeAddons] = useState<ActiveAddon[]>(mockActiveAddons);
   const [exploreAddons] = useState<ExploreAddon[]>(mockExploreAddons);
   const [reusableAddons, setReusableAddons] = useState<ReusableAddon[]>(sampleAddons);
   
+  // Subscribed addons state (simulating already-subscribed add-ons)
+  const [subscribedAddonIds, setSubscribedAddonIds] = useState<string[]>([
+    'toll-free', 'callout', 'supervised-transfer'
+  ]);
+  
   // Modal states
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [voicemailModalOpen, setVoicemailModalOpen] = useState(false);
   const [recordModalOpen, setRecordModalOpen] = useState(false);
   const [selectedExtension, setSelectedExtension] = useState<Extension | null>(null);
+  
+  // Add to plan dialog states
+  const [addToPlanDialogOpen, setAddToPlanDialogOpen] = useState(false);
+  const [selectedMarketplaceAddon, setSelectedMarketplaceAddon] = useState<MarketplaceAddon | null>(null);
+  const [isAddingToPlan, setIsAddingToPlan] = useState(false);
   
   const { toast } = useToast();
 
@@ -1195,6 +1510,43 @@ export default function PhoneSystemPage() {
     setRecordModalOpen(true);
   };
 
+  // Marketplace handlers
+  const handleViewBundles = () => {
+    router.push('/billing/plans');
+  };
+
+  const handleAddToPlan = (addon: MarketplaceAddon) => {
+    setSelectedMarketplaceAddon(addon);
+    setAddToPlanDialogOpen(true);
+  };
+
+  const handleConfirmAddToPlan = async () => {
+    if (!selectedMarketplaceAddon) return;
+    
+    setIsAddingToPlan(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    setSubscribedAddonIds(prev => [...prev, selectedMarketplaceAddon.id]);
+    setIsAddingToPlan(false);
+    setAddToPlanDialogOpen(false);
+    
+    toast({
+      title: 'Add-on Added!',
+      description: `${selectedMarketplaceAddon.name} has been added to your monthly plan.`,
+    });
+    
+    setSelectedMarketplaceAddon(null);
+  };
+
+  const handleManageAddon = (addon: MarketplaceAddon) => {
+    toast({
+      title: 'Manage Add-on',
+      description: `Opening settings for ${addon.name}`,
+    });
+  };
+
   return (
     <div className="p-4 lg:p-8" data-testid="phone-system-page">
       {/* Header */}
@@ -1249,22 +1601,44 @@ export default function PhoneSystemPage() {
       )}
       
       {activeTab === 'add-ons' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <ExploreAddons
-              addons={exploreAddons}
-              onAdd={handleAddAddon}
-            />
-          </div>
-          {reusableAddons.filter(a => a.status === 'inactive').length > 0 && (
-            <ActiveAddonsList
-              addons={reusableAddons}
-              onAddonUpdate={handleReusableAddonUpdate}
-              onViewInstructions={handleReusableViewInstructions}
-              title="Available Add-ons"
-              showOnlyActive={false}
-            />
+        <div className="space-y-6" data-testid="addons-tab-content">
+          {/* Bundle Promotion Banner */}
+          <BundlePromoBanner onViewBundles={handleViewBundles} />
+          
+          {/* Active Add-ons Summary */}
+          {subscribedAddonIds.length > 0 && (
+            <Card className="p-5" data-testid="active-addons-summary">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-gray-900">Your Active Add-ons</h2>
+                <Badge variant="outline" className="text-green-600 border-green-200">
+                  {subscribedAddonIds.length} Active
+                </Badge>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {subscribedAddonIds.map(id => {
+                  const addon = availableAddons.find(a => a.id === id);
+                  return addon ? (
+                    <Badge 
+                      key={id} 
+                      className="bg-green-50 text-green-700 border border-green-200"
+                      data-testid={`active-badge-${id}`}
+                    >
+                      <Check className="h-3 w-3 mr-1" />
+                      {addon.name}
+                    </Badge>
+                  ) : null;
+                })}
+              </div>
+            </Card>
           )}
+          
+          {/* Marketplace Grid */}
+          <MarketplaceAddonsGrid
+            addons={availableAddons}
+            subscribedAddonIds={subscribedAddonIds}
+            onAddToPlan={handleAddToPlan}
+            onManage={handleManageAddon}
+          />
         </div>
       )}
       
@@ -1288,6 +1662,18 @@ export default function PhoneSystemPage() {
         open={recordModalOpen}
         onClose={() => setRecordModalOpen(false)}
         extension={selectedExtension}
+      />
+      
+      {/* Add to Plan Confirmation Dialog */}
+      <AddToPlanDialog
+        open={addToPlanDialogOpen}
+        onClose={() => {
+          setAddToPlanDialogOpen(false);
+          setSelectedMarketplaceAddon(null);
+        }}
+        addon={selectedMarketplaceAddon}
+        onConfirm={handleConfirmAddToPlan}
+        isLoading={isAddingToPlan}
       />
     </div>
   );
