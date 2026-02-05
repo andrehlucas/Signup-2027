@@ -303,7 +303,7 @@ export default function CustomizePage() {
             <div className="relative">
               <div 
                 className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300 ${
-                  !showAllAddons ? 'max-h-[580px] overflow-hidden' : ''
+                  !showAllAddons ? 'max-h-[380px] overflow-hidden' : ''
                 }`}
                 data-testid="addons-grid"
               >
@@ -393,14 +393,14 @@ export default function CustomizePage() {
                 })}
               </div>
 
-              {!showAllAddons && sortedAddons.length > 9 && (
+              {!showAllAddons && sortedAddons.length > 6 && (
                 <div 
                   className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none"
                   data-testid="addons-gradient-overlay"
                 />
               )}
 
-              {sortedAddons.length > 9 && (
+              {sortedAddons.length > 6 && (
                 <div className={`flex justify-center ${!showAllAddons ? '-mt-4 relative z-10' : 'mt-4'}`}>
                   <Button
                     variant="outline"

@@ -949,6 +949,10 @@ body {
   max-height: 100vh;
 }
 
+.max-h-\[380px\] {
+  max-height: 380px;
+}
+
 .min-h-0 {
   min-height: 0;
 }
