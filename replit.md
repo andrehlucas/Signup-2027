@@ -138,8 +138,15 @@ Multi-step wizard for business expansion located at `/add-location`:
 *Step 3: Checkout*
 - Order summary (location, bundle, phone, addons)
 - Remove addon capability
-- Agreement checkbox (required to proceed)
-- Payment summary with monthly and one-time totals
+- Payment term selector (1, 3, 6, 12 months) with multi-month discounts:
+  - 3 months: Pay for 2, get 3 (1 month free)
+  - 6 months: Pay for 5, get 6 (1 month free)
+  - 12 months: Pay for 10, get 12 (2 months free)
+- Payment method selector:
+  - Credit/Debit Card (default) with billing address fields
+  - Wire Transfer for international clients (displays bank details with copy buttons)
+- Dynamic payment summary showing billing term, discounts, and effective rate
+- Agreement checkbox with dynamic term text (required to proceed)
 - Complete Checkout button (disabled until agreement checked)
 
 *Thank You Page*
