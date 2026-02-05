@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a full-stack web application for a virtual office service provider. The application showcases business services including virtual business addresses, professional call answering, mail receipt, and related office solutions. Built with a modern React frontend using shadcn/ui components and an Express backend with PostgreSQL database integration via Drizzle ORM.
+This is a full-stack web application for a virtual office service provider, showcasing business services like virtual business addresses, call answering, and mail services. The project aims to provide a modern, responsive platform for managing virtual office solutions, built with a React frontend and an Express backend.
 
 ## User Preferences
 
@@ -10,298 +10,70 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend Architecture
+### Frontend
 
-**Framework & Build System**
-- React 18+ with TypeScript for type-safe component development
-- Vite as the build tool and development server, providing fast HMR (Hot Module Replacement)
-- Wouter for lightweight client-side routing (alternative to React Router)
-- Path aliases configured for clean imports (`@/` for client src, `@shared/` for shared code)
+The frontend is built with React 18+ and TypeScript, utilizing Vite for fast development and Wouter for routing. UI components are developed with `shadcn/ui` based on Radix UI primitives and styled with Tailwind CSS, ensuring a responsive, mobile-first design with a custom color palette. State management for server interactions is handled by TanStack Query, while form management uses React Hook Form.
 
-**UI Component System**
-- shadcn/ui component library in "new-york" style with Radix UI primitives
-- Tailwind CSS for utility-first styling with custom design tokens
-- CSS variables for theming (brand colors, grays, semantic colors)
-- Custom color palette including brand colors (red-based), grays, and status colors
-- Responsive design with mobile-first approach
+### Backend
 
-**State Management**
-- TanStack Query (React Query) for server state management and API communication
-- Custom query client with infinite stale time and disabled refetching
-- Toast notifications via Radix UI Toast primitives
+The backend uses Express.js with TypeScript and Node.js. It follows an ESM module system with a clear API structure, where all endpoints are prefixed with `/api`. A storage interface abstraction is in place for data operations, currently using an in-memory solution but designed for database integration. Middleware handles JSON parsing, logging, and error management.
 
-**Component Organization**
-- UI components in `client/src/components/ui/` (shadcn/ui generated)
-- Custom components in `client/src/components/` (e.g., FeaturesBox)
-- Pages in `client/src/pages/` with Desktop as main landing page
-- Shared utilities in `client/src/lib/utils.ts`
+### Data Layer
 
-### Backend Architecture
+Drizzle ORM is used for PostgreSQL database integration, with schema definitions shared between the client and server for type safety. Zod is integrated for runtime schema validation. The schema includes a `Users` table with UUID primary keys.
 
-**Server Framework**
-- Express.js with TypeScript running on Node.js
-- ESM module system throughout the application
-- Separation between development and production modes
-- Custom logging middleware for API request tracking
+### Project Structure and Key Features
 
-**Development Tooling**
-- tsx for TypeScript execution in development
-- esbuild for production builds with bundling
-- Replit-specific plugins for development (cartographer, dev-banner, runtime-error-modal)
+The application employs a Next.js App Router layout for the portal, with distinct sections for the server and shared code. Key features include:
 
-**API Structure**
-- Routes registered through `server/routes.ts`
-- All API endpoints prefixed with `/api`
-- HTTP server created using Node's native `http` module
-- Storage interface abstraction for data operations
-
-**Data Layer**
-- Storage interface pattern (`IStorage`) for CRUD operations
-- In-memory storage implementation (`MemStorage`) for development/testing
-- Prepared for database integration with user management methods
-- UUID generation using Node's crypto module
-
-**Middleware Pipeline**
-1. JSON body parsing
-2. URL-encoded form parsing
-3. Request logging with duration tracking and response capture
-4. Route handlers
-5. Global error handler with status code normalization
-
-### Data Storage Solution
-
-**ORM & Database**
-- Drizzle ORM configured for PostgreSQL dialect
-- Schema definitions in `shared/schema.ts` for code sharing between client and server
-- Drizzle-Zod integration for schema validation
-- Migration files output to `./migrations` directory
-- Neon serverless PostgreSQL driver for database connectivity
-
-**Schema Design**
-- Users table with UUID primary keys (auto-generated)
-- Username uniqueness constraint
-- Password storage (should implement hashing in production)
-- Type-safe schema exports using Drizzle's inference
-
-**Validation**
-- Zod schemas generated from Drizzle schemas for runtime validation
-- Separate insert schemas for user creation
-
-### Project Structure
-
-**Next.js App Router Layout**
-- `app/` - Next.js application with App Router (portal-only)
-  - `page.tsx` - Portal dashboard (main page at /)
-  - `portal-components/` - Portal-specific reusable components
-  - `components/` - Shared UI components
-    - `ui/` - shadcn/ui components
-    - `NavigationProgress.tsx` - Page loading indicator
-  - `layout.tsx` - Root layout (Providers, PortalSidebar, NavigationProgress, Toaster)
-- `server/` - Backend Express application
-- `shared/` - Shared TypeScript code (schemas, types)
-- `attached_assets/` - Static image assets
-- `public/` - Public static assets (images, SVGs)
-- `migrations/` - Database migration files
-
-**Portal Routes**
-- `/` - Portal dashboard (locations overview)
-- `/office` - My Office page (mail forwarding, document upload, scanning setup, My Mail section)
-- `/phone` - Phone page (active add-ons management)
-- `/addons` - Addons page
-- `/account` - Account settings page (email, password, phone, company details)
-- `/billing` - Billing page
-- `/videos` - How to / Videos page
-- `/meeting-rooms` - Meeting rooms page
-- `/support` - Support page
-- `/add-location` - Add New Location wizard (multi-step flow)
-  - `/add-location` - Step 1: Location Selection
-  - `/add-location/customize` - Step 2: Service Customization
-  - `/add-location/checkout` - Step 3: Checkout
-  - `/add-location/thank-you` - Order Confirmation
-
-**Add New Location Feature**
-Multi-step wizard for business expansion located at `/add-location`:
-
-*Step 1: Location Selection*
-- State → City → Location drill-down selection
-- Premium Location badge for qualifying locations
-- Location preview with address details
-- Progress indicator showing current step
-
-*Step 2: Service Customization*
-- Bundle selection cards (Essentials $99, Plus $119, Pro $149, Premium $179)
-- Auto-assigned phone number with Change option (modal picker)
-- Add-ons section with "Add to Cart" / "Remove" toggle
-- Addons already included in bundle show "Included" badge
-- Cart summary with running monthly total
-
-*Step 3: Checkout*
-- Order summary (location, bundle, phone, addons)
-- Remove addon capability
-- Payment term selector (1, 3, 6, 12 months):
-  - 1, 3, 6 months: Standard pricing (prepay options)
-  - 12 months: Pay for 10, get 12 (2 months free) - "1 month free" badge
-- Payment method selector:
-  - Credit/Debit Card (default) with billing address fields
-  - Wire Transfer for international clients (displays bank details with copy buttons)
-- Dynamic payment summary showing billing term, discounts, and effective rate
-- Agreement checkbox with dynamic term text (required to proceed)
-- Complete Checkout button (disabled until agreement checked)
-
-*Thank You Page*
-- Order confirmation with details
-- Next Steps action cards (Mail, Phone, Documents, Team)
-- Onboarding info and support links
-- Go to Dashboard / Set Up Office buttons
-
-*Technical Notes*
-- State management via React Context (`OrderProvider` in layout.tsx)
-- Types defined in `app/add-location/types.ts`
-- Sample data included for locations, bundles, phone numbers, addons
-- Navigation guards prevent accessing steps without prerequisites
-
-**Account Page Features**
-Located at `/account`, the Account page provides:
-
-*Login & Security Section:*
-- Email display with Change Email button → opens 3-step modal (enter → verify → success)
-- Password change with live validation checklist (8+ chars, uppercase, number, symbol)
-- Phone display with inline edit mode and formatting
-
-*Company Details Section:*
-- Company name change with $30 fee notice
-- Required checkbox for fee acknowledgment
-- Confirmation modal before submission
-- Toast notifications for all success/error states
-
-**Billing Page Features**
-Located at `/billing`, the Billing page provides:
-
-*Current Subscription Section:*
-- Plan name, monthly amount, and next billing date display
-- Change Plan button
-
-*Payment Methods Section:*
-- List of saved cards with type icon, last 4 digits, expiry
-- Default card badge and "Set as Default" action
-- Add Card modal with cardholder name, card number, expiry, CVC
-- Delete card with confirmation modal
-
-*Billing History Section:*
-- Invoice table with ID, date, description, amount, status
-- Download PDF button for each invoice
-- Status badges (Paid, Pending, Failed)
-
-**Portal Search**
-- Located in `app/portal-components/PortalSearch.tsx`
-- Searchable index includes all portal pages with keywords and descriptions
-- Matches complete words only (not partial strings) - e.g., "form" matches but "for" only matches if "for" is a standalone word
-- Minimum 2 characters to trigger search
-- Displays results with page title, category, and description preview
-- Supports keyboard navigation (arrow keys, enter, escape)
-- Shows "No results found" message for zero matches
-- To add new pages: add an entry to the `searchablePages` array with title, href, keywords array, description, and category
-
-**Portal Reusable Components**
-Located in `app/portal-components/`:
-- `PromoBanner.tsx` - Dismissible promotional CTA banner
-- `QuickActionCard.tsx` - Action card with icon, title, description
-- `FeatureItem.tsx` - Package feature row with icon and label
-- `LocationMedia.tsx` - Building image + map + address + action buttons
-- `NavSection.tsx` - Collapsible sidebar navigation section with onNavigate callback
-- `PortalSidebar.tsx` - Responsive sidebar with desktop view (lg+) and mobile drawer
-- `PortalSearch.tsx` - Portal-wide search with searchable page index and dropdown results
-- `MyMailSection.tsx` - Mail notification section with pending mail list, review modal, and action buttons
-- `addons/` - Active Addons component system (API-ready, reusable)
-  - `types.ts` - TypeScript types for Addon data structure
-  - `ActiveAddonItem.tsx` - Individual addon row with green status dot and Edit/View Instructions button
-  - `ActiveAddonsList.tsx` - Container component that filters and displays addons
-  - `SupervisedTransferModal.tsx` - Yes/No availability toggle modal
-  - `MessageTakingModal.tsx` - Email/SMS/Both delivery selection + terms checkbox
-  - `PhoneNumberModal.tsx` - Reusable phone number selection modal
-  - `sampleAddons.ts` - Sample addon data for development
-
-**Active Addons Feature**
-The Active Addons component system on the Phone page allows customers to manage phone add-ons:
-- Displays active addons with green status dots and Edit or View Instructions buttons
-- Supervised Transfer Edit: Modal with Yes/No availability toggle for receiving incoming calls
-- Message Taking Edit: Modal with Email/SMS/Both delivery method selection + terms authorization checkbox
-- Toll-Free Edit: Modal to select from available toll-free numbers (1-800, 1-888 prefixed)
-- Additional Phone Number Edit: Modal to select from available local phone numbers
-- Terms link points to https://www.opusvirtualoffices.com/opus-virtual-offices-terms-of-use/
-- API-ready: Designed to receive addon data from an API with active/inactive status
-- Component usage:
-  ```tsx
-  import { ActiveAddonsList, Addon } from './portal-components/addons';
-  
-  <ActiveAddonsList
-    addons={addonsArray}
-    onAddonUpdate={(addonId, config) => handleUpdate(addonId, config)}
-    onViewInstructions={(addon) => handleViewInstructions(addon)}
-    title="Active Add-ons"
-    showOnlyActive={true}
-  />
-  ```
-
-**My Mail Feature**
-The My Mail section on the Office page allows customers to manage incoming mail:
-- View pending mail items with thumbnails, names, and received dates
-- Click "Review" to open a modal with envelope visualization
-- Take actions: Scan, Forward, Keep, Shred, or Not My Mail
-- Confirmation dialog before executing actions
-- Configure default action for new mail (Keep, Scan, Forward, Shred)
-- API endpoints: GET /api/mail, GET /api/mail/:id, POST /api/mail/:id/action, GET/PATCH /api/mail-settings
-- Feature flag: Set `NEXT_PUBLIC_MAILX_ENABLED=true` to enable (disabled by default)
-
-**Mobile Responsiveness**
-- Breakpoint: lg (1024px) separates desktop and mobile views
-- Desktop (lg+): Fixed sidebar always visible on the left
-- Mobile (below lg): Fixed header bar with hamburger menu, sidebar content in right-side Sheet drawer
-- Drawer auto-closes when navigation links are clicked
-- Main content has top padding (pt-16) on mobile to account for fixed header
-
-**Build Process**
-- Next.js handles client and server builds
-- TypeScript compilation checks without emit
-- Separate dev and production scripts
+-   **Portal Routes:** Dashboard, My Office, Phone, Addons, Account, Billing, Videos, Meeting Rooms, Support.
+-   **Add New Location Wizard:** A multi-step flow for selecting a location, customizing services (bundles, phone numbers, add-ons), and checkout with various payment options and terms.
+-   **Account Page:** Allows users to manage login credentials, security settings, and company details with validation and confirmation flows.
+-   **Billing Page:** Displays current subscriptions, payment methods management (add, set default, delete cards), and a history of invoices with PDF download options.
+-   **Portal Search:** A comprehensive search functionality across all portal pages, supporting keyword matching and keyboard navigation.
+-   **Active Add-ons and Marketplace:** Components for managing active phone add-ons and a marketplace grid to discover and add new services.
+-   **My Mail Feature:** Enables users to review pending mail items, view envelope thumbnails, and take actions like scanning, forwarding, keeping, or shredding mail.
+-   **Mobile Responsiveness:** Designed with an `lg` breakpoint for desktop/mobile views, featuring a fixed sidebar for desktop and a hamburger menu with a drawer for mobile.
 
 ## External Dependencies
 
 ### Third-Party UI Libraries
-- **Radix UI**: Comprehensive unstyled component primitives (accordion, dialog, dropdown, select, toast, etc.)
-- **shadcn/ui**: Pre-built accessible components built on Radix UI
-- **Lucide React**: Icon library for UI elements
-- **Embla Carousel**: Carousel/slider component
-- **cmdk**: Command menu component
-- **vaul**: Drawer component library
-- **react-day-picker**: Date picker component
+
+-   **Radix UI**: Core unstyled components.
+-   **shadcn/ui**: Styled components built on Radix UI.
+-   **Lucide React**: Icon library.
+-   **Embla Carousel**: Carousel component.
+-   **cmdk**: Command menu.
+-   **vaul**: Drawer component.
+-   **react-day-picker**: Date picker.
 
 ### State & Data Management
-- **TanStack Query v5**: Server state management and caching
-- **React Hook Form**: Form state management with validation
-- **Zod**: Schema validation and type safety
-- **Drizzle ORM**: TypeScript ORM for PostgreSQL
+
+-   **TanStack Query v5**: Server state management.
+-   **React Hook Form**: Form management.
+-   **Zod**: Schema validation.
+-   **Drizzle ORM**: TypeScript ORM for PostgreSQL.
 
 ### Styling & Utilities
-- **Tailwind CSS**: Utility-first CSS framework
-- **class-variance-authority**: Component variant management
-- **clsx & tailwind-merge**: Conditional className utilities
-- **date-fns**: Date manipulation and formatting
+
+-   **Tailwind CSS**: Utility-first CSS framework.
+-   **class-variance-authority**: Component variant utilities.
+-   **clsx & tailwind-merge**: Classname manipulation.
+-   **date-fns**: Date utilities.
 
 ### Backend Services
-- **Express**: Web server framework
-- **Neon Serverless**: PostgreSQL database driver optimized for serverless
-- **connect-pg-simple**: PostgreSQL session store (configured but not actively used)
+
+-   **Express**: Web server framework.
+-   **Neon Serverless**: PostgreSQL database driver.
 
 ### Development Tools
-- **Vite**: Frontend build tool and dev server
-- **esbuild**: JavaScript bundler for production
-- **tsx**: TypeScript execution for development
-- **Drizzle Kit**: Database migration and management CLI
-- **TypeScript**: Type system and compiler
-- **Replit Plugins**: Development environment enhancements (Cartographer, dev banner, runtime error overlay)
+
+-   **Vite**: Frontend build tool.
+-   **esbuild**: Production bundler.
+-   **tsx**: TypeScript execution.
+-   **Drizzle Kit**: Database migration CLI.
+-   **TypeScript**: Type system.
 
 ### Database
-- **PostgreSQL**: Primary database (via Neon serverless driver)
-- Connection configured via `DATABASE_URL` environment variable
-- Schema-first approach with Drizzle ORM migrations
+
+-   **PostgreSQL**: Primary database accessed via Neon serverless driver.
