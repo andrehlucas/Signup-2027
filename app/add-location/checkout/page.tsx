@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Building2, Clock, Globe, Copy } from 'lucide-react';
@@ -74,12 +74,63 @@ export default function CheckoutPage() {
   const [saveCard, setSaveCard] = useState(false);
   const [paymentTerm, setPaymentTerm] = useState<PaymentTerm>(1);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('card');
+  
+  // Sticky payment summary logic
+  const summaryContainerRef = useRef<HTMLDivElement>(null);
+  const [isSticky, setIsSticky] = useState(false);
+  const [summaryWidth, setSummaryWidth] = useState<number | null>(null);
 
   useEffect(() => {
     if (!order.location || !order.bundle || !order.phoneNumber) {
       router.push('/add-location');
     }
   }, [order, router]);
+
+  // Handle sticky scroll behavior
+  useEffect(() => {
+    const mainElement = document.querySelector('main');
+    if (!summaryContainerRef.current) return;
+
+    const handleScroll = () => {
+      const container = summaryContainerRef.current;
+      if (!container) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const stickyOffset = 24; // top-6 = 1.5rem = 24px
+      
+      // Check if we've scrolled past the container's top position
+      if (containerRect.top <= stickyOffset) {
+        setIsSticky(true);
+        setSummaryWidth(container.offsetWidth);
+      } else {
+        setIsSticky(false);
+        setSummaryWidth(null);
+      }
+    };
+
+    const handleResize = () => {
+      // Update width on resize if sticky
+      if (isSticky && summaryContainerRef.current) {
+        setSummaryWidth(summaryContainerRef.current.offsetWidth);
+      }
+    };
+
+    // Listen to both main element scroll and window scroll
+    if (mainElement) {
+      mainElement.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+    handleScroll(); // Check initial position
+    
+    return () => {
+      if (mainElement) {
+        mainElement.removeEventListener('scroll', handleScroll);
+      }
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isSticky]);
 
   const { monthly, oneTime } = getCartTotal();
   
@@ -679,8 +730,14 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-1 lg:relative">
-            <div className="bg-white rounded-xl border border-gray-200 p-6 lg:fixed lg:top-24 lg:w-[calc((100%-288px-4rem)/3-1.5rem)] lg:max-w-sm" data-testid="payment-summary">
+          <div className="lg:col-span-1" ref={summaryContainerRef}>
+            <div 
+              className={`bg-white rounded-xl border border-gray-200 p-6 transition-none ${
+                isSticky ? 'lg:fixed lg:top-6' : ''
+              }`}
+              style={isSticky && summaryWidth ? { width: summaryWidth } : undefined}
+              data-testid="payment-summary"
+            >
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Summary</h2>
 
               <div className="space-y-3 mb-4">
