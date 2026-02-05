@@ -24,8 +24,8 @@ interface PaymentTermOption {
 
 const paymentTermOptions: PaymentTermOption[] = [
   { months: 1, label: 'Monthly', freeMonths: 0 },
-  { months: 3, label: '3 Months', freeMonths: 1, badge: 'Save 1 Month' },
-  { months: 6, label: '6 Months', freeMonths: 1, badge: 'Save 1 Month' },
+  { months: 3, label: '3 Months', freeMonths: 0 },
+  { months: 6, label: '6 Months', freeMonths: 0 },
   { months: 12, label: '12 Months', freeMonths: 2, badge: 'Best Value' },
 ];
 
