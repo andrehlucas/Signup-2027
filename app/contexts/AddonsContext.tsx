@@ -23,21 +23,8 @@ interface AddonsContextType {
 
 const AddonsContext = createContext<AddonsContextType | undefined>(undefined);
 
-const initialActiveAddonIds = ['toll-free', 'callout', 'supervised-transfer'];
-
 export function AddonsProvider({ children }: { children: ReactNode }) {
-  const [activeAddons, setActiveAddons] = useState<ActiveAddon[]>(() => {
-    return initialActiveAddonIds.map(id => {
-      const addon = availableAddons.find(a => a.id === id);
-      return {
-        id,
-        name: addon?.name || id,
-        price: addon?.price || 0,
-        status: 'active' as const,
-        addedDate: '2026-01-15',
-      };
-    });
-  });
+  const [activeAddons, setActiveAddons] = useState<ActiveAddon[]>([]);
 
   const totalAddonsCost = useMemo(() => {
     return activeAddons

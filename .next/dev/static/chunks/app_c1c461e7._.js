@@ -649,31 +649,9 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 ;
 ;
 const AddonsContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(undefined);
-const initialActiveAddonIds = [
-    'toll-free',
-    'callout',
-    'supervised-transfer'
-];
 function AddonsProvider({ children }) {
     _s();
-    const [activeAddons, setActiveAddons] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
-        "AddonsProvider.useState": ()=>{
-            return initialActiveAddonIds.map({
-                "AddonsProvider.useState": (id)=>{
-                    const addon = __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["availableAddons"].find({
-                        "AddonsProvider.useState.addon": (a)=>a.id === id
-                    }["AddonsProvider.useState.addon"]);
-                    return {
-                        id,
-                        name: addon?.name || id,
-                        price: addon?.price || 0,
-                        status: 'active',
-                        addedDate: '2026-01-15'
-                    };
-                }
-            }["AddonsProvider.useState"]);
-        }
-    }["AddonsProvider.useState"]);
+    const [activeAddons, setActiveAddons] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const totalAddonsCost = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "AddonsProvider.useMemo[totalAddonsCost]": ()=>{
             return activeAddons.filter({
@@ -777,11 +755,11 @@ function AddonsProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/app/contexts/AddonsContext.tsx",
-        lineNumber: 103,
+        lineNumber: 90,
         columnNumber: 5
     }, this);
 }
-_s(AddonsProvider, "5TA1X9ZlsmKbT1YjSm7fjMw+MR8=");
+_s(AddonsProvider, "jpu5+YbZHzVwiu/7l+jjM1NJ5Z4=");
 _c = AddonsProvider;
 function useAddons() {
     _s1();
@@ -818,9 +796,9 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 ;
 ;
 const defaultPlan = {
-    id: 'essentials',
-    name: 'The Essentials',
-    price: 99
+    id: 'pro',
+    name: 'Office PRO',
+    price: 149
 };
 const SubscriptionContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(undefined);
 function SubscriptionProvider({ children }) {

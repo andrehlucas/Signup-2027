@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { Location, UserType } from '../shared/schema';
@@ -11,19 +11,20 @@ import { QuickActionCard } from './portal-components/QuickActionCard';
 import { FeatureItem } from './portal-components/FeatureItem';
 import { AlertComponent, Alert } from './portal-components/AlertComponent';
 import { ExpandLocationBanner } from './portal-components/ExpandLocationBanner';
+import { useSubscription } from './contexts/SubscriptionContext';
 
 const alertQueue: Alert[] = [
   { id: '1', type: 'info', title: 'New Mail Received', message: 'You have 3 new pieces of mail waiting at your office location.' },
   { id: '2', type: 'success', title: 'Payment Processed', message: 'Your monthly subscription has been renewed successfully.' },
 ];
 
-const packageFeatures = [
-  { icon: MapPin, label: 'Prestigious Business Address' },
-  { icon: Phone, label: 'Professional Live Call Answering' },
-  { icon: Phone, label: 'Personalized Call Transferring' },
-  { icon: Phone, label: 'Voicemail/Fax Converted to Email' },
-  { icon: Phone, label: 'Business Phone/Fax Number' },
-  { icon: FileEdit, label: 'Professional Mail Receipt' },
+const baseFeatures = [
+  { icon: MapPin, label: 'Prestigious Business Address', featureKey: 'businessAddress' as const },
+  { icon: Phone, label: 'Professional Live Call Answering', featureKey: 'liveCallAnswering' as const },
+  { icon: Phone, label: 'Personalized Call Transferring', featureKey: 'callTransferring' as const },
+  { icon: Phone, label: 'Voicemail/Fax Converted to Email', featureKey: 'voicemailToEmail' as const },
+  { icon: Phone, label: 'Business Phone/Fax Number', featureKey: 'businessPhoneNumber' as const },
+  { icon: FileEdit, label: 'Professional Mail Receipt', featureKey: 'mailReceipt' as const },
 ];
 
 const quickActions = [
@@ -37,6 +38,7 @@ const quickActions = [
 
 export default function PortalDashboard() {
   const router = useRouter();
+  const { currentBundle } = useSubscription();
   const { data: user } = useQuery<UserType>({
     queryKey: ['/api/user']
   });
@@ -47,6 +49,16 @@ export default function PortalDashboard() {
   
   const [activeLocation, setActiveLocation] = useState<string | null>(null);
   const [alerts, setAlerts] = useState<Alert[]>(alertQueue);
+  
+  const packageFeatures = useMemo(() => {
+    return baseFeatures.map(feature => {
+      const isIncluded = currentBundle?.features[feature.featureKey] || false;
+      return {
+        ...feature,
+        status: isIncluded ? 'included' as const : 'available' as const,
+      };
+    });
+  }, [currentBundle]);
 
   const currentAlert = alerts.length > 0 ? alerts[0] : null;
 
@@ -122,6 +134,8 @@ export default function PortalDashboard() {
                 key={idx}
                 icon={feature.icon}
                 label={feature.label}
+                status={feature.status}
+                planName={feature.status === 'included' ? currentBundle?.name : undefined}
               />
             ))}
           </div>

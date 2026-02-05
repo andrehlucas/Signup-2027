@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { UserType } from '../../shared/schema';
@@ -18,8 +18,11 @@ import {
   Headphones,
   PhoneForwarded,
   Voicemail,
-  FileEdit
+  FileEdit,
+  Lock,
+  Check
 } from 'lucide-react';
+import { useSubscription } from '@/app/contexts/SubscriptionContext';
 import { Button } from '@/app/components/ui/button';
 import { Progress } from '@/app/components/ui/progress';
 import {
@@ -50,20 +53,31 @@ interface UploadingFile {
   status: 'uploading' | 'complete' | 'error';
 }
 
-const packageFeatures = [
-  { icon: MapPin, label: 'Prestigious Business Address' },
-  { icon: Headphones, label: 'Professional Live Call Answering' },
-  { icon: PhoneForwarded, label: 'Personalized Call Transferring' },
-  { icon: Voicemail, label: 'Voicemail/Fax Converted to Email' },
-  { icon: Phone, label: 'Business Phone/Fax Number' },
-  { icon: FileEdit, label: 'Professional Mail Receipt' },
+const baseFeatures = [
+  { icon: MapPin, label: 'Prestigious Business Address', featureKey: 'businessAddress' as const },
+  { icon: Headphones, label: 'Professional Live Call Answering', featureKey: 'liveCallAnswering' as const },
+  { icon: PhoneForwarded, label: 'Personalized Call Transferring', featureKey: 'callTransferring' as const },
+  { icon: Voicemail, label: 'Voicemail/Fax Converted to Email', featureKey: 'voicemailToEmail' as const },
+  { icon: Phone, label: 'Business Phone/Fax Number', featureKey: 'businessPhoneNumber' as const },
+  { icon: FileEdit, label: 'Professional Mail Receipt', featureKey: 'mailReceipt' as const },
 ];
 
 export default function OfficePage() {
   const router = useRouter();
+  const { currentBundle } = useSubscription();
   const { data: user } = useQuery<UserType>({
     queryKey: ['/api/user']
   });
+  
+  const packageFeatures = useMemo(() => {
+    return baseFeatures.map(feature => {
+      const isIncluded = currentBundle?.features[feature.featureKey] || false;
+      return {
+        ...feature,
+        status: isIncluded ? 'included' as const : 'available' as const,
+      };
+    });
+  }, [currentBundle]);
 
   const [uploadingFiles, setUploadingFiles] = useState<UploadingFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);

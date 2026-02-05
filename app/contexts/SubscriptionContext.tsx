@@ -24,9 +24,9 @@ interface SubscriptionContextType {
 }
 
 const defaultPlan = {
-  id: 'essentials',
-  name: 'The Essentials',
-  price: 99,
+  id: 'pro',
+  name: 'Office PRO',
+  price: 149,
 };
 
 const SubscriptionContext = createContext<SubscriptionContextType | undefined>(undefined);

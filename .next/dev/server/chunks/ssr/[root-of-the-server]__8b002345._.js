@@ -641,24 +641,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$ty
 ;
 ;
 const AddonsContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(undefined);
-const initialActiveAddonIds = [
-    'toll-free',
-    'callout',
-    'supervised-transfer'
-];
 function AddonsProvider({ children }) {
-    const [activeAddons, setActiveAddons] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(()=>{
-        return initialActiveAddonIds.map((id)=>{
-            const addon = __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["availableAddons"].find((a)=>a.id === id);
-            return {
-                id,
-                name: addon?.name || id,
-                price: addon?.price || 0,
-                status: 'active',
-                addedDate: '2026-01-15'
-            };
-        });
-    });
+    const [activeAddons, setActiveAddons] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const totalAddonsCost = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
         return activeAddons.filter((a)=>a.status === 'active').reduce((sum, addon)=>sum + addon.price, 0);
     }, [
@@ -730,7 +714,7 @@ function AddonsProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/app/contexts/AddonsContext.tsx",
-        lineNumber: 103,
+        lineNumber: 90,
         columnNumber: 5
     }, this);
 }
@@ -761,9 +745,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$ty
 ;
 ;
 const defaultPlan = {
-    id: 'essentials',
-    name: 'The Essentials',
-    price: 99
+    id: 'pro',
+    name: 'Office PRO',
+    price: 149
 };
 const SubscriptionContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(undefined);
 function SubscriptionProvider({ children }) {

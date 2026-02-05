@@ -51,9 +51,10 @@ import {
   SelectValue,
 } from '@/app/components/ui/select';
 import { useToast } from '@/app/hooks/use-toast';
-import { availableAddons, Addon as MarketplaceAddon } from '@/app/add-location/types';
+import { availableAddons, Addon as MarketplaceAddon, AddonStatus } from '@/app/add-location/types';
 import { useAddons } from '@/app/contexts/AddonsContext';
-import { Trash2 } from 'lucide-react';
+import { useSubscription } from '@/app/contexts/SubscriptionContext';
+import { Trash2, Lock } from 'lucide-react';
 
 // Types
 interface Extension {
@@ -671,18 +672,20 @@ function BundlePromoBanner({ onViewBundles }: BundlePromoBannerProps) {
 // Marketplace Addons Grid Component
 interface MarketplaceAddonsGridProps {
   addons: MarketplaceAddon[];
-  subscribedAddonIds: string[];
+  includedAddonIds: string[];
+  activeAddonIds: string[];
   onAddToPlan: (addon: MarketplaceAddon) => void;
   onRemoveFromPlan: (addon: MarketplaceAddon) => void;
-  onManage: (addon: MarketplaceAddon) => void;
+  currentPlanName: string;
 }
 
 function MarketplaceAddonsGrid({ 
   addons, 
-  subscribedAddonIds, 
+  includedAddonIds,
+  activeAddonIds,
   onAddToPlan, 
   onRemoveFromPlan,
-  onManage 
+  currentPlanName,
 }: MarketplaceAddonsGridProps) {
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAll, setShowAll] = useState(false);
@@ -697,6 +700,13 @@ function MarketplaceAddonsGrid({
       }
       return newSet;
     });
+  };
+
+  // Helper to get addon status
+  const getStatus = (addonId: string): AddonStatus => {
+    if (includedAddonIds.includes(addonId)) return 'included';
+    if (activeAddonIds.includes(addonId)) return 'active';
+    return 'available';
   };
 
   const sortedAddons = useMemo(() => {
@@ -718,15 +728,17 @@ function MarketplaceAddonsGrid({
     return [...addons]
       .filter(addon => addon.category === 'phone')
       .sort((a, b) => {
-        const aSubscribed = subscribedAddonIds.includes(a.id);
-        const bSubscribed = subscribedAddonIds.includes(b.id);
-        if (aSubscribed !== bSubscribed) return aSubscribed ? -1 : 1;
+        // Sort order: included > active > available
+        const statusOrder = { included: 0, active: 1, available: 2 };
+        const aStatus = includedAddonIds.includes(a.id) ? 'included' : activeAddonIds.includes(a.id) ? 'active' : 'available';
+        const bStatus = includedAddonIds.includes(b.id) ? 'included' : activeAddonIds.includes(b.id) ? 'active' : 'available';
+        if (aStatus !== bStatus) return statusOrder[aStatus] - statusOrder[bStatus];
         
         const aPriority = priorityOrder[a.id] ?? 999;
         const bPriority = priorityOrder[b.id] ?? 999;
         return aPriority - bPriority;
       });
-  }, [addons, subscribedAddonIds]);
+  }, [addons, includedAddonIds, activeAddonIds]);
 
   const displayedAddons = showAll ? sortedAddons : sortedAddons.slice(0, 6);
 
@@ -737,7 +749,7 @@ function MarketplaceAddonsGrid({
           Phone System Add-ons
         </h2>
         <span className="text-sm text-gray-500">
-          {subscribedAddonIds.length} active
+          {includedAddonIds.length + activeAddonIds.length} active
         </span>
       </div>
 
@@ -749,14 +761,16 @@ function MarketplaceAddonsGrid({
           data-testid="marketplace-addons-grid"
         >
           {displayedAddons.map((addon) => {
-            const isSubscribed = subscribedAddonIds.includes(addon.id);
+            const status = getStatus(addon.id);
             const isExpanded = expandedAddons.has(addon.id);
 
             return (
               <div
                 key={addon.id}
                 className={`rounded-lg border transition-all ${
-                  isSubscribed
+                  status === 'included'
+                    ? 'border-blue-200 bg-blue-50'
+                    : status === 'active'
                     ? 'border-green-200 bg-green-50'
                     : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
                 }`}
@@ -765,8 +779,13 @@ function MarketplaceAddonsGrid({
                 <div className="p-4">
                   <div className="flex items-start justify-between mb-1">
                     <h4 className="font-medium text-gray-900">{addon.name}</h4>
-                    {isSubscribed ? (
-                      <Badge className="bg-green-100 text-green-700 border-0">
+                    {status === 'included' ? (
+                      <Badge className="bg-blue-100 text-blue-700 border-0" data-testid={`badge-included-${addon.id}`}>
+                        <Lock className="h-3 w-3 mr-1" />
+                        Included
+                      </Badge>
+                    ) : status === 'active' ? (
+                      <Badge className="bg-green-100 text-green-700 border-0" data-testid={`badge-active-${addon.id}`}>
                         <Check className="h-3 w-3 mr-1" />
                         Active
                       </Badge>
@@ -809,7 +828,15 @@ function MarketplaceAddonsGrid({
                     </div>
                   )}
 
-                  {isSubscribed ? (
+                  {status === 'included' ? (
+                    <div 
+                      className="w-full py-2 px-3 bg-blue-100 text-blue-700 text-sm text-center rounded-md flex items-center justify-center gap-2"
+                      data-testid={`included-notice-${addon.id}`}
+                    >
+                      <Lock className="h-3 w-3" />
+                      Included in {currentPlanName}
+                    </div>
+                  ) : status === 'active' ? (
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
@@ -1490,23 +1517,27 @@ export default function PhoneSystemPage() {
   const [activeAddons] = useState<ActiveAddon[]>(mockActiveAddons);
   const [exploreAddons] = useState<ExploreAddon[]>(mockExploreAddons);
   
-  // Use AddonsContext as single source of truth
-  const { activeAddons: contextAddons, addAddon, removeAddon, isAddonActive } = useAddons();
+  // Use contexts for add-ons and subscription
+  const { activeAddons: contextAddons, addAddon, removeAddon, isAddonActive, getAddonStatus } = useAddons();
+  const { includedAddonIds, currentPlanName, isAddonIncluded } = useSubscription();
   
-  // Derive subscribedAddonIds from context
-  const subscribedAddonIds = useMemo(() => {
+  // Derive activeAddonIds from context (separately purchased add-ons, not included in bundle)
+  const activeAddonIds = useMemo(() => {
     return contextAddons
       .filter(addon => addon.status === 'active')
       .map(addon => addon.id);
   }, [contextAddons]);
   
-  // Derive reusableAddons for ActiveAddonsList (synced with context)
+  // Derive reusableAddons for ActiveAddonsList (synced with context + includes bundle features)
   const reusableAddons = useMemo(() => {
-    return sampleAddons.map(addon => ({
-      ...addon,
-      status: isAddonActive(addon.id) ? 'active' : 'inactive'
-    })) as ReusableAddon[];
-  }, [isAddonActive]);
+    return sampleAddons.map(addon => {
+      const status = getAddonStatus(addon.id, includedAddonIds);
+      return {
+        ...addon,
+        status: status === 'included' ? 'active' : status === 'active' ? 'active' : 'inactive'
+      };
+    }) as ReusableAddon[];
+  }, [getAddonStatus, includedAddonIds]);
   
   // Modal states
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -1568,11 +1599,7 @@ export default function PhoneSystemPage() {
   };
 
   const handleReusableAddonUpdate = (addonId: string, config: ReusableAddon['config']) => {
-    setReusableAddons((prev) =>
-      prev.map((addon) =>
-        addon.id === addonId ? { ...addon, config } : addon
-      )
-    );
+    // Config updates are handled through context now
     toast({
       title: 'Settings Updated',
       description: 'Your add-on settings have been saved.',
@@ -1621,15 +1648,8 @@ export default function PhoneSystemPage() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Use context to add addon
-    const price = selectedMarketplaceAddon.packages && selectedMarketplaceAddon.packages.length > 0 
-      ? selectedMarketplaceAddon.packages[0].price 
-      : selectedMarketplaceAddon.price;
-    addAddon({
-      id: selectedMarketplaceAddon.id,
-      name: selectedMarketplaceAddon.name,
-      price: price,
-    });
+    // Use context to add addon (pass the full addon object)
+    addAddon(selectedMarketplaceAddon);
     
     setIsAddingToPlan(false);
     setAddToPlanDialogOpen(false);
@@ -1736,22 +1756,37 @@ export default function PhoneSystemPage() {
           <BundlePromoBanner onViewBundles={handleViewBundles} />
           
           {/* Active Add-ons Summary */}
-          {subscribedAddonIds.length > 0 && (
+          {(includedAddonIds.length + activeAddonIds.length) > 0 && (
             <Card className="p-5" data-testid="active-addons-summary">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-gray-900">Your Active Add-ons</h2>
                 <Badge variant="outline" className="text-green-600 border-green-200">
-                  {subscribedAddonIds.length} Active
+                  {includedAddonIds.length + activeAddonIds.length} Active
                 </Badge>
               </div>
               <div className="flex flex-wrap gap-2">
-                {subscribedAddonIds.map(id => {
+                {/* Show included add-ons first */}
+                {includedAddonIds.map(id => {
+                  const addon = availableAddons.find(a => a.id === id);
+                  return addon ? (
+                    <Badge 
+                      key={id} 
+                      className="bg-blue-50 text-blue-700 border border-blue-200"
+                      data-testid={`summary-addon-included-${id}`}
+                    >
+                      <Lock className="h-3 w-3 mr-1" />
+                      {addon.name}
+                    </Badge>
+                  ) : null;
+                })}
+                {/* Show separately purchased add-ons */}
+                {activeAddonIds.map(id => {
                   const addon = availableAddons.find(a => a.id === id);
                   return addon ? (
                     <Badge 
                       key={id} 
                       className="bg-green-50 text-green-700 border border-green-200"
-                      data-testid={`active-badge-${id}`}
+                      data-testid={`summary-addon-active-${id}`}
                     >
                       <Check className="h-3 w-3 mr-1" />
                       {addon.name}
@@ -1765,10 +1800,11 @@ export default function PhoneSystemPage() {
           {/* Marketplace Grid */}
           <MarketplaceAddonsGrid
             addons={availableAddons}
-            subscribedAddonIds={subscribedAddonIds}
+            includedAddonIds={includedAddonIds}
+            activeAddonIds={activeAddonIds}
             onAddToPlan={handleAddToPlan}
             onRemoveFromPlan={handleRemoveFromPlan}
-            onManage={handleManageAddon}
+            currentPlanName={currentPlanName}
           />
         </div>
       )}
