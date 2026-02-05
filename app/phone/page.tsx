@@ -759,8 +759,8 @@ function MarketplaceAddonsGrid({
         <h2 className="text-lg font-semibold text-gray-900" data-testid="heading-marketplace-addons">
           Phone System Add-ons
         </h2>
-        <span className="text-sm text-gray-500">
-          {includedAddonIds.length + activeAddonIds.length} active
+        <span className="text-sm text-gray-500" data-testid="current-plan-indicator">
+          Current Plan: <span className="font-medium text-gray-700">{currentPlanName}</span>
         </span>
       </div>
 
@@ -840,25 +840,16 @@ function MarketplaceAddonsGrid({
                   )}
 
                   {status === 'included' ? (
-                    <div className="space-y-2">
-                      <div 
-                        className="w-full py-2 px-3 bg-blue-100 text-blue-700 text-sm text-center rounded-md flex items-center justify-center gap-2"
-                        data-testid={`included-notice-${addon.id}`}
-                      >
-                        <Lock className="h-3 w-3" />
-                        Included in {currentPlanName}
-                      </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onRemoveBundleFeature(addon)}
-                        className="w-full border-amber-200 text-amber-600 hover:bg-amber-50"
-                        data-testid={`button-remove-bundle-feature-${addon.id}`}
-                      >
-                        <Trash2 className="h-3 w-3 mr-1" />
-                        Remove Feature
-                      </Button>
-                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => onRemoveBundleFeature(addon)}
+                      className="w-full border-amber-200 text-amber-600 hover:bg-amber-50"
+                      data-testid={`button-remove-bundle-feature-${addon.id}`}
+                    >
+                      <Trash2 className="h-3 w-3 mr-1" />
+                      Remove Feature
+                    </Button>
                   ) : status === 'active' ? (
                     <div className="flex gap-2">
                       <Button
@@ -1945,48 +1936,6 @@ export default function PhoneSystemPage() {
         <div className="space-y-6" data-testid="addons-tab-content">
           {/* Bundle Promotion Banner */}
           <BundlePromoBanner onViewBundles={handleViewBundles} />
-          
-          {/* Active Add-ons Summary */}
-          {(includedAddonIds.length + activeAddonIds.length) > 0 && (
-            <Card className="p-5" data-testid="active-addons-summary">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-gray-900">Your Active Add-ons</h2>
-                <Badge variant="outline" className="text-green-600 border-green-200">
-                  {includedAddonIds.length + activeAddonIds.length} Active
-                </Badge>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {/* Show included add-ons first */}
-                {includedAddonIds.map(id => {
-                  const addon = availableAddons.find(a => a.id === id);
-                  return addon ? (
-                    <Badge 
-                      key={id} 
-                      className="bg-blue-50 text-blue-700 border border-blue-200"
-                      data-testid={`summary-addon-included-${id}`}
-                    >
-                      <Lock className="h-3 w-3 mr-1" />
-                      {addon.name}
-                    </Badge>
-                  ) : null;
-                })}
-                {/* Show separately purchased add-ons */}
-                {activeAddonIds.map(id => {
-                  const addon = availableAddons.find(a => a.id === id);
-                  return addon ? (
-                    <Badge 
-                      key={id} 
-                      className="bg-green-50 text-green-700 border border-green-200"
-                      data-testid={`summary-addon-active-${id}`}
-                    >
-                      <Check className="h-3 w-3 mr-1" />
-                      {addon.name}
-                    </Badge>
-                  ) : null;
-                })}
-              </div>
-            </Card>
-          )}
           
           {/* Marketplace Grid */}
           <MarketplaceAddonsGrid
