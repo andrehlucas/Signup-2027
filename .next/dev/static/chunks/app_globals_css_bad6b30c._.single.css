@@ -933,6 +933,10 @@ body {
   max-height: 300px;
 }
 
+.max-h-\[580px\] {
+  max-height: 580px;
+}
+
 .max-h-\[90vh\] {
   max-height: 90vh;
 }
@@ -2062,6 +2066,12 @@ body {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-white {
+  --tw-gradient-from: var(--white) var(--tw-gradient-from-position);
+  --tw-gradient-to: #fff0 var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .via-\[\#1a1a2e\]\/80 {
   --tw-gradient-to: #1a1a2e00 var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #1a1a2ecc var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -2996,6 +3006,10 @@ body {
   transition-duration: .2s;
 }
 
+.duration-300 {
+  transition-duration: .3s;
+}
+
 .duration-500 {
   transition-duration: .5s;
 }
@@ -3054,6 +3068,10 @@ body {
 
 .duration-200 {
   animation-duration: .2s;
+}
+
+.duration-300 {
+  animation-duration: .3s;
 }
 
 .duration-500 {
