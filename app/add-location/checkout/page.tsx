@@ -183,7 +183,7 @@ export default function CheckoutPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-start">
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="order-summary-section">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
@@ -679,8 +679,8 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-1 self-start">
-            <div className="bg-white rounded-xl border border-gray-200 p-6 sticky top-4" data-testid="payment-summary">
+          <div className="lg:col-span-1 lg:relative">
+            <div className="bg-white rounded-xl border border-gray-200 p-6 lg:fixed lg:top-24 lg:w-[calc((100%-288px-4rem)/3-1.5rem)] lg:max-w-sm" data-testid="payment-summary">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Summary</h2>
 
               <div className="space-y-3 mb-4">
