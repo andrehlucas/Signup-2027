@@ -966,10 +966,6 @@ body {
   max-height: 380px;
 }
 
-.max-h-\[600px\] {
-  max-height: 600px;
-}
-
 .max-h-\[90vh\] {
   max-height: 90vh;
 }
@@ -2166,11 +2162,6 @@ body {
 .via-\[\#2d2d4a\] {
   --tw-gradient-to: #2d2d4a00 var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #2d2d4a var(--tw-gradient-via-position), var(--tw-gradient-to);
-}
-
-.via-white {
-  --tw-gradient-to: #fff0 var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--white) var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
 .to-\[\#0d4f6e\] {

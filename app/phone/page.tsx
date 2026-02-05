@@ -699,7 +699,6 @@ function MarketplaceAddonsGrid({
   currentPlanName,
 }: MarketplaceAddonsGridProps) {
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
-  const [showAll, setShowAll] = useState(false);
 
   const toggleExpanded = (addonId: string) => {
     setExpandedAddons(prev => {
@@ -751,8 +750,6 @@ function MarketplaceAddonsGrid({
       });
   }, [addons, includedAddonIds, activeAddonIds]);
 
-  const displayedAddons = showAll ? sortedAddons : sortedAddons.slice(0, 6);
-
   return (
     <div data-testid="marketplace-addons-section">
       <div className="flex items-center justify-between mb-4">
@@ -764,14 +761,12 @@ function MarketplaceAddonsGrid({
         </span>
       </div>
 
-      <div className="relative">
+      <div>
         <div 
-          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300 ${
-            !showAll && sortedAddons.length > 6 ? 'max-h-[600px] overflow-hidden' : ''
-          }`}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
           data-testid="marketplace-addons-grid"
         >
-          {displayedAddons.map((addon) => {
+          {sortedAddons.map((addon) => {
             const status = getStatus(addon.id);
             const isExpanded = expandedAddons.has(addon.id);
 
@@ -879,19 +874,6 @@ function MarketplaceAddonsGrid({
             );
           })}
         </div>
-
-        {sortedAddons.length > 6 && (
-          <div className={`${!showAll ? 'absolute bottom-0 left-0 right-0 pt-16 pb-4 bg-gradient-to-t from-white via-white to-transparent' : 'mt-4'} flex justify-center`}>
-            <Button
-              variant="outline"
-              onClick={() => setShowAll(!showAll)}
-              data-testid="button-show-more-addons"
-            >
-              {showAll ? 'Show Less' : `Show All ${sortedAddons.length} Add-ons`}
-              {showAll ? <ChevronUp className="h-4 w-4 ml-2" /> : <ChevronDown className="h-4 w-4 ml-2" />}
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );
