@@ -872,14 +872,12 @@ const paymentTermOptions = [
     {
         months: 3,
         label: '3 Months',
-        freeMonths: 1,
-        badge: 'Save 1 Month'
+        freeMonths: 0
     },
     {
         months: 6,
         label: '6 Months',
-        freeMonths: 1,
-        badge: 'Save 1 Month'
+        freeMonths: 0
     },
     {
         months: 12,
@@ -2603,7 +2601,11 @@ function CheckoutPage() {
                                                                         lineNumber: 681,
                                                                         columnNumber: 76
                                                                     }, this),
-                                                                    " agree to subscribe to the OPUS VIRTUAL OFFICES VIRTUAL OFFICE PROGRAM as stated above. I understand that my monthly recurring charges must be paid in advance and that services will be billed 5 business days prior to its monthly due date. Late payment may result in suspension of service and may be subject to a US$50 reinstatement fee."
+                                                                    " agree to subscribe to the OPUS VIRTUAL OFFICES VIRTUAL OFFICE PROGRAM as stated above. I understand that my ",
+                                                                    paymentTerm === 1 ? 'monthly recurring charges must be paid in advance' : `${paymentTerm}-month term payment is due upfront`,
+                                                                    " and that services will be billed 5 business days prior to its ",
+                                                                    paymentTerm === 1 ? 'monthly' : 'term',
+                                                                    " due date. Late payment may result in suspension of service and may be subject to a US$50 reinstatement fee."
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/add-location/checkout/page.tsx",
@@ -2611,8 +2613,16 @@ function CheckoutPage() {
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                children: "This agreement is for an initial 3 months term. After the initial 3 months term this agreement shall automatically renew on a month to month basis provided CLIENT does not give OPUS written notice of cancellation at least 30 days prior to the monthly term renewal. In the event Opus Virtual Offices is required to employ an attorney to enforce any provision of this Agreement; Client shall pay to Opus Virtual Offices, all attorney fees and court costs incurred."
-                                                            }, void 0, false, {
+                                                                children: [
+                                                                    "This agreement is for an initial ",
+                                                                    paymentTerm,
+                                                                    " month",
+                                                                    paymentTerm > 1 ? 's' : '',
+                                                                    " term. After the initial term this agreement shall automatically renew on a ",
+                                                                    paymentTerm === 1 ? 'month to month' : `${paymentTerm}-month`,
+                                                                    " basis provided CLIENT does not give OPUS written notice of cancellation at least 30 days prior to the term renewal. In the event Opus Virtual Offices is required to employ an attorney to enforce any provision of this Agreement; Client shall pay to Opus Virtual Offices, all attorney fees and court costs incurred."
+                                                                ]
+                                                            }, void 0, true, {
                                                                 fileName: "[project]/app/add-location/checkout/page.tsx",
                                                                 lineNumber: 683,
                                                                 columnNumber: 19

@@ -26,7 +26,7 @@ const paymentTermOptions: PaymentTermOption[] = [
   { months: 1, label: 'Monthly', freeMonths: 0 },
   { months: 3, label: '3 Months', freeMonths: 0 },
   { months: 6, label: '6 Months', freeMonths: 0 },
-  { months: 12, label: '12 Months', freeMonths: 2, badge: 'Best Value' },
+  { months: 12, label: '12 Months', freeMonths: 2, badge: '1 month free' },
 ];
 
 const wireTransferDetails = {
@@ -318,21 +318,12 @@ export default function CheckoutPage() {
                     data-testid={`payment-term-${option.months}`}
                   >
                     {option.badge && (
-                      <span className={`absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap ${
-                        option.badge === 'Best Value' 
-                          ? 'bg-green-100 text-green-700' 
-                          : 'bg-orange-100 text-orange-700'
-                      }`}>
+                      <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap bg-green-100 text-green-700">
                         {option.badge}
                       </span>
                     )}
                     <div className="text-center">
                       <p className="font-semibold text-gray-900">{option.label}</p>
-                      {option.months > 1 && (
-                        <p className="text-xs text-gray-500 mt-1">
-                          Pay for {option.months - option.freeMonths}, get {option.months}
-                        </p>
-                      )}
                     </div>
                     {paymentTerm === option.months && (
                       <div className="absolute top-2 right-2">

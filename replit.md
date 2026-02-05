@@ -140,7 +140,7 @@ Multi-step wizard for business expansion located at `/add-location`:
 - Remove addon capability
 - Payment term selector (1, 3, 6, 12 months):
   - 1, 3, 6 months: Standard pricing (prepay options)
-  - 12 months: Pay for 10, get 12 (2 months free) - "Best Value" badge
+  - 12 months: Pay for 10, get 12 (2 months free) - "1 month free" badge
 - Payment method selector:
   - Credit/Debit Card (default) with billing address fields
   - Wire Transfer for international clients (displays bank details with copy buttons)
