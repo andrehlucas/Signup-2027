@@ -454,6 +454,8 @@ export const samplePhoneNumbers: PhoneNumber[] = [
   { id: 'pn-8', number: '(310) 555-1234', type: 'local', areaCode: '310', isAvailable: true },
   { id: 'pn-9', number: '(310) 555-5678', type: 'local', areaCode: '310', isAvailable: true },
   { id: 'pn-10', number: '(713) 555-1234', type: 'local', areaCode: '713', isAvailable: true },
+  { id: 'pn-11', number: '(312) 555-1234', type: 'local', areaCode: '312', isAvailable: true },
+  { id: 'pn-12', number: '(312) 555-5678', type: 'local', areaCode: '312', isAvailable: true },
 ];
 
 export function getStates(): string[] {
