@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useMemo, ReactNode, useCallback } from 'react';
-import { availableAddons, Addon as MarketplaceAddon } from '@/app/add-location/types';
+import { availableAddons, Addon as MarketplaceAddon, AddonStatus } from '@/app/add-location/types';
 
 export interface ActiveAddon {
   id: string;
@@ -18,6 +18,7 @@ interface AddonsContextType {
   removeAddon: (addonId: string) => void;
   isAddonActive: (addonId: string) => boolean;
   getAddonDetails: (addonId: string) => MarketplaceAddon | undefined;
+  getAddonStatus: (addonId: string, includedAddonIds: string[]) => AddonStatus;
 }
 
 const AddonsContext = createContext<AddonsContextType | undefined>(undefined);
@@ -83,6 +84,21 @@ export function AddonsProvider({ children }: { children: ReactNode }) {
     return availableAddons.find(a => a.id === addonId);
   }, []);
 
+  // Get the status of an add-on considering bundle inclusions
+  const getAddonStatus = useCallback((addonId: string, includedAddonIds: string[]): AddonStatus => {
+    // First check if it's included in the bundle
+    if (includedAddonIds.includes(addonId)) {
+      return 'included';
+    }
+    // Then check if it's actively subscribed
+    const addon = activeAddons.find(a => a.id === addonId);
+    if (addon?.status === 'active') {
+      return 'active';
+    }
+    // Otherwise it's available to add
+    return 'available';
+  }, [activeAddons]);
+
   return (
     <AddonsContext.Provider 
       value={{ 
@@ -92,6 +108,7 @@ export function AddonsProvider({ children }: { children: ReactNode }) {
         removeAddon, 
         isAddonActive,
         getAddonDetails,
+        getAddonStatus,
       }}
     >
       {children}

@@ -165,6 +165,40 @@ export const featureLabels: Record<string, string> = {
   messageTaking: 'Message Taking',
 };
 
+// Maps add-on IDs to their corresponding bundle feature keys
+// This is used to determine if an add-on is included in a bundle
+export const addonToFeatureMap: Record<string, keyof Bundle['features']> = {
+  'toll-free': 'tollFreeNumber',
+  'callout': 'calloutFeature',
+  'call-log': 'callLog',
+  'supervised-transfer': 'supervisedCallTransfer',
+  'message-taking': 'messageTaking',
+};
+
+// Add-on status types
+export type AddonStatus = 'available' | 'active' | 'included';
+
+// Helper function to get bundle by ID
+export function getBundleById(bundleId: string): Bundle | undefined {
+  return bundles.find(b => b.id === bundleId);
+}
+
+// Helper function to check if an add-on is included in a bundle
+export function isAddonIncludedInBundle(addonId: string, bundle: Bundle | null): boolean {
+  if (!bundle) return false;
+  const featureKey = addonToFeatureMap[addonId];
+  if (!featureKey) return false;
+  return bundle.features[featureKey] === true;
+}
+
+// Helper function to get list of included add-on IDs for a bundle
+export function getIncludedAddonIds(bundle: Bundle | null): string[] {
+  if (!bundle) return [];
+  return Object.entries(addonToFeatureMap)
+    .filter(([_, featureKey]) => bundle.features[featureKey] === true)
+    .map(([addonId]) => addonId);
+}
+
 export const availableAddons: Addon[] = [
   {
     id: 'toll-free',

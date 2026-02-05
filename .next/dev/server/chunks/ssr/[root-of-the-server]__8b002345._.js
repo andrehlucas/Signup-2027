@@ -63,20 +63,28 @@ TooltipContent.displayName = __TURBOPACK__imported__module__$5b$project$5d2f$nod
 "use strict";
 
 __turbopack_context__.s([
+    "addonToFeatureMap",
+    ()=>addonToFeatureMap,
     "availableAddons",
     ()=>availableAddons,
     "bundles",
     ()=>bundles,
     "featureLabels",
     ()=>featureLabels,
+    "getBundleById",
+    ()=>getBundleById,
     "getCitiesByState",
     ()=>getCitiesByState,
+    "getIncludedAddonIds",
+    ()=>getIncludedAddonIds,
     "getLocationsByCity",
     ()=>getLocationsByCity,
     "getPhoneNumbersForLocation",
     ()=>getPhoneNumbersForLocation,
     "getStates",
     ()=>getStates,
+    "isAddonIncludedInBundle",
+    ()=>isAddonIncludedInBundle,
     "sampleLocations",
     ()=>sampleLocations,
     "samplePhoneNumbers",
@@ -169,6 +177,26 @@ const featureLabels = {
     supervisedCallTransfer: 'Supervised Call Transfer',
     messageTaking: 'Message Taking'
 };
+const addonToFeatureMap = {
+    'toll-free': 'tollFreeNumber',
+    'callout': 'calloutFeature',
+    'call-log': 'callLog',
+    'supervised-transfer': 'supervisedCallTransfer',
+    'message-taking': 'messageTaking'
+};
+function getBundleById(bundleId) {
+    return bundles.find((b)=>b.id === bundleId);
+}
+function isAddonIncludedInBundle(addonId, bundle) {
+    if (!bundle) return false;
+    const featureKey = addonToFeatureMap[addonId];
+    if (!featureKey) return false;
+    return bundle.features[featureKey] === true;
+}
+function getIncludedAddonIds(bundle) {
+    if (!bundle) return [];
+    return Object.entries(addonToFeatureMap).filter(([_, featureKey])=>bundle.features[featureKey] === true).map(([addonId])=>addonId);
+}
 const availableAddons = [
     {
         id: 'toll-free',
@@ -673,6 +701,22 @@ function AddonsProvider({ children }) {
     const getAddonDetails = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((addonId)=>{
         return __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["availableAddons"].find((a)=>a.id === addonId);
     }, []);
+    // Get the status of an add-on considering bundle inclusions
+    const getAddonStatus = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((addonId, includedAddonIds)=>{
+        // First check if it's included in the bundle
+        if (includedAddonIds.includes(addonId)) {
+            return 'included';
+        }
+        // Then check if it's actively subscribed
+        const addon = activeAddons.find((a)=>a.id === addonId);
+        if (addon?.status === 'active') {
+            return 'active';
+        }
+        // Otherwise it's available to add
+        return 'available';
+    }, [
+        activeAddons
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AddonsContext.Provider, {
         value: {
             activeAddons,
@@ -680,12 +724,13 @@ function AddonsProvider({ children }) {
             addAddon,
             removeAddon,
             isAddonActive,
-            getAddonDetails
+            getAddonDetails,
+            getAddonStatus
         },
         children: children
     }, void 0, false, {
         fileName: "[project]/app/contexts/AddonsContext.tsx",
-        lineNumber: 87,
+        lineNumber: 103,
         columnNumber: 5
     }, this);
 }
@@ -709,7 +754,9 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$contexts$2f$AddonsContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/contexts/AddonsContext.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/add-location/types.ts [app-ssr] (ecmascript)");
 'use client';
+;
 ;
 ;
 ;
@@ -724,6 +771,22 @@ function SubscriptionProvider({ children }) {
     const [currentPlanName, setCurrentPlanName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(defaultPlan.name);
     const [basePlanAmount, setBasePlanAmount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(defaultPlan.price);
     const { totalAddonsCost } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$contexts$2f$AddonsContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAddons"])();
+    // Get the current bundle based on plan ID
+    const currentBundle = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
+        return __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["bundles"].find((b)=>b.id === currentPlanId) || null;
+    }, [
+        currentPlanId
+    ]);
+    // Get list of add-on IDs that are included in the current bundle
+    const includedAddonIds = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
+        return (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getIncludedAddonIds"])(currentBundle);
+    }, [
+        currentBundle
+    ]);
+    // Check if a specific add-on is included in the current bundle
+    const isAddonIncluded = (addonId)=>{
+        return includedAddonIds.includes(addonId);
+    };
     const monthlyAmount = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
         return basePlanAmount + totalAddonsCost;
     }, [
@@ -739,15 +802,18 @@ function SubscriptionProvider({ children }) {
         value: {
             currentPlanId,
             currentPlanName,
+            currentBundle,
+            includedAddonIds,
             basePlanAmount,
             addonsCost: totalAddonsCost,
             monthlyAmount,
-            updatePlan
+            updatePlan,
+            isAddonIncluded
         },
         children: children
     }, void 0, false, {
         fileName: "[project]/app/contexts/SubscriptionContext.tsx",
-        lineNumber: 48,
+        lineNumber: 67,
         columnNumber: 5
     }, this);
 }
