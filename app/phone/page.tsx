@@ -1413,12 +1413,22 @@ export default function PhoneSystemPage() {
   const [extensions, setExtensions] = useState<Extension[]>(mockExtensions);
   const [activeAddons] = useState<ActiveAddon[]>(mockActiveAddons);
   const [exploreAddons] = useState<ExploreAddon[]>(mockExploreAddons);
-  const [reusableAddons, setReusableAddons] = useState<ReusableAddon[]>(sampleAddons);
   
-  // Subscribed addons state (simulating already-subscribed add-ons)
-  const [subscribedAddonIds, setSubscribedAddonIds] = useState<string[]>([
-    'toll-free', 'callout', 'supervised-transfer'
-  ]);
+  // Initialize reusableAddons with only some set to active (syncs with marketplace)
+  const [reusableAddons, setReusableAddons] = useState<ReusableAddon[]>(() => {
+    const initialActiveIds = ['toll-free', 'callout', 'supervised-transfer'];
+    return sampleAddons.map(addon => ({
+      ...addon,
+      status: initialActiveIds.includes(addon.id) ? 'active' : 'inactive'
+    })) as ReusableAddon[];
+  });
+  
+  // Derive subscribedAddonIds from reusableAddons - single source of truth
+  const subscribedAddonIds = useMemo(() => {
+    return reusableAddons
+      .filter(addon => addon.status === 'active')
+      .map(addon => addon.id);
+  }, [reusableAddons]);
   
   // Modal states
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -1528,7 +1538,30 @@ export default function PhoneSystemPage() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    setSubscribedAddonIds(prev => [...prev, selectedMarketplaceAddon.id]);
+    // Update reusableAddons to mark this addon as active
+    // This syncs with the Phone System tab's Active Add-ons list
+    setReusableAddons(prev => {
+      // Check if addon already exists in the list
+      const existingAddon = prev.find(a => a.id === selectedMarketplaceAddon.id);
+      if (existingAddon) {
+        // Update existing addon to active
+        return prev.map(addon => 
+          addon.id === selectedMarketplaceAddon.id 
+            ? { ...addon, status: 'active' as const } 
+            : addon
+        );
+      } else {
+        // Add new addon to the list
+        return [...prev, {
+          id: selectedMarketplaceAddon.id,
+          name: selectedMarketplaceAddon.name,
+          status: 'active' as const,
+          actionType: 'view' as const,
+          modalType: 'none' as const,
+        }];
+      }
+    });
+    
     setIsAddingToPlan(false);
     setAddToPlanDialogOpen(false);
     
