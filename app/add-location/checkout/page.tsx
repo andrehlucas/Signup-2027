@@ -679,7 +679,7 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 self-start">
             <div className="bg-white rounded-xl border border-gray-200 p-6 sticky top-4" data-testid="payment-summary">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Summary</h2>
 
