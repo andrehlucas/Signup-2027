@@ -10,6 +10,7 @@ interface OrderContextType {
   setPhoneNumber: (phoneNumber: PhoneNumber | null) => void;
   addAddon: (addon: Addon) => void;
   removeAddon: (addonId: string) => void;
+  updateAddon: (addon: Addon) => void;
   setExtensionCount: (count: number) => void;
   setAgreementAccepted: (accepted: boolean) => void;
   clearOrder: () => void;
@@ -57,6 +58,13 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const updateAddon = (addon: Addon) => {
+    setOrder(prev => ({
+      ...prev,
+      addons: prev.addons.map(a => a.id === addon.id ? addon : a),
+    }));
+  };
+
   const setExtensionCount = (count: number) => {
     setOrder(prev => ({ ...prev, extensionCount: Math.max(0, count) }));
   };
@@ -86,7 +94,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     });
 
     if (order.extensionCount > 0) {
-      monthly += order.extensionCount * 10;
+      monthly += order.extensionCount * 25;
     }
 
     return { monthly, oneTime };
@@ -126,7 +134,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
       items.push({
         id: 'additional-extensions',
         name: 'Additional Extensions',
-        price: order.extensionCount * 10,
+        price: order.extensionCount * 25,
         type: 'addon',
         quantity: order.extensionCount,
       });
@@ -144,6 +152,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         setPhoneNumber,
         addAddon,
         removeAddon,
+        updateAddon,
         setExtensionCount,
         setAgreementAccepted,
         clearOrder,

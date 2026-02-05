@@ -13,6 +13,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/app/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/app/components/ui/select';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import {
@@ -23,6 +30,7 @@ import {
   Bundle,
   PhoneNumber,
   Addon,
+  AddonPackage,
 } from '../types';
 
 function getTierColor(tier: string) {
@@ -40,7 +48,7 @@ function getTierColor(tier: string) {
 
 export default function CustomizePage() {
   const router = useRouter();
-  const { order, setBundle, setPhoneNumber, addAddon, removeAddon, setExtensionCount, getCartTotal } = useOrder();
+  const { order, setBundle, setPhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
   const [selectedBundle, setSelectedBundle] = useState<Bundle | null>(order.bundle);
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
@@ -90,7 +98,19 @@ export default function CustomizePage() {
     if (isInCart) {
       removeAddon(addon.id);
     } else {
-      addAddon(addon);
+      if (addon.packages && addon.packages.length > 0) {
+        const defaultPackage = addon.packages[0];
+        addAddon({ ...addon, selectedPackage: defaultPackage, price: defaultPackage.price });
+      } else {
+        addAddon(addon);
+      }
+    }
+  };
+
+  const handlePackageChange = (addon: Addon, packageId: string) => {
+    const selectedPackage = addon.packages?.find(p => p.id === packageId);
+    if (selectedPackage) {
+      updateAddon({ ...addon, selectedPackage, price: selectedPackage.price });
     }
   };
 
@@ -122,6 +142,21 @@ export default function CustomizePage() {
     });
   };
 
+  const addonPriorityOrder: Record<string, number> = {
+    'callout': 1,
+    'toll-free': 2,
+    'supervised-transfer': 3,
+    'message-taking': 4,
+    'appointment-scheduling': 5,
+    'texting': 6,
+    'call-recording': 7,
+    'additional-extensions': 8,
+    'fax-out': 9,
+    'conf-bridge': 10,
+    'int-transfer': 11,
+    'call-log': 12,
+  };
+
   const sortedAddons = useMemo(() => {
     const addonsToSort = availableAddons.filter(addon => addon.id !== 'additional-extensions');
     return addonsToSort.sort((a, b) => {
@@ -129,7 +164,10 @@ export default function CustomizePage() {
       const bIncluded = isAddonIncluded(b);
       if (aIncluded && !bIncluded) return -1;
       if (!aIncluded && bIncluded) return 1;
-      return 0;
+      
+      const aPriority = addonPriorityOrder[a.id] || 999;
+      const bPriority = addonPriorityOrder[b.id] || 999;
+      return aPriority - bPriority;
     });
   }, [selectedBundle]);
 
@@ -331,6 +369,10 @@ export default function CustomizePage() {
                             <Badge className="bg-green-100 text-green-700 border-0">
                               Included
                             </Badge>
+                          ) : addon.packages && addon.packages.length > 0 ? (
+                            <span className="font-semibold text-gray-900">
+                              From ${addon.packages[0].price}/mo
+                            </span>
                           ) : (
                             <span className="font-semibold text-gray-900">
                               ${addon.price}/mo
@@ -367,25 +409,57 @@ export default function CustomizePage() {
                         )}
 
                         {!isIncluded && (
-                          <Button
-                            variant={isInCart ? 'outline' : 'default'}
-                            size="sm"
-                            className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'bg-[#36bff9] hover:bg-[#2aa8e0]'}
-                            onClick={() => handleAddonToggle(addon)}
-                            data-testid={`button-addon-${addon.id}`}
-                          >
-                            {isInCart ? (
-                              <>
-                                <X className="h-3 w-3 mr-1" />
-                                Remove
-                              </>
-                            ) : (
-                              <>
-                                <Plus className="h-3 w-3 mr-1" />
-                                Add to Cart
-                              </>
+                          <div className="space-y-3">
+                            <Button
+                              variant={isInCart ? 'outline' : 'default'}
+                              size="sm"
+                              className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'bg-[#36bff9] hover:bg-[#2aa8e0]'}
+                              onClick={() => handleAddonToggle(addon)}
+                              data-testid={`button-addon-${addon.id}`}
+                            >
+                              {isInCart ? (
+                                <>
+                                  <X className="h-3 w-3 mr-1" />
+                                  Remove
+                                </>
+                              ) : (
+                                <>
+                                  <Plus className="h-3 w-3 mr-1" />
+                                  Add to Cart
+                                </>
+                              )}
+                            </Button>
+                            
+                            {isInCart && addon.packages && addon.packages.length > 0 && (
+                              <div className="pt-2 border-t border-gray-200">
+                                <label className="text-xs font-medium text-gray-700 mb-1 block">
+                                  Select Package
+                                </label>
+                                <Select
+                                  value={isInCart.selectedPackage?.id || addon.packages[0].id}
+                                  onValueChange={(value) => handlePackageChange(addon, value)}
+                                >
+                                  <SelectTrigger 
+                                    className="w-full bg-white"
+                                    data-testid={`select-package-${addon.id}`}
+                                  >
+                                    <SelectValue placeholder="Select a package" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {addon.packages.map((pkg) => (
+                                      <SelectItem 
+                                        key={pkg.id} 
+                                        value={pkg.id}
+                                        data-testid={`package-option-${pkg.id}`}
+                                      >
+                                        {pkg.name} - ${pkg.price}/mo
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
                             )}
-                          </Button>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -433,7 +507,7 @@ export default function CustomizePage() {
               >
                 <div className="flex items-start justify-between mb-2">
                   <h4 className="font-medium text-gray-900">Additional Extensions</h4>
-                  <span className="font-semibold text-gray-900">$10/mo each</span>
+                  <span className="font-semibold text-gray-900">$25/mo each</span>
                 </div>
                 <p className="text-sm text-gray-600 mb-3">
                   Add more extensions to your phone system. Further customization available from the Phone System page after setup.
@@ -463,7 +537,7 @@ export default function CustomizePage() {
                   </Button>
                   {order.extensionCount > 0 && (
                     <span className="text-sm text-gray-600 ml-2">
-                      = ${order.extensionCount * 10}/mo
+                      = ${order.extensionCount * 25}/mo
                     </span>
                   )}
                 </div>
@@ -486,10 +560,13 @@ export default function CustomizePage() {
           <div className="text-sm text-gray-600 space-y-1">
             <p>{selectedBundle ? `${selectedBundle.name} ${selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : ''} - $${selectedBundle.price}/mo` : 'No bundle selected'}</p>
             {order.addons.map((addon) => (
-              <p key={addon.id}>{addon.name} - ${addon.price}/mo</p>
+              <p key={addon.id}>
+                {addon.name}
+                {addon.selectedPackage ? ` (${addon.selectedPackage.name})` : ''} - ${addon.price}/mo
+              </p>
             ))}
             {order.extensionCount > 0 && (
-              <p>Additional Extensions ({order.extensionCount}) - ${order.extensionCount * 10}/mo</p>
+              <p>Additional Extensions ({order.extensionCount}) - ${order.extensionCount * 25}/mo</p>
             )}
           </div>
         </div>

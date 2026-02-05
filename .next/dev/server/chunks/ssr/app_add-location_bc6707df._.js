@@ -60,6 +60,12 @@ function OrderProvider({ children }) {
                 addons: prev.addons.filter((a)=>a.id !== addonId)
             }));
     };
+    const updateAddon = (addon)=>{
+        setOrder((prev)=>({
+                ...prev,
+                addons: prev.addons.map((a)=>a.id === addon.id ? addon : a)
+            }));
+    };
     const setExtensionCount = (count)=>{
         setOrder((prev)=>({
                 ...prev,
@@ -89,7 +95,7 @@ function OrderProvider({ children }) {
             }
         });
         if (order.extensionCount > 0) {
-            monthly += order.extensionCount * 10;
+            monthly += order.extensionCount * 25;
         }
         return {
             monthly,
@@ -126,7 +132,7 @@ function OrderProvider({ children }) {
             items.push({
                 id: 'additional-extensions',
                 name: 'Additional Extensions',
-                price: order.extensionCount * 10,
+                price: order.extensionCount * 25,
                 type: 'addon',
                 quantity: order.extensionCount
             });
@@ -141,6 +147,7 @@ function OrderProvider({ children }) {
             setPhoneNumber,
             addAddon,
             removeAddon,
+            updateAddon,
             setExtensionCount,
             setAgreementAccepted,
             clearOrder,
@@ -150,7 +157,7 @@ function OrderProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/app/add-location/context.tsx",
-        lineNumber: 139,
+        lineNumber: 147,
         columnNumber: 5
     }, this);
 }

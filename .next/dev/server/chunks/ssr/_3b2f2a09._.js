@@ -479,9 +479,50 @@ const availableAddons = [
         name: 'Additional Extensions',
         description: 'Add more extensions to your phone system. Further customization available from Phone System page.',
         detailedDescription: 'Expand your phone system with additional extensions for team members or departments. Each extension gets a unique number and voicemail. Manage call routing and forwarding rules independently.',
-        price: 10,
+        price: 25,
         billingCycle: 'monthly',
         category: 'phone'
+    },
+    {
+        id: 'appointment-scheduling',
+        name: 'Appointment Scheduling',
+        description: 'Professional appointment booking handled by our receptionists',
+        detailedDescription: 'Let our trained receptionists manage your appointment scheduling. They will answer calls, check your calendar availability, and book appointments on your behalf. Perfect for medical offices, salons, consultants, and service businesses.',
+        price: 100,
+        billingCycle: 'monthly',
+        category: 'phone',
+        packages: [
+            {
+                id: 'apt-20',
+                name: '20 Appointments/Month',
+                quantity: 20,
+                price: 100
+            },
+            {
+                id: 'apt-40',
+                name: '40 Appointments/Month',
+                quantity: 40,
+                price: 200
+            },
+            {
+                id: 'apt-60',
+                name: '60 Appointments/Month',
+                quantity: 60,
+                price: 300
+            },
+            {
+                id: 'apt-100',
+                name: '100 Appointments/Month',
+                quantity: 100,
+                price: 400
+            },
+            {
+                id: 'apt-200',
+                name: '200 Appointments/Month',
+                quantity: 200,
+                price: 800
+            }
+        ]
     }
 ];
 const sampleLocations = [

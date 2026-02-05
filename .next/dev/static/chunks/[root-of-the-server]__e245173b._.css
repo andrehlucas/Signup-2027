@@ -1015,8 +1015,8 @@ body {
   max-height: 300px;
 }
 
-.max-h-\[580px\] {
-  max-height: 580px;
+.max-h-\[380px\] {
+  max-height: 380px;
 }
 
 .max-h-\[90vh\] {
@@ -1029,10 +1029,6 @@ body {
 
 .max-h-screen {
   max-height: 100vh;
-}
-
-.max-h-\[380px\] {
-  max-height: 380px;
 }
 
 .min-h-0 {
