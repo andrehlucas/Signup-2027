@@ -7,71 +7,24 @@ import {
   User,
   Phone,
   MapPin,
-  Bell,
-  Smartphone,
   Monitor,
+  Smartphone,
 } from 'lucide-react';
 import { Switch } from '@/app/components/ui/switch';
-import { Label } from '@/app/components/ui/label';
 import { useToast } from '@/app/hooks/use-toast';
 import { NotificationPreferences } from '../../../shared/schema';
 
 const categorySettings = [
-  {
-    key: 'mailEnabled' as const,
-    label: 'Mail Notifications',
-    description: 'Get notified when you receive new mail at any of your office locations.',
-    icon: Mail,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-50',
-  },
-  {
-    key: 'billingEnabled' as const,
-    label: 'Billing & Payments',
-    description: 'Receive alerts about invoices, payment confirmations, and subscription changes.',
-    icon: CreditCard,
-    color: 'text-green-600',
-    bgColor: 'bg-green-50',
-  },
-  {
-    key: 'accountEnabled' as const,
-    label: 'Account Activity',
-    description: 'Stay informed about login activity, password changes, and security alerts.',
-    icon: User,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-50',
-  },
-  {
-    key: 'serviceEnabled' as const,
-    label: 'Service Updates',
-    description: 'Notifications about your phone system, call forwarding, and add-on activations.',
-    icon: Phone,
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-50',
-  },
-  {
-    key: 'locationEnabled' as const,
-    label: 'Location Updates',
-    description: 'Updates about new locations, address changes, and office availability.',
-    icon: MapPin,
-    color: 'text-pink-600',
-    bgColor: 'bg-pink-50',
-  },
+  { key: 'mailEnabled' as const, label: 'Mail', icon: Mail },
+  { key: 'billingEnabled' as const, label: 'Billing & Payments', icon: CreditCard },
+  { key: 'accountEnabled' as const, label: 'Account Activity', icon: User },
+  { key: 'serviceEnabled' as const, label: 'Service Updates', icon: Phone },
+  { key: 'locationEnabled' as const, label: 'Location Updates', icon: MapPin },
 ];
 
 const deliverySettings = [
-  {
-    key: 'inAppDelivery' as const,
-    label: 'In-App Notifications',
-    description: 'Show notifications within the portal when you log in.',
-    icon: Monitor,
-  },
-  {
-    key: 'emailDelivery' as const,
-    label: 'Email Notifications',
-    description: 'Send notification summaries to your registered email address.',
-    icon: Smartphone,
-  },
+  { key: 'inAppDelivery' as const, label: 'In-App', icon: Monitor },
+  { key: 'emailDelivery' as const, label: 'Email', icon: Smartphone },
 ];
 
 export default function NotificationsAlertsPage() {
@@ -109,22 +62,14 @@ export default function NotificationsAlertsPage() {
 
   if (isLoading) {
     return (
-      <div className="p-4 lg:p-8 max-w-4xl">
-        <div className="mb-6">
-          <div className="h-8 bg-gray-200 rounded w-1/3 animate-pulse mb-2" />
-          <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse" />
-        </div>
-        <div className="space-y-4">
+      <div className="p-4 lg:p-8 max-w-3xl">
+        <div className="h-6 bg-gray-100 rounded w-40 animate-pulse mb-6" />
+        <div className="space-y-3">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="bg-white rounded-lg border border-gray-200 p-4 animate-pulse">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-200 rounded-full" />
-                <div className="flex-1 space-y-2">
-                  <div className="h-4 bg-gray-200 rounded w-1/3" />
-                  <div className="h-3 bg-gray-200 rounded w-2/3" />
-                </div>
-                <div className="w-10 h-5 bg-gray-200 rounded-full" />
-              </div>
+            <div key={i} className="py-3 animate-pulse flex items-center gap-3">
+              <div className="w-8 h-8 bg-gray-100 rounded-full" />
+              <div className="h-3.5 bg-gray-100 rounded w-1/3 flex-1" />
+              <div className="w-9 h-5 bg-gray-100 rounded-full" />
             </div>
           ))}
         </div>
@@ -133,40 +78,34 @@ export default function NotificationsAlertsPage() {
   }
 
   return (
-    <div className="p-4 lg:p-8 max-w-4xl">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900" data-testid="text-alerts-title">
-          Alerts & Preferences
-        </h1>
-        <p className="text-sm text-gray-500 mt-1" data-testid="text-alerts-subtitle">
-          Choose which notifications you receive and how they are delivered.
-        </p>
-      </div>
+    <div className="p-4 lg:p-8 max-w-3xl">
+      <h1 className="text-xl font-semibold text-gray-900 mb-1" data-testid="text-alerts-title">
+        Alerts & Preferences
+      </h1>
+      <p className="text-sm text-gray-500 mb-6" data-testid="text-alerts-subtitle">
+        Choose which notifications you receive.
+      </p>
 
       <div className="mb-8">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2" data-testid="text-categories-heading">
-          <Bell className="h-5 w-5 text-gray-500" />
-          Notification Categories
+        <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3" data-testid="text-categories-heading">
+          Categories
         </h2>
-        <div className="space-y-3">
+        <div className="divide-y divide-gray-100">
           {categorySettings.map((setting) => {
             const Icon = setting.icon;
             const isEnabled = preferences?.[setting.key] ?? true;
             return (
               <div
                 key={setting.key}
-                className="bg-white rounded-lg border border-gray-200 p-4 flex items-center gap-4 transition-all hover:shadow-sm"
+                className="py-3 flex items-center gap-3"
                 data-testid={`card-preference-${setting.key}`}
               >
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${setting.bgColor}`}>
-                  <Icon className={`h-5 w-5 ${setting.color}`} />
+                <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-gray-100">
+                  <Icon className="h-4 w-4 text-gray-500" />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <Label className="text-sm font-medium text-gray-900 cursor-pointer" data-testid={`text-preference-label-${setting.key}`}>
-                    {setting.label}
-                  </Label>
-                  <p className="text-xs text-gray-500 mt-0.5">{setting.description}</p>
-                </div>
+                <span className="text-sm text-gray-800 flex-1" data-testid={`text-preference-label-${setting.key}`}>
+                  {setting.label}
+                </span>
                 <Switch
                   checked={isEnabled}
                   onCheckedChange={(checked) => handleToggle(setting.key, checked)}
@@ -180,29 +119,25 @@ export default function NotificationsAlertsPage() {
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2" data-testid="text-delivery-heading">
-          <Smartphone className="h-5 w-5 text-gray-500" />
-          Delivery Method
+        <h2 className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3" data-testid="text-delivery-heading">
+          Delivery
         </h2>
-        <div className="space-y-3">
+        <div className="divide-y divide-gray-100">
           {deliverySettings.map((setting) => {
             const Icon = setting.icon;
             const isEnabled = preferences?.[setting.key] ?? true;
             return (
               <div
                 key={setting.key}
-                className="bg-white rounded-lg border border-gray-200 p-4 flex items-center gap-4 transition-all hover:shadow-sm"
+                className="py-3 flex items-center gap-3"
                 data-testid={`card-delivery-${setting.key}`}
               >
-                <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-gray-100">
-                  <Icon className="h-5 w-5 text-gray-600" />
+                <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-gray-100">
+                  <Icon className="h-4 w-4 text-gray-500" />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <Label className="text-sm font-medium text-gray-900 cursor-pointer" data-testid={`text-delivery-label-${setting.key}`}>
-                    {setting.label}
-                  </Label>
-                  <p className="text-xs text-gray-500 mt-0.5">{setting.description}</p>
-                </div>
+                <span className="text-sm text-gray-800 flex-1" data-testid={`text-delivery-label-${setting.key}`}>
+                  {setting.label}
+                </span>
                 <Switch
                   checked={isEnabled}
                   onCheckedChange={(checked) => handleToggle(setting.key, checked)}
