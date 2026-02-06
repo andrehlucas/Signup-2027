@@ -1,10 +1,5 @@
 {
-  "/add-location/checkout/page": "app/add-location/checkout/page.js",
-  "/add-location/customize/page": "app/add-location/customize/page.js",
   "/add-location/page": "app/add-location/page.js",
-  "/billing/page": "app/billing/page.js",
-  "/billing/plans/page": "app/billing/plans/page.js",
   "/office/page": "app/office/page.js",
-  "/page": "app/page.js",
-  "/phone/page": "app/phone/page.js"
+  "/page": "app/page.js"
 }

@@ -3,17 +3,17 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Building2, Clock, Globe, Copy } from 'lucide-react';
+import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Clock, HelpCircle } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Input } from '@/app/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/popover';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useToast } from '@/app/hooks/use-toast';
-import { Bundle, featureLabels } from '../types';
+import { Bundle, featureLabels, featureIndividualPrices, ESSENTIALS_PLAN } from '../types';
 
 type PaymentTerm = 1 | 3 | 6 | 12;
-type PaymentMethod = 'card' | 'wire';
 
 interface PaymentTermOption {
   months: PaymentTerm;
@@ -28,15 +28,6 @@ const paymentTermOptions: PaymentTermOption[] = [
   { months: 6, label: '6 Months', freeMonths: 0 },
   { months: 12, label: '12 Months', freeMonths: 2, badge: '1 month free' },
 ];
-
-const wireTransferDetails = {
-  bankName: 'Chase Bank',
-  accountName: 'Opus Virtual Offices LLC',
-  accountNumber: '****4582',
-  routingNumber: '021000021',
-  swiftCode: 'CHASUS33',
-  bankAddress: '270 Park Avenue, New York, NY 10017',
-};
 
 function getBundleIncludedAddons(bundle: Bundle): { name: string; label: string }[] {
   const included: { name: string; label: string }[] = [];
@@ -73,7 +64,6 @@ export default function CheckoutPage() {
   const [billingZip, setBillingZip] = useState('');
   const [saveCard, setSaveCard] = useState(false);
   const [paymentTerm, setPaymentTerm] = useState<PaymentTerm>(1);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('card');
   
   // Sticky payment summary logic
   const summaryContainerRef = useRef<HTMLDivElement>(null);
@@ -141,13 +131,6 @@ export default function CheckoutPage() {
   const totalDueToday = termTotal + oneTime;
   const effectiveMonthlyRate = paymentTerm > 1 ? (termTotal / paymentTerm).toFixed(2) : monthly.toString();
 
-  const copyToClipboard = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: 'Copied!',
-      description: `${label} copied to clipboard`,
-    });
-  };
   
   const bundleIncludedAddons = useMemo(() => {
     if (!order.bundle) return [];
@@ -401,55 +384,16 @@ export default function CheckoutPage() {
                 Payment Method
               </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                <div
-                  onClick={() => setPaymentMethod('card')}
-                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all flex items-center gap-3 ${
-                    paymentMethod === 'card'
-                      ? 'border-[#36bff9] bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                  data-testid="payment-method-card"
-                >
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                    paymentMethod === 'card' ? 'bg-[#36bff9]' : 'bg-gray-100'
-                  }`}>
-                    <CreditCard className={`h-5 w-5 ${paymentMethod === 'card' ? 'text-white' : 'text-gray-500'}`} />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">Credit / Debit Card</p>
-                    <p className="text-xs text-gray-500">Visa, Mastercard, Amex</p>
-                  </div>
-                  {paymentMethod === 'card' && (
-                    <Check className="h-5 w-5 text-[#36bff9] ml-auto" />
-                  )}
+              <div className="flex items-center gap-3 mb-6 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#36bff9]">
+                  <CreditCard className="h-5 w-5 text-white" />
                 </div>
-
-                <div
-                  onClick={() => setPaymentMethod('wire')}
-                  className={`p-4 rounded-lg border-2 cursor-pointer transition-all flex items-center gap-3 ${
-                    paymentMethod === 'wire'
-                      ? 'border-[#36bff9] bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                  data-testid="payment-method-wire"
-                >
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                    paymentMethod === 'wire' ? 'bg-[#36bff9]' : 'bg-gray-100'
-                  }`}>
-                    <Building2 className={`h-5 w-5 ${paymentMethod === 'wire' ? 'text-white' : 'text-gray-500'}`} />
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">Wire Transfer</p>
-                    <p className="text-xs text-gray-500">International payments</p>
-                  </div>
-                  {paymentMethod === 'wire' && (
-                    <Check className="h-5 w-5 text-[#36bff9] ml-auto" />
-                  )}
+                <div>
+                  <p className="font-medium text-gray-900">Credit / Debit Card</p>
+                  <p className="text-xs text-gray-500">Visa, Mastercard, Amex</p>
                 </div>
               </div>
 
-              {paymentMethod === 'card' ? (
                 <div className="space-y-4">
                   <div>
                     <label htmlFor="cardholderName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -610,98 +554,6 @@ export default function CheckoutPage() {
                     Your payment information is encrypted and secure
                   </p>
                 </div>
-              ) : (
-                <div className="space-y-4" data-testid="wire-transfer-details">
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                    <div className="flex items-start gap-3">
-                      <Globe className="h-5 w-5 text-blue-600 mt-0.5" />
-                      <div>
-                        <p className="font-medium text-blue-900">International Wire Transfer</p>
-                        <p className="text-sm text-blue-700 mt-1">
-                          Use the bank details below to complete your payment. Your order will be processed once the transfer is confirmed (typically 3-5 business days).
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-                    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
-                      <div>
-                        <p className="text-xs text-gray-500">Bank Name</p>
-                        <p className="font-medium text-gray-900">{wireTransferDetails.bankName}</p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => copyToClipboard(wireTransferDetails.bankName, 'Bank name')}
-                        className="h-8 w-8 p-0"
-                        data-testid="copy-bank-name"
-                      >
-                        <Copy className="h-4 w-4 text-gray-500" />
-                      </Button>
-                    </div>
-
-                    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
-                      <div>
-                        <p className="text-xs text-gray-500">Account Name</p>
-                        <p className="font-medium text-gray-900">{wireTransferDetails.accountName}</p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => copyToClipboard(wireTransferDetails.accountName, 'Account name')}
-                        className="h-8 w-8 p-0"
-                        data-testid="copy-account-name"
-                      >
-                        <Copy className="h-4 w-4 text-gray-500" />
-                      </Button>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 pb-3 border-b border-gray-200">
-                      <div>
-                        <p className="text-xs text-gray-500">Account Number</p>
-                        <p className="font-medium text-gray-900">{wireTransferDetails.accountNumber}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500">Routing Number</p>
-                        <p className="font-medium text-gray-900">{wireTransferDetails.routingNumber}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center pb-3 border-b border-gray-200">
-                      <div>
-                        <p className="text-xs text-gray-500">SWIFT Code (International)</p>
-                        <p className="font-medium text-gray-900">{wireTransferDetails.swiftCode}</p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => copyToClipboard(wireTransferDetails.swiftCode, 'SWIFT code')}
-                        className="h-8 w-8 p-0"
-                        data-testid="copy-swift-code"
-                      >
-                        <Copy className="h-4 w-4 text-gray-500" />
-                      </Button>
-                    </div>
-
-                    <div>
-                      <p className="text-xs text-gray-500">Bank Address</p>
-                      <p className="font-medium text-gray-900">{wireTransferDetails.bankAddress}</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                    <p className="text-sm text-amber-800">
-                      <span className="font-medium">Important:</span> Please include your order reference number in the transfer memo. You will receive this number after placing your order.
-                    </p>
-                  </div>
-
-                  <p className="text-xs text-gray-500 flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    Wire transfers typically take 3-5 business days to process
-                  </p>
-                </div>
-              )}
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="agreement-section">
@@ -742,7 +594,68 @@ export default function CheckoutPage() {
 
               <div className="space-y-3 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Bundle ({order.bundle.tier})</span>
+                  <span className="text-gray-600 flex items-center gap-1">
+                    Bundle ({order.bundle.tier})
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          className="inline-flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
+                          data-testid="bundle-breakdown-trigger"
+                        >
+                          <HelpCircle className="h-3.5 w-3.5" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-72 p-4" side="left" align="start">
+                        <div className="space-y-3">
+                          <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Bundle Breakdown</p>
+                          <div className="space-y-2">
+                            {Object.entries(order.bundle.features).map(([key, included]) => {
+                              if (!included) return null;
+                              const featureKey = key as keyof Bundle['features'];
+                              const individualPrice = featureIndividualPrices[featureKey];
+                              return (
+                                <div key={key} className="flex justify-between text-xs">
+                                  <span className="text-gray-600 flex items-center gap-1">
+                                    <Check className="h-3 w-3 text-green-500" />
+                                    {featureLabels[key]}
+                                  </span>
+                                  {individualPrice > 0 ? (
+                                    <span className="text-gray-400 line-through">${individualPrice}/mo</span>
+                                  ) : (
+                                    <span className="text-gray-400">Included</span>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                          {(() => {
+                            const totalIndividual = Object.entries(order.bundle!.features)
+                              .filter(([, included]) => included)
+                              .reduce((sum, [key]) => sum + featureIndividualPrices[key as keyof Bundle['features']], 0);
+                            const essentialsBase = ESSENTIALS_PLAN.price;
+                            const wouldCost = essentialsBase + totalIndividual;
+                            const savings = wouldCost - order.bundle!.price;
+                            return savings > 0 ? (
+                              <div className="border-t border-gray-200 pt-2 mt-2 space-y-1">
+                                <div className="flex justify-between text-xs">
+                                  <span className="text-gray-500">If purchased separately</span>
+                                  <span className="text-gray-500">${wouldCost}/mo</span>
+                                </div>
+                                <div className="flex justify-between text-xs">
+                                  <span className="text-gray-500">Bundle price</span>
+                                  <span className="font-medium text-gray-900">${order.bundle!.price}/mo</span>
+                                </div>
+                                <div className="flex justify-between text-xs font-semibold text-green-600">
+                                  <span>You save</span>
+                                  <span>${savings}/mo</span>
+                                </div>
+                              </div>
+                            ) : null;
+                          })()}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  </span>
                   <span className="font-medium">${order.bundle.price}/mo</span>
                 </div>
                 {order.addons.map((addon) => (
@@ -794,14 +707,6 @@ export default function CheckoutPage() {
                 </p>
               </div>
 
-              {paymentMethod === 'wire' && (
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-                  <p className="text-xs text-amber-800">
-                    Your order will be placed as pending. Services activate after wire transfer confirmation.
-                  </p>
-                </div>
-              )}
-
               <Button
                 onClick={handleCheckout}
                 disabled={!order.agreementAccepted || isProcessing}
@@ -810,11 +715,6 @@ export default function CheckoutPage() {
               >
                 {isProcessing ? (
                   'Processing...'
-                ) : paymentMethod === 'wire' ? (
-                  <>
-                    <Building2 className="h-4 w-4 mr-2" />
-                    Place Order (Wire Transfer)
-                  </>
                 ) : (
                   <>
                     <CreditCard className="h-4 w-4 mr-2" />
@@ -824,10 +724,7 @@ export default function CheckoutPage() {
               </Button>
 
               <p className="text-xs text-gray-500 text-center mt-3">
-                {paymentMethod === 'wire' 
-                  ? 'Wire transfer details will be emailed after placing order'
-                  : 'Secure payment processed by our payment provider'
-                }
+                Secure payment processed by our payment provider
               </p>
             </div>
           </div>
