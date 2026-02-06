@@ -11,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/pop
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useToast } from '@/app/hooks/use-toast';
-import { Bundle, featureLabels, featureIndividualPrices, ESSENTIALS_PLAN } from '../types';
+import { Bundle, featureLabels } from '../types';
 
 type PaymentTerm = 1 | 3 | 6 | 12;
 
@@ -607,47 +607,39 @@ export default function CheckoutPage() {
                       </PopoverTrigger>
                       <PopoverContent className="w-72 p-4" side="left" align="start">
                         <div className="space-y-3">
-                          <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">Bundle Breakdown</p>
+                          <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">All Plans Include</p>
                           <div className="space-y-2">
-                            {Object.entries(order.bundle.features).map(([key, included]) => {
-                              if (!included) return null;
-                              const featureKey = key as keyof Bundle['features'];
-                              const individualPrice = featureIndividualPrices[featureKey];
-                              return (
-                                <div key={key} className="flex justify-between text-xs">
-                                  <span className="text-gray-600 flex items-center gap-1">
-                                    <Check className="h-3 w-3 text-green-500" />
-                                    {featureLabels[key]}
-                                  </span>
-                                  {individualPrice > 0 ? (
-                                    <span className="text-gray-400 line-through">${individualPrice}/mo</span>
-                                  ) : (
-                                    <span className="text-gray-400">Included</span>
-                                  )}
-                                </div>
-                              );
-                            })}
+                            {[
+                              'Prestigious Business Address',
+                              'Live Call Answering',
+                              'Call Transferring',
+                              '2 Voicemail Boxes',
+                              'Business Phone/Fax Number',
+                              'Voicemail/Fax Converted to Email',
+                            ].map((feature) => (
+                              <div key={feature} className="flex items-center gap-1.5 text-xs text-gray-600">
+                                <Check className="h-3 w-3 text-green-500 shrink-0" />
+                                {feature}
+                              </div>
+                            ))}
                           </div>
                           {(() => {
-                            const totalIndividual = Object.entries(order.bundle!.features)
-                              .filter(([, included]) => included)
-                              .reduce((sum, [key]) => sum + featureIndividualPrices[key as keyof Bundle['features']], 0);
-                            const essentialsBase = ESSENTIALS_PLAN.price;
-                            const wouldCost = essentialsBase + totalIndividual;
-                            const savings = wouldCost - order.bundle!.price;
-                            return savings > 0 ? (
-                              <div className="border-t border-gray-200 pt-2 mt-2 space-y-1">
-                                <div className="flex justify-between text-xs">
-                                  <span className="text-gray-500">If purchased separately</span>
-                                  <span className="text-gray-500">${wouldCost}/mo</span>
-                                </div>
-                                <div className="flex justify-between text-xs">
-                                  <span className="text-gray-500">Bundle price</span>
-                                  <span className="font-medium text-gray-900">${order.bundle!.price}/mo</span>
-                                </div>
-                                <div className="flex justify-between text-xs font-semibold text-green-600">
-                                  <span>You save</span>
-                                  <span>${savings}/mo</span>
+                            const bundleExtras = Object.entries(order.bundle!.features)
+                              .filter(([key, included]) => {
+                                const base = ['businessAddress', 'liveCallAnswering', 'callTransferring'];
+                                return included && !base.includes(key);
+                              })
+                              .map(([key]) => featureLabels[key]);
+                            return bundleExtras.length > 0 ? (
+                              <div className="border-t border-gray-200 pt-2 mt-1">
+                                <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Included in Bundle</p>
+                                <div className="space-y-2">
+                                  {bundleExtras.map((label) => (
+                                    <div key={label} className="flex items-center gap-1.5 text-xs text-gray-600">
+                                      <Check className="h-3 w-3 text-[#36bff9] shrink-0" />
+                                      {label}
+                                    </div>
+                                  ))}
                                 </div>
                               </div>
                             ) : null;
