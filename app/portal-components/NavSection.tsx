@@ -19,6 +19,7 @@ interface NavSectionProps {
   isActive?: (href: string) => boolean;
   testIdPrefix?: string;
   onNavigate?: () => void;
+  badge?: number;
 }
 
 export function NavSection({
@@ -31,6 +32,7 @@ export function NavSection({
   isActive = () => false,
   testIdPrefix = 'nav',
   onNavigate,
+  badge,
 }: NavSectionProps) {
   const slugLabel = label.toLowerCase().replace(/\s+/g, '-');
 
@@ -43,8 +45,20 @@ export function NavSection({
           data-testid={`button-${testIdPrefix}-${slugLabel}`}
         >
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="shrink-0">{icon}</div>
+            <div className="shrink-0 relative">
+              {icon}
+              {badge !== undefined && badge > 0 && !isExpanded && (
+                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1" data-testid="badge-notification-count">
+                  {badge > 99 ? '99+' : badge}
+                </span>
+              )}
+            </div>
             <span className="font-medium truncate">{label}</span>
+            {badge !== undefined && badge > 0 && isExpanded && (
+              <span className="bg-red-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-1 shrink-0" data-testid="badge-notification-count">
+                {badge > 99 ? '99+' : badge}
+              </span>
+            )}
           </div>
           {isExpanded ? (
             <ChevronDown className="h-4 w-4" />

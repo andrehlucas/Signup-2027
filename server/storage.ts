@@ -1,4 +1,4 @@
-import { UserType, InsertUser, Location, Mail, MailSettings, MailAction } from "../shared/schema";
+import { UserType, InsertUser, Location, Mail, MailSettings, MailAction, Notification, NotificationPreferences, NotificationType } from "../shared/schema";
 
 export interface IStorage {
   getUser(id: string): Promise<UserType | undefined>;
@@ -15,6 +15,15 @@ export interface IStorage {
 
   getMailSettings(userId: string): Promise<MailSettings | undefined>;
   updateMailSettings(userId: string, defaultAction: string): Promise<MailSettings>;
+
+  getNotifications(userId: string, type?: NotificationType): Promise<Notification[]>;
+  getUnreadNotificationCount(userId: string): Promise<number>;
+  markNotificationRead(id: string): Promise<Notification | undefined>;
+  markAllNotificationsRead(userId: string): Promise<void>;
+  deleteNotification(id: string): Promise<boolean>;
+
+  getNotificationPreferences(userId: string): Promise<NotificationPreferences | undefined>;
+  updateNotificationPreferences(userId: string, prefs: Partial<Omit<NotificationPreferences, 'id' | 'userId'>>): Promise<NotificationPreferences>;
 }
 
 export class MemStorage implements IStorage {
@@ -22,14 +31,17 @@ export class MemStorage implements IStorage {
   private locations: Map<string, Location>;
   private mailItems: Map<string, Mail>;
   private mailSettings: Map<string, MailSettings>;
+  private notificationItems: Map<string, Notification>;
+  private notificationPrefs: Map<string, NotificationPreferences>;
 
   constructor() {
     this.users = new Map();
     this.locations = new Map();
     this.mailItems = new Map();
     this.mailSettings = new Map();
+    this.notificationItems = new Map();
+    this.notificationPrefs = new Map();
     
-    // Seed mock data
     this.seed();
   }
 
@@ -95,6 +107,123 @@ export class MemStorage implements IStorage {
       defaultAction: 'keep',
     };
     this.mailSettings.set('1', defaultSettings);
+
+    const mockNotifications: Notification[] = [
+      {
+        id: 'n1',
+        userId: '1',
+        type: 'mail',
+        title: 'New Mail Received',
+        message: 'You have a new piece of mail from IRS Department waiting at your Manhattan Office.',
+        isRead: false,
+        link: '/office',
+        createdAt: '2025-02-06T10:30:00Z',
+      },
+      {
+        id: 'n2',
+        userId: '1',
+        type: 'billing',
+        title: 'Invoice Due Soon',
+        message: 'Your monthly subscription invoice of $149.00 is due in 3 days.',
+        isRead: false,
+        link: '/billing',
+        createdAt: '2025-02-05T14:00:00Z',
+      },
+      {
+        id: 'n3',
+        userId: '1',
+        type: 'billing',
+        title: 'Payment Processed',
+        message: 'Your payment of $149.00 for January has been processed successfully.',
+        isRead: true,
+        link: '/billing',
+        createdAt: '2025-01-30T09:15:00Z',
+      },
+      {
+        id: 'n4',
+        userId: '1',
+        type: 'account',
+        title: 'Password Changed',
+        message: 'Your account password was changed successfully. If this wasn\'t you, contact support immediately.',
+        isRead: true,
+        link: '/account',
+        createdAt: '2025-01-28T16:45:00Z',
+      },
+      {
+        id: 'n5',
+        userId: '1',
+        type: 'service',
+        title: 'Phone Number Activated',
+        message: 'Your new business phone number (305) 555-9876 has been activated and is ready to use.',
+        isRead: false,
+        link: '/phone',
+        createdAt: '2025-02-04T11:20:00Z',
+      },
+      {
+        id: 'n6',
+        userId: '1',
+        type: 'mail',
+        title: 'Mail Forwarded',
+        message: 'Your mail item from Sarah Williams has been forwarded to your registered address.',
+        isRead: true,
+        link: '/office',
+        createdAt: '2025-01-27T08:30:00Z',
+      },
+      {
+        id: 'n7',
+        userId: '1',
+        type: 'location',
+        title: 'New Location Available',
+        message: 'A new premium office location is now available in Chicago. Explore our latest offerings.',
+        isRead: false,
+        link: '/add-location',
+        createdAt: '2025-02-03T13:00:00Z',
+      },
+      {
+        id: 'n8',
+        userId: '1',
+        type: 'service',
+        title: 'Call Forwarding Updated',
+        message: 'Your call forwarding settings have been updated for your Manhattan Office number.',
+        isRead: true,
+        link: '/phone',
+        createdAt: '2025-01-25T10:00:00Z',
+      },
+      {
+        id: 'n9',
+        userId: '1',
+        type: 'account',
+        title: 'New Login Detected',
+        message: 'A new login to your account was detected from Chrome on Windows. Location: Miami, FL.',
+        isRead: false,
+        link: '/account',
+        createdAt: '2025-02-06T08:00:00Z',
+      },
+      {
+        id: 'n10',
+        userId: '1',
+        type: 'billing',
+        title: 'Add-on Subscription Confirmed',
+        message: 'Your Virtual Phone Receptionist add-on has been added to your plan. Monthly cost: $29.99.',
+        isRead: false,
+        link: '/billing',
+        createdAt: '2025-02-01T15:30:00Z',
+      },
+    ];
+    mockNotifications.forEach(n => this.notificationItems.set(n.id, n));
+
+    const defaultNotifPrefs: NotificationPreferences = {
+      id: 'np1',
+      userId: '1',
+      mailEnabled: true,
+      billingEnabled: true,
+      accountEnabled: true,
+      serviceEnabled: true,
+      locationEnabled: true,
+      emailDelivery: true,
+      inAppDelivery: true,
+    };
+    this.notificationPrefs.set('np1', defaultNotifPrefs);
   }
 
   async getUser(id: string): Promise<UserType | undefined> {
@@ -168,6 +297,66 @@ export class MemStorage implements IStorage {
     };
     this.mailSettings.set(newSettings.id, newSettings);
     return newSettings;
+  }
+
+  async getNotifications(userId: string, type?: NotificationType): Promise<Notification[]> {
+    const all = Array.from(this.notificationItems.values())
+      .filter(n => n.userId === userId);
+    const filtered = type ? all.filter(n => n.type === type) : all;
+    return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  async getUnreadNotificationCount(userId: string): Promise<number> {
+    return Array.from(this.notificationItems.values())
+      .filter(n => n.userId === userId && !n.isRead).length;
+  }
+
+  async markNotificationRead(id: string): Promise<Notification | undefined> {
+    const notif = this.notificationItems.get(id);
+    if (notif) {
+      const updated = { ...notif, isRead: true };
+      this.notificationItems.set(id, updated);
+      return updated;
+    }
+    return undefined;
+  }
+
+  async markAllNotificationsRead(userId: string): Promise<void> {
+    for (const [id, notif] of this.notificationItems.entries()) {
+      if (notif.userId === userId && !notif.isRead) {
+        this.notificationItems.set(id, { ...notif, isRead: true });
+      }
+    }
+  }
+
+  async deleteNotification(id: string): Promise<boolean> {
+    return this.notificationItems.delete(id);
+  }
+
+  async getNotificationPreferences(userId: string): Promise<NotificationPreferences | undefined> {
+    return Array.from(this.notificationPrefs.values()).find(p => p.userId === userId);
+  }
+
+  async updateNotificationPreferences(userId: string, prefs: Partial<Omit<NotificationPreferences, 'id' | 'userId'>>): Promise<NotificationPreferences> {
+    let existing = await this.getNotificationPreferences(userId);
+    if (existing) {
+      const updated = { ...existing, ...prefs };
+      this.notificationPrefs.set(existing.id, updated);
+      return updated;
+    }
+    const newPrefs: NotificationPreferences = {
+      id: Math.random().toString(36).substr(2, 9),
+      userId,
+      mailEnabled: prefs.mailEnabled ?? true,
+      billingEnabled: prefs.billingEnabled ?? true,
+      accountEnabled: prefs.accountEnabled ?? true,
+      serviceEnabled: prefs.serviceEnabled ?? true,
+      locationEnabled: prefs.locationEnabled ?? true,
+      emailDelivery: prefs.emailDelivery ?? true,
+      inAppDelivery: prefs.inAppDelivery ?? true,
+    };
+    this.notificationPrefs.set(newPrefs.id, newPrefs);
+    return newPrefs;
   }
 }
 

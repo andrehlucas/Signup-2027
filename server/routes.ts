@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { MailAction } from "../shared/schema";
+import { MailAction, NotificationType } from "../shared/schema";
 
 export function registerRoutes(app: Express): Server {
   app.get("/api/user", async (_req, res) => {
@@ -135,6 +135,98 @@ export function registerRoutes(app: Express): Server {
       res.json(settings);
     } catch (error) {
       console.error("Error updating mail settings:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/notifications", async (req, res) => {
+    try {
+      const type = req.query.type as NotificationType | undefined;
+      const validTypes: NotificationType[] = ['mail', 'billing', 'account', 'service', 'location'];
+      if (type && !validTypes.includes(type)) {
+        res.status(400).json({ message: "Invalid notification type" });
+        return;
+      }
+      const notifications = await storage.getNotifications("1", type);
+      res.json(notifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/notifications/unread-count", async (_req, res) => {
+    try {
+      const count = await storage.getUnreadNotificationCount("1");
+      res.json({ count });
+    } catch (error) {
+      console.error("Error fetching unread count:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.patch("/api/notifications/:id/read", async (req, res) => {
+    try {
+      const updated = await storage.markNotificationRead(req.params.id);
+      if (!updated) {
+        res.status(404).json({ message: "Notification not found" });
+        return;
+      }
+      res.json(updated);
+    } catch (error) {
+      console.error("Error marking notification read:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.patch("/api/notifications/read-all", async (_req, res) => {
+    try {
+      await storage.markAllNotificationsRead("1");
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error marking all notifications read:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/notifications/:id", async (req, res) => {
+    try {
+      const deleted = await storage.deleteNotification(req.params.id);
+      if (!deleted) {
+        res.status(404).json({ message: "Notification not found" });
+        return;
+      }
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting notification:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/notification-preferences", async (_req, res) => {
+    try {
+      const prefs = await storage.getNotificationPreferences("1");
+      res.json(prefs || {
+        mailEnabled: true,
+        billingEnabled: true,
+        accountEnabled: true,
+        serviceEnabled: true,
+        locationEnabled: true,
+        emailDelivery: true,
+        inAppDelivery: true,
+      });
+    } catch (error) {
+      console.error("Error fetching notification preferences:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.patch("/api/notification-preferences", async (req, res) => {
+    try {
+      const updated = await storage.updateNotificationPreferences("1", req.body);
+      res.json(updated);
+    } catch (error) {
+      console.error("Error updating notification preferences:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });

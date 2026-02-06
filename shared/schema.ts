@@ -1,4 +1,4 @@
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -50,3 +50,36 @@ export type MailSettings = typeof mailSettings.$inferSelect;
 export type InsertMailSettings = z.infer<typeof insertMailSettingsSchema>;
 
 export type MailAction = 'scan' | 'forward' | 'keep' | 'shred' | 'not_my_mail';
+
+export type NotificationType = 'mail' | 'billing' | 'account' | 'service' | 'location';
+
+export const notifications = pgTable("notifications", {
+  id: varchar("id").primaryKey(),
+  userId: varchar("user_id").notNull(),
+  type: text("type").notNull(),
+  title: text("title").notNull(),
+  message: text("message").notNull(),
+  isRead: boolean("is_read").notNull().default(false),
+  link: text("link"),
+  createdAt: text("created_at").notNull(),
+});
+
+export const notificationPreferences = pgTable("notification_preferences", {
+  id: varchar("id").primaryKey(),
+  userId: varchar("user_id").notNull(),
+  mailEnabled: boolean("mail_enabled").notNull().default(true),
+  billingEnabled: boolean("billing_enabled").notNull().default(true),
+  accountEnabled: boolean("account_enabled").notNull().default(true),
+  serviceEnabled: boolean("service_enabled").notNull().default(true),
+  locationEnabled: boolean("location_enabled").notNull().default(true),
+  emailDelivery: boolean("email_delivery").notNull().default(true),
+  inAppDelivery: boolean("in_app_delivery").notNull().default(true),
+});
+
+export const insertNotificationSchema = createInsertSchema(notifications);
+export const insertNotificationPreferencesSchema = createInsertSchema(notificationPreferences);
+
+export type Notification = typeof notifications.$inferSelect;
+export type InsertNotification = z.infer<typeof insertNotificationSchema>;
+export type NotificationPreferences = typeof notificationPreferences.$inferSelect;
+export type InsertNotificationPreferences = z.infer<typeof insertNotificationPreferencesSchema>;

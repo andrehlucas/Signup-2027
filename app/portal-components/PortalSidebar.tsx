@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import { 
   Building2, 
   User, 
@@ -94,7 +95,6 @@ const navItems: NavItem[] = [
   },
 ];
 
-import { useQuery } from '@tanstack/react-query';
 import { Location } from "../../shared/schema";
 
 const mockLocations: Location[] = [
@@ -169,6 +169,16 @@ function SidebarContent({
 }) {
   const pathname = usePathname();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  
+  const { data: unreadData } = useQuery<{ count: number }>({
+    queryKey: ['/api/notifications/unread-count'],
+    queryFn: async () => {
+      const res = await fetch('/api/notifications/unread-count');
+      if (!res.ok) return { count: 0 };
+      return res.json();
+    },
+    refetchInterval: 30000,
+  });
 
   const toggleExpanded = (label: string) => {
     setExpandedItems(prev => 
@@ -211,6 +221,7 @@ function SidebarContent({
             onToggle={() => toggleExpanded(item.label)}
             isActive={isActive}
             onNavigate={handleNavClick}
+            badge={item.label === 'Notifications' ? (unreadData?.count ?? 0) : undefined}
           />
         ))}
       </nav>
