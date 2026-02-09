@@ -94,17 +94,10 @@ const searchablePages: SearchableItem[] = [
     category: 'Phone System',
   },
   {
-    title: 'Messages',
-    href: '/notifications/messages',
-    keywords: ['messages', 'inbox', 'notifications', 'communication'],
-    description: 'View and manage your messages',
-    category: 'Notifications',
-  },
-  {
-    title: 'Alerts & Preferences',
-    href: '/notifications/alerts',
-    keywords: ['alerts', 'preferences', 'notifications', 'settings', 'email'],
-    description: 'Configure notification alerts and preferences',
+    title: 'Notifications',
+    href: '/notifications',
+    keywords: ['messages', 'inbox', 'notifications', 'communication', 'alerts', 'preferences', 'settings', 'email'],
+    description: 'View messages and configure notification preferences',
     category: 'Notifications',
   },
   {

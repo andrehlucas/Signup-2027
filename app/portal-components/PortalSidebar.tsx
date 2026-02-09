@@ -59,11 +59,8 @@ const navItems: NavItem[] = [
   },
   {
     label: 'Notifications',
+    href: '/notifications',
     icon: <Bell className="h-5 w-5" />,
-    children: [
-      { label: 'Messages', href: '/notifications/messages' },
-      { label: 'Alerts & Preferences', href: '/notifications/alerts' },
-    ],
   },
   {
     label: 'Account',
