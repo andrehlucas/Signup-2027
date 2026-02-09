@@ -231,6 +231,31 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  app.get("/api/benefits", async (req, res) => {
+    try {
+      const category = req.query.category as string | undefined;
+      const benefits = await storage.getBenefits(category);
+      res.json(benefits);
+    } catch (error) {
+      console.error("Error fetching benefits:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/benefits/:id", async (req, res) => {
+    try {
+      const benefit = await storage.getBenefit(req.params.id);
+      if (!benefit) {
+        res.status(404).json({ message: "Benefit not found" });
+        return;
+      }
+      res.json(benefit);
+    } catch (error) {
+      console.error("Error fetching benefit:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -20,254 +20,310 @@ const benefits = [
     {
         id: '1',
         name: 'Spherule',
-        logo: '🔵',
+        logo: '/logos/spherule.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Get premium business management tools to streamline your daily operations and boost team productivity across all departments.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Step back into classic hoops style with a durable leather upper and vintage design. Perfect for both on-court action and street style, featuring cushioned support and a timeless silhouette. Get premium business management tools to streamline your daily operations and boost team productivity across all departments.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '2',
         name: 'Segment',
-        logo: '🟣',
+        logo: '/logos/segment.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Analytics and data platform to help you understand your customers better and make data-driven decisions for your business.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Analytics and data platform to help you understand your customers better and make data-driven decisions for your business. Includes advanced segmentation, real-time tracking, and comprehensive reporting dashboards.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '3',
         name: 'Hourglass',
-        logo: '⏳',
+        logo: '/logos/hourglass.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Time tracking and project management software designed for small businesses and freelancers to stay organized.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Time tracking and project management software designed for small businesses and freelancers to stay organized. Features include automated timesheets, project budgeting, team scheduling, and invoicing integration.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '4',
         name: 'Lightbox',
-        logo: '💡',
+        logo: '/logos/lightbox.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Cloud-based invoicing and accounting solution that simplifies financial management for growing businesses.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Cloud-based invoicing and accounting solution that simplifies financial management for growing businesses. Automate recurring invoices, track expenses, manage payroll, and generate financial reports effortlessly.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '5',
         name: 'Capsule',
-        logo: '💊',
+        logo: '/logos/capsule.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'CRM platform that helps you build stronger customer relationships and close more deals with powerful automation.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'CRM platform that helps you build stronger customer relationships and close more deals with powerful automation. Features include contact management, sales pipeline tracking, task automation, and detailed analytics.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '6',
         name: 'Layers',
-        logo: '📐',
+        logo: '/logos/layers.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Design collaboration tool for teams to create, share, and iterate on projects with real-time feedback.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Design collaboration tool for teams to create, share, and iterate on projects with real-time feedback. Includes version control, comment threads, design system management, and seamless handoff to developers.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '7',
         name: 'Boltshift',
-        logo: '⚡',
+        logo: '/logos/boltshift.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'E-commerce automation platform to scale your online store with smart inventory and order management.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'E-commerce automation platform to scale your online store with smart inventory and order management. Features multi-channel selling, automated restocking alerts, shipping label generation, and customer insights.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '8',
         name: 'Interlock',
-        logo: '🔗',
+        logo: '/logos/interlock.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Team communication and workflow integration tool that connects all your business apps in one place.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Team communication and workflow integration tool that connects all your business apps in one place. Streamline project management, file sharing, and team discussions with customizable workflows and automation rules.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '9',
         name: 'Alt+Shift',
-        logo: '⌨️',
+        logo: '/logos/altshift.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Keyboard shortcut productivity suite that helps you navigate your workflow faster and more efficiently.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Keyboard shortcut productivity suite that helps you navigate your workflow faster and more efficiently. Customize shortcuts, create macros, and access app-specific commands with intelligent context awareness.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '10',
         name: 'Polymath',
-        logo: '🧠',
+        logo: '/logos/polymath.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'AI-powered learning platform for professional development and team training with personalized courses.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'AI-powered learning platform for professional development and team training with personalized courses. Offers skill assessments, learning paths, certification programs, and team progress dashboards.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '11',
         name: 'Galileo',
-        logo: '🔭',
+        logo: '/logos/galileo.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Business intelligence dashboard that visualizes your KPIs and provides actionable insights for growth.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Business intelligence dashboard that visualizes your KPIs and provides actionable insights for growth. Connect multiple data sources, create custom dashboards, set up alerts, and share reports with your team.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '12',
         name: 'Epicurious',
-        logo: '🍽️',
+        logo: '/logos/epicurious.svg',
         category: 'Business Tools',
         discount: '10% OFF',
-        description: 'Corporate catering and meal planning service to keep your team fueled and focused throughout the workday.',
-        dealUrl: '#'
+        shortDescription: 'Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather Step back into classic hoops style with a durable leather',
+        fullDescription: 'Corporate catering and meal planning service to keep your team fueled and focused throughout the workday. Offers diverse menu options, dietary accommodation, flexible delivery schedules, and budget management tools.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '13',
         name: 'Webflow Pro',
-        logo: '🌐',
+        logo: '/logos/webflow.svg',
         category: 'Setup Your Business',
         discount: '20% OFF',
-        description: 'Build professional websites without code. Get your business online with beautiful templates and hosting included.',
-        dealUrl: '#'
+        shortDescription: 'Build professional websites without code. Get your business online with beautiful templates and hosting included.',
+        fullDescription: 'Build professional websites without code. Get your business online with beautiful templates and hosting included. Features visual design tools, CMS integration, e-commerce capabilities, and SEO optimization tools.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '14',
         name: 'BrandKit',
-        logo: '🎨',
+        logo: '/logos/brandkit.svg',
         category: 'Setup Your Business',
         discount: '15% OFF',
-        description: 'Complete branding toolkit including logo design, business cards, and brand guideline creation for startups.',
-        dealUrl: '#'
+        shortDescription: 'Complete branding toolkit including logo design, business cards, and brand guideline creation for startups.',
+        fullDescription: 'Complete branding toolkit including logo design, business cards, and brand guideline creation for startups. Also includes social media kit, email signature generator, letterhead templates, and brand color palette creator.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '15',
         name: 'LegalZoom',
-        logo: '⚖️',
+        logo: '/logos/legalzoom.svg',
         category: 'Setup Your Business',
         discount: '25% OFF',
-        description: 'Business formation, trademark registration, and legal document services to protect your company from day one.',
-        dealUrl: '#'
+        shortDescription: 'Business formation, trademark registration, and legal document services to protect your company from day one.',
+        fullDescription: 'Business formation, trademark registration, and legal document services to protect your company from day one. Includes LLC formation, registered agent services, operating agreements, and ongoing compliance support.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '16',
         name: 'QuickBooks',
-        logo: '📊',
+        logo: '/logos/quickbooks.svg',
         category: 'Setup Your Business',
         discount: '30% OFF',
-        description: 'Accounting software for small businesses to manage expenses, send invoices, and track profits effortlessly.',
-        dealUrl: '#'
+        shortDescription: 'Accounting software for small businesses to manage expenses, send invoices, and track profits effortlessly.',
+        fullDescription: 'Accounting software for small businesses to manage expenses, send invoices, and track profits effortlessly. Features include automated bookkeeping, tax preparation, payroll management, and multi-currency support.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '17',
         name: 'Mailchimp',
-        logo: '📧',
+        logo: '/logos/mailchimp.svg',
         category: 'Marketing Tools',
         discount: '15% OFF',
-        description: 'Email marketing platform with automation, audience segmentation, and campaign analytics for growing businesses.',
-        dealUrl: '#'
+        shortDescription: 'Email marketing platform with automation, audience segmentation, and campaign analytics for growing businesses.',
+        fullDescription: 'Email marketing platform with automation, audience segmentation, and campaign analytics for growing businesses. Includes A/B testing, landing pages, social media integration, and behavioral targeting features.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '18',
         name: 'HubSpot',
-        logo: '🧲',
+        logo: '/logos/hubspot.svg',
         category: 'Marketing Tools',
         discount: '20% OFF',
-        description: 'All-in-one marketing, sales, and service platform to attract visitors, convert leads, and delight customers.',
-        dealUrl: '#'
+        shortDescription: 'All-in-one marketing, sales, and service platform to attract visitors, convert leads, and delight customers.',
+        fullDescription: 'All-in-one marketing, sales, and service platform to attract visitors, convert leads, and delight customers. Features CRM, email marketing, social media management, content management, and advanced analytics.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '19',
         name: 'Canva Pro',
-        logo: '✏️',
+        logo: '/logos/canva.svg',
         category: 'Marketing Tools',
         discount: '10% OFF',
-        description: 'Design stunning marketing materials, social media posts, and presentations with easy-to-use templates.',
-        dealUrl: '#'
+        shortDescription: 'Design stunning marketing materials, social media posts, and presentations with easy-to-use templates.',
+        fullDescription: 'Design stunning marketing materials, social media posts, and presentations with easy-to-use templates. Includes brand kit, magic resize, content planner, team collaboration, and premium stock assets.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '20',
         name: 'Buffer',
-        logo: '📱',
+        logo: '/logos/buffer.svg',
         category: 'Marketing Tools',
         discount: '15% OFF',
-        description: 'Social media management tool to schedule posts, analyze performance, and grow your audience across platforms.',
-        dealUrl: '#'
+        shortDescription: 'Social media management tool to schedule posts, analyze performance, and grow your audience across platforms.',
+        fullDescription: 'Social media management tool to schedule posts, analyze performance, and grow your audience across platforms. Features include auto-scheduling, engagement tracking, hashtag suggestions, and team approval workflows.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '21',
         name: 'ShipStation',
-        logo: '📦',
+        logo: '/logos/shipstation.svg',
         category: 'Shipping Deals',
         discount: '25% OFF',
-        description: 'Shipping automation platform that integrates with all major carriers to save time and reduce shipping costs.',
-        dealUrl: '#'
+        shortDescription: 'Shipping automation platform that integrates with all major carriers to save time and reduce shipping costs.',
+        fullDescription: 'Shipping automation platform that integrates with all major carriers to save time and reduce shipping costs. Features batch label printing, automated tracking, custom packing slips, and multi-channel order management.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '22',
         name: 'FedEx Business',
-        logo: '🚚',
+        logo: '/logos/fedex.svg',
         category: 'Shipping Deals',
         discount: '30% OFF',
-        description: 'Exclusive business shipping rates for domestic and international deliveries with priority handling.',
-        dealUrl: '#'
+        shortDescription: 'Exclusive business shipping rates for domestic and international deliveries with priority handling.',
+        fullDescription: 'Exclusive business shipping rates for domestic and international deliveries with priority handling. Includes volume discounts, dedicated account manager, customs brokerage support, and real-time package tracking.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '23',
         name: 'UPS My Choice',
-        logo: '📬',
+        logo: '/logos/ups.svg',
         category: 'Shipping Deals',
         discount: '20% OFF',
-        description: 'Discounted business shipping with package tracking, delivery alerts, and flexible delivery options.',
-        dealUrl: '#'
+        shortDescription: 'Discounted business shipping with package tracking, delivery alerts, and flexible delivery options.',
+        fullDescription: 'Discounted business shipping with package tracking, delivery alerts, and flexible delivery options. Features include scheduled pickups, returns management, address validation, and shipment insurance.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '24',
         name: 'Pirate Ship',
-        logo: '🏴‍☠️',
+        logo: '/logos/pirateship.svg',
         category: 'Shipping Deals',
         discount: '15% OFF',
-        description: 'Free shipping software with the cheapest USPS and UPS rates for e-commerce businesses of all sizes.',
-        dealUrl: '#'
+        shortDescription: 'Free shipping software with the cheapest USPS and UPS rates for e-commerce businesses of all sizes.',
+        fullDescription: 'Free shipping software with the cheapest USPS and UPS rates for e-commerce businesses of all sizes. No monthly fees, no markups, just the lowest rates available with easy batch printing and tracking.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '25',
         name: 'Hotels.com Biz',
-        logo: '🏨',
+        logo: '/logos/hotels.svg',
         category: 'Travel',
         discount: '20% OFF',
-        description: 'Corporate hotel booking with exclusive business rates, loyalty rewards, and flexible cancellation policies.',
-        dealUrl: '#'
+        shortDescription: 'Corporate hotel booking with exclusive business rates, loyalty rewards, and flexible cancellation policies.',
+        fullDescription: 'Corporate hotel booking with exclusive business rates, loyalty rewards, and flexible cancellation policies. Features include expense reporting integration, duty of care tools, and a vast network of 500,000+ properties.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '26',
         name: 'United Airlines',
-        logo: '✈️',
+        logo: '/logos/united.svg',
         category: 'Travel',
         discount: '15% OFF',
-        description: 'Discounted business travel flights with priority boarding, extra baggage, and flexible rebooking options.',
-        dealUrl: '#'
+        shortDescription: 'Discounted business travel flights with priority boarding, extra baggage, and flexible rebooking options.',
+        fullDescription: 'Discounted business travel flights with priority boarding, extra baggage, and flexible rebooking options. MileagePlus perks, United Club access, and dedicated corporate travel support included.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '27',
         name: 'Hertz Business',
-        logo: '🚗',
+        logo: '/logos/hertz.svg',
         category: 'Travel',
         discount: '25% OFF',
-        description: 'Premium car rental rates for business travelers with free upgrades and loyalty points on every booking.',
-        dealUrl: '#'
+        shortDescription: 'Premium car rental rates for business travelers with free upgrades and loyalty points on every booking.',
+        fullDescription: 'Premium car rental rates for business travelers with free upgrades and loyalty points on every booking. Includes Gold Plus Rewards membership, expedited pickup, and a wide selection of premium vehicles.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     },
     {
         id: '28',
         name: 'TripActions',
-        logo: '🗺️',
+        logo: '/logos/tripactions.svg',
         category: 'Travel',
         discount: '10% OFF',
-        description: 'All-in-one corporate travel management platform with real-time policy compliance and expense tracking.',
-        dealUrl: '#'
+        shortDescription: 'All-in-one corporate travel management platform with real-time policy compliance and expense tracking.',
+        fullDescription: 'All-in-one corporate travel management platform with real-time policy compliance and expense tracking. Features include 24/7 travel support, dynamic policy engine, carbon footprint tracking, and integrated payments.',
+        dealUrl: '#',
+        ctaLabel: 'Get Deal'
     }
 ];
 }),

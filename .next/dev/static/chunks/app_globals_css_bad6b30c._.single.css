@@ -695,10 +695,6 @@ body {
   margin-right: .5rem;
 }
 
-.mr-2\.5 {
-  margin-right: .625rem;
-}
-
 .mt-0\.5 {
   margin-top: .125rem;
 }
@@ -1094,10 +1090,6 @@ body {
   width: 1rem;
 }
 
-.w-40 {
-  width: 10rem;
-}
-
 .w-48 {
   width: 12rem;
 }
@@ -1176,10 +1168,6 @@ body {
 
 .w-auto {
   width: auto;
-}
-
-.w-fit {
-  width: fit-content;
 }
 
 .w-full {
@@ -1851,11 +1839,6 @@ body {
   border-color: hsl(var(--destructive) / .5);
 }
 
-.border-emerald-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(167 243 208 / var(--tw-border-opacity, 1));
-}
-
 .border-gray-100 {
   border-color: var(--gray-100);
 }
@@ -1899,11 +1882,6 @@ body {
   border-color: hsl(var(--primary));
 }
 
-.border-purple-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(233 213 255 / var(--tw-border-opacity, 1));
-}
-
 .border-red-100 {
   --tw-border-opacity: 1;
   border-color: rgb(254 226 226 / var(--tw-border-opacity, 1));
@@ -1917,11 +1895,6 @@ body {
 .border-red-300 {
   --tw-border-opacity: 1;
   border-color: rgb(252 165 165 / var(--tw-border-opacity, 1));
-}
-
-.border-rose-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(254 205 211 / var(--tw-border-opacity, 1));
 }
 
 .border-transparent {
@@ -2076,9 +2049,9 @@ body {
   background-color: hsl(var(--destructive));
 }
 
-.bg-emerald-50 {
+.bg-emerald-100 {
   --tw-bg-opacity: 1;
-  background-color: rgb(236 253 245 / var(--tw-bg-opacity, 1));
+  background-color: rgb(209 250 229 / var(--tw-bg-opacity, 1));
 }
 
 .bg-foreground {
@@ -2159,9 +2132,9 @@ body {
   background-color: hsl(var(--primary));
 }
 
-.bg-purple-50 {
+.bg-purple-100 {
   --tw-bg-opacity: 1;
-  background-color: rgb(250 245 255 / var(--tw-bg-opacity, 1));
+  background-color: rgb(243 232 255 / var(--tw-bg-opacity, 1));
 }
 
 .bg-purple-500 {
@@ -2184,9 +2157,9 @@ body {
   background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
 }
 
-.bg-rose-50 {
+.bg-rose-100 {
   --tw-bg-opacity: 1;
-  background-color: rgb(255 241 242 / var(--tw-bg-opacity, 1));
+  background-color: rgb(255 228 230 / var(--tw-bg-opacity, 1));
 }
 
 .bg-secondary {
@@ -3047,6 +3020,10 @@ body {
   text-decoration-line: line-through;
 }
 
+.underline-offset-2 {
+  text-underline-offset: 2px;
+}
+
 .underline-offset-4 {
   text-underline-offset: 4px;
 }
@@ -3864,6 +3841,11 @@ body {
 .hover\:bg-red-50:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-red-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-secondary:hover {

@@ -1,12 +1,7 @@
 {
-  "/account/page": "app/account/page.js",
   "/add-location/page": "app/add-location/page.js",
-  "/api/notification-preferences/route": "app/api/notification-preferences/route.js",
-  "/api/notifications/route": "app/api/notifications/route.js",
+  "/api/benefits/route": "app/api/benefits/route.js",
   "/api/notifications/unread-count/route": "app/api/notifications/unread-count/route.js",
-  "/billing/page": "app/billing/page.js",
-  "/notifications/page": "app/notifications/page.js",
   "/office/page": "app/office/page.js",
-  "/page": "app/page.js",
-  "/phone/page": "app/phone/page.js"
+  "/page": "app/page.js"
 }
