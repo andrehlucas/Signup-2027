@@ -3,8 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TooltipProvider } from '@/app/components/ui/tooltip';
 import { useState } from 'react';
-import { SubscriptionProvider } from '@/app/contexts/SubscriptionContext';
-import { AddonsProvider } from '@/app/contexts/AddonsContext';
+import { OrderProvider } from '@/app/add-location/context';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -22,11 +21,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <AddonsProvider>
-          <SubscriptionProvider>
-            {children}
-          </SubscriptionProvider>
-        </AddonsProvider>
+        <OrderProvider>
+          {children}
+        </OrderProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

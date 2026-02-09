@@ -1,172 +1,252 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { Location, UserType } from '../shared/schema';
-import { MapPin, Phone, User, MoreVertical, CreditCard, FileEdit, Users, Mail, Calendar, Settings, ChevronRight } from 'lucide-react';
-import { Badge } from '@/app/components/ui/badge';
-import { LocationMedia } from './portal-components/LocationMedia';
-import { QuickActionCard } from './portal-components/QuickActionCard';
-import { FeatureItem } from './portal-components/FeatureItem';
-import { AlertComponent, Alert } from './portal-components/AlertComponent';
-import { ExpandLocationBanner } from './portal-components/ExpandLocationBanner';
-import { useSubscription } from './contexts/SubscriptionContext';
+import { ChevronDown } from 'lucide-react';
+import { Button } from '@/app/components/ui/button';
+import { Input } from '@/app/components/ui/input';
+import { Checkbox } from '@/app/components/ui/checkbox';
+import { ProgressIndicator } from './add-location/components/ProgressIndicator';
+import { useOrder } from './add-location/context';
 
-const alertQueue: Alert[] = [
-  { id: '1', type: 'info', title: 'New Mail Received', message: 'You have 3 new pieces of mail waiting at your office location.' },
-  { id: '2', type: 'success', title: 'Payment Processed', message: 'Your monthly subscription has been renewed successfully.' },
+const countryCodes = [
+  { code: '+1', flag: '🇺🇸', label: 'US' },
+  { code: '+1', flag: '🇨🇦', label: 'CA' },
+  { code: '+44', flag: '🇬🇧', label: 'UK' },
+  { code: '+61', flag: '🇦🇺', label: 'AU' },
+  { code: '+49', flag: '🇩🇪', label: 'DE' },
+  { code: '+33', flag: '🇫🇷', label: 'FR' },
+  { code: '+81', flag: '🇯🇵', label: 'JP' },
+  { code: '+86', flag: '🇨🇳', label: 'CN' },
+  { code: '+91', flag: '🇮🇳', label: 'IN' },
+  { code: '+52', flag: '🇲🇽', label: 'MX' },
+  { code: '+55', flag: '🇧🇷', label: 'BR' },
 ];
 
-const baseFeatures = [
-  { icon: MapPin, label: 'Prestigious Business Address', featureKey: 'businessAddress' as const },
-  { icon: Phone, label: 'Professional Live Call Answering', featureKey: 'liveCallAnswering' as const },
-  { icon: Phone, label: 'Personalized Call Transferring', featureKey: 'callTransferring' as const },
-  { icon: Phone, label: 'Voicemail/Fax Converted to Email', featureKey: 'voicemailToEmail' as const },
-  { icon: Phone, label: 'Business Phone/Fax Number', featureKey: 'businessPhoneNumber' as const },
-  { icon: FileEdit, label: 'Professional Mail Receipt', featureKey: 'mailReceipt' as const },
-];
-
-const quickActions = [
-  { icon: CreditCard, title: 'Update Payment Method', description: 'Manage your credit cards and billing information' },
-  { icon: Calendar, title: 'Book a Meeting Room', description: 'Reserve professional office space or conference rooms' },
-  { icon: Mail, title: 'Mail Preferences', description: 'Set up mail forwarding or scanning instructions' },
-  { icon: Phone, title: 'Call Forwarding', description: 'Configure how your business calls are routed' },
-  { icon: Users, title: 'Refer a Client', description: 'Earn rewards by referring new businesses to Opus VO' },
-  { icon: Settings, title: 'Account Settings', description: 'Update your company profile and login details' },
-];
-
-export default function PortalDashboard() {
+export default function SignUpPage() {
   const router = useRouter();
-  const { currentBundle } = useSubscription();
-  const { data: user } = useQuery<UserType>({
-    queryKey: ['/api/user']
-  });
+  const { order, setUserInfo } = useOrder();
 
-  const { data: locations, isLoading } = useQuery<Location[]>({ 
-    queryKey: ['/api/locations'] 
-  });
-  
-  const [activeLocation, setActiveLocation] = useState<string | null>(null);
-  const [alerts, setAlerts] = useState<Alert[]>(alertQueue);
-  
-  const packageFeatures = useMemo(() => {
-    return baseFeatures.map(feature => {
-      const isIncluded = currentBundle?.features[feature.featureKey] || false;
-      return {
-        ...feature,
-        status: isIncluded ? 'included' as const : 'available' as const,
-      };
-    });
-  }, [currentBundle]);
+  const [firstName, setFirstName] = useState(order.userInfo.firstName);
+  const [lastName, setLastName] = useState(order.userInfo.lastName);
+  const [phone, setPhone] = useState(order.userInfo.phone);
+  const [countryCode, setCountryCode] = useState(order.userInfo.countryCode || '+1');
+  const [email, setEmail] = useState(order.userInfo.email);
+  const [confirmEmail, setConfirmEmail] = useState(order.userInfo.confirmEmail);
+  const [company, setCompany] = useState(order.userInfo.company);
+  const [termsAccepted, setTermsAccepted] = useState(order.userInfo.termsAccepted);
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const currentAlert = alerts.length > 0 ? alerts[0] : null;
+  const selectedCountry = countryCodes.find(c => c.code === countryCode) || countryCodes[0];
 
-  const dismissAlert = () => {
-    setAlerts(prev => prev.slice(1));
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!email.trim()) {
+      newErrors.email = 'Email address is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    if (!confirmEmail.trim()) {
+      newErrors.confirmEmail = 'Please confirm your email';
+    } else if (email !== confirmEmail) {
+      newErrors.confirmEmail = 'Email addresses do not match';
+    }
+    if (!company.trim()) newErrors.company = 'Company name is required';
+    if (!termsAccepted) newErrors.terms = 'You must agree to the Terms of Use';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const displayLocations = (locations && locations.length > 0) ? locations : [
-    { id: '1', name: 'Manhattan Office', address: '848 Brickell Avenue, Penthouse 5', imageUrl: '/office-building_1761587957783.webp' },
-    { id: '2', name: 'Brooklyn Hub', address: '456 Atlantic Ave, Brooklyn, NY', imageUrl: '/new-york-aerial-view_1761593422460.webp' },
-    { id: '3', name: 'Los Angeles Office', address: '789 Wilshire Blvd, LA, CA', imageUrl: '/los-angeles.webp' },
-  ];
+  const handleContinue = () => {
+    if (!validate()) return;
 
-  if (!activeLocation && displayLocations.length > 0) {
-    setActiveLocation(displayLocations[0].id);
-  }
+    setUserInfo({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      phone: phone.trim(),
+      countryCode,
+      email: email.trim(),
+      confirmEmail: confirmEmail.trim(),
+      company: company.trim(),
+      termsAccepted,
+    });
 
-  const currentLocation = displayLocations.find(loc => loc.id === activeLocation) || displayLocations[0];
-
-  const businessName = user?.businessName || 'Acme Corporation';
+    router.push('/add-location');
+  };
 
   return (
-    <div className="p-4 lg:p-8" data-testid="portal-dashboard">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6" data-testid="heading-welcome">
-        Welcome, {businessName}
-      </h1>
+    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="signup-page">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1" data-testid="heading-signup">
+            You're Only 3 Steps Away From Securing
+          </h1>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup-sub">
+            Your New Virtual Office Solution!
+          </h2>
+        </div>
 
-      <ExpandLocationBanner onAddLocation={() => router.push('/add-location')} />
+        <div className="mb-8">
+          <ProgressIndicator currentStep={1} />
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div className="lg:col-span-2">
-          <LocationMedia
-            buildingImage={currentLocation.imageUrl || '/office-building_1761587957783.webp'}
-            mapEmbedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.6595159366707!2d-80.19180492441!3d25.76168277735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b69c20e3f7c9%3A0x9e9b2d99b7c12d83!2s848%20Brickell%20Ave%2C%20Miami%2C%20FL%2033131!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
-            address={currentLocation.address}
-            city="Miami FL 33131"
-          />
-
-          <div className="mt-4 space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="font-medium text-gray-900">Phone Number:</span>
-              <span className="text-gray-600" data-testid="text-phone">(305) 555 - 1234</span>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="font-medium text-gray-900">Extension(s):</span>
-              <div className="flex items-center gap-2 ml-2">
-                <User className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-700">Michael Torres</span>
-                <Badge variant="outline" className="bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9] rounded-full px-2.5 py-0.5 text-xs font-medium">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#4caf50] mr-1.5 inline-block" />
-                  Marketing
-                </Badge>
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8">
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Input
+                    placeholder="First Name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className={`h-12 ${errors.firstName ? 'border-red-500' : ''}`}
+                    data-testid="input-first-name"
+                  />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1" data-testid="error-first-name">{errors.firstName}</p>
+                  )}
+                </div>
+                <div>
+                  <Input
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className={`h-12 ${errors.lastName ? 'border-red-500' : ''}`}
+                    data-testid="input-last-name"
+                  />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-xs mt-1" data-testid="error-last-name">{errors.lastName}</p>
+                  )}
+                </div>
               </div>
-              <span className="text-gray-300 mx-2">|</span>
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-gray-400" />
-                <span className="text-gray-700">Sarah Chen</span>
-                <Badge variant="outline" className="bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9] rounded-full px-2.5 py-0.5 text-xs font-medium">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#4caf50] mr-1.5 inline-block" />
-                  Sales
-                </Badge>
+
+              <div>
+                <div className="relative flex">
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                      className={`flex items-center gap-1.5 h-12 px-3 border border-r-0 rounded-l-md bg-gray-50 hover:bg-gray-100 transition-colors ${errors.phone ? 'border-red-500' : 'border-input'}`}
+                      data-testid="button-country-code"
+                    >
+                      <span className="text-lg">{selectedCountry.flag}</span>
+                      <span className="text-sm text-gray-700">{countryCode}</span>
+                      <ChevronDown className="h-3 w-3 text-gray-500" />
+                    </button>
+                    {showCountryDropdown && (
+                      <div className="absolute top-full left-0 z-50 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto" data-testid="dropdown-country-codes">
+                        {countryCodes.map((c, idx) => (
+                          <button
+                            key={`${c.code}-${c.label}-${idx}`}
+                            type="button"
+                            onClick={() => {
+                              setCountryCode(c.code);
+                              setShowCountryDropdown(false);
+                            }}
+                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-left text-sm"
+                            data-testid={`option-country-${c.label}`}
+                          >
+                            <span className="text-lg">{c.flag}</span>
+                            <span className="text-gray-700">{c.label}</span>
+                            <span className="text-gray-500">{c.code}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <Input
+                    placeholder="Phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value.replace(/[^\d\s()-]/g, ''))}
+                    className={`h-12 rounded-l-none flex-1 ${errors.phone ? 'border-red-500' : ''}`}
+                    data-testid="input-phone"
+                  />
+                </div>
+                {errors.phone && (
+                  <p className="text-red-500 text-xs mt-1" data-testid="error-phone">{errors.phone}</p>
+                )}
               </div>
+
+              <div>
+                <Input
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`h-12 ${errors.email ? 'border-red-500' : ''}`}
+                  data-testid="input-email"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1" data-testid="error-email">{errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <Input
+                  type="email"
+                  placeholder="Please confirm your email"
+                  value={confirmEmail}
+                  onChange={(e) => setConfirmEmail(e.target.value)}
+                  className={`h-12 ${errors.confirmEmail ? 'border-red-500' : ''}`}
+                  data-testid="input-confirm-email"
+                />
+                {errors.confirmEmail && (
+                  <p className="text-red-500 text-xs mt-1" data-testid="error-confirm-email">{errors.confirmEmail}</p>
+                )}
+              </div>
+
+              <div>
+                <Input
+                  placeholder="Company"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  className={`h-12 ${errors.company ? 'border-red-500' : ''}`}
+                  data-testid="input-company"
+                />
+                {errors.company && (
+                  <p className="text-red-500 text-xs mt-1" data-testid="error-company">{errors.company}</p>
+                )}
+              </div>
+
+              <div>
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="terms"
+                    checked={termsAccepted}
+                    onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                    className="mt-0.5"
+                    data-testid="checkbox-terms"
+                  />
+                  <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
+                    I agree to the{' '}
+                    <a href="#" className="text-[#36bff9] hover:underline" data-testid="link-terms">
+                      Terms of Use
+                    </a>
+                    .
+                  </label>
+                </div>
+                {errors.terms && (
+                  <p className="text-red-500 text-xs mt-1" data-testid="error-terms">{errors.terms}</p>
+                )}
+              </div>
+
+              <Button
+                onClick={handleContinue}
+                className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-lg font-semibold"
+                data-testid="button-continue"
+              >
+                Continue
+              </Button>
             </div>
           </div>
         </div>
-
-        <div className="hidden lg:block">
-          <h3 className="text-sm font-medium text-gray-500 mb-4">Your Office Package Includes:</h3>
-          <div className="space-y-3">
-            {packageFeatures.map((feature, idx) => (
-              <FeatureItem
-                key={idx}
-                icon={feature.icon}
-                label={feature.label}
-                status={feature.status}
-                planName={feature.status === 'included' ? currentBundle?.name : undefined}
-              />
-            ))}
-          </div>
-        </div>
       </div>
-
-      <div className="mt-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900" data-testid="heading-quick-actions">Quick Actions</h2>
-          <button className="text-gray-400 hover:text-gray-600" data-testid="button-more-actions">
-            <MoreVertical className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {quickActions.map((action, idx) => (
-            <QuickActionCard
-              key={idx}
-              icon={action.icon}
-              title={action.title}
-              description={action.description}
-              testId={`card-quick-action-${idx}`}
-            />
-          ))}
-        </div>
-      </div>
-
-      <AlertComponent 
-        alert={currentAlert} 
-        onDismiss={dismissAlert} 
-      />
     </div>
   );
 }

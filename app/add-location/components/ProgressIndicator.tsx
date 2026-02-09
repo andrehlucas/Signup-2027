@@ -5,7 +5,6 @@ import { Check } from 'lucide-react';
 interface Step {
   id: number;
   name: string;
-  href: string;
 }
 
 interface ProgressIndicatorProps {
@@ -14,14 +13,26 @@ interface ProgressIndicatorProps {
 }
 
 const defaultSteps: Step[] = [
-  { id: 1, name: 'Location', href: '/add-location' },
-  { id: 2, name: 'Customize', href: '/add-location/customize' },
-  { id: 3, name: 'Checkout', href: '/add-location/checkout' },
+  { id: 1, name: 'Your Info' },
+  { id: 2, name: 'Location' },
+  { id: 3, name: 'Customize & Checkout' },
 ];
 
 export function ProgressIndicator({ currentStep, steps = defaultSteps }: ProgressIndicatorProps) {
   return (
     <nav aria-label="Progress" className="w-full" data-testid="progress-indicator">
+      <div className="text-center mb-4">
+        <h3 className="text-lg font-semibold text-[#36bff9]" data-testid="text-step-title">
+          {steps.find(s => s.id === currentStep)?.name || ''}
+        </h3>
+        <div className="w-full max-w-md mx-auto h-1 bg-gray-200 rounded-full mt-2 overflow-hidden">
+          <div
+            className="h-full bg-[#36bff9] rounded-full transition-all duration-300"
+            style={{ width: `${(currentStep / steps.length) * 100}%` }}
+            data-testid="progress-bar"
+          />
+        </div>
+      </div>
       <ol className="flex items-center justify-center">
         {steps.map((step, stepIdx) => (
           <li

@@ -1,10 +1,11 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState } from './types';
+import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo } from './types';
 
 interface OrderContextType {
   order: OrderState;
+  setUserInfo: (userInfo: UserInfo) => void;
   setLocation: (location: AvailableLocation | null) => void;
   setBundle: (bundle: Bundle | null) => void;
   setPhoneNumber: (phoneNumber: PhoneNumber | null) => void;
@@ -18,7 +19,19 @@ interface OrderContextType {
   getCartItems: () => Array<{ id: string; name: string; price: number; type: string; quantity?: number }>;
 }
 
+const initialUserInfo: UserInfo = {
+  firstName: '',
+  lastName: '',
+  phone: '',
+  countryCode: '+1',
+  email: '',
+  confirmEmail: '',
+  company: '',
+  termsAccepted: false,
+};
+
 const initialOrder: OrderState = {
+  userInfo: initialUserInfo,
   location: null,
   bundle: null,
   phoneNumber: null,
@@ -31,6 +44,10 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [order, setOrder] = useState<OrderState>(initialOrder);
+
+  const setUserInfo = (userInfo: UserInfo) => {
+    setOrder(prev => ({ ...prev, userInfo }));
+  };
 
   const setLocation = (location: AvailableLocation | null) => {
     setOrder(prev => ({ ...prev, location }));
@@ -147,6 +164,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     <OrderContext.Provider
       value={{
         order,
+        setUserInfo,
         setLocation,
         setBundle,
         setPhoneNumber,

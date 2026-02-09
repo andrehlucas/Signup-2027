@@ -197,7 +197,7 @@ export default function CustomizePage() {
 
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <ProgressIndicator currentStep={2} />
+          <ProgressIndicator currentStep={3} />
         </div>
 
         <div className="text-center mb-8">

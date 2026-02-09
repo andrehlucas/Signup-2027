@@ -67,7 +67,19 @@ export interface CartItem {
   billingCycle: 'monthly' | 'one-time';
 }
 
+export interface UserInfo {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  countryCode: string;
+  email: string;
+  confirmEmail: string;
+  company: string;
+  termsAccepted: boolean;
+}
+
 export interface OrderState {
+  userInfo: UserInfo;
   location: AvailableLocation | null;
   bundle: Bundle | null;
   phoneNumber: PhoneNumber | null;

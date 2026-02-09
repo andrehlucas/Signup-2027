@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, MapPin, Star, Building2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
@@ -22,9 +22,15 @@ import {
 
 export default function LocationSelectionPage() {
   const router = useRouter();
-  const { setLocation } = useOrder();
+  const { order, setLocation } = useOrder();
   const [selectedState, setSelectedState] = useState<string>('');
   const [selectedCity, setSelectedCity] = useState<string>('');
+
+  useEffect(() => {
+    if (!order.userInfo.firstName || !order.userInfo.email) {
+      router.push('/');
+    }
+  }, [order.userInfo, router]);
 
   const states = useMemo(() => getStates(), []);
   const cities = useMemo(
@@ -51,29 +57,29 @@ export default function LocationSelectionPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 lg:p-8" data-testid="location-selection-page">
-      <Button
-        variant="ghost"
-        onClick={() => router.push('/')}
-        className="mb-6"
-        data-testid="button-back-dashboard"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Dashboard
-      </Button>
-
+    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="location-selection-page">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <ProgressIndicator currentStep={1} />
+        <Button
+          variant="ghost"
+          onClick={() => router.push('/')}
+          className="mb-6"
+          data-testid="button-back-info"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back to Your Information
+        </Button>
+
+        <div className="text-center mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1" data-testid="heading-location">
+            You're Only 3 Steps Away From Securing
+          </h1>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Your New Virtual Office Solution!
+          </h2>
         </div>
 
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="heading-location">
-            Add New Location
-          </h1>
-          <p className="text-gray-600">
-            Expand your business with a new prestigious address
-          </p>
+        <div className="mb-8">
+          <ProgressIndicator currentStep={2} />
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
@@ -176,7 +182,6 @@ export default function LocationSelectionPage() {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
