@@ -11,6 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/pop
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useToast } from '@/app/hooks/use-toast';
+import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import { Bundle, featureLabels } from '../types';
 
 type PaymentTerm = 1 | 3 | 6 | 12;
@@ -64,6 +65,7 @@ export default function CheckoutPage() {
   const [billingZip, setBillingZip] = useState('');
   const [saveCard, setSaveCard] = useState(false);
   const [paymentTerm, setPaymentTerm] = useState<PaymentTerm>(1);
+  const { trackComplete } = useFunnelTracking('checkout');
   
   // Sticky payment summary logic
   const summaryContainerRef = useRef<HTMLDivElement>(null);
@@ -176,6 +178,7 @@ export default function CheckoutPage() {
 
       queryClient.invalidateQueries({ queryKey: ['/api/locations'] });
       
+      trackComplete();
       router.push('/add-location/thank-you');
     } catch (error) {
       toast({

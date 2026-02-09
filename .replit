@@ -42,3 +42,4 @@ waitForPort = 5000
 
 [userenv.shared]
 NEXT_PUBLIC_MAILX_ENABLED = "false"
+NEXT_PUBLIC_ENABLE_FUNNEL_TRACKING = "true"

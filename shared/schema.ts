@@ -1,4 +1,4 @@
-import { pgTable, text, varchar, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, boolean, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -83,3 +83,34 @@ export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = z.infer<typeof insertNotificationSchema>;
 export type NotificationPreferences = typeof notificationPreferences.$inferSelect;
 export type InsertNotificationPreferences = z.infer<typeof insertNotificationPreferencesSchema>;
+
+export const funnelSessions = pgTable("funnel_sessions", {
+  id: varchar("id").primaryKey(),
+  sessionId: text("session_id").notNull(),
+  startedAt: text("started_at").notNull(),
+  lastSeenAt: text("last_seen_at").notNull(),
+  userAgent: text("user_agent"),
+  referrer: text("referrer"),
+  completed: boolean("completed").notNull().default(false),
+});
+
+export const funnelEvents = pgTable("funnel_events", {
+  id: varchar("id").primaryKey(),
+  sessionId: text("session_id").notNull(),
+  step: text("step").notNull(),
+  eventType: text("event_type").notNull(),
+  timestamp: text("timestamp").notNull(),
+  duration: integer("duration"),
+  metadata: text("metadata"),
+});
+
+export const insertFunnelSessionSchema = createInsertSchema(funnelSessions);
+export const insertFunnelEventSchema = createInsertSchema(funnelEvents);
+
+export type FunnelSession = typeof funnelSessions.$inferSelect;
+export type InsertFunnelSession = z.infer<typeof insertFunnelSessionSchema>;
+export type FunnelEvent = typeof funnelEvents.$inferSelect;
+export type InsertFunnelEvent = z.infer<typeof insertFunnelEventSchema>;
+
+export type FunnelStep = 'your_info' | 'location' | 'customize' | 'checkout' | 'thank_you';
+export type FunnelEventType = 'enter' | 'complete';

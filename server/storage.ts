@@ -1,4 +1,4 @@
-import { UserType, InsertUser, Location, Mail, MailSettings, MailAction, Notification, NotificationPreferences, NotificationType } from "../shared/schema";
+import { UserType, InsertUser, Location, Mail, MailSettings, MailAction, Notification, NotificationPreferences, NotificationType, FunnelSession, FunnelEvent } from "../shared/schema";
 
 export interface BenefitData {
   id: string;
@@ -39,6 +39,13 @@ export interface IStorage {
 
   getBenefits(category?: string): Promise<BenefitData[]>;
   getBenefit(id: string): Promise<BenefitData | undefined>;
+
+  createFunnelSession(session: FunnelSession): Promise<FunnelSession>;
+  updateFunnelSession(sessionId: string, updates: Partial<FunnelSession>): Promise<FunnelSession | undefined>;
+  getFunnelSession(sessionId: string): Promise<FunnelSession | undefined>;
+  createFunnelEvent(event: FunnelEvent): Promise<FunnelEvent>;
+  getFunnelEvents(): Promise<FunnelEvent[]>;
+  getFunnelSessions(): Promise<FunnelSession[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -49,6 +56,8 @@ export class MemStorage implements IStorage {
   private notificationItems: Map<string, Notification>;
   private notificationPrefs: Map<string, NotificationPreferences>;
   private benefitItems: Map<string, BenefitData>;
+  private funnelSessions: Map<string, FunnelSession>;
+  private funnelEvents: Map<string, FunnelEvent>;
 
   constructor() {
     this.users = new Map();
@@ -58,6 +67,8 @@ export class MemStorage implements IStorage {
     this.notificationItems = new Map();
     this.notificationPrefs = new Map();
     this.benefitItems = new Map();
+    this.funnelSessions = new Map();
+    this.funnelEvents = new Map();
     
     this.seed();
   }
@@ -416,6 +427,36 @@ export class MemStorage implements IStorage {
 
   async getBenefit(id: string): Promise<BenefitData | undefined> {
     return this.benefitItems.get(id);
+  }
+
+  async createFunnelSession(session: FunnelSession): Promise<FunnelSession> {
+    this.funnelSessions.set(session.sessionId, session);
+    return session;
+  }
+
+  async updateFunnelSession(sessionId: string, updates: Partial<FunnelSession>): Promise<FunnelSession | undefined> {
+    const existing = this.funnelSessions.get(sessionId);
+    if (!existing) return undefined;
+    const updated = { ...existing, ...updates };
+    this.funnelSessions.set(sessionId, updated);
+    return updated;
+  }
+
+  async getFunnelSession(sessionId: string): Promise<FunnelSession | undefined> {
+    return this.funnelSessions.get(sessionId);
+  }
+
+  async createFunnelEvent(event: FunnelEvent): Promise<FunnelEvent> {
+    this.funnelEvents.set(event.id, event);
+    return event;
+  }
+
+  async getFunnelEvents(): Promise<FunnelEvent[]> {
+    return Array.from(this.funnelEvents.values());
+  }
+
+  async getFunnelSessions(): Promise<FunnelSession[]> {
+    return Array.from(this.funnelSessions.values());
   }
 }
 

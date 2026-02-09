@@ -8,6 +8,7 @@ import { Input } from '@/app/components/ui/input';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { ProgressIndicator } from './add-location/components/ProgressIndicator';
 import { useOrder } from './add-location/context';
+import { useFunnelTracking } from './hooks/use-funnel-tracking';
 
 const countryCodes = [
   { code: '+1', flag: '🇺🇸', label: 'US' },
@@ -37,6 +38,7 @@ export default function SignUpPage() {
   const [termsAccepted, setTermsAccepted] = useState(order.userInfo.termsAccepted);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { trackComplete } = useFunnelTracking('your_info');
 
   const selectedCountry = countryCodes.find(c => c.code === countryCode) || countryCodes[0];
 
@@ -83,6 +85,7 @@ export default function SignUpPage() {
       termsAccepted,
     });
 
+    trackComplete();
     router.push('/add-location');
   };
 

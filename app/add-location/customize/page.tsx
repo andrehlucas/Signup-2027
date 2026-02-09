@@ -22,6 +22,7 @@ import {
 } from '@/app/components/ui/select';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
+import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import {
   bundles,
   featureLabels,
@@ -55,6 +56,7 @@ export default function CustomizePage() {
   const [tempSelectedPhone, setTempSelectedPhone] = useState<PhoneNumber | null>(null);
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAllAddons, setShowAllAddons] = useState(false);
+  const { trackComplete } = useFunnelTracking('customize');
 
   const phoneNumbers = useMemo(() => {
     if (!order.location) return [];
@@ -173,6 +175,7 @@ export default function CustomizePage() {
 
   const handleContinue = () => {
     if (selectedBundle && selectedPhone) {
+      trackComplete({ bundle: selectedBundle.name });
       router.push('/add-location/checkout');
     }
   };

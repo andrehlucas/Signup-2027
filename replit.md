@@ -37,6 +37,24 @@ The application employs a Next.js App Router layout for the portal, with distinc
 -   **My Mail Feature:** Enables users to review pending mail items, view envelope thumbnails, and take actions like scanning, forwarding, keeping, or shredding mail.
 -   **Mobile Responsiveness:** Designed with an `lg` breakpoint for desktop/mobile views, featuring a fixed sidebar for desktop and a hamburger menu with a drawer for mobile.
 
+### Funnel Analytics Module (Independent/Pluggable)
+
+A standalone, decoupled analytics system that tracks user drop-off in the sign-up flow. It's designed as a plugin that can be turned on/off via the `NEXT_PUBLIC_ENABLE_FUNNEL_TRACKING` environment variable.
+
+**Architecture:**
+- **Schema:** `funnelSessions` and `funnelEvents` tables in `shared/schema.ts`
+- **Storage:** Funnel CRUD methods added to `IStorage` interface and `MemStorage` in `server/storage.ts`
+- **API Routes:** Next.js API route handlers at `app/api/funnel/events/route.ts` (POST) and `app/api/funnel/summary/route.ts` (GET)
+- **Client Hook:** `app/hooks/use-funnel-tracking.ts` — `useFunnelTracking(step)` hook that sends enter/complete events when tracking is enabled
+- **Dashboard:** `/admin/analytics` page with funnel visualization, drop-off rates, time-per-step, daily trends, and recent events table
+
+**How to toggle:**
+- Set `NEXT_PUBLIC_ENABLE_FUNNEL_TRACKING=true` to enable tracking
+- Set it to `false` or remove the variable to disable tracking completely
+- When disabled, no events are sent and the dashboard shows a "disabled" state
+
+**Sign-up flow steps tracked:** Your Info → Location → Customize → Checkout → Thank You
+
 ## External Dependencies
 
 ### Third-Party UI Libraries
