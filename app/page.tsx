@@ -45,10 +45,16 @@ export default function SignUpPage() {
 
     if (!firstName.trim()) newErrors.firstName = 'First name is required';
     if (!lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!phone.trim()) newErrors.phone = 'Phone number is required';
+    if (!phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (phone.replace(/[\s()-]/g, '').length < 7) {
+      newErrors.phone = 'Please enter a valid phone number (at least 7 digits)';
+    } else if (phone.replace(/[\s()-]/g, '').length > 15) {
+      newErrors.phone = 'Phone number is too long';
+    }
     if (!email.trim()) {
       newErrors.email = 'Email address is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
       newErrors.email = 'Please enter a valid email address';
     }
     if (!confirmEmail.trim()) {
@@ -161,6 +167,8 @@ export default function SignUpPage() {
                     )}
                   </div>
                   <Input
+                    type="tel"
+                    inputMode="numeric"
                     placeholder="Phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value.replace(/[^\d\s()-]/g, ''))}
