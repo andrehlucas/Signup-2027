@@ -1,9 +1,4 @@
 {
-  "/add-location/page": "app/add-location/page.js",
   "/api/notifications/unread-count/route": "app/api/notifications/unread-count/route.js",
-  "/auth/enter-code/page": "app/auth/enter-code/page.js",
-  "/auth/get-code/page": "app/auth/get-code/page.js",
-  "/auth/new-password/page": "app/auth/new-password/page.js",
-  "/auth/signup/page": "app/auth/signup/page.js",
   "/page": "app/page.js"
 }
