@@ -26,7 +26,7 @@ const paymentTermOptions: PaymentTermOption[] = [
   { months: 1, label: 'Monthly', freeMonths: 0 },
   { months: 3, label: '3 Months', freeMonths: 0 },
   { months: 6, label: '6 Months', freeMonths: 0 },
-  { months: 12, label: '12 Months', freeMonths: 2, badge: '1 month free' },
+  { months: 12, label: '12 Months', freeMonths: 1, badge: '1 month free' },
 ];
 
 function getBundleIncludedAddons(bundle: Bundle): { name: string; label: string }[] {
