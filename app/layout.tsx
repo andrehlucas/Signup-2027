@@ -4,7 +4,7 @@ import './globals.css';
 import { Providers } from './providers';
 import { Toaster } from '@/app/components/ui/toaster';
 import { NavigationProgress } from '@/app/components/NavigationProgress';
-import { PortalSidebar } from './portal-components/PortalSidebar';
+import { LayoutShell } from './components/LayoutShell';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,12 +32,9 @@ export default function RootLayout({
       <body>
         <Providers>
           <NavigationProgress />
-          <div className="flex min-h-screen bg-gray-50">
-            <PortalSidebar />
-            <main className="flex-1 overflow-auto pt-16 lg:pt-0 px-0">
-              {children}
-            </main>
-          </div>
+          <LayoutShell>
+            {children}
+          </LayoutShell>
           <Toaster />
         </Providers>
       </body>

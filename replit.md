@@ -27,6 +27,7 @@ Drizzle ORM is used for PostgreSQL database integration, with schema definitions
 The application employs a Next.js App Router layout for the portal, with distinct sections for the server and shared code. Key features include:
 
 -   **Portal Routes:** Dashboard, My Office, Phone, Addons, Account, Billing, Videos, Meeting Rooms, Support.
+-   **Auth Flow (Sign Up / Login):** Multi-step sign-up flow at `/auth/signup` → `/auth/get-code` → `/auth/enter-code` → `/auth/new-password` → redirects to Add Location wizard. Login at `/auth/login`. Auth pages use a separate layout without the portal sidebar, featuring the Opus logo watermark background. The `LayoutShell` component in `app/components/LayoutShell.tsx` conditionally hides the sidebar for `/auth` routes.
 -   **Add New Location Wizard:** A multi-step flow for selecting a location, customizing services (bundles, phone numbers, add-ons), and checkout with various payment options and terms.
 -   **Account Page:** Allows users to manage login credentials, security settings, and company details with validation and confirmation flows.
 -   **Billing Page:** Displays current subscriptions, payment methods management (add, set default, delete cards), and a history of invoices with PDF download options.
