@@ -1,7 +1,4 @@
 {
-  "/add-location/page": "app/add-location/page.js",
-  "/api/benefits/route": "app/api/benefits/route.js",
   "/api/notifications/unread-count/route": "app/api/notifications/unread-count/route.js",
-  "/office/page": "app/office/page.js",
   "/page": "app/page.js"
 }
