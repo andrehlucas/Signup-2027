@@ -572,6 +572,252 @@ class MemStorage {
             }
         ];
         seedBenefits.forEach((b)=>this.benefitItems.set(b.id, b));
+        this.seedFunnelData();
+    }
+    seedFunnelData() {
+        const steps = [
+            'your_info',
+            'location',
+            'customize',
+            'checkout',
+            'thank_you'
+        ];
+        const baseDate = new Date('2026-02-09T00:00:00Z');
+        let eventCounter = 0;
+        const sessionProfiles = [
+            {
+                maxStep: 4,
+                durations: [
+                    45,
+                    62,
+                    38,
+                    55,
+                    0
+                ]
+            },
+            {
+                maxStep: 4,
+                durations: [
+                    30,
+                    45,
+                    50,
+                    42,
+                    0
+                ]
+            },
+            {
+                maxStep: 4,
+                durations: [
+                    60,
+                    80,
+                    55,
+                    70,
+                    0
+                ]
+            },
+            {
+                maxStep: 3,
+                durations: [
+                    35,
+                    50,
+                    65,
+                    48
+                ]
+            },
+            {
+                maxStep: 3,
+                durations: [
+                    55,
+                    70,
+                    45,
+                    60
+                ]
+            },
+            {
+                maxStep: 3,
+                durations: [
+                    40,
+                    35,
+                    55,
+                    40
+                ]
+            },
+            {
+                maxStep: 2,
+                durations: [
+                    50,
+                    60,
+                    40
+                ]
+            },
+            {
+                maxStep: 2,
+                durations: [
+                    25,
+                    45,
+                    55
+                ]
+            },
+            {
+                maxStep: 2,
+                durations: [
+                    70,
+                    50,
+                    35
+                ]
+            },
+            {
+                maxStep: 2,
+                durations: [
+                    38,
+                    62,
+                    48
+                ]
+            },
+            {
+                maxStep: 1,
+                durations: [
+                    40,
+                    55
+                ]
+            },
+            {
+                maxStep: 1,
+                durations: [
+                    65,
+                    42
+                ]
+            },
+            {
+                maxStep: 1,
+                durations: [
+                    30,
+                    70
+                ]
+            },
+            {
+                maxStep: 1,
+                durations: [
+                    50,
+                    38
+                ]
+            },
+            {
+                maxStep: 1,
+                durations: [
+                    45,
+                    60
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    90
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    15
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    120
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    25
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    45
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    60
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    35
+                ]
+            }
+        ];
+        for(let day = 13; day >= 0; day--){
+            const dayDate = new Date(baseDate);
+            dayDate.setDate(dayDate.getDate() - day);
+            const dateStr = dayDate.toISOString().split('T')[0];
+            const dailyMultiplier = day < 3 ? 1.4 : day < 7 ? 1.0 : 0.7;
+            const sessionsToday = Math.round(sessionProfiles.length * dailyMultiplier);
+            for(let s = 0; s < sessionsToday; s++){
+                const profile = sessionProfiles[s % sessionProfiles.length];
+                const sessionId = `seed_${dateStr}_${s}`;
+                const hourOffset = Math.floor(s / sessionsToday * 14) + 8;
+                const minuteOffset = Math.floor(Math.random() * 60);
+                const sessionStart = new Date(dayDate);
+                sessionStart.setHours(hourOffset, minuteOffset, 0, 0);
+                const reachedThankYou = profile.maxStep === 4;
+                this.funnelSessions.set(sessionId, {
+                    id: `sid_${eventCounter++}`,
+                    sessionId,
+                    startedAt: sessionStart.toISOString(),
+                    lastSeenAt: sessionStart.toISOString(),
+                    userAgent: [
+                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+                        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
+                        'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0)',
+                        'Mozilla/5.0 (Linux; Android 14)'
+                    ][s % 4],
+                    referrer: [
+                        'https://google.com',
+                        'https://facebook.com',
+                        '',
+                        'https://linkedin.com',
+                        'direct'
+                    ][s % 5],
+                    completed: reachedThankYou
+                });
+                let currentTime = new Date(sessionStart);
+                for(let stepIdx = 0; stepIdx <= profile.maxStep; stepIdx++){
+                    const step = steps[stepIdx];
+                    this.funnelEvents.set(`fe_${eventCounter}`, {
+                        id: `fe_${eventCounter++}`,
+                        sessionId,
+                        step,
+                        eventType: 'enter',
+                        timestamp: currentTime.toISOString(),
+                        duration: null,
+                        metadata: null
+                    });
+                    if (stepIdx < profile.maxStep) {
+                        const duration = profile.durations[stepIdx] + Math.floor(Math.random() * 20) - 10;
+                        currentTime = new Date(currentTime.getTime() + duration * 1000);
+                        this.funnelEvents.set(`fe_${eventCounter}`, {
+                            id: `fe_${eventCounter++}`,
+                            sessionId,
+                            step,
+                            eventType: 'complete',
+                            timestamp: currentTime.toISOString(),
+                            duration: Math.max(5, duration),
+                            metadata: null
+                        });
+                    }
+                }
+                const lastTime = currentTime;
+                const sessionEntry = this.funnelSessions.get(sessionId);
+                sessionEntry.lastSeenAt = lastTime.toISOString();
+                this.funnelSessions.set(sessionId, sessionEntry);
+            }
+        }
     }
     async getUser(id) {
         return this.users.get(id);
