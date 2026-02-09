@@ -1,5 +1,11 @@
 {
   "/add-location/page": "app/add-location/page.js",
+  "/api/notification-preferences/route": "app/api/notification-preferences/route.js",
+  "/api/notifications/route": "app/api/notifications/route.js",
   "/api/notifications/unread-count/route": "app/api/notifications/unread-count/route.js",
-  "/page": "app/page.js"
+  "/notifications/alerts/page": "app/notifications/alerts/page.js",
+  "/notifications/messages/page": "app/notifications/messages/page.js",
+  "/office/page": "app/office/page.js",
+  "/page": "app/page.js",
+  "/phone/page": "app/phone/page.js"
 }
