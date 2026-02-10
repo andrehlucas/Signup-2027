@@ -289,14 +289,14 @@ export default function CustomizePage() {
                 {availableLocations.map((location) => (
                   <div
                     key={location.id}
-                    className="flex items-center gap-4 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all"
+                    className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all"
                     data-testid={`location-card-${location.id}`}
                   >
                     <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Building2 className="h-8 w-8 text-gray-400" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
                         <h4 className="font-medium text-gray-900">{location.name}</h4>
                         {location.isPremium && (
                           <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold">
@@ -306,13 +306,13 @@ export default function CustomizePage() {
                         )}
                       </div>
                       <p className="text-sm text-gray-600 flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5" />
+                        <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
                         {location.address}, {location.city}, {location.stateCode} {location.zipCode}
                       </p>
                     </div>
                     <Button
                       onClick={() => handleLocationSelect(location)}
-                      className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0"
+                      className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0 w-full sm:w-auto"
                       data-testid={`button-select-location-${location.id}`}
                     >
                       Select
