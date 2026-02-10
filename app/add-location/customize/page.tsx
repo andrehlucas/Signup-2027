@@ -815,7 +815,7 @@ export default function CustomizePage() {
                         <span className="hidden sm:inline">See what's included</span>
                       </button>
                     </PopoverTrigger>
-                    <PopoverContent side="top" align="start" className="w-72 p-0" data-testid="popover-included-features">
+                    <PopoverContent side="top" align="center" className="w-72 p-0" data-testid="popover-included-features">
                       <div className="px-4 py-3 border-b border-gray-100">
                         <p className="text-sm font-semibold text-gray-900">{displayBundleName} includes:</p>
                       </div>
@@ -857,19 +857,18 @@ export default function CustomizePage() {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
-                  {(order.addons.length > 0 || order.extensionCount > 0) && (
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <button
-                          className="inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors"
-                          data-testid="button-see-addons"
-                        >
-                          See details
-                        </button>
-                      </PopoverTrigger>
-                      <PopoverContent side="top" align="start" className="w-72 p-0" data-testid="popover-addon-breakdown">
+                <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
+                {(order.addons.length > 0 || order.extensionCount > 0) && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        className="inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors mt-0.5"
+                        data-testid="button-see-addons"
+                      >
+                        See details
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent side="top" align="center" className="w-72 p-0" data-testid="popover-addon-breakdown">
                         <div className="px-4 py-3 border-b border-gray-100">
                           <p className="text-sm font-semibold text-gray-900">Your Add-ons</p>
                         </div>
@@ -896,7 +895,6 @@ export default function CustomizePage() {
                       </PopoverContent>
                     </Popover>
                   )}
-                </div>
               </div>
             </div>
             <Button
