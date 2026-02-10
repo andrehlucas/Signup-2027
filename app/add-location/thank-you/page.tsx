@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { CheckCircle2, MapPin, Package, Phone, ArrowRight } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
@@ -9,7 +9,7 @@ import { useOrder } from '../context';
 function Fireworks() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const run = useCallback(() => {
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -46,42 +46,46 @@ function Fireworks() {
 
     const particles: Particle[] = [];
     const rockets: Rocket[] = [];
-    const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bcb', '#36bff9', '#f97316', '#a855f7'];
+    const colors = ['#ff2d2d', '#ffdd00', '#00e676', '#2979ff', '#ff4081', '#36bff9', '#ff9100', '#d500f9', '#ffea00', '#00e5ff'];
 
     function createRocket() {
       const x = Math.random() * w * 0.8 + w * 0.1;
       rockets.push({
         x,
         y: h,
-        vy: -(Math.random() * 4 + 8),
-        targetY: Math.random() * h * 0.3 + h * 0.1,
+        vy: -(Math.random() * 6 + 10),
+        targetY: Math.random() * h * 0.4 + h * 0.05,
         color: colors[Math.floor(Math.random() * colors.length)],
         trail: [],
       });
     }
 
     function explode(x: number, y: number, color: string) {
-      const count = 60 + Math.floor(Math.random() * 40);
+      const count = 100 + Math.floor(Math.random() * 60);
       for (let i = 0; i < count; i++) {
         const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
-        const speed = Math.random() * 5 + 2;
+        const speed = Math.random() * 8 + 3;
         particles.push({
           x,
           y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           alpha: 1,
-          color: Math.random() > 0.3 ? color : colors[Math.floor(Math.random() * colors.length)],
-          decay: Math.random() * 0.015 + 0.01,
-          size: Math.random() * 2.5 + 1,
+          color: Math.random() > 0.25 ? color : colors[Math.floor(Math.random() * colors.length)],
+          decay: Math.random() * 0.012 + 0.006,
+          size: Math.random() * 4 + 1.5,
         });
       }
     }
 
     let frame = 0;
     let animId: number;
-    const duration = 4000;
+    const duration = 3800;
     const startTime = Date.now();
+
+    for (let i = 0; i < 5; i++) {
+      createRocket();
+    }
 
     function loop() {
       const elapsed = Date.now() - startTime;
@@ -93,26 +97,31 @@ function Fireworks() {
 
       animId = requestAnimationFrame(loop);
       ctx!.globalCompositeOperation = 'destination-out';
-      ctx!.fillStyle = 'rgba(0,0,0,0.15)';
+      ctx!.fillStyle = 'rgba(0,0,0,0.12)';
       ctx!.fillRect(0, 0, w, h);
       ctx!.globalCompositeOperation = 'lighter';
 
-      if (elapsed < duration - 500 && frame % 12 === 0) {
-        createRocket();
+      if (elapsed < duration - 400) {
+        if (frame % 4 === 0) {
+          createRocket();
+        }
+        if (frame % 7 === 0) {
+          createRocket();
+        }
       }
 
       for (let i = rockets.length - 1; i >= 0; i--) {
         const r = rockets[i];
         r.trail.push({ x: r.x, y: r.y, alpha: 1 });
         r.y += r.vy;
-        r.vy *= 0.98;
+        r.vy *= 0.97;
 
         for (let t = r.trail.length - 1; t >= 0; t--) {
-          r.trail[t].alpha -= 0.05;
+          r.trail[t].alpha -= 0.04;
           if (r.trail[t].alpha <= 0) r.trail.splice(t, 1);
           else {
             ctx!.beginPath();
-            ctx!.arc(r.trail[t].x, r.trail[t].y, 1.5, 0, Math.PI * 2);
+            ctx!.arc(r.trail[t].x, r.trail[t].y, 2, 0, Math.PI * 2);
             ctx!.fillStyle = `rgba(255,255,255,${r.trail[t].alpha})`;
             ctx!.fill();
           }
@@ -128,7 +137,7 @@ function Fireworks() {
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.05;
+        p.vy += 0.04;
         p.vx *= 0.99;
         p.alpha -= p.decay;
 
@@ -154,10 +163,6 @@ function Fireworks() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  useEffect(() => {
-    return run();
-  }, [run]);
 
   return (
     <canvas
