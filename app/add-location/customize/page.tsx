@@ -455,8 +455,7 @@ export default function CustomizePage() {
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="hidden sm:block text-right">
-                    <p className="text-xs text-blue-200/60" data-testid="text-selected-bundle-name">{displayBundleName}</p>
-                    <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">From ${bundles[1].price}/mo</p>
+                    <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">See Bundles</p>
                   </div>
                   <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
                     {bundleExpanded ? (
