@@ -501,7 +501,7 @@ export default function CustomizePage() {
                                 ${bundle.originalPrice}
                               </span>
                             )}
-                            <span className="text-white/50 text-sm ml-1">/mo</span>
+                            <span className="text-gray-400 text-sm ml-1">/mo</span>
                           </div>
 
                           <div className="space-y-2 flex-1">
