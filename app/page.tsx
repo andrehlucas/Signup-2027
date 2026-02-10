@@ -24,13 +24,20 @@ const countryCodes = [
   { code: '+55', flag: '🇧🇷', label: 'BR' },
 ];
 
+function formatPhoneNumber(value: string): string {
+  const digits = value.replace(/\D/g, '');
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)} - ${digits.slice(6, 10)}`;
+}
+
 export default function SignUpPage() {
   const router = useRouter();
   const { order, setUserInfo } = useOrder();
 
   const [firstName, setFirstName] = useState(order.userInfo.firstName);
   const [lastName, setLastName] = useState(order.userInfo.lastName);
-  const [phone, setPhone] = useState(order.userInfo.phone);
+  const [phone, setPhone] = useState(formatPhoneNumber(order.userInfo.phone));
   const [countryCode, setCountryCode] = useState(order.userInfo.countryCode || '+1');
   const [email, setEmail] = useState(order.userInfo.email);
   const [confirmEmail, setConfirmEmail] = useState(order.userInfo.confirmEmail);
@@ -77,7 +84,7 @@ export default function SignUpPage() {
     setUserInfo({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
-      phone: phone.trim(),
+      phone: phone.replace(/\D/g, ''),
       countryCode,
       email: email.trim(),
       confirmEmail: confirmEmail.trim(),
@@ -169,9 +176,9 @@ export default function SignUpPage() {
                   <Input
                     type="tel"
                     inputMode="numeric"
-                    placeholder="Phone"
+                    placeholder="(555) 555 - 5555"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/[^\d\s()-]/g, ''))}
+                    onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
                     className={`h-12 rounded-l-none flex-1 ${errors.phone ? 'border-red-500' : ''}`}
                     data-testid="input-phone"
                   />
