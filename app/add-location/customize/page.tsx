@@ -367,7 +367,7 @@ export default function CustomizePage() {
     : 'The Essentials';
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 lg:p-8 pb-36" data-testid="customize-page">
+    <div className="min-h-screen bg-gray-50 p-4 lg:p-8 pb-[27rem]" data-testid="customize-page">
       <Button
         variant="ghost"
         onClick={handleBackFromCustomize}
@@ -392,198 +392,190 @@ export default function CustomizePage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-6" data-testid="essentials-info-banner">
-          <div className="bg-[#36bff9] text-white text-center py-2 text-sm font-medium">
-            Your Office Package
-          </div>
-          <div className="p-4">
-            <div className="mb-3">
-              <h3 className="text-base font-medium text-gray-900">{displayBundleName}</h3>
+        <div className="flex flex-col lg:flex-row gap-4 mb-6">
+          <div className="lg:w-2/3 bg-white rounded-xl border-2 border-gray-200 overflow-hidden" data-testid="essentials-info-banner">
+            <div className="bg-[#36bff9] text-white text-center py-2 text-sm font-medium">
+              Your Office Package
             </div>
-            <div className="mb-4">
-              <span className="text-3xl font-bold text-gray-900">${selectedBundle?.price || bundles[0].price}</span>
-              <span className="text-gray-500 text-sm ml-1">/mo</span>
-            </div>
-            <div className="space-y-2">
-              {Object.entries((selectedBundle || bundles[0]).features)
-                .filter(([, enabled]) => enabled)
-                .map(([key]) => (
-                  <div key={key} className="flex items-center gap-2 text-sm">
-                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                      <Check className="h-2.5 w-2.5 text-white" />
+            <div className="p-4">
+              <div className="mb-3">
+                <h3 className="text-base font-medium text-gray-900">{displayBundleName}</h3>
+              </div>
+              <div className="mb-4">
+                <span className="text-3xl font-bold text-gray-900">${selectedBundle?.price || bundles[0].price}</span>
+                <span className="text-gray-500 text-sm ml-1">/mo</span>
+              </div>
+              <div className="space-y-2">
+                {Object.entries((selectedBundle || bundles[0]).features)
+                  .filter(([, enabled]) => enabled)
+                  .map(([key]) => (
+                    <div key={key} className="flex items-center gap-2 text-sm">
+                      <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
+                        <Check className="h-2.5 w-2.5 text-white" />
+                      </div>
+                      <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
                     </div>
-                    <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-xl mb-6 overflow-hidden" data-testid="bundle-upgrade-banner">
-          <button
-            onClick={() => setBundleExpanded(!bundleExpanded)}
-            className="w-full relative overflow-hidden"
-            data-testid="button-toggle-bundle-upgrade"
-            style={{
-              background: 'linear-gradient(135deg, #0f1c2e 0%, #1a2d4a 40%, #1e3a5f 70%, #1a2d4a 100%)',
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-[0.07]"
-              style={{
-                backgroundImage: `radial-gradient(circle at 20% 50%, rgba(54, 191, 249, 0.4) 0%, transparent 50%),
-                                  radial-gradient(circle at 80% 20%, rgba(54, 191, 249, 0.3) 0%, transparent 40%),
-                                  radial-gradient(circle at 60% 80%, rgba(42, 168, 224, 0.2) 0%, transparent 40%)`,
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-[0.03]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2336bff9' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              }}
-            />
-            <div className="relative p-4 sm:p-6">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center flex-shrink-0">
-                    <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-[#36bff9]" />
-                  </div>
-                  <div className="text-left">
-                    <h2 className="text-base sm:text-lg font-bold text-white">Bundle & Save</h2>
-                    <p className="text-xs sm:text-sm text-blue-200/80">Supercharge your office with premium features</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <div className="hidden sm:block text-right">
-                    <p className="text-xs text-blue-200/60" data-testid="text-selected-bundle-name">{displayBundleName}</p>
-                    <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">From ${bundles[1].price}/mo</p>
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
-                    {bundleExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-blue-200" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 text-blue-200" />
-                    )}
-                  </div>
-                </div>
+                  ))}
               </div>
             </div>
-          </button>
+          </div>
 
-          {bundleExpanded && (
-            <div
-              className="relative overflow-hidden"
+          <div className="lg:w-1/3 rounded-xl overflow-hidden" data-testid="bundle-upgrade-banner">
+            <button
+              onClick={() => setBundleExpanded(!bundleExpanded)}
+              className="w-full h-full relative overflow-hidden"
+              data-testid="button-toggle-bundle-upgrade"
               style={{
-                background: 'linear-gradient(180deg, #0f1c2e 0%, #152338 50%, #1a2d4a 100%)',
+                background: 'linear-gradient(135deg, #0f1c2e 0%, #1a2d4a 40%, #1e3a5f 70%, #1a2d4a 100%)',
               }}
             >
               <div
-                className="absolute inset-0 opacity-[0.04]"
+                className="absolute inset-0 opacity-[0.07]"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 20% 50%, rgba(54, 191, 249, 0.4) 0%, transparent 50%),
+                                    radial-gradient(circle at 80% 20%, rgba(54, 191, 249, 0.3) 0%, transparent 40%),
+                                    radial-gradient(circle at 60% 80%, rgba(42, 168, 224, 0.2) 0%, transparent 40%)`,
+                }}
+              />
+              <div
+                className="absolute inset-0 opacity-[0.03]"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2336bff9' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
                 }}
               />
-              <div className="relative px-4 sm:px-6 py-5">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {upgradeBundles.map((bundle) => {
-                    const isSelected = selectedBundle?.id === bundle.id;
-                    return (
-                      <div
-                        key={bundle.id}
-                        onClick={() => handleBundleSelect(bundle)}
-                        className={`rounded-xl overflow-hidden flex flex-col transition-all cursor-pointer ${
-                          isSelected
-                            ? 'ring-2 ring-[#36bff9] shadow-lg shadow-[#36bff9]/20'
-                            : 'hover:shadow-lg hover:shadow-white/5'
-                        }`}
-                        style={{
-                          background: isSelected
-                            ? 'linear-gradient(135deg, rgba(54,191,249,0.15) 0%, rgba(30,58,95,0.9) 100%)'
-                            : 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-                          border: isSelected ? '1px solid rgba(54,191,249,0.4)' : '1px solid rgba(255,255,255,0.1)',
-                        }}
-                        data-testid={`bundle-card-${bundle.id}`}
-                      >
-                        <div className="p-4 flex flex-col flex-1">
-                          <div className="flex items-center justify-between mb-3">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
-                              {bundle.badge}
-                            </span>
-                            {isSelected && (
-                              <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400 bg-emerald-400/10 rounded-full px-2 py-0.5">
-                                <Check className="h-3 w-3" />
-                                Active
-                              </span>
-                            )}
-                          </div>
-
-                          <h3 className="text-lg font-bold text-white mb-1">
-                            {bundle.tier}
-                          </h3>
-
-                          <div className="mb-4">
-                            <span className="text-3xl font-bold text-white">${bundle.price}</span>
-                            {bundle.originalPrice && (
-                              <span className="text-sm text-gray-400 line-through ml-2">
-                                ${bundle.originalPrice}
-                              </span>
-                            )}
-                            <span className="text-gray-400 text-sm ml-1">/mo</span>
-                          </div>
-
-                          <div className="space-y-2 flex-1">
-                            {Object.entries(bundle.features)
-                              .filter(([, enabled]) => enabled)
-                              .map(([key]) => (
-                                <div key={key} className="flex items-center gap-2 text-sm">
-                                  <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
-                                    <Check className="h-2.5 w-2.5 text-[#36bff9]" />
-                                  </div>
-                                  <span className="text-white text-xs">{featureLabels[key]}</span>
-                                </div>
-                              ))}
-                          </div>
-
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleBundleSelect(bundle);
-                            }}
-                            className={`mt-4 w-full ${
-                              isSelected
-                                ? 'bg-[#36bff9] hover:bg-[#2aa8e0] text-white'
-                                : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
-                            }`}
-                            data-testid={`button-select-bundle-${bundle.id}`}
-                          >
-                            {isSelected ? (
-                              <>
-                                <Check className="h-4 w-4 mr-2" />
-                                Selected
-                              </>
-                            ) : (
-                              'Select'
-                            )}
-                          </Button>
-                        </div>
-                      </div>
-                    );
-                  })}
+              <div className="relative p-4 sm:p-6 flex flex-col items-center justify-center h-full gap-3">
+                <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                  <DollarSign className="h-5 w-5 text-[#36bff9]" />
                 </div>
-
-                {selectedBundle?.id !== 'essentials' && (
-                  <button
-                    onClick={() => handleBundleSelect(bundles[0])}
-                    className="mt-4 text-sm text-blue-300/70 hover:text-blue-200 underline underline-offset-2"
-                    data-testid="button-revert-essentials"
-                  >
-                    Revert to The Essentials ($99/mo)
-                  </button>
-                )}
+                <h2 className="text-base sm:text-lg font-bold text-white text-center">Bundle & Save</h2>
+                <div className="flex items-center gap-2 text-sm text-[#36bff9]">
+                  <span>See bundles</span>
+                  <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+                    {bundleExpanded ? (
+                      <ChevronUp className="h-3.5 w-3.5 text-blue-200" />
+                    ) : (
+                      <ChevronDown className="h-3.5 w-3.5 text-blue-200" />
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          )}
+            </button>
+          </div>
         </div>
+
+        {bundleExpanded && (
+          <div
+            className="relative rounded-xl overflow-hidden mb-6"
+            style={{
+              background: 'linear-gradient(180deg, #0f1c2e 0%, #152338 50%, #1a2d4a 100%)',
+            }}
+          >
+            <div
+              className="absolute inset-0 opacity-[0.04]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2336bff9' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              }}
+            />
+            <div className="relative px-4 sm:px-6 py-5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {upgradeBundles.map((bundle) => {
+                  const isSelected = selectedBundle?.id === bundle.id;
+                  return (
+                    <div
+                      key={bundle.id}
+                      onClick={() => handleBundleSelect(bundle)}
+                      className={`rounded-xl overflow-hidden flex flex-col transition-all cursor-pointer ${
+                        isSelected
+                          ? 'ring-2 ring-[#36bff9] shadow-lg shadow-[#36bff9]/20'
+                          : 'hover:shadow-lg hover:shadow-white/5'
+                      }`}
+                      style={{
+                        background: isSelected
+                          ? 'linear-gradient(135deg, rgba(54,191,249,0.15) 0%, rgba(30,58,95,0.9) 100%)'
+                          : 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
+                        border: isSelected ? '1px solid rgba(54,191,249,0.4)' : '1px solid rgba(255,255,255,0.1)',
+                      }}
+                      data-testid={`bundle-card-${bundle.id}`}
+                    >
+                      <div className="p-4 flex flex-col flex-1">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
+                            {bundle.badge}
+                          </span>
+                          {isSelected && (
+                            <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400 bg-emerald-400/10 rounded-full px-2 py-0.5">
+                              <Check className="h-3 w-3" />
+                              Active
+                            </span>
+                          )}
+                        </div>
+
+                        <h3 className="text-lg font-bold text-white mb-1">
+                          {bundle.tier}
+                        </h3>
+
+                        <div className="mb-4">
+                          <span className="text-3xl font-bold text-white">${bundle.price}</span>
+                          {bundle.originalPrice && (
+                            <span className="text-sm text-gray-400 line-through ml-2">
+                              ${bundle.originalPrice}
+                            </span>
+                          )}
+                          <span className="text-gray-400 text-sm ml-1">/mo</span>
+                        </div>
+
+                        <div className="space-y-2 flex-1">
+                          {Object.entries(bundle.features)
+                            .filter(([, enabled]) => enabled)
+                            .map(([key]) => (
+                              <div key={key} className="flex items-center gap-2 text-sm">
+                                <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
+                                  <Check className="h-2.5 w-2.5 text-[#36bff9]" />
+                                </div>
+                                <span className="text-white text-xs">{featureLabels[key]}</span>
+                              </div>
+                            ))}
+                        </div>
+
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleBundleSelect(bundle);
+                          }}
+                          className={`mt-4 w-full ${
+                            isSelected
+                              ? 'bg-[#36bff9] hover:bg-[#2aa8e0] text-white'
+                              : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
+                          }`}
+                          data-testid={`button-select-bundle-${bundle.id}`}
+                        >
+                          {isSelected ? (
+                            <>
+                              <Check className="h-4 w-4 mr-2" />
+                              Selected
+                            </>
+                          ) : (
+                            'Select'
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {selectedBundle?.id !== 'essentials' && (
+                <button
+                  onClick={() => handleBundleSelect(bundles[0])}
+                  className="mt-4 text-sm text-blue-300/70 hover:text-blue-200 underline underline-offset-2"
+                  data-testid="button-revert-essentials"
+                >
+                  Revert to The Essentials ($99/mo)
+                </button>
+              )}
+            </div>
+          </div>
+        )}
 
         {selectedBundle && (
           <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="addons-section">

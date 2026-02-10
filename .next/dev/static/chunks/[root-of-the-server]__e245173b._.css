@@ -1001,6 +1001,10 @@ body {
   width: 1.25rem;
 }
 
+.w-6 {
+  width: 1.5rem;
+}
+
 .w-64 {
   width: 16rem;
 }
@@ -1853,12 +1857,12 @@ body {
   padding-bottom: .75rem;
 }
 
-.pb-36 {
-  padding-bottom: 9rem;
-}
-
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pb-\[27rem\] {
+  padding-bottom: 27rem;
 }
 
 .pl-2\.5 {
@@ -2063,14 +2067,6 @@ body {
 .text-blue-200 {
   --tw-text-opacity: 1;
   color: rgb(191 219 254 / var(--tw-text-opacity, 1));
-}
-
-.text-blue-200\/60 {
-  color: #bfdbfe99;
-}
-
-.text-blue-200\/80 {
-  color: #bfdbfecc;
 }
 
 .text-blue-300\/70 {
@@ -3609,24 +3605,8 @@ body {
     display: flex;
   }
 
-  .sm\:h-10 {
-    height: 2.5rem;
-  }
-
-  .sm\:h-5 {
-    height: 1.25rem;
-  }
-
-  .sm\:w-10 {
-    width: 2.5rem;
-  }
-
   .sm\:w-20 {
     width: 5rem;
-  }
-
-  .sm\:w-5 {
-    width: 1.25rem;
   }
 
   .sm\:w-auto {
@@ -3711,11 +3691,6 @@ body {
   .sm\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
-  }
-
-  .sm\:text-sm {
-    font-size: .875rem;
-    line-height: 1.25rem;
   }
 
   .data-\[state\=open\]\:sm\:slide-in-from-bottom-full[data-state="open"] {
@@ -3819,6 +3794,14 @@ body {
     grid-column: span 2 / span 2;
   }
 
+  .lg\:w-1\/3 {
+    width: 33.3333%;
+  }
+
+  .lg\:w-2\/3 {
+    width: 66.6667%;
+  }
+
   .lg\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3829,6 +3812,10 @@ body {
 
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lg\:flex-row {
+    flex-direction: row;
   }
 
   .lg\:items-start {
