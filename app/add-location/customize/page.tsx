@@ -721,6 +721,49 @@ export default function CustomizePage() {
                     </div>
                   );
                 })}
+
+                <div
+                  className={`rounded-lg border transition-all ${
+                    order.extensionCount > 0 ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 bg-white'
+                  }`}
+                  data-testid="addon-card-additional-extensions"
+                >
+                  <div className="p-4">
+                    <div className="flex items-start justify-between mb-1">
+                      <h4 className="font-medium text-gray-900">Additional Extensions</h4>
+                      <span className="font-semibold text-gray-900">$25/mo each</span>
+                    </div>
+                    <div className="flex items-center gap-3 mt-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setExtensionCount(order.extensionCount - 1)}
+                        disabled={order.extensionCount === 0}
+                        className="h-7 w-7 p-0"
+                        data-testid="button-extension-decrease"
+                      >
+                        <Minus className="h-3.5 w-3.5" />
+                      </Button>
+                      <span className="font-medium text-gray-900 min-w-[1.5rem] text-center text-sm" data-testid="extension-count">
+                        {order.extensionCount}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setExtensionCount(order.extensionCount + 1)}
+                        className="h-7 w-7 p-0"
+                        data-testid="button-extension-increase"
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                      </Button>
+                      {order.extensionCount > 0 && (
+                        <span className="text-sm text-gray-600 ml-1">
+                          = ${order.extensionCount * 25}/mo
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {!showAllAddons && sortedAddons.length > 6 && (
@@ -754,51 +797,6 @@ export default function CustomizePage() {
               )}
             </div>
 
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <h3 className="text-base font-semibold text-gray-900 mb-3">Additional Extensions</h3>
-              <div
-                className={`rounded-lg border p-4 ${
-                  order.extensionCount > 0 ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 bg-white'
-                }`}
-                data-testid="addon-card-additional-extensions"
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <span className="font-semibold text-gray-900">$25/mo each</span>
-                </div>
-                <p className="text-sm text-gray-600 mb-3">
-                  Add more extensions to your phone system. Further customization available from the Phone System page after setup.
-                </p>
-                <div className="flex items-center gap-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setExtensionCount(order.extensionCount - 1)}
-                    disabled={order.extensionCount === 0}
-                    className="h-8 w-8 p-0"
-                    data-testid="button-extension-decrease"
-                  >
-                    <Minus className="h-4 w-4" />
-                  </Button>
-                  <span className="font-medium text-gray-900 min-w-[2rem] text-center" data-testid="extension-count">
-                    {order.extensionCount}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setExtensionCount(order.extensionCount + 1)}
-                    className="h-8 w-8 p-0"
-                    data-testid="button-extension-increase"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </Button>
-                  {order.extensionCount > 0 && (
-                    <span className="text-sm text-gray-600 ml-2">
-                      = ${order.extensionCount * 25}/mo
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
           </div>
         )}
 

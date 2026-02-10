@@ -987,12 +987,12 @@ body {
   min-width: 2.25rem;
 }
 
-.min-w-\[12rem\] {
-  min-width: 12rem;
+.min-w-\[1\.5rem\] {
+  min-width: 1.5rem;
 }
 
-.min-w-\[2rem\] {
-  min-width: 2rem;
+.min-w-\[12rem\] {
+  min-width: 12rem;
 }
 
 .min-w-\[8rem\] {
