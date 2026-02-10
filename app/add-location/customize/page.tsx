@@ -232,15 +232,6 @@ export default function CustomizePage() {
             Back to Your Information
           </Button>
 
-          <div className="text-center mb-4">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1" data-testid="heading-location">
-              You're Only 2 Steps Away From Securing
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Your New Virtual Office Solution!
-            </h2>
-          </div>
-
           <div className="mb-8">
             <ProgressIndicator currentStep={2} />
           </div>
