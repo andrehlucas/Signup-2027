@@ -633,7 +633,7 @@ export default function CustomizePage() {
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-3 mt-2">
+                        <div className="flex items-center justify-between mt-2">
                           <button
                             onClick={() => toggleAddonExpanded(addon.id)}
                             className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1"
