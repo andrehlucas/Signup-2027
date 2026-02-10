@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles, Info, ListPlus } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles, Info } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -863,10 +863,10 @@ export default function CustomizePage() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <button
-                          className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#36bff9] text-white hover:bg-[#2aa8e0] transition-colors"
+                          className="inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors"
                           data-testid="button-see-addons"
                         >
-                          <ListPlus className="h-3 w-3" />
+                          See details
                         </button>
                       </PopoverTrigger>
                       <PopoverContent side="top" align="start" className="w-72 p-0" data-testid="popover-addon-breakdown">
