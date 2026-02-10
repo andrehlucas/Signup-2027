@@ -3436,179 +3436,188 @@ function CustomizePage() {
                                                 lineNumber: 806,
                                                 columnNumber: 17
                                             }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-lg font-bold text-gray-900 leading-tight",
-                                                "data-testid": "footer-monthly-total",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "flex items-end gap-2",
                                                 children: [
-                                                    "$",
-                                                    monthly,
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "text-sm font-normal text-gray-500",
-                                                        children: "/mo"
-                                                    }, void 0, false, {
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "text-lg font-bold text-gray-900 leading-tight",
+                                                        "data-testid": "footer-monthly-total",
+                                                        children: [
+                                                            "$",
+                                                            monthly,
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-sm font-normal text-gray-500",
+                                                                children: "/mo"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                lineNumber: 861,
+                                                                columnNumber: 125
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 860,
-                                                        columnNumber: 123
+                                                        lineNumber: 861,
+                                                        columnNumber: 19
+                                                    }, this),
+                                                    (order.addons.length > 0 || order.extensionCount > 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Popover"], {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PopoverTrigger"], {
+                                                                asChild: true,
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                    className: "inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors mb-0.5",
+                                                                    "data-testid": "button-see-addons",
+                                                                    children: "See details"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                    lineNumber: 865,
+                                                                    columnNumber: 25
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                lineNumber: 864,
+                                                                columnNumber: 23
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PopoverContent"], {
+                                                                side: "top",
+                                                                align: "center",
+                                                                className: "w-72 p-0",
+                                                                "data-testid": "popover-addon-breakdown",
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "px-4 py-3 border-b border-gray-100",
+                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                            className: "text-sm font-semibold text-gray-900",
+                                                                            children: "Your Add-ons"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                            lineNumber: 874,
+                                                                            columnNumber: 27
+                                                                        }, this)
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                        lineNumber: 873,
+                                                                        columnNumber: 25
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "px-4 py-3 space-y-2",
+                                                                        children: [
+                                                                            order.addons.map((addon)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                    className: "flex items-center justify-between text-sm",
+                                                                                    children: [
+                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                            className: "text-gray-700",
+                                                                                            children: [
+                                                                                                addon.name,
+                                                                                                addon.selectedPackage ? ` (${addon.selectedPackage.name})` : ''
+                                                                                            ]
+                                                                                        }, void 0, true, {
+                                                                                            fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                            lineNumber: 879,
+                                                                                            columnNumber: 31
+                                                                                        }, this),
+                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                            className: "font-medium text-gray-900 flex-shrink-0 ml-3",
+                                                                                            children: [
+                                                                                                "$",
+                                                                                                addon.price,
+                                                                                                "/mo"
+                                                                                            ]
+                                                                                        }, void 0, true, {
+                                                                                            fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                            lineNumber: 880,
+                                                                                            columnNumber: 31
+                                                                                        }, this)
+                                                                                    ]
+                                                                                }, addon.id, true, {
+                                                                                    fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                    lineNumber: 878,
+                                                                                    columnNumber: 29
+                                                                                }, this)),
+                                                                            order.extensionCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                className: "flex items-center justify-between text-sm",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                        className: "text-gray-700",
+                                                                                        children: [
+                                                                                            "Additional Extensions (",
+                                                                                            order.extensionCount,
+                                                                                            ")"
+                                                                                        ]
+                                                                                    }, void 0, true, {
+                                                                                        fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                        lineNumber: 885,
+                                                                                        columnNumber: 31
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                        className: "font-medium text-gray-900 flex-shrink-0 ml-3",
+                                                                                        children: [
+                                                                                            "$",
+                                                                                            order.extensionCount * 25,
+                                                                                            "/mo"
+                                                                                        ]
+                                                                                    }, void 0, true, {
+                                                                                        fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                        lineNumber: 886,
+                                                                                        columnNumber: 31
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                lineNumber: 884,
+                                                                                columnNumber: 29
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                className: "flex items-center justify-between text-sm pt-2 border-t border-gray-100",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                        className: "font-semibold text-gray-900",
+                                                                                        children: "Add-ons Total"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                        lineNumber: 890,
+                                                                                        columnNumber: 29
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                        className: "font-semibold text-gray-900",
+                                                                                        children: [
+                                                                                            "$",
+                                                                                            order.addons.reduce((sum, a)=>sum + a.price, 0) + order.extensionCount * 25,
+                                                                                            "/mo"
+                                                                                        ]
+                                                                                    }, void 0, true, {
+                                                                                        fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                        lineNumber: 891,
+                                                                                        columnNumber: 29
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                                lineNumber: 889,
+                                                                                columnNumber: 27
+                                                                            }, this)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                        lineNumber: 876,
+                                                                        columnNumber: 25
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/app/add-location/customize/page.tsx",
+                                                                lineNumber: 872,
+                                                                columnNumber: 21
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/app/add-location/customize/page.tsx",
+                                                        lineNumber: 863,
+                                                        columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
                                                 lineNumber: 860,
                                                 columnNumber: 17
-                                            }, this),
-                                            (order.addons.length > 0 || order.extensionCount > 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Popover"], {
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PopoverTrigger"], {
-                                                        asChild: true,
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            className: "inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors mt-0.5",
-                                                            "data-testid": "button-see-addons",
-                                                            children: "See details"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 864,
-                                                            columnNumber: 23
-                                                        }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 863,
-                                                        columnNumber: 21
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PopoverContent"], {
-                                                        side: "top",
-                                                        align: "center",
-                                                        className: "w-72 p-0",
-                                                        "data-testid": "popover-addon-breakdown",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "px-4 py-3 border-b border-gray-100",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                    className: "text-sm font-semibold text-gray-900",
-                                                                    children: "Your Add-ons"
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 873,
-                                                                    columnNumber: 27
-                                                                }, this)
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 872,
-                                                                columnNumber: 25
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "px-4 py-3 space-y-2",
-                                                                children: [
-                                                                    order.addons.map((addon)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                            className: "flex items-center justify-between text-sm",
-                                                                            children: [
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                    className: "text-gray-700",
-                                                                                    children: [
-                                                                                        addon.name,
-                                                                                        addon.selectedPackage ? ` (${addon.selectedPackage.name})` : ''
-                                                                                    ]
-                                                                                }, void 0, true, {
-                                                                                    fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 878,
-                                                                                    columnNumber: 31
-                                                                                }, this),
-                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                    className: "font-medium text-gray-900 flex-shrink-0 ml-3",
-                                                                                    children: [
-                                                                                        "$",
-                                                                                        addon.price,
-                                                                                        "/mo"
-                                                                                    ]
-                                                                                }, void 0, true, {
-                                                                                    fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 879,
-                                                                                    columnNumber: 31
-                                                                                }, this)
-                                                                            ]
-                                                                        }, addon.id, true, {
-                                                                            fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                            lineNumber: 877,
-                                                                            columnNumber: 29
-                                                                        }, this)),
-                                                                    order.extensionCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "flex items-center justify-between text-sm",
-                                                                        children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "text-gray-700",
-                                                                                children: [
-                                                                                    "Additional Extensions (",
-                                                                                    order.extensionCount,
-                                                                                    ")"
-                                                                                ]
-                                                                            }, void 0, true, {
-                                                                                fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                lineNumber: 884,
-                                                                                columnNumber: 31
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "font-medium text-gray-900 flex-shrink-0 ml-3",
-                                                                                children: [
-                                                                                    "$",
-                                                                                    order.extensionCount * 25,
-                                                                                    "/mo"
-                                                                                ]
-                                                                            }, void 0, true, {
-                                                                                fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                lineNumber: 885,
-                                                                                columnNumber: 31
-                                                                            }, this)
-                                                                        ]
-                                                                    }, void 0, true, {
-                                                                        fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 883,
-                                                                        columnNumber: 29
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "flex items-center justify-between text-sm pt-2 border-t border-gray-100",
-                                                                        children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "font-semibold text-gray-900",
-                                                                                children: "Add-ons Total"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                lineNumber: 889,
-                                                                                columnNumber: 29
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "font-semibold text-gray-900",
-                                                                                children: [
-                                                                                    "$",
-                                                                                    order.addons.reduce((sum, a)=>sum + a.price, 0) + order.extensionCount * 25,
-                                                                                    "/mo"
-                                                                                ]
-                                                                            }, void 0, true, {
-                                                                                fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                lineNumber: 890,
-                                                                                columnNumber: 29
-                                                                            }, this)
-                                                                        ]
-                                                                    }, void 0, true, {
-                                                                        fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 888,
-                                                                        columnNumber: 27
-                                                                    }, this)
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 875,
-                                                                columnNumber: 25
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 871,
-                                                        columnNumber: 21
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 862,
-                                                columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
@@ -3633,13 +3642,13 @@ function CustomizePage() {
                                         className: "h-4 w-4 ml-1.5"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 907,
+                                        lineNumber: 909,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 900,
+                                lineNumber: 902,
                                 columnNumber: 13
                             }, this)
                         ]
@@ -3671,20 +3680,20 @@ function CustomizePage() {
                                     children: "Select Phone Number"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 916,
+                                    lineNumber: 918,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Choose a phone number for your new location. All numbers are local to your selected area."
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 917,
+                                    lineNumber: 919,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 915,
+                            lineNumber: 917,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3698,7 +3707,7 @@ function CustomizePage() {
                                             className: "h-4 w-4 text-gray-500"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 934,
+                                            lineNumber: 936,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3706,25 +3715,25 @@ function CustomizePage() {
                                             children: phone.number
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 935,
+                                            lineNumber: 937,
                                             columnNumber: 17
                                         }, this),
                                         tempSelectedPhone?.id === phone.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
                                             className: "h-4 w-4 text-[#36bff9] ml-auto"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 937,
+                                            lineNumber: 939,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, phone.id, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 924,
+                                    lineNumber: 926,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 922,
+                            lineNumber: 924,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogFooter"], {
@@ -3736,7 +3745,7 @@ function CustomizePage() {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 944,
+                                    lineNumber: 946,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3746,24 +3755,24 @@ function CustomizePage() {
                                     children: "Confirm Selection"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 951,
+                                    lineNumber: 953,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 943,
+                            lineNumber: 945,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/customize/page.tsx",
-                    lineNumber: 914,
+                    lineNumber: 916,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/add-location/customize/page.tsx",
-                lineNumber: 913,
+                lineNumber: 915,
                 columnNumber: 7
             }, this)
         ]
