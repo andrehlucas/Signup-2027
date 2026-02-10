@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles, Info } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles, Info, ListPlus } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -857,7 +857,46 @@ export default function CustomizePage() {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
+                <div className="flex items-center gap-1.5">
+                  <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
+                  {(order.addons.length > 0 || order.extensionCount > 0) && (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[#36bff9] text-white hover:bg-[#2aa8e0] transition-colors"
+                          data-testid="button-see-addons"
+                        >
+                          <ListPlus className="h-3 w-3" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent side="top" align="start" className="w-72 p-0" data-testid="popover-addon-breakdown">
+                        <div className="px-4 py-3 border-b border-gray-100">
+                          <p className="text-sm font-semibold text-gray-900">Your Add-ons</p>
+                        </div>
+                        <div className="px-4 py-3 space-y-2">
+                          {order.addons.map((addon) => (
+                            <div key={addon.id} className="flex items-center justify-between text-sm">
+                              <span className="text-gray-700">{addon.name}{addon.selectedPackage ? ` (${addon.selectedPackage.name})` : ''}</span>
+                              <span className="font-medium text-gray-900 flex-shrink-0 ml-3">${addon.price}/mo</span>
+                            </div>
+                          ))}
+                          {order.extensionCount > 0 && (
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-700">Additional Extensions ({order.extensionCount})</span>
+                              <span className="font-medium text-gray-900 flex-shrink-0 ml-3">${order.extensionCount * 25}/mo</span>
+                            </div>
+                          )}
+                          <div className="flex items-center justify-between text-sm pt-2 border-t border-gray-100">
+                            <span className="font-semibold text-gray-900">Add-ons Total</span>
+                            <span className="font-semibold text-gray-900">
+                              ${order.addons.reduce((sum, a) => sum + a.price, 0) + order.extensionCount * 25}/mo
+                            </span>
+                          </div>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
+                </div>
               </div>
             </div>
             <Button

@@ -806,7 +806,8 @@ const sampleLocations = [
     {
         id: 'loc-1',
         name: 'Brickell Tower',
-        address: '848 Brickell Avenue, Penthouse 5',
+        address: '848 Brickell Avenue',
+        addressLine2: 'Penthouse 5',
         city: 'Miami',
         state: 'Florida',
         stateCode: 'FL',
@@ -817,7 +818,8 @@ const sampleLocations = [
     {
         id: 'loc-2',
         name: 'Downtown Miami Center',
-        address: '100 SE 2nd Street, Suite 400',
+        address: '100 SE 2nd Street',
+        addressLine2: 'Suite 400',
         city: 'Miami',
         state: 'Florida',
         stateCode: 'FL',
@@ -828,7 +830,8 @@ const sampleLocations = [
     {
         id: 'loc-3',
         name: 'Coral Gables Executive',
-        address: '2655 S Le Jeune Rd, Suite 300',
+        address: '2655 S Le Jeune Rd',
+        addressLine2: 'Suite 300',
         city: 'Coral Gables',
         state: 'Florida',
         stateCode: 'FL',
@@ -839,7 +842,8 @@ const sampleLocations = [
     {
         id: 'loc-4',
         name: 'Fort Lauderdale Business Center',
-        address: '110 SE 6th Street, Suite 1700',
+        address: '110 SE 6th Street',
+        addressLine2: 'Suite 1700',
         city: 'Fort Lauderdale',
         state: 'Florida',
         stateCode: 'FL',
@@ -850,7 +854,8 @@ const sampleLocations = [
     {
         id: 'loc-5',
         name: 'Manhattan Midtown',
-        address: '1 Penn Plaza, Suite 6200',
+        address: '1 Penn Plaza',
+        addressLine2: 'Suite 6200',
         city: 'New York',
         state: 'New York',
         stateCode: 'NY',
@@ -861,7 +866,8 @@ const sampleLocations = [
     {
         id: 'loc-6',
         name: 'Wall Street Financial',
-        address: '14 Wall Street, 20th Floor',
+        address: '14 Wall Street',
+        addressLine2: '20th Floor',
         city: 'New York',
         state: 'New York',
         stateCode: 'NY',
@@ -872,7 +878,8 @@ const sampleLocations = [
     {
         id: 'loc-7',
         name: 'Downtown LA Tower',
-        address: '633 W 5th Street, Suite 2600',
+        address: '633 W 5th Street',
+        addressLine2: 'Suite 2600',
         city: 'Los Angeles',
         state: 'California',
         stateCode: 'CA',
@@ -883,7 +890,8 @@ const sampleLocations = [
     {
         id: 'loc-8',
         name: 'Santa Monica Business Park',
-        address: '2425 Olympic Blvd, Suite 4000',
+        address: '2425 Olympic Blvd',
+        addressLine2: 'Suite 4000',
         city: 'Santa Monica',
         state: 'California',
         stateCode: 'CA',
@@ -894,7 +902,8 @@ const sampleLocations = [
     {
         id: 'loc-9',
         name: 'Chicago Loop Center',
-        address: '111 W Jackson Blvd, Suite 1700',
+        address: '111 W Jackson Blvd',
+        addressLine2: 'Suite 1700',
         city: 'Chicago',
         state: 'Illinois',
         stateCode: 'IL',
@@ -905,7 +914,8 @@ const sampleLocations = [
     {
         id: 'loc-10',
         name: 'Houston Galleria',
-        address: '2929 Allen Parkway, Suite 200',
+        address: '2929 Allen Parkway',
+        addressLine2: 'Suite 200',
         city: 'Houston',
         state: 'Texas',
         stateCode: 'TX',
@@ -916,7 +926,8 @@ const sampleLocations = [
     {
         id: 'loc-11',
         name: 'Dallas Uptown',
-        address: '3131 McKinney Ave, Suite 600',
+        address: '3131 McKinney Ave',
+        addressLine2: 'Suite 600',
         city: 'Dallas',
         state: 'Texas',
         stateCode: 'TX',
@@ -1409,16 +1420,32 @@ function CheckoutPage() {
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                                 className: "text-sm text-gray-500",
+                                                                                children: order.location.address
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/app/add-location/checkout/page.tsx",
+                                                                                lineNumber: 238,
+                                                                                columnNumber: 25
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                className: "text-sm text-gray-500",
+                                                                                children: order.location.addressLine2
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/app/add-location/checkout/page.tsx",
+                                                                                lineNumber: 239,
+                                                                                columnNumber: 25
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                className: "text-sm text-gray-500",
                                                                                 children: [
-                                                                                    order.location.address,
-                                                                                    ", ",
                                                                                     order.location.city,
                                                                                     ", ",
-                                                                                    order.location.stateCode
+                                                                                    order.location.stateCode,
+                                                                                    " ",
+                                                                                    order.location.zipCode
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/add-location/checkout/page.tsx",
-                                                                                lineNumber: 238,
+                                                                                lineNumber: 240,
                                                                                 columnNumber: 25
                                                                             }, this)
                                                                         ]
