@@ -395,32 +395,28 @@ export default function CustomizePage() {
         <div className="bg-white rounded-xl border border-gray-200 mb-6 overflow-hidden" data-testid="bundle-upgrade-banner">
           <button
             onClick={() => setBundleExpanded(!bundleExpanded)}
-            className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            className="w-full p-4 sm:p-6 hover:bg-gray-50 transition-colors"
             data-testid="button-toggle-bundle-upgrade"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#36bff9] to-[#2aa8e0] flex items-center justify-center">
-                <Sparkles className="h-5 w-5 text-white" />
-              </div>
-              <div className="text-left">
-                <h2 className="text-lg font-semibold text-gray-900">Upgrade Your Package</h2>
-                <p className="text-sm text-gray-600">Unlock premium features like Toll-Free Numbers, Call Logs, and more</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-sm font-medium text-gray-900" data-testid="text-selected-bundle-name">
-                  {displayBundleName}
-                </p>
-                <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">
-                  ${selectedBundle?.price || bundles[0].price}/mo
-                </p>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-[#36bff9] to-[#2aa8e0] flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                </div>
+                <h2 className="text-base sm:text-lg font-semibold text-gray-900 text-left">Upgrade Your Package</h2>
               </div>
               {bundleExpanded ? (
                 <ChevronUp className="h-5 w-5 text-gray-400 flex-shrink-0" />
               ) : (
                 <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
               )}
+            </div>
+            <div className="mt-2 ml-12 sm:ml-[52px] flex items-center justify-between">
+              <p className="text-sm text-gray-600 text-left">Unlock Toll-Free Numbers, Call Logs, and more</p>
+              <div className="text-right flex-shrink-0 ml-3">
+                <p className="text-xs text-gray-500" data-testid="text-selected-bundle-name">{displayBundleName}</p>
+                <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">${selectedBundle?.price || bundles[0].price}/mo</p>
+              </div>
             </div>
           </button>
 
