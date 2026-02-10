@@ -2829,6 +2829,11 @@ body {
   z-index: 20;
 }
 
+.hover\:border-\[\#36bff9\]:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(54 191 249 / var(--tw-border-opacity, 1));
+}
+
 .hover\:border-gray-300:hover {
   border-color: var(--gray-300);
 }
@@ -2943,6 +2948,12 @@ body {
 .hover\:shadow-lg:hover {
   --tw-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.hover\:shadow-md:hover {
+  --tw-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a;
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -3813,6 +3824,10 @@ body {
 
   .lg\:col-span-2 {
     grid-column: span 2 / span 2;
+  }
+
+  .lg\:max-w-6xl {
+    max-width: 72rem;
   }
 
   .lg\:grid-cols-2 {
