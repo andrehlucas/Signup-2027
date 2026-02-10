@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles, Info } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -20,6 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/app/components/ui/popover';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
@@ -793,42 +798,77 @@ export default function CustomizePage() {
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-50" data-testid="sticky-footer">
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 min-w-0">
-              <div className="hidden sm:flex items-center gap-3 min-w-0">
-                <div className="w-9 h-9 rounded-lg bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                  <ShoppingCart className="h-4 w-4 text-white" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs text-gray-500 leading-tight" data-testid="footer-package-name">{displayBundleName}</p>
-                  <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
-                </div>
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 rounded-lg bg-[#36bff9] flex items-center justify-center flex-shrink-0">
+                <ShoppingCart className="h-4 w-4 text-white" />
               </div>
-              <div className="flex sm:hidden items-center gap-2 min-w-0">
-                <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total-mobile">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <p className="text-sm font-semibold text-gray-900 leading-tight" data-testid="footer-package-name">{displayBundleName}</p>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        className="inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors"
+                        data-testid="button-see-included"
+                      >
+                        <Info className="h-3.5 w-3.5" />
+                        <span className="hidden sm:inline">See what's included</span>
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent side="top" align="start" className="w-72 p-0" data-testid="popover-included-features">
+                      <div className="px-4 py-3 border-b border-gray-100">
+                        <p className="text-sm font-semibold text-gray-900">{displayBundleName} includes:</p>
+                      </div>
+                      <div className="px-4 py-3 space-y-2">
+                        <div className="flex items-center gap-2 text-sm">
+                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <span className="text-gray-700">Prestigious Business Address</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <span className="text-gray-700">Live Call Answering</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <span className="text-gray-700">Call Transferring</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <span className="text-gray-700">2 Voicemail Boxes</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <span className="text-gray-700">Business Phone/Fax Number</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <span className="text-gray-700">Voicemail/Fax to Email</span>
+                        </div>
+                        {selectedBundle && Object.entries(selectedBundle.features)
+                          .filter(([key, enabled]) => enabled && !['businessAddress', 'liveCallAnswering', 'callTransferring'].includes(key))
+                          .map(([key]) => (
+                            <div key={key} className="flex items-center gap-2 text-sm">
+                              <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                              <span className="text-gray-700">{featureLabels[key]}</span>
+                            </div>
+                          ))
+                        }
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
               </div>
             </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleBackFromCustomize}
-                className="h-10 px-4"
-                data-testid="button-back"
-              >
-                <ArrowLeft className="h-4 w-4 mr-1.5" />
-                Back
-              </Button>
-              <Button
-                onClick={handleContinue}
-                disabled={!selectedBundle || !selectedPhone}
-                size="sm"
-                className="h-10 px-5 bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
-                data-testid="button-continue-checkout"
-              >
-                Continue
-                <ChevronRight className="h-4 w-4 ml-1.5" />
-              </Button>
-            </div>
+            <Button
+              onClick={handleContinue}
+              disabled={!selectedBundle || !selectedPhone}
+              className="h-10 px-6 bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0"
+              data-testid="button-continue-checkout"
+            >
+              Continue
+              <ChevronRight className="h-4 w-4 ml-1.5" />
+            </Button>
           </div>
         </div>
       </div>

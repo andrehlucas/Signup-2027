@@ -700,10 +700,6 @@ body {
   margin-right: .25rem;
 }
 
-.mr-1\.5 {
-  margin-right: .375rem;
-}
-
 .mr-2 {
   margin-right: .5rem;
 }
@@ -3566,12 +3562,12 @@ body {
     display: block;
   }
 
-  .sm\:flex {
-    display: flex;
+  .sm\:inline {
+    display: inline;
   }
 
-  .sm\:hidden {
-    display: none;
+  .sm\:flex {
+    display: flex;
   }
 
   .sm\:w-20 {
