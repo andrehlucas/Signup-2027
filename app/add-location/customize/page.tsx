@@ -512,7 +512,7 @@ export default function CustomizePage() {
                                   <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
                                     <Check className="h-2.5 w-2.5 text-[#36bff9]" />
                                   </div>
-                                  <span className="text-white/80 text-xs">{featureLabels[key]}</span>
+                                  <span className="text-white text-xs">{featureLabels[key]}</span>
                                 </div>
                               ))}
                           </div>
