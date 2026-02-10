@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2 } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles, Info } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -61,6 +61,7 @@ export default function CustomizePage() {
   const [tempSelectedPhone, setTempSelectedPhone] = useState<PhoneNumber | null>(null);
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAllAddons, setShowAllAddons] = useState(false);
+  const [bundleExpanded, setBundleExpanded] = useState(false);
   const { trackComplete } = useFunnelTracking('customize');
 
   const [selectedState, setSelectedState] = useState<string>('');
@@ -81,12 +82,6 @@ export default function CustomizePage() {
     return getPhoneNumbersForLocation(order.location);
   }, [order.location]);
 
-  // useEffect(() => {
-  //   if (!order.userInfo.firstName || !order.userInfo.email) {
-  //     router.push('/');
-  //   }
-  // }, [order.userInfo, router]);
-
   useEffect(() => {
     if (phoneNumbers.length > 0 && !selectedPhone) {
       const autoAssigned = phoneNumbers[0];
@@ -94,6 +89,16 @@ export default function CustomizePage() {
       setPhoneNumber(autoAssigned);
     }
   }, [phoneNumbers, selectedPhone, setPhoneNumber]);
+
+  useEffect(() => {
+    if (!selectedBundle && subStep === 'customize') {
+      const essentialsBundle = bundles[0];
+      if (essentialsBundle) {
+        setSelectedBundle(essentialsBundle);
+        setBundle(essentialsBundle);
+      }
+    }
+  }, [subStep]);
 
   const handleStateChange = (state: string) => {
     setSelectedState(state);
@@ -351,8 +356,13 @@ export default function CustomizePage() {
     return null;
   }
 
+  const upgradeBundles = bundles.filter(b => b.id !== 'essentials');
+  const displayBundleName = selectedBundle
+    ? (selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : 'The Essentials')
+    : 'The Essentials';
+
   return (
-    <div className="min-h-screen bg-gray-50 p-4 lg:p-8" data-testid="customize-page">
+    <div className="min-h-screen bg-gray-50 p-4 lg:p-8 pb-28" data-testid="customize-page">
       <Button
         variant="ghost"
         onClick={handleBackFromCustomize}
@@ -377,126 +387,137 @@ export default function CustomizePage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">Select Your Bundle</h2>
-          <p className="text-sm text-gray-600 mb-6">
-            All plans include: Prestigious Business Address, Live Call Answering, Call Transferring, 2 Voicemail Boxes, Business Phone/Fax Number, and Voicemail/Fax Converted to Email.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            {bundles.map((bundle) => (
-              <div
-                key={bundle.id}
-                onClick={() => handleBundleSelect(bundle)}
-                className={`bg-white rounded-xl border-2 overflow-hidden flex flex-col transition-all cursor-pointer hover:shadow-md ${
-                  selectedBundle?.id === bundle.id
-                    ? 'border-[#36bff9] ring-2 ring-[#36bff9] ring-opacity-30'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-                data-testid={`bundle-card-${bundle.id}`}
-              >
-                <div className={`${bundle.badgeColor} text-white text-center py-2 text-sm font-medium`}>
-                  {bundle.badge}
-                </div>
-
-                <div className="p-4 flex flex-col flex-1">
-                  <div className="mb-3">
-                    <h3 className="text-base font-medium text-gray-900">
-                      {bundle.name}
-                      {bundle.tier !== 'The Essentials' && (
-                        <span className={`font-bold ${getTierColor(bundle.tier)}`}> {bundle.tier}</span>
-                      )}
-                    </h3>
-                  </div>
-
-                  <div className="mb-4">
-                    <span className="text-3xl font-bold text-gray-900">${bundle.price}</span>
-                    {bundle.originalPrice && (
-                      <span className="text-sm text-gray-400 line-through ml-2">
-                        ${bundle.originalPrice}
-                      </span>
-                    )}
-                    <span className="text-gray-500 text-sm ml-1">/mo</span>
-                  </div>
-
-                  <div className="space-y-2 flex-1">
-                    {Object.entries(bundle.features).map(([key, enabled]) => (
-                      <div key={key} className="flex items-center gap-2 text-sm">
-                        {enabled ? (
-                          <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                            <Check className="h-2.5 w-2.5 text-white" />
-                          </div>
-                        ) : (
-                          <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
-                            <Minus className="h-3 w-3 text-gray-300" />
-                          </div>
-                        )}
-                        <span className={`${enabled ? 'text-gray-700' : 'text-gray-400'} text-xs`}>
-                          {featureLabels[key]}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleBundleSelect(bundle);
-                    }}
-                    className={`mt-4 w-full ${
-                      selectedBundle?.id === bundle.id
-                        ? 'bg-green-600 hover:bg-green-700'
-                        : 'bg-[#36bff9] hover:bg-[#2aa8e0]'
-                    }`}
-                    data-testid={`button-select-bundle-${bundle.id}`}
-                  >
-                    {selectedBundle?.id === bundle.id ? (
-                      <>
-                        <Check className="h-4 w-4 mr-2" />
-                        Selected
-                      </>
-                    ) : (
-                      'Select this bundle'
-                    )}
-                  </Button>
-                </div>
+        <div className="bg-white rounded-xl border border-gray-200 mb-6 overflow-hidden" data-testid="bundle-upgrade-banner">
+          <button
+            onClick={() => setBundleExpanded(!bundleExpanded)}
+            className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            data-testid="button-toggle-bundle-upgrade"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#36bff9] to-[#2aa8e0] flex items-center justify-center">
+                <Sparkles className="h-5 w-5 text-white" />
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="phone-section">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Business Phone Number</h2>
-              <p className="text-sm text-gray-600">
-                Auto-assigned based on your location. You can change it if you prefer a different number.
-              </p>
+              <div className="text-left">
+                <h2 className="text-lg font-semibold text-gray-900">Upgrade Your Package</h2>
+                <p className="text-sm text-gray-600">Unlock premium features like Toll-Free Numbers, Call Logs, and more</p>
+              </div>
             </div>
-          </div>
-
-          {selectedPhone && (
-            <div className="mt-4 flex items-center justify-between bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#36bff9] flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900" data-testid="selected-phone-number">
-                    {selectedPhone.number}
-                  </p>
-                  <p className="text-sm text-gray-500">Local Number</p>
-                </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-sm font-medium text-gray-900" data-testid="text-selected-bundle-name">
+                  {displayBundleName}
+                </p>
+                <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">
+                  ${selectedBundle?.price || bundles[0].price}/mo
+                </p>
               </div>
-              <Button
-                variant="outline"
-                onClick={handleOpenPhoneModal}
-                data-testid="button-change-phone"
-              >
-                Change
-              </Button>
+              {bundleExpanded ? (
+                <ChevronUp className="h-5 w-5 text-gray-400 flex-shrink-0" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
+              )}
+            </div>
+          </button>
+
+          {bundleExpanded && (
+            <div className="px-6 pb-6 border-t border-gray-100 pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {upgradeBundles.map((bundle) => (
+                  <div
+                    key={bundle.id}
+                    onClick={() => handleBundleSelect(bundle)}
+                    className={`bg-white rounded-xl border-2 overflow-hidden flex flex-col transition-all cursor-pointer hover:shadow-md ${
+                      selectedBundle?.id === bundle.id
+                        ? 'border-[#36bff9] ring-2 ring-[#36bff9] ring-opacity-30'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                    data-testid={`bundle-card-${bundle.id}`}
+                  >
+                    <div className={`${bundle.badgeColor} text-white text-center py-2 text-sm font-medium`}>
+                      {bundle.badge}
+                    </div>
+
+                    <div className="p-4 flex flex-col flex-1">
+                      <div className="mb-3">
+                        <h3 className="text-base font-medium text-gray-900">
+                          {bundle.name}
+                          <span className={`font-bold ${getTierColor(bundle.tier)}`}> {bundle.tier}</span>
+                        </h3>
+                      </div>
+
+                      <div className="mb-4">
+                        <span className="text-3xl font-bold text-gray-900">${bundle.price}</span>
+                        {bundle.originalPrice && (
+                          <span className="text-sm text-gray-400 line-through ml-2">
+                            ${bundle.originalPrice}
+                          </span>
+                        )}
+                        <span className="text-gray-500 text-sm ml-1">/mo</span>
+                      </div>
+
+                      <div className="space-y-2 flex-1">
+                        {Object.entries(bundle.features).map(([key, enabled]) => (
+                          <div key={key} className="flex items-center gap-2 text-sm">
+                            {enabled ? (
+                              <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
+                                <Check className="h-2.5 w-2.5 text-white" />
+                              </div>
+                            ) : (
+                              <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+                                <Minus className="h-3 w-3 text-gray-300" />
+                              </div>
+                            )}
+                            <span className={`${enabled ? 'text-gray-700' : 'text-gray-400'} text-xs`}>
+                              {featureLabels[key]}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleBundleSelect(bundle);
+                        }}
+                        className={`mt-4 w-full ${
+                          selectedBundle?.id === bundle.id
+                            ? 'bg-green-600 hover:bg-green-700'
+                            : 'bg-[#36bff9] hover:bg-[#2aa8e0]'
+                        }`}
+                        data-testid={`button-select-bundle-${bundle.id}`}
+                      >
+                        {selectedBundle?.id === bundle.id ? (
+                          <>
+                            <Check className="h-4 w-4 mr-2" />
+                            Selected
+                          </>
+                        ) : (
+                          'Select this bundle'
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {selectedBundle?.id !== 'essentials' && (
+                <button
+                  onClick={() => handleBundleSelect(bundles[0])}
+                  className="mt-4 text-sm text-gray-500 hover:text-gray-700 underline"
+                  data-testid="button-revert-essentials"
+                >
+                  Revert to The Essentials ($99/mo)
+                </button>
+              )}
             </div>
           )}
+        </div>
+
+        <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 mb-6 flex items-start gap-3" data-testid="essentials-info-banner">
+          <Info className="h-5 w-5 text-[#36bff9] flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-gray-700">
+            Your plan includes <span className="font-semibold">The Essentials package</span>: Prestigious Business Address, Live Call Answering, Call Transferring, 2 Voicemail Boxes, Business Phone/Fax Number, and Voicemail/Fax Converted to Email.
+          </p>
         </div>
 
         {selectedBundle && (
@@ -714,49 +735,67 @@ export default function CustomizePage() {
           </div>
         )}
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="cart-summary">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <ShoppingCart className="h-5 w-5 text-gray-600" />
-              <p className="font-medium text-gray-900">Cart Summary</p>
-            </div>
-            <div className="text-right">
-              <p className="text-2xl font-bold text-gray-900">${monthly}/mo</p>
-              <p className="text-sm text-gray-500">Monthly total</p>
-            </div>
-          </div>
-          <div className="text-sm text-gray-600 space-y-1">
-            <p>{selectedBundle ? `${selectedBundle.name} ${selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : ''} - $${selectedBundle.price}/mo` : 'No bundle selected'}</p>
-            {order.addons.map((addon) => (
-              <p key={addon.id}>
-                {addon.name}
-                {addon.selectedPackage ? ` (${addon.selectedPackage.name})` : ''} - ${addon.price}/mo
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="phone-section">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Business Phone Number</h2>
+              <p className="text-sm text-gray-600">
+                Auto-assigned based on your location. You can change it if you prefer a different number.
               </p>
-            ))}
-            {order.extensionCount > 0 && (
-              <p>Additional Extensions ({order.extensionCount}) - ${order.extensionCount * 25}/mo</p>
-            )}
+            </div>
           </div>
-        </div>
 
-        <div className="flex justify-between">
-          <Button
-            variant="outline"
-            onClick={handleBackFromCustomize}
-            data-testid="button-back"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Button>
-          <Button
-            onClick={handleContinue}
-            disabled={!selectedBundle || !selectedPhone}
-            className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white px-8"
-            data-testid="button-continue-checkout"
-          >
-            Continue to Checkout
-            <ChevronRight className="h-4 w-4 ml-2" />
-          </Button>
+          {selectedPhone && (
+            <div className="mt-4 flex items-center justify-between bg-gray-50 rounded-lg p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#36bff9] flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900" data-testid="selected-phone-number">
+                    {selectedPhone.number}
+                  </p>
+                  <p className="text-sm text-gray-500">Local Number</p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                onClick={handleOpenPhoneModal}
+                data-testid="button-change-phone"
+              >
+                Change
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-50" data-testid="sticky-footer">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div>
+            <p className="text-sm text-gray-500">Current Package</p>
+            <p className="font-semibold text-gray-900" data-testid="footer-package-name">{displayBundleName}</p>
+            <p className="text-lg font-bold text-[#36bff9]" data-testid="footer-monthly-total">${monthly}/mo</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="outline"
+              onClick={handleBackFromCustomize}
+              data-testid="button-back"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+            <Button
+              onClick={handleContinue}
+              disabled={!selectedBundle || !selectedPhone}
+              className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white px-8"
+              data-testid="button-continue-checkout"
+            >
+              Continue to Checkout
+              <ChevronRight className="h-4 w-4 ml-2" />
+            </Button>
+          </div>
         </div>
       </div>
 
