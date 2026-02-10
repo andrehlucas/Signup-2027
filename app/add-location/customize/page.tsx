@@ -81,11 +81,11 @@ export default function CustomizePage() {
     return getPhoneNumbersForLocation(order.location);
   }, [order.location]);
 
-  useEffect(() => {
-    if (!order.userInfo.firstName || !order.userInfo.email) {
-      router.push('/');
-    }
-  }, [order.userInfo, router]);
+  // useEffect(() => {
+  //   if (!order.userInfo.firstName || !order.userInfo.email) {
+  //     router.push('/');
+  //   }
+  // }, [order.userInfo, router]);
 
   useEffect(() => {
     if (phoneNumbers.length > 0 && !selectedPhone) {

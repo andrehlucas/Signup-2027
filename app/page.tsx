@@ -10,6 +10,9 @@ import { ProgressIndicator } from './add-location/components/ProgressIndicator';
 import { useOrder } from './add-location/context';
 import { useFunnelTracking } from './hooks/use-funnel-tracking';
 
+// Set to true to skip user info validation and go straight to Customize
+const SKIP_USER_INFO = true;
+
 const countryCodes = [
   { code: '+1', flag: '🇺🇸', label: 'US' },
   { code: '+1', flag: '🇨🇦', label: 'CA' },
@@ -79,17 +82,17 @@ export default function SignUpPage() {
   };
 
   const handleContinue = () => {
-    if (!validate()) return;
+    if (!SKIP_USER_INFO && !validate()) return;
 
     setUserInfo({
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      phone: phone.replace(/\D/g, ''),
+      firstName: firstName.trim() || 'Test',
+      lastName: lastName.trim() || 'User',
+      phone: phone.replace(/\D/g, '') || '5551234567',
       countryCode,
-      email: email.trim(),
-      confirmEmail: confirmEmail.trim(),
-      company: company.trim(),
-      termsAccepted,
+      email: email.trim() || 'test@example.com',
+      confirmEmail: confirmEmail.trim() || 'test@example.com',
+      company: company.trim() || 'Test Company',
+      termsAccepted: SKIP_USER_INFO ? true : termsAccepted,
     });
 
     trackComplete();
