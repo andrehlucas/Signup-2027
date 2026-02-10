@@ -367,7 +367,7 @@ export default function CustomizePage() {
     : 'The Essentials';
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 lg:p-8 pb-28" data-testid="customize-page">
+    <div className="min-h-screen bg-gray-50 p-4 lg:p-8 pb-36" data-testid="customize-page">
       <Button
         variant="ghost"
         onClick={handleBackFromCustomize}
@@ -560,18 +560,18 @@ export default function CustomizePage() {
 
         <div className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-6" data-testid="essentials-info-banner">
           <div className="bg-[#36bff9] text-white text-center py-2 text-sm font-medium">
-            Your Included Package
+            Your Office Package
           </div>
           <div className="p-4">
             <div className="mb-3">
-              <h3 className="text-base font-medium text-gray-900">The Ultimate Office Solution</h3>
+              <h3 className="text-base font-medium text-gray-900">{displayBundleName}</h3>
             </div>
             <div className="mb-4">
-              <span className="text-3xl font-bold text-gray-900">${bundles[0].price}</span>
+              <span className="text-3xl font-bold text-gray-900">${selectedBundle?.price || bundles[0].price}</span>
               <span className="text-gray-500 text-sm ml-1">/mo</span>
             </div>
             <div className="space-y-2">
-              {Object.entries(bundles[0].features)
+              {Object.entries((selectedBundle || bundles[0]).features)
                 .filter(([, enabled]) => enabled)
                 .map(([key]) => (
                   <div key={key} className="flex items-center gap-2 text-sm">
@@ -633,37 +633,25 @@ export default function CustomizePage() {
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">{addon.description}</p>
-                        
-                        <button
-                          onClick={() => toggleAddonExpanded(addon.id)}
-                          className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1 mb-2"
-                          data-testid={`button-learn-more-${addon.id}`}
-                        >
-                          {isExpanded ? (
-                            <>
-                              Show less
-                              <ChevronUp className="h-3 w-3" />
-                            </>
-                          ) : (
-                            <>
-                              Learn more
-                              <ChevronDown className="h-3 w-3" />
-                            </>
-                          )}
-                        </button>
-
-                        {isExpanded && addon.detailedDescription && (
-                          <div 
-                            className="text-sm text-gray-600 bg-gray-50 rounded-md p-3 mb-3 border border-gray-100"
-                            data-testid={`addon-details-${addon.id}`}
+                        <div className="flex items-center gap-3 mt-2">
+                          <button
+                            onClick={() => toggleAddonExpanded(addon.id)}
+                            className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1"
+                            data-testid={`button-learn-more-${addon.id}`}
                           >
-                            {addon.detailedDescription}
-                          </div>
-                        )}
-
-                        {!isIncluded && (
-                          <div className="space-y-3">
+                            {isExpanded ? (
+                              <>
+                                Show less
+                                <ChevronUp className="h-3 w-3" />
+                              </>
+                            ) : (
+                              <>
+                                Learn more
+                                <ChevronDown className="h-3 w-3" />
+                              </>
+                            )}
+                          </button>
+                          {!isIncluded && (
                             <Button
                               variant={isInCart ? 'outline' : 'default'}
                               size="sm"
@@ -678,11 +666,25 @@ export default function CustomizePage() {
                                 </>
                               ) : (
                                 <>
-                                  <Plus className="h-3 w-3 mr-1" />
+                                  <ShoppingCart className="h-3 w-3 mr-1" />
                                   Add to Cart
                                 </>
                               )}
                             </Button>
+                          )}
+                        </div>
+
+                        {isExpanded && addon.detailedDescription && (
+                          <div 
+                            className="text-sm text-gray-600 bg-gray-50 rounded-md p-3 mt-2 border border-gray-100"
+                            data-testid={`addon-details-${addon.id}`}
+                          >
+                            {addon.detailedDescription}
+                          </div>
+                        )}
+
+                        {!isIncluded && (
+                          <div className="space-y-3">
                             
                             {isInCart && addon.packages && addon.packages.length > 0 && (
                               <div className="pt-2 border-t border-gray-200">
@@ -753,6 +755,7 @@ export default function CustomizePage() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-gray-200">
+              <h3 className="text-base font-semibold text-gray-900 mb-3">Additional Extensions</h3>
               <div
                 className={`rounded-lg border p-4 ${
                   order.extensionCount > 0 ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 bg-white'
@@ -760,7 +763,6 @@ export default function CustomizePage() {
                 data-testid="addon-card-additional-extensions"
               >
                 <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-gray-900">Additional Extensions</h4>
                   <span className="font-semibold text-gray-900">$25/mo each</span>
                 </div>
                 <p className="text-sm text-gray-600 mb-3">
@@ -836,7 +838,7 @@ export default function CustomizePage() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-50" data-testid="sticky-footer">
-        <div className="max-w-6xl mx-auto px-4 py-3">
+        <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-9 h-9 rounded-lg bg-[#36bff9] flex items-center justify-center flex-shrink-0">
