@@ -392,31 +392,71 @@ export default function CustomizePage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 mb-6 overflow-hidden" data-testid="bundle-upgrade-banner">
+        <div className="rounded-xl mb-6 overflow-hidden" data-testid="bundle-upgrade-banner">
           <button
             onClick={() => setBundleExpanded(!bundleExpanded)}
-            className="w-full p-4 sm:p-6 hover:bg-gray-50 transition-colors"
+            className="w-full relative overflow-hidden"
             data-testid="button-toggle-bundle-upgrade"
+            style={{
+              background: 'linear-gradient(135deg, #0f1c2e 0%, #1a2d4a 40%, #1e3a5f 70%, #1a2d4a 100%)',
+            }}
           >
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-[#36bff9] to-[#2aa8e0] flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            <div
+              className="absolute inset-0 opacity-[0.07]"
+              style={{
+                backgroundImage: `radial-gradient(circle at 20% 50%, rgba(54, 191, 249, 0.4) 0%, transparent 50%),
+                                  radial-gradient(circle at 80% 20%, rgba(54, 191, 249, 0.3) 0%, transparent 40%),
+                                  radial-gradient(circle at 60% 80%, rgba(42, 168, 224, 0.2) 0%, transparent 40%)`,
+              }}
+            />
+            <div
+              className="absolute inset-0 opacity-[0.03]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2336bff9' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              }}
+            />
+            <div className="relative p-4 sm:p-6">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-[#36bff9]" />
+                  </div>
+                  <div className="text-left">
+                    <h2 className="text-base sm:text-lg font-bold text-white">Bundle & Save</h2>
+                    <p className="text-xs sm:text-sm text-blue-200/80">Supercharge your office with premium features</p>
+                  </div>
                 </div>
-                <h2 className="text-base sm:text-lg font-semibold text-gray-900 text-left">Bundle & Save</h2>
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <div className="hidden sm:block text-right">
+                    <p className="text-xs text-blue-200/60" data-testid="text-selected-bundle-name">{displayBundleName}</p>
+                    <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">From ${bundles[1].price}/mo</p>
+                  </div>
+                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
+                    {bundleExpanded ? (
+                      <ChevronUp className="h-4 w-4 text-blue-200" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 text-blue-200" />
+                    )}
+                  </div>
+                </div>
               </div>
-              {bundleExpanded ? (
-                <ChevronUp className="h-5 w-5 text-gray-400 flex-shrink-0" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
+              {!bundleExpanded && (
+                <div className="mt-3 ml-12 sm:ml-[52px] flex items-center gap-3 flex-wrap">
+                  <span className="inline-flex items-center gap-1.5 text-xs text-blue-100/90 bg-white/10 rounded-full px-2.5 py-1">
+                    <Check className="h-3 w-3 text-[#36bff9]" />
+                    Toll-Free Number
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-blue-100/90 bg-white/10 rounded-full px-2.5 py-1">
+                    <Check className="h-3 w-3 text-[#36bff9]" />
+                    Call Logs
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-blue-100/90 bg-white/10 rounded-full px-2.5 py-1">
+                    <Check className="h-3 w-3 text-[#36bff9]" />
+                    Message Taking
+                  </span>
+                  <span className="text-xs text-blue-300/70">& more</span>
+                </div>
               )}
-            </div>
-            <div className="mt-2 ml-12 sm:ml-[52px] flex items-center justify-between">
-              <p className="text-sm text-gray-600 text-left">Do more with your virtual office</p>
-              <div className="text-right flex-shrink-0 ml-3">
-                <p className="text-xs text-gray-500" data-testid="text-selected-bundle-name">{displayBundleName}</p>
-                <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">${selectedBundle?.price || bundles[0].price}/mo</p>
-              </div>
             </div>
           </button>
 
