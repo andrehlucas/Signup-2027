@@ -93,12 +93,9 @@ export default function SignUpPage() {
     <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="signup-page">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1" data-testid="heading-signup">
-            You're Only 3 Steps Away From Securing
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup">
+            You're Only 3 Steps Away From Securing Your New Virtual Office Solution!
           </h1>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup-sub">
-            Your New Virtual Office Solution!
-          </h2>
         </div>
 
         <div className="mb-8">
