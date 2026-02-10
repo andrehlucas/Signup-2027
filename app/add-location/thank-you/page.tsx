@@ -45,51 +45,51 @@ function Fireworks() {
     }
 
     const particles: Particle[] = [];
+    const rockets: Rocket[] = [];
     const colors = ['#ff2d2d', '#ffdd00', '#00e676', '#2979ff', '#ff4081', '#36bff9', '#ff9100', '#d500f9', '#ffea00', '#00e5ff'];
 
-    function explodeBurst(centerX: number, centerY: number) {
-      const burstColors = [
-        colors[Math.floor(Math.random() * colors.length)],
-        colors[Math.floor(Math.random() * colors.length)],
-        colors[Math.floor(Math.random() * colors.length)],
-      ];
-      const positions = [
-        { x: centerX - w * 0.15, y: centerY - h * 0.05 },
-        { x: centerX, y: centerY + h * 0.08 },
-        { x: centerX + w * 0.15, y: centerY - h * 0.03 },
-        { x: centerX - w * 0.08, y: centerY + h * 0.02 },
-        { x: centerX + w * 0.08, y: centerY - h * 0.06 },
-      ];
-      for (const pos of positions) {
-        const mainColor = burstColors[Math.floor(Math.random() * burstColors.length)];
-        const count = 120 + Math.floor(Math.random() * 40);
-        for (let i = 0; i < count; i++) {
-          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
-          const speed = Math.random() * 9 + 3;
-          particles.push({
-            x: pos.x + (Math.random() - 0.5) * 10,
-            y: pos.y + (Math.random() - 0.5) * 10,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            alpha: 1,
-            color: Math.random() > 0.2 ? mainColor : colors[Math.floor(Math.random() * colors.length)],
-            decay: Math.random() * 0.01 + 0.008,
-            size: Math.random() * 4 + 1.5,
-          });
-        }
+    function createRocket() {
+      const x = Math.random() * w * 0.8 + w * 0.1;
+      rockets.push({
+        x,
+        y: h,
+        vy: -(Math.random() * 6 + 10),
+        targetY: Math.random() * h * 0.4 + h * 0.05,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        trail: [],
+      });
+    }
+
+    function explode(x: number, y: number, color: string) {
+      const count = 100 + Math.floor(Math.random() * 60);
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+        const speed = Math.random() * 8 + 3;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1,
+          color: Math.random() > 0.25 ? color : colors[Math.floor(Math.random() * colors.length)],
+          decay: Math.random() * 0.012 + 0.006,
+          size: Math.random() * 4 + 1.5,
+        });
       }
     }
 
     let animId: number;
     const startTime = Date.now();
 
-    const burstTimes = [100, 1300, 2500];
+    const burstTimes = [0, 1200, 2400];
+    const burstRockets = 8;
     const burstsLaunched = [false, false, false];
-    const burstCenters = [
-      { x: w * 0.3, y: h * 0.3 },
-      { x: w * 0.6, y: h * 0.25 },
-      { x: w * 0.45, y: h * 0.35 },
-    ];
+
+    function launchBurst() {
+      for (let i = 0; i < burstRockets; i++) {
+        createRocket();
+      }
+    }
 
     function loop() {
       const elapsed = Date.now() - startTime;
@@ -97,12 +97,12 @@ function Fireworks() {
       for (let b = 0; b < burstTimes.length; b++) {
         if (!burstsLaunched[b] && elapsed >= burstTimes[b]) {
           burstsLaunched[b] = true;
-          explodeBurst(burstCenters[b].x, burstCenters[b].y);
+          launchBurst();
         }
       }
 
       const allBurstsDone = burstsLaunched.every(Boolean);
-      if (allBurstsDone && particles.length === 0) {
+      if (allBurstsDone && rockets.length === 0 && particles.length === 0) {
         ctx!.clearRect(0, 0, w, h);
         window.removeEventListener('resize', handleResize);
         return;
@@ -110,16 +110,39 @@ function Fireworks() {
 
       animId = requestAnimationFrame(loop);
       ctx!.globalCompositeOperation = 'destination-out';
-      ctx!.fillStyle = 'rgba(0,0,0,0.1)';
+      ctx!.fillStyle = 'rgba(0,0,0,0.12)';
       ctx!.fillRect(0, 0, w, h);
       ctx!.globalCompositeOperation = 'lighter';
+
+      for (let i = rockets.length - 1; i >= 0; i--) {
+        const r = rockets[i];
+        r.trail.push({ x: r.x, y: r.y, alpha: 1 });
+        r.y += r.vy;
+        r.vy *= 0.97;
+
+        for (let t = r.trail.length - 1; t >= 0; t--) {
+          r.trail[t].alpha -= 0.04;
+          if (r.trail[t].alpha <= 0) r.trail.splice(t, 1);
+          else {
+            ctx!.beginPath();
+            ctx!.arc(r.trail[t].x, r.trail[t].y, 2, 0, Math.PI * 2);
+            ctx!.fillStyle = `rgba(255,255,255,${r.trail[t].alpha})`;
+            ctx!.fill();
+          }
+        }
+
+        if (r.y <= r.targetY) {
+          explode(r.x, r.y, r.color);
+          rockets.splice(i, 1);
+        }
+      }
 
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
         p.vy += 0.04;
-        p.vx *= 0.985;
+        p.vx *= 0.99;
         p.alpha -= p.decay;
 
         if (p.alpha <= 0) {
