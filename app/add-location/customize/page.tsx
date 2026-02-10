@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles, Info } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, Sparkles } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -513,11 +513,31 @@ export default function CustomizePage() {
           )}
         </div>
 
-        <div className="rounded-xl border border-blue-200 bg-blue-50 p-4 mb-6 flex items-start gap-3" data-testid="essentials-info-banner">
-          <Info className="h-5 w-5 text-[#36bff9] flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-gray-700">
-            Your plan includes <span className="font-semibold">The Essentials package</span>: Prestigious Business Address, Live Call Answering, Call Transferring, 2 Voicemail Boxes, Business Phone/Fax Number, and Voicemail/Fax Converted to Email.
-          </p>
+        <div className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-6" data-testid="essentials-info-banner">
+          <div className="bg-[#36bff9] text-white text-center py-2 text-sm font-medium">
+            Your Included Package
+          </div>
+          <div className="p-4">
+            <div className="mb-3">
+              <h3 className="text-base font-medium text-gray-900">The Ultimate Office Solution</h3>
+            </div>
+            <div className="mb-4">
+              <span className="text-3xl font-bold text-gray-900">${bundles[0].price}</span>
+              <span className="text-gray-500 text-sm ml-1">/mo</span>
+            </div>
+            <div className="space-y-2">
+              {Object.entries(bundles[0].features)
+                .filter(([, enabled]) => enabled)
+                .map(([key]) => (
+                  <div key={key} className="flex items-center gap-2 text-sm">
+                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
+                      <Check className="h-2.5 w-2.5 text-white" />
+                    </div>
+                    <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
+                  </div>
+                ))}
+            </div>
+          </div>
         </div>
 
         {selectedBundle && (
