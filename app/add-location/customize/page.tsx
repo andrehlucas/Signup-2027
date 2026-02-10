@@ -392,6 +392,33 @@ export default function CustomizePage() {
           </p>
         </div>
 
+        <div className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-6" data-testid="essentials-info-banner">
+          <div className="bg-[#36bff9] text-white text-center py-2 text-sm font-medium">
+            Your Office Package
+          </div>
+          <div className="p-4">
+            <div className="mb-3">
+              <h3 className="text-base font-medium text-gray-900">{displayBundleName}</h3>
+            </div>
+            <div className="mb-4">
+              <span className="text-3xl font-bold text-gray-900">${selectedBundle?.price || bundles[0].price}</span>
+              <span className="text-gray-500 text-sm ml-1">/mo</span>
+            </div>
+            <div className="space-y-2">
+              {Object.entries((selectedBundle || bundles[0]).features)
+                .filter(([, enabled]) => enabled)
+                .map(([key]) => (
+                  <div key={key} className="flex items-center gap-2 text-sm">
+                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
+                      <Check className="h-2.5 w-2.5 text-white" />
+                    </div>
+                    <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+
         <div className="rounded-xl mb-6 overflow-hidden" data-testid="bundle-upgrade-banner">
           <button
             onClick={() => setBundleExpanded(!bundleExpanded)}
@@ -556,33 +583,6 @@ export default function CustomizePage() {
               </div>
             </div>
           )}
-        </div>
-
-        <div className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-6" data-testid="essentials-info-banner">
-          <div className="bg-[#36bff9] text-white text-center py-2 text-sm font-medium">
-            Your Office Package
-          </div>
-          <div className="p-4">
-            <div className="mb-3">
-              <h3 className="text-base font-medium text-gray-900">{displayBundleName}</h3>
-            </div>
-            <div className="mb-4">
-              <span className="text-3xl font-bold text-gray-900">${selectedBundle?.price || bundles[0].price}</span>
-              <span className="text-gray-500 text-sm ml-1">/mo</span>
-            </div>
-            <div className="space-y-2">
-              {Object.entries((selectedBundle || bundles[0]).features)
-                .filter(([, enabled]) => enabled)
-                .map(([key]) => (
-                  <div key={key} className="flex items-center gap-2 text-sm">
-                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                      <Check className="h-2.5 w-2.5 text-white" />
-                    </div>
-                    <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
-                  </div>
-                ))}
-            </div>
-          </div>
         </div>
 
         {selectedBundle && (
