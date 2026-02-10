@@ -403,7 +403,7 @@ export default function CustomizePage() {
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-[#36bff9] to-[#2aa8e0] flex items-center justify-center flex-shrink-0">
                   <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                 </div>
-                <h2 className="text-base sm:text-lg font-semibold text-gray-900 text-left">Upgrade Your Package</h2>
+                <h2 className="text-base sm:text-lg font-semibold text-gray-900 text-left">Bundle & Save</h2>
               </div>
               {bundleExpanded ? (
                 <ChevronUp className="h-5 w-5 text-gray-400 flex-shrink-0" />
@@ -412,7 +412,7 @@ export default function CustomizePage() {
               )}
             </div>
             <div className="mt-2 ml-12 sm:ml-[52px] flex items-center justify-between">
-              <p className="text-sm text-gray-600 text-left">Unlock Toll-Free Numbers, Call Logs, and more</p>
+              <p className="text-sm text-gray-600 text-left">Do more with your virtual office</p>
               <div className="text-right flex-shrink-0 ml-3">
                 <p className="text-xs text-gray-500" data-testid="text-selected-bundle-name">{displayBundleName}</p>
                 <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">${selectedBundle?.price || bundles[0].price}/mo</p>
