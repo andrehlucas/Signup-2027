@@ -1771,12 +1771,12 @@ body {
   padding-bottom: .75rem;
 }
 
-.pb-36 {
-  padding-bottom: 9rem;
-}
-
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pb-64 {
+  padding-bottom: 16rem;
 }
 
 .pl-2\.5 {
@@ -1829,10 +1829,6 @@ body {
 
 .pt-6 {
   padding-top: 1.5rem;
-}
-
-.pb-48 {
-  padding-bottom: 12rem;
 }
 
 .text-left {
@@ -1985,10 +1981,6 @@ body {
 .text-blue-200 {
   --tw-text-opacity: 1;
   color: rgb(191 219 254 / var(--tw-text-opacity, 1));
-}
-
-.text-blue-200\/60 {
-  color: #bfdbfe99;
 }
 
 .text-blue-200\/80 {
