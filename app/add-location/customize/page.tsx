@@ -497,7 +497,7 @@ export default function CustomizePage() {
                           <div className="mb-4">
                             <span className="text-3xl font-bold text-white">${bundle.price}</span>
                             {bundle.originalPrice && (
-                              <span className="text-sm text-white/60 line-through ml-2">
+                              <span className="text-sm text-gray-400 line-through ml-2">
                                 ${bundle.originalPrice}
                               </span>
                             )}
