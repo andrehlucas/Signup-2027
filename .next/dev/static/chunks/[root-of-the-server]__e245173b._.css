@@ -676,6 +676,10 @@ body {
   margin-left: .25rem;
 }
 
+.ml-1\.5 {
+  margin-left: .375rem;
+}
+
 .ml-2 {
   margin-left: .5rem;
 }
@@ -694,6 +698,10 @@ body {
 
 .mr-1 {
   margin-right: .25rem;
+}
+
+.mr-1\.5 {
+  margin-right: .375rem;
 }
 
 .mr-2 {
@@ -2001,6 +2009,10 @@ body {
 
 .leading-none {
   line-height: 1;
+}
+
+.leading-tight {
+  line-height: 1.25;
 }
 
 .tracking-tight {
@@ -3556,6 +3568,10 @@ body {
 
   .sm\:flex {
     display: flex;
+  }
+
+  .sm\:hidden {
+    display: none;
   }
 
   .sm\:w-20 {

@@ -791,30 +791,44 @@ export default function CustomizePage() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-50" data-testid="sticky-footer">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500">Current Package</p>
-            <p className="font-semibold text-gray-900" data-testid="footer-package-name">{displayBundleName}</p>
-            <p className="text-lg font-bold text-[#36bff9]" data-testid="footer-monthly-total">${monthly}/mo</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              onClick={handleBackFromCustomize}
-              data-testid="button-back"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Button>
-            <Button
-              onClick={handleContinue}
-              disabled={!selectedBundle || !selectedPhone}
-              className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white px-8"
-              data-testid="button-continue-checkout"
-            >
-              Continue to Checkout
-              <ChevronRight className="h-4 w-4 ml-2" />
-            </Button>
+        <div className="max-w-6xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4 min-w-0">
+              <div className="hidden sm:flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-lg bg-[#36bff9] flex items-center justify-center flex-shrink-0">
+                  <ShoppingCart className="h-4 w-4 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs text-gray-500 leading-tight" data-testid="footer-package-name">{displayBundleName}</p>
+                  <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
+                </div>
+              </div>
+              <div className="flex sm:hidden items-center gap-2 min-w-0">
+                <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total-mobile">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleBackFromCustomize}
+                className="h-10 px-4"
+                data-testid="button-back"
+              >
+                <ArrowLeft className="h-4 w-4 mr-1.5" />
+                Back
+              </Button>
+              <Button
+                onClick={handleContinue}
+                disabled={!selectedBundle || !selectedPhone}
+                size="sm"
+                className="h-10 px-5 bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
+                data-testid="button-continue-checkout"
+              >
+                Continue
+                <ChevronRight className="h-4 w-4 ml-1.5" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
