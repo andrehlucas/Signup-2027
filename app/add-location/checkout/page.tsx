@@ -235,9 +235,9 @@ export default function CheckoutPage() {
                       <div>
                         <p className="font-medium text-gray-900">Location</p>
                         <p className="text-sm text-gray-600">{order.location.name}</p>
-                        <p className="text-sm text-gray-500">
-                          {order.location.address}, {order.location.city}, {order.location.stateCode}
-                        </p>
+                        <p className="text-sm text-gray-500">{order.location.address}</p>
+                        <p className="text-sm text-gray-500">{order.location.addressLine2}</p>
+                        <p className="text-sm text-gray-500">{order.location.city}, {order.location.stateCode} {order.location.zipCode}</p>
                       </div>
                     </div>
                   </div>

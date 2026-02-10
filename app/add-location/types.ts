@@ -2,6 +2,7 @@ export interface AvailableLocation {
   id: string;
   name: string;
   address: string;
+  addressLine2: string;
   city: string;
   state: string;
   stateCode: string;
@@ -424,7 +425,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-1',
     name: 'Brickell Tower',
-    address: '848 Brickell Avenue, Penthouse 5',
+    address: '848 Brickell Avenue',
+    addressLine2: 'Penthouse 5',
     city: 'Miami',
     state: 'Florida',
     stateCode: 'FL',
@@ -435,7 +437,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-2',
     name: 'Downtown Miami Center',
-    address: '100 SE 2nd Street, Suite 400',
+    address: '100 SE 2nd Street',
+    addressLine2: 'Suite 400',
     city: 'Miami',
     state: 'Florida',
     stateCode: 'FL',
@@ -446,7 +449,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-3',
     name: 'Coral Gables Executive',
-    address: '2655 S Le Jeune Rd, Suite 300',
+    address: '2655 S Le Jeune Rd',
+    addressLine2: 'Suite 300',
     city: 'Coral Gables',
     state: 'Florida',
     stateCode: 'FL',
@@ -457,7 +461,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-4',
     name: 'Fort Lauderdale Business Center',
-    address: '110 SE 6th Street, Suite 1700',
+    address: '110 SE 6th Street',
+    addressLine2: 'Suite 1700',
     city: 'Fort Lauderdale',
     state: 'Florida',
     stateCode: 'FL',
@@ -468,7 +473,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-5',
     name: 'Manhattan Midtown',
-    address: '1 Penn Plaza, Suite 6200',
+    address: '1 Penn Plaza',
+    addressLine2: 'Suite 6200',
     city: 'New York',
     state: 'New York',
     stateCode: 'NY',
@@ -479,7 +485,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-6',
     name: 'Wall Street Financial',
-    address: '14 Wall Street, 20th Floor',
+    address: '14 Wall Street',
+    addressLine2: '20th Floor',
     city: 'New York',
     state: 'New York',
     stateCode: 'NY',
@@ -490,7 +497,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-7',
     name: 'Downtown LA Tower',
-    address: '633 W 5th Street, Suite 2600',
+    address: '633 W 5th Street',
+    addressLine2: 'Suite 2600',
     city: 'Los Angeles',
     state: 'California',
     stateCode: 'CA',
@@ -501,7 +509,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-8',
     name: 'Santa Monica Business Park',
-    address: '2425 Olympic Blvd, Suite 4000',
+    address: '2425 Olympic Blvd',
+    addressLine2: 'Suite 4000',
     city: 'Santa Monica',
     state: 'California',
     stateCode: 'CA',
@@ -512,7 +521,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-9',
     name: 'Chicago Loop Center',
-    address: '111 W Jackson Blvd, Suite 1700',
+    address: '111 W Jackson Blvd',
+    addressLine2: 'Suite 1700',
     city: 'Chicago',
     state: 'Illinois',
     stateCode: 'IL',
@@ -523,7 +533,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-10',
     name: 'Houston Galleria',
-    address: '2929 Allen Parkway, Suite 200',
+    address: '2929 Allen Parkway',
+    addressLine2: 'Suite 200',
     city: 'Houston',
     state: 'Texas',
     stateCode: 'TX',
@@ -534,7 +545,8 @@ export const sampleLocations: AvailableLocation[] = [
   {
     id: 'loc-11',
     name: 'Dallas Uptown',
-    address: '3131 McKinney Ave, Suite 600',
+    address: '3131 McKinney Ave',
+    addressLine2: 'Suite 600',
     city: 'Dallas',
     state: 'Texas',
     stateCode: 'TX',

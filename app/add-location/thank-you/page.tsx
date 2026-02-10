@@ -50,9 +50,9 @@ export default function ThankYouPage() {
               </div>
               <div>
                 <p className="font-medium text-gray-900">{order.location.name}</p>
-                <p className="text-sm text-gray-600">
-                  {order.location.address}, {order.location.city}, {order.location.stateCode} {order.location.zipCode}
-                </p>
+                <p className="text-sm text-gray-600">{order.location.address}</p>
+                <p className="text-sm text-gray-600">{order.location.addressLine2}</p>
+                <p className="text-sm text-gray-600">{order.location.city}, {order.location.stateCode} {order.location.zipCode}</p>
               </div>
             </div>
 

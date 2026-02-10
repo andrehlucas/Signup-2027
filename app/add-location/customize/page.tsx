@@ -306,10 +306,14 @@ export default function CustomizePage() {
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-gray-600 flex items-center gap-1">
-                          <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
-                          {location.address}, {location.city}, {location.stateCode} {location.zipCode}
-                        </p>
+                        <div className="text-sm text-gray-600">
+                          <p className="flex items-center gap-1">
+                            <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
+                            {location.address}
+                          </p>
+                          <p className="ml-5">{location.addressLine2}</p>
+                          <p className="ml-5">{location.city}, {location.stateCode} {location.zipCode}</p>
+                        </div>
                       </div>
                       <Button
                         onClick={() => handleLocationSelect(location)}

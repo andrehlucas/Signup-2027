@@ -1474,16 +1474,11 @@ function CustomizePage() {
     }["CustomizePage.useMemo[phoneNumbers]"], [
         order.location
     ]);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "CustomizePage.useEffect": ()=>{
-            if (!order.userInfo.firstName || !order.userInfo.email) {
-                router.push('/');
-            }
-        }
-    }["CustomizePage.useEffect"], [
-        order.userInfo,
-        router
-    ]);
+    // useEffect(() => {
+    //   if (!order.userInfo.firstName || !order.userInfo.email) {
+    //     router.push('/');
+    //   }
+    // }, [order.userInfo, router]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "CustomizePage.useEffect": ()=>{
             if (phoneNumbers.length > 0 && !selectedPhone) {
@@ -3097,7 +3092,7 @@ function CustomizePage() {
         columnNumber: 5
     }, this);
 }
-_s(CustomizePage, "WXF+gd9s4UPtPG9PuvTYsJi+lMk=", false, function() {
+_s(CustomizePage, "4Vb79NbeqdKkxcj5Mr07UUrz2vk=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useOrder"],
