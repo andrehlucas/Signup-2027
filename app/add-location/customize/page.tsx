@@ -497,7 +497,7 @@ export default function CustomizePage() {
                           <div className="mb-4">
                             <span className="text-3xl font-bold text-white">${bundle.price}</span>
                             {bundle.originalPrice && (
-                              <span className="text-sm text-white/40 line-through ml-2">
+                              <span className="text-sm text-white/60 line-through ml-2">
                                 ${bundle.originalPrice}
                               </span>
                             )}
@@ -509,8 +509,8 @@ export default function CustomizePage() {
                               .filter(([, enabled]) => enabled)
                               .map(([key]) => (
                                 <div key={key} className="flex items-center gap-2 text-sm">
-                                  <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
-                                    <Check className="h-2.5 w-2.5 text-[#36bff9]" />
+                                  <div className="w-4 h-4 rounded-full bg-amber-400/20 flex items-center justify-center flex-shrink-0">
+                                    <Check className="h-2.5 w-2.5 text-amber-400" />
                                   </div>
                                   <span className="text-white text-xs">{featureLabels[key]}</span>
                                 </div>
