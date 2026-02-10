@@ -14,8 +14,8 @@ interface ProgressIndicatorProps {
 
 const defaultSteps: Step[] = [
   { id: 1, name: 'Your Info' },
-  { id: 2, name: 'Location' },
-  { id: 3, name: 'Customize & Checkout' },
+  { id: 2, name: 'Customize' },
+  { id: 3, name: 'Checkout' },
 ];
 
 export function ProgressIndicator({ currentStep, steps = defaultSteps }: ProgressIndicatorProps) {

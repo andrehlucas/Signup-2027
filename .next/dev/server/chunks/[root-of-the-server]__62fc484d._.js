@@ -577,136 +577,91 @@ class MemStorage {
     seedFunnelData() {
         const steps = [
             'your_info',
-            'location',
             'customize',
-            'checkout',
-            'thank_you'
+            'checkout'
         ];
         const baseDate = new Date('2026-02-09T00:00:00Z');
         let eventCounter = 0;
         const sessionProfiles = [
             {
-                maxStep: 4,
+                maxStep: 2,
                 durations: [
                     45,
-                    62,
-                    38,
-                    55,
-                    0
+                    95,
+                    70
                 ]
             },
             {
-                maxStep: 4,
+                maxStep: 2,
                 durations: [
                     30,
-                    45,
-                    50,
-                    42,
-                    0
+                    80,
+                    55
                 ]
             },
             {
-                maxStep: 4,
+                maxStep: 2,
                 durations: [
                     60,
-                    80,
-                    55,
-                    70,
-                    0
+                    110,
+                    85
                 ]
             },
             {
-                maxStep: 3,
+                maxStep: 2,
                 durations: [
                     35,
-                    50,
-                    65,
-                    48
-                ]
-            },
-            {
-                maxStep: 3,
-                durations: [
-                    55,
-                    70,
-                    45,
+                    75,
                     60
                 ]
             },
             {
-                maxStep: 3,
-                durations: [
-                    40,
-                    35,
-                    55,
-                    40
-                ]
-            },
-            {
-                maxStep: 2,
+                maxStep: 1,
                 durations: [
                     50,
-                    60,
-                    40
+                    90
                 ]
             },
             {
-                maxStep: 2,
+                maxStep: 1,
                 durations: [
                     25,
-                    45,
-                    55
-                ]
-            },
-            {
-                maxStep: 2,
-                durations: [
-                    70,
-                    50,
-                    35
-                ]
-            },
-            {
-                maxStep: 2,
-                durations: [
-                    38,
-                    62,
-                    48
-                ]
-            },
-            {
-                maxStep: 1,
-                durations: [
-                    40,
-                    55
-                ]
-            },
-            {
-                maxStep: 1,
-                durations: [
-                    65,
-                    42
-                ]
-            },
-            {
-                maxStep: 1,
-                durations: [
-                    30,
                     70
                 ]
             },
             {
                 maxStep: 1,
                 durations: [
-                    50,
-                    38
+                    70,
+                    85
                 ]
             },
             {
                 maxStep: 1,
                 durations: [
-                    45,
-                    60
+                    38,
+                    100
+                ]
+            },
+            {
+                maxStep: 1,
+                durations: [
+                    55,
+                    65
+                ]
+            },
+            {
+                maxStep: 1,
+                durations: [
+                    40,
+                    78
+                ]
+            },
+            {
+                maxStep: 1,
+                durations: [
+                    65,
+                    92
                 ]
             },
             {
@@ -750,6 +705,30 @@ class MemStorage {
                 durations: [
                     35
                 ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    80
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    50
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    40
+                ]
+            },
+            {
+                maxStep: 0,
+                durations: [
+                    55
+                ]
             }
         ];
         for(let day = 13; day >= 0; day--){
@@ -765,7 +744,7 @@ class MemStorage {
                 const minuteOffset = Math.floor(Math.random() * 60);
                 const sessionStart = new Date(dayDate);
                 sessionStart.setHours(hourOffset, minuteOffset, 0, 0);
-                const reachedThankYou = profile.maxStep === 4;
+                const completedCheckout = profile.maxStep === 2;
                 this.funnelSessions.set(sessionId, {
                     id: `sid_${eventCounter++}`,
                     sessionId,
@@ -784,7 +763,7 @@ class MemStorage {
                         'https://linkedin.com',
                         'direct'
                     ][s % 5],
-                    completed: reachedThankYou
+                    completed: completedCheckout
                 });
                 let currentTime = new Date(sessionStart);
                 for(let stepIdx = 0; stepIdx <= profile.maxStep; stepIdx++){
@@ -798,7 +777,7 @@ class MemStorage {
                         duration: null,
                         metadata: null
                     });
-                    if (stepIdx < profile.maxStep) {
+                    if (stepIdx < profile.maxStep || stepIdx === profile.maxStep && completedCheckout) {
                         const duration = profile.durations[stepIdx] + Math.floor(Math.random() * 20) - 10;
                         currentTime = new Date(currentTime.getTime() + duration * 1000);
                         this.funnelEvents.set(`fe_${eventCounter}`, {
@@ -1008,17 +987,13 @@ async function GET() {
         const sessions = await __TURBOPACK__imported__module__$5b$project$5d2f$server$2f$storage$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["storage"].getFunnelSessions();
         const stepOrder = [
             'your_info',
-            'location',
             'customize',
-            'checkout',
-            'thank_you'
+            'checkout'
         ];
         const stepLabels = {
             your_info: 'Your Info',
-            location: 'Location',
             customize: 'Customize',
-            checkout: 'Checkout',
-            thank_you: 'Thank You'
+            checkout: 'Checkout'
         };
         const stepStats = stepOrder.map((step)=>{
             const enterEvents = events.filter((e)=>e.step === step && e.eventType === 'enter');

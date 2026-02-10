@@ -285,7 +285,7 @@ export function registerRoutes(app: Express): Server {
         await storage.updateFunnelSession(sessionId, { lastSeenAt: timestamp });
       }
 
-      if (step === 'thank_you' && eventType === 'enter') {
+      if (step === 'checkout' && eventType === 'complete') {
         await storage.updateFunnelSession(sessionId, { completed: true, lastSeenAt: timestamp });
       }
 
@@ -314,13 +314,11 @@ export function registerRoutes(app: Express): Server {
       const events = await storage.getFunnelEvents();
       const sessions = await storage.getFunnelSessions();
 
-      const stepOrder: string[] = ['your_info', 'location', 'customize', 'checkout', 'thank_you'];
+      const stepOrder: string[] = ['your_info', 'customize', 'checkout'];
       const stepLabels: Record<string, string> = {
         your_info: 'Your Info',
-        location: 'Location',
         customize: 'Customize',
         checkout: 'Checkout',
-        thank_you: 'Thank You',
       };
 
       const stepStats = stepOrder.map(step => {

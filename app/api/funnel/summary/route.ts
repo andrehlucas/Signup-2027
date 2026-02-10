@@ -18,13 +18,11 @@ export async function GET() {
     const events = await storage.getFunnelEvents();
     const sessions = await storage.getFunnelSessions();
 
-    const stepOrder = ['your_info', 'location', 'customize', 'checkout', 'thank_you'];
+    const stepOrder = ['your_info', 'customize', 'checkout'];
     const stepLabels: Record<string, string> = {
       your_info: 'Your Info',
-      location: 'Location',
       customize: 'Customize',
       checkout: 'Checkout',
-      thank_you: 'Thank You',
     };
 
     const stepStats = stepOrder.map((step) => {

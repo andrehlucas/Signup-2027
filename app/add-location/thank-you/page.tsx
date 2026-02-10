@@ -5,12 +5,10 @@ import { useRouter } from 'next/navigation';
 import { CheckCircle2, MapPin, Package, Phone, ArrowRight } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { useOrder } from '../context';
-import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 
 export default function ThankYouPage() {
   const router = useRouter();
   const { order, clearOrder } = useOrder();
-  useFunnelTracking('thank_you');
 
   useEffect(() => {
     if (!order.location || !order.bundle) {

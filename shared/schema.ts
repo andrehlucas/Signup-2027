@@ -112,5 +112,5 @@ export type InsertFunnelSession = z.infer<typeof insertFunnelSessionSchema>;
 export type FunnelEvent = typeof funnelEvents.$inferSelect;
 export type InsertFunnelEvent = z.infer<typeof insertFunnelEventSchema>;
 
-export type FunnelStep = 'your_info' | 'location' | 'customize' | 'checkout' | 'thank_you';
+export type FunnelStep = 'your_info' | 'customize' | 'checkout';
 export type FunnelEventType = 'enter' | 'complete';

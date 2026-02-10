@@ -13,7 +13,6 @@ import {
 } from '@/app/components/ui/select';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { useOrder } from './context';
-import { useFunnelTracking } from '../hooks/use-funnel-tracking';
 import {
   getStates,
   getCitiesByState,
@@ -26,8 +25,6 @@ export default function LocationSelectionPage() {
   const { order, setLocation } = useOrder();
   const [selectedState, setSelectedState] = useState<string>('');
   const [selectedCity, setSelectedCity] = useState<string>('');
-  const { trackComplete } = useFunnelTracking('location');
-
   useEffect(() => {
     if (!order.userInfo.firstName || !order.userInfo.email) {
       router.push('/');
@@ -55,7 +52,6 @@ export default function LocationSelectionPage() {
 
   const handleLocationSelect = (location: AvailableLocation) => {
     setLocation(location);
-    trackComplete({ locationId: location.id, locationName: location.name });
     router.push('/add-location/customize');
   };
 

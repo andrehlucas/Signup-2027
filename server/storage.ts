@@ -289,29 +289,25 @@ export class MemStorage implements IStorage {
   }
 
   private seedFunnelData() {
-    const steps: Array<'your_info' | 'location' | 'customize' | 'checkout' | 'thank_you'> = [
-      'your_info', 'location', 'customize', 'checkout', 'thank_you'
+    const steps: Array<'your_info' | 'customize' | 'checkout'> = [
+      'your_info', 'customize', 'checkout'
     ];
 
     const baseDate = new Date('2026-02-09T00:00:00Z');
     let eventCounter = 0;
 
     const sessionProfiles = [
-      { maxStep: 4, durations: [45, 62, 38, 55, 0] },
-      { maxStep: 4, durations: [30, 45, 50, 42, 0] },
-      { maxStep: 4, durations: [60, 80, 55, 70, 0] },
-      { maxStep: 3, durations: [35, 50, 65, 48] },
-      { maxStep: 3, durations: [55, 70, 45, 60] },
-      { maxStep: 3, durations: [40, 35, 55, 40] },
-      { maxStep: 2, durations: [50, 60, 40] },
-      { maxStep: 2, durations: [25, 45, 55] },
-      { maxStep: 2, durations: [70, 50, 35] },
-      { maxStep: 2, durations: [38, 62, 48] },
-      { maxStep: 1, durations: [40, 55] },
-      { maxStep: 1, durations: [65, 42] },
-      { maxStep: 1, durations: [30, 70] },
-      { maxStep: 1, durations: [50, 38] },
-      { maxStep: 1, durations: [45, 60] },
+      { maxStep: 2, durations: [45, 95, 70] },
+      { maxStep: 2, durations: [30, 80, 55] },
+      { maxStep: 2, durations: [60, 110, 85] },
+      { maxStep: 2, durations: [35, 75, 60] },
+      { maxStep: 1, durations: [50, 90] },
+      { maxStep: 1, durations: [25, 70] },
+      { maxStep: 1, durations: [70, 85] },
+      { maxStep: 1, durations: [38, 100] },
+      { maxStep: 1, durations: [55, 65] },
+      { maxStep: 1, durations: [40, 78] },
+      { maxStep: 1, durations: [65, 92] },
       { maxStep: 0, durations: [90] },
       { maxStep: 0, durations: [15] },
       { maxStep: 0, durations: [120] },
@@ -319,6 +315,10 @@ export class MemStorage implements IStorage {
       { maxStep: 0, durations: [45] },
       { maxStep: 0, durations: [60] },
       { maxStep: 0, durations: [35] },
+      { maxStep: 0, durations: [80] },
+      { maxStep: 0, durations: [50] },
+      { maxStep: 0, durations: [40] },
+      { maxStep: 0, durations: [55] },
     ];
 
     for (let day = 13; day >= 0; day--) {
@@ -338,7 +338,7 @@ export class MemStorage implements IStorage {
         const sessionStart = new Date(dayDate);
         sessionStart.setHours(hourOffset, minuteOffset, 0, 0);
 
-        const reachedThankYou = profile.maxStep === 4;
+        const completedCheckout = profile.maxStep === 2;
 
         this.funnelSessions.set(sessionId, {
           id: `sid_${eventCounter++}`,
@@ -347,7 +347,7 @@ export class MemStorage implements IStorage {
           lastSeenAt: sessionStart.toISOString(),
           userAgent: ['Mozilla/5.0 (Windows NT 10.0; Win64; x64)', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)', 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0)', 'Mozilla/5.0 (Linux; Android 14)'][s % 4],
           referrer: ['https://google.com', 'https://facebook.com', '', 'https://linkedin.com', 'direct'][s % 5],
-          completed: reachedThankYou,
+          completed: completedCheckout,
         });
 
         let currentTime = new Date(sessionStart);
@@ -365,7 +365,7 @@ export class MemStorage implements IStorage {
             metadata: null,
           });
 
-          if (stepIdx < profile.maxStep) {
+          if (stepIdx < profile.maxStep || (stepIdx === profile.maxStep && completedCheckout)) {
             const duration = profile.durations[stepIdx] + Math.floor(Math.random() * 20) - 10;
             currentTime = new Date(currentTime.getTime() + duration * 1000);
 

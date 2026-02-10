@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -28,10 +28,14 @@ import {
   featureLabels,
   availableAddons,
   getPhoneNumbersForLocation,
+  getStates,
+  getCitiesByState,
+  getLocationsByCity,
   Bundle,
   PhoneNumber,
   Addon,
   AddonPackage,
+  AvailableLocation,
 } from '../types';
 
 function getTierColor(tier: string) {
@@ -49,7 +53,8 @@ function getTierColor(tier: string) {
 
 export default function CustomizePage() {
   const router = useRouter();
-  const { order, setBundle, setPhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
+  const { order, setLocation, setBundle, setPhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
+  const [subStep, setSubStep] = useState<'location' | 'customize'>(order.location ? 'customize' : 'location');
   const [selectedBundle, setSelectedBundle] = useState<Bundle | null>(order.bundle);
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
@@ -58,16 +63,29 @@ export default function CustomizePage() {
   const [showAllAddons, setShowAllAddons] = useState(false);
   const { trackComplete } = useFunnelTracking('customize');
 
+  const [selectedState, setSelectedState] = useState<string>('');
+  const [selectedCity, setSelectedCity] = useState<string>('');
+
+  const states = useMemo(() => getStates(), []);
+  const cities = useMemo(
+    () => (selectedState ? getCitiesByState(selectedState) : []),
+    [selectedState]
+  );
+  const availableLocations = useMemo(
+    () => (selectedCity ? getLocationsByCity(selectedCity) : []),
+    [selectedCity]
+  );
+
   const phoneNumbers = useMemo(() => {
     if (!order.location) return [];
     return getPhoneNumbersForLocation(order.location);
   }, [order.location]);
 
   useEffect(() => {
-    if (!order.location) {
-      router.push('/add-location');
+    if (!order.userInfo.firstName || !order.userInfo.email) {
+      router.push('/');
     }
-  }, [order.location, router]);
+  }, [order.userInfo, router]);
 
   useEffect(() => {
     if (phoneNumbers.length > 0 && !selectedPhone) {
@@ -76,6 +94,20 @@ export default function CustomizePage() {
       setPhoneNumber(autoAssigned);
     }
   }, [phoneNumbers, selectedPhone, setPhoneNumber]);
+
+  const handleStateChange = (state: string) => {
+    setSelectedState(state);
+    setSelectedCity('');
+  };
+
+  const handleCityChange = (city: string) => {
+    setSelectedCity(city);
+  };
+
+  const handleLocationSelect = (location: AvailableLocation) => {
+    setLocation(location);
+    setSubStep('customize');
+  };
 
   const handleBundleSelect = (bundle: Bundle) => {
     setSelectedBundle(bundle);
@@ -180,7 +212,143 @@ export default function CustomizePage() {
     }
   };
 
+  const handleBackFromCustomize = () => {
+    setSubStep('location');
+  };
+
   const { monthly } = getCartTotal();
+
+  if (subStep === 'location') {
+    return (
+      <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="customize-page-location">
+        <div className="max-w-4xl mx-auto">
+          <Button
+            variant="ghost"
+            onClick={() => router.push('/')}
+            className="mb-6"
+            data-testid="button-back-info"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Your Information
+          </Button>
+
+          <div className="text-center mb-4">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1" data-testid="heading-location">
+              You're Only 2 Steps Away From Securing
+            </h1>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+              Your New Virtual Office Solution!
+            </h2>
+          </div>
+
+          <div className="mb-8">
+            <ProgressIndicator currentStep={2} />
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Your Location</h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  State
+                </label>
+                <Select value={selectedState} onValueChange={handleStateChange}>
+                  <SelectTrigger data-testid="select-state">
+                    <SelectValue placeholder="Select a state" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {states.map((state) => (
+                      <SelectItem key={state} value={state} data-testid={`option-state-${state}`}>
+                        {state}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  City
+                </label>
+                <Select
+                  value={selectedCity}
+                  onValueChange={handleCityChange}
+                  disabled={!selectedState}
+                >
+                  <SelectTrigger data-testid="select-city">
+                    <SelectValue placeholder={selectedState ? 'Select a city' : 'Select state first'} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {cities.map((city) => (
+                      <SelectItem key={city} value={city} data-testid={`option-city-${city}`}>
+                        {city}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {selectedCity && (
+              <div className="space-y-3" data-testid="locations-list">
+                <h3 className="text-sm font-medium text-gray-700 mb-3">
+                  Available Locations in {selectedCity}
+                </h3>
+                {availableLocations.map((location) => (
+                  <div
+                    key={location.id}
+                    className="flex items-center gap-4 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all"
+                    data-testid={`location-card-${location.id}`}
+                  >
+                    <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Building2 className="h-8 w-8 text-gray-400" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-medium text-gray-900">{location.name}</h4>
+                        {location.isPremium && (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold">
+                            <Star className="h-3 w-3 fill-amber-500" />
+                            Premium Location
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600 flex items-center gap-1">
+                        <MapPin className="h-3.5 w-3.5" />
+                        {location.address}, {location.city}, {location.stateCode} {location.zipCode}
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => handleLocationSelect(location)}
+                      className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0"
+                      data-testid={`button-select-location-${location.id}`}
+                    >
+                      Select
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {!selectedState && (
+              <div className="text-center py-12 text-gray-500">
+                <MapPin className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                <p>Select a state to view available locations</p>
+              </div>
+            )}
+
+            {selectedState && !selectedCity && (
+              <div className="text-center py-12 text-gray-500">
+                <Building2 className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                <p>Select a city to view available locations</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!order.location) {
     return null;
@@ -190,7 +358,7 @@ export default function CustomizePage() {
     <div className="min-h-screen bg-gray-50 p-4 lg:p-8" data-testid="customize-page">
       <Button
         variant="ghost"
-        onClick={() => router.push('/add-location')}
+        onClick={handleBackFromCustomize}
         className="mb-6"
         data-testid="button-back-location"
       >
@@ -200,7 +368,7 @@ export default function CustomizePage() {
 
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <ProgressIndicator currentStep={3} />
+          <ProgressIndicator currentStep={2} />
         </div>
 
         <div className="text-center mb-8">
@@ -577,7 +745,7 @@ export default function CustomizePage() {
         <div className="flex justify-between">
           <Button
             variant="outline"
-            onClick={() => router.push('/add-location')}
+            onClick={handleBackFromCustomize}
             data-testid="button-back"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />

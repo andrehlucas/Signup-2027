@@ -32,7 +32,7 @@ export default function RootLayout({
           <div className="min-h-screen bg-gray-50">
             <header className="bg-white border-b border-gray-200 py-4 px-6">
               <div className="max-w-4xl mx-auto flex items-center justify-center">
-                <img src="/opus-vo-main-logo-white.svg" alt="Opus Virtual Offices" className="h-10 brightness-0" data-testid="img-logo" />
+                <img src="/opus-vo-main-logo.svg" alt="Opus Virtual Offices" className="h-10" data-testid="img-logo" />
               </div>
             </header>
             <main>

@@ -86,7 +86,7 @@ export default function SignUpPage() {
     });
 
     trackComplete();
-    router.push('/add-location');
+    router.push('/add-location/customize');
   };
 
   return (
