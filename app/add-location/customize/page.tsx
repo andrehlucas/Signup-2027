@@ -367,7 +367,7 @@ export default function CustomizePage() {
     : 'The Essentials';
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-64 lg:px-8 lg:pt-8" data-testid="customize-page">
+    <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="customize-page">
       <Button
         variant="ghost"
         onClick={handleBackFromCustomize}

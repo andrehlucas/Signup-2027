@@ -3752,6 +3752,15 @@ body {
   .lg\:p-8 {
     padding: 2rem;
   }
+
+  .lg\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .lg\:pt-8 {
+    padding-top: 2rem;
+  }
 }
 
 .\[\&\:has\(\[aria-selected\]\)\]\:bg-accent:has([aria-selected]) {
