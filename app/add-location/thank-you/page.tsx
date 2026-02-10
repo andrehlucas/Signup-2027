@@ -1,10 +1,179 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { CheckCircle2, MapPin, Package, Phone, ArrowRight } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { useOrder } from '../context';
+
+function Fireworks() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const run = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let w = (canvas.width = window.innerWidth);
+    let h = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', handleResize);
+
+    interface Particle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      alpha: number;
+      color: string;
+      decay: number;
+      size: number;
+    }
+
+    interface Rocket {
+      x: number;
+      y: number;
+      vy: number;
+      targetY: number;
+      color: string;
+      trail: { x: number; y: number; alpha: number }[];
+    }
+
+    const particles: Particle[] = [];
+    const rockets: Rocket[] = [];
+    const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bcb', '#36bff9', '#f97316', '#a855f7'];
+
+    function createRocket() {
+      const x = Math.random() * w * 0.8 + w * 0.1;
+      rockets.push({
+        x,
+        y: h,
+        vy: -(Math.random() * 4 + 8),
+        targetY: Math.random() * h * 0.3 + h * 0.1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        trail: [],
+      });
+    }
+
+    function explode(x: number, y: number, color: string) {
+      const count = 60 + Math.floor(Math.random() * 40);
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+        const speed = Math.random() * 5 + 2;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1,
+          color: Math.random() > 0.3 ? color : colors[Math.floor(Math.random() * colors.length)],
+          decay: Math.random() * 0.015 + 0.01,
+          size: Math.random() * 2.5 + 1,
+        });
+      }
+    }
+
+    let frame = 0;
+    let animId: number;
+    const duration = 4000;
+    const startTime = Date.now();
+
+    function loop() {
+      const elapsed = Date.now() - startTime;
+      if (elapsed > duration && rockets.length === 0 && particles.length === 0) {
+        ctx!.clearRect(0, 0, w, h);
+        window.removeEventListener('resize', handleResize);
+        return;
+      }
+
+      animId = requestAnimationFrame(loop);
+      ctx!.globalCompositeOperation = 'destination-out';
+      ctx!.fillStyle = 'rgba(0,0,0,0.15)';
+      ctx!.fillRect(0, 0, w, h);
+      ctx!.globalCompositeOperation = 'lighter';
+
+      if (elapsed < duration - 500 && frame % 12 === 0) {
+        createRocket();
+      }
+
+      for (let i = rockets.length - 1; i >= 0; i--) {
+        const r = rockets[i];
+        r.trail.push({ x: r.x, y: r.y, alpha: 1 });
+        r.y += r.vy;
+        r.vy *= 0.98;
+
+        for (let t = r.trail.length - 1; t >= 0; t--) {
+          r.trail[t].alpha -= 0.05;
+          if (r.trail[t].alpha <= 0) r.trail.splice(t, 1);
+          else {
+            ctx!.beginPath();
+            ctx!.arc(r.trail[t].x, r.trail[t].y, 1.5, 0, Math.PI * 2);
+            ctx!.fillStyle = `rgba(255,255,255,${r.trail[t].alpha})`;
+            ctx!.fill();
+          }
+        }
+
+        if (r.y <= r.targetY) {
+          explode(r.x, r.y, r.color);
+          rockets.splice(i, 1);
+        }
+      }
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.05;
+        p.vx *= 0.99;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+        } else {
+          ctx!.beginPath();
+          ctx!.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx!.fillStyle = p.color;
+          ctx!.globalAlpha = p.alpha;
+          ctx!.fill();
+          ctx!.globalAlpha = 1;
+        }
+      }
+
+      frame++;
+    }
+
+    loop();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    return run();
+  }, [run]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: 50,
+      }}
+    />
+  );
+}
 
 export default function ThankYouPage() {
   const router = useRouter();
@@ -27,6 +196,7 @@ export default function ThankYouPage() {
 
   return (
     <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="thank-you-page">
+      <Fireworks />
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
