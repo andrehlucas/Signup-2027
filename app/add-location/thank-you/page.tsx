@@ -78,18 +78,31 @@ function Fireworks() {
       }
     }
 
-    let frame = 0;
     let animId: number;
-    const duration = 3800;
     const startTime = Date.now();
 
-    for (let i = 0; i < 5; i++) {
-      createRocket();
+    const burstTimes = [0, 1200, 2400];
+    const burstRockets = 8;
+    const burstsLaunched = [false, false, false];
+
+    function launchBurst() {
+      for (let i = 0; i < burstRockets; i++) {
+        createRocket();
+      }
     }
 
     function loop() {
       const elapsed = Date.now() - startTime;
-      if (elapsed > duration && rockets.length === 0 && particles.length === 0) {
+
+      for (let b = 0; b < burstTimes.length; b++) {
+        if (!burstsLaunched[b] && elapsed >= burstTimes[b]) {
+          burstsLaunched[b] = true;
+          launchBurst();
+        }
+      }
+
+      const allBurstsDone = burstsLaunched.every(Boolean);
+      if (allBurstsDone && rockets.length === 0 && particles.length === 0) {
         ctx!.clearRect(0, 0, w, h);
         window.removeEventListener('resize', handleResize);
         return;
@@ -100,15 +113,6 @@ function Fireworks() {
       ctx!.fillStyle = 'rgba(0,0,0,0.12)';
       ctx!.fillRect(0, 0, w, h);
       ctx!.globalCompositeOperation = 'lighter';
-
-      if (elapsed < duration - 400) {
-        if (frame % 4 === 0) {
-          createRocket();
-        }
-        if (frame % 7 === 0) {
-          createRocket();
-        }
-      }
 
       for (let i = rockets.length - 1; i >= 0; i--) {
         const r = rockets[i];
@@ -153,7 +157,6 @@ function Fireworks() {
         }
       }
 
-      frame++;
     }
 
     loop();
