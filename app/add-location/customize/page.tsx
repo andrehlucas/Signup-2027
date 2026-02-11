@@ -648,114 +648,121 @@ export default function CustomizePage() {
       </div>
       </div>
 
-      <Dialog open={bundleModalOpen} onOpenChange={setBundleModalOpen}>
-        <DialogContent className="sm:max-w-3xl max-h-[85vh] overflow-y-auto" data-testid="bundle-selection-modal">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+      {bundleModalOpen && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center"
+          data-testid="bundle-selection-modal"
+        >
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setBundleModalOpen(false)}
+          />
+          <div className="relative z-10 w-full max-w-3xl mx-4 flex flex-col items-center gap-4">
+            <div className="flex items-center gap-2 mb-2">
               <DollarSign className="h-5 w-5 text-[#36bff9]" />
-              Bundle & Save
-            </DialogTitle>
-            <DialogDescription>
-              Upgrade your plan to include popular features and save compared to adding them individually.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-4">
-            {upgradeBundles.map((bundle) => {
-              const isSelected = selectedBundle?.id === bundle.id;
-              return (
-                <div
-                  key={bundle.id}
-                  onClick={() => handleBundleSelect(bundle)}
-                  className={`rounded-xl overflow-hidden flex flex-col transition-all cursor-pointer border-2 ${
-                    isSelected
-                      ? 'border-[#36bff9] bg-blue-50 shadow-lg shadow-[#36bff9]/10'
-                      : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
-                  }`}
-                  data-testid={`modal-bundle-card-${bundle.id}`}
-                >
-                  <div className="p-4 flex flex-col flex-1">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
-                        {bundle.badge}
-                      </span>
-                      {isSelected && (
-                        <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 rounded-full px-2 py-0.5">
-                          <Check className="h-3 w-3" />
-                          Active
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="text-lg font-bold text-gray-900 mb-1">
-                      {bundle.tier}
-                    </h3>
-
-                    <div className="mb-3">
-                      <span className="text-2xl font-bold text-gray-900">${bundle.price}</span>
-                      {bundle.originalPrice && (
-                        <span className="text-sm text-gray-400 line-through ml-2">
-                          ${bundle.originalPrice}
-                        </span>
-                      )}
-                      <span className="text-gray-500 text-sm ml-1">/mo</span>
-                    </div>
-
-                    <div className="space-y-1.5 flex-1">
-                      {Object.entries(bundle.features)
-                        .filter(([, enabled]) => enabled)
-                        .map(([key]) => (
-                          <div key={key} className="flex items-center gap-2 text-sm">
-                            <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
-                              <Check className="h-2.5 w-2.5 text-[#36bff9]" />
-                            </div>
-                            <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
-                          </div>
-                        ))}
-                    </div>
-
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleBundleSelect(bundle);
-                      }}
-                      className={`mt-4 w-full ${
-                        isSelected
-                          ? 'bg-[#36bff9] hover:bg-[#2aa8e0] text-white'
-                          : 'bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300'
-                      }`}
-                      data-testid={`modal-button-select-bundle-${bundle.id}`}
-                    >
-                      {isSelected ? (
-                        <>
-                          <Check className="h-4 w-4 mr-2" />
-                          Selected
-                        </>
-                      ) : (
-                        'Select'
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {selectedBundle?.id !== 'essentials' && (
-            <div className="border-t border-gray-100 pt-3">
+              <h2 className="text-xl font-bold text-white">Bundle & Save</h2>
               <button
-                onClick={() => {
-                  handleBundleSelect(bundles[0]);
-                }}
-                className="text-sm text-gray-500 hover:text-gray-700 underline"
+                onClick={() => setBundleModalOpen(false)}
+                className="ml-4 text-white/70 hover:text-white"
+                data-testid="button-close-bundle-modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+              {upgradeBundles.map((bundle) => {
+                const isSelected = selectedBundle?.id === bundle.id;
+                return (
+                  <div
+                    key={bundle.id}
+                    onClick={() => handleBundleSelect(bundle)}
+                    className={`rounded-xl overflow-hidden flex flex-col transition-all cursor-pointer border-2 bg-white shadow-xl ${
+                      isSelected
+                        ? 'border-[#36bff9] ring-2 ring-[#36bff9] shadow-[#36bff9]/20'
+                        : 'border-gray-200 hover:border-gray-300 hover:shadow-2xl'
+                    }`}
+                    data-testid={`modal-bundle-card-${bundle.id}`}
+                  >
+                    <div className="p-4 flex flex-col flex-1">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
+                          {bundle.badge}
+                        </span>
+                        {isSelected && (
+                          <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 rounded-full px-2 py-0.5">
+                            <Check className="h-3 w-3" />
+                            Active
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">
+                        {bundle.tier}
+                      </h3>
+
+                      <div className="mb-3">
+                        <span className="text-2xl font-bold text-gray-900">${bundle.price}</span>
+                        {bundle.originalPrice && (
+                          <span className="text-sm text-gray-400 line-through ml-2">
+                            ${bundle.originalPrice}
+                          </span>
+                        )}
+                        <span className="text-gray-500 text-sm ml-1">/mo</span>
+                      </div>
+
+                      <div className="space-y-1.5 flex-1">
+                        {Object.entries(bundle.features)
+                          .filter(([, enabled]) => enabled)
+                          .map(([key]) => (
+                            <div key={key} className="flex items-center gap-2 text-sm">
+                              <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
+                                <Check className="h-2.5 w-2.5 text-[#36bff9]" />
+                              </div>
+                              <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
+                            </div>
+                          ))}
+                      </div>
+
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleBundleSelect(bundle);
+                        }}
+                        className={`mt-4 w-full ${
+                          isSelected
+                            ? 'bg-[#36bff9] hover:bg-[#2aa8e0] text-white'
+                            : 'bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300'
+                        }`}
+                        data-testid={`modal-button-select-bundle-${bundle.id}`}
+                      >
+                        {isSelected ? (
+                          <>
+                            <Check className="h-4 w-4 mr-2" />
+                            Selected
+                          </>
+                        ) : (
+                          'Select'
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {selectedBundle?.id !== 'essentials' && (
+              <button
+                onClick={() => handleBundleSelect(bundles[0])}
+                className="text-sm text-white/70 hover:text-white underline mt-1"
                 data-testid="button-revert-essentials"
               >
                 Revert to The Essentials (${bundles[0].price}/mo)
               </button>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+            )}
+          </div>
+        </div>
+      )}
 
       <Dialog open={phoneModalOpen} onOpenChange={setPhoneModalOpen}>
         <DialogContent className="sm:max-w-md" data-testid="phone-selection-modal">
