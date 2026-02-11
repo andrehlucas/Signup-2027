@@ -1,6 +1,11 @@
 {
   "/add-location/checkout/page": "app/add-location/checkout/page.js",
+  "/add-location/customize/page": "app/add-location/customize/page.js",
   "/add-location/page": "app/add-location/page.js",
+  "/add-location/pick-plan/page": "app/add-location/pick-plan/page.js",
+  "/add-location/thank-you/page": "app/add-location/thank-you/page.js",
   "/api/funnel/events/route": "app/api/funnel/events/route.js",
+  "/api/locations/route": "app/api/locations/route.js",
+  "/api/promo/validate/route": "app/api/promo/validate/route.js",
   "/page": "app/page.js"
 }

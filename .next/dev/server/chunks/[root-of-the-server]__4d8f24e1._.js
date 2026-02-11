@@ -1,0 +1,813 @@
+module.exports = [
+"[externals]/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js [external] (next/dist/compiled/next-server/app-route-turbo.runtime.dev.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/compiled/next-server/app-route-turbo.runtime.dev.js", () => require("next/dist/compiled/next-server/app-route-turbo.runtime.dev.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/compiled/@opentelemetry/api [external] (next/dist/compiled/@opentelemetry/api, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/compiled/@opentelemetry/api", () => require("next/dist/compiled/@opentelemetry/api"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js [external] (next/dist/compiled/next-server/app-page-turbo.runtime.dev.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/compiled/next-server/app-page-turbo.runtime.dev.js", () => require("next/dist/compiled/next-server/app-page-turbo.runtime.dev.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/work-unit-async-storage.external.js [external] (next/dist/server/app-render/work-unit-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/work-unit-async-storage.external.js", () => require("next/dist/server/app-render/work-unit-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/work-async-storage.external.js [external] (next/dist/server/app-render/work-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/work-async-storage.external.js", () => require("next/dist/server/app-render/work-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/shared/lib/no-fallback-error.external.js [external] (next/dist/shared/lib/no-fallback-error.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/shared/lib/no-fallback-error.external.js", () => require("next/dist/shared/lib/no-fallback-error.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/after-task-async-storage.external.js [external] (next/dist/server/app-render/after-task-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/after-task-async-storage.external.js", () => require("next/dist/server/app-render/after-task-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[project]/app/add-location/types.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "ESSENTIALS_PLAN",
+    ()=>ESSENTIALS_PLAN,
+    "addonToFeatureMap",
+    ()=>addonToFeatureMap,
+    "availableAddons",
+    ()=>availableAddons,
+    "bundles",
+    ()=>bundles,
+    "calculatePriceAfterRemoval",
+    ()=>calculatePriceAfterRemoval,
+    "calculatePromoDiscount",
+    ()=>calculatePromoDiscount,
+    "featureIndividualPrices",
+    ()=>featureIndividualPrices,
+    "featureLabels",
+    ()=>featureLabels,
+    "getBundleById",
+    ()=>getBundleById,
+    "getCitiesByState",
+    ()=>getCitiesByState,
+    "getIncludedAddonIds",
+    ()=>getIncludedAddonIds,
+    "getLocationsByCity",
+    ()=>getLocationsByCity,
+    "getPhoneNumbersForLocation",
+    ()=>getPhoneNumbersForLocation,
+    "getStates",
+    ()=>getStates,
+    "isAddonIncludedInBundle",
+    ()=>isAddonIncludedInBundle,
+    "promoCodes",
+    ()=>promoCodes,
+    "sampleLocations",
+    ()=>sampleLocations,
+    "samplePhoneNumbers",
+    ()=>samplePhoneNumbers,
+    "validatePromoCode",
+    ()=>validatePromoCode
+]);
+const bundles = [
+    {
+        id: 'essentials',
+        name: 'The Ultimate Office Solution',
+        tier: 'The Essentials',
+        price: 99,
+        badge: 'The Essentials',
+        badgeColor: 'bg-[#36bff9]',
+        features: {
+            businessAddress: true,
+            liveCallAnswering: true,
+            callTransferring: true,
+            calloutFeature: false,
+            tollFreeNumber: false,
+            callLog: false,
+            supervisedCallTransfer: false,
+            messageTaking: false
+        }
+    },
+    {
+        id: 'plus',
+        name: 'The Ultimate Office',
+        tier: 'PLUS',
+        price: 119,
+        originalPrice: 129,
+        badge: 'Popular Upgrades',
+        badgeColor: 'bg-[#36bff9]',
+        features: {
+            businessAddress: true,
+            liveCallAnswering: true,
+            callTransferring: true,
+            calloutFeature: true,
+            tollFreeNumber: false,
+            callLog: false,
+            supervisedCallTransfer: false,
+            messageTaking: false
+        }
+    },
+    {
+        id: 'pro',
+        name: 'The Ultimate Office',
+        tier: 'PRO',
+        price: 149,
+        originalPrice: 179,
+        badge: 'The Professional',
+        badgeColor: 'bg-[#36bff9]',
+        features: {
+            businessAddress: true,
+            liveCallAnswering: true,
+            callTransferring: true,
+            calloutFeature: true,
+            tollFreeNumber: true,
+            callLog: true,
+            supervisedCallTransfer: true,
+            messageTaking: false
+        }
+    },
+    {
+        id: 'premium',
+        name: 'The Ultimate Office',
+        tier: 'PREMIUM',
+        price: 179,
+        originalPrice: 229,
+        badge: 'The Best Value',
+        badgeColor: 'bg-[#36bff9]',
+        features: {
+            businessAddress: true,
+            liveCallAnswering: true,
+            callTransferring: true,
+            calloutFeature: true,
+            tollFreeNumber: true,
+            callLog: true,
+            supervisedCallTransfer: true,
+            messageTaking: true
+        }
+    }
+];
+const promoCodes = [
+    {
+        code: 'SAVE20',
+        type: 'percentage',
+        value: 20,
+        description: '20% off your first payment',
+        currentUses: 0,
+        maxUses: 100
+    },
+    {
+        code: 'FLAT50',
+        type: 'flat',
+        value: 50,
+        description: '$50 off your order',
+        currentUses: 0
+    },
+    {
+        code: 'FREEMONTH',
+        type: 'free_months',
+        value: 1,
+        description: '1 free month added',
+        currentUses: 0,
+        maxUses: 50
+    },
+    {
+        code: 'WELCOME10',
+        type: 'percentage',
+        value: 10,
+        description: '10% off for new customers',
+        currentUses: 0
+    },
+    {
+        code: 'OPUS100',
+        type: 'flat',
+        value: 100,
+        description: '$100 off your order',
+        minOrderAmount: 300,
+        currentUses: 0
+    }
+];
+function validatePromoCode(code, monthlyTotal, paymentTerm) {
+    const promo = promoCodes.find((p)=>p.code.toUpperCase() === code.toUpperCase());
+    if (!promo) {
+        return {
+            valid: false,
+            error: 'Invalid promo code'
+        };
+    }
+    if (promo.expiresAt && new Date(promo.expiresAt) < new Date()) {
+        return {
+            valid: false,
+            error: 'This promo code has expired'
+        };
+    }
+    if (promo.maxUses !== undefined && promo.currentUses >= promo.maxUses) {
+        return {
+            valid: false,
+            error: 'This promo code has reached its usage limit'
+        };
+    }
+    const orderTotal = monthlyTotal * paymentTerm;
+    if (promo.minOrderAmount && orderTotal < promo.minOrderAmount) {
+        return {
+            valid: false,
+            error: `Minimum order of $${promo.minOrderAmount} required`
+        };
+    }
+    return {
+        valid: true,
+        promo
+    };
+}
+function calculatePromoDiscount(promo, monthlyTotal, paymentTerm) {
+    switch(promo.type){
+        case 'percentage':
+            return Math.round(monthlyTotal * paymentTerm * promo.value / 100 * 100) / 100;
+        case 'flat':
+            return Math.min(promo.value, monthlyTotal * paymentTerm);
+        case 'free_months':
+            return monthlyTotal * Math.min(promo.value, paymentTerm);
+        default:
+            return 0;
+    }
+}
+const featureLabels = {
+    businessAddress: 'Business Address',
+    liveCallAnswering: 'Live Call Answering',
+    callTransferring: 'Call Transferring',
+    calloutFeature: 'Callout Feature',
+    tollFreeNumber: 'Toll-Free Number',
+    callLog: 'Call Log',
+    supervisedCallTransfer: 'Supervised Call Transfer',
+    messageTaking: 'Message Taking'
+};
+const addonToFeatureMap = {
+    'toll-free': 'tollFreeNumber',
+    'callout': 'calloutFeature',
+    'call-log': 'callLog',
+    'supervised-transfer': 'supervisedCallTransfer',
+    'message-taking': 'messageTaking'
+};
+const featureIndividualPrices = {
+    businessAddress: 0,
+    liveCallAnswering: 0,
+    callTransferring: 0,
+    calloutFeature: 10,
+    tollFreeNumber: 10,
+    callLog: 10,
+    supervisedCallTransfer: 50,
+    messageTaking: 50
+};
+const ESSENTIALS_PLAN = {
+    id: 'essentials',
+    name: 'The Essentials',
+    price: 99
+};
+function calculatePriceAfterRemoval(currentBundle, featureToRemove) {
+    const breakdown = [
+        {
+            name: 'The Essentials (Base Plan)',
+            price: ESSENTIALS_PLAN.price
+        }
+    ];
+    // Get all features that are currently included in the bundle (excluding the one being removed)
+    const remainingFeatures = Object.entries(currentBundle.features).filter(([key, value])=>value === true && key !== featureToRemove && featureIndividualPrices[key] > 0);
+    // Add each remaining feature with its individual price
+    remainingFeatures.forEach(([key])=>{
+        const featureKey = key;
+        const price = featureIndividualPrices[featureKey];
+        if (price > 0) {
+            breakdown.push({
+                name: featureLabels[key] || key,
+                price
+            });
+        }
+    });
+    const newPrice = breakdown.reduce((sum, item)=>sum + item.price, 0);
+    return {
+        newPrice,
+        breakdown
+    };
+}
+function getBundleById(bundleId) {
+    return bundles.find((b)=>b.id === bundleId);
+}
+function isAddonIncludedInBundle(addonId, bundle) {
+    if (!bundle) return false;
+    const featureKey = addonToFeatureMap[addonId];
+    if (!featureKey) return false;
+    return bundle.features[featureKey] === true;
+}
+function getIncludedAddonIds(bundle) {
+    if (!bundle) return [];
+    return Object.entries(addonToFeatureMap).filter(([_, featureKey])=>bundle.features[featureKey] === true).map(([addonId])=>addonId);
+}
+const availableAddons = [
+    {
+        id: 'toll-free',
+        name: 'Toll Free Number',
+        description: 'Get a professional 1-800 number for your business',
+        detailedDescription: 'A toll-free number allows customers to call you without incurring long-distance charges. This professional touch builds trust and makes it easier for customers nationwide to reach you. Includes a vanity number option and call analytics.',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'additional-phone',
+        name: 'Additional Phone Number',
+        description: 'Add an extra local phone number to your account',
+        detailedDescription: 'Expand your presence with additional local phone numbers. Perfect for businesses that want to appear local in multiple markets, or for separating different departments or product lines with unique numbers.',
+        price: 25,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'call-log',
+        name: 'Call Logs',
+        description: 'Detailed logs of all incoming and outgoing calls',
+        detailedDescription: 'Access comprehensive call history with detailed information including caller ID, call duration, time stamps, and call outcomes. Export reports for analysis and track communication patterns to improve your business operations.',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'call-recording',
+        name: 'Call Recording',
+        description: 'Record incoming and outgoing calls for your records',
+        detailedDescription: 'Automatically record all business calls for quality assurance, training, and compliance purposes. Recordings are securely stored and easily accessible through your dashboard. Perfect for customer service improvement and dispute resolution.',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'callout',
+        name: 'Callout',
+        description: 'Outbound calling capability from your business line',
+        detailedDescription: 'Make outbound calls that display your business number as the caller ID. This feature allows you to reach customers professionally while keeping your personal number private. Includes call scheduling and contact management.',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'conf-bridge',
+        name: 'Conference Bridge',
+        description: 'Host conference calls with multiple participants',
+        detailedDescription: 'Host professional conference calls with up to 25 participants. Features include dial-in numbers, host controls, mute/unmute capabilities, and recording options. Perfect for team meetings and client presentations.',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'dba',
+        name: 'DBA',
+        description: 'Register a "Doing Business As" name for your company',
+        detailedDescription: 'Establish your business identity with a registered DBA (Doing Business As) name. We handle the filing process with local authorities, ensuring compliance with state and local regulations. Includes certificate of registration.',
+        price: 59,
+        billingCycle: 'monthly',
+        category: 'business'
+    },
+    {
+        id: 'fax-out',
+        name: 'Fax Out',
+        description: 'Send faxes from your business number',
+        detailedDescription: 'Send faxes directly from your email or dashboard using your business fax number. No physical fax machine needed. Track delivery confirmations and maintain a digital archive of all sent documents.',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'int-transfer',
+        name: 'International Transfer',
+        description: 'Transfer calls to international numbers',
+        detailedDescription: 'Seamlessly transfer incoming calls to international phone numbers. Ideal for businesses with global teams or international clients. Supports over 150 countries with competitive per-minute rates.',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'ivr',
+        name: 'IVR',
+        description: 'Interactive Voice Response system for call routing',
+        detailedDescription: 'Create a professional automated phone system that greets callers and routes them to the right department. Customize greetings, menu options, and business hours. Reduce missed calls and improve customer experience.',
+        price: 25,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'message-taking',
+        name: 'Message Taking',
+        description: 'Professional message taking service',
+        detailedDescription: 'Our trained receptionists take detailed messages when you\'re unavailable. Messages are instantly delivered via email or SMS with caller information, message content, and urgency level. Never miss an important customer inquiry.',
+        price: 50,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'message-transcription',
+        name: 'Message Transcription',
+        description: 'Voicemail messages transcribed to text',
+        detailedDescription: 'Receive voicemail messages as text transcriptions delivered to your email. Quickly scan messages without listening to audio. Searchable archive makes it easy to find important information from past messages.',
+        price: 5,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'supervised-transfer',
+        name: 'Supervised Transfer',
+        description: 'Announce callers before transferring',
+        detailedDescription: 'Our receptionists will announce the caller before transferring the call to you. This allows you to decide whether to accept, decline, or take a message. Perfect for screening calls and maintaining professionalism.',
+        price: 50,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'texting',
+        name: 'Texting',
+        description: 'Send and receive text messages from your business number',
+        detailedDescription: 'Enable two-way SMS texting from your business phone number. Communicate with customers via text while keeping your personal number private. Manage conversations from your dashboard or mobile app.',
+        price: 10,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'additional-extensions',
+        name: 'Additional Extensions',
+        description: 'Add more extensions to your phone system. Further customization available from Phone System page.',
+        detailedDescription: 'Expand your phone system with additional extensions for team members or departments. Each extension gets a unique number and voicemail. Manage call routing and forwarding rules independently.',
+        price: 25,
+        billingCycle: 'monthly',
+        category: 'phone'
+    },
+    {
+        id: 'appointment-scheduling',
+        name: 'Appointment Scheduling',
+        description: 'Professional appointment booking handled by our receptionists',
+        detailedDescription: 'Let our trained receptionists manage your appointment scheduling. They will answer calls, check your calendar availability, and book appointments on your behalf. Perfect for medical offices, salons, consultants, and service businesses.',
+        price: 100,
+        billingCycle: 'monthly',
+        category: 'phone',
+        packages: [
+            {
+                id: 'apt-20',
+                name: '20 Appointments/Month',
+                quantity: 20,
+                price: 100
+            },
+            {
+                id: 'apt-40',
+                name: '40 Appointments/Month',
+                quantity: 40,
+                price: 200
+            },
+            {
+                id: 'apt-60',
+                name: '60 Appointments/Month',
+                quantity: 60,
+                price: 300
+            },
+            {
+                id: 'apt-100',
+                name: '100 Appointments/Month',
+                quantity: 100,
+                price: 400
+            },
+            {
+                id: 'apt-200',
+                name: '200 Appointments/Month',
+                quantity: 200,
+                price: 800
+            }
+        ]
+    }
+];
+const sampleLocations = [
+    {
+        id: 'loc-1',
+        name: 'Brickell Tower',
+        address: '848 Brickell Avenue',
+        addressLine2: 'Penthouse 5',
+        city: 'Miami',
+        state: 'Florida',
+        stateCode: 'FL',
+        zipCode: '33131',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: true
+    },
+    {
+        id: 'loc-2',
+        name: 'Downtown Miami Center',
+        address: '100 SE 2nd Street',
+        addressLine2: 'Suite 400',
+        city: 'Miami',
+        state: 'Florida',
+        stateCode: 'FL',
+        zipCode: '33131',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: false
+    },
+    {
+        id: 'loc-3',
+        name: 'Coral Gables Executive',
+        address: '2655 S Le Jeune Rd',
+        addressLine2: 'Suite 300',
+        city: 'Coral Gables',
+        state: 'Florida',
+        stateCode: 'FL',
+        zipCode: '33134',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: true
+    },
+    {
+        id: 'loc-4',
+        name: 'Fort Lauderdale Business Center',
+        address: '110 SE 6th Street',
+        addressLine2: 'Suite 1700',
+        city: 'Fort Lauderdale',
+        state: 'Florida',
+        stateCode: 'FL',
+        zipCode: '33301',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: false
+    },
+    {
+        id: 'loc-5',
+        name: 'Manhattan Midtown',
+        address: '1 Penn Plaza',
+        addressLine2: 'Suite 6200',
+        city: 'New York',
+        state: 'New York',
+        stateCode: 'NY',
+        zipCode: '10119',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: true
+    },
+    {
+        id: 'loc-6',
+        name: 'Wall Street Financial',
+        address: '14 Wall Street',
+        addressLine2: '20th Floor',
+        city: 'New York',
+        state: 'New York',
+        stateCode: 'NY',
+        zipCode: '10005',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: true
+    },
+    {
+        id: 'loc-7',
+        name: 'Downtown LA Tower',
+        address: '633 W 5th Street',
+        addressLine2: 'Suite 2600',
+        city: 'Los Angeles',
+        state: 'California',
+        stateCode: 'CA',
+        zipCode: '90071',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: true
+    },
+    {
+        id: 'loc-8',
+        name: 'Santa Monica Business Park',
+        address: '2425 Olympic Blvd',
+        addressLine2: 'Suite 4000',
+        city: 'Santa Monica',
+        state: 'California',
+        stateCode: 'CA',
+        zipCode: '90404',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: false
+    },
+    {
+        id: 'loc-9',
+        name: 'Chicago Loop Center',
+        address: '111 W Jackson Blvd',
+        addressLine2: 'Suite 1700',
+        city: 'Chicago',
+        state: 'Illinois',
+        stateCode: 'IL',
+        zipCode: '60604',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: true
+    },
+    {
+        id: 'loc-10',
+        name: 'Houston Galleria',
+        address: '2929 Allen Parkway',
+        addressLine2: 'Suite 200',
+        city: 'Houston',
+        state: 'Texas',
+        stateCode: 'TX',
+        zipCode: '77019',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: false
+    },
+    {
+        id: 'loc-11',
+        name: 'Dallas Uptown',
+        address: '3131 McKinney Ave',
+        addressLine2: 'Suite 600',
+        city: 'Dallas',
+        state: 'Texas',
+        stateCode: 'TX',
+        zipCode: '75204',
+        imageUrl: '/placeholder-building.jpg',
+        isPremium: true
+    }
+];
+const samplePhoneNumbers = [
+    {
+        id: 'pn-1',
+        number: '(305) 555-1234',
+        type: 'local',
+        areaCode: '305',
+        isAvailable: true
+    },
+    {
+        id: 'pn-2',
+        number: '(305) 555-5678',
+        type: 'local',
+        areaCode: '305',
+        isAvailable: true
+    },
+    {
+        id: 'pn-3',
+        number: '(305) 555-9012',
+        type: 'local',
+        areaCode: '305',
+        isAvailable: true
+    },
+    {
+        id: 'pn-4',
+        number: '(786) 555-3456',
+        type: 'local',
+        areaCode: '786',
+        isAvailable: true
+    },
+    {
+        id: 'pn-5',
+        number: '(786) 555-7890',
+        type: 'local',
+        areaCode: '786',
+        isAvailable: true
+    },
+    {
+        id: 'pn-6',
+        number: '(212) 555-1234',
+        type: 'local',
+        areaCode: '212',
+        isAvailable: true
+    },
+    {
+        id: 'pn-7',
+        number: '(212) 555-5678',
+        type: 'local',
+        areaCode: '212',
+        isAvailable: true
+    },
+    {
+        id: 'pn-8',
+        number: '(310) 555-1234',
+        type: 'local',
+        areaCode: '310',
+        isAvailable: true
+    },
+    {
+        id: 'pn-9',
+        number: '(310) 555-5678',
+        type: 'local',
+        areaCode: '310',
+        isAvailable: true
+    },
+    {
+        id: 'pn-10',
+        number: '(713) 555-1234',
+        type: 'local',
+        areaCode: '713',
+        isAvailable: true
+    },
+    {
+        id: 'pn-11',
+        number: '(312) 555-1234',
+        type: 'local',
+        areaCode: '312',
+        isAvailable: true
+    },
+    {
+        id: 'pn-12',
+        number: '(312) 555-5678',
+        type: 'local',
+        areaCode: '312',
+        isAvailable: true
+    }
+];
+function getStates() {
+    const states = [
+        ...new Set(sampleLocations.map((loc)=>loc.state))
+    ];
+    return states.sort();
+}
+function getCitiesByState(state) {
+    const cities = [
+        ...new Set(sampleLocations.filter((loc)=>loc.state === state).map((loc)=>loc.city))
+    ];
+    return cities.sort();
+}
+function getLocationsByCity(city) {
+    return sampleLocations.filter((loc)=>loc.city === city);
+}
+function getPhoneNumbersForLocation(location) {
+    const areaCodeMap = {
+        'FL': [
+            '305',
+            '786'
+        ],
+        'NY': [
+            '212'
+        ],
+        'CA': [
+            '310'
+        ],
+        'TX': [
+            '713'
+        ],
+        'IL': [
+            '312'
+        ]
+    };
+    const areaCodes = areaCodeMap[location.stateCode] || [
+        '305'
+    ];
+    return samplePhoneNumbers.filter((pn)=>areaCodes.includes(pn.areaCode));
+}
+}),
+"[project]/app/api/promo/validate/route.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "POST",
+    ()=>POST
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/server.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/add-location/types.ts [app-route] (ecmascript)");
+;
+;
+async function POST(request) {
+    try {
+        const body = await request.json();
+        const { code, monthlyTotal, paymentTerm } = body;
+        if (!code || monthlyTotal === undefined || !paymentTerm) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                valid: false,
+                error: 'Missing required fields'
+            }, {
+                status: 400
+            });
+        }
+        const result = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["validatePromoCode"])(code, monthlyTotal, paymentTerm);
+        if (!result.valid || !result.promo) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                valid: false,
+                error: result.error
+            }, {
+                status: 200
+            });
+        }
+        const discountAmount = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["calculatePromoDiscount"])(result.promo, monthlyTotal, paymentTerm);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            valid: true,
+            promo: {
+                code: result.promo.code,
+                type: result.promo.type,
+                value: result.promo.value,
+                description: result.promo.description,
+                discountAmount
+            }
+        });
+    } catch (error) {
+        console.error('Error validating promo code:', error);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            valid: false,
+            error: 'Failed to validate promo code'
+        }, {
+            status: 500
+        });
+    }
+}
+}),
+];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__4d8f24e1._.js.map
