@@ -331,3 +331,11 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+@media screen and (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
