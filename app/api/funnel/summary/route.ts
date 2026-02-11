@@ -18,9 +18,10 @@ export async function GET() {
     const events = await storage.getFunnelEvents();
     const sessions = await storage.getFunnelSessions();
 
-    const stepOrder = ['your_info', 'customize', 'checkout'];
+    const stepOrder = ['your_info', 'pick_plan', 'customize', 'checkout'];
     const stepLabels: Record<string, string> = {
       your_info: 'Your Info',
+      pick_plan: 'Pick Your Plan',
       customize: 'Customize',
       checkout: 'Checkout',
     };

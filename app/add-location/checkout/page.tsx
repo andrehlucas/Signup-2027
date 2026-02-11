@@ -208,7 +208,7 @@ export default function CheckoutPage() {
 
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <ProgressIndicator currentStep={3} />
+          <ProgressIndicator currentStep={4} />
         </div>
 
         <div className="text-center mb-8">

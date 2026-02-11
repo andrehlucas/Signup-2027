@@ -52,7 +52,7 @@ export default function LocationSelectionPage() {
 
   const handleLocationSelect = (location: AvailableLocation) => {
     setLocation(location);
-    router.push('/add-location/customize');
+    router.push('/add-location/pick-plan');
   };
 
   return (

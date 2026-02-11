@@ -170,10 +170,14 @@ const defaultSteps = [
     },
     {
         id: 2,
-        name: 'Customize'
+        name: 'Pick Your Plan'
     },
     {
         id: 3,
+        name: 'Customize'
+    },
+    {
+        id: 4,
         name: 'Checkout'
     }
 ];
@@ -197,12 +201,12 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                     "aria-hidden": "true"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                    lineNumber: 36,
+                                    lineNumber: 37,
                                     columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 32,
+                                lineNumber: 33,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -210,7 +214,7 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                 children: step.name
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 38,
+                                lineNumber: 39,
                                 columnNumber: 17
                             }, this),
                             stepIdx !== steps.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -218,13 +222,13 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                 "aria-hidden": "true"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 42,
+                                lineNumber: 43,
                                 columnNumber: 19
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                        lineNumber: 31,
+                        lineNumber: 32,
                         columnNumber: 15
                     }, this) : step.id === currentStep ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex items-center",
@@ -238,12 +242,12 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                     children: step.id
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                    lineNumber: 54,
+                                    lineNumber: 55,
                                     columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 50,
+                                lineNumber: 51,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -251,7 +255,7 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                 children: step.name
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 56,
+                                lineNumber: 57,
                                 columnNumber: 17
                             }, this),
                             stepIdx !== steps.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -259,13 +263,13 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                 "aria-hidden": "true"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 60,
+                                lineNumber: 61,
                                 columnNumber: 19
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                        lineNumber: 49,
+                        lineNumber: 50,
                         columnNumber: 15
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex items-center",
@@ -278,12 +282,12 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                     children: step.id
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                    lineNumber: 72,
+                                    lineNumber: 73,
                                     columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 68,
+                                lineNumber: 69,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -291,7 +295,7 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                 children: step.name
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 74,
+                                lineNumber: 75,
                                 columnNumber: 17
                             }, this),
                             stepIdx !== steps.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -299,28 +303,28 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                 "aria-hidden": "true"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 78,
+                                lineNumber: 79,
                                 columnNumber: 19
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                        lineNumber: 67,
+                        lineNumber: 68,
                         columnNumber: 15
                     }, this)
                 }, step.name, false, {
                     fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                    lineNumber: 26,
+                    lineNumber: 27,
                     columnNumber: 11
                 }, this))
         }, void 0, false, {
             fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-            lineNumber: 24,
+            lineNumber: 25,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-        lineNumber: 23,
+        lineNumber: 24,
         columnNumber: 5
     }, this);
 }

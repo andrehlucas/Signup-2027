@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, MapPin, Star, Building2, DollarSign, Info } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -33,54 +33,27 @@ import {
   featureLabels,
   availableAddons,
   getPhoneNumbersForLocation,
-  getStates,
-  getCitiesByState,
-  getLocationsByCity,
   Bundle,
   PhoneNumber,
   Addon,
-  AddonPackage,
-  AvailableLocation,
 } from '../types';
-
-function getTierColor(tier: string) {
-  switch (tier) {
-    case 'PLUS':
-      return 'text-[#36bff9]';
-    case 'PRO':
-      return 'text-[#c53030]';
-    case 'PREMIUM':
-      return 'text-[#d69e2e]';
-    default:
-      return 'text-gray-900';
-  }
-}
 
 export default function CustomizePage() {
   const router = useRouter();
-  const { order, setLocation, setBundle, setPhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
-  const [subStep, setSubStep] = useState<'location' | 'customize'>(order.location ? 'customize' : 'location');
-  const [selectedBundle, setSelectedBundle] = useState<Bundle | null>(order.bundle);
+  const { order, setPhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
+  const selectedBundle = order.bundle;
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
   const [tempSelectedPhone, setTempSelectedPhone] = useState<PhoneNumber | null>(null);
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAllAddons, setShowAllAddons] = useState(false);
-  const [bundleExpanded, setBundleExpanded] = useState(false);
   const { trackComplete } = useFunnelTracking('customize');
 
-  const [selectedState, setSelectedState] = useState<string>('');
-  const [selectedCity, setSelectedCity] = useState<string>('');
-
-  const states = useMemo(() => getStates(), []);
-  const cities = useMemo(
-    () => (selectedState ? getCitiesByState(selectedState) : []),
-    [selectedState]
-  );
-  const availableLocations = useMemo(
-    () => (selectedCity ? getLocationsByCity(selectedCity) : []),
-    [selectedCity]
-  );
+  useEffect(() => {
+    if (!order.location || !order.bundle) {
+      router.push('/add-location/pick-plan');
+    }
+  }, [order.location, order.bundle, router]);
 
   const phoneNumbers = useMemo(() => {
     if (!order.location) return [];
@@ -94,35 +67,6 @@ export default function CustomizePage() {
       setPhoneNumber(autoAssigned);
     }
   }, [phoneNumbers, selectedPhone, setPhoneNumber]);
-
-  useEffect(() => {
-    if (!selectedBundle && subStep === 'customize') {
-      const essentialsBundle = bundles[0];
-      if (essentialsBundle) {
-        setSelectedBundle(essentialsBundle);
-        setBundle(essentialsBundle);
-      }
-    }
-  }, [subStep]);
-
-  const handleStateChange = (state: string) => {
-    setSelectedState(state);
-    setSelectedCity('');
-  };
-
-  const handleCityChange = (city: string) => {
-    setSelectedCity(city);
-  };
-
-  const handleLocationSelect = (location: AvailableLocation) => {
-    setLocation(location);
-    setSubStep('customize');
-  };
-
-  const handleBundleSelect = (bundle: Bundle) => {
-    setSelectedBundle(bundle);
-    setBundle(bundle);
-  };
 
   const handlePhoneConfirm = () => {
     if (tempSelectedPhone) {
@@ -216,588 +160,45 @@ export default function CustomizePage() {
   }, [selectedBundle]);
 
   const handleContinue = () => {
-    if (selectedBundle && selectedPhone) {
-      trackComplete({ bundle: selectedBundle.name });
+    if (selectedPhone) {
+      trackComplete({ bundle: selectedBundle?.name });
       router.push('/add-location/checkout');
     }
   };
 
-  const handleBackFromCustomize = () => {
-    setSubStep('location');
-  };
-
   const { monthly } = getCartTotal();
 
-  if (subStep === 'location') {
-    return (
-      <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="customize-page-location">
-        <div className="max-w-4xl mx-auto">
-          <Button
-            variant="ghost"
-            onClick={() => router.push('/')}
-            className="mb-6"
-            data-testid="button-back-info"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Your Information
-          </Button>
-
-          <div className="mb-8">
-            <ProgressIndicator currentStep={2} />
-          </div>
-
-          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Your Location</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  State
-                </label>
-                <Select value={selectedState} onValueChange={handleStateChange}>
-                  <SelectTrigger data-testid="select-state">
-                    <SelectValue placeholder="Select a state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {states.map((state) => (
-                      <SelectItem key={state} value={state} data-testid={`option-state-${state}`}>
-                        {state}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  City
-                </label>
-                <Select
-                  value={selectedCity}
-                  onValueChange={handleCityChange}
-                  disabled={!selectedState}
-                >
-                  <SelectTrigger data-testid="select-city">
-                    <SelectValue placeholder={selectedState ? 'Select a city' : 'Select state first'} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {cities.map((city) => (
-                      <SelectItem key={city} value={city} data-testid={`option-city-${city}`}>
-                        {city}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {selectedCity && (
-              <div className="space-y-3" data-testid="locations-list">
-                <h3 className="text-sm font-medium text-gray-700 mb-3">
-                  Available Locations in {selectedCity}
-                </h3>
-                {availableLocations.map((location) => (
-                  <div
-                    key={location.id}
-                    className="flex flex-col rounded-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all overflow-hidden"
-                    data-testid={`location-card-${location.id}`}
-                  >
-                    <div className="w-full bg-gray-200 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>
-                      <Building2 className="h-12 w-12 text-gray-400" />
-                    </div>
-                    <div className="p-4 flex flex-col sm:flex-row sm:items-center gap-3">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <h4 className="font-medium text-gray-900">{location.name}</h4>
-                          {location.isPremium && (
-                            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold">
-                              <Star className="h-3 w-3 fill-amber-500" />
-                              Premium Location
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          <p className="flex items-center gap-1">
-                            <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
-                            {location.address}
-                          </p>
-                          <p className="ml-5">{location.addressLine2}</p>
-                          <p className="ml-5">{location.city}, {location.stateCode} {location.zipCode}</p>
-                        </div>
-                      </div>
-                      <Button
-                        onClick={() => handleLocationSelect(location)}
-                        className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0 w-full sm:w-auto"
-                        data-testid={`button-select-location-${location.id}`}
-                      >
-                        Select
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {!selectedState && (
-              <div className="text-center py-12 text-gray-500">
-                <MapPin className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-                <p>Select a state to view available locations</p>
-              </div>
-            )}
-
-            {selectedState && !selectedCity && (
-              <div className="text-center py-12 text-gray-500">
-                <Building2 className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-                <p>Select a city to view available locations</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!order.location) {
+  if (!order.location || !selectedBundle) {
     return null;
   }
 
-  const upgradeBundles = bundles.filter(b => b.id !== 'essentials');
-  const displayBundleName = selectedBundle
-    ? (selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : 'The Essentials')
-    : 'The Essentials';
+  const displayBundleName = selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : 'The Essentials';
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="customize-page">
       <Button
         variant="ghost"
-        onClick={handleBackFromCustomize}
+        onClick={() => router.push('/add-location/pick-plan')}
         className="mb-6"
-        data-testid="button-back-location"
+        data-testid="button-back-plan"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Location
+        Back to Pick Your Plan
       </Button>
 
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <ProgressIndicator currentStep={2} />
+          <ProgressIndicator currentStep={3} />
         </div>
 
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="heading-customize">
-            Customize Your Service
+            Customize Your Office
           </h1>
           <p className="text-gray-600">
             for <span className="font-medium">{order.location.name}</span>, {order.location.city}
           </p>
         </div>
-
-        <div className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-6" data-testid="essentials-info-banner">
-          <div className="bg-[#36bff9] text-white text-center py-2 text-sm font-medium">
-            Your Office Package
-          </div>
-          <div className="p-4">
-            <div className="mb-3">
-              <h3 className="text-base font-medium text-gray-900">{displayBundleName}</h3>
-            </div>
-            <div className="mb-4">
-              <span className="text-3xl font-bold text-gray-900">${selectedBundle?.price || bundles[0].price}</span>
-              <span className="text-gray-500 text-sm ml-1">/mo</span>
-            </div>
-            <div className="space-y-2">
-              {Object.entries((selectedBundle || bundles[0]).features)
-                .filter(([, enabled]) => enabled)
-                .map(([key]) => (
-                  <div key={key} className="flex items-center gap-2 text-sm">
-                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                      <Check className="h-2.5 w-2.5 text-white" />
-                    </div>
-                    <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-xl mb-6 overflow-hidden" data-testid="bundle-upgrade-banner">
-          <button
-            onClick={() => setBundleExpanded(!bundleExpanded)}
-            className="w-full relative overflow-hidden"
-            data-testid="button-toggle-bundle-upgrade"
-            style={{
-              background: 'linear-gradient(135deg, #0f1c2e 0%, #1a2d4a 40%, #1e3a5f 70%, #1a2d4a 100%)',
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-[0.07]"
-              style={{
-                backgroundImage: `radial-gradient(circle at 20% 50%, rgba(54, 191, 249, 0.4) 0%, transparent 50%),
-                                  radial-gradient(circle at 80% 20%, rgba(54, 191, 249, 0.3) 0%, transparent 40%),
-                                  radial-gradient(circle at 60% 80%, rgba(42, 168, 224, 0.2) 0%, transparent 40%)`,
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-[0.03]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2336bff9' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              }}
-            />
-            <div className="relative p-4 sm:p-6">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center flex-shrink-0">
-                    <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-[#36bff9]" />
-                  </div>
-                  <div className="text-left">
-                    <h2 className="text-base sm:text-lg font-bold text-white">Bundle & Save</h2>
-                    <p className="text-xs sm:text-sm text-blue-200/80">Supercharge your office with premium features</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <div className="hidden sm:block text-right">
-                    <p className="text-sm text-[#36bff9] font-semibold" data-testid="text-selected-bundle-price">See Bundles</p>
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
-                    {bundleExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-blue-200" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 text-blue-200" />
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </button>
-
-          {bundleExpanded && (
-            <div
-              className="relative overflow-hidden"
-              style={{
-                background: 'linear-gradient(180deg, #0f1c2e 0%, #152338 50%, #1a2d4a 100%)',
-              }}
-            >
-              <div
-                className="absolute inset-0 opacity-[0.04]"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2336bff9' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                }}
-              />
-              <div className="relative px-4 sm:px-6 py-5">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {upgradeBundles.map((bundle) => {
-                    const isSelected = selectedBundle?.id === bundle.id;
-                    return (
-                      <div
-                        key={bundle.id}
-                        onClick={() => handleBundleSelect(bundle)}
-                        className={`rounded-xl overflow-hidden flex flex-col transition-all cursor-pointer ${
-                          isSelected
-                            ? 'ring-2 ring-[#36bff9] shadow-lg shadow-[#36bff9]/20'
-                            : 'hover:shadow-lg hover:shadow-white/5'
-                        }`}
-                        style={{
-                          background: isSelected
-                            ? 'linear-gradient(135deg, rgba(54,191,249,0.15) 0%, rgba(30,58,95,0.9) 100%)'
-                            : 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-                          border: isSelected ? '1px solid rgba(54,191,249,0.4)' : '1px solid rgba(255,255,255,0.1)',
-                        }}
-                        data-testid={`bundle-card-${bundle.id}`}
-                      >
-                        <div className="p-4 flex flex-col flex-1">
-                          <div className="flex items-center justify-between mb-3">
-                            <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
-                              {bundle.badge}
-                            </span>
-                            {isSelected && (
-                              <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-400 bg-emerald-400/10 rounded-full px-2 py-0.5">
-                                <Check className="h-3 w-3" />
-                                Active
-                              </span>
-                            )}
-                          </div>
-
-                          <h3 className="text-lg font-bold text-white mb-1">
-                            {bundle.tier}
-                          </h3>
-
-                          <div className="mb-4">
-                            <span className="text-3xl font-bold text-white">${bundle.price}</span>
-                            {bundle.originalPrice && (
-                              <span className="text-sm text-gray-400 line-through ml-2">
-                                ${bundle.originalPrice}
-                              </span>
-                            )}
-                            <span className="text-gray-400 text-sm ml-1">/mo</span>
-                          </div>
-
-                          <div className="space-y-2 flex-1">
-                            {Object.entries(bundle.features)
-                              .filter(([, enabled]) => enabled)
-                              .map(([key]) => (
-                                <div key={key} className="flex items-center gap-2 text-sm">
-                                  <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
-                                    <Check className="h-2.5 w-2.5 text-[#36bff9]" />
-                                  </div>
-                                  <span className="text-white text-xs">{featureLabels[key]}</span>
-                                </div>
-                              ))}
-                          </div>
-
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleBundleSelect(bundle);
-                            }}
-                            className={`mt-4 w-full ${
-                              isSelected
-                                ? 'bg-[#36bff9] hover:bg-[#2aa8e0] text-white'
-                                : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
-                            }`}
-                            data-testid={`button-select-bundle-${bundle.id}`}
-                          >
-                            {isSelected ? (
-                              <>
-                                <Check className="h-4 w-4 mr-2" />
-                                Selected
-                              </>
-                            ) : (
-                              'Select'
-                            )}
-                          </Button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {selectedBundle?.id !== 'essentials' && (
-                  <button
-                    onClick={() => handleBundleSelect(bundles[0])}
-                    className="mt-4 text-sm text-blue-300/70 hover:text-blue-200 underline underline-offset-2"
-                    data-testid="button-revert-essentials"
-                  >
-                    Revert to The Essentials ($99/mo)
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {selectedBundle && (
-          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="addons-section">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">Add-ons</h2>
-            <p className="text-sm text-gray-600 mb-6">
-              Enhance your plan with additional features. Some add-ons may already be included in your bundle.
-            </p>
-
-            <div className="relative">
-              <div 
-                className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300 ${
-                  !showAllAddons ? 'max-h-[380px] overflow-hidden' : ''
-                }`}
-                data-testid="addons-grid"
-              >
-                {sortedAddons.map((addon) => {
-                  const isIncluded = isAddonIncluded(addon);
-                  const isInCart = order.addons.find(a => a.id === addon.id);
-                  const isExpanded = expandedAddons.has(addon.id);
-
-                  return (
-                    <div
-                      key={addon.id}
-                      className={`rounded-lg border transition-all ${
-                        isIncluded
-                          ? 'border-green-200 bg-green-50'
-                          : isInCart
-                          ? 'border-[#36bff9] bg-blue-50'
-                          : 'border-gray-200 bg-white'
-                      }`}
-                      data-testid={`addon-card-${addon.id}`}
-                    >
-                      <div className="p-4">
-                        <div className="flex items-start justify-between mb-1">
-                          <h4 className="font-medium text-gray-900">{addon.name}</h4>
-                          {isIncluded ? (
-                            <Badge className="bg-green-100 text-green-700 border-0">
-                              Included
-                            </Badge>
-                          ) : addon.packages && addon.packages.length > 0 ? (
-                            <span className="font-semibold text-gray-900">
-                              From ${addon.packages[0].price}/mo
-                            </span>
-                          ) : (
-                            <span className="font-semibold text-gray-900">
-                              ${addon.price}/mo
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex items-center justify-between mt-2">
-                          <button
-                            onClick={() => toggleAddonExpanded(addon.id)}
-                            className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1"
-                            data-testid={`button-learn-more-${addon.id}`}
-                          >
-                            {isExpanded ? (
-                              <>
-                                Show less
-                                <ChevronUp className="h-3 w-3" />
-                              </>
-                            ) : (
-                              <>
-                                Learn more
-                                <ChevronDown className="h-3 w-3" />
-                              </>
-                            )}
-                          </button>
-                          {!isIncluded && (
-                            <Button
-                              variant={isInCart ? 'outline' : 'default'}
-                              size="sm"
-                              className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'bg-[#36bff9] hover:bg-[#2aa8e0]'}
-                              onClick={() => handleAddonToggle(addon)}
-                              data-testid={`button-addon-${addon.id}`}
-                            >
-                              {isInCart ? (
-                                <>
-                                  <X className="h-3 w-3 mr-1" />
-                                  Remove
-                                </>
-                              ) : (
-                                <>
-                                  <ShoppingCart className="h-3 w-3 mr-1" />
-                                  Add to Cart
-                                </>
-                              )}
-                            </Button>
-                          )}
-                        </div>
-
-                        {isExpanded && addon.detailedDescription && (
-                          <div 
-                            className="text-sm text-gray-600 bg-gray-50 rounded-md p-3 mt-2 border border-gray-100"
-                            data-testid={`addon-details-${addon.id}`}
-                          >
-                            {addon.detailedDescription}
-                          </div>
-                        )}
-
-                        {!isIncluded && (
-                          <div className="space-y-3">
-                            
-                            {isInCart && addon.packages && addon.packages.length > 0 && (
-                              <div className="pt-2 border-t border-gray-200">
-                                <label className="text-xs font-medium text-gray-700 mb-1 block">
-                                  Select Package
-                                </label>
-                                <Select
-                                  value={isInCart.selectedPackage?.id || addon.packages[0].id}
-                                  onValueChange={(value) => handlePackageChange(addon, value)}
-                                >
-                                  <SelectTrigger 
-                                    className="w-full bg-white"
-                                    data-testid={`select-package-${addon.id}`}
-                                  >
-                                    <SelectValue placeholder="Select a package" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {addon.packages.map((pkg) => (
-                                      <SelectItem 
-                                        key={pkg.id} 
-                                        value={pkg.id}
-                                        data-testid={`package-option-${pkg.id}`}
-                                      >
-                                        {pkg.name} - ${pkg.price}/mo
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-
-                <div
-                  className={`rounded-lg border transition-all ${
-                    order.extensionCount > 0 ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 bg-white'
-                  }`}
-                  data-testid="addon-card-additional-extensions"
-                >
-                  <div className="p-4">
-                    <div className="flex items-start justify-between mb-1">
-                      <h4 className="font-medium text-gray-900">Additional Extensions</h4>
-                      <span className="font-semibold text-gray-900">$25/mo each</span>
-                    </div>
-                    <div className="flex items-center gap-3 mt-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setExtensionCount(order.extensionCount - 1)}
-                        disabled={order.extensionCount === 0}
-                        className="h-7 w-7 p-0"
-                        data-testid="button-extension-decrease"
-                      >
-                        <Minus className="h-3.5 w-3.5" />
-                      </Button>
-                      <span className="font-medium text-gray-900 min-w-[1.5rem] text-center text-sm" data-testid="extension-count">
-                        {order.extensionCount}
-                      </span>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setExtensionCount(order.extensionCount + 1)}
-                        className="h-7 w-7 p-0"
-                        data-testid="button-extension-increase"
-                      >
-                        <Plus className="h-3.5 w-3.5" />
-                      </Button>
-                      {order.extensionCount > 0 && (
-                        <span className="text-sm text-gray-600 ml-1">
-                          = ${order.extensionCount * 25}/mo
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {!showAllAddons && sortedAddons.length > 6 && (
-                <div 
-                  className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none"
-                  data-testid="addons-gradient-overlay"
-                />
-              )}
-
-              {sortedAddons.length > 6 && (
-                <div className={`flex justify-center ${!showAllAddons ? '-mt-4 relative z-10' : 'mt-4'}`}>
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowAllAddons(!showAllAddons)}
-                    className="bg-white border-gray-300 hover:bg-gray-50"
-                    data-testid="button-show-all-addons"
-                  >
-                    {showAllAddons ? (
-                      <>
-                        Show fewer add-ons
-                        <ChevronUp className="h-4 w-4 ml-2" />
-                      </>
-                    ) : (
-                      <>
-                        Show all add-ons
-                        <ChevronDown className="h-4 w-4 ml-2" />
-                      </>
-                    )}
-                  </Button>
-                </div>
-              )}
-            </div>
-
-          </div>
-        )}
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="phone-section">
           <div className="flex items-center justify-between">
@@ -831,6 +232,217 @@ export default function CustomizePage() {
               </Button>
             </div>
           )}
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="addons-section">
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">Add-ons</h2>
+          <p className="text-sm text-gray-600 mb-6">
+            Enhance your plan with additional features. Some add-ons may already be included in your bundle.
+          </p>
+
+          <div className="relative">
+            <div 
+              className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300 ${
+                !showAllAddons ? 'max-h-[380px] overflow-hidden' : ''
+              }`}
+              data-testid="addons-grid"
+            >
+              {sortedAddons.map((addon) => {
+                const isIncluded = isAddonIncluded(addon);
+                const isInCart = order.addons.find(a => a.id === addon.id);
+                const isExpanded = expandedAddons.has(addon.id);
+
+                return (
+                  <div
+                    key={addon.id}
+                    className={`rounded-lg border transition-all ${
+                      isIncluded
+                        ? 'border-green-200 bg-green-50'
+                        : isInCart
+                        ? 'border-[#36bff9] bg-blue-50'
+                        : 'border-gray-200 bg-white'
+                    }`}
+                    data-testid={`addon-card-${addon.id}`}
+                  >
+                    <div className="p-4">
+                      <div className="flex items-start justify-between mb-1">
+                        <h4 className="font-medium text-gray-900">{addon.name}</h4>
+                        {isIncluded ? (
+                          <Badge className="bg-green-100 text-green-700 border-0">
+                            Included
+                          </Badge>
+                        ) : addon.packages && addon.packages.length > 0 ? (
+                          <span className="font-semibold text-gray-900">
+                            From ${addon.packages[0].price}/mo
+                          </span>
+                        ) : (
+                          <span className="font-semibold text-gray-900">
+                            ${addon.price}/mo
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between mt-2">
+                        <button
+                          onClick={() => toggleAddonExpanded(addon.id)}
+                          className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1"
+                          data-testid={`button-learn-more-${addon.id}`}
+                        >
+                          {isExpanded ? (
+                            <>
+                              Show less
+                              <ChevronUp className="h-3 w-3" />
+                            </>
+                          ) : (
+                            <>
+                              Learn more
+                              <ChevronDown className="h-3 w-3" />
+                            </>
+                          )}
+                        </button>
+                        {!isIncluded && (
+                          <Button
+                            variant={isInCart ? 'outline' : 'default'}
+                            size="sm"
+                            className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'bg-[#36bff9] hover:bg-[#2aa8e0]'}
+                            onClick={() => handleAddonToggle(addon)}
+                            data-testid={`button-addon-${addon.id}`}
+                          >
+                            {isInCart ? (
+                              <>
+                                <X className="h-3 w-3 mr-1" />
+                                Remove
+                              </>
+                            ) : (
+                              <>
+                                <ShoppingCart className="h-3 w-3 mr-1" />
+                                Add to Cart
+                              </>
+                            )}
+                          </Button>
+                        )}
+                      </div>
+
+                      {isExpanded && addon.detailedDescription && (
+                        <div 
+                          className="text-sm text-gray-600 bg-gray-50 rounded-md p-3 mt-2 border border-gray-100"
+                          data-testid={`addon-details-${addon.id}`}
+                        >
+                          {addon.detailedDescription}
+                        </div>
+                      )}
+
+                      {!isIncluded && (
+                        <div className="space-y-3">
+                          {isInCart && addon.packages && addon.packages.length > 0 && (
+                            <div className="pt-2 border-t border-gray-200">
+                              <label className="text-xs font-medium text-gray-700 mb-1 block">
+                                Select Package
+                              </label>
+                              <Select
+                                value={isInCart.selectedPackage?.id || addon.packages[0].id}
+                                onValueChange={(value) => handlePackageChange(addon, value)}
+                              >
+                                <SelectTrigger 
+                                  className="w-full bg-white"
+                                  data-testid={`select-package-${addon.id}`}
+                                >
+                                  <SelectValue placeholder="Select a package" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {addon.packages.map((pkg) => (
+                                    <SelectItem 
+                                      key={pkg.id} 
+                                      value={pkg.id}
+                                      data-testid={`package-option-${pkg.id}`}
+                                    >
+                                      {pkg.name} - ${pkg.price}/mo
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+
+              <div
+                className={`rounded-lg border transition-all ${
+                  order.extensionCount > 0 ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 bg-white'
+                }`}
+                data-testid="addon-card-additional-extensions"
+              >
+                <div className="p-4">
+                  <div className="flex items-start justify-between mb-1">
+                    <h4 className="font-medium text-gray-900">Additional Extensions</h4>
+                    <span className="font-semibold text-gray-900">$25/mo each</span>
+                  </div>
+                  <div className="flex items-center gap-3 mt-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setExtensionCount(order.extensionCount - 1)}
+                      disabled={order.extensionCount === 0}
+                      className="h-7 w-7 p-0"
+                      data-testid="button-extension-decrease"
+                    >
+                      <Minus className="h-3.5 w-3.5" />
+                    </Button>
+                    <span className="font-medium text-gray-900 min-w-[1.5rem] text-center text-sm" data-testid="extension-count">
+                      {order.extensionCount}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setExtensionCount(order.extensionCount + 1)}
+                      className="h-7 w-7 p-0"
+                      data-testid="button-extension-increase"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                    </Button>
+                    {order.extensionCount > 0 && (
+                      <span className="text-sm text-gray-600 ml-1">
+                        = ${order.extensionCount * 25}/mo
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {!showAllAddons && sortedAddons.length > 6 && (
+              <div 
+                className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none"
+                data-testid="addons-gradient-overlay"
+              />
+            )}
+
+            {sortedAddons.length > 6 && (
+              <div className={`flex justify-center ${!showAllAddons ? '-mt-4 relative z-10' : 'mt-4'}`}>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowAllAddons(!showAllAddons)}
+                  className="bg-white border-gray-300 hover:bg-gray-50"
+                  data-testid="button-show-all-addons"
+                >
+                  {showAllAddons ? (
+                    <>
+                      Show fewer add-ons
+                      <ChevronUp className="h-4 w-4 ml-2" />
+                    </>
+                  ) : (
+                    <>
+                      Show all add-ons
+                      <ChevronDown className="h-4 w-4 ml-2" />
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -940,7 +552,7 @@ export default function CustomizePage() {
             </div>
             <Button
               onClick={handleContinue}
-              disabled={!selectedBundle || !selectedPhone}
+              disabled={!selectedPhone}
               className="h-10 px-6 bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0"
               data-testid="button-continue-checkout"
             >

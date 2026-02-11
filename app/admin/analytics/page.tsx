@@ -36,7 +36,7 @@ interface FunnelSummary {
   }>;
 }
 
-const stepColors = ['#36bff9', '#2aa8e0', '#1e90d0'];
+const stepColors = ['#36bff9', '#2aa8e0', '#1e90d0', '#1678b8'];
 
 const funnelChartConfig: ChartConfig = {
   entered: { label: 'Entered', color: '#36bff9' },
@@ -45,8 +45,9 @@ const funnelChartConfig: ChartConfig = {
 
 const trendChartConfig: ChartConfig = {
   your_info: { label: 'Your Info', color: '#36bff9' },
-  customize: { label: 'Customize', color: '#2aa8e0' },
-  checkout: { label: 'Checkout', color: '#1e90d0' },
+  pick_plan: { label: 'Pick Your Plan', color: '#2aa8e0' },
+  customize: { label: 'Customize', color: '#1e90d0' },
+  checkout: { label: 'Checkout', color: '#1678b8' },
 };
 
 function formatDuration(seconds: number): string {
@@ -59,6 +60,7 @@ function formatDuration(seconds: number): string {
 function getStepLabel(step: string): string {
   const labels: Record<string, string> = {
     your_info: 'Your Info',
+    pick_plan: 'Pick Your Plan',
     customize: 'Customize',
     checkout: 'Checkout',
   };
@@ -360,6 +362,7 @@ export default function AnalyticsDashboard() {
                     <YAxis tick={{ fontSize: 11 }} />
                     <ChartTooltip content={<ChartTooltipContent />} />
                     <Line type="monotone" dataKey="your_info" name="Your Info" stroke="#36bff9" strokeWidth={2} dot={{ r: 3 }} />
+                    <Line type="monotone" dataKey="pick_plan" name="Pick Your Plan" stroke="#2aa8e0" strokeWidth={2} dot={{ r: 3 }} />
                     <Line type="monotone" dataKey="customize" name="Customize" stroke="#1e90d0" strokeWidth={2} dot={{ r: 3 }} />
                     <Line type="monotone" dataKey="checkout" name="Checkout" stroke="#1678b8" strokeWidth={2} dot={{ r: 3 }} />
                   </LineChart>
@@ -405,7 +408,7 @@ export default function AnalyticsDashboard() {
                               className="w-2 h-2 rounded-full"
                               style={{
                                 backgroundColor: stepColors[
-                                  ['your_info', 'customize', 'checkout'].indexOf(event.step) % stepColors.length
+                                  ['your_info', 'pick_plan', 'customize', 'checkout'].indexOf(event.step) % stepColors.length
                                 ],
                               }}
                             />
