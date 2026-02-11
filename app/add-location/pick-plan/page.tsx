@@ -274,6 +274,14 @@ export default function PickPlanPage() {
                   </div>
                 ))}
             </div>
+            <Button
+              onClick={handleContinue}
+              disabled={!selectedBundle || !order.location}
+              className="w-full mt-4 h-10 bg-[#36bff9] hover:bg-[#2aa8e0] text-white font-medium"
+              data-testid="button-select-office-package"
+            >
+              Select
+            </Button>
           </div>
         </div>
 
