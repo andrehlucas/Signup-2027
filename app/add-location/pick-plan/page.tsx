@@ -262,12 +262,12 @@ export default function PickPlanPage() {
               <span className="text-gray-500 text-sm ml-1">/mo</span>
             </div>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-              {Object.entries(bundles[0].features).map(([key, enabled]) => (
+              {Object.entries(bundles[0].features).map(([key]) => (
                 <div key={key} className="flex items-center gap-2 text-sm">
-                  <div className={`w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 ${enabled ? 'bg-[#36bff9]' : 'bg-gray-200'}`}>
-                    <Check className={`h-2.5 w-2.5 ${enabled ? 'text-white' : 'text-gray-400'}`} />
+                  <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
+                    <Check className="h-2.5 w-2.5 text-white" />
                   </div>
-                  <span className={`text-xs ${enabled ? 'text-gray-700' : 'text-gray-400'}`}>{featureLabels[key]}</span>
+                  <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
                 </div>
               ))}
             </div>
