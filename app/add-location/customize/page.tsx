@@ -51,7 +51,7 @@ export default function CustomizePage() {
 
   useEffect(() => {
     if (!order.location || !order.bundle) {
-      router.push('/add-location');
+      router.push('/add-location/pick-plan');
     }
   }, [order.location, order.bundle, router]);
 
@@ -178,12 +178,12 @@ export default function CustomizePage() {
     <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="customize-page">
       <Button
         variant="ghost"
-        onClick={() => router.push('/add-location')}
+        onClick={() => router.push('/add-location/pick-plan')}
         className="mb-6"
-        data-testid="button-back-location"
+        data-testid="button-back-plan"
       >
         <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Location Selection
+        Back to Pick Your Plan
       </Button>
 
       <div className="max-w-6xl mx-auto">

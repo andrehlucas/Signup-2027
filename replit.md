@@ -27,7 +27,7 @@ Drizzle ORM is used for PostgreSQL database integration, with schema definitions
 The application employs a Next.js App Router layout for the portal, with distinct sections for the server and shared code. Key features include:
 
 -   **Portal Routes:** Dashboard, My Office, Phone, Addons, Account, Billing, Videos, Meeting Rooms, Support.
--   **Add New Location Wizard:** A multi-step flow: (1) Your Info, (2) Pick Your Plan (location selection + plan selection via modal), (3) Customize Your Office (phone number, add-ons, extensions), (4) Checkout with various payment options and terms. Plan/bundle selection is presented as a modal dialog after choosing a location, not a separate page.
+-   **Add New Location Wizard:** A multi-step flow: (1) Your Info, (2) Pick Your Plan (location selection + bundle/plan choice), (3) Customize Your Office (phone number, add-ons, extensions), (4) Checkout with various payment options and terms.
 -   **Account Page:** Allows users to manage login credentials, security settings, and company details with validation and confirmation flows.
 -   **Billing Page:** Displays current subscriptions, payment methods management (add, set default, delete cards), and a history of invoices with PDF download options.
 -   **Portal Search:** A comprehensive search functionality across all portal pages, supporting keyword matching and keyboard navigation.
