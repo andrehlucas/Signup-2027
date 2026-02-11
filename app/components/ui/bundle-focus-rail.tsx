@@ -246,16 +246,16 @@ export function BundleFocusRail({
             );
           })}
           <button
-            onClick={handlePrev}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-[#0a1628]/10 p-3 text-[#0a1628]/50 backdrop-blur-sm ring-1 ring-[#0a1628]/10 transition hover:bg-[#0a1628]/20 hover:text-[#0a1628] active:scale-90"
+            onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-[#0a1628]/10 p-3 text-white backdrop-blur-sm ring-1 ring-[#0a1628]/10 transition hover:bg-[#0a1628]/20 active:scale-90"
             aria-label="Previous bundle"
             data-testid="rail-arrow-prev"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
           <button
-            onClick={handleNext}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-[#0a1628]/10 p-3 text-[#0a1628]/50 backdrop-blur-sm ring-1 ring-[#0a1628]/10 transition hover:bg-[#0a1628]/20 hover:text-[#0a1628] active:scale-90"
+            onClick={(e) => { e.stopPropagation(); handleNext(); }}
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-[#0a1628]/10 p-3 text-white backdrop-blur-sm ring-1 ring-[#0a1628]/10 transition hover:bg-[#0a1628]/20 active:scale-90"
             aria-label="Next bundle"
             data-testid="rail-arrow-next"
           >
@@ -277,7 +277,7 @@ export function BundleFocusRail({
                 {activeItem.tier}
               </h3>
               {activeItem.originalPrice && (
-                <p className="text-sm font-semibold text-[#36bff9]">
+                <p className="text-sm font-semibold text-white">
                   Save ${activeItem.originalPrice - activeItem.price}/mo
                 </p>
               )}

@@ -1995,6 +1995,11 @@ body {
   line-height: 2.5rem;
 }
 
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+
 .text-\[0\.8rem\] {
   font-size: .8rem;
 }
@@ -2084,10 +2089,6 @@ body {
 .text-\[\#0a1628\] {
   --tw-text-opacity: 1;
   color: rgb(10 22 40 / var(--tw-text-opacity, 1));
-}
-
-.text-\[\#0a1628\]\/50 {
-  color: #0a162880;
 }
 
 .text-\[\#0a1628\]\/60 {
