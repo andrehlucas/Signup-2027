@@ -9,6 +9,7 @@ interface OrderContextType {
   setLocation: (location: AvailableLocation | null) => void;
   setBundle: (bundle: Bundle | null) => void;
   setPhoneNumber: (phoneNumber: PhoneNumber | null) => void;
+  setTollFreePhoneNumber: (phoneNumber: PhoneNumber | null) => void;
   addAddon: (addon: Addon) => void;
   removeAddon: (addonId: string) => void;
   updateAddon: (addon: Addon) => void;
@@ -36,6 +37,7 @@ const initialOrder: OrderState = {
   location: null,
   bundle: null,
   phoneNumber: null,
+  tollFreePhoneNumber: null,
   addons: [],
   extensionCount: 0,
   agreementAccepted: false,
@@ -61,6 +63,10 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const setPhoneNumber = (phoneNumber: PhoneNumber | null) => {
     setOrder(prev => ({ ...prev, phoneNumber }));
+  };
+
+  const setTollFreePhoneNumber = (phoneNumber: PhoneNumber | null) => {
+    setOrder(prev => ({ ...prev, tollFreePhoneNumber: phoneNumber }));
   };
 
   const addAddon = (addon: Addon) => {
@@ -174,6 +180,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         setLocation,
         setBundle,
         setPhoneNumber,
+        setTollFreePhoneNumber,
         addAddon,
         removeAddon,
         updateAddon,

@@ -396,6 +396,67 @@ export default function CheckoutPage() {
               </div>
             </div>
 
+            <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="promo-code-section">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <Tag className="h-5 w-5" />
+                Promo Code
+              </h2>
+              {order.appliedPromo ? (
+                <div className="flex items-center justify-between bg-green-50 rounded-lg px-3 py-2">
+                  <div className="flex items-center gap-2">
+                    <Tag className="h-3.5 w-3.5 text-green-600" />
+                    <div>
+                      <p className="text-sm font-medium text-green-700">{order.appliedPromo.code}</p>
+                      <p className="text-xs text-green-600">{order.appliedPromo.description}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleRemovePromo}
+                    className="text-green-600 hover:text-green-800 p-1"
+                    data-testid="button-remove-promo-top"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <div className="flex gap-2">
+                    <Input
+                      type="text"
+                      placeholder="Enter promo code"
+                      value={promoCode}
+                      onChange={(e) => {
+                        setPromoCode(e.target.value.toUpperCase());
+                        setPromoError('');
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleApplyPromo();
+                      }}
+                      className={`flex-1 text-sm ${promoError ? 'border-red-300' : ''}`}
+                      data-testid="input-promo-code-top"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleApplyPromo}
+                      disabled={!promoCode.trim() || isValidatingPromo}
+                      className="shrink-0"
+                      data-testid="button-apply-promo-top"
+                    >
+                      {isValidatingPromo ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        'Apply'
+                      )}
+                    </Button>
+                  </div>
+                  {promoError && (
+                    <p className="text-xs text-red-500 mt-1" data-testid="text-promo-error-top">{promoError}</p>
+                  )}
+                </div>
+              )}
+            </div>
+
             <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="payment-term-section">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                 <Clock className="h-5 w-5" />

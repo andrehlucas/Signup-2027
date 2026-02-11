@@ -84,6 +84,7 @@ export interface OrderState {
   location: AvailableLocation | null;
   bundle: Bundle | null;
   phoneNumber: PhoneNumber | null;
+  tollFreePhoneNumber: PhoneNumber | null;
   addons: Addon[];
   extensionCount: number;
   agreementAccepted: boolean;
@@ -122,8 +123,8 @@ export const bundles: Bundle[] = [
       liveCallAnswering: true,
       callTransferring: true,
       calloutFeature: true,
-      tollFreeNumber: false,
-      callLog: false,
+      tollFreeNumber: true,
+      callLog: true,
       supervisedCallTransfer: false,
       messageTaking: false,
     },
@@ -676,6 +677,15 @@ export const samplePhoneNumbers: PhoneNumber[] = [
   { id: 'pn-10', number: '(713) 555-1234', type: 'local', areaCode: '713', isAvailable: true },
   { id: 'pn-11', number: '(312) 555-1234', type: 'local', areaCode: '312', isAvailable: true },
   { id: 'pn-12', number: '(312) 555-5678', type: 'local', areaCode: '312', isAvailable: true },
+];
+
+export const sampleTollFreeNumbers: PhoneNumber[] = [
+  { id: 'tf-1', number: '(800) 555-1234', type: 'toll-free', areaCode: '800', isAvailable: true },
+  { id: 'tf-2', number: '(800) 555-5678', type: 'toll-free', areaCode: '800', isAvailable: true },
+  { id: 'tf-3', number: '(888) 555-1234', type: 'toll-free', areaCode: '888', isAvailable: true },
+  { id: 'tf-4', number: '(888) 555-5678', type: 'toll-free', areaCode: '888', isAvailable: true },
+  { id: 'tf-5', number: '(877) 555-1234', type: 'toll-free', areaCode: '877', isAvailable: true },
+  { id: 'tf-6', number: '(866) 555-1234', type: 'toll-free', areaCode: '866', isAvailable: true },
 ];
 
 export function getStates(): string[] {

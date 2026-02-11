@@ -33,6 +33,7 @@ import {
   featureLabels,
   availableAddons,
   getPhoneNumbersForLocation,
+  sampleTollFreeNumbers,
   Bundle,
   PhoneNumber,
   Addon,
@@ -40,13 +41,16 @@ import {
 
 export default function CustomizePage() {
   const router = useRouter();
-  const { order, setPhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
+  const { order, setPhoneNumber, setTollFreePhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
   const selectedBundle = order.bundle;
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
   const [tempSelectedPhone, setTempSelectedPhone] = useState<PhoneNumber | null>(null);
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAllAddons, setShowAllAddons] = useState(false);
+  const [tollFreeModalOpen, setTollFreeModalOpen] = useState(false);
+  const [selectedTollFree, setSelectedTollFree] = useState<PhoneNumber | null>(order.tollFreePhoneNumber);
+  const [tempSelectedTollFree, setTempSelectedTollFree] = useState<PhoneNumber | null>(null);
   const { trackComplete } = useFunnelTracking('customize');
 
   useEffect(() => {
@@ -67,6 +71,37 @@ export default function CustomizePage() {
       setPhoneNumber(autoAssigned);
     }
   }, [phoneNumbers, selectedPhone, setPhoneNumber]);
+
+  const hasTollFree = useMemo(() => {
+    if (!selectedBundle) return false;
+    if (selectedBundle.features.tollFreeNumber) return true;
+    return order.addons.some(a => a.id === 'toll-free');
+  }, [selectedBundle, order.addons]);
+
+  useEffect(() => {
+    if (hasTollFree && !selectedTollFree) {
+      const autoAssigned = sampleTollFreeNumbers[0];
+      setSelectedTollFree(autoAssigned);
+      setTollFreePhoneNumber(autoAssigned);
+    }
+    if (!hasTollFree && selectedTollFree) {
+      setSelectedTollFree(null);
+      setTollFreePhoneNumber(null);
+    }
+  }, [hasTollFree]);
+
+  const handleTollFreeConfirm = () => {
+    if (tempSelectedTollFree) {
+      setSelectedTollFree(tempSelectedTollFree);
+      setTollFreePhoneNumber(tempSelectedTollFree);
+    }
+    setTollFreeModalOpen(false);
+  };
+
+  const handleOpenTollFreeModal = () => {
+    setTempSelectedTollFree(selectedTollFree);
+    setTollFreeModalOpen(true);
+  };
 
   const handlePhoneConfirm = () => {
     if (tempSelectedPhone) {
@@ -444,6 +479,30 @@ export default function CustomizePage() {
               </Button>
             </div>
           )}
+
+          {hasTollFree && selectedTollFree && (
+            <div className="mt-3 flex items-center justify-between bg-gray-50 rounded-lg p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900" data-testid="selected-tollfree-number">
+                    {selectedTollFree.number}
+                  </p>
+                  <p className="text-sm text-gray-500">Toll-Free Number</p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleOpenTollFreeModal}
+                data-testid="button-change-tollfree"
+              >
+                <Pencil className="h-4 w-4 text-gray-500" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -606,6 +665,55 @@ export default function CustomizePage() {
               onClick={handlePhoneConfirm}
               className="bg-[#36bff9] hover:bg-[#2aa8e0]"
               data-testid="button-confirm-phone"
+            >
+              Confirm Selection
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={tollFreeModalOpen} onOpenChange={setTollFreeModalOpen}>
+        <DialogContent className="sm:max-w-md" data-testid="tollfree-selection-modal">
+          <DialogHeader>
+            <DialogTitle>Select Toll-Free Number</DialogTitle>
+            <DialogDescription>
+              Choose a toll-free number for your business. Customers can call you at no charge.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-2 py-4 max-h-60 overflow-y-auto">
+            {sampleTollFreeNumbers.map((phone) => (
+              <div
+                key={phone.id}
+                onClick={() => setTempSelectedTollFree(phone)}
+                className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
+                  tempSelectedTollFree?.id === phone.id
+                    ? 'bg-green-50 border-2 border-green-500'
+                    : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
+                }`}
+                data-testid={`tollfree-option-${phone.id}`}
+              >
+                <Phone className="h-4 w-4 text-gray-500" />
+                <span className="font-medium">{phone.number}</span>
+                {tempSelectedTollFree?.id === phone.id && (
+                  <Check className="h-4 w-4 text-green-500 ml-auto" />
+                )}
+              </div>
+            ))}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setTollFreeModalOpen(false)}
+              data-testid="button-cancel-tollfree"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleTollFreeConfirm}
+              className="bg-green-500 hover:bg-green-600"
+              data-testid="button-confirm-tollfree"
             >
               Confirm Selection
             </Button>

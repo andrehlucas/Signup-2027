@@ -93,6 +93,7 @@ const initialOrder = {
     location: null,
     bundle: null,
     phoneNumber: null,
+    tollFreePhoneNumber: null,
     addons: [],
     extensionCount: 0,
     agreementAccepted: false,
@@ -124,6 +125,12 @@ function OrderProvider({ children }) {
         setOrder((prev)=>({
                 ...prev,
                 phoneNumber
+            }));
+    };
+    const setTollFreePhoneNumber = (phoneNumber)=>{
+        setOrder((prev)=>({
+                ...prev,
+                tollFreePhoneNumber: phoneNumber
             }));
     };
     const addAddon = (addon)=>{
@@ -236,6 +243,7 @@ function OrderProvider({ children }) {
             setLocation,
             setBundle,
             setPhoneNumber,
+            setTollFreePhoneNumber,
             addAddon,
             removeAddon,
             updateAddon,
@@ -249,7 +257,7 @@ function OrderProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/app/add-location/context.tsx",
-        lineNumber: 170,
+        lineNumber: 176,
         columnNumber: 5
     }, this);
 }
