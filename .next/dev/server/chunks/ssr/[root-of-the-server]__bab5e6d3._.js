@@ -1384,7 +1384,7 @@ function CheckoutPage() {
                                                 className: "space-y-4",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "flex items-start gap-4 pb-4 border-b border-gray-100",
+                                                        className: "flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0",
@@ -1475,7 +1475,7 @@ function CheckoutPage() {
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "flex items-start gap-4 pb-4 border-b border-gray-100",
+                                                        className: "flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0",
@@ -1500,7 +1500,7 @@ function CheckoutPage() {
                                                                             children: [
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                                     className: "font-medium text-gray-900",
-                                                                                    children: "Bundle"
+                                                                                    children: "Office Package"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/checkout/page.tsx",
                                                                                     lineNumber: 253,
@@ -1575,7 +1575,7 @@ function CheckoutPage() {
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "flex items-start gap-4 pb-4 border-b border-gray-100",
+                                                        className: "flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0",
@@ -2551,7 +2551,7 @@ function CheckoutPage() {
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "text-gray-600 flex items-center gap-1",
                                                             children: [
-                                                                "Bundle (",
+                                                                "Office Package (",
                                                                 order.bundle.tier,
                                                                 ")",
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Popover"], {
@@ -2638,7 +2638,7 @@ function CheckoutPage() {
                                                                                             children: [
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                                                     className: "text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2",
-                                                                                                    children: "Included in Bundle"
+                                                                                                    children: "Included in Office Package"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/add-location/checkout/page.tsx",
                                                                                                     lineNumber: 638,

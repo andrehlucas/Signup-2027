@@ -226,7 +226,7 @@ export default function CheckoutPage() {
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
 
               <div className="space-y-4">
-                <div className="flex items-start gap-4 pb-4 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
                   <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
                     <MapPin className="h-5 w-5 text-[#36bff9]" />
                   </div>
@@ -243,14 +243,14 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 pb-4 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
                   <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
                     <Package className="h-5 w-5 text-[#36bff9]" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-medium text-gray-900">Bundle</p>
+                        <p className="font-medium text-gray-900">Office Package</p>
                         <p className="text-sm text-gray-600">
                           {order.bundle.name} {order.bundle.tier !== 'The Essentials' ? order.bundle.tier : ''}
                         </p>
@@ -265,7 +265,7 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 pb-4 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
                   <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
                     <Phone className="h-5 w-5 text-[#36bff9]" />
                   </div>
@@ -598,7 +598,7 @@ export default function CheckoutPage() {
               <div className="space-y-3 mb-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600 flex items-center gap-1">
-                    Bundle ({order.bundle.tier})
+                    Office Package ({order.bundle.tier})
                     <Popover>
                       <PopoverTrigger asChild>
                         <button
@@ -635,7 +635,7 @@ export default function CheckoutPage() {
                               .map(([key]) => featureLabels[key]);
                             return bundleExtras.length > 0 ? (
                               <div className="border-t border-gray-200 pt-2 mt-1">
-                                <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Included in Bundle</p>
+                                <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Included in Office Package</p>
                                 <div className="space-y-2">
                                   {bundleExtras.map((label) => (
                                     <div key={label} className="flex items-center gap-1.5 text-xs text-gray-600">

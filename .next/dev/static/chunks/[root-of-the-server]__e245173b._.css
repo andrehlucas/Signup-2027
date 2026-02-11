@@ -3664,6 +3664,10 @@ body {
     flex-direction: column;
   }
 
+  .sm\:items-start {
+    align-items: flex-start;
+  }
+
   .sm\:items-center {
     align-items: center;
   }
@@ -3674,6 +3678,10 @@ body {
 
   .sm\:gap-2\.5 {
     gap: .625rem;
+  }
+
+  .sm\:gap-4 {
+    gap: 1rem;
   }
 
   .sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
