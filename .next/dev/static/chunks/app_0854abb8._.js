@@ -2156,16 +2156,6 @@ function PickPlanPage() {
                                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
                                             lineNumber: 341,
                                             columnNumber: 15
-                                        }, this),
-                                        selectedBundle?.id !== 'essentials' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                            onClick: ()=>handleBundleSelect(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["bundles"][0]),
-                                            className: "mt-4 text-sm text-blue-300/70 hover:text-blue-200 underline underline-offset-2",
-                                            "data-testid": "button-revert-essentials",
-                                            children: "Revert to The Essentials ($99/mo)"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                            lineNumber: 429,
-                                            columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
@@ -2207,56 +2197,66 @@ function PickPlanPage() {
                                             className: "h-4 w-4 text-white"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                            lineNumber: 447,
+                                            lineNumber: 438,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                        lineNumber: 446,
+                                        lineNumber: 437,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "min-w-0",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-sm font-semibold text-gray-900 leading-tight",
-                                                "data-testid": "footer-package-name",
-                                                children: displayBundleName
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                lineNumber: 450,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-lg font-bold text-gray-900 leading-tight",
-                                                "data-testid": "footer-monthly-total",
-                                                children: [
-                                                    "$",
-                                                    selectedBundle?.price || __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["bundles"][0].price,
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "text-sm font-normal text-gray-500",
-                                                        children: "/mo"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                        lineNumber: 452,
-                                                        columnNumber: 63
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                lineNumber: 451,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
+                                        children: selectedBundle ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-sm font-semibold text-gray-900 leading-tight",
+                                                    "data-testid": "footer-package-name",
+                                                    children: displayBundleName
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/add-location/pick-plan/page.tsx",
+                                                    lineNumber: 443,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-lg font-bold text-gray-900 leading-tight",
+                                                    "data-testid": "footer-monthly-total",
+                                                    children: [
+                                                        "$",
+                                                        selectedBundle.price,
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-sm font-normal text-gray-500",
+                                                            children: "/mo"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/add-location/pick-plan/page.tsx",
+                                                            lineNumber: 445,
+                                                            columnNumber: 46
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/add-location/pick-plan/page.tsx",
+                                                    lineNumber: 444,
+                                                    columnNumber: 21
+                                                }, this)
+                                            ]
+                                        }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-sm font-medium text-gray-500",
+                                            "data-testid": "footer-package-name",
+                                            children: "Select your package"
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/add-location/pick-plan/page.tsx",
+                                            lineNumber: 449,
+                                            columnNumber: 19
+                                        }, this)
+                                    }, void 0, false, {
                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                        lineNumber: 449,
+                                        lineNumber: 440,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                lineNumber: 445,
+                                lineNumber: 436,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2270,29 +2270,29 @@ function PickPlanPage() {
                                         className: "h-4 w-4 ml-1.5"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                        lineNumber: 463,
+                                        lineNumber: 460,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                lineNumber: 456,
+                                lineNumber: 453,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                        lineNumber: 444,
+                        lineNumber: 435,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                    lineNumber: 443,
+                    lineNumber: 434,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                lineNumber: 442,
+                lineNumber: 433,
                 columnNumber: 7
             }, this)
         ]

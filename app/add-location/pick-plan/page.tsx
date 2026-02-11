@@ -425,15 +425,6 @@ export default function PickPlanPage() {
                 })}
               </div>
 
-              {selectedBundle?.id !== 'essentials' && (
-                <button
-                  onClick={() => handleBundleSelect(bundles[0])}
-                  className="mt-4 text-sm text-blue-300/70 hover:text-blue-200 underline underline-offset-2"
-                  data-testid="button-revert-essentials"
-                >
-                  Revert to The Essentials ($99/mo)
-                </button>
-              )}
             </div>
           </div>
         </div>
@@ -447,10 +438,16 @@ export default function PickPlanPage() {
                 <DollarSign className="h-4 w-4 text-white" />
               </div>
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-gray-900 leading-tight" data-testid="footer-package-name">{displayBundleName}</p>
-                <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">
-                  ${selectedBundle?.price || bundles[0].price}<span className="text-sm font-normal text-gray-500">/mo</span>
-                </p>
+                {selectedBundle ? (
+                  <>
+                    <p className="text-sm font-semibold text-gray-900 leading-tight" data-testid="footer-package-name">{displayBundleName}</p>
+                    <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">
+                      ${selectedBundle.price}<span className="text-sm font-normal text-gray-500">/mo</span>
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-sm font-medium text-gray-500" data-testid="footer-package-name">Select your package</p>
+                )}
               </div>
             </div>
             <Button

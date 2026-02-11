@@ -2072,10 +2072,6 @@ body {
   color: #bfdbfecc;
 }
 
-.text-blue-300\/70 {
-  color: #93c5fdb3;
-}
-
 .text-blue-700 {
   --tw-text-opacity: 1;
   color: rgb(29 78 216 / var(--tw-text-opacity, 1));
@@ -2192,16 +2188,8 @@ body {
   color: var(--white);
 }
 
-.underline {
-  text-decoration-line: underline;
-}
-
 .line-through {
   text-decoration-line: line-through;
-}
-
-.underline-offset-2 {
-  text-underline-offset: 2px;
 }
 
 .underline-offset-4 {
@@ -2915,11 +2903,6 @@ body {
 
 .hover\:text-accent-foreground:hover {
   color: hsl(var(--accent-foreground));
-}
-
-.hover\:text-blue-200:hover {
-  --tw-text-opacity: 1;
-  color: rgb(191 219 254 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-foreground:hover {
