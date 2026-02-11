@@ -1648,206 +1648,242 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                     },
                     dragElastic: 0.2,
                     onDragEnd: onDragEnd,
-                    children: visibleIndices.map((offset)=>{
-                        const absIndex = active + offset;
-                        const index = wrap(0, count, absIndex);
-                        const bundle = bundles[index];
-                        const isCenter = offset === 0;
-                        const dist = Math.abs(offset);
-                        const xOffset = offset * 360;
-                        const zOffset = -dist * 150;
-                        const scale = isCenter ? 1 : 0.82;
-                        const rotateY = offset * -15;
-                        const opacity = isCenter ? 1 : 0.5;
-                        const blur = isCenter ? 0 : dist * 4;
-                        const brightness = isCenter ? 1 : 0.6;
-                        const selected = isSelected(bundle);
-                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute w-[320px] md:w-[360px] rounded-2xl border-2 bg-white shadow-2xl overflow-hidden", isCenter ? "z-20" : "z-10", selected && isCenter ? "border-[#36bff9] ring-2 ring-[#36bff9]" : "border-white/20"),
-                            initial: false,
-                            animate: {
-                                x: xOffset,
-                                z: zOffset,
-                                scale: scale,
-                                rotateY: rotateY,
-                                opacity: opacity,
-                                filter: `blur(${blur}px) brightness(${brightness})`
-                            },
-                            transition: (val)=>{
-                                if (val === "scale") return TAP_SPRING;
-                                return BASE_SPRING;
-                            },
-                            style: {
-                                transformStyle: "preserve-3d"
-                            },
-                            onClick: ()=>{
-                                if (offset !== 0) setActive((p)=>p + offset);
-                            },
-                            "data-testid": `rail-bundle-card-${bundle.id}`,
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "p-6 flex flex-col h-full min-h-[440px]",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center justify-between mb-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-xs font-semibold uppercase tracking-wider text-[#36bff9]",
-                                                children: bundle.badge
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                lineNumber: 178,
-                                                columnNumber: 21
-                                            }, this),
-                                            selected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "inline-flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 rounded-full px-2 py-0.5",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
-                                                        className: "h-3 w-3"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                        lineNumber: 183,
-                                                        columnNumber: 25
-                                                    }, this),
-                                                    "Active"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                lineNumber: 182,
-                                                columnNumber: 23
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 177,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "text-xl font-bold text-gray-900 mb-1",
-                                        children: bundle.tier
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 189,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "mb-3",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-3xl font-bold text-gray-900",
-                                                children: [
-                                                    "$",
-                                                    bundle.price
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                lineNumber: 194,
-                                                columnNumber: 21
-                                            }, this),
-                                            bundle.originalPrice && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-sm text-gray-400 line-through ml-2",
-                                                children: [
-                                                    "$",
-                                                    bundle.originalPrice
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                lineNumber: 198,
-                                                columnNumber: 23
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-gray-500 text-sm ml-1",
-                                                children: "/mo"
-                                            }, void 0, false, {
-                                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                lineNumber: 202,
-                                                columnNumber: 21
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 193,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "space-y-2 flex-1",
-                                        children: Object.entries(bundle.features).filter(([, enabled])=>enabled).map(([key])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-center gap-2",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0",
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
-                                                            className: "h-2.5 w-2.5 text-[#36bff9]"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                            lineNumber: 211,
-                                                            columnNumber: 29
-                                                        }, this)
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                        lineNumber: 210,
-                                                        columnNumber: 27
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "text-gray-700 text-xs",
-                                                        children: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["featureLabels"][key]
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                        lineNumber: 213,
-                                                        columnNumber: 27
-                                                    }, this)
-                                                ]
-                                            }, key, true, {
-                                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                lineNumber: 209,
-                                                columnNumber: 25
-                                            }, this))
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 205,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                        onClick: (e)=>{
-                                            e.stopPropagation();
-                                            onSelect(bundle);
-                                        },
-                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("mt-4 w-full py-2.5 rounded-lg text-sm font-semibold transition-all", selected ? "bg-[#36bff9] hover:bg-[#2aa8e0] text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300"),
-                                        "data-testid": `rail-button-select-bundle-${bundle.id}`,
-                                        children: selected ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "flex items-center justify-center gap-2",
+                    children: [
+                        visibleIndices.map((offset)=>{
+                            const absIndex = active + offset;
+                            const index = wrap(0, count, absIndex);
+                            const bundle = bundles[index];
+                            const isCenter = offset === 0;
+                            const dist = Math.abs(offset);
+                            const xOffset = offset * 360;
+                            const zOffset = -dist * 150;
+                            const scale = isCenter ? 1 : 0.82;
+                            const rotateY = offset * -15;
+                            const opacity = isCenter ? 1 : 0.5;
+                            const blur = isCenter ? 0 : dist * 4;
+                            const brightness = isCenter ? 1 : 0.6;
+                            const selected = isSelected(bundle);
+                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
+                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute w-[320px] md:w-[360px] rounded-2xl border-2 bg-white shadow-2xl overflow-hidden", isCenter ? "z-20" : "z-10", selected && isCenter ? "border-[#36bff9] ring-2 ring-[#36bff9]" : "border-white/20"),
+                                initial: false,
+                                animate: {
+                                    x: xOffset,
+                                    z: zOffset,
+                                    scale: scale,
+                                    rotateY: rotateY,
+                                    opacity: opacity,
+                                    filter: `blur(${blur}px) brightness(${brightness})`
+                                },
+                                transition: (val)=>{
+                                    if (val === "scale") return TAP_SPRING;
+                                    return BASE_SPRING;
+                                },
+                                style: {
+                                    transformStyle: "preserve-3d"
+                                },
+                                onClick: ()=>{
+                                    if (offset !== 0) setActive((p)=>p + offset);
+                                },
+                                "data-testid": `rail-bundle-card-${bundle.id}`,
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "p-6 flex flex-col h-full min-h-[440px]",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "flex items-center justify-between mb-2",
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
-                                                    className: "h-4 w-4"
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-xs font-semibold uppercase tracking-wider text-[#36bff9]",
+                                                    children: bundle.badge
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                    lineNumber: 235,
-                                                    columnNumber: 25
+                                                    lineNumber: 178,
+                                                    columnNumber: 21
                                                 }, this),
-                                                "Selected"
+                                                selected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "inline-flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 rounded-full px-2 py-0.5",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
+                                                            className: "h-3 w-3"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                            lineNumber: 183,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        "Active"
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                    lineNumber: 182,
+                                                    columnNumber: 23
+                                                }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 234,
-                                            columnNumber: 23
-                                        }, this) : "Select"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 220,
-                                        columnNumber: 19
-                                    }, this)
-                                ]
-                            }, void 0, true, {
+                                            lineNumber: 177,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                            className: "text-xl font-bold text-gray-900 mb-1",
+                                            children: bundle.tier
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                            lineNumber: 189,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "mb-3",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-3xl font-bold text-gray-900",
+                                                    children: [
+                                                        "$",
+                                                        bundle.price
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                    lineNumber: 194,
+                                                    columnNumber: 21
+                                                }, this),
+                                                bundle.originalPrice && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-sm text-gray-400 line-through ml-2",
+                                                    children: [
+                                                        "$",
+                                                        bundle.originalPrice
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                    lineNumber: 198,
+                                                    columnNumber: 23
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "text-gray-500 text-sm ml-1",
+                                                    children: "/mo"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                    lineNumber: 202,
+                                                    columnNumber: 21
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                            lineNumber: 193,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "space-y-2 flex-1",
+                                            children: Object.entries(bundle.features).filter(([, enabled])=>enabled).map(([key])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center gap-2",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0",
+                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
+                                                                className: "h-2.5 w-2.5 text-[#36bff9]"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                                lineNumber: 211,
+                                                                columnNumber: 29
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                            lineNumber: 210,
+                                                            columnNumber: 27
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-gray-700 text-xs",
+                                                            children: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["featureLabels"][key]
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                            lineNumber: 213,
+                                                            columnNumber: 27
+                                                        }, this)
+                                                    ]
+                                                }, key, true, {
+                                                    fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                    lineNumber: 209,
+                                                    columnNumber: 25
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                            lineNumber: 205,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            onClick: (e)=>{
+                                                e.stopPropagation();
+                                                onSelect(bundle);
+                                            },
+                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("mt-4 w-full py-2.5 rounded-lg text-sm font-semibold transition-all", selected ? "bg-[#36bff9] hover:bg-[#2aa8e0] text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300"),
+                                            "data-testid": `rail-button-select-bundle-${bundle.id}`,
+                                            children: selected ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "flex items-center justify-center gap-2",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
+                                                        className: "h-4 w-4"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                        lineNumber: 235,
+                                                        columnNumber: 25
+                                                    }, this),
+                                                    "Selected"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                                lineNumber: 234,
+                                                columnNumber: 23
+                                            }, this) : "Select"
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                            lineNumber: 220,
+                                            columnNumber: 19
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                    lineNumber: 176,
+                                    columnNumber: 17
+                                }, this)
+                            }, absIndex, false, {
                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                lineNumber: 176,
-                                columnNumber: 17
+                                lineNumber: 148,
+                                columnNumber: 15
+                            }, this);
+                        }),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: handlePrev,
+                            className: "absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/10 p-3 text-white/70 backdrop-blur-sm ring-1 ring-white/10 transition hover:bg-white/20 hover:text-white active:scale-90",
+                            "aria-label": "Previous bundle",
+                            "data-testid": "rail-arrow-prev",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronLeft$3e$__["ChevronLeft"], {
+                                className: "h-6 w-6"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                lineNumber: 252,
+                                columnNumber: 13
                             }, this)
-                        }, absIndex, false, {
+                        }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 148,
-                            columnNumber: 15
-                        }, this);
-                    })
-                }, void 0, false, {
+                            lineNumber: 246,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: handleNext,
+                            className: "absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/10 p-3 text-white/70 backdrop-blur-sm ring-1 ring-white/10 transition hover:bg-white/20 hover:text-white active:scale-90",
+                            "aria-label": "Next bundle",
+                            "data-testid": "rail-arrow-next",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
+                                className: "h-6 w-6"
+                            }, void 0, false, {
+                                fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                                lineNumber: 260,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
+                            lineNumber: 254,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
                     lineNumber: 123,
                     columnNumber: 9
@@ -1879,11 +1915,11 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                 className: "text-center",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "text-lg font-bold text-white",
+                                        className: "text-4xl font-extrabold tracking-tight text-white",
                                         children: activeItem.tier
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 258,
+                                        lineNumber: 274,
                                         columnNumber: 15
                                     }, this),
                                     activeItem.originalPrice && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1895,18 +1931,18 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 262,
+                                        lineNumber: 278,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, activeItem.id, true, {
                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                lineNumber: 250,
+                                lineNumber: 266,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 249,
+                            lineNumber: 265,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1923,12 +1959,12 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                             className: "h-5 w-5"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 277,
+                                            lineNumber: 293,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 271,
+                                        lineNumber: 287,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1940,7 +1976,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 279,
+                                        lineNumber: 295,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1952,23 +1988,23 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                             className: "h-5 w-5"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 288,
+                                            lineNumber: 304,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 282,
+                                        lineNumber: 298,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                lineNumber: 270,
+                                lineNumber: 286,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 269,
+                            lineNumber: 285,
                             columnNumber: 11
                         }, this),
                         onRevert && selectedBundleId !== "essentials" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1982,13 +2018,13 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 294,
+                            lineNumber: 310,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                    lineNumber: 248,
+                    lineNumber: 264,
                     columnNumber: 9
                 }, this)
             ]
@@ -3644,7 +3680,7 @@ function CustomizePage() {
                                 className: "flex items-center justify-center gap-2 pt-6 pb-2",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                        className: "text-2xl font-extrabold tracking-tight text-white",
+                                        className: "text-4xl font-extrabold tracking-tight text-white",
                                         children: "Bundle & Save"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",

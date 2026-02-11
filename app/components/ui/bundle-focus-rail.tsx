@@ -243,6 +243,22 @@ export function BundleFocusRail({
               </motion.div>
             );
           })}
+          <button
+            onClick={handlePrev}
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/10 p-3 text-white/70 backdrop-blur-sm ring-1 ring-white/10 transition hover:bg-white/20 hover:text-white active:scale-90"
+            aria-label="Previous bundle"
+            data-testid="rail-arrow-prev"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/10 p-3 text-white/70 backdrop-blur-sm ring-1 ring-white/10 transition hover:bg-white/20 hover:text-white active:scale-90"
+            aria-label="Next bundle"
+            data-testid="rail-arrow-next"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
         </motion.div>
 
         <div className="mx-auto mt-6 flex w-full max-w-4xl flex-col items-center gap-4">
@@ -255,7 +271,7 @@ export function BundleFocusRail({
               transition={{ duration: 0.25 }}
               className="text-center"
             >
-              <h3 className="text-lg font-bold text-white">
+              <h3 className="text-4xl font-extrabold tracking-tight text-white">
                 {activeItem.tier}
               </h3>
               {activeItem.originalPrice && (

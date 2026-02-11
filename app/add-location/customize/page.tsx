@@ -660,7 +660,7 @@ export default function CustomizePage() {
           />
           <div className="relative z-10 w-full h-full flex flex-col">
             <div className="flex items-center justify-center gap-2 pt-6 pb-2">
-              <h2 className="text-2xl font-extrabold tracking-tight text-white">Bundle & Save</h2>
+              <h2 className="text-4xl font-extrabold tracking-tight text-white">Bundle & Save</h2>
               <button
                 onClick={() => setBundleModalOpen(false)}
                 className="ml-4 text-white/70 hover:text-white"
