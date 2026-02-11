@@ -1664,7 +1664,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                             const brightness = isCenter ? 1 : 0.6;
                             const selected = isSelected(bundle);
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute w-[320px] md:w-[360px] rounded-2xl border-2 bg-white shadow-2xl overflow-hidden", isCenter ? "z-20" : "z-10", selected && isCenter ? "border-[#36bff9] ring-2 ring-[#36bff9]" : "border-white/20"),
+                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute w-[320px] md:w-[360px] rounded-2xl border-2 shadow-2xl overflow-hidden", "bg-gradient-to-b from-[#0a1628] to-[#0f2240]", isCenter ? "z-20" : "z-10", selected && isCenter ? "border-[#36bff9] ring-2 ring-[#36bff9]" : "border-white/10"),
                                 initial: false,
                                 animate: {
                                     x: xOffset,
@@ -1696,77 +1696,77 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                                     children: bundle.badge
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                    lineNumber: 178,
+                                                    lineNumber: 179,
                                                     columnNumber: 21
                                                 }, this),
                                                 selected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "inline-flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 rounded-full px-2 py-0.5",
+                                                    className: "inline-flex items-center gap-1 text-xs font-medium text-emerald-300 bg-emerald-500/20 rounded-full px-2 py-0.5",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
                                                             className: "h-3 w-3"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                            lineNumber: 183,
+                                                            lineNumber: 184,
                                                             columnNumber: 25
                                                         }, this),
                                                         "Active"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                    lineNumber: 182,
+                                                    lineNumber: 183,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 177,
+                                            lineNumber: 178,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: "text-xl font-bold text-gray-900 mb-1",
+                                            className: "text-xl font-bold text-white mb-1",
                                             children: bundle.tier
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 189,
+                                            lineNumber: 190,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "mb-3",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-3xl font-bold text-gray-900",
+                                                    className: "text-3xl font-bold text-white",
                                                     children: [
                                                         "$",
                                                         bundle.price
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                    lineNumber: 194,
+                                                    lineNumber: 195,
                                                     columnNumber: 21
                                                 }, this),
                                                 bundle.originalPrice && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-sm text-gray-400 line-through ml-2",
+                                                    className: "text-sm text-white/40 line-through ml-2",
                                                     children: [
                                                         "$",
                                                         bundle.originalPrice
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                    lineNumber: 198,
+                                                    lineNumber: 199,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-gray-500 text-sm ml-1",
+                                                    className: "text-white/50 text-sm ml-1",
                                                     children: "/mo"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                    lineNumber: 202,
+                                                    lineNumber: 203,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 193,
+                                            lineNumber: 194,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1780,31 +1780,31 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                                                 className: "h-3.5 w-3.5 text-[#36bff9]"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                                lineNumber: 211,
+                                                                lineNumber: 212,
                                                                 columnNumber: 29
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                            lineNumber: 210,
+                                                            lineNumber: 211,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-gray-700 text-sm",
+                                                            className: "text-white/80 text-sm",
                                                             children: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["featureLabels"][key]
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                            lineNumber: 213,
+                                                            lineNumber: 214,
                                                             columnNumber: 27
                                                         }, this)
                                                     ]
                                                 }, key, true, {
                                                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                    lineNumber: 209,
+                                                    lineNumber: 210,
                                                     columnNumber: 25
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 205,
+                                            lineNumber: 206,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1812,7 +1812,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                                 e.stopPropagation();
                                                 onSelect(bundle);
                                             },
-                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("mt-4 w-full py-2.5 rounded-lg text-sm font-semibold transition-all", selected ? "bg-[#36bff9] hover:bg-[#2aa8e0] text-white" : "bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300"),
+                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("mt-4 w-full py-2.5 rounded-lg text-sm font-semibold transition-all", selected ? "bg-[#36bff9] hover:bg-[#2aa8e0] text-white" : "bg-white/10 hover:bg-white/20 text-white border border-white/20"),
                                             "data-testid": `rail-button-select-bundle-${bundle.id}`,
                                             children: selected ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "flex items-center justify-center gap-2",
@@ -1821,25 +1821,25 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                        lineNumber: 235,
+                                                        lineNumber: 236,
                                                         columnNumber: 25
                                                     }, this),
                                                     "Selected"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                                lineNumber: 234,
+                                                lineNumber: 235,
                                                 columnNumber: 23
                                             }, this) : "Select"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 220,
+                                            lineNumber: 221,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                    lineNumber: 176,
+                                    lineNumber: 177,
                                     columnNumber: 17
                                 }, this)
                             }, absIndex, false, {
@@ -1857,12 +1857,12 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                 className: "h-6 w-6"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                lineNumber: 252,
+                                lineNumber: 253,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 246,
+                            lineNumber: 247,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1874,12 +1874,12 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                 className: "h-6 w-6"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                lineNumber: 260,
+                                lineNumber: 261,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 254,
+                            lineNumber: 255,
                             columnNumber: 11
                         }, this)
                     ]
@@ -1919,7 +1919,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                         children: activeItem.tier
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 274,
+                                        lineNumber: 275,
                                         columnNumber: 15
                                     }, this),
                                     activeItem.originalPrice && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1931,18 +1931,18 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 278,
+                                        lineNumber: 279,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, activeItem.id, true, {
                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                lineNumber: 266,
+                                lineNumber: 267,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 265,
+                            lineNumber: 266,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1959,12 +1959,12 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                             className: "h-5 w-5"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 293,
+                                            lineNumber: 294,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 287,
+                                        lineNumber: 288,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1976,7 +1976,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 295,
+                                        lineNumber: 296,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1988,23 +1988,23 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                             className: "h-5 w-5"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                            lineNumber: 304,
+                                            lineNumber: 305,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                        lineNumber: 298,
+                                        lineNumber: 299,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                                lineNumber: 286,
+                                lineNumber: 287,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 285,
+                            lineNumber: 286,
                             columnNumber: 11
                         }, this),
                         onRevert && selectedBundleId !== "essentials" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2018,13 +2018,13 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                            lineNumber: 310,
+                            lineNumber: 311,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",
-                    lineNumber: 264,
+                    lineNumber: 265,
                     columnNumber: 9
                 }, this)
             ]

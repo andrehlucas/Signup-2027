@@ -148,11 +148,12 @@ export function BundleFocusRail({
               <motion.div
                 key={absIndex}
                 className={cn(
-                  "absolute w-[320px] md:w-[360px] rounded-2xl border-2 bg-white shadow-2xl overflow-hidden",
+                  "absolute w-[320px] md:w-[360px] rounded-2xl border-2 shadow-2xl overflow-hidden",
+                  "bg-gradient-to-b from-[#0a1628] to-[#0f2240]",
                   isCenter ? "z-20" : "z-10",
                   selected && isCenter
                     ? "border-[#36bff9] ring-2 ring-[#36bff9]"
-                    : "border-white/20"
+                    : "border-white/10"
                 )}
                 initial={false}
                 animate={{
@@ -179,27 +180,27 @@ export function BundleFocusRail({
                       {bundle.badge}
                     </span>
                     {selected && (
-                      <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 rounded-full px-2 py-0.5">
+                      <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-300 bg-emerald-500/20 rounded-full px-2 py-0.5">
                         <Check className="h-3 w-3" />
                         Active
                       </span>
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">
+                  <h3 className="text-xl font-bold text-white mb-1">
                     {bundle.tier}
                   </h3>
 
                   <div className="mb-3">
-                    <span className="text-3xl font-bold text-gray-900">
+                    <span className="text-3xl font-bold text-white">
                       ${bundle.price}
                     </span>
                     {bundle.originalPrice && (
-                      <span className="text-sm text-gray-400 line-through ml-2">
+                      <span className="text-sm text-white/40 line-through ml-2">
                         ${bundle.originalPrice}
                       </span>
                     )}
-                    <span className="text-gray-500 text-sm ml-1">/mo</span>
+                    <span className="text-white/50 text-sm ml-1">/mo</span>
                   </div>
 
                   <div className="space-y-2.5 flex-1">
@@ -210,7 +211,7 @@ export function BundleFocusRail({
                           <div className="w-6 h-6 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
                             <Check className="h-3.5 w-3.5 text-[#36bff9]" />
                           </div>
-                          <span className="text-gray-700 text-sm">
+                          <span className="text-white/80 text-sm">
                             {featureLabels[key]}
                           </span>
                         </div>
@@ -226,7 +227,7 @@ export function BundleFocusRail({
                       "mt-4 w-full py-2.5 rounded-lg text-sm font-semibold transition-all",
                       selected
                         ? "bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
-                        : "bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300"
+                        : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
                     )}
                     data-testid={`rail-button-select-bundle-${bundle.id}`}
                   >
