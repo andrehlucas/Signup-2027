@@ -121,7 +121,7 @@ export function BundleFocusRail({
     >
       <div className="relative z-10 flex flex-1 flex-col justify-center px-4">
         <motion.div
-          className="relative mx-auto flex h-[420px] w-full max-w-4xl items-center justify-center cursor-grab active:cursor-grabbing"
+          className="relative mx-auto flex h-[500px] w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing"
           style={{ perspective: "1200px" }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
@@ -135,7 +135,7 @@ export function BundleFocusRail({
             const isCenter = offset === 0;
             const dist = Math.abs(offset);
 
-            const xOffset = offset * 300;
+            const xOffset = offset * 360;
             const zOffset = -dist * 150;
             const scale = isCenter ? 1 : 0.82;
             const rotateY = offset * -15;
@@ -148,7 +148,7 @@ export function BundleFocusRail({
               <motion.div
                 key={absIndex}
                 className={cn(
-                  "absolute w-[280px] md:w-[300px] rounded-2xl border-2 bg-white shadow-2xl overflow-hidden",
+                  "absolute w-[320px] md:w-[360px] rounded-2xl border-2 bg-white shadow-2xl overflow-hidden",
                   isCenter ? "z-20" : "z-10",
                   selected && isCenter
                     ? "border-[#36bff9] ring-2 ring-[#36bff9]"
@@ -173,7 +173,7 @@ export function BundleFocusRail({
                 }}
                 data-testid={`rail-bundle-card-${bundle.id}`}
               >
-                <div className="p-5 flex flex-col h-full min-h-[380px]">
+                <div className="p-6 flex flex-col h-full min-h-[440px]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
                       {bundle.badge}

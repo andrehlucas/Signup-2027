@@ -655,13 +655,12 @@ export default function CustomizePage() {
           data-testid="bundle-selection-modal"
         >
           <div
-            className="absolute inset-0 bg-black/50"
+            className="absolute inset-0 bg-black/75"
             onClick={() => setBundleModalOpen(false)}
           />
           <div className="relative z-10 w-full h-full flex flex-col">
             <div className="flex items-center justify-center gap-2 pt-6 pb-2">
-              <DollarSign className="h-5 w-5 text-[#36bff9]" />
-              <h2 className="text-xl font-bold text-white">Bundle & Save</h2>
+              <h2 className="text-2xl font-extrabold tracking-tight text-white">Bundle & Save</h2>
               <button
                 onClick={() => setBundleModalOpen(false)}
                 className="ml-4 text-white/70 hover:text-white"
