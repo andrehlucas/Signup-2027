@@ -169,7 +169,8 @@ export function BundleFocusRail({
                   return BASE_SPRING;
                 }}
                 style={{ transformStyle: "preserve-3d" }}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   if (offset !== 0) setActive((p) => p + offset);
                 }}
                 data-testid={`rail-bundle-card-${bundle.id}`}
@@ -246,7 +247,7 @@ export function BundleFocusRail({
           })}
           <button
             onClick={handlePrev}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/10 p-3 text-white/70 backdrop-blur-sm ring-1 ring-white/10 transition hover:bg-white/20 hover:text-white active:scale-90"
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-[#0a1628]/10 p-3 text-[#0a1628]/50 backdrop-blur-sm ring-1 ring-[#0a1628]/10 transition hover:bg-[#0a1628]/20 hover:text-[#0a1628] active:scale-90"
             aria-label="Previous bundle"
             data-testid="rail-arrow-prev"
           >
@@ -254,7 +255,7 @@ export function BundleFocusRail({
           </button>
           <button
             onClick={handleNext}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-white/10 p-3 text-white/70 backdrop-blur-sm ring-1 ring-white/10 transition hover:bg-white/20 hover:text-white active:scale-90"
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 rounded-full bg-[#0a1628]/10 p-3 text-[#0a1628]/50 backdrop-blur-sm ring-1 ring-[#0a1628]/10 transition hover:bg-[#0a1628]/20 hover:text-[#0a1628] active:scale-90"
             aria-label="Next bundle"
             data-testid="rail-arrow-next"
           >
@@ -272,11 +273,11 @@ export function BundleFocusRail({
               transition={{ duration: 0.25 }}
               className="text-center"
             >
-              <h3 className="text-4xl font-extrabold tracking-tight text-white">
+              <h3 className="text-4xl font-extrabold tracking-tight text-[#0a1628]">
                 {activeItem.tier}
               </h3>
               {activeItem.originalPrice && (
-                <p className="text-sm text-emerald-400">
+                <p className="text-sm font-semibold text-[#36bff9]">
                   Save ${activeItem.originalPrice - activeItem.price}/mo
                 </p>
               )}
@@ -284,21 +285,21 @@ export function BundleFocusRail({
           </AnimatePresence>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 rounded-full bg-neutral-900/80 p-1 ring-1 ring-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-1 rounded-full bg-[#0a1628]/80 p-1 ring-1 ring-white/10 backdrop-blur-md">
               <button
                 onClick={handlePrev}
-                className="rounded-full p-2.5 text-neutral-400 transition hover:bg-white/10 hover:text-white active:scale-95"
+                className="rounded-full p-2.5 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
                 aria-label="Previous"
                 data-testid="rail-button-prev"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
-              <span className="min-w-[40px] text-center text-xs font-mono text-neutral-500">
+              <span className="min-w-[40px] text-center text-xs font-mono text-white/50">
                 {activeIndex + 1} / {count}
               </span>
               <button
                 onClick={handleNext}
-                className="rounded-full p-2.5 text-neutral-400 transition hover:bg-white/10 hover:text-white active:scale-95"
+                className="rounded-full p-2.5 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
                 aria-label="Next"
                 data-testid="rail-button-next"
               >
@@ -310,7 +311,7 @@ export function BundleFocusRail({
           {onRevert && selectedBundleId !== "essentials" && (
             <button
               onClick={onRevert}
-              className="text-sm text-white/70 hover:text-white underline"
+              className="text-sm text-[#0a1628]/60 hover:text-[#0a1628] underline"
               data-testid="button-revert-essentials"
             >
               Revert to The Essentials (${essentialsPrice}/mo)

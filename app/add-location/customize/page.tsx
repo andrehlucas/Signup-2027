@@ -655,19 +655,12 @@ export default function CustomizePage() {
           data-testid="bundle-selection-modal"
         >
           <div
-            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            className="absolute inset-0 bg-white/60 backdrop-blur-xl"
             onClick={() => setBundleModalOpen(false)}
           />
-          <div className="relative z-10 w-full h-full flex flex-col">
-            <div className="flex items-center justify-center gap-2 pt-6 pb-2">
-              <h2 className="text-4xl font-extrabold tracking-tight text-white">Bundle & Save</h2>
-              <button
-                onClick={() => setBundleModalOpen(false)}
-                className="ml-4 text-white/70 hover:text-white"
-                data-testid="button-close-bundle-modal"
-              >
-                <X className="h-5 w-5" />
-              </button>
+          <div className="relative z-10 w-full h-full flex flex-col" onClick={() => setBundleModalOpen(false)}>
+            <div className="flex items-center justify-center pt-10 pb-4">
+              <h2 className="text-4xl font-extrabold tracking-tight text-[#0a1628]">Bundle & Save</h2>
             </div>
             <div className="flex-1 min-h-0">
               <BundleFocusRail
