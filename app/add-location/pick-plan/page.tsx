@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, ChevronRight, MapPin, Star, Building2, DollarSign, ChevronDown, ChevronUp } from 'lucide-react';
+import { Check, ChevronRight, MapPin, Star, Building2, DollarSign, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import {
   Select,
@@ -71,10 +71,6 @@ export default function PickPlanPage() {
     }
   };
 
-  const handleBackFromPlan = () => {
-    setSubStep('location');
-  };
-
   const upgradeBundles = bundles.filter(b => b.id !== 'essentials');
   const displayBundleName = selectedBundle
     ? (selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : 'The Essentials')
@@ -84,16 +80,6 @@ export default function PickPlanPage() {
     return (
       <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="pick-plan-page-location">
         <div className="max-w-4xl lg:max-w-6xl mx-auto">
-          <Button
-            variant="ghost"
-            onClick={() => router.push('/')}
-            className="mb-6"
-            data-testid="button-back-info"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Your Information
-          </Button>
-
           <div className="mb-8">
             <ProgressIndicator currentStep={2} />
           </div>
@@ -217,16 +203,6 @@ export default function PickPlanPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
-      <Button
-        variant="ghost"
-        onClick={handleBackFromPlan}
-        className="mb-6"
-        data-testid="button-back-location"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Location
-      </Button>
-
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={2} />

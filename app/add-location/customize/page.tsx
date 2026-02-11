@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil } from 'lucide-react';
+import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -211,16 +211,6 @@ export default function CustomizePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="customize-page">
-      <Button
-        variant="ghost"
-        onClick={() => router.push('/add-location/pick-plan')}
-        className="mb-6"
-        data-testid="button-back-plan"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Pick Your Plan
-      </Button>
-
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={3} />

@@ -162,118 +162,138 @@ __turbopack_context__.s([
     ()=>ProgressIndicator
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/check.js [app-client] (ecmascript) <export default as Check>");
+;
+var _s = __turbopack_context__.k.signature();
 'use client';
 ;
 ;
 const defaultSteps = [
     {
         id: 1,
-        name: 'Your Info'
+        name: 'Your Info',
+        path: '/'
     },
     {
         id: 2,
-        name: 'Pick Your Plan'
+        name: 'Pick Your Plan',
+        path: '/add-location/pick-plan'
     },
     {
         id: 3,
-        name: 'Customize'
+        name: 'Customize',
+        path: '/add-location/customize'
     },
     {
         id: 4,
-        name: 'Checkout'
+        name: 'Checkout',
+        path: '/add-location/checkout'
     }
 ];
 function ProgressIndicator({ currentStep, steps = defaultSteps }) {
+    _s();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const handleStepClick = (step)=>{
+        if (step.id <= currentStep) {
+            router.push(step.path);
+        }
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
         "aria-label": "Progress",
         className: "w-full",
         "data-testid": "progress-indicator",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ol", {
             className: "flex items-center justify-center",
-            children: steps.map((step, stepIdx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+            children: steps.map((step, stepIdx)=>{
+                const isClickable = step.id < currentStep;
+                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                     className: `relative ${stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : ''}`,
                     children: step.id < currentStep ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center",
+                        className: `flex items-center ${isClickable ? 'cursor-pointer group' : ''}`,
+                        onClick: ()=>handleStepClick(step),
+                        "data-testid": `step-nav-${step.id}`,
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "flex h-8 w-8 items-center justify-center rounded-full bg-[#36bff9]",
+                                className: "flex h-8 w-8 items-center justify-center rounded-full bg-[#36bff9] transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#36bff9]/30 group-hover:ring-offset-2",
                                 "data-testid": `step-${step.id}-complete`,
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
                                     className: "h-5 w-5 text-white",
                                     "aria-hidden": "true"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                    lineNumber: 37,
-                                    columnNumber: 19
+                                    lineNumber: 54,
+                                    columnNumber: 21
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 33,
-                                columnNumber: 17
+                                lineNumber: 50,
+                                columnNumber: 19
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "ml-3 text-sm font-medium text-gray-900 hidden sm:block",
+                                className: "ml-3 text-sm font-medium text-gray-900 group-hover:text-[#36bff9] hidden sm:block",
                                 children: step.name
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 39,
-                                columnNumber: 17
+                                lineNumber: 56,
+                                columnNumber: 19
                             }, this),
                             stepIdx !== steps.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute right-0 top-4 h-0.5 w-8 sm:w-20 bg-[#36bff9]",
                                 "aria-hidden": "true"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 43,
-                                columnNumber: 19
+                                lineNumber: 60,
+                                columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                        lineNumber: 32,
-                        columnNumber: 15
+                        lineNumber: 45,
+                        columnNumber: 17
                     }, this) : step.id === currentStep ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center",
+                        className: "flex items-center cursor-pointer group",
                         "aria-current": "step",
+                        onClick: ()=>handleStepClick(step),
+                        "data-testid": `step-nav-${step.id}`,
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#36bff9] bg-white",
+                                className: "flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#36bff9] bg-white transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#36bff9]/30 group-hover:ring-offset-2",
                                 "data-testid": `step-${step.id}-current`,
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     className: "text-[#36bff9] font-semibold",
                                     children: step.id
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                    lineNumber: 55,
-                                    columnNumber: 19
+                                    lineNumber: 77,
+                                    columnNumber: 21
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 51,
-                                columnNumber: 17
+                                lineNumber: 73,
+                                columnNumber: 19
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "ml-3 text-sm font-medium text-[#36bff9] hidden sm:block",
                                 children: step.name
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 57,
-                                columnNumber: 17
+                                lineNumber: 79,
+                                columnNumber: 19
                             }, this),
                             stepIdx !== steps.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute right-0 top-4 h-0.5 w-8 sm:w-20 bg-gray-200",
                                 "aria-hidden": "true"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 61,
-                                columnNumber: 19
+                                lineNumber: 83,
+                                columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                        lineNumber: 50,
-                        columnNumber: 15
+                        lineNumber: 67,
+                        columnNumber: 17
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex items-center",
                         children: [
@@ -285,52 +305,58 @@ function ProgressIndicator({ currentStep, steps = defaultSteps }) {
                                     children: step.id
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                    lineNumber: 73,
-                                    columnNumber: 19
+                                    lineNumber: 95,
+                                    columnNumber: 21
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 69,
-                                columnNumber: 17
+                                lineNumber: 91,
+                                columnNumber: 19
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "ml-3 text-sm font-medium text-gray-500 hidden sm:block",
                                 children: step.name
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 75,
-                                columnNumber: 17
+                                lineNumber: 97,
+                                columnNumber: 19
                             }, this),
                             stepIdx !== steps.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute right-0 top-4 h-0.5 w-8 sm:w-20 bg-gray-200",
                                 "aria-hidden": "true"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                                lineNumber: 79,
-                                columnNumber: 19
+                                lineNumber: 101,
+                                columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                        lineNumber: 68,
-                        columnNumber: 15
+                        lineNumber: 90,
+                        columnNumber: 17
                     }, this)
                 }, step.name, false, {
                     fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-                    lineNumber: 27,
-                    columnNumber: 11
-                }, this))
+                    lineNumber: 40,
+                    columnNumber: 13
+                }, this);
+            })
         }, void 0, false, {
             fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-            lineNumber: 25,
+            lineNumber: 35,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/add-location/components/ProgressIndicator.tsx",
-        lineNumber: 24,
+        lineNumber: 34,
         columnNumber: 5
     }, this);
 }
+_s(ProgressIndicator, "fN7XvhJ+p5oE6+Xlo0NJmXpxjC8=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
+    ];
+});
 _c = ProgressIndicator;
 var _c;
 __turbopack_context__.k.register(_c, "ProgressIndicator");

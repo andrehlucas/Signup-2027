@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, MapPin, Star, Building2 } from 'lucide-react';
+import { MapPin, Star, Building2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import {
   Select,
@@ -58,16 +58,6 @@ export default function LocationSelectionPage() {
   return (
     <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="location-selection-page">
       <div className="max-w-4xl lg:max-w-6xl mx-auto">
-        <Button
-          variant="ghost"
-          onClick={() => router.push('/')}
-          className="mb-6"
-          data-testid="button-back-info"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Your Information
-        </Button>
-
         <div className="mb-8">
           <ProgressIndicator currentStep={2} />
         </div>

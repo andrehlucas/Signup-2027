@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Clock, HelpCircle, Tag, X, Loader2 } from 'lucide-react';
+import { MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Clock, HelpCircle, Tag, X, Loader2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Input } from '@/app/components/ui/input';
@@ -257,16 +257,6 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 lg:p-8" data-testid="checkout-page">
-      <Button
-        variant="ghost"
-        onClick={() => router.push('/add-location/customize')}
-        className="mb-6"
-        data-testid="button-back-customize"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Customize
-      </Button>
-
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={4} />
@@ -913,17 +903,6 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        <div className="flex justify-between mt-6">
-          <Button
-            variant="outline"
-            onClick={() => router.push('/add-location/customize')}
-            disabled={isProcessing}
-            data-testid="button-back"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Customize
-          </Button>
-        </div>
       </div>
     </div>
   );
