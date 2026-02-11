@@ -87,6 +87,7 @@ export interface OrderState {
   addons: Addon[];
   extensionCount: number;
   agreementAccepted: boolean;
+  appliedPromo: AppliedPromo | null;
 }
 
 export const bundles: Bundle[] = [
@@ -166,6 +167,112 @@ export const bundles: Bundle[] = [
     },
   },
 ];
+
+export type PromoCodeType = 'percentage' | 'flat' | 'free_months';
+
+export interface PromoCode {
+  code: string;
+  type: PromoCodeType;
+  value: number;
+  description: string;
+  minOrderAmount?: number;
+  expiresAt?: string;
+  maxUses?: number;
+  currentUses: number;
+}
+
+export interface AppliedPromo {
+  code: string;
+  type: PromoCodeType;
+  value: number;
+  description: string;
+  discountAmount: number;
+}
+
+export const promoCodes: PromoCode[] = [
+  {
+    code: 'SAVE20',
+    type: 'percentage',
+    value: 20,
+    description: '20% off your first payment',
+    currentUses: 0,
+    maxUses: 100,
+  },
+  {
+    code: 'FLAT50',
+    type: 'flat',
+    value: 50,
+    description: '$50 off your order',
+    currentUses: 0,
+  },
+  {
+    code: 'FREEMONTH',
+    type: 'free_months',
+    value: 1,
+    description: '1 free month added',
+    currentUses: 0,
+    maxUses: 50,
+  },
+  {
+    code: 'WELCOME10',
+    type: 'percentage',
+    value: 10,
+    description: '10% off for new customers',
+    currentUses: 0,
+  },
+  {
+    code: 'OPUS100',
+    type: 'flat',
+    value: 100,
+    description: '$100 off your order',
+    minOrderAmount: 300,
+    currentUses: 0,
+  },
+];
+
+export function validatePromoCode(
+  code: string,
+  monthlyTotal: number,
+  paymentTerm: number
+): { valid: boolean; promo?: PromoCode; error?: string } {
+  const promo = promoCodes.find(p => p.code.toUpperCase() === code.toUpperCase());
+
+  if (!promo) {
+    return { valid: false, error: 'Invalid promo code' };
+  }
+
+  if (promo.expiresAt && new Date(promo.expiresAt) < new Date()) {
+    return { valid: false, error: 'This promo code has expired' };
+  }
+
+  if (promo.maxUses !== undefined && promo.currentUses >= promo.maxUses) {
+    return { valid: false, error: 'This promo code has reached its usage limit' };
+  }
+
+  const orderTotal = monthlyTotal * paymentTerm;
+  if (promo.minOrderAmount && orderTotal < promo.minOrderAmount) {
+    return { valid: false, error: `Minimum order of $${promo.minOrderAmount} required` };
+  }
+
+  return { valid: true, promo };
+}
+
+export function calculatePromoDiscount(
+  promo: PromoCode,
+  monthlyTotal: number,
+  paymentTerm: number
+): number {
+  switch (promo.type) {
+    case 'percentage':
+      return Math.round((monthlyTotal * paymentTerm * promo.value) / 100 * 100) / 100;
+    case 'flat':
+      return Math.min(promo.value, monthlyTotal * paymentTerm);
+    case 'free_months':
+      return monthlyTotal * Math.min(promo.value, paymentTerm);
+    default:
+      return 0;
+  }
+}
 
 export const featureLabels: Record<string, string> = {
   businessAddress: 'Business Address',

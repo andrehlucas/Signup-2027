@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Clock, HelpCircle } from 'lucide-react';
+import { ArrowLeft, MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Clock, HelpCircle, Tag, X, Loader2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Input } from '@/app/components/ui/input';
@@ -12,7 +12,7 @@ import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useToast } from '@/app/hooks/use-toast';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
-import { Bundle, featureLabels } from '../types';
+import { Bundle, featureLabels, AppliedPromo } from '../types';
 
 type PaymentTerm = 1 | 3 | 6 | 12;
 
@@ -53,8 +53,11 @@ export default function CheckoutPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const { order, removeAddon, setExtensionCount, setAgreementAccepted, getCartTotal } = useOrder();
+  const { order, removeAddon, setExtensionCount, setAgreementAccepted, setAppliedPromo, getCartTotal } = useOrder();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
+  const [promoError, setPromoError] = useState('');
+  const [isValidatingPromo, setIsValidatingPromo] = useState(false);
   const [cardNumber, setCardNumber] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
@@ -130,7 +133,21 @@ export default function CheckoutPage() {
   const paidMonths = paymentTerm - selectedTermOption.freeMonths;
   const termTotal = monthly * paidMonths;
   const termSavings = monthly * selectedTermOption.freeMonths;
-  const totalDueToday = termTotal + oneTime;
+  const promoDiscount = useMemo(() => {
+    if (!order.appliedPromo) return 0;
+    const promo = order.appliedPromo;
+    switch (promo.type) {
+      case 'percentage':
+        return Math.round((termTotal * promo.value) / 100 * 100) / 100;
+      case 'flat':
+        return Math.min(promo.value, termTotal);
+      case 'free_months':
+        return monthly * Math.min(promo.value, paidMonths);
+      default:
+        return 0;
+    }
+  }, [order.appliedPromo, termTotal, monthly, paidMonths]);
+  const totalDueToday = Math.max(0, termTotal + oneTime - promoDiscount);
   const effectiveMonthlyRate = paymentTerm > 1 ? (termTotal / paymentTerm).toFixed(2) : monthly.toString();
 
   
@@ -144,6 +161,50 @@ export default function CheckoutPage() {
     toast({
       title: 'Add-on removed',
       description: 'The add-on has been removed from your cart.',
+    });
+  };
+
+  const handleApplyPromo = async () => {
+    if (!promoCode.trim()) return;
+    setPromoError('');
+    setIsValidatingPromo(true);
+
+    try {
+      const response = await fetch('/api/promo/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: promoCode.trim(),
+          monthlyTotal: monthly,
+          paymentTerm,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.valid && data.promo) {
+        setAppliedPromo(data.promo as AppliedPromo);
+        setPromoCode('');
+        setPromoError('');
+        toast({
+          title: 'Promo code applied',
+          description: data.promo.description,
+        });
+      } else {
+        setPromoError(data.error || 'Invalid promo code');
+      }
+    } catch {
+      setPromoError('Failed to validate promo code. Please try again.');
+    } finally {
+      setIsValidatingPromo(false);
+    }
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    toast({
+      title: 'Promo code removed',
+      description: 'The promo code has been removed from your order.',
     });
   };
 
@@ -662,6 +723,63 @@ export default function CheckoutPage() {
               </div>
 
               <div className="border-t border-gray-200 pt-4 mb-4">
+                {order.appliedPromo ? (
+                  <div className="flex items-center justify-between bg-green-50 rounded-lg px-3 py-2 mb-3">
+                    <div className="flex items-center gap-2">
+                      <Tag className="h-3.5 w-3.5 text-green-600" />
+                      <div>
+                        <p className="text-sm font-medium text-green-700">{order.appliedPromo.code}</p>
+                        <p className="text-xs text-green-600">{order.appliedPromo.description}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleRemovePromo}
+                      className="text-green-600 hover:text-green-800 p-1"
+                      data-testid="button-remove-promo"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mb-3">
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        placeholder="Enter promo code"
+                        value={promoCode}
+                        onChange={(e) => {
+                          setPromoCode(e.target.value.toUpperCase());
+                          setPromoError('');
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') handleApplyPromo();
+                        }}
+                        className={`flex-1 text-sm ${promoError ? 'border-red-300' : ''}`}
+                        data-testid="input-promo-code"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleApplyPromo}
+                        disabled={!promoCode.trim() || isValidatingPromo}
+                        className="shrink-0"
+                        data-testid="button-apply-promo"
+                      >
+                        {isValidatingPromo ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          'Apply'
+                        )}
+                      </Button>
+                    </div>
+                    {promoError && (
+                      <p className="text-xs text-red-500 mt-1" data-testid="text-promo-error">{promoError}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div className="border-t border-gray-200 pt-4 mb-4">
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-600">Monthly Rate</span>
                   <span className="font-semibold text-gray-900">${monthly}/mo</span>
@@ -674,6 +792,15 @@ export default function CheckoutPage() {
                   <div className="flex justify-between mb-2 text-green-600">
                     <span>Discount ({selectedTermOption.freeMonths} month{selectedTermOption.freeMonths > 1 ? 's' : ''} free)</span>
                     <span className="font-semibold">-${termSavings}</span>
+                  </div>
+                )}
+                {promoDiscount > 0 && (
+                  <div className="flex justify-between mb-2 text-green-600">
+                    <span className="flex items-center gap-1">
+                      <Tag className="h-3 w-3" />
+                      Promo: {order.appliedPromo?.code}
+                    </span>
+                    <span className="font-semibold">-${promoDiscount}</span>
                   </div>
                 )}
                 {oneTime > 0 && (

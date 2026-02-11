@@ -1235,6 +1235,12 @@ body {
   animation: 2s cubic-bezier(.4, 0, .6, 1) infinite pulse;
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 .cursor-default {
   cursor: default;
 }
@@ -2669,12 +2675,6 @@ body {
   animation: var(--animate-spin);
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(1turn);
-  }
-}
-
 @keyframes image-glow {
   0% {
     opacity: 0;
@@ -2920,6 +2920,11 @@ body {
 
 .hover\:text-gray-600:hover {
   color: var(--gray-600);
+}
+
+.hover\:text-green-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(22 101 52 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-muted-foreground:hover {

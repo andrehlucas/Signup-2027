@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo } from './types';
+import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo, AppliedPromo } from './types';
 
 interface OrderContextType {
   order: OrderState;
@@ -14,6 +14,7 @@ interface OrderContextType {
   updateAddon: (addon: Addon) => void;
   setExtensionCount: (count: number) => void;
   setAgreementAccepted: (accepted: boolean) => void;
+  setAppliedPromo: (promo: AppliedPromo | null) => void;
   clearOrder: () => void;
   getCartTotal: () => { monthly: number; oneTime: number };
   getCartItems: () => Array<{ id: string; name: string; price: number; type: string; quantity?: number }>;
@@ -38,6 +39,7 @@ const initialOrder: OrderState = {
   addons: [],
   extensionCount: 0,
   agreementAccepted: false,
+  appliedPromo: null,
 };
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -88,6 +90,10 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const setAgreementAccepted = (accepted: boolean) => {
     setOrder(prev => ({ ...prev, agreementAccepted: accepted }));
+  };
+
+  const setAppliedPromo = (promo: AppliedPromo | null) => {
+    setOrder(prev => ({ ...prev, appliedPromo: promo }));
   };
 
   const clearOrder = () => {
@@ -173,6 +179,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         updateAddon,
         setExtensionCount,
         setAgreementAccepted,
+        setAppliedPromo,
         clearOrder,
         getCartTotal,
         getCartItems,
