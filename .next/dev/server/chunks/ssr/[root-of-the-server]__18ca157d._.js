@@ -569,6 +569,8 @@ __turbopack_context__.s([
     ()=>sampleLocations,
     "samplePhoneNumbers",
     ()=>samplePhoneNumbers,
+    "sampleTollFreeNumbers",
+    ()=>sampleTollFreeNumbers,
     "validatePromoCode",
     ()=>validatePromoCode
 ]);
@@ -604,8 +606,8 @@ const bundles = [
             liveCallAnswering: true,
             callTransferring: true,
             calloutFeature: true,
-            tollFreeNumber: false,
-            callLog: false,
+            tollFreeNumber: true,
+            callLog: true,
             supervisedCallTransfer: false,
             messageTaking: false
         }
@@ -1202,6 +1204,50 @@ const samplePhoneNumbers = [
         isAvailable: true
     }
 ];
+const sampleTollFreeNumbers = [
+    {
+        id: 'tf-1',
+        number: '(800) 555-1234',
+        type: 'toll-free',
+        areaCode: '800',
+        isAvailable: true
+    },
+    {
+        id: 'tf-2',
+        number: '(800) 555-5678',
+        type: 'toll-free',
+        areaCode: '800',
+        isAvailable: true
+    },
+    {
+        id: 'tf-3',
+        number: '(888) 555-1234',
+        type: 'toll-free',
+        areaCode: '888',
+        isAvailable: true
+    },
+    {
+        id: 'tf-4',
+        number: '(888) 555-5678',
+        type: 'toll-free',
+        areaCode: '888',
+        isAvailable: true
+    },
+    {
+        id: 'tf-5',
+        number: '(877) 555-1234',
+        type: 'toll-free',
+        areaCode: '877',
+        isAvailable: true
+    },
+    {
+        id: 'tf-6',
+        number: '(866) 555-1234',
+        type: 'toll-free',
+        areaCode: '866',
+        isAvailable: true
+    }
+];
 function getStates() {
     const states = [
         ...new Set(sampleLocations.map((loc)=>loc.state))
@@ -1280,7 +1326,7 @@ function PickPlanPage() {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const { order, setLocation, setBundle } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$context$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useOrder"])();
     const [subStep, setSubStep] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(order.location ? 'plan' : 'location');
-    const [selectedBundle, setSelectedBundle] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(order.bundle);
+    const [selectedBundle, setSelectedBundle] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(order.bundle || __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["bundles"][0]);
     const { trackComplete } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$hooks$2f$use$2d$funnel$2d$tracking$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useFunnelTracking"])('pick_plan');
     const [selectedState, setSelectedState] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [selectedCity, setSelectedCity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');

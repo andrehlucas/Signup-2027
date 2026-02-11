@@ -28,7 +28,7 @@ export default function PickPlanPage() {
   const router = useRouter();
   const { order, setLocation, setBundle } = useOrder();
   const [subStep, setSubStep] = useState<'location' | 'plan'>(order.location ? 'plan' : 'location');
-  const [selectedBundle, setSelectedBundle] = useState<Bundle | null>(order.bundle);
+  const [selectedBundle, setSelectedBundle] = useState<Bundle | null>(order.bundle || bundles[0]);
   const { trackComplete } = useFunnelTracking('pick_plan');
 
   const [selectedState, setSelectedState] = useState<string>('');
