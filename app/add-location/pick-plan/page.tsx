@@ -44,15 +44,6 @@ export default function PickPlanPage() {
     [selectedCity]
   );
 
-  useEffect(() => {
-    if (!selectedBundle && subStep === 'plan') {
-      const essentialsBundle = bundles[0];
-      if (essentialsBundle) {
-        setSelectedBundle(essentialsBundle);
-        setBundle(essentialsBundle);
-      }
-    }
-  }, [subStep]);
 
   const handleStateChange = (state: string) => {
     setSelectedState(state);
