@@ -659,10 +659,10 @@ export default function CustomizePage() {
             onClick={() => setBundleModalOpen(false)}
           />
           <div className="relative z-10 w-full h-full flex flex-col" onClick={() => setBundleModalOpen(false)}>
-            <div className="flex flex-col items-center justify-center pt-10 pb-4 gap-2" onClick={(e) => e.stopPropagation()}>
+            <div className="flex flex-col items-center justify-center pt-6 pb-2 gap-1" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-5xl font-extrabold tracking-tight text-[#0a1628]">Bundle & Save</h2>
               <p className="text-sm text-[#0a1628]/60 text-center max-w-2xl">
-                Business Address &middot; Live Call Answering &middot; Call Transferring &middot; Callout Feature &middot; Toll-Free Number &middot; Call Log &middot; Supervised Call Transfer &middot; Message Taking
+                All bundles include: Business Address, Live Call Answering, Call Transferring, Callout Feature, Toll-Free Number, Call Log, Supervised Call Transfer &amp; Message Taking
               </p>
             </div>
             <div className="flex-1 min-h-0">

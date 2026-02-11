@@ -121,7 +121,7 @@ export function BundleFocusRail({
     >
       <div className="relative z-10 flex flex-1 flex-col justify-center px-4">
         <motion.div
-          className="relative mx-auto flex h-[500px] w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing"
+          className="relative mx-auto flex h-[400px] w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing"
           style={{ perspective: "1200px" }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
@@ -175,7 +175,7 @@ export function BundleFocusRail({
                 }}
                 data-testid={`rail-bundle-card-${bundle.id}`}
               >
-                <div className="p-6 flex flex-col h-full min-h-[440px]">
+                <div className="p-5 flex flex-col h-full min-h-[360px]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
                       {bundle.badge}
@@ -263,7 +263,7 @@ export function BundleFocusRail({
           </button>
         </motion.div>
 
-        <div className="mx-auto mt-6 flex w-full max-w-4xl flex-col items-center gap-4">
+        <div className="mx-auto mt-2 flex w-full max-w-4xl flex-col items-center gap-2">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeItem.id}
