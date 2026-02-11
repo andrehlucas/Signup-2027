@@ -12,19 +12,26 @@ import {
   SelectValue,
 } from '@/app/components/ui/select';
 import { ProgressIndicator } from './components/ProgressIndicator';
+import { PlanSelectionModal } from './components/PlanSelectionModal';
 import { useOrder } from './context';
+import { useFunnelTracking } from '../hooks/use-funnel-tracking';
 import {
   getStates,
   getCitiesByState,
   getLocationsByCity,
   AvailableLocation,
+  Bundle,
 } from './types';
 
 export default function LocationSelectionPage() {
   const router = useRouter();
-  const { order, setLocation } = useOrder();
+  const { order, setLocation, setBundle } = useOrder();
   const [selectedState, setSelectedState] = useState<string>('');
   const [selectedCity, setSelectedCity] = useState<string>('');
+  const [planModalOpen, setPlanModalOpen] = useState(false);
+  const [pendingLocation, setPendingLocation] = useState<AvailableLocation | null>(null);
+  const { trackComplete } = useFunnelTracking('pick_plan');
+
   useEffect(() => {
     if (!order.userInfo.firstName || !order.userInfo.email) {
       router.push('/');
@@ -52,7 +59,15 @@ export default function LocationSelectionPage() {
 
   const handleLocationSelect = (location: AvailableLocation) => {
     setLocation(location);
-    router.push('/add-location/pick-plan');
+    setPendingLocation(location);
+    setPlanModalOpen(true);
+  };
+
+  const handlePlanConfirm = (bundle: Bundle) => {
+    setBundle(bundle);
+    setPlanModalOpen(false);
+    trackComplete({ bundle: bundle.name });
+    router.push('/add-location/customize');
   };
 
   return (
@@ -181,6 +196,16 @@ export default function LocationSelectionPage() {
           )}
         </div>
       </div>
+
+      {pendingLocation && (
+        <PlanSelectionModal
+          open={planModalOpen}
+          onOpenChange={setPlanModalOpen}
+          location={pendingLocation}
+          selectedBundle={order.bundle}
+          onConfirm={handlePlanConfirm}
+        />
+      )}
     </div>
   );
 }
