@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info } from 'lucide-react';
+import { ArrowLeft, Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -198,40 +198,6 @@ export default function CustomizePage() {
           <p className="text-gray-600">
             for <span className="font-medium">{order.location.name}</span>, {order.location.city}
           </p>
-        </div>
-
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="phone-section">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Business Phone Number</h2>
-              <p className="text-sm text-gray-600">
-                Auto-assigned based on your location. You can change it if you prefer a different number.
-              </p>
-            </div>
-          </div>
-
-          {selectedPhone && (
-            <div className="mt-4 flex items-center justify-between bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#36bff9] flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900" data-testid="selected-phone-number">
-                    {selectedPhone.number}
-                  </p>
-                  <p className="text-sm text-gray-500">Local Number</p>
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                onClick={handleOpenPhoneModal}
-                data-testid="button-change-phone"
-              >
-                Change
-              </Button>
-            </div>
-          )}
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="addons-section">
@@ -443,6 +409,41 @@ export default function CustomizePage() {
               </div>
             )}
           </div>
+        </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="phone-section">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Business Phone Number</h2>
+              <p className="text-sm text-gray-600">
+                Auto-assigned based on your location. You can change it if you prefer a different number.
+              </p>
+            </div>
+          </div>
+
+          {selectedPhone && (
+            <div className="mt-4 flex items-center justify-between bg-gray-50 rounded-lg p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#36bff9] flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900" data-testid="selected-phone-number">
+                    {selectedPhone.number}
+                  </p>
+                  <p className="text-sm text-gray-500">Local Number</p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleOpenPhoneModal}
+                data-testid="button-change-phone"
+              >
+                <Pencil className="h-4 w-4 text-gray-500" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
