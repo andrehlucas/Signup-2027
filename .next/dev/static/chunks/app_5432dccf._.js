@@ -3666,7 +3666,7 @@ function CustomizePage() {
                 "data-testid": "bundle-selection-modal",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "absolute inset-0 bg-black/75",
+                        className: "absolute inset-0 bg-black/80 backdrop-blur-md",
                         onClick: ()=>setBundleModalOpen(false)
                     }, void 0, false, {
                         fileName: "[project]/app/add-location/customize/page.tsx",

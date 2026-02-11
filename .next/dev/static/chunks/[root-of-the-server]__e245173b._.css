@@ -1683,10 +1683,6 @@ body {
   background-color: hsl(var(--background));
 }
 
-.bg-black\/75 {
-  background-color: #000000bf;
-}
-
 .bg-black\/80 {
   background-color: #000c;
 }

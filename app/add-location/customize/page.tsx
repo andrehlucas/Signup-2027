@@ -655,7 +655,7 @@ export default function CustomizePage() {
           data-testid="bundle-selection-modal"
         >
           <div
-            className="absolute inset-0 bg-black/75"
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
             onClick={() => setBundleModalOpen(false)}
           />
           <div className="relative z-10 w-full h-full flex flex-col">
