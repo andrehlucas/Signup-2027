@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil } from 'lucide-react';
+import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil, DollarSign, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -41,7 +41,7 @@ import {
 
 export default function CustomizePage() {
   const router = useRouter();
-  const { order, setPhoneNumber, setTollFreePhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
+  const { order, setBundle, setPhoneNumber, setTollFreePhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
   const selectedBundle = order.bundle;
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
@@ -51,6 +51,7 @@ export default function CustomizePage() {
   const [tollFreeModalOpen, setTollFreeModalOpen] = useState(false);
   const [selectedTollFree, setSelectedTollFree] = useState<PhoneNumber | null>(order.tollFreePhoneNumber);
   const [tempSelectedTollFree, setTempSelectedTollFree] = useState<PhoneNumber | null>(null);
+  const [bundleModalOpen, setBundleModalOpen] = useState(false);
   const { trackComplete } = useFunnelTracking('customize');
 
   useEffect(() => {
@@ -89,6 +90,15 @@ export default function CustomizePage() {
       setTollFreePhoneNumber(null);
     }
   }, [hasTollFree]);
+
+  useEffect(() => {
+    if (!selectedBundle) return;
+    order.addons.forEach(addon => {
+      if (isAddonIncluded(addon)) {
+        removeAddon(addon.id);
+      }
+    });
+  }, [selectedBundle?.id]);
 
   const handleTollFreeConfirm = () => {
     if (tempSelectedTollFree) {
@@ -193,6 +203,13 @@ export default function CustomizePage() {
       return aPriority - bPriority;
     });
   }, [selectedBundle]);
+
+  const upgradeBundles = bundles.filter(b => b.id !== 'essentials');
+
+  const handleBundleSelect = (bundle: Bundle) => {
+    setBundle(bundle);
+    setBundleModalOpen(false);
+  };
 
   const handleContinue = () => {
     if (selectedPhone) {
@@ -496,7 +513,24 @@ export default function CustomizePage() {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-50" data-testid="sticky-footer">
+      <div
+        className="fixed bottom-0 left-0 right-0 z-50"
+        data-testid="footer-wrapper"
+      >
+        <div
+          onClick={() => setBundleModalOpen(true)}
+          className="bg-gradient-to-r from-[#0f1c2e] to-[#1e3a5f] cursor-pointer hover:from-[#1a2d4a] hover:to-[#2a4a6f] transition-all"
+          data-testid="bundle-save-banner"
+        >
+          <div className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2">
+            <DollarSign className="h-4 w-4 text-[#36bff9]" />
+            <span className="text-sm font-semibold text-white">Bundle & Save</span>
+            <span className="text-xs text-blue-200/80 hidden sm:inline">- Upgrade your plan and save on popular features</span>
+            <ChevronRight className="h-4 w-4 text-[#36bff9] ml-1" />
+          </div>
+        </div>
+
+        <div className="bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]" data-testid="sticky-footer">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
@@ -612,6 +646,116 @@ export default function CustomizePage() {
           </div>
         </div>
       </div>
+      </div>
+
+      <Dialog open={bundleModalOpen} onOpenChange={setBundleModalOpen}>
+        <DialogContent className="sm:max-w-3xl max-h-[85vh] overflow-y-auto" data-testid="bundle-selection-modal">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <DollarSign className="h-5 w-5 text-[#36bff9]" />
+              Bundle & Save
+            </DialogTitle>
+            <DialogDescription>
+              Upgrade your plan to include popular features and save compared to adding them individually.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-4">
+            {upgradeBundles.map((bundle) => {
+              const isSelected = selectedBundle?.id === bundle.id;
+              return (
+                <div
+                  key={bundle.id}
+                  onClick={() => handleBundleSelect(bundle)}
+                  className={`rounded-xl overflow-hidden flex flex-col transition-all cursor-pointer border-2 ${
+                    isSelected
+                      ? 'border-[#36bff9] bg-blue-50 shadow-lg shadow-[#36bff9]/10'
+                      : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-md'
+                  }`}
+                  data-testid={`modal-bundle-card-${bundle.id}`}
+                >
+                  <div className="p-4 flex flex-col flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
+                        {bundle.badge}
+                      </span>
+                      {isSelected && (
+                        <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 rounded-full px-2 py-0.5">
+                          <Check className="h-3 w-3" />
+                          Active
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">
+                      {bundle.tier}
+                    </h3>
+
+                    <div className="mb-3">
+                      <span className="text-2xl font-bold text-gray-900">${bundle.price}</span>
+                      {bundle.originalPrice && (
+                        <span className="text-sm text-gray-400 line-through ml-2">
+                          ${bundle.originalPrice}
+                        </span>
+                      )}
+                      <span className="text-gray-500 text-sm ml-1">/mo</span>
+                    </div>
+
+                    <div className="space-y-1.5 flex-1">
+                      {Object.entries(bundle.features)
+                        .filter(([, enabled]) => enabled)
+                        .map(([key]) => (
+                          <div key={key} className="flex items-center gap-2 text-sm">
+                            <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
+                              <Check className="h-2.5 w-2.5 text-[#36bff9]" />
+                            </div>
+                            <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
+                          </div>
+                        ))}
+                    </div>
+
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleBundleSelect(bundle);
+                      }}
+                      className={`mt-4 w-full ${
+                        isSelected
+                          ? 'bg-[#36bff9] hover:bg-[#2aa8e0] text-white'
+                          : 'bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300'
+                      }`}
+                      data-testid={`modal-button-select-bundle-${bundle.id}`}
+                    >
+                      {isSelected ? (
+                        <>
+                          <Check className="h-4 w-4 mr-2" />
+                          Selected
+                        </>
+                      ) : (
+                        'Select'
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {selectedBundle?.id !== 'essentials' && (
+            <div className="border-t border-gray-100 pt-3">
+              <button
+                onClick={() => {
+                  handleBundleSelect(bundles[0]);
+                }}
+                className="text-sm text-gray-500 hover:text-gray-700 underline"
+                data-testid="button-revert-essentials"
+              >
+                Revert to The Essentials (${bundles[0].price}/mo)
+              </button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={phoneModalOpen} onOpenChange={setPhoneModalOpen}>
         <DialogContent className="sm:max-w-md" data-testid="phone-selection-modal">
