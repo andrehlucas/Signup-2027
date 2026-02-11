@@ -2,9 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { CheckCircle2, MapPin, Package, Phone, ArrowRight } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { useOrder } from '../context';
+import Image from 'next/image';
 
 function Fireworks() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -203,105 +204,92 @@ export default function ThankYouPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="thank-you-page">
+    <div className="min-h-[calc(100vh-73px)] bg-white" data-testid="thank-you-page">
       <Fireworks />
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
-            <CheckCircle2 className="h-12 w-12 text-green-600" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="heading-thank-you">
-            Order Confirmed!
-          </h1>
-          <p className="text-lg text-gray-600">
-            Your new virtual office is being set up. You'll receive a confirmation email shortly.
-          </p>
-        </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="order-confirmation">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Details</h2>
+      <div className="max-w-6xl mx-auto px-4 py-8 lg:py-12">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12 mb-10">
+          <div className="flex-1">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight" data-testid="heading-thank-you">
+              Congratulations on your new office!
+            </h1>
 
-          <div className="space-y-4">
-            <div className="flex items-start gap-4 pb-4 border-b border-gray-100">
-              <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <MapPin className="h-5 w-5 text-[#36bff9]" />
-              </div>
-              <div>
-                <p className="font-medium text-gray-900">{order.location.name}</p>
-                <p className="text-sm text-gray-600">{order.location.address}</p>
-                <p className="text-sm text-gray-600">{order.location.addressLine2}</p>
-                <p className="text-sm text-gray-600">{order.location.city}, {order.location.stateCode} {order.location.zipCode}</p>
-              </div>
-            </div>
+            <p className="text-sm sm:text-base font-semibold text-gray-800 mb-6 leading-relaxed">
+              You&apos;re Only a Few Steps Away From Setting Everything Up! Don&apos;t Worry, We&apos;ve Simplified The Process and Most Customers Complete All 3 Steps in Only a Few Minutes.
+            </p>
 
-            <div className="flex items-start gap-4 pb-4 border-b border-gray-100">
-              <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <Package className="h-5 w-5 text-[#36bff9]" />
+            <div className="space-y-4 mb-8">
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
+                <p className="text-gray-800">
+                  <strong>Confirmation:</strong> Confirm your address and business type.
+                </p>
               </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-gray-900">
-                      {order.bundle.name} {order.bundle.tier !== 'The Essentials' ? order.bundle.tier : ''}
-                    </p>
-                    <p className="text-sm text-gray-600">Monthly subscription</p>
-                  </div>
-                  <p className="font-semibold text-gray-900">${order.bundle.price}/mo</p>
-                </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
+                <p className="text-gray-800">
+                  <strong>Document Upload:</strong> Provide us with 2 required documents.*
+                </p>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
+                <p className="text-gray-800">
+                  <strong>Review and Sign:</strong> Review your details and sign.
+                </p>
               </div>
             </div>
 
-            {order.phoneNumber && (
-              <div className="flex items-start gap-4 pb-4 border-b border-gray-100">
-                <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                  <Phone className="h-5 w-5 text-[#36bff9]" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">{order.phoneNumber.number}</p>
-                  <p className="text-sm text-gray-600">Your new business phone number</p>
-                </div>
-              </div>
-            )}
+            <p className="font-semibold text-gray-900 mb-4">
+              What are you waiting for? It&apos;s as easy as 1, 2, 3...
+            </p>
 
-            {(order.addons.length > 0 || order.extensionCount > 0) && (
-              <div className="pt-2">
-                <p className="text-sm font-medium text-gray-700 mb-2">Add-ons included:</p>
-                <div className="flex flex-wrap gap-2">
-                  {order.addons.map((addon) => (
-                    <span
-                      key={addon.id}
-                      className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-sm text-gray-700"
-                    >
-                      {addon.name}
-                    </span>
-                  ))}
-                  {order.extensionCount > 0 && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-sm text-gray-700">
-                      Additional Extensions ({order.extensionCount})
-                    </span>
-                  )}
-                </div>
-              </div>
-            )}
+            <Button
+              onClick={handleStartOver}
+              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-base rounded-md"
+              data-testid="button-begin-process"
+            >
+              Click Here To Begin The Process Now
+            </Button>
+          </div>
+
+          <div className="mt-8 lg:mt-0 lg:w-[400px] flex-shrink-0">
+            <div className="rounded-xl overflow-hidden">
+              <Image
+                src="/images/celebration.jpg"
+                alt="Team celebrating new office"
+                width={400}
+                height={500}
+                className="w-full h-auto object-cover rounded-xl"
+                data-testid="img-celebration"
+              />
+            </div>
           </div>
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6" data-testid="onboarding-info">
-          <h3 className="font-semibold text-gray-900 mb-2">What Happens Next?</h3>
-          <p className="text-gray-600">
-            Our team will reach out within 24 hours to help you get started with your new virtual office. A confirmation email with your order details has been sent to <strong>{order.userInfo.email}</strong>.
-          </p>
+        <div className="bg-gray-100 rounded-xl p-6 sm:p-8 mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6" data-testid="fileforms-banner">
+          <div>
+            <p className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Click here</p>
+            <p className="text-lg sm:text-xl text-gray-700">
+              for the simplest way to<br />
+              incorporate or form an LLC through our partner
+            </p>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="flex-shrink-0">
+              <rect width="36" height="36" rx="4" fill="#2D7D6F" />
+              <path d="M8 10h6v2H8v-2zm0 4h10v2H8v-2zm0 4h8v2H8v-2zm0 4h12v2H8v-2zm14-10h6v12h-6V12z" fill="white" />
+            </svg>
+            <span className="text-2xl sm:text-3xl font-bold text-[#2D7D6F]">FileForms</span>
+          </div>
         </div>
 
-        <div className="flex justify-center">
-          <Button
-            onClick={handleStartOver}
-            className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white px-8"
-            data-testid="button-start-over"
-          >
-            Sign Up Another Location
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Button>
+        <div className="border-t border-gray-200 pt-6 space-y-4 text-xs text-gray-500 leading-relaxed" data-testid="disclaimers">
+          <p>
+            *Examples of acceptable documents include driver&apos;s license, passport, auto registration, or auto insurance policy (see a complete list of accepted documents as you complete the setup process).
+          </p>
+          <p>
+            **As part of our commitment to providing you with top-notch virtual office services, we are required to submit USPS Form 1583 to the post office. This form includes your home address, which is necessary for compliance with postal regulations. Please be assured that your privacy is of utmost importance to us. The information provided on USPS Form 1583 will be used solely by the post office for verification purposes and will not be shared with any other parties. Thank you for your understanding and cooperation.
+          </p>
         </div>
       </div>
     </div>
