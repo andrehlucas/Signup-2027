@@ -236,7 +236,7 @@ export default function PickPlanPage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="heading-pick-plan">
             Pick Your Plan
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-500 text-xs">
             for <span className="font-medium">{order.location.name}</span>, {order.location.city}
           </p>
         </div>
@@ -261,17 +261,15 @@ export default function PickPlanPage() {
               <span className="text-3xl font-bold text-gray-900">${bundles[0].price}</span>
               <span className="text-gray-500 text-sm ml-1">/mo</span>
             </div>
-            <div className="space-y-2">
-              {Object.entries(bundles[0].features)
-                .filter(([, enabled]) => enabled)
-                .map(([key]) => (
-                  <div key={key} className="flex items-center gap-2 text-sm">
-                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                      <Check className="h-2.5 w-2.5 text-white" />
-                    </div>
-                    <span className="text-gray-700 text-xs">{featureLabels[key]}</span>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+              {Object.entries(bundles[0].features).map(([key, enabled]) => (
+                <div key={key} className="flex items-center gap-2 text-sm">
+                  <div className={`w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 ${enabled ? 'bg-[#36bff9]' : 'bg-gray-200'}`}>
+                    <Check className={`h-2.5 w-2.5 ${enabled ? 'text-white' : 'text-gray-400'}`} />
                   </div>
-                ))}
+                  <span className={`text-xs ${enabled ? 'text-gray-700' : 'text-gray-400'}`}>{featureLabels[key]}</span>
+                </div>
+              ))}
             </div>
             <Button
               onClick={(e) => {
@@ -325,7 +323,7 @@ export default function PickPlanPage() {
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-bold text-white">Bundle & Save</h2>
-                  <p className="text-xs sm:text-sm text-blue-200/80">Supercharge your office with premium features</p>
+                  <p className="text-xs sm:text-sm text-blue-200/80">All features from The Ultimate Office Solution, plus</p>
                 </div>
               </div>
 
