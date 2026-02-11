@@ -250,20 +250,28 @@ export default function PickPlanPage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-6" data-testid="essentials-info-banner">
+        <div
+          onClick={() => handleBundleSelect(bundles[0])}
+          className={`bg-white rounded-xl border-2 overflow-hidden mb-6 cursor-pointer transition-all ${
+            selectedBundle?.id === bundles[0].id
+              ? 'border-[#36bff9] ring-2 ring-[#36bff9] shadow-lg shadow-[#36bff9]/20'
+              : 'border-gray-200 hover:shadow-md'
+          }`}
+          data-testid="essentials-info-banner"
+        >
           <div className="bg-[#36bff9] text-white text-center py-2 text-sm font-medium">
             Your Office Package
           </div>
           <div className="p-4">
             <div className="mb-3">
-              <h3 className="text-base font-medium text-gray-900">{displayBundleName}</h3>
+              <h3 className="text-base font-medium text-gray-900">{bundles[0].name}</h3>
             </div>
             <div className="mb-4">
-              <span className="text-3xl font-bold text-gray-900">${selectedBundle?.price || bundles[0].price}</span>
+              <span className="text-3xl font-bold text-gray-900">${bundles[0].price}</span>
               <span className="text-gray-500 text-sm ml-1">/mo</span>
             </div>
             <div className="space-y-2">
-              {Object.entries((selectedBundle || bundles[0]).features)
+              {Object.entries(bundles[0].features)
                 .filter(([, enabled]) => enabled)
                 .map(([key]) => (
                   <div key={key} className="flex items-center gap-2 text-sm">
@@ -275,12 +283,25 @@ export default function PickPlanPage() {
                 ))}
             </div>
             <Button
-              onClick={handleContinue}
-              disabled={!selectedBundle || !order.location}
-              className="w-full mt-4 h-10 bg-[#36bff9] hover:bg-[#2aa8e0] text-white font-medium"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleBundleSelect(bundles[0]);
+              }}
+              className={`w-full mt-4 h-10 font-medium ${
+                selectedBundle?.id === bundles[0].id
+                  ? 'bg-[#36bff9] hover:bg-[#2aa8e0] text-white'
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300'
+              }`}
               data-testid="button-select-office-package"
             >
-              Select
+              {selectedBundle?.id === bundles[0].id ? (
+                <>
+                  <Check className="h-4 w-4 mr-2" />
+                  Selected
+                </>
+              ) : (
+                'Select'
+              )}
             </Button>
           </div>
         </div>

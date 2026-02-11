@@ -2780,6 +2780,10 @@ body {
   background-color: var(--gray-100);
 }
 
+.hover\:bg-gray-200:hover {
+  background-color: var(--gray-200);
+}
+
 .hover\:bg-gray-50:hover {
   background-color: var(--gray-50);
 }
