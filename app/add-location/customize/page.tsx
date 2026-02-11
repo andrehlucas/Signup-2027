@@ -662,7 +662,7 @@ export default function CustomizePage() {
             <div className="flex flex-col items-center justify-center pt-6 pb-2 gap-1" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-5xl font-extrabold tracking-tight text-[#0a1628]">Bundle & Save</h2>
               <p className="text-sm text-[#0a1628]/60 text-center max-w-2xl">
-                All bundles include: Business Address, Live Call Answering, Call Transferring, Callout Feature, Toll-Free Number, Call Log, Supervised Call Transfer &amp; Message Taking
+                All bundles include all features from the Ultimate Office Solution
               </p>
             </div>
             <div className="flex-1 min-h-0">

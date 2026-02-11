@@ -1634,10 +1634,10 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
         onWheel: onWheel,
         "data-testid": "bundle-focus-rail",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "relative z-10 flex flex-1 flex-col justify-center px-4",
+            className: "relative z-10 flex flex-1 flex-col px-4",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                    className: "relative mx-auto flex h-[400px] w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing",
+                    className: "relative mx-auto flex flex-1 w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing",
                     style: {
                         perspective: "1200px"
                     },
@@ -1664,7 +1664,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                             const brightness = isCenter ? 1 : 0.55;
                             const selected = isSelected(bundle);
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute w-[320px] md:w-[360px] rounded-2xl border-2 shadow-2xl overflow-hidden", "bg-gradient-to-b from-[#0a1628] to-[#0f2240]", isCenter ? "z-20" : "z-10", selected && isCenter ? "border-[#36bff9] ring-2 ring-[#36bff9]" : "border-white/10"),
+                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute w-[320px] md:w-[360px] max-h-[85%] rounded-2xl border-2 shadow-2xl overflow-hidden", "bg-gradient-to-b from-[#0a1628] to-[#0f2240]", isCenter ? "z-20" : "z-10", selected && isCenter ? "border-[#36bff9] ring-2 ring-[#36bff9]" : "border-white/10"),
                                 initial: false,
                                 animate: {
                                     x: xOffset,
@@ -1687,7 +1687,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                 },
                                 "data-testid": `rail-bundle-card-${bundle.id}`,
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "p-5 flex flex-col h-full min-h-[360px]",
+                                    className: "p-5 flex flex-col h-full",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex items-center justify-between mb-2",
@@ -1896,7 +1896,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "mx-auto mt-2 flex w-full max-w-4xl flex-col items-center gap-2",
+                    className: "mx-auto flex-shrink-0 py-3 flex w-full max-w-4xl flex-col items-center gap-2",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
                             mode: "wait",
@@ -3698,7 +3698,7 @@ function CustomizePage() {
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         className: "text-sm text-[#0a1628]/60 text-center max-w-2xl",
-                                        children: "All bundles include: Business Address, Live Call Answering, Call Transferring, Callout Feature, Toll-Free Number, Call Log, Supervised Call Transfer & Message Taking"
+                                        children: "All bundles include all features from the Ultimate Office Solution"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
                                         lineNumber: 664,

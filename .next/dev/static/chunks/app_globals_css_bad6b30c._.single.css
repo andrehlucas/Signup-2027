@@ -799,10 +799,6 @@ body {
   height: 300px;
 }
 
-.h-\[400px\] {
-  height: 400px;
-}
-
 .h-\[var\(--radix-navigation-menu-viewport-height\)\] {
   height: var(--radix-navigation-menu-viewport-height);
 }
@@ -847,6 +843,10 @@ body {
   max-height: 380px;
 }
 
+.max-h-\[85\%\] {
+  max-height: 85%;
+}
+
 .max-h-\[var\(--radix-dropdown-menu-content-available-height\)\] {
   max-height: var(--radix-dropdown-menu-content-available-height);
 }
@@ -857,10 +857,6 @@ body {
 
 .min-h-0 {
   min-height: 0;
-}
-
-.min-h-\[360px\] {
-  min-height: 360px;
 }
 
 .min-h-\[80px\] {
