@@ -1655,13 +1655,13 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                             const bundle = bundles[index];
                             const isCenter = offset === 0;
                             const dist = Math.abs(offset);
-                            const xOffset = offset * 360;
-                            const zOffset = -dist * 150;
-                            const scale = isCenter ? 1 : 0.82;
-                            const rotateY = offset * -15;
-                            const opacity = isCenter ? 1 : 0.5;
-                            const blur = isCenter ? 0 : dist * 4;
-                            const brightness = isCenter ? 1 : 0.6;
+                            const xOffset = offset * 400;
+                            const zOffset = -dist * 200;
+                            const scale = isCenter ? 1 : 0.75;
+                            const rotateY = offset * -18;
+                            const opacity = isCenter ? 1 : 0.45;
+                            const blur = isCenter ? 0 : dist * 5;
+                            const brightness = isCenter ? 1 : 0.55;
                             const selected = isSelected(bundle);
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
                                 className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute w-[320px] md:w-[360px] rounded-2xl border-2 shadow-2xl overflow-hidden", "bg-gradient-to-b from-[#0a1628] to-[#0f2240]", isCenter ? "z-20" : "z-10", selected && isCenter ? "border-[#36bff9] ring-2 ring-[#36bff9]" : "border-white/10"),

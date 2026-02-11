@@ -135,13 +135,13 @@ export function BundleFocusRail({
             const isCenter = offset === 0;
             const dist = Math.abs(offset);
 
-            const xOffset = offset * 360;
-            const zOffset = -dist * 150;
-            const scale = isCenter ? 1 : 0.82;
-            const rotateY = offset * -15;
-            const opacity = isCenter ? 1 : 0.5;
-            const blur = isCenter ? 0 : dist * 4;
-            const brightness = isCenter ? 1 : 0.6;
+            const xOffset = offset * 400;
+            const zOffset = -dist * 200;
+            const scale = isCenter ? 1 : 0.75;
+            const rotateY = offset * -18;
+            const opacity = isCenter ? 1 : 0.45;
+            const blur = isCenter ? 0 : dist * 5;
+            const brightness = isCenter ? 1 : 0.55;
             const selected = isSelected(bundle);
 
             return (
