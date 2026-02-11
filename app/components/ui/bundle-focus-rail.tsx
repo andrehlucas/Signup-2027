@@ -202,15 +202,15 @@ export function BundleFocusRail({
                     <span className="text-gray-500 text-sm ml-1">/mo</span>
                   </div>
 
-                  <div className="space-y-2 flex-1">
+                  <div className="space-y-2.5 flex-1">
                     {Object.entries(bundle.features)
                       .filter(([, enabled]) => enabled)
                       .map(([key]) => (
-                        <div key={key} className="flex items-center gap-2">
-                          <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
-                            <Check className="h-2.5 w-2.5 text-[#36bff9]" />
+                        <div key={key} className="flex items-center gap-3">
+                          <div className="w-6 h-6 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
+                            <Check className="h-3.5 w-3.5 text-[#36bff9]" />
                           </div>
-                          <span className="text-gray-700 text-xs">
+                          <span className="text-gray-700 text-sm">
                             {featureLabels[key]}
                           </span>
                         </div>
