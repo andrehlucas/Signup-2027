@@ -1952,6 +1952,10 @@ body {
   padding-bottom: 2rem;
 }
 
+.pb-1 {
+  padding-bottom: .25rem;
+}
+
 .pb-3 {
   padding-bottom: .75rem;
 }
