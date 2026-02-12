@@ -748,7 +748,7 @@ export default function CheckoutPage() {
                                 .map(([key]) => featureLabels[key]);
                               return bundleExtras.length > 0 ? (
                                 <div className="border-t border-gray-200 pt-2 mt-1">
-                                  <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Included in Office Package</p>
+                                  <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Included in {order.bundle.tier} Bundle</p>
                                   <div className="space-y-2">
                                     {bundleExtras.map((label) => (
                                       <div key={label} className="flex items-center gap-1.5 text-xs text-gray-600">
