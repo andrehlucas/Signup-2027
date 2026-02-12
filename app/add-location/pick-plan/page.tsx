@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ChevronRight, MapPin, Star, Building2 } from 'lucide-react';
+import { Check, ChevronRight, MapPin, Star, Building2, X } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import {
   Select,
@@ -228,13 +228,18 @@ export default function PickPlanPage() {
             </div>
             <div className="grid grid-cols-2 gap-x-6 gap-y-3">
               {Object.entries(essentialsPlan.features)
-                .filter(([, enabled]) => enabled)
-                .map(([key]) => (
-                  <div key={key} className="flex items-center gap-2 text-sm">
-                    <div className="w-5 h-5 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                    <span className="text-gray-700">{featureLabels[key]}</span>
+                .map(([key, enabled]) => (
+                  <div key={key} className="flex items-center gap-2 text-sm" data-testid={`feature-${key}`}>
+                    {enabled ? (
+                      <div className="w-5 h-5 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
+                        <Check className="h-3 w-3 text-white" />
+                      </div>
+                    ) : (
+                      <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                        <X className="h-3 w-3 text-gray-400" />
+                      </div>
+                    )}
+                    <span className={enabled ? 'text-gray-700' : 'text-gray-400'}>{featureLabels[key]}</span>
                   </div>
                 ))}
             </div>
