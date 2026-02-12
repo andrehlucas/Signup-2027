@@ -58,9 +58,10 @@ export default function CustomizePage() {
   const [suggestionTriggeredFromContinue, setSuggestionTriggeredFromContinue] = useState(false);
   const { trackComplete } = useFunnelTracking('customize');
 
-  const [footerVisible, setFooterVisible] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(true);
   const lastScrollY = useRef(0);
   const scrollThreshold = 5;
+  const scrollIdleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,18 +70,27 @@ export default function CustomizePage() {
 
       if (Math.abs(delta) < scrollThreshold) return;
 
-      const atBottom = (window.innerHeight + currentScrollY) >= (document.documentElement.scrollHeight - 10);
-
       if (delta > 0 && currentScrollY > 50) {
-        setFooterVisible(true);
-      } else if (delta < 0 && !atBottom) {
         setFooterVisible(false);
       }
+
       lastScrollY.current = currentScrollY;
+
+      if (scrollIdleTimer.current) {
+        clearTimeout(scrollIdleTimer.current);
+      }
+      scrollIdleTimer.current = setTimeout(() => {
+        setFooterVisible(true);
+      }, 300);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollIdleTimer.current) {
+        clearTimeout(scrollIdleTimer.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
