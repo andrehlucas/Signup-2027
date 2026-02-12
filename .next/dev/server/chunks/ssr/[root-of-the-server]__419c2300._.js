@@ -2122,7 +2122,7 @@ function CustomizePage() {
             const currentScrollY = window.scrollY;
             const delta = currentScrollY - lastScrollY.current;
             if (Math.abs(delta) < scrollThreshold) return;
-            if (delta > 0 && currentScrollY > 100) {
+            if (delta > 0 && currentScrollY > 50) {
                 setFooterVisible(true);
             } else if (delta < 0) {
                 setFooterVisible(false);
