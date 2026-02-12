@@ -5,6 +5,7 @@ import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight, Check, DollarSign, X } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle, featureLabels } from "@/app/add-location/types";
+const bgBundlePlus = "/images/bg-bundle-plus.webp";
 
 interface BundleFocusRailProps {
   bundles: Bundle[];
@@ -175,7 +176,17 @@ export function BundleFocusRail({
                 }}
                 data-testid={`rail-bundle-card-${bundle.id}`}
               >
-                <div className="p-4 flex flex-col">
+                {bundle.id === "plus" && (
+                  <div
+                    className="absolute inset-0 rounded-2xl bg-cover bg-center pointer-events-none"
+                    style={{
+                      backgroundImage: `url(${bgBundlePlus})`,
+                      mixBlendMode: "lighten",
+                      opacity: 0.15,
+                    }}
+                  />
+                )}
+                <div className="relative p-4 flex flex-col">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
                       {bundle.badge}
