@@ -27,8 +27,6 @@ import {
 } from '@/app/components/ui/popover';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { BundleFocusRail } from '@/app/components/ui/bundle-focus-rail';
-import { BundleSliderCompare } from '@/app/components/ui/bundle-slider-compare';
-import { cn } from '@/app/lib/utils';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import {
@@ -58,7 +56,6 @@ export default function CustomizePage() {
   const [selectedTollFree, setSelectedTollFree] = useState<PhoneNumber | null>(order.tollFreePhoneNumber);
   const [tempSelectedTollFree, setTempSelectedTollFree] = useState<PhoneNumber | null>(null);
   const [bundleModalOpen, setBundleModalOpen] = useState(false);
-  const [bundleModalVariant, setBundleModalVariant] = useState<'A' | 'B'>('A');
   const [bundleSuggestionOpen, setBundleSuggestionOpen] = useState(false);
   const [suggestionTriggeredFromContinue, setSuggestionTriggeredFromContinue] = useState(false);
   const { trackComplete } = useFunnelTracking('customize');
@@ -907,67 +904,21 @@ export default function CustomizePage() {
             className="absolute inset-0 bg-white/60 backdrop-blur-xl"
             onClick={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}
           />
-
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-md border border-gray-200" onClick={(e) => e.stopPropagation()} data-testid="bundle-variant-toggle">
-            <button
-              onClick={() => setBundleModalVariant('A')}
-              className={cn(
-                "px-4 py-1.5 rounded-full text-xs font-semibold transition-all",
-                bundleModalVariant === 'A'
-                  ? "bg-[#0a1628] text-white shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
-              )}
-              data-testid="toggle-variant-a"
-            >
-              Version A
-            </button>
-            <button
-              onClick={() => setBundleModalVariant('B')}
-              className={cn(
-                "px-4 py-1.5 rounded-full text-xs font-semibold transition-all",
-                bundleModalVariant === 'B'
-                  ? "bg-[#0a1628] text-white shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
-              )}
-              data-testid="toggle-variant-b"
-            >
-              Version B
-            </button>
+          <div className="relative z-10 w-full h-full flex flex-col" onClick={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}>
+            <div className="flex items-center justify-center flex-1 min-h-0" onClick={(e) => e.stopPropagation()}>
+              <h2 className="text-5xl font-extrabold tracking-tight text-[#0a1628]">Bundle & Save</h2>
+            </div>
+            <div className="flex-[3_1_0%] min-h-0">
+              <BundleFocusRail
+                bundles={upgradeBundles}
+                selectedBundleId={selectedBundle?.id}
+                onSelect={handleBundleSelect}
+                onClose={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}
+                onRevert={() => handleBundleSelect(bundles[0])}
+                essentialsPrice={bundles[0].price}
+              />
+            </div>
           </div>
-
-          {bundleModalVariant === 'A' ? (
-            <div className="relative z-10 w-full h-full flex flex-col" onClick={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}>
-              <div className="flex items-center justify-center flex-1 min-h-0" onClick={(e) => e.stopPropagation()}>
-                <h2 className="text-5xl font-extrabold tracking-tight text-[#0a1628]">Bundle & Save</h2>
-              </div>
-              <div className="flex-[3_1_0%] min-h-0">
-                <BundleFocusRail
-                  bundles={upgradeBundles}
-                  selectedBundleId={selectedBundle?.id}
-                  onSelect={handleBundleSelect}
-                  onClose={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}
-                  onRevert={() => handleBundleSelect(bundles[0])}
-                  essentialsPrice={bundles[0].price}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="relative z-10 w-full h-full flex flex-col" onClick={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}>
-              <div className="flex items-center justify-center pt-14 pb-2" onClick={(e) => e.stopPropagation()}>
-                <h2 className="text-4xl font-extrabold tracking-tight text-[#0a1628]">Bundle & Save</h2>
-              </div>
-              <div className="flex-1 min-h-0" onClick={(e) => e.stopPropagation()}>
-                <BundleSliderCompare
-                  bundles={upgradeBundles}
-                  selectedBundleId={selectedBundle?.id}
-                  onSelect={handleBundleSelect}
-                  onClose={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}
-                  onRevert={() => handleBundleSelect(bundles[0])}
-                  essentialsPrice={bundles[0].price}
-                />
-              </div>
-            </div>
-          )}
         </div>
       )}
 
