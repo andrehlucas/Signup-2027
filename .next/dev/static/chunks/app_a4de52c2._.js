@@ -508,6 +508,9 @@ const bundles = [
             businessAddress: true,
             liveCallAnswering: true,
             callTransferring: true,
+            businessPhoneFax: true,
+            mailReceipt: true,
+            voicemailToEmail: true,
             calloutFeature: false,
             tollFreeNumber: false,
             callLog: false,
@@ -527,6 +530,9 @@ const bundles = [
             businessAddress: true,
             liveCallAnswering: true,
             callTransferring: true,
+            businessPhoneFax: true,
+            mailReceipt: true,
+            voicemailToEmail: true,
             calloutFeature: true,
             tollFreeNumber: true,
             callLog: true,
@@ -546,6 +552,9 @@ const bundles = [
             businessAddress: true,
             liveCallAnswering: true,
             callTransferring: true,
+            businessPhoneFax: true,
+            mailReceipt: true,
+            voicemailToEmail: true,
             calloutFeature: true,
             tollFreeNumber: true,
             callLog: true,
@@ -565,6 +574,9 @@ const bundles = [
             businessAddress: true,
             liveCallAnswering: true,
             callTransferring: true,
+            businessPhoneFax: true,
+            mailReceipt: true,
+            voicemailToEmail: true,
             calloutFeature: true,
             tollFreeNumber: true,
             callLog: true,
@@ -658,9 +670,12 @@ function calculatePromoDiscount(promo, monthlyTotal, paymentTerm) {
     }
 }
 const featureLabels = {
-    businessAddress: 'Business Address',
-    liveCallAnswering: 'Live Call Answering',
-    callTransferring: 'Call Transferring',
+    businessAddress: 'Prestigious Business Address',
+    liveCallAnswering: 'Professional Live Call Answering',
+    callTransferring: 'Personalized Call Transferring',
+    businessPhoneFax: 'Business Phone/Fax Number',
+    mailReceipt: 'Professional Mail Receipt',
+    voicemailToEmail: 'Voicemail/Fax Converted to Email',
     calloutFeature: 'Callout Feature',
     tollFreeNumber: 'Toll-Free Number',
     callLog: 'Call Log',
@@ -678,6 +693,9 @@ const featureIndividualPrices = {
     businessAddress: 0,
     liveCallAnswering: 0,
     callTransferring: 0,
+    businessPhoneFax: 0,
+    mailReceipt: 0,
+    voicemailToEmail: 0,
     calloutFeature: 10,
     tollFreeNumber: 10,
     callLog: 10,
@@ -2990,7 +3008,10 @@ function CheckoutPage() {
                                                                                         const base = [
                                                                                             'businessAddress',
                                                                                             'liveCallAnswering',
-                                                                                            'callTransferring'
+                                                                                            'callTransferring',
+                                                                                            'businessPhoneFax',
+                                                                                            'mailReceipt',
+                                                                                            'voicemailToEmail'
                                                                                         ];
                                                                                         return included && !base.includes(key);
                                                                                     }).map(([key])=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["featureLabels"][key]);
