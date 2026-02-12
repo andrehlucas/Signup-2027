@@ -66,9 +66,11 @@ export default function CustomizePage() {
 
       if (Math.abs(delta) < scrollThreshold) return;
 
+      const atBottom = (window.innerHeight + currentScrollY) >= (document.documentElement.scrollHeight - 10);
+
       if (delta > 0 && currentScrollY > 50) {
         setFooterVisible(true);
-      } else if (delta < 0) {
+      } else if (delta < 0 && !atBottom) {
         setFooterVisible(false);
       }
       lastScrollY.current = currentScrollY;
