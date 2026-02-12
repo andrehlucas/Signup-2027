@@ -1923,9 +1923,13 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center gap-4 rounded-full bg-[#0a1628]/80 px-2 py-1 ring-1 ring-white/10 backdrop-blur-md",
+                            onClick: (e)=>e.stopPropagation(),
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: handlePrev,
+                                    onClick: (e)=>{
+                                        e.stopPropagation();
+                                        handlePrev();
+                                    },
                                     className: "rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95",
                                     "aria-label": "Previous",
                                     "data-testid": "rail-button-prev",
@@ -1996,7 +2000,10 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: handleNext,
+                                    onClick: (e)=>{
+                                        e.stopPropagation();
+                                        handleNext();
+                                    },
                                     className: "rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95",
                                     "aria-label": "Next",
                                     "data-testid": "rail-button-next",

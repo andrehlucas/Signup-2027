@@ -279,9 +279,9 @@ export function BundleFocusRail({
         </motion.div>
 
         <div className="mx-auto flex w-full max-w-4xl items-center justify-center" style={{ flex: "0.5 1 0%" }}>
-          <div className="flex items-center gap-4 rounded-full bg-[#0a1628]/80 px-2 py-1 ring-1 ring-white/10 backdrop-blur-md">
+          <div className="flex items-center gap-4 rounded-full bg-[#0a1628]/80 px-2 py-1 ring-1 ring-white/10 backdrop-blur-md" onClick={(e) => e.stopPropagation()}>
             <button
-              onClick={handlePrev}
+              onClick={(e) => { e.stopPropagation(); handlePrev(); }}
               className="rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
               aria-label="Previous"
               data-testid="rail-button-prev"
@@ -310,7 +310,7 @@ export function BundleFocusRail({
             </AnimatePresence>
 
             <button
-              onClick={handleNext}
+              onClick={(e) => { e.stopPropagation(); handleNext(); }}
               className="rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
               aria-label="Next"
               data-testid="rail-button-next"
