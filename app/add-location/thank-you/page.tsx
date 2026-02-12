@@ -268,7 +268,7 @@ export default function ThankYouPage() {
           <div className="mt-8 lg:mt-0 lg:w-[400px] flex-shrink-0">
             <div className="rounded-xl overflow-hidden">
               <Image
-                src="/images/celebration.jpg"
+                src="/images/celebration.webp"
                 alt="Team celebrating new office"
                 width={400}
                 height={500}
