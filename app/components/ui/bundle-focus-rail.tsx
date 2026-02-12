@@ -124,10 +124,10 @@ export function BundleFocusRail({
       onWheel={onWheel}
       data-testid="bundle-focus-rail"
     >
-      <div className="relative z-10 flex flex-1 flex-col px-4">
+      <div className="relative z-10 flex h-full flex-col px-4">
         <motion.div
-          className="relative mx-auto flex flex-1 w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing"
-          style={{ perspective: "1200px" }}
+          className="relative mx-auto flex w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing"
+          style={{ perspective: "1200px", flex: "3 1 0%" }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.2}
@@ -278,7 +278,7 @@ export function BundleFocusRail({
           </button>
         </motion.div>
 
-        <div className="mx-auto flex-shrink-0 py-3 flex w-full max-w-4xl flex-col items-center gap-2">
+        <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center gap-2" style={{ flex: "1 1 0%" }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={activeItem.id}
