@@ -6,6 +6,8 @@ import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle } from "@/app/add-location/types";
 
+const CARD_HEIGHT = 190;
+
 const bundleBadges: Record<string, string> = {
   plus: "/images/plus-badge.svg",
   pro: "/images/pro-badge.svg",
@@ -13,9 +15,9 @@ const bundleBadges: Record<string, string> = {
 };
 
 const bundleDescriptions: Record<string, string> = {
-  plus: "All features from the ultimate office solution plus call log, toll-free number, and callout",
-  pro: "All features from the ultimate office solution plus call log, toll-free number, callout, and supervised transfer",
-  premium: "All features from the ultimate office solution plus call log, toll-free number, callout, supervised transfer, and message taking",
+  plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
+  pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
+  premium: "The complete package — every feature included plus dedicated message taking for your team.",
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -115,14 +117,13 @@ export function BundleInlineSelector({
       <div
         ref={containerRef}
         className="relative py-4 overflow-hidden"
-        style={{ minHeight: "220px" }}
       >
         <motion.div
-          className="relative w-full h-full cursor-grab active:cursor-grabbing"
-          style={{ minHeight: "200px" }}
+          className="relative w-full cursor-grab active:cursor-grabbing"
+          style={{ height: CARD_HEIGHT }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.15}
+          dragElastic={0.12}
           onDragEnd={onDragEnd}
         >
           {[0, 1].map((offset) => {
@@ -145,58 +146,60 @@ export function BundleInlineSelector({
                 )}
                 style={{
                   width: centerCardWidth,
+                  height: CARD_HEIGHT,
                   background: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 30%, #fffde7 60%, #fff8e1 100%)",
                 }}
                 initial={false}
                 animate={{
                   left: isCenter ? centerLeft : nextLeft,
-                  scale: isCenter ? 1 : 0.95,
-                  opacity: isCenter ? 1 : 0.5,
+                  scale: isCenter ? 1 : 0.97,
+                  opacity: isCenter ? 1 : 0.45,
                 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                transition={{ type: "tween", ease: [0.25, 0.1, 0.25, 1], duration: 0.4 }}
                 onClick={() => {
                   if (offset !== 0) goTo(activeIndex + offset);
                 }}
                 data-testid={`inline-bundle-card-${bundle.id}`}
               >
-                <div className="p-5 flex flex-col gap-3">
-                  {badgeSrc && (
-                    <img
-                      src={badgeSrc}
-                      alt={bundle.tier}
-                      className="h-7 w-auto object-contain self-start"
-                      data-testid={`inline-badge-${bundle.id}`}
-                    />
-                  )}
+                <div className="p-5 flex flex-col justify-between h-full">
+                  <div className="flex flex-col gap-2">
+                    {badgeSrc && (
+                      <img
+                        src={badgeSrc}
+                        alt={bundle.tier}
+                        className="h-7 w-auto object-contain self-start"
+                        data-testid={`inline-badge-${bundle.id}`}
+                      />
+                    )}
 
-                  <p className="text-sm leading-relaxed text-gray-600" data-testid={`inline-description-${bundle.id}`}>
-                    {bundleDescriptions[bundle.id] || bundle.name}
-                  </p>
+                    <p className="text-sm leading-relaxed text-gray-600 line-clamp-2" data-testid={`inline-description-${bundle.id}`}>
+                      {bundleDescriptions[bundle.id] || bundle.name}
+                    </p>
+                  </div>
 
-                  {isCenter && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSelect(bundle);
-                      }}
-                      className={cn(
-                        "w-full py-2.5 rounded-xl text-sm font-semibold transition-all text-white",
-                        isSelected
-                          ? "bg-[#36bff9] hover:bg-[#2aa8e0]"
-                          : "bg-[#1a1a1a] hover:bg-[#333]"
-                      )}
-                      data-testid={`inline-select-bundle-${bundle.id}`}
-                    >
-                      {isSelected ? (
-                        <span className="flex items-center justify-center gap-2">
-                          <Check className="h-4 w-4" />
-                          Selected
-                        </span>
-                      ) : (
-                        `Select ${bundle.tier} Bundle`
-                      )}
-                    </button>
-                  )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isCenter) onSelect(bundle);
+                    }}
+                    className={cn(
+                      "w-full py-2.5 rounded-xl text-sm font-semibold transition-all text-white",
+                      isSelected && isCenter
+                        ? "bg-[#36bff9] hover:bg-[#2aa8e0]"
+                        : "bg-[#1a1a1a] hover:bg-[#333]"
+                    )}
+                    tabIndex={isCenter ? 0 : -1}
+                    data-testid={`inline-select-bundle-${bundle.id}`}
+                  >
+                    {isSelected && isCenter ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <Check className="h-4 w-4" />
+                        Selected
+                      </span>
+                    ) : (
+                      `Select ${bundle.tier} Bundle`
+                    )}
+                  </button>
                 </div>
               </motion.div>
             );
@@ -225,7 +228,7 @@ export function BundleInlineSelector({
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.15 }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
                   className="absolute inset-0 flex items-center justify-center text-xs font-bold text-[#36bff9]"
                   data-testid={`text-bundle-col-${activeBundle.id}`}
                 >
@@ -266,7 +269,7 @@ export function BundleInlineSelector({
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.15 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
                         className="absolute inset-0 flex items-center justify-center"
                       >
                         {activeBundleHas ? (
