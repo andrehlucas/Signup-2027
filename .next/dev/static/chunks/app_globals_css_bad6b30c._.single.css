@@ -1067,6 +1067,10 @@ body {
   flex: 1;
 }
 
+.flex-\[3_1_0\%\] {
+  flex: 3;
+}
+
 .flex-shrink-0, .shrink-0 {
   flex-shrink: 0;
 }

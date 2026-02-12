@@ -126,8 +126,8 @@ export function BundleFocusRail({
     >
       <div className="relative z-10 flex h-full flex-col px-4">
         <motion.div
-          className="relative mx-auto flex w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing"
-          style={{ perspective: "1200px", flex: "3 1 0%" }}
+          className="relative mx-auto flex flex-[3_1_0%] w-full max-w-5xl items-center justify-center cursor-grab active:cursor-grabbing"
+          style={{ perspective: "1200px" }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.2}
@@ -278,7 +278,7 @@ export function BundleFocusRail({
           </button>
         </motion.div>
 
-        <div className="mx-auto flex w-full max-w-4xl items-center justify-center" style={{ flex: "0.5 1 0%" }}>
+        <div className="mx-auto flex flex-1 w-full max-w-4xl items-center justify-center">
           <div className="flex items-center gap-4 rounded-full bg-[#0a1628]/80 px-2 py-1 ring-1 ring-white/10 backdrop-blur-md" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={(e) => { e.stopPropagation(); handlePrev(); }}
