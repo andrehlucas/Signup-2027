@@ -269,8 +269,6 @@ export default function CustomizePage() {
       const upgradeCost = candidateBundle.price - selectedBundle.price;
       const savings = addonsCost - upgradeCost;
 
-      if (savings <= 0) continue;
-
       const bonusFeatures = Object.entries(candidateBundle.features)
         .filter(([key, enabled]) => {
           if (!enabled) return false;
@@ -280,7 +278,9 @@ export default function CustomizePage() {
         })
         .map(([key]) => featureLabels[key] || key);
 
-      if (!bestSuggestion || savings > bestSuggestion.savings) {
+      if (savings < 0 && bonusFeatures.length === 0) continue;
+
+      if (!bestSuggestion || savings > bestSuggestion.savings || (savings === bestSuggestion.savings && bonusFeatures.length > bestSuggestion.bonusFeatures.length)) {
         bestSuggestion = {
           bundle: candidateBundle,
           matchingAddons,
@@ -792,9 +792,15 @@ export default function CustomizePage() {
                     <p className="text-sm font-medium text-emerald-800">
                       Upgrade to <span className="font-bold">{bundleSuggestion.bundle.tier}</span>
                     </p>
-                    <p className="text-2xl font-bold text-emerald-700 mt-1">
-                      Save ${bundleSuggestion.savings}<span className="text-sm font-normal">/mo</span>
-                    </p>
+                    {bundleSuggestion.savings > 0 ? (
+                      <p className="text-2xl font-bold text-emerald-700 mt-1">
+                        Save ${bundleSuggestion.savings}<span className="text-sm font-normal">/mo</span>
+                      </p>
+                    ) : (
+                      <p className="text-lg font-bold text-emerald-700 mt-1">
+                        Same price, more features
+                      </p>
+                    )}
                   </div>
                   <div className="text-right">
                     <p className="text-sm text-emerald-600">${bundleSuggestion.bundle.price}/mo</p>
