@@ -21,10 +21,6 @@ const bundleDescriptions: Record<string, string> = {
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "businessAddress", label: "Prestigious Business Address" },
   { key: "liveCallAnswering", label: "Professional Live Call Answering" },
-  { key: "callTransferring", label: "Personalized Call Transferring" },
-  { key: "businessPhoneFax", label: "Business Phone/Fax Number" },
-  { key: "mailReceipt", label: "Professional Mail Receipt" },
-  { key: "voicemailToEmail", label: "Voicemail/Fax Converted to Email" },
   { key: "callLog", label: "Call Log" },
   { key: "tollFreeNumber", label: "Toll-Free Number" },
   { key: "calloutFeature", label: "Callout Feature" },
