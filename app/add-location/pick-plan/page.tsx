@@ -199,7 +199,7 @@ export default function PickPlanPage() {
   const essentialsPlan = bundles[0];
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
+    <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-8 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={2} />
@@ -207,7 +207,7 @@ export default function PickPlanPage() {
 
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="heading-pick-plan">
-            Review Your Selection
+            Your Office Details
           </h1>
           <p className="text-gray-500 text-sm">
             Confirm your office package and location before continuing.
@@ -263,32 +263,15 @@ export default function PickPlanPage() {
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-50" data-testid="sticky-footer">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="w-9 h-9 rounded-lg bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                <Check className="h-4 w-4 text-white" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-gray-900 leading-tight" data-testid="footer-package-name">{essentialsPlan.name}</p>
-                <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">
-                  ${essentialsPlan.price}<span className="text-sm font-normal text-gray-500">/mo</span>
-                </p>
-              </div>
-            </div>
-            <Button
-              onClick={handleContinue}
-              className="h-10 px-6 bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0"
-              data-testid="button-continue-customize"
-            >
-              Continue
-              <ChevronRight className="h-4 w-4 ml-1.5" />
-            </Button>
-          </div>
-        </div>
+        <Button
+          onClick={handleContinue}
+          className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-base font-semibold mt-2"
+          data-testid="button-continue-customize"
+        >
+          Continue to Add-ons
+          <ChevronRight className="h-4 w-4 ml-1.5" />
+        </Button>
       </div>
     </div>
   );

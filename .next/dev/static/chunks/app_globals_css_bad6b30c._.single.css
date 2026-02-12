@@ -404,6 +404,10 @@ body {
   bottom: -3rem;
 }
 
+.-bottom-full {
+  bottom: -100%;
+}
+
 .-left-12 {
   left: -3rem;
 }
@@ -1892,6 +1896,10 @@ body {
 
 .pb-48 {
   padding-bottom: 12rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
 }
 
 .pl-2\.5 {

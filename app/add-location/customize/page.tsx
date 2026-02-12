@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil, DollarSign, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
@@ -54,6 +54,32 @@ export default function CustomizePage() {
   const [tempSelectedTollFree, setTempSelectedTollFree] = useState<PhoneNumber | null>(null);
   const [bundleModalOpen, setBundleModalOpen] = useState(false);
   const { trackComplete } = useFunnelTracking('customize');
+
+  const [footerVisible, setFooterVisible] = useState(false);
+  const lastScrollY = useRef(0);
+  const scrollThreshold = 5;
+
+  useEffect(() => {
+    const mainElement = document.querySelector('main');
+    const scrollTarget = mainElement || window;
+
+    const handleScroll = () => {
+      const currentScrollY = mainElement ? mainElement.scrollTop : window.scrollY;
+      const delta = currentScrollY - lastScrollY.current;
+
+      if (Math.abs(delta) < scrollThreshold) return;
+
+      if (delta > 0 && currentScrollY > 100) {
+        setFooterVisible(true);
+      } else if (delta < 0) {
+        setFooterVisible(false);
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
+    return () => scrollTarget.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if (!order.location || !order.bundle) {
@@ -515,7 +541,7 @@ export default function CustomizePage() {
       </div>
 
       <div
-        className="fixed bottom-0 left-0 right-0 z-50"
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${footerVisible ? 'bottom-0' : '-bottom-full'}`}
         data-testid="footer-wrapper"
       >
         <div
@@ -524,10 +550,21 @@ export default function CustomizePage() {
           data-testid="bundle-save-banner"
         >
           <div className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2">
-            <DollarSign className="h-4 w-4 text-[#36bff9]" />
-            <span className="text-sm font-semibold text-white">Bundle & Save</span>
-            <span className="text-xs text-blue-200/80 hidden sm:inline">- Upgrade your plan and save on popular features</span>
-            <ChevronRight className="h-4 w-4 text-[#36bff9] ml-1" />
+            {selectedBundle && selectedBundle.id !== 'essentials' ? (
+              <>
+                <Star className="h-4 w-4 text-[#36bff9]" />
+                <span className="text-sm font-semibold text-white">Active Bundle</span>
+                <span className="text-xs text-blue-200/80 hidden sm:inline">- {displayBundleName}</span>
+                <span className="text-xs font-medium text-[#36bff9] ml-1">Edit</span>
+              </>
+            ) : (
+              <>
+                <DollarSign className="h-4 w-4 text-[#36bff9]" />
+                <span className="text-sm font-semibold text-white">Bundle & Save</span>
+                <span className="text-xs text-blue-200/80 hidden sm:inline">- Upgrade your plan and save on popular features</span>
+                <ChevronRight className="h-4 w-4 text-[#36bff9] ml-1" />
+              </>
+            )}
           </div>
         </div>
 
