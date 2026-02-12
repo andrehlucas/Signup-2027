@@ -6,7 +6,7 @@ import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle } from "@/app/add-location/types";
 
-const CARD_HEIGHT = 190;
+const CARD_HEIGHT = 200;
 
 const bundleBadges: Record<string, string> = {
   plus: "/images/plus-badge.svg",
@@ -18,6 +18,12 @@ const bundleDescriptions: Record<string, string> = {
   plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
   pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
   premium: "The complete package — every feature included plus dedicated message taking for your team.",
+};
+
+const bundleBackgrounds: Record<string, string> = {
+  plus: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 40%, #e8f5e9 100%)",
+  pro: "linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 40%, #ede7f6 100%)",
+  premium: "linear-gradient(135deg, #fff8e1 0%, #fff3e0 40%, #fce4ec 100%)",
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -106,6 +112,7 @@ export function BundleInlineSelector({
     else if (swipe > swipeConfidenceThreshold) handlePrev();
   };
 
+  const prevLeft = -(centerCardWidth * 0.6);
   const centerLeft = cardPadding;
   const nextLeft = cardPadding + centerCardWidth + cardPadding;
 
@@ -126,13 +133,28 @@ export function BundleInlineSelector({
           dragElastic={0.12}
           onDragEnd={onDragEnd}
         >
-          {[0, 1].map((offset) => {
+          {[-1, 0, 1].map((offset) => {
             const absIndex = activeIndex + offset;
             const index = wrap(0, count, absIndex);
             const bundle = bundles[index];
             const isCenter = offset === 0;
+            const isPrev = offset === -1;
             const isSelected = selectedBundleId === bundle.id;
             const badgeSrc = bundleBadges[bundle.id];
+            const bg = bundleBackgrounds[bundle.id] || bundleBackgrounds.plus;
+
+            let left = centerLeft;
+            let cardOpacity = 1;
+            let cardScale = 1;
+            if (isPrev) {
+              left = prevLeft;
+              cardOpacity = 0.15;
+              cardScale = 0.92;
+            } else if (!isCenter) {
+              left = nextLeft;
+              cardOpacity = 0.45;
+              cardScale = 0.97;
+            }
 
             return (
               <motion.div
@@ -147,13 +169,13 @@ export function BundleInlineSelector({
                 style={{
                   width: centerCardWidth,
                   height: CARD_HEIGHT,
-                  background: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 30%, #fffde7 60%, #fff8e1 100%)",
+                  background: bg,
                 }}
                 initial={false}
                 animate={{
-                  left: isCenter ? centerLeft : nextLeft,
-                  scale: isCenter ? 1 : 0.97,
-                  opacity: isCenter ? 1 : 0.45,
+                  left,
+                  scale: cardScale,
+                  opacity: cardOpacity,
                 }}
                 transition={{ type: "tween", ease: [0.25, 0.1, 0.25, 1], duration: 0.4 }}
                 onClick={() => {
@@ -163,16 +185,21 @@ export function BundleInlineSelector({
               >
                 <div className="p-5 flex flex-col justify-between h-full">
                   <div className="flex flex-col gap-2">
-                    {badgeSrc && (
-                      <img
-                        src={badgeSrc}
-                        alt={bundle.tier}
-                        className="h-7 w-auto object-contain self-start"
-                        data-testid={`inline-badge-${bundle.id}`}
-                      />
-                    )}
+                    <div className="flex items-center justify-between">
+                      {badgeSrc && (
+                        <img
+                          src={badgeSrc}
+                          alt={bundle.tier}
+                          className="h-7 w-auto object-contain"
+                          data-testid={`inline-badge-${bundle.id}`}
+                        />
+                      )}
+                      <span className="text-lg font-bold text-gray-900" data-testid={`inline-price-${bundle.id}`}>
+                        ${bundle.price}<span className="text-xs font-normal text-gray-500">/mo</span>
+                      </span>
+                    </div>
 
-                    <p className="text-sm leading-relaxed text-gray-600 line-clamp-2" data-testid={`inline-description-${bundle.id}`}>
+                    <p className="text-sm leading-relaxed text-gray-600" data-testid={`inline-description-${bundle.id}`}>
                       {bundleDescriptions[bundle.id] || bundle.name}
                     </p>
                   </div>

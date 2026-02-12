@@ -780,7 +780,7 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
-const CARD_HEIGHT = 190;
+const CARD_HEIGHT = 200;
 const bundleBadges = {
     plus: "/images/plus-badge.svg",
     pro: "/images/pro-badge.svg",
@@ -790,6 +790,11 @@ const bundleDescriptions = {
     plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
     pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
     premium: "The complete package — every feature included plus dedicated message taking for your team."
+};
+const bundleBackgrounds = {
+    plus: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 40%, #e8f5e9 100%)",
+    pro: "linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 40%, #ede7f6 100%)",
+    premium: "linear-gradient(135deg, #fff8e1 0%, #fff3e0 40%, #fce4ec 100%)"
 };
 const comparisonFeatures = [
     {
@@ -886,6 +891,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
         if (swipe < -swipeConfidenceThreshold) handleNext();
         else if (swipe > swipeConfidenceThreshold) handlePrev();
     };
+    const prevLeft = -(centerCardWidth * 0.6);
     const centerLeft = cardPadding;
     const nextLeft = cardPadding + centerCardWidth + cardPadding;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -909,6 +915,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                         dragElastic: 0.12,
                         onDragEnd: onDragEnd,
                         children: [
+                            -1,
                             0,
                             1
                         ].map((offset)=>{
@@ -916,20 +923,34 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                             const index = wrap(0, count, absIndex);
                             const bundle = bundles[index];
                             const isCenter = offset === 0;
+                            const isPrev = offset === -1;
                             const isSelected = selectedBundleId === bundle.id;
                             const badgeSrc = bundleBadges[bundle.id];
+                            const bg = bundleBackgrounds[bundle.id] || bundleBackgrounds.plus;
+                            let left = centerLeft;
+                            let cardOpacity = 1;
+                            let cardScale = 1;
+                            if (isPrev) {
+                                left = prevLeft;
+                                cardOpacity = 0.15;
+                                cardScale = 0.92;
+                            } else if (!isCenter) {
+                                left = nextLeft;
+                                cardOpacity = 0.45;
+                                cardScale = 0.97;
+                            }
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
                                 className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute top-0 rounded-2xl overflow-hidden", isCenter ? "z-20 shadow-lg" : "z-10 pointer-events-none shadow-md", isSelected && isCenter ? "ring-2 ring-[#36bff9]" : ""),
                                 style: {
                                     width: centerCardWidth,
                                     height: CARD_HEIGHT,
-                                    background: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 30%, #fffde7 60%, #fff8e1 100%)"
+                                    background: bg
                                 },
                                 initial: false,
                                 animate: {
-                                    left: isCenter ? centerLeft : nextLeft,
-                                    scale: isCenter ? 1 : 0.97,
-                                    opacity: isCenter ? 1 : 0.45
+                                    left,
+                                    scale: cardScale,
+                                    opacity: cardOpacity
                                 },
                                 transition: {
                                     type: "tween",
@@ -951,29 +972,58 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex flex-col gap-2",
                                             children: [
-                                                badgeSrc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                                    src: badgeSrc,
-                                                    alt: bundle.tier,
-                                                    className: "h-7 w-auto object-contain self-start",
-                                                    "data-testid": `inline-badge-${bundle.id}`
-                                                }, void 0, false, {
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center justify-between",
+                                                    children: [
+                                                        badgeSrc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                            src: badgeSrc,
+                                                            alt: bundle.tier,
+                                                            className: "h-7 w-auto object-contain",
+                                                            "data-testid": `inline-badge-${bundle.id}`
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
+                                                            lineNumber: 190,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                            className: "text-lg font-bold text-gray-900",
+                                                            "data-testid": `inline-price-${bundle.id}`,
+                                                            children: [
+                                                                "$",
+                                                                bundle.price,
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                    className: "text-xs font-normal text-gray-500",
+                                                                    children: "/mo"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
+                                                                    lineNumber: 198,
+                                                                    columnNumber: 40
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
+                                                            lineNumber: 197,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
                                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 167,
-                                                    columnNumber: 23
+                                                    lineNumber: 188,
+                                                    columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-sm leading-relaxed text-gray-600 line-clamp-2",
+                                                    className: "text-sm leading-relaxed text-gray-600",
                                                     "data-testid": `inline-description-${bundle.id}`,
                                                     children: bundleDescriptions[bundle.id] || bundle.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 175,
+                                                    lineNumber: 202,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                            lineNumber: 165,
+                                            lineNumber: 187,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -991,36 +1041,36 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                        lineNumber: 196,
+                                                        lineNumber: 223,
                                                         columnNumber: 25
                                                     }, this),
                                                     "Selected"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                lineNumber: 195,
+                                                lineNumber: 222,
                                                 columnNumber: 23
                                             }, this) : `Select ${bundle.tier} Bundle`
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                            lineNumber: 180,
+                                            lineNumber: 207,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                    lineNumber: 164,
+                                    lineNumber: 186,
                                     columnNumber: 17
                                 }, this)
                             }, `${bundle.id}-${absIndex}`, false, {
                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                lineNumber: 138,
+                                lineNumber: 160,
                                 columnNumber: 15
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 121,
+                        lineNumber: 128,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1032,18 +1082,18 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                             className: "h-4 w-4 text-gray-600"
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                            lineNumber: 215,
+                            lineNumber: 242,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 209,
+                        lineNumber: 236,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                lineNumber: 117,
+                lineNumber: 124,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1060,7 +1110,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                 children: "What you get:"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                lineNumber: 221,
+                                lineNumber: 248,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1078,7 +1128,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                         children: "Essentials"
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                        lineNumber: 223,
+                                        lineNumber: 250,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1111,29 +1161,29 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                                 children: activeBundle.tier
                                             }, activeBundle.id, false, {
                                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                lineNumber: 226,
+                                                lineNumber: 253,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                            lineNumber: 225,
+                                            lineNumber: 252,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 251,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                lineNumber: 222,
+                                lineNumber: 249,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 220,
+                        lineNumber: 247,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1151,7 +1201,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                         children: feature.label
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                        lineNumber: 256,
+                                        lineNumber: 283,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1170,19 +1220,19 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                                     className: "h-3.5 w-3.5 text-gray-400"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 260,
+                                                    lineNumber: 287,
                                                     columnNumber: 23
                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-gray-300 text-xs",
                                                     children: "—"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 262,
+                                                    lineNumber: 289,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                lineNumber: 258,
+                                                lineNumber: 285,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1216,59 +1266,59 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                                             className: "h-3.5 w-3.5 text-[#36bff9]"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                            lineNumber: 276,
+                                                            lineNumber: 303,
                                                             columnNumber: 27
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "text-gray-300 text-xs",
                                                             children: "—"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                            lineNumber: 278,
+                                                            lineNumber: 305,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, `${activeBundle.id}-${feature.key}`, false, {
                                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                        lineNumber: 267,
+                                                        lineNumber: 294,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 266,
+                                                    lineNumber: 293,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                lineNumber: 265,
+                                                lineNumber: 292,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                        lineNumber: 257,
+                                        lineNumber: 284,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, feature.key, true, {
                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                lineNumber: 248,
+                                lineNumber: 275,
                                 columnNumber: 15
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 242,
+                        lineNumber: 269,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                lineNumber: 219,
+                lineNumber: 246,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-        lineNumber: 113,
+        lineNumber: 120,
         columnNumber: 5
     }, this);
 }
