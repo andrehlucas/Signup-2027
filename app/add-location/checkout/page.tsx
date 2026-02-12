@@ -7,7 +7,6 @@ import { MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRigh
 import { Button } from '@/app/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Input } from '@/app/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/popover';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useToast } from '@/app/hooks/use-toast';
@@ -67,6 +66,7 @@ export default function CheckoutPage() {
   const [billingState, setBillingState] = useState('');
   const [billingZip, setBillingZip] = useState('');
   const [saveCard, setSaveCard] = useState(false);
+  const [bundleTooltipOpen, setBundleTooltipOpen] = useState(false);
   const [paymentTerm, setPaymentTerm] = useState<PaymentTerm>(1);
   const { trackComplete } = useFunnelTracking('checkout');
   
@@ -711,57 +711,59 @@ export default function CheckoutPage() {
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600 flex items-center gap-1">
                     Office Package ({order.bundle.tier})
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <button
+                    <button
                           className="inline-flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
                           data-testid="bundle-breakdown-trigger"
+                          onClick={() => setBundleTooltipOpen((v) => !v)}
                         >
                           <HelpCircle className="h-3.5 w-3.5" />
                         </button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-72 p-4" side="left" align="start">
-                        <div className="space-y-3">
-                          <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">All Plans Include</p>
-                          <div className="space-y-2">
-                            {[
-                              'Prestigious Business Address',
-                              'Live Call Answering',
-                              'Call Transferring',
-                              '2 Voicemail Boxes',
-                              'Business Phone/Fax Number',
-                              'Voicemail/Fax Converted to Email',
-                            ].map((feature) => (
-                              <div key={feature} className="flex items-center gap-1.5 text-xs text-gray-600">
-                                <Check className="h-3 w-3 text-green-500 shrink-0" />
-                                {feature}
-                              </div>
-                            ))}
-                          </div>
-                          {(() => {
-                            const bundleExtras = Object.entries(order.bundle!.features)
-                              .filter(([key, included]) => {
-                                const base = ['businessAddress', 'liveCallAnswering', 'callTransferring'];
-                                return included && !base.includes(key);
-                              })
-                              .map(([key]) => featureLabels[key]);
-                            return bundleExtras.length > 0 ? (
-                              <div className="border-t border-gray-200 pt-2 mt-1">
-                                <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Included in Office Package</p>
-                                <div className="space-y-2">
-                                  {bundleExtras.map((label) => (
-                                    <div key={label} className="flex items-center gap-1.5 text-xs text-gray-600">
-                                      <Check className="h-3 w-3 text-[#36bff9] shrink-0" />
-                                      {label}
-                                    </div>
-                                  ))}
+                    {bundleTooltipOpen && (
+                      <>
+                        <div className="fixed inset-0 z-40" onClick={() => setBundleTooltipOpen(false)} />
+                        <div className="fixed left-1/2 -translate-x-1/2 top-1/3 z-50 w-72 rounded-lg border border-gray-200 bg-white p-4 shadow-lg" data-testid="bundle-breakdown-popover">
+                          <div className="space-y-3">
+                            <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">All Plans Include</p>
+                            <div className="space-y-2">
+                              {[
+                                'Prestigious Business Address',
+                                'Live Call Answering',
+                                'Call Transferring',
+                                '2 Voicemail Boxes',
+                                'Business Phone/Fax Number',
+                                'Voicemail/Fax Converted to Email',
+                              ].map((feature) => (
+                                <div key={feature} className="flex items-center gap-1.5 text-xs text-gray-600">
+                                  <Check className="h-3 w-3 text-green-500 shrink-0" />
+                                  {feature}
                                 </div>
-                              </div>
-                            ) : null;
-                          })()}
+                              ))}
+                            </div>
+                            {(() => {
+                              const bundleExtras = Object.entries(order.bundle!.features)
+                                .filter(([key, included]) => {
+                                  const base = ['businessAddress', 'liveCallAnswering', 'callTransferring'];
+                                  return included && !base.includes(key);
+                                })
+                                .map(([key]) => featureLabels[key]);
+                              return bundleExtras.length > 0 ? (
+                                <div className="border-t border-gray-200 pt-2 mt-1">
+                                  <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Included in Office Package</p>
+                                  <div className="space-y-2">
+                                    {bundleExtras.map((label) => (
+                                      <div key={label} className="flex items-center gap-1.5 text-xs text-gray-600">
+                                        <Check className="h-3 w-3 text-[#36bff9] shrink-0" />
+                                        {label}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              ) : null;
+                            })()}
+                          </div>
                         </div>
-                      </PopoverContent>
-                    </Popover>
+                      </>
+                    )}
                   </span>
                   <span className="font-medium">${order.bundle.price}/mo</span>
                 </div>
