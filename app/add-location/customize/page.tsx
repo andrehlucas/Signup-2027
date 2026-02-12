@@ -323,6 +323,16 @@ export default function CustomizePage() {
     setBundleModalOpen(true);
   };
 
+  const handleSuggestionProceedWithBundle = () => {
+    if (!bundleSuggestion) return;
+    setBundleSuggestionOpen(false);
+    setBundle(bundleSuggestion.bundle);
+    setTimeout(() => {
+      trackComplete({ bundle: bundleSuggestion.bundle.name });
+      router.push('/add-location/checkout');
+    }, 150);
+  };
+
   const handleSuggestionDismiss = () => {
     setBundleSuggestionOpen(false);
     trackComplete({ bundle: selectedBundle?.name });
@@ -848,13 +858,24 @@ export default function CustomizePage() {
           )}
 
           <DialogFooter className="flex-col sm:flex-col gap-2 sm:gap-2">
+            {bundleSuggestion && (
+              <Button
+                onClick={handleSuggestionProceedWithBundle}
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-11"
+                data-testid="button-suggestion-proceed-bundle"
+              >
+                <Check className="h-4 w-4 mr-2" />
+                Proceed with {bundleSuggestion.bundle.tier}
+              </Button>
+            )}
             <Button
+              variant="outline"
               onClick={handleSuggestionSeeBundles}
-              className="w-full bg-[#36bff9] hover:bg-[#2aa8e0] text-white h-11"
+              className="w-full h-11"
               data-testid="button-suggestion-see-bundles"
             >
               <DollarSign className="h-4 w-4 mr-2" />
-              See Bundles & Save
+              See All Bundles
             </Button>
             <Button
               variant="ghost"
