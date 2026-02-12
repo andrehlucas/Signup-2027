@@ -1693,7 +1693,7 @@ function BundleFocusRail({ bundles, selectedBundleId, onSelect, onClose, onRever
                                         style: {
                                             backgroundImage: `url(${bgBundlePlus})`,
                                             mixBlendMode: "lighten",
-                                            opacity: 0.15
+                                            opacity: 0.75
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-focus-rail.tsx",

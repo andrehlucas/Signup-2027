@@ -182,7 +182,7 @@ export function BundleFocusRail({
                     style={{
                       backgroundImage: `url(${bgBundlePlus})`,
                       mixBlendMode: "lighten",
-                      opacity: 0.15,
+                      opacity: 0.75,
                     }}
                   />
                 )}
