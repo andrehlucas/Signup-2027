@@ -975,20 +975,12 @@ body {
   width: 100px;
 }
 
-.w-\[140px\] {
-  width: 140px;
-}
-
 .w-\[1px\] {
   width: 1px;
 }
 
 .w-\[320px\] {
   width: 320px;
-}
-
-.w-\[70px\] {
-  width: 70px;
 }
 
 .w-auto {
@@ -1603,6 +1595,11 @@ body {
 
 .bg-\[\#0a1628\]\/80 {
   background-color: #0a1628cc;
+}
+
+.bg-\[\#1a1a1a\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(26 26 26 / var(--tw-bg-opacity, 1));
 }
 
 .bg-\[\#36bff9\] {
@@ -2996,6 +2993,11 @@ body {
 .hover\:bg-\[\#2aa8e0\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(42 168 224 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-\[\#333\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 51 51 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-accent:hover {

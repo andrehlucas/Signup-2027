@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
-import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle } from "@/app/add-location/types";
 
@@ -27,12 +27,6 @@ const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "supervisedCallTransfer", label: "Supervised Call Transfer" },
   { key: "messageTaking", label: "Message Taking" },
 ];
-
-const bundleButtonColors: Record<string, { bg: string; hover: string }> = {
-  plus: { bg: "#6b8e6b", hover: "#5a7d5a" },
-  pro: { bg: "#4a7fb5", hover: "#3d6e9e" },
-  premium: { bg: "#8b6bb5", hover: "#7a5aa0" },
-};
 
 interface BundleInlineSelectorProps {
   bundles: Bundle[];
@@ -87,9 +81,8 @@ export function BundleInlineSelector({
   const currentIndex = wrap(0, count, activeIndex);
   const activeBundle = bundles[currentIndex];
 
+  const cardPadding = 8;
   const centerCardWidth = containerWidth * 0.8;
-  const sideGap = (containerWidth - centerCardWidth) / 2;
-  const sideCardOffset = centerCardWidth * 0.5 + sideGap * 0.5 + 4;
 
   const goTo = (newIndex: number) => {
     setActiveIndex(newIndex);
@@ -111,7 +104,8 @@ export function BundleInlineSelector({
     else if (swipe > swipeConfidenceThreshold) handlePrev();
   };
 
-  const visibleIndices = [-1, 0, 1];
+  const centerLeft = cardPadding;
+  const nextLeft = cardPadding + centerCardWidth + cardPadding;
 
   return (
     <div
@@ -120,54 +114,44 @@ export function BundleInlineSelector({
     >
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center py-6 overflow-hidden"
-        style={{ minHeight: "240px" }}
+        className="relative py-4 overflow-hidden"
+        style={{ minHeight: "220px" }}
       >
-        <button
-          onClick={handlePrev}
-          className="absolute left-1 z-30 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors"
-          aria-label="Previous bundle"
-          data-testid="inline-bundle-prev"
-        >
-          <ChevronLeft className="h-4 w-4 text-gray-600" />
-        </button>
-
         <motion.div
-          className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing"
-          style={{ minHeight: "220px" }}
+          className="relative w-full h-full cursor-grab active:cursor-grabbing"
+          style={{ minHeight: "200px" }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.15}
           onDragEnd={onDragEnd}
         >
-          {visibleIndices.map((offset) => {
+          {[0, 1].map((offset) => {
             const absIndex = activeIndex + offset;
             const index = wrap(0, count, absIndex);
             const bundle = bundles[index];
             const isCenter = offset === 0;
             const isSelected = selectedBundleId === bundle.id;
             const badgeSrc = bundleBadges[bundle.id];
-            const btnColors = bundleButtonColors[bundle.id] || { bg: "#6b8e6b", hover: "#5a7d5a" };
 
             return (
               <motion.div
                 key={`${bundle.id}-${absIndex}`}
                 className={cn(
-                  "absolute rounded-2xl overflow-hidden bg-white",
+                  "absolute top-0 rounded-2xl overflow-hidden",
                   isCenter ? "z-20 shadow-lg" : "z-10 pointer-events-none shadow-md",
                   isSelected && isCenter
                     ? "ring-2 ring-[#36bff9]"
                     : ""
                 )}
                 style={{
-                  width: isCenter ? centerCardWidth : centerCardWidth * 0.85,
+                  width: centerCardWidth,
+                  background: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 30%, #fffde7 60%, #fff8e1 100%)",
                 }}
                 initial={false}
                 animate={{
-                  x: offset === 0 ? 0 : offset * sideCardOffset,
-                  scale: isCenter ? 1 : 0.92,
-                  opacity: isCenter ? 1 : 0.35,
-                  filter: isCenter ? "blur(0px)" : "blur(1.5px)",
+                  left: isCenter ? centerLeft : nextLeft,
+                  scale: isCenter ? 1 : 0.95,
+                  opacity: isCenter ? 1 : 0.5,
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 onClick={() => {
@@ -185,7 +169,7 @@ export function BundleInlineSelector({
                     />
                   )}
 
-                  <p className="text-sm leading-relaxed text-gray-500" data-testid={`inline-description-${bundle.id}`}>
+                  <p className="text-sm leading-relaxed text-gray-600" data-testid={`inline-description-${bundle.id}`}>
                     {bundleDescriptions[bundle.id] || bundle.name}
                   </p>
 
@@ -195,16 +179,12 @@ export function BundleInlineSelector({
                         e.stopPropagation();
                         onSelect(bundle);
                       }}
-                      className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all text-white"
-                      style={{
-                        backgroundColor: isSelected ? "#36bff9" : btnColors.bg,
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.target as HTMLButtonElement).style.backgroundColor = isSelected ? "#2aa8e0" : btnColors.hover;
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.target as HTMLButtonElement).style.backgroundColor = isSelected ? "#36bff9" : btnColors.bg;
-                      }}
+                      className={cn(
+                        "w-full py-2.5 rounded-xl text-sm font-semibold transition-all text-white",
+                        isSelected
+                          ? "bg-[#36bff9] hover:bg-[#2aa8e0]"
+                          : "bg-[#1a1a1a] hover:bg-[#333]"
+                      )}
                       data-testid={`inline-select-bundle-${bundle.id}`}
                     >
                       {isSelected ? (
@@ -225,7 +205,7 @@ export function BundleInlineSelector({
 
         <button
           onClick={handleNext}
-          className="absolute right-1 z-30 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors"
           aria-label="Next bundle"
           data-testid="inline-bundle-next"
         >
@@ -235,22 +215,24 @@ export function BundleInlineSelector({
 
       <div className="mt-2 px-2" data-testid="inline-comparison-table">
         <div className="flex items-center gap-2 mb-3" data-testid="comparison-header">
-          <span className="flex-1 text-xs font-medium text-gray-900" data-testid="text-what-you-get">What you get:</span>
-          <div className="flex items-center w-[140px]">
-            <span className="w-[70px] text-center text-xs font-medium text-gray-500" data-testid="text-essentials-col">Essentials</span>
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={activeBundle.id}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.15 }}
-                className="w-[70px] text-center text-xs font-bold text-[#36bff9]"
-                data-testid={`text-bundle-col-${activeBundle.id}`}
-              >
-                {activeBundle.tier}
-              </motion.span>
-            </AnimatePresence>
+          <span className="flex-1 min-w-0 text-xs font-medium text-gray-900" data-testid="text-what-you-get">What you get:</span>
+          <div className="flex items-center flex-shrink-0" style={{ width: "140px" }}>
+            <span className="text-center text-xs font-medium text-gray-500" style={{ width: "70px" }} data-testid="text-essentials-col">Essentials</span>
+            <div className="relative overflow-hidden" style={{ width: "70px", height: "16px" }}>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={activeBundle.id}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute inset-0 flex items-center justify-center text-xs font-bold text-[#36bff9]"
+                  data-testid={`text-bundle-col-${activeBundle.id}`}
+                >
+                  {activeBundle.tier}
+                </motion.span>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
 
@@ -268,16 +250,16 @@ export function BundleInlineSelector({
                 )}
                 data-testid={`comparison-row-${feature.key}`}
               >
-                <span className="flex-1 text-xs text-gray-700" data-testid={`comparison-label-${feature.key}`}>{feature.label}</span>
-                <div className="flex items-center w-[140px]">
-                  <div className="w-[70px] flex justify-center" data-testid={`comparison-essentials-${feature.key}`}>
+                <span className="flex-1 min-w-0 text-xs text-gray-700" data-testid={`comparison-label-${feature.key}`}>{feature.label}</span>
+                <div className="flex items-center flex-shrink-0" style={{ width: "140px" }}>
+                  <div className="flex justify-center" style={{ width: "70px" }} data-testid={`comparison-essentials-${feature.key}`}>
                     {essentialsHas ? (
                       <Check className="h-3.5 w-3.5 text-gray-400" />
                     ) : (
                       <span className="text-gray-300 text-xs">—</span>
                     )}
                   </div>
-                  <div className="w-[70px] flex justify-center" data-testid={`comparison-bundle-${feature.key}`}>
+                  <div className="relative overflow-hidden" style={{ width: "70px", height: "16px" }} data-testid={`comparison-bundle-${feature.key}`}>
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={`${activeBundle.id}-${feature.key}`}
@@ -285,6 +267,7 @@ export function BundleInlineSelector({
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.15 }}
+                        className="absolute inset-0 flex items-center justify-center"
                       >
                         {activeBundleHas ? (
                           <Check className="h-3.5 w-3.5 text-[#36bff9]" />
