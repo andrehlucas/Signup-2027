@@ -1093,8 +1093,8 @@ body {
   min-width: 12rem;
 }
 
-.min-w-\[40px\] {
-  min-width: 40px;
+.min-w-\[160px\] {
+  min-width: 160px;
 }
 
 .min-w-\[8rem\] {
@@ -1854,10 +1854,6 @@ body {
   padding: .5rem;
 }
 
-.p-2\.5 {
-  padding: .625rem;
-}
-
 .p-3 {
   padding: .75rem;
 }
@@ -2058,11 +2054,6 @@ body {
   line-height: 2.25rem;
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-}
-
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
@@ -2159,8 +2150,8 @@ body {
   color: rgb(10 22 40 / var(--tw-text-opacity, 1));
 }
 
-.text-\[\#0a1628\]\/60 {
-  color: #0a162899;
+.text-\[\#0a1628\]\/50 {
+  color: #0a162880;
 }
 
 .text-\[\#2D7D6F\] {
@@ -2225,6 +2216,11 @@ body {
 .text-emerald-300 {
   --tw-text-opacity: 1;
   color: rgb(110 231 183 / var(--tw-text-opacity, 1));
+}
+
+.text-emerald-400 {
+  --tw-text-opacity: 1;
+  color: rgb(52 211 153 / var(--tw-text-opacity, 1));
 }
 
 .text-foreground {

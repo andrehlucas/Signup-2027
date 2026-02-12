@@ -278,58 +278,54 @@ export function BundleFocusRail({
           </button>
         </motion.div>
 
-        <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-center gap-2" style={{ flex: "1 1 0%" }}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeItem.id}
-              initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
-              transition={{ duration: 0.25 }}
-              className="text-center"
+        <div className="mx-auto flex w-full max-w-4xl items-center justify-center" style={{ flex: "0.5 1 0%" }}>
+          <div className="flex items-center gap-4 rounded-full bg-[#0a1628]/80 px-2 py-1 ring-1 ring-white/10 backdrop-blur-md">
+            <button
+              onClick={handlePrev}
+              className="rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
+              aria-label="Previous"
+              data-testid="rail-button-prev"
             >
-              <h3 className="text-4xl font-extrabold tracking-tight text-[#0a1628]">
-                {activeItem.tier}
-              </h3>
-              {activeItem.originalPrice && (
-                <p className="text-sm font-semibold text-white">
-                  Save ${activeItem.originalPrice - activeItem.price}/mo
-                </p>
-              )}
-            </motion.div>
-          </AnimatePresence>
+              <ChevronLeft className="h-4 w-4" />
+            </button>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 rounded-full bg-[#0a1628]/80 p-1 ring-1 ring-white/10 backdrop-blur-md">
-              <button
-                onClick={handlePrev}
-                className="rounded-full p-2.5 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
-                aria-label="Previous"
-                data-testid="rail-button-prev"
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeItem.id}
+                initial={{ opacity: 0, y: 4, filter: "blur(3px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -4, filter: "blur(3px)" }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-3 min-w-[160px] justify-center"
               >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <span className="min-w-[40px] text-center text-xs font-mono text-white/50">
-                {activeIndex + 1} / {count}
-              </span>
-              <button
-                onClick={handleNext}
-                className="rounded-full p-2.5 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
-                aria-label="Next"
-                data-testid="rail-button-next"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
+                <span className="text-lg font-bold text-white tracking-tight">
+                  {activeItem.tier}
+                </span>
+                {activeItem.originalPrice && (
+                  <span className="text-xs font-semibold text-emerald-400">
+                    Save ${activeItem.originalPrice - activeItem.price}/mo
+                  </span>
+                )}
+              </motion.div>
+            </AnimatePresence>
+
+            <button
+              onClick={handleNext}
+              className="rounded-full p-2 text-white/60 transition hover:bg-white/10 hover:text-white active:scale-95"
+              aria-label="Next"
+              data-testid="rail-button-next"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
 
           {onRevert && selectedBundleId !== "essentials" && (
             <button
               onClick={onRevert}
-              className="text-sm text-[#0a1628]/60 hover:text-[#0a1628] underline"
+              className="ml-3 text-xs text-[#0a1628]/50 hover:text-[#0a1628] underline"
               data-testid="button-revert-essentials"
             >
-              Revert to The Essentials (${essentialsPrice}/mo)
+              Revert
             </button>
           )}
         </div>
