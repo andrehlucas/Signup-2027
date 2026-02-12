@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
-import { Bundle } from "@/app/add-location/types";
+import { Bundle, featureIndividualPrices, ESSENTIALS_PLAN } from "@/app/add-location/types";
 
 const CARD_HEIGHT = 200;
 
@@ -26,6 +26,12 @@ const bundleBackgrounds: Record<string, string> = {
   premium: "linear-gradient(135deg, #fff8e1 0%, #fff3e0 40%, #fce4ec 100%)",
 };
 
+const bundleAccentColors: Record<string, string> = {
+  plus: "#2e7d32",
+  pro: "#5c6bc0",
+  premium: "#e65100",
+};
+
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "businessAddress", label: "Prestigious Business Address" },
   { key: "liveCallAnswering", label: "Professional Live Call Answering" },
@@ -35,6 +41,16 @@ const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "supervisedCallTransfer", label: "Supervised Call Transfer" },
   { key: "messageTaking", label: "Message Taking" },
 ];
+
+function calculateSavings(bundle: Bundle): number {
+  let alaCarteTotal = ESSENTIALS_PLAN.price;
+  for (const [key, included] of Object.entries(bundle.features)) {
+    if (included && featureIndividualPrices[key as keyof Bundle["features"]] > 0) {
+      alaCarteTotal += featureIndividualPrices[key as keyof Bundle["features"]];
+    }
+  }
+  return alaCarteTotal - bundle.price;
+}
 
 interface BundleInlineSelectorProps {
   bundles: Bundle[];
@@ -88,6 +104,8 @@ export function BundleInlineSelector({
 
   const currentIndex = wrap(0, count, activeIndex);
   const activeBundle = bundles[currentIndex];
+  const accentColor = bundleAccentColors[activeBundle.id] || "#36bff9";
+  const savings = calculateSavings(activeBundle);
 
   const cardPadding = 8;
   const centerCardWidth = containerWidth * 0.8;
@@ -256,7 +274,8 @@ export function BundleInlineSelector({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.25, ease: "easeInOut" }}
-                  className="absolute inset-0 flex items-center justify-center text-xs font-bold text-[#36bff9]"
+                  className="absolute inset-0 flex items-center justify-center text-xs font-bold"
+                  style={{ color: accentColor }}
                   data-testid={`text-bundle-col-${activeBundle.id}`}
                 >
                   {activeBundle.tier}
@@ -300,7 +319,7 @@ export function BundleInlineSelector({
                         className="absolute inset-0 flex items-center justify-center"
                       >
                         {activeBundleHas ? (
-                          <Check className="h-3.5 w-3.5 text-[#36bff9]" />
+                          <Check className="h-3.5 w-3.5" style={{ color: accentColor }} />
                         ) : (
                           <span className="text-gray-300 text-xs">—</span>
                         )}
@@ -312,6 +331,25 @@ export function BundleInlineSelector({
             );
           })}
         </div>
+
+        {savings > 0 && (
+          <div className="border-t border-gray-200 mt-1 pt-3 pb-1">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={activeBundle.id}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="text-center text-sm font-semibold"
+                style={{ color: accentColor }}
+                data-testid={`savings-line-${activeBundle.id}`}
+              >
+                You save ${savings}/mo with {activeBundle.tier}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+        )}
       </div>
     </div>
   );

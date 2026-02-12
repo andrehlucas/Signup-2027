@@ -1766,9 +1766,9 @@ body {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-\[\#0f1c2e\] {
-  --tw-gradient-from: #0f1c2e var(--tw-gradient-from-position);
-  --tw-gradient-to: #0f1c2e00 var(--tw-gradient-to-position);
+.from-\[\#15803d\] {
+  --tw-gradient-from: #15803d var(--tw-gradient-from-position);
+  --tw-gradient-to: #15803d00 var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
@@ -1782,8 +1782,8 @@ body {
   --tw-gradient-to: #0f2240 var(--tw-gradient-to-position);
 }
 
-.to-\[\#1e3a5f\] {
-  --tw-gradient-to: #1e3a5f var(--tw-gradient-to-position);
+.to-\[\#22c55e\] {
+  --tw-gradient-to: #22c55e var(--tw-gradient-to-position);
 }
 
 .to-transparent {
@@ -2174,10 +2174,6 @@ body {
   color: rgb(146 64 14 / var(--tw-text-opacity, 1));
 }
 
-.text-blue-200\/80 {
-  color: #bfdbfecc;
-}
-
 .text-blue-700 {
   --tw-text-opacity: 1;
   color: rgb(29 78 216 / var(--tw-text-opacity, 1));
@@ -2263,6 +2259,10 @@ body {
 
 .text-gray-900 {
   color: var(--gray-900);
+}
+
+.text-green-100\/80 {
+  color: #dcfce7cc;
 }
 
 .text-green-500 {
@@ -3068,14 +3068,14 @@ body {
   background-color: var(--white);
 }
 
-.hover\:from-\[\#1a2d4a\]:hover {
-  --tw-gradient-from: #1a2d4a var(--tw-gradient-from-position);
-  --tw-gradient-to: #1a2d4a00 var(--tw-gradient-to-position);
+.hover\:from-\[\#166534\]:hover {
+  --tw-gradient-from: #166534 var(--tw-gradient-from-position);
+  --tw-gradient-to: #16653400 var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.hover\:to-\[\#2a4a6f\]:hover {
-  --tw-gradient-to: #2a4a6f var(--tw-gradient-to-position);
+.hover\:to-\[\#16a34a\]:hover {
+  --tw-gradient-to: #16a34a var(--tw-gradient-to-position);
 }
 
 .hover\:text-\[\#0a1628\]:hover {

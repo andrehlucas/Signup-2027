@@ -701,26 +701,26 @@ export default function CustomizePage() {
               }, 100);
             }
           }}
-          className="bg-gradient-to-r from-[#0f1c2e] to-[#1e3a5f] cursor-pointer hover:from-[#1a2d4a] hover:to-[#2a4a6f] transition-all"
+          className="bg-gradient-to-r from-[#15803d] to-[#22c55e] cursor-pointer hover:from-[#166534] hover:to-[#16a34a] transition-all"
           data-testid="bundle-save-banner"
         >
           <div className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2">
             {selectedBundle && selectedBundle.id !== 'essentials' ? (
               <>
-                <Star className="h-4 w-4 text-[#36bff9]" />
+                <Star className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">Active Bundle</span>
-                <span className="text-xs text-blue-200/80 hidden sm:inline">- {displayBundleName}</span>
-                <span className="text-xs font-medium text-[#36bff9] ml-1">{bundleExpanded ? 'Close' : 'Edit'}</span>
+                <span className="text-xs text-green-100/80 hidden sm:inline">- {displayBundleName}</span>
+                <span className="text-xs font-medium text-white ml-1">{bundleExpanded ? 'Close' : 'Edit'}</span>
               </>
             ) : (
               <>
-                <DollarSign className="h-4 w-4 text-[#36bff9]" />
+                <DollarSign className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">Bundle & Save</span>
-                <span className="text-xs text-blue-200/80 hidden sm:inline">- Upgrade your plan and save on popular features</span>
+                <span className="text-xs text-green-100/80 hidden sm:inline">- Upgrade your plan and save on popular features</span>
                 {bundleExpanded ? (
-                  <ChevronDown className="h-4 w-4 text-[#36bff9] ml-1" />
+                  <ChevronDown className="h-4 w-4 text-white ml-1" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-[#36bff9] ml-1" />
+                  <ChevronRight className="h-4 w-4 text-white ml-1" />
                 )}
               </>
             )}
