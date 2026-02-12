@@ -60,11 +60,8 @@ export default function CustomizePage() {
   const scrollThreshold = 5;
 
   useEffect(() => {
-    const mainElement = document.querySelector('main');
-    const scrollTarget = mainElement || window;
-
     const handleScroll = () => {
-      const currentScrollY = mainElement ? mainElement.scrollTop : window.scrollY;
+      const currentScrollY = window.scrollY;
       const delta = currentScrollY - lastScrollY.current;
 
       if (Math.abs(delta) < scrollThreshold) return;
@@ -77,8 +74,8 @@ export default function CustomizePage() {
       lastScrollY.current = currentScrollY;
     };
 
-    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
-    return () => scrollTarget.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
