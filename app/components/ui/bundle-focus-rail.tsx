@@ -148,7 +148,7 @@ export function BundleFocusRail({
               <motion.div
                 key={absIndex}
                 className={cn(
-                  "absolute w-[320px] md:w-[360px] max-h-[85%] rounded-2xl border-2 shadow-2xl overflow-hidden",
+                  "absolute w-[320px] md:w-[360px] rounded-2xl border-2 shadow-2xl",
                   "bg-gradient-to-b from-[#0a1628] to-[#0f2240]",
                   isCenter ? "z-20" : "z-10",
                   selected && isCenter
@@ -175,8 +175,8 @@ export function BundleFocusRail({
                 }}
                 data-testid={`rail-bundle-card-${bundle.id}`}
               >
-                <div className="p-5 flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-2">
+                <div className="p-4 flex flex-col">
+                  <div className="flex items-center justify-between mb-1">
                     <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
                       {bundle.badge}
                     </span>
@@ -188,12 +188,12 @@ export function BundleFocusRail({
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-lg font-bold text-white mb-0.5">
                     {bundle.tier}
                   </h3>
 
-                  <div className="mb-3">
-                    <span className="text-3xl font-bold text-white">
+                  <div className="mb-2">
+                    <span className="text-2xl font-bold text-white">
                       ${bundle.price}
                     </span>
                     {bundle.originalPrice && (
@@ -204,15 +204,15 @@ export function BundleFocusRail({
                     <span className="text-white/50 text-sm ml-1">/mo</span>
                   </div>
 
-                  <div className="space-y-2.5 flex-1">
+                  <div className="space-y-1.5">
                     {Object.entries(bundle.features)
                       .filter(([, enabled]) => enabled)
                       .map(([key]) => (
-                        <div key={key} className="flex items-center gap-3">
-                          <div className="w-6 h-6 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
-                            <Check className="h-3.5 w-3.5 text-[#36bff9]" />
+                        <div key={key} className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
+                            <Check className="h-3 w-3 text-[#36bff9]" />
                           </div>
-                          <span className="text-white/80 text-sm">
+                          <span className="text-white/80 text-sm leading-tight">
                             {featureLabels[key]}
                           </span>
                         </div>
@@ -225,7 +225,7 @@ export function BundleFocusRail({
                       onSelect(bundle);
                     }}
                     className={cn(
-                      "mt-4 w-full py-2.5 rounded-lg text-sm font-semibold transition-all",
+                      "mt-3 w-full py-2 rounded-lg text-sm font-semibold transition-all",
                       selected
                         ? "bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
                         : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
