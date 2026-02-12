@@ -35,6 +35,7 @@ import {
   availableAddons,
   getPhoneNumbersForLocation,
   sampleTollFreeNumbers,
+  addonToFeatureMap,
   Bundle,
   PhoneNumber,
   Addon,
@@ -53,6 +54,8 @@ export default function CustomizePage() {
   const [selectedTollFree, setSelectedTollFree] = useState<PhoneNumber | null>(order.tollFreePhoneNumber);
   const [tempSelectedTollFree, setTempSelectedTollFree] = useState<PhoneNumber | null>(null);
   const [bundleModalOpen, setBundleModalOpen] = useState(false);
+  const [bundleSuggestionOpen, setBundleSuggestionOpen] = useState(false);
+  const [suggestionTriggeredFromContinue, setSuggestionTriggeredFromContinue] = useState(false);
   const { trackComplete } = useFunnelTracking('customize');
 
   const [footerVisible, setFooterVisible] = useState(false);
@@ -232,16 +235,98 @@ export default function CustomizePage() {
 
   const upgradeBundles = bundles.filter(b => b.id !== 'essentials');
 
+  const bundleSuggestion = useMemo(() => {
+    if (!selectedBundle) return null;
+
+    const selectedAddonIds = order.addons.map(a => a.id);
+    const mappableAddonIds = selectedAddonIds.filter(id => addonToFeatureMap[id]);
+
+    if (mappableAddonIds.length < 2) return null;
+
+    const currentBundleTierIndex = bundles.findIndex(b => b.id === selectedBundle.id);
+
+    let bestSuggestion: {
+      bundle: Bundle;
+      matchingAddons: Addon[];
+      savings: number;
+      bonusFeatures: string[];
+    } | null = null;
+
+    for (let i = currentBundleTierIndex + 1; i < bundles.length; i++) {
+      const candidateBundle = bundles[i];
+
+      const matchingAddons = order.addons.filter(addon => {
+        const featureKey = addonToFeatureMap[addon.id];
+        if (!featureKey) return false;
+        const alreadyInCurrentBundle = selectedBundle.features[featureKey];
+        const includedInCandidate = candidateBundle.features[featureKey];
+        return !alreadyInCurrentBundle && includedInCandidate;
+      });
+
+      if (matchingAddons.length < 2) continue;
+
+      const addonsCost = matchingAddons.reduce((sum, a) => sum + a.price, 0);
+      const upgradeCost = candidateBundle.price - selectedBundle.price;
+      const savings = addonsCost - upgradeCost;
+
+      if (savings <= 0) continue;
+
+      const bonusFeatures = Object.entries(candidateBundle.features)
+        .filter(([key, enabled]) => {
+          if (!enabled) return false;
+          if (selectedBundle.features[key as keyof Bundle['features']]) return false;
+          const isMatchedAddon = matchingAddons.some(a => addonToFeatureMap[a.id] === key);
+          return !isMatchedAddon;
+        })
+        .map(([key]) => featureLabels[key] || key);
+
+      if (!bestSuggestion || savings > bestSuggestion.savings) {
+        bestSuggestion = {
+          bundle: candidateBundle,
+          matchingAddons,
+          savings,
+          bonusFeatures,
+        };
+      }
+    }
+
+    return bestSuggestion;
+  }, [selectedBundle, order.addons]);
+
   const handleBundleSelect = (bundle: Bundle) => {
     setBundle(bundle);
     setBundleModalOpen(false);
+    if (suggestionTriggeredFromContinue) {
+      setSuggestionTriggeredFromContinue(false);
+      setTimeout(() => {
+        trackComplete({ bundle: bundle.name });
+        router.push('/add-location/checkout');
+      }, 150);
+    }
   };
 
   const handleContinue = () => {
-    if (selectedPhone) {
-      trackComplete({ bundle: selectedBundle?.name });
-      router.push('/add-location/checkout');
+    if (!selectedPhone) return;
+
+    if (bundleSuggestion) {
+      setBundleSuggestionOpen(true);
+      return;
     }
+
+    trackComplete({ bundle: selectedBundle?.name });
+    router.push('/add-location/checkout');
+  };
+
+  const handleSuggestionSeeBundles = () => {
+    setBundleSuggestionOpen(false);
+    setSuggestionTriggeredFromContinue(true);
+    setBundleModalOpen(true);
+  };
+
+  const handleSuggestionDismiss = () => {
+    setBundleSuggestionOpen(false);
+    trackComplete({ bundle: selectedBundle?.name });
+    router.push('/add-location/checkout');
   };
 
   const { monthly } = getCartTotal();
@@ -685,6 +770,98 @@ export default function CustomizePage() {
       </div>
       </div>
 
+      <Dialog open={bundleSuggestionOpen} onOpenChange={setBundleSuggestionOpen}>
+        <DialogContent className="sm:max-w-lg" data-testid="bundle-suggestion-modal">
+          <DialogHeader>
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                <DollarSign className="h-4 w-4 text-emerald-600" />
+              </div>
+              <DialogTitle className="text-xl">You Could Be Saving!</DialogTitle>
+            </div>
+            <DialogDescription>
+              Based on the add-ons you've selected, upgrading to a bundle could save you money every month.
+            </DialogDescription>
+          </DialogHeader>
+
+          {bundleSuggestion && (
+            <div className="space-y-4 py-2">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <p className="text-sm font-medium text-emerald-800">
+                      Upgrade to <span className="font-bold">{bundleSuggestion.bundle.tier}</span>
+                    </p>
+                    <p className="text-2xl font-bold text-emerald-700 mt-1">
+                      Save ${bundleSuggestion.savings}<span className="text-sm font-normal">/mo</span>
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-emerald-600">${bundleSuggestion.bundle.price}/mo</p>
+                    {bundleSuggestion.bundle.originalPrice && (
+                      <p className="text-xs text-emerald-500 line-through">${bundleSuggestion.bundle.originalPrice}/mo</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">
+                  These add-ons would be included in the bundle:
+                </p>
+                <div className="space-y-2">
+                  {bundleSuggestion.matchingAddons.map(addon => (
+                    <div key={addon.id} className="flex items-center justify-between text-sm bg-gray-50 rounded-lg px-3 py-2" data-testid={`suggestion-addon-${addon.id}`}>
+                      <div className="flex items-center gap-2">
+                        <Check className="h-3.5 w-3.5 text-emerald-500" />
+                        <span className="text-gray-700">{addon.name}</span>
+                      </div>
+                      <span className="text-gray-400 line-through">${addon.price}/mo</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {bundleSuggestion.bonusFeatures.length > 0 && (
+                <div>
+                  <p className="text-sm font-medium text-gray-700 mb-2">
+                    Plus, you&apos;ll also get:
+                  </p>
+                  <div className="space-y-1.5">
+                    {bundleSuggestion.bonusFeatures.map(feature => (
+                      <div key={feature} className="flex items-center gap-2 text-sm">
+                        <Star className="h-3.5 w-3.5 text-[#36bff9]" />
+                        <span className="text-gray-600">{feature}</span>
+                        <Badge className="bg-blue-50 text-[#36bff9] border-0 text-[10px] px-1.5 py-0">FREE</Badge>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <DialogFooter className="flex-col sm:flex-col gap-2 sm:gap-2">
+            <Button
+              onClick={handleSuggestionSeeBundles}
+              className="w-full bg-[#36bff9] hover:bg-[#2aa8e0] text-white h-11"
+              data-testid="button-suggestion-see-bundles"
+            >
+              <DollarSign className="h-4 w-4 mr-2" />
+              See Bundles & Save
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={handleSuggestionDismiss}
+              className="w-full text-gray-500 hover:text-gray-700"
+              data-testid="button-suggestion-dismiss"
+            >
+              No thanks, continue to checkout
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {bundleModalOpen && (
         <div
           className="fixed inset-0 z-[60] flex flex-col items-center justify-center"
@@ -692,9 +869,9 @@ export default function CustomizePage() {
         >
           <div
             className="absolute inset-0 bg-white/60 backdrop-blur-xl"
-            onClick={() => setBundleModalOpen(false)}
+            onClick={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}
           />
-          <div className="relative z-10 w-full h-full flex flex-col" onClick={() => setBundleModalOpen(false)}>
+          <div className="relative z-10 w-full h-full flex flex-col" onClick={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}>
             <div className="flex items-center justify-center flex-1 min-h-0" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-5xl font-extrabold tracking-tight text-[#0a1628]">Bundle & Save</h2>
             </div>
@@ -703,7 +880,7 @@ export default function CustomizePage() {
                 bundles={upgradeBundles}
                 selectedBundleId={selectedBundle?.id}
                 onSelect={handleBundleSelect}
-                onClose={() => setBundleModalOpen(false)}
+                onClose={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}
                 onRevert={() => handleBundleSelect(bundles[0])}
                 essentialsPrice={bundles[0].price}
               />
