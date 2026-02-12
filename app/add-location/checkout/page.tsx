@@ -742,7 +742,7 @@ export default function CheckoutPage() {
                             {(() => {
                               const bundleExtras = Object.entries(order.bundle!.features)
                                 .filter(([key, included]) => {
-                                  const base = ['businessAddress', 'liveCallAnswering', 'callTransferring'];
+                                  const base = ['businessAddress', 'liveCallAnswering', 'callTransferring', 'businessPhoneFax', 'mailReceipt', 'voicemailToEmail'];
                                   return included && !base.includes(key);
                                 })
                                 .map(([key]) => featureLabels[key]);

@@ -221,7 +221,12 @@ export function BundleFocusRail({
 
                   <div className="space-y-1.5">
                     {Object.entries(bundle.features)
-                      .filter(([, enabled]) => enabled)
+                      .filter(([key, enabled]) => {
+                        if (!enabled) return false;
+                        const alwaysShow = ['businessAddress', 'liveCallAnswering', 'businessPhoneFax'];
+                        const bundleUpgrades = ['calloutFeature', 'tollFreeNumber', 'callLog', 'supervisedCallTransfer', 'messageTaking'];
+                        return alwaysShow.includes(key) || bundleUpgrades.includes(key);
+                      })
                       .map(([key]) => (
                         <div key={key} className="flex items-center gap-2">
                           <div className="w-5 h-5 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
