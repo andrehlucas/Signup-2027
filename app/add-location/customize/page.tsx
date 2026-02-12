@@ -40,10 +40,12 @@ import {
   PhoneNumber,
   Addon,
 } from '../types';
+import { useToast } from '@/app/hooks/use-toast';
 
 export default function CustomizePage() {
   const router = useRouter();
   const { order, setBundle, setPhoneNumber, setTollFreePhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
+  const { toast } = useToast();
   const selectedBundle = order.bundle;
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
@@ -296,6 +298,10 @@ export default function CustomizePage() {
   const handleBundleSelect = (bundle: Bundle) => {
     setBundle(bundle);
     setBundleModalOpen(false);
+    toast({
+      title: `${bundle.tier} bundle activated`,
+      description: `Your plan has been updated to ${bundle.tier} at $${bundle.price}/mo.`,
+    });
     if (suggestionTriggeredFromContinue) {
       setSuggestionTriggeredFromContinue(false);
       setTimeout(() => {
