@@ -768,13 +768,6 @@ body {
   margin-top: auto;
 }
 
-.line-clamp-3 {
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  overflow: hidden;
-}
-
 .block {
   display: block;
 }
@@ -882,10 +875,6 @@ body {
 
 .h-96 {
   height: 24rem;
-}
-
-.h-\[160px\] {
-  height: 160px;
 }
 
 .h-\[1px\] {
@@ -1074,10 +1063,6 @@ body {
 
 .w-\[1px\] {
   width: 1px;
-}
-
-.w-\[200px\] {
-  width: 200px;
 }
 
 .w-\[320px\] {
@@ -1472,10 +1457,6 @@ body {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
-}
-
-.self-start {
-  align-self: flex-start;
 }
 
 .overflow-auto {
@@ -1876,12 +1857,6 @@ body {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-black\/20 {
-  --tw-gradient-from: #0003 var(--tw-gradient-from-position);
-  --tw-gradient-to: #0000 var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .from-white {
   --tw-gradient-from: var(--white) var(--tw-gradient-from-position);
   --tw-gradient-to: #fff0 var(--tw-gradient-to-position);
@@ -1894,10 +1869,6 @@ body {
 
 .to-\[\#1e3a5f\] {
   --tw-gradient-to: #1e3a5f var(--tw-gradient-to-position);
-}
-
-.to-black\/50 {
-  --tw-gradient-to: #00000080 var(--tw-gradient-to-position);
 }
 
 .to-transparent {
@@ -1936,6 +1907,10 @@ body {
 
 .p-1 {
   padding: .25rem;
+}
+
+.p-1\.5 {
+  padding: .375rem;
 }
 
 .p-2 {
@@ -2187,10 +2162,6 @@ body {
 .text-xs {
   font-size: .75rem;
   line-height: 1rem;
-}
-
-.font-black {
-  font-weight: 900;
 }
 
 .font-bold {
@@ -2638,12 +2609,6 @@ body {
 
 .transition-opacity {
   transition-property: opacity;
-  transition-duration: .15s;
-  transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-}
-
-.transition-shadow {
-  transition-property: box-shadow;
   transition-duration: .15s;
   transition-timing-function: cubic-bezier(.4, 0, .2, 1);
 }
@@ -3134,10 +3099,6 @@ body {
   background-color: var(--gray-100);
 }
 
-.hover\:bg-gray-200:hover {
-  background-color: var(--gray-200);
-}
-
 .hover\:bg-gray-50:hover {
   background-color: var(--gray-50);
 }
@@ -3183,6 +3144,10 @@ body {
 
 .hover\:bg-secondary\/80:hover {
   background-color: hsl(var(--secondary) / .8);
+}
+
+.hover\:bg-white:hover {
+  background-color: var(--white);
 }
 
 .hover\:from-\[\#1a2d4a\]:hover {
