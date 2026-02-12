@@ -786,15 +786,10 @@ const bundleBadges = {
     pro: "/images/pro-badge.svg",
     premium: "/images/premium-badge.svg"
 };
-const bundleBackgrounds = {
-    plus: "/images/bg-bundle-01.webp",
-    pro: "/images/bg-bundle-02.webp",
-    premium: "/images/bg-bundle-03.webp"
-};
 const bundleDescriptions = {
     plus: "All features from the ultimate office solution plus call log, toll-free number, and callout",
-    pro: "All features from the ultimate office solution plus call log, toll-free number, and callout",
-    premium: "All features from the ultimate office solution plus call log, toll-free number, and callout"
+    pro: "All features from the ultimate office solution plus call log, toll-free number, callout, and supervised transfer",
+    premium: "All features from the ultimate office solution plus call log, toll-free number, callout, supervised transfer, and message taking"
 };
 const comparisonFeatures = [
     {
@@ -806,6 +801,22 @@ const comparisonFeatures = [
         label: "Professional Live Call Answering"
     },
     {
+        key: "callTransferring",
+        label: "Personalized Call Transferring"
+    },
+    {
+        key: "businessPhoneFax",
+        label: "Business Phone/Fax Number"
+    },
+    {
+        key: "mailReceipt",
+        label: "Professional Mail Receipt"
+    },
+    {
+        key: "voicemailToEmail",
+        label: "Voicemail/Fax Converted to Email"
+    },
+    {
         key: "callLog",
         label: "Call Log"
     },
@@ -815,17 +826,31 @@ const comparisonFeatures = [
     },
     {
         key: "calloutFeature",
-        label: "Callout"
+        label: "Callout Feature"
     },
     {
         key: "supervisedCallTransfer",
-        label: "Supervised Transfer"
+        label: "Supervised Call Transfer"
     },
     {
         key: "messageTaking",
         label: "Message Taking"
     }
 ];
+const bundleButtonColors = {
+    plus: {
+        bg: "#6b8e6b",
+        hover: "#5a7d5a"
+    },
+    pro: {
+        bg: "#4a7fb5",
+        hover: "#3d6e9e"
+    },
+    premium: {
+        bg: "#8b6bb5",
+        hover: "#7a5aa0"
+    }
+};
 function wrap(min, max, v) {
     const rangeSize = max - min;
     return ((v - min) % rangeSize + rangeSize) % rangeSize + min;
@@ -845,6 +870,8 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
         selectedBundleId
     ]);
     const [activeIndex, setActiveIndex] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(getInitialIndex);
+    const containerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const [containerWidth, setContainerWidth] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(400);
     const count = bundles.length;
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "BundleInlineSelector.useEffect": ()=>{
@@ -854,15 +881,36 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
         selectedBundleId,
         getInitialIndex
     ]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "BundleInlineSelector.useEffect": ()=>{
+            const el = containerRef.current;
+            if (!el) return;
+            const observer = new ResizeObserver({
+                "BundleInlineSelector.useEffect": (entries)=>{
+                    for (const entry of entries){
+                        setContainerWidth(entry.contentRect.width);
+                    }
+                }
+            }["BundleInlineSelector.useEffect"]);
+            observer.observe(el);
+            setContainerWidth(el.offsetWidth);
+            return ({
+                "BundleInlineSelector.useEffect": ()=>observer.disconnect()
+            })["BundleInlineSelector.useEffect"];
+        }
+    }["BundleInlineSelector.useEffect"], []);
     if (count === 0) return null;
     const currentIndex = wrap(0, count, activeIndex);
     const activeBundle = bundles[currentIndex];
+    const centerCardWidth = containerWidth * 0.8;
+    const sideGap = (containerWidth - centerCardWidth) / 2;
+    const sideCardOffset = centerCardWidth * 0.5 + sideGap * 0.5 + 4;
     const goTo = (newIndex)=>{
         setActiveIndex(newIndex);
     };
     const handlePrev = ()=>goTo(activeIndex - 1);
     const handleNext = ()=>goTo(activeIndex + 1);
-    const swipeConfidenceThreshold = 5000;
+    const swipeConfidenceThreshold = 3000;
     const swipePower = (offset, velocity)=>Math.abs(offset) * velocity;
     const onDragEnd = (_e, { offset, velocity })=>{
         const swipe = swipePower(offset.x, velocity.x);
@@ -879,184 +927,171 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
         "data-testid": "bundle-inline-selector",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "relative flex items-center justify-center py-4 overflow-hidden",
+                ref: containerRef,
+                className: "relative flex items-center justify-center py-6 overflow-hidden",
+                style: {
+                    minHeight: "240px"
+                },
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: handlePrev,
-                        className: "absolute left-0 z-30 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors",
+                        className: "absolute left-1 z-30 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors",
                         "aria-label": "Previous bundle",
                         "data-testid": "inline-bundle-prev",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronLeft$3e$__["ChevronLeft"], {
-                            className: "h-5 w-5 text-gray-600"
+                            className: "h-4 w-4 text-gray-600"
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                            lineNumber: 109,
+                            lineNumber: 136,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 103,
+                        lineNumber: 130,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "relative w-full flex items-center justify-center",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
+                        className: "relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing",
                         style: {
-                            height: "180px"
+                            minHeight: "220px"
                         },
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                            className: "relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing",
-                            drag: "x",
-                            dragConstraints: {
-                                left: 0,
-                                right: 0
-                            },
-                            dragElastic: 0.15,
-                            onDragEnd: onDragEnd,
-                            children: visibleIndices.map((offset)=>{
-                                const absIndex = activeIndex + offset;
-                                const index = wrap(0, count, absIndex);
-                                const bundle = bundles[index];
-                                const isCenter = offset === 0;
-                                const isSelected = selectedBundleId === bundle.id;
-                                const badgeSrc = bundleBadges[bundle.id];
-                                const bgSrc = bundleBackgrounds[bundle.id];
-                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
-                                    className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute rounded-xl overflow-hidden shadow-md transition-shadow", "w-[200px] h-[160px]", isCenter ? "z-20" : "z-10 pointer-events-none", isSelected && isCenter ? "ring-2 ring-[#36bff9]" : ""),
-                                    initial: false,
-                                    animate: {
-                                        x: offset * 170,
-                                        scale: isCenter ? 1 : 0.85,
-                                        opacity: isCenter ? 1 : 0.4
-                                    },
-                                    transition: {
-                                        type: "spring",
-                                        stiffness: 300,
-                                        damping: 30
-                                    },
-                                    onClick: ()=>{
-                                        if (offset !== 0) goTo(activeIndex + offset);
-                                    },
-                                    "data-testid": `inline-bundle-card-${bundle.id}`,
+                        drag: "x",
+                        dragConstraints: {
+                            left: 0,
+                            right: 0
+                        },
+                        dragElastic: 0.15,
+                        onDragEnd: onDragEnd,
+                        children: visibleIndices.map((offset)=>{
+                            const absIndex = activeIndex + offset;
+                            const index = wrap(0, count, absIndex);
+                            const bundle = bundles[index];
+                            const isCenter = offset === 0;
+                            const isSelected = selectedBundleId === bundle.id;
+                            const badgeSrc = bundleBadges[bundle.id];
+                            const btnColors = bundleButtonColors[bundle.id] || {
+                                bg: "#6b8e6b",
+                                hover: "#5a7d5a"
+                            };
+                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
+                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("absolute rounded-2xl overflow-hidden bg-white", isCenter ? "z-20 shadow-lg" : "z-10 pointer-events-none shadow-md", isSelected && isCenter ? "ring-2 ring-[#36bff9]" : ""),
+                                style: {
+                                    width: isCenter ? centerCardWidth : centerCardWidth * 0.85
+                                },
+                                initial: false,
+                                animate: {
+                                    x: offset === 0 ? 0 : offset * sideCardOffset,
+                                    scale: isCenter ? 1 : 0.92,
+                                    opacity: isCenter ? 1 : 0.35,
+                                    filter: isCenter ? "blur(0px)" : "blur(1.5px)"
+                                },
+                                transition: {
+                                    type: "spring",
+                                    stiffness: 300,
+                                    damping: 30
+                                },
+                                onClick: ()=>{
+                                    if (offset !== 0) goTo(activeIndex + offset);
+                                },
+                                "data-testid": `inline-bundle-card-${bundle.id}`,
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "p-5 flex flex-col gap-3",
                                     children: [
-                                        bgSrc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute inset-0 bg-cover bg-center",
-                                            style: {
-                                                backgroundImage: `url(${bgSrc})`
-                                            }
+                                        badgeSrc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                            src: badgeSrc,
+                                            alt: bundle.tier,
+                                            className: "h-7 w-auto object-contain self-start",
+                                            "data-testid": `inline-badge-${bundle.id}`
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                            lineNumber: 153,
+                                            lineNumber: 184,
                                             columnNumber: 21
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute inset-0 bg-gradient-to-b from-black/20 to-black/50"
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-sm leading-relaxed text-gray-500",
+                                            "data-testid": `inline-description-${bundle.id}`,
+                                            children: bundleDescriptions[bundle.id] || bundle.name
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                            lineNumber: 158,
+                                            lineNumber: 192,
                                             columnNumber: 19
                                         }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "relative p-3 flex flex-col h-full justify-between",
-                                            children: [
-                                                badgeSrc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                                    src: badgeSrc,
-                                                    alt: bundle.tier,
-                                                    className: "h-5 w-auto object-contain self-start",
-                                                    "data-testid": `inline-badge-${bundle.id}`
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 162,
-                                                    columnNumber: 23
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-[10px] leading-tight text-white/90 mt-1.5 line-clamp-3",
-                                                    "data-testid": `inline-description-${bundle.id}`,
-                                                    children: bundleDescriptions[bundle.id] || bundle.name
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 170,
-                                                    columnNumber: 21
-                                                }, this),
-                                                isCenter && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                    onClick: (e)=>{
-                                                        e.stopPropagation();
-                                                        onSelect(bundle);
-                                                    },
-                                                    className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("mt-2 w-full py-1.5 rounded-lg text-xs font-semibold transition-all text-center", isSelected ? "bg-[#36bff9] text-white" : "bg-[#36bff9] hover:bg-[#2aa8e0] text-white"),
-                                                    "data-testid": `inline-select-bundle-${bundle.id}`,
-                                                    children: isSelected ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "flex items-center justify-center gap-1",
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
-                                                                className: "h-3 w-3"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                                lineNumber: 190,
-                                                                columnNumber: 29
-                                                            }, this),
-                                                            "Selected"
-                                                        ]
-                                                    }, void 0, true, {
+                                        isCenter && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                            onClick: (e)=>{
+                                                e.stopPropagation();
+                                                onSelect(bundle);
+                                            },
+                                            className: "w-full py-2.5 rounded-xl text-sm font-semibold transition-all text-white",
+                                            style: {
+                                                backgroundColor: isSelected ? "#36bff9" : btnColors.bg
+                                            },
+                                            onMouseEnter: (e)=>{
+                                                e.target.style.backgroundColor = isSelected ? "#2aa8e0" : btnColors.hover;
+                                            },
+                                            onMouseLeave: (e)=>{
+                                                e.target.style.backgroundColor = isSelected ? "#36bff9" : btnColors.bg;
+                                            },
+                                            "data-testid": `inline-select-bundle-${bundle.id}`,
+                                            children: isSelected ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "flex items-center justify-center gap-2",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
+                                                        className: "h-4 w-4"
+                                                    }, void 0, false, {
                                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                        lineNumber: 189,
+                                                        lineNumber: 216,
                                                         columnNumber: 27
-                                                    }, this) : `Select ${bundle.tier} Bundle`
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 175,
-                                                    columnNumber: 23
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                            lineNumber: 160,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute inset-0 pointer-events-none rounded-xl shadow-[inset_0px_0px_0px_1px_rgba(10,13,18,0.18),inset_0px_-2px_0px_0px_rgba(10,13,18,0.05)]"
+                                                    }, this),
+                                                    "Selected"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
+                                                lineNumber: 215,
+                                                columnNumber: 25
+                                            }, this) : `Select ${bundle.tier} Bundle`
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                            lineNumber: 200,
-                                            columnNumber: 19
+                                            lineNumber: 197,
+                                            columnNumber: 21
                                         }, this)
                                     ]
-                                }, `${bundle.id}-${absIndex}`, true, {
+                                }, void 0, true, {
                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                    lineNumber: 130,
+                                    lineNumber: 182,
                                     columnNumber: 17
-                                }, this);
-                            })
-                        }, void 0, false, {
-                            fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                            lineNumber: 113,
-                            columnNumber: 11
-                        }, this)
+                                }, this)
+                            }, `${bundle.id}-${absIndex}`, false, {
+                                fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
+                                lineNumber: 157,
+                                columnNumber: 15
+                            }, this);
+                        })
                     }, void 0, false, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 112,
+                        lineNumber: 139,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: handleNext,
-                        className: "absolute right-0 z-30 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors",
+                        className: "absolute right-1 z-30 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors",
                         "aria-label": "Next bundle",
                         "data-testid": "inline-bundle-next",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
-                            className: "h-5 w-5 text-gray-600"
+                            className: "h-4 w-4 text-gray-600"
                         }, void 0, false, {
                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                            lineNumber: 213,
+                            lineNumber: 236,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 207,
+                        lineNumber: 230,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                lineNumber: 102,
+                lineNumber: 125,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1073,7 +1108,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                 children: "What you get:"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                lineNumber: 219,
+                                lineNumber: 242,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1085,7 +1120,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                         children: "Essentials"
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                        lineNumber: 221,
+                                        lineNumber: 244,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -1106,38 +1141,29 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                             transition: {
                                                 duration: 0.15
                                             },
-                                            className: "w-[70px] text-center text-xs font-black",
+                                            className: "w-[70px] text-center text-xs font-bold text-[#36bff9]",
                                             "data-testid": `text-bundle-col-${activeBundle.id}`,
-                                            style: {
-                                                backgroundImage: `url(${bundleBadges[activeBundle.id]})`,
-                                                backgroundSize: "contain",
-                                                backgroundPosition: "center",
-                                                backgroundRepeat: "no-repeat",
-                                                WebkitBackgroundClip: "text",
-                                                WebkitTextFillColor: "transparent",
-                                                backgroundClip: "text"
-                                            },
                                             children: activeBundle.tier
                                         }, activeBundle.id, false, {
                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                            lineNumber: 223,
+                                            lineNumber: 246,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                        lineNumber: 222,
+                                        lineNumber: 245,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                lineNumber: 220,
+                                lineNumber: 243,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 218,
+                        lineNumber: 241,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1155,7 +1181,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                         children: feature.label
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                        lineNumber: 261,
+                                        lineNumber: 275,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1168,19 +1194,19 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                                     className: "h-3.5 w-3.5 text-gray-400"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 265,
+                                                    lineNumber: 279,
                                                     columnNumber: 23
                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-gray-300 text-xs",
                                                     children: "—"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 267,
+                                                    lineNumber: 281,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                lineNumber: 263,
+                                                lineNumber: 277,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1208,63 +1234,63 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                                             className: "h-3.5 w-3.5 text-[#36bff9]"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                            lineNumber: 280,
+                                                            lineNumber: 294,
                                                             columnNumber: 27
                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             className: "text-gray-300 text-xs",
                                                             children: "—"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                            lineNumber: 282,
+                                                            lineNumber: 296,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, `${activeBundle.id}-${feature.key}`, false, {
                                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                        lineNumber: 272,
+                                                        lineNumber: 286,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                    lineNumber: 271,
+                                                    lineNumber: 285,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                                lineNumber: 270,
+                                                lineNumber: 284,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                        lineNumber: 262,
+                                        lineNumber: 276,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, feature.key, true, {
                                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                                lineNumber: 253,
+                                lineNumber: 267,
                                 columnNumber: 15
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                        lineNumber: 247,
+                        lineNumber: 261,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-                lineNumber: 217,
+                lineNumber: 240,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/ui/bundle-inline-selector.tsx",
-        lineNumber: 98,
+        lineNumber: 121,
         columnNumber: 5
     }, this);
 }
-_s(BundleInlineSelector, "8xV6qGloWgkDWNwnglOrHNex4Xc=");
+_s(BundleInlineSelector, "UmeoQkLob033YYHQb08nTDgJCfc=");
 _c = BundleInlineSelector;
 var _c;
 __turbopack_context__.k.register(_c, "BundleInlineSelector");

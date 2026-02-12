@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
-import { Bundle, featureLabels } from "@/app/add-location/types";
+import { Bundle } from "@/app/add-location/types";
 
 const bundleBadges: Record<string, string> = {
   plus: "/images/plus-badge.svg",
@@ -12,10 +12,10 @@ const bundleBadges: Record<string, string> = {
   premium: "/images/premium-badge.svg",
 };
 
-const bundleBackgrounds: Record<string, string> = {
-  plus: "/images/bg-bundle-01.webp",
-  pro: "/images/bg-bundle-02.webp",
-  premium: "/images/bg-bundle-03.webp",
+const bundleDescriptions: Record<string, string> = {
+  plus: "All features from the ultimate office solution plus call log, toll-free number, and callout",
+  pro: "All features from the ultimate office solution plus call log, toll-free number, callout, and supervised transfer",
+  premium: "All features from the ultimate office solution plus call log, toll-free number, callout, supervised transfer, and message taking",
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -31,6 +31,12 @@ const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "supervisedCallTransfer", label: "Supervised Call Transfer" },
   { key: "messageTaking", label: "Message Taking" },
 ];
+
+const bundleButtonColors: Record<string, { bg: string; hover: string }> = {
+  plus: { bg: "#6b8e6b", hover: "#5a7d5a" },
+  pro: { bg: "#4a7fb5", hover: "#3d6e9e" },
+  premium: { bg: "#8b6bb5", hover: "#7a5aa0" },
+};
 
 interface BundleInlineSelectorProps {
   bundles: Bundle[];
@@ -111,17 +117,6 @@ export function BundleInlineSelector({
 
   const visibleIndices = [-1, 0, 1];
 
-  const displayedFeatures = (bundle: Bundle) => {
-    return Object.entries(bundle.features)
-      .filter(([key, enabled]) => {
-        if (!enabled) return false;
-        const alwaysShow = ["businessAddress", "liveCallAnswering", "businessPhoneFax"];
-        const bundleUpgrades = ["calloutFeature", "tollFreeNumber", "callLog", "supervisedCallTransfer", "messageTaking"];
-        return alwaysShow.includes(key) || bundleUpgrades.includes(key);
-      })
-      .map(([key]) => key);
-  };
-
   return (
     <div
       className={cn("w-full", className)}
@@ -129,21 +124,21 @@ export function BundleInlineSelector({
     >
       <div
         ref={containerRef}
-        className="relative flex items-center justify-center py-4 overflow-hidden"
-        style={{ minHeight: "320px" }}
+        className="relative flex items-center justify-center py-6 overflow-hidden"
+        style={{ minHeight: "240px" }}
       >
         <button
           onClick={handlePrev}
-          className="absolute left-1 z-30 p-1.5 rounded-full bg-white/80 hover:bg-white shadow-md transition-colors"
+          className="absolute left-1 z-30 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors"
           aria-label="Previous bundle"
           data-testid="inline-bundle-prev"
         >
-          <ChevronLeft className="h-4 w-4 text-gray-700" />
+          <ChevronLeft className="h-4 w-4 text-gray-600" />
         </button>
 
         <motion.div
           className="relative w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing"
-          style={{ minHeight: "300px" }}
+          style={{ minHeight: "220px" }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.15}
@@ -156,19 +151,17 @@ export function BundleInlineSelector({
             const isCenter = offset === 0;
             const isSelected = selectedBundleId === bundle.id;
             const badgeSrc = bundleBadges[bundle.id];
-            const bgSrc = bundleBackgrounds[bundle.id];
-            const features = displayedFeatures(bundle);
+            const btnColors = bundleButtonColors[bundle.id] || { bg: "#6b8e6b", hover: "#5a7d5a" };
 
             return (
               <motion.div
                 key={`${bundle.id}-${absIndex}`}
                 className={cn(
-                  "absolute rounded-2xl overflow-hidden border-2",
-                  "bg-gradient-to-b from-[#0a1628] to-[#0f2240]",
-                  isCenter ? "z-20 shadow-2xl" : "z-10 pointer-events-none",
+                  "absolute rounded-2xl overflow-hidden bg-white",
+                  isCenter ? "z-20 shadow-lg" : "z-10 pointer-events-none shadow-md",
                   isSelected && isCenter
-                    ? "border-[#36bff9] ring-2 ring-[#36bff9]"
-                    : "border-white/10"
+                    ? "ring-2 ring-[#36bff9]"
+                    : ""
                 )}
                 style={{
                   width: isCenter ? centerCardWidth : centerCardWidth * 0.85,
@@ -176,9 +169,9 @@ export function BundleInlineSelector({
                 initial={false}
                 animate={{
                   x: offset === 0 ? 0 : offset * sideCardOffset,
-                  scale: isCenter ? 1 : 0.88,
-                  opacity: isCenter ? 1 : 0.4,
-                  filter: isCenter ? "blur(0px)" : "blur(2px)",
+                  scale: isCenter ? 1 : 0.92,
+                  opacity: isCenter ? 1 : 0.35,
+                  filter: isCenter ? "blur(0px)" : "blur(1.5px)",
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 onClick={() => {
@@ -186,68 +179,19 @@ export function BundleInlineSelector({
                 }}
                 data-testid={`inline-bundle-card-${bundle.id}`}
               >
-                {bgSrc && (
-                  <div
-                    className="absolute inset-0 rounded-2xl bg-cover bg-center pointer-events-none"
-                    style={{
-                      backgroundImage: `url(${bgSrc})`,
-                      mixBlendMode: "lighten",
-                      opacity: 0.75,
-                    }}
-                  />
-                )}
+                <div className="p-5 flex flex-col gap-3">
+                  {badgeSrc && (
+                    <img
+                      src={badgeSrc}
+                      alt={bundle.tier}
+                      className="h-7 w-auto object-contain self-start"
+                      data-testid={`inline-badge-${bundle.id}`}
+                    />
+                  )}
 
-                <div className="relative p-4 flex flex-col">
-                  <div className="flex items-center justify-between mb-1">
-                    <div className="flex items-center gap-2">
-                      {badgeSrc && (
-                        <img
-                          src={badgeSrc}
-                          alt={bundle.tier}
-                          className="h-5 w-auto object-contain"
-                          data-testid={`inline-badge-${bundle.id}`}
-                        />
-                      )}
-                      <span className="text-xs font-semibold uppercase tracking-wider text-[#36bff9]">
-                        {bundle.badge}
-                      </span>
-                    </div>
-                    {isSelected && isCenter && (
-                      <span className="inline-flex items-center gap-1 text-xs font-medium text-emerald-300 bg-emerald-500/20 rounded-full px-2 py-0.5" data-testid={`status-selected-${bundle.id}`}>
-                        <Check className="h-3 w-3" />
-                        Active
-                      </span>
-                    )}
-                  </div>
-
-                  <h3 className="text-lg font-bold text-white mb-0.5" data-testid={`text-tier-${bundle.id}`}>
-                    {bundle.tier}
-                  </h3>
-
-                  <div className="mb-3">
-                    <span className="text-2xl font-bold text-white" data-testid={`text-price-${bundle.id}`}>
-                      ${bundle.price}
-                    </span>
-                    {bundle.originalPrice && (
-                      <span className="text-sm text-white/40 line-through ml-2">
-                        ${bundle.originalPrice}
-                      </span>
-                    )}
-                    <span className="text-white/50 text-sm ml-1">/mo</span>
-                  </div>
-
-                  <div className="space-y-1.5 mb-3">
-                    {features.map((key) => (
-                      <div key={key} className="flex items-center gap-2" data-testid={`text-feature-${bundle.id}-${key}`}>
-                        <div className="w-4 h-4 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
-                          <Check className="h-2.5 w-2.5 text-[#36bff9]" />
-                        </div>
-                        <span className="text-white/80 text-xs leading-tight">
-                          {featureLabels[key] || key}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  <p className="text-sm leading-relaxed text-gray-500" data-testid={`inline-description-${bundle.id}`}>
+                    {bundleDescriptions[bundle.id] || bundle.name}
+                  </p>
 
                   {isCenter && (
                     <button
@@ -255,12 +199,16 @@ export function BundleInlineSelector({
                         e.stopPropagation();
                         onSelect(bundle);
                       }}
-                      className={cn(
-                        "w-full py-2 rounded-lg text-sm font-semibold transition-all",
-                        isSelected
-                          ? "bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
-                          : "bg-white/10 hover:bg-white/20 text-white border border-white/20"
-                      )}
+                      className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all text-white"
+                      style={{
+                        backgroundColor: isSelected ? "#36bff9" : btnColors.bg,
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.target as HTMLButtonElement).style.backgroundColor = isSelected ? "#2aa8e0" : btnColors.hover;
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.target as HTMLButtonElement).style.backgroundColor = isSelected ? "#36bff9" : btnColors.bg;
+                      }}
                       data-testid={`inline-select-bundle-${bundle.id}`}
                     >
                       {isSelected ? (
@@ -269,13 +217,11 @@ export function BundleInlineSelector({
                           Selected
                         </span>
                       ) : (
-                        `Select ${bundle.tier}`
+                        `Select ${bundle.tier} Bundle`
                       )}
                     </button>
                   )}
                 </div>
-
-                <div className="absolute inset-0 pointer-events-none rounded-2xl shadow-[inset_0px_0px_0px_1px_rgba(10,13,18,0.18),inset_0px_-2px_0px_0px_rgba(10,13,18,0.05)]" />
               </motion.div>
             );
           })}
@@ -283,11 +229,11 @@ export function BundleInlineSelector({
 
         <button
           onClick={handleNext}
-          className="absolute right-1 z-30 p-1.5 rounded-full bg-white/80 hover:bg-white shadow-md transition-colors"
+          className="absolute right-1 z-30 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors"
           aria-label="Next bundle"
           data-testid="inline-bundle-next"
         >
-          <ChevronRight className="h-4 w-4 text-gray-700" />
+          <ChevronRight className="h-4 w-4 text-gray-600" />
         </button>
       </div>
 

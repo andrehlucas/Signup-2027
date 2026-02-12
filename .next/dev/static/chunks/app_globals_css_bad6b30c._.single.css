@@ -1377,6 +1377,10 @@ body {
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 
+.self-start {
+  align-self: flex-start;
+}
+
 .overflow-auto {
   overflow: auto;
 }
@@ -1841,6 +1845,10 @@ body {
 
 .p-4 {
   padding: 1rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
 }
 
 .p-6 {
@@ -2375,12 +2383,6 @@ body {
 .shadow-\[0_0_0_1px_hsl\(var\(--sidebar-border\)\)\] {
   --tw-shadow: 0 0 0 1px hsl(var(--sidebar-border));
   --tw-shadow-colored: 0 0 0 1px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-\[inset_0px_0px_0px_1px_rgba\(10\,13\,18\,0\.18\)\,inset_0px_-2px_0px_0px_rgba\(10\,13\,18\,0\.05\)\] {
-  --tw-shadow: inset 0px 0px 0px 1px #0a0d122e, inset 0px -2px 0px 0px #0a0d120d;
-  --tw-shadow-colored: inset 0px 0px 0px 1px var(--tw-shadow-color), inset 0px -2px 0px 0px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
