@@ -24,6 +24,9 @@ export interface Bundle {
     businessAddress: boolean;
     liveCallAnswering: boolean;
     callTransferring: boolean;
+    businessPhoneFax: boolean;
+    mailReceipt: boolean;
+    voicemailToEmail: boolean;
     calloutFeature: boolean;
     tollFreeNumber: boolean;
     callLog: boolean;
@@ -103,6 +106,9 @@ export const bundles: Bundle[] = [
       businessAddress: true,
       liveCallAnswering: true,
       callTransferring: true,
+      businessPhoneFax: true,
+      mailReceipt: true,
+      voicemailToEmail: true,
       calloutFeature: false,
       tollFreeNumber: false,
       callLog: false,
@@ -122,6 +128,9 @@ export const bundles: Bundle[] = [
       businessAddress: true,
       liveCallAnswering: true,
       callTransferring: true,
+      businessPhoneFax: true,
+      mailReceipt: true,
+      voicemailToEmail: true,
       calloutFeature: true,
       tollFreeNumber: true,
       callLog: true,
@@ -141,6 +150,9 @@ export const bundles: Bundle[] = [
       businessAddress: true,
       liveCallAnswering: true,
       callTransferring: true,
+      businessPhoneFax: true,
+      mailReceipt: true,
+      voicemailToEmail: true,
       calloutFeature: true,
       tollFreeNumber: true,
       callLog: true,
@@ -160,6 +172,9 @@ export const bundles: Bundle[] = [
       businessAddress: true,
       liveCallAnswering: true,
       callTransferring: true,
+      businessPhoneFax: true,
+      mailReceipt: true,
+      voicemailToEmail: true,
       calloutFeature: true,
       tollFreeNumber: true,
       callLog: true,
@@ -276,9 +291,12 @@ export function calculatePromoDiscount(
 }
 
 export const featureLabels: Record<string, string> = {
-  businessAddress: 'Business Address',
-  liveCallAnswering: 'Live Call Answering',
-  callTransferring: 'Call Transferring',
+  businessAddress: 'Prestigious Business Address',
+  liveCallAnswering: 'Professional Live Call Answering',
+  callTransferring: 'Personalized Call Transferring',
+  businessPhoneFax: 'Business Phone/Fax Number',
+  mailReceipt: 'Professional Mail Receipt',
+  voicemailToEmail: 'Voicemail/Fax Converted to Email',
   calloutFeature: 'Callout Feature',
   tollFreeNumber: 'Toll-Free Number',
   callLog: 'Call Log',
@@ -302,9 +320,12 @@ export type AddonStatus = 'available' | 'active' | 'included';
 // Individual feature prices - used when calculating price after removing bundle features
 // These are the a-la-carte prices if someone wants a feature without a bundle
 export const featureIndividualPrices: Record<keyof Bundle['features'], number> = {
-  businessAddress: 0,  // Always included in base
-  liveCallAnswering: 0,  // Always included in base
-  callTransferring: 0,  // Always included in base
+  businessAddress: 0,
+  liveCallAnswering: 0,
+  callTransferring: 0,
+  businessPhoneFax: 0,
+  mailReceipt: 0,
+  voicemailToEmail: 0,
   calloutFeature: 10,
   tollFreeNumber: 10,
   callLog: 10,
