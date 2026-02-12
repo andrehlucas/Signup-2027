@@ -26,7 +26,7 @@ import {
   PopoverTrigger,
 } from '@/app/components/ui/popover';
 import { ProgressIndicator } from '../components/ProgressIndicator';
-import { BundleFocusRail } from '@/app/components/ui/bundle-focus-rail';
+import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import {
@@ -55,9 +55,10 @@ export default function CustomizePage() {
   const [tollFreeModalOpen, setTollFreeModalOpen] = useState(false);
   const [selectedTollFree, setSelectedTollFree] = useState<PhoneNumber | null>(order.tollFreePhoneNumber);
   const [tempSelectedTollFree, setTempSelectedTollFree] = useState<PhoneNumber | null>(null);
-  const [bundleModalOpen, setBundleModalOpen] = useState(false);
+  const [bundleExpanded, setBundleExpanded] = useState(false);
   const [bundleSuggestionOpen, setBundleSuggestionOpen] = useState(false);
   const [suggestionTriggeredFromContinue, setSuggestionTriggeredFromContinue] = useState(false);
+  const bundleSectionRef = useRef<HTMLDivElement>(null);
   const { trackComplete } = useFunnelTracking('customize');
 
   const [footerVisible, setFooterVisible] = useState(false);
@@ -297,7 +298,7 @@ export default function CustomizePage() {
 
   const handleBundleSelect = (bundle: Bundle) => {
     setBundle(bundle);
-    setBundleModalOpen(false);
+    setBundleExpanded(false);
     toast({
       title: `${bundle.tier} bundle activated`,
       description: `Your plan has been updated to ${bundle.tier} at $${bundle.price}/mo.`,
@@ -326,7 +327,10 @@ export default function CustomizePage() {
   const handleSuggestionSeeBundles = () => {
     setBundleSuggestionOpen(false);
     setSuggestionTriggeredFromContinue(true);
-    setBundleModalOpen(true);
+    setBundleExpanded(true);
+    setTimeout(() => {
+      bundleSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
   };
 
   const handleSuggestionProceedWithBundle = () => {
@@ -580,6 +584,50 @@ export default function CustomizePage() {
           </div>
         </div>
 
+        <div
+          ref={bundleSectionRef}
+          className={`overflow-hidden transition-all duration-400 ease-in-out ${
+            bundleExpanded ? 'max-h-[800px] opacity-100 mb-6' : 'max-h-0 opacity-0'
+          }`}
+          data-testid="bundle-inline-section"
+        >
+          <div className="bg-white rounded-xl border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-lg font-semibold text-gray-900">Bundle & Save</h2>
+              <button
+                onClick={() => setBundleExpanded(false)}
+                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                data-testid="button-close-bundle-section"
+              >
+                <X className="h-3.5 w-3.5" />
+                Close
+              </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-2">
+              Upgrade your plan and save on popular features. Swipe to compare bundles.
+            </p>
+            <BundleInlineSelector
+              bundles={upgradeBundles}
+              selectedBundleId={selectedBundle?.id}
+              onSelect={handleBundleSelect}
+              essentialsBundle={bundles[0]}
+            />
+            {selectedBundle && selectedBundle.id !== 'essentials' && (
+              <div className="mt-3 flex justify-center">
+                <button
+                  onClick={() => {
+                    handleBundleSelect(bundles[0]);
+                  }}
+                  className="text-xs text-gray-500 hover:text-gray-700 underline"
+                  data-testid="button-revert-to-essentials"
+                >
+                  Revert to Essentials
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="phone-section">
           <div className="flex items-center justify-between">
             <div>
@@ -645,7 +693,14 @@ export default function CustomizePage() {
         data-testid="footer-wrapper"
       >
         <div
-          onClick={() => setBundleModalOpen(true)}
+          onClick={() => {
+            setBundleExpanded(!bundleExpanded);
+            if (!bundleExpanded) {
+              setTimeout(() => {
+                bundleSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }, 100);
+            }
+          }}
           className="bg-gradient-to-r from-[#0f1c2e] to-[#1e3a5f] cursor-pointer hover:from-[#1a2d4a] hover:to-[#2a4a6f] transition-all"
           data-testid="bundle-save-banner"
         >
@@ -655,14 +710,18 @@ export default function CustomizePage() {
                 <Star className="h-4 w-4 text-[#36bff9]" />
                 <span className="text-sm font-semibold text-white">Active Bundle</span>
                 <span className="text-xs text-blue-200/80 hidden sm:inline">- {displayBundleName}</span>
-                <span className="text-xs font-medium text-[#36bff9] ml-1">Edit</span>
+                <span className="text-xs font-medium text-[#36bff9] ml-1">{bundleExpanded ? 'Close' : 'Edit'}</span>
               </>
             ) : (
               <>
                 <DollarSign className="h-4 w-4 text-[#36bff9]" />
                 <span className="text-sm font-semibold text-white">Bundle & Save</span>
                 <span className="text-xs text-blue-200/80 hidden sm:inline">- Upgrade your plan and save on popular features</span>
-                <ChevronRight className="h-4 w-4 text-[#36bff9] ml-1" />
+                {bundleExpanded ? (
+                  <ChevronDown className="h-4 w-4 text-[#36bff9] ml-1" />
+                ) : (
+                  <ChevronRight className="h-4 w-4 text-[#36bff9] ml-1" />
+                )}
               </>
             )}
           </div>
@@ -894,33 +953,6 @@ export default function CustomizePage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
-      {bundleModalOpen && (
-        <div
-          className="fixed inset-0 z-[60] flex flex-col items-center justify-center"
-          data-testid="bundle-selection-modal"
-        >
-          <div
-            className="absolute inset-0 bg-white/60 backdrop-blur-xl"
-            onClick={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}
-          />
-          <div className="relative z-10 w-full h-full flex flex-col" onClick={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}>
-            <div className="flex items-center justify-center flex-1 min-h-0" onClick={(e) => e.stopPropagation()}>
-              <h2 className="text-5xl font-extrabold tracking-tight text-[#0a1628]">Bundle & Save</h2>
-            </div>
-            <div className="flex-[3_1_0%] min-h-0">
-              <BundleFocusRail
-                bundles={upgradeBundles}
-                selectedBundleId={selectedBundle?.id}
-                onSelect={handleBundleSelect}
-                onClose={() => { setBundleModalOpen(false); setSuggestionTriggeredFromContinue(false); }}
-                onRevert={() => handleBundleSelect(bundles[0])}
-                essentialsPrice={bundles[0].price}
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       <Dialog open={phoneModalOpen} onOpenChange={setPhoneModalOpen}>
         <DialogContent className="sm:max-w-md" data-testid="phone-selection-modal">
