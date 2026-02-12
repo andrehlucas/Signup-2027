@@ -228,7 +228,8 @@ export default function PickPlanPage() {
             </div>
             <div className="grid grid-cols-2 gap-x-6 gap-y-3">
               {Object.entries(essentialsPlan.features)
-                .map(([key, enabled]) => (
+                .filter(([, enabled]) => enabled)
+                .map(([key]) => (
                   <div key={key} className="flex items-center gap-2 text-sm" data-testid={`feature-${key}`}>
                     <div className="w-5 h-5 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
                       <Check className="h-3 w-3 text-white" />
