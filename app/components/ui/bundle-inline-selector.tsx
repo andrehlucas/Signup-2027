@@ -11,7 +11,7 @@ const CARD_HEIGHT = 200;
 const bundleDescriptions: Record<string, string> = {
   plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
   pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
-  premium: "Everything in Pro, plus dedicated message taking so no call goes unanswered.",
+  premium: "Everything in Pro, plus message taking to ensure your clients' messages are captured even when calls go unanswered.",
 };
 
 const bundleBackgrounds: Record<string, string> = {
