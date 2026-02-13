@@ -11,7 +11,7 @@ const CARD_HEIGHT = 200;
 const bundleDescriptions: Record<string, string> = {
   plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
   pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
-  premium: "The complete package — every feature included plus dedicated message taking for your team.",
+  premium: "Everything in Pro, plus dedicated message taking so no call goes unanswered.",
 };
 
 const bundleBackgrounds: Record<string, string> = {
@@ -209,7 +209,7 @@ export function BundleInlineSelector({
                       </span>
                     </div>
 
-                    <p className="text-sm leading-relaxed text-black" data-testid={`inline-description-${bundle.id}`}>
+                    <p className="text-sm leading-relaxed text-white" data-testid={`inline-description-${bundle.id}`}>
                       {bundleDescriptions[bundle.id] || bundle.name}
                     </p>
                   </div>

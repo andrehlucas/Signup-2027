@@ -1505,7 +1505,7 @@ const CARD_HEIGHT = 200;
 const bundleDescriptions = {
     plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
     pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
-    premium: "The complete package — every feature included plus dedicated message taking for your team."
+    premium: "Everything in Pro, plus dedicated message taking so no call goes unanswered."
 };
 const bundleBackgrounds = {
     plus: "#F79009",
@@ -1732,7 +1732,7 @@ function BundleInlineSelector({ bundles, selectedBundleId, onSelect, essentialsB
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-sm leading-relaxed text-black",
+                                                    className: "text-sm leading-relaxed text-white",
                                                     "data-testid": `inline-description-${bundle.id}`,
                                                     children: bundleDescriptions[bundle.id] || bundle.name
                                                 }, void 0, false, {
