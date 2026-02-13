@@ -1566,7 +1566,7 @@ const CARD_HEIGHT = 200;
 const bundleDescriptions = {
     plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
     pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
-    premium: "Everything in Pro, plus message taking to ensure your clients' messages are captured even when calls go unanswered."
+    premium: "Everything in Pro, plus message taking so your clients always reach you."
 };
 const bundleBackgrounds = {
     plus: "#F79009",
