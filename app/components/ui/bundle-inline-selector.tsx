@@ -8,12 +8,6 @@ import { Bundle, featureIndividualPrices, ESSENTIALS_PLAN } from "@/app/add-loca
 
 const CARD_HEIGHT = 200;
 
-const bundleBadges: Record<string, string> = {
-  plus: "/images/plus-badge.svg",
-  pro: "/images/pro-badge.svg",
-  premium: "/images/premium-badge.svg",
-};
-
 const bundleDescriptions: Record<string, string> = {
   plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
   pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
@@ -21,15 +15,15 @@ const bundleDescriptions: Record<string, string> = {
 };
 
 const bundleBackgrounds: Record<string, string> = {
-  plus: "linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 40%, #e8f5e9 100%)",
-  pro: "linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 40%, #ede7f6 100%)",
-  premium: "linear-gradient(135deg, #fff8e1 0%, #fff3e0 40%, #fce4ec 100%)",
+  plus: "#F79009",
+  pro: "#3E4784",
+  premium: "#079455",
 };
 
 const bundleAccentColors: Record<string, string> = {
-  plus: "#2e7d32",
-  pro: "#5c6bc0",
-  premium: "#e65100",
+  plus: "#F79009",
+  pro: "#3E4784",
+  premium: "#079455",
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -158,7 +152,6 @@ export function BundleInlineSelector({
             const isCenter = offset === 0;
             const isPrev = offset === -1;
             const isSelected = selectedBundleId === bundle.id;
-            const badgeSrc = bundleBadges[bundle.id];
             const bg = bundleBackgrounds[bundle.id] || bundleBackgrounds.plus;
 
             let left = centerLeft;
@@ -204,20 +197,19 @@ export function BundleInlineSelector({
                 <div className="p-5 flex flex-col justify-between h-full">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      {badgeSrc && (
-                        <img
-                          src={badgeSrc}
-                          alt={bundle.tier}
-                          className="h-7 w-auto object-contain"
-                          data-testid={`inline-badge-${bundle.id}`}
-                        />
-                      )}
-                      <span className="text-lg font-bold text-gray-900" data-testid={`inline-price-${bundle.id}`}>
-                        ${bundle.price}<span className="text-xs font-normal text-gray-500">/mo</span>
+                      <span
+                        className="text-xl font-bold tracking-tight text-white"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                        data-testid={`inline-badge-${bundle.id}`}
+                      >
+                        {bundle.tier}
+                      </span>
+                      <span className="text-lg font-bold text-white" data-testid={`inline-price-${bundle.id}`}>
+                        ${bundle.price}<span className="text-xs font-normal text-white/70">/mo</span>
                       </span>
                     </div>
 
-                    <p className="text-sm leading-relaxed text-gray-600" data-testid={`inline-description-${bundle.id}`}>
+                    <p className="text-sm leading-relaxed text-black" data-testid={`inline-description-${bundle.id}`}>
                       {bundleDescriptions[bundle.id] || bundle.name}
                     </p>
                   </div>
@@ -228,10 +220,10 @@ export function BundleInlineSelector({
                       if (isCenter) onSelect(bundle);
                     }}
                     className={cn(
-                      "w-full py-2.5 rounded-xl text-sm font-semibold transition-all text-white",
+                      "w-full py-2.5 rounded-xl text-sm font-semibold transition-all",
                       isSelected && isCenter
-                        ? "bg-[#36bff9] hover:bg-[#2aa8e0]"
-                        : "bg-[#1a1a1a] hover:bg-[#333]"
+                        ? "bg-white text-black hover:bg-white/90"
+                        : "bg-black/80 text-white hover:bg-black"
                     )}
                     tabIndex={isCenter ? 0 : -1}
                     data-testid={`inline-select-bundle-${bundle.id}`}
