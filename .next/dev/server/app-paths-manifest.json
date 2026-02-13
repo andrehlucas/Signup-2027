@@ -1,4 +1,5 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/add-location/checkout/page": "app/add-location/checkout/page.js",
   "/add-location/customize/page": "app/add-location/customize/page.js",
   "/add-location/page": "app/add-location/page.js",
