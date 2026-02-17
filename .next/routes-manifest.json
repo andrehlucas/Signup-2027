@@ -38,6 +38,66 @@
       "regex": "^/_not\\-found(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/add-location",
+      "regex": "^/add\\-location(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/add\\-location(?:/)?$"
+    },
+    {
+      "page": "/add-location/checkout",
+      "regex": "^/add\\-location/checkout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/add\\-location/checkout(?:/)?$"
+    },
+    {
+      "page": "/add-location/customize",
+      "regex": "^/add\\-location/customize(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/add\\-location/customize(?:/)?$"
+    },
+    {
+      "page": "/add-location/pick-plan",
+      "regex": "^/add\\-location/pick\\-plan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/add\\-location/pick\\-plan(?:/)?$"
+    },
+    {
+      "page": "/add-location/thank-you",
+      "regex": "^/add\\-location/thank\\-you(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/add\\-location/thank\\-you(?:/)?$"
+    },
+    {
+      "page": "/admin/analytics",
+      "regex": "^/admin/analytics(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/analytics(?:/)?$"
+    },
+    {
+      "page": "/api/funnel/events",
+      "regex": "^/api/funnel/events(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/funnel/events(?:/)?$"
+    },
+    {
+      "page": "/api/funnel/summary",
+      "regex": "^/api/funnel/summary(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/funnel/summary(?:/)?$"
+    },
+    {
+      "page": "/api/locations",
+      "regex": "^/api/locations(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/locations(?:/)?$"
+    },
+    {
+      "page": "/api/promo/validate",
+      "regex": "^/api/promo/validate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/promo/validate(?:/)?$"
     }
   ],
   "dataRoutes": [],

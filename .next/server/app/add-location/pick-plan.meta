@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/add-location/layout,_N_T_/add-location/pick-plan/layout,_N_T_/add-location/pick-plan/page,_N_T_/add-location/pick-plan"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/add-location/pick-plan/__PAGE__",
+    "/add-location/pick-plan",
+    "/add-location",
+    "/_index"
+  ]
+}

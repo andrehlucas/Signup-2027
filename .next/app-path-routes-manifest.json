@@ -1,5 +1,15 @@
 {
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
+  "/add-location/checkout/page": "/add-location/checkout",
+  "/add-location/customize/page": "/add-location/customize",
+  "/add-location/page": "/add-location",
+  "/add-location/pick-plan/page": "/add-location/pick-plan",
+  "/add-location/thank-you/page": "/add-location/thank-you",
+  "/admin/analytics/page": "/admin/analytics",
+  "/api/funnel/events/route": "/api/funnel/events",
+  "/api/funnel/summary/route": "/api/funnel/summary",
+  "/api/locations/route": "/api/locations",
+  "/api/promo/validate/route": "/api/promo/validate",
   "/page": "/"
 }
