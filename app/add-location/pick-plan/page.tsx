@@ -227,26 +227,23 @@ export default function PickPlanPage() {
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-5" data-testid="review-package-card">
-          <div className="bg-[#36bff9] text-white text-center py-2.5 text-sm font-semibold tracking-wide">
-            Your Office Package
-          </div>
-          <div className="p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xl font-bold text-gray-900">{essentialsPlan.name}</h3>
-              <div className="text-right">
-                <span className="text-3xl font-bold text-gray-900">${essentialsPlan.price}</span>
-                <span className="text-gray-500 text-sm ml-1">/mo</span>
-              </div>
+          <div className="bg-[#36bff9] text-white flex items-center justify-between px-5 py-3">
+            <h3 className="text-base font-bold">{essentialsPlan.name}</h3>
+            <div className="flex items-baseline gap-0.5">
+              <span className="text-2xl font-bold">${essentialsPlan.price}</span>
+              <span className="text-white/80 text-xs">/mo</span>
             </div>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2.5">
+          </div>
+          <div className="px-5 py-4">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
               {Object.entries(essentialsPlan.features)
                 .filter(([, enabled]) => enabled)
                 .map(([key]) => (
-                  <div key={key} className="flex items-center gap-2 text-sm" data-testid={`feature-${key}`}>
-                    <div className="w-5 h-5 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0">
-                      <Check className="h-3 w-3 text-white" />
+                  <div key={key} className="flex items-start gap-2 text-xs" data-testid={`feature-${key}`}>
+                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="h-2.5 w-2.5 text-white" />
                     </div>
-                    <span className="text-gray-700">{featureLabels[key]}</span>
+                    <span className="text-gray-700 leading-snug">{featureLabels[key]}</span>
                   </div>
                 ))}
             </div>
