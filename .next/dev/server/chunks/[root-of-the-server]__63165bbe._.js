@@ -82,22 +82,34 @@ class MemStorage {
         this.users.set(mockUser.id, mockUser);
         const mockLocations = [
             {
-                id: '1',
-                name: 'Manhattan Office',
-                address: '123 5th Avenue, New York, NY',
-                imageUrl: '/attached_assets/manhattan.jpg'
+                id: '1285',
+                name: 'Miami Office',
+                address: '848 Brickell Avenue, PH5, Miami, FL 33131',
+                imageUrl: '/attached_assets/miami-office.webp'
             },
             {
-                id: '2',
-                name: 'Brooklyn Hub',
-                address: '456 Atlantic Ave, Brooklyn, NY',
-                imageUrl: '/attached_assets/brooklyn.jpg'
+                id: '776',
+                name: 'Boca Raton Office',
+                address: '1825 NW Corporate Blvd, Suite 110, Boca Raton, FL 33431',
+                imageUrl: '/attached_assets/boca-raton-office.webp'
             },
             {
-                id: '3',
-                name: 'Los Angeles Office',
-                address: '789 Wilshire Blvd, LA, CA',
-                imageUrl: '/attached_assets/la.jpg'
+                id: '803',
+                name: 'Fort Lauderdale Office',
+                address: '515 E Las Olas Boulevard, Suite 1301, Fort Lauderdale, FL 33301',
+                imageUrl: '/attached_assets/fort-lauderdale-office.jpg'
+            },
+            {
+                id: '1499',
+                name: 'Orlando Office',
+                address: '200 E Robinson Street, Suite 1120, Orlando, FL 32801',
+                imageUrl: '/attached_assets/orlando-office.webp'
+            },
+            {
+                id: '885',
+                name: 'Tampa Office',
+                address: '401 East Jackson Street, Suite 2340, Tampa, FL 33602',
+                imageUrl: '/attached_assets/tampa-office.webp'
             }
         ];
         mockLocations.forEach((loc)=>this.locations.set(loc.id, loc));
@@ -152,7 +164,7 @@ class MemStorage {
                 userId: '1',
                 type: 'mail',
                 title: 'New Mail Received',
-                message: 'You have a new piece of mail from IRS Department waiting at your Manhattan Office.',
+                message: 'You have a new piece of mail from IRS Department waiting at your Miami Office.',
                 isRead: false,
                 link: '/office',
                 createdAt: '2025-02-06T10:30:00Z'
@@ -222,7 +234,7 @@ class MemStorage {
                 userId: '1',
                 type: 'service',
                 title: 'Call Forwarding Updated',
-                message: 'Your call forwarding settings have been updated for your Manhattan Office number.',
+                message: 'Your call forwarding settings have been updated for your Miami Office number.',
                 isRead: true,
                 link: '/phone',
                 createdAt: '2025-01-25T10:00:00Z'

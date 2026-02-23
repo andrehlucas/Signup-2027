@@ -1093,221 +1093,142 @@ const availableAddons = [
 ];
 const sampleLocations = [
     {
-        id: 'loc-1',
-        name: 'Brickell Tower',
+        id: 'loc-1285',
+        name: 'Miami - Brickell Avenue',
         address: '848 Brickell Avenue',
-        addressLine2: 'Penthouse 5',
+        addressLine2: 'PH5',
         city: 'Miami',
         state: 'Florida',
         stateCode: 'FL',
         zipCode: '33131',
-        imageUrl: '/placeholder-building.jpg',
+        imageUrl: '/attached_assets/miami-office.webp',
         isPremium: true
     },
     {
-        id: 'loc-2',
-        name: 'Downtown Miami Center',
-        address: '100 SE 2nd Street',
-        addressLine2: 'Suite 400',
-        city: 'Miami',
+        id: 'loc-776',
+        name: 'Boca Raton - Corporate Blvd',
+        address: '1825 NW Corporate Blvd',
+        addressLine2: 'Suite 110',
+        city: 'Boca Raton',
         state: 'Florida',
         stateCode: 'FL',
-        zipCode: '33131',
-        imageUrl: '/placeholder-building.jpg',
+        zipCode: '33431',
+        imageUrl: '/attached_assets/boca-raton-office.webp',
         isPremium: false
     },
     {
-        id: 'loc-3',
-        name: 'Coral Gables Executive',
-        address: '2655 S Le Jeune Rd',
-        addressLine2: 'Suite 300',
-        city: 'Coral Gables',
-        state: 'Florida',
-        stateCode: 'FL',
-        zipCode: '33134',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: true
-    },
-    {
-        id: 'loc-4',
-        name: 'Fort Lauderdale Business Center',
-        address: '110 SE 6th Street',
-        addressLine2: 'Suite 1700',
+        id: 'loc-803',
+        name: 'Fort Lauderdale - Las Olas',
+        address: '515 E Las Olas Boulevard',
+        addressLine2: 'Suite 1301',
         city: 'Fort Lauderdale',
         state: 'Florida',
         stateCode: 'FL',
         zipCode: '33301',
-        imageUrl: '/placeholder-building.jpg',
+        imageUrl: '/attached_assets/fort-lauderdale-office.jpg',
+        isPremium: true
+    },
+    {
+        id: 'loc-1499',
+        name: 'Orlando - Robinson Street',
+        address: '200 E Robinson Street',
+        addressLine2: 'Suite 1120',
+        city: 'Orlando',
+        state: 'Florida',
+        stateCode: 'FL',
+        zipCode: '32801',
+        imageUrl: '/attached_assets/orlando-office.webp',
         isPremium: false
     },
     {
-        id: 'loc-5',
-        name: 'Manhattan Midtown',
-        address: '1 Penn Plaza',
-        addressLine2: 'Suite 6200',
-        city: 'New York',
-        state: 'New York',
-        stateCode: 'NY',
-        zipCode: '10119',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: true
-    },
-    {
-        id: 'loc-6',
-        name: 'Wall Street Financial',
-        address: '14 Wall Street',
-        addressLine2: '20th Floor',
-        city: 'New York',
-        state: 'New York',
-        stateCode: 'NY',
-        zipCode: '10005',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: true
-    },
-    {
-        id: 'loc-7',
-        name: 'Downtown LA Tower',
-        address: '633 W 5th Street',
-        addressLine2: 'Suite 2600',
-        city: 'Los Angeles',
-        state: 'California',
-        stateCode: 'CA',
-        zipCode: '90071',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: true
-    },
-    {
-        id: 'loc-8',
-        name: 'Santa Monica Business Park',
-        address: '2425 Olympic Blvd',
-        addressLine2: 'Suite 4000',
-        city: 'Santa Monica',
-        state: 'California',
-        stateCode: 'CA',
-        zipCode: '90404',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: false
-    },
-    {
-        id: 'loc-9',
-        name: 'Chicago Loop Center',
-        address: '111 W Jackson Blvd',
-        addressLine2: 'Suite 1700',
-        city: 'Chicago',
-        state: 'Illinois',
-        stateCode: 'IL',
-        zipCode: '60604',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: true
-    },
-    {
-        id: 'loc-10',
-        name: 'Houston Galleria',
-        address: '2929 Allen Parkway',
-        addressLine2: 'Suite 200',
-        city: 'Houston',
-        state: 'Texas',
-        stateCode: 'TX',
-        zipCode: '77019',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: false
-    },
-    {
-        id: 'loc-11',
-        name: 'Dallas Uptown',
-        address: '3131 McKinney Ave',
-        addressLine2: 'Suite 600',
-        city: 'Dallas',
-        state: 'Texas',
-        stateCode: 'TX',
-        zipCode: '75204',
-        imageUrl: '/placeholder-building.jpg',
+        id: 'loc-885',
+        name: 'Tampa - Truist Place',
+        address: '401 East Jackson Street',
+        addressLine2: 'Suite 2340',
+        city: 'Tampa',
+        state: 'Florida',
+        stateCode: 'FL',
+        zipCode: '33602',
+        imageUrl: '/attached_assets/tampa-office.webp',
         isPremium: true
     }
 ];
 const samplePhoneNumbers = [
     {
         id: 'pn-1',
-        number: '(305) 555-1234',
+        number: '(305) 847-9001',
         type: 'local',
         areaCode: '305',
         isAvailable: true
     },
     {
         id: 'pn-2',
-        number: '(305) 555-5678',
+        number: '(305) 847-9002',
         type: 'local',
         areaCode: '305',
         isAvailable: true
     },
     {
         id: 'pn-3',
-        number: '(305) 555-9012',
+        number: '(305) 847-9003',
         type: 'local',
         areaCode: '305',
         isAvailable: true
     },
     {
         id: 'pn-4',
-        number: '(786) 555-3456',
+        number: '(561) 988-6901',
         type: 'local',
-        areaCode: '786',
+        areaCode: '561',
         isAvailable: true
     },
     {
         id: 'pn-5',
-        number: '(786) 555-7890',
+        number: '(561) 988-6902',
         type: 'local',
-        areaCode: '786',
+        areaCode: '561',
         isAvailable: true
     },
     {
         id: 'pn-6',
-        number: '(212) 555-1234',
+        number: '(954) 903-3101',
         type: 'local',
-        areaCode: '212',
+        areaCode: '954',
         isAvailable: true
     },
     {
         id: 'pn-7',
-        number: '(212) 555-5678',
+        number: '(954) 903-3102',
         type: 'local',
-        areaCode: '212',
+        areaCode: '954',
         isAvailable: true
     },
     {
         id: 'pn-8',
-        number: '(310) 555-1234',
+        number: '(407) 559-2001',
         type: 'local',
-        areaCode: '310',
+        areaCode: '407',
         isAvailable: true
     },
     {
         id: 'pn-9',
-        number: '(310) 555-5678',
+        number: '(407) 559-2002',
         type: 'local',
-        areaCode: '310',
+        areaCode: '407',
         isAvailable: true
     },
     {
         id: 'pn-10',
-        number: '(713) 555-1234',
+        number: '(813) 315-3991',
         type: 'local',
-        areaCode: '713',
+        areaCode: '813',
         isAvailable: true
     },
     {
         id: 'pn-11',
-        number: '(312) 555-1234',
+        number: '(813) 315-3992',
         type: 'local',
-        areaCode: '312',
-        isAvailable: true
-    },
-    {
-        id: 'pn-12',
-        number: '(312) 555-5678',
-        type: 'local',
-        areaCode: '312',
+        areaCode: '813',
         isAvailable: true
     }
 ];
@@ -1371,25 +1292,24 @@ function getLocationsByCity(city) {
     return sampleLocations.filter((loc)=>loc.city === city);
 }
 function getPhoneNumbersForLocation(location) {
-    const areaCodeMap = {
-        'FL': [
-            '305',
-            '786'
+    const cityAreaCodeMap = {
+        'Miami': [
+            '305'
         ],
-        'NY': [
-            '212'
+        'Boca Raton': [
+            '561'
         ],
-        'CA': [
-            '310'
+        'Fort Lauderdale': [
+            '954'
         ],
-        'TX': [
-            '713'
+        'Orlando': [
+            '407'
         ],
-        'IL': [
-            '312'
+        'Tampa': [
+            '813'
         ]
     };
-    const areaCodes = areaCodeMap[location.stateCode] || [
+    const areaCodes = cityAreaCodeMap[location.city] || [
         '305'
     ];
     return samplePhoneNumbers.filter((pn)=>areaCodes.includes(pn.areaCode));
@@ -1654,16 +1574,24 @@ function PickPlanPage() {
                                                 "data-testid": `location-card-${location.id}`,
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "w-full bg-gray-200 flex items-center justify-center",
+                                                        className: "w-full bg-gray-200 flex items-center justify-center overflow-hidden",
                                                         style: {
                                                             aspectRatio: '1.85 / 1'
                                                         },
-                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"], {
+                                                        children: location.imageUrl && location.imageUrl !== '/placeholder-building.jpg' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                            src: location.imageUrl,
+                                                            alt: location.name,
+                                                            className: "w-full h-full object-cover"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/add-location/pick-plan/page.tsx",
+                                                            lineNumber: 141,
+                                                            columnNumber: 27
+                                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"], {
                                                             className: "h-12 w-12 text-gray-400"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                            lineNumber: 140,
-                                                            columnNumber: 25
+                                                            lineNumber: 147,
+                                                            columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
@@ -1684,7 +1612,7 @@ function PickPlanPage() {
                                                                                 children: location.name
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                                lineNumber: 145,
+                                                                                lineNumber: 153,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             location.isPremium && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1694,20 +1622,20 @@ function PickPlanPage() {
                                                                                         className: "h-3 w-3 fill-amber-500"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                                        lineNumber: 148,
+                                                                                        lineNumber: 156,
                                                                                         columnNumber: 33
                                                                                     }, this),
                                                                                     "Premium Location"
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                                lineNumber: 147,
+                                                                                lineNumber: 155,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                        lineNumber: 144,
+                                                                        lineNumber: 152,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1720,14 +1648,14 @@ function PickPlanPage() {
                                                                                         className: "h-3.5 w-3.5 flex-shrink-0"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                                        lineNumber: 155,
+                                                                                        lineNumber: 163,
                                                                                         columnNumber: 31
                                                                                     }, this),
                                                                                     location.address
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                                lineNumber: 154,
+                                                                                lineNumber: 162,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1735,7 +1663,7 @@ function PickPlanPage() {
                                                                                 children: location.addressLine2
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                                lineNumber: 158,
+                                                                                lineNumber: 166,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1749,19 +1677,19 @@ function PickPlanPage() {
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                                lineNumber: 159,
+                                                                                lineNumber: 167,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                        lineNumber: 153,
+                                                                        lineNumber: 161,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                lineNumber: 143,
+                                                                lineNumber: 151,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1771,13 +1699,13 @@ function PickPlanPage() {
                                                                 children: "Select"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                                lineNumber: 162,
+                                                                lineNumber: 170,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                        lineNumber: 142,
+                                                        lineNumber: 150,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
@@ -1804,20 +1732,20 @@ function PickPlanPage() {
                                         className: "h-12 w-12 mx-auto mb-3 text-gray-300"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                        lineNumber: 178,
+                                        lineNumber: 186,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "Select a state to view available locations"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                        lineNumber: 179,
+                                        lineNumber: 187,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                lineNumber: 177,
+                                lineNumber: 185,
                                 columnNumber: 15
                             }, this),
                             selectedState && !selectedCity && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1827,20 +1755,20 @@ function PickPlanPage() {
                                         className: "h-12 w-12 mx-auto mb-3 text-gray-300"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                        lineNumber: 185,
+                                        lineNumber: 193,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "Select a city to view available locations"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                        lineNumber: 186,
+                                        lineNumber: 194,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                lineNumber: 184,
+                                lineNumber: 192,
                                 columnNumber: 15
                             }, this)
                         ]
@@ -1877,12 +1805,12 @@ function PickPlanPage() {
                         currentStep: 2
                     }, void 0, false, {
                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                        lineNumber: 205,
+                        lineNumber: 213,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                    lineNumber: 204,
+                    lineNumber: 212,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1895,12 +1823,12 @@ function PickPlanPage() {
                                 className: "h-5 w-5 text-[#36bff9]"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                lineNumber: 210,
+                                lineNumber: 218,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                            lineNumber: 209,
+                            lineNumber: 217,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1912,7 +1840,7 @@ function PickPlanPage() {
                                     children: order.location.address
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                    lineNumber: 213,
+                                    lineNumber: 221,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1932,13 +1860,13 @@ function PickPlanPage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                    lineNumber: 216,
+                                    lineNumber: 224,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                            lineNumber: 212,
+                            lineNumber: 220,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1948,13 +1876,13 @@ function PickPlanPage() {
                             children: "Change"
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                            lineNumber: 220,
+                            lineNumber: 228,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                    lineNumber: 208,
+                    lineNumber: 216,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1969,7 +1897,7 @@ function PickPlanPage() {
                                     children: essentialsPlan.name
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                    lineNumber: 231,
+                                    lineNumber: 239,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1983,7 +1911,7 @@ function PickPlanPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                            lineNumber: 233,
+                                            lineNumber: 241,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1991,19 +1919,19 @@ function PickPlanPage() {
                                             children: "/mo"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                            lineNumber: 234,
+                                            lineNumber: 242,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                    lineNumber: 232,
+                                    lineNumber: 240,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                            lineNumber: 230,
+                            lineNumber: 238,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2020,12 +1948,12 @@ function PickPlanPage() {
                                                     className: "h-2.5 w-2.5 text-white"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                    lineNumber: 244,
+                                                    lineNumber: 252,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                lineNumber: 243,
+                                                lineNumber: 251,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2033,29 +1961,29 @@ function PickPlanPage() {
                                                 children: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["featureLabels"][key]
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                                lineNumber: 246,
+                                                lineNumber: 254,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, key, true, {
                                         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                        lineNumber: 242,
+                                        lineNumber: 250,
                                         columnNumber: 19
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                                lineNumber: 238,
+                                lineNumber: 246,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                            lineNumber: 237,
+                            lineNumber: 245,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                    lineNumber: 229,
+                    lineNumber: 237,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2068,24 +1996,24 @@ function PickPlanPage() {
                             className: "h-4 w-4 ml-1.5"
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                            lineNumber: 259,
+                            lineNumber: 267,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/pick-plan/page.tsx",
-                    lineNumber: 253,
+                    lineNumber: 261,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/add-location/pick-plan/page.tsx",
-            lineNumber: 203,
+            lineNumber: 211,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/add-location/pick-plan/page.tsx",
-        lineNumber: 202,
+        lineNumber: 210,
         columnNumber: 5
     }, this);
 }

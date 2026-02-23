@@ -136,8 +136,16 @@ export default function PickPlanPage() {
                       className="flex flex-col rounded-lg border-2 border-gray-200 hover:border-[#36bff9] hover:shadow-md transition-all overflow-hidden"
                       data-testid={`location-card-${location.id}`}
                     >
-                      <div className="w-full bg-gray-200 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>
-                        <Building2 className="h-12 w-12 text-gray-400" />
+                      <div className="w-full bg-gray-200 flex items-center justify-center overflow-hidden" style={{ aspectRatio: '1.85 / 1' }}>
+                        {location.imageUrl && location.imageUrl !== '/placeholder-building.jpg' ? (
+                          <img
+                            src={location.imageUrl}
+                            alt={location.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <Building2 className="h-12 w-12 text-gray-400" />
+                        )}
                       </div>
                       <div className="p-4 flex flex-col gap-3 flex-1">
                         <div className="flex-1 min-w-0">
