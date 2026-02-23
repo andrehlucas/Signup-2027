@@ -201,32 +201,52 @@ export default function PickPlanPage() {
   return (
     <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-8 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
       <div className="max-w-3xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-6">
           <ProgressIndicator currentStep={2} />
         </div>
 
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="heading-pick-plan">
-            Your Office Details
-          </h1>
-          <p className="text-gray-500 text-sm">
-            Review your office details before continuing.
-          </p>
+        <div className="bg-white rounded-xl border border-gray-200 p-5 mb-5 flex items-center gap-4" data-testid="review-location-card">
+          <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+            <MapPin className="h-5 w-5 text-[#36bff9]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg font-bold text-gray-900" data-testid="heading-pick-plan">
+                {order.location.name}
+              </h1>
+              {order.location.isPremium && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold">
+                  <Star className="h-3 w-3 fill-amber-500" />
+                  Premium
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-gray-500 truncate">
+              {order.location.address}, {order.location.city}, {order.location.stateCode} {order.location.zipCode}
+            </p>
+          </div>
+          <button
+            onClick={() => setSubStep('location')}
+            className="text-sm text-[#36bff9] hover:text-[#2aa8e0] font-medium flex-shrink-0"
+            data-testid="button-change-location"
+          >
+            Change
+          </button>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-6" data-testid="review-package-card">
-          <div className="bg-[#36bff9] text-white text-center py-3 text-sm font-semibold tracking-wide">
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-5" data-testid="review-package-card">
+          <div className="bg-[#36bff9] text-white text-center py-2.5 text-sm font-semibold tracking-wide">
             Your Office Package
           </div>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
+          <div className="p-5">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-xl font-bold text-gray-900">{essentialsPlan.name}</h3>
               <div className="text-right">
                 <span className="text-3xl font-bold text-gray-900">${essentialsPlan.price}</span>
                 <span className="text-gray-500 text-sm ml-1">/mo</span>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2.5">
               {Object.entries(essentialsPlan.features)
                 .filter(([, enabled]) => enabled)
                 .map(([key]) => (
@@ -241,32 +261,9 @@ export default function PickPlanPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="review-location-card">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Your Location</h3>
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-              <MapPin className="h-5 w-5 text-[#36bff9]" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <p className="font-semibold text-gray-900">{order.location.name}</p>
-                {order.location.isPremium && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold">
-                    <Star className="h-3 w-3 fill-amber-500" />
-                    Premium
-                  </span>
-                )}
-              </div>
-              <p className="text-sm text-gray-600">{order.location.address}</p>
-              <p className="text-sm text-gray-600">{order.location.addressLine2}</p>
-              <p className="text-sm text-gray-600">{order.location.city}, {order.location.stateCode} {order.location.zipCode}</p>
-            </div>
-          </div>
-        </div>
-
         <Button
           onClick={handleContinue}
-          className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-base font-semibold mt-2"
+          className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-base font-semibold"
           data-testid="button-continue-customize"
         >
           Continue to Add-ons

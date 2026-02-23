@@ -692,6 +692,10 @@ body {
   margin-bottom: 1rem;
 }
 
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -1393,8 +1397,8 @@ body {
   column-gap: 1.5rem;
 }
 
-.gap-y-3 {
-  row-gap: .75rem;
+.gap-y-2\.5 {
+  row-gap: .625rem;
 }
 
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
@@ -1479,6 +1483,12 @@ body {
 
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+
+.truncate {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .whitespace-nowrap {
