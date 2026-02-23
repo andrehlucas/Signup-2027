@@ -37,6 +37,7 @@ function getBundleIncludedAddons(bundle: Bundle): { name: string; label: string 
     'callLog',
     'supervisedCallTransfer',
     'messageTaking',
+    'appointmentMaking',
   ];
   
   for (const feature of addonFeatures) {

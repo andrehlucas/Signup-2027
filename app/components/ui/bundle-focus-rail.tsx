@@ -9,6 +9,7 @@ const bundleBackgrounds: Record<string, string> = {
   plus: "/images/bg-bundle-01.webp",
   pro: "/images/bg-bundle-02.webp",
   premium: "/images/bg-bundle-03.webp",
+  prestige: "/images/bg-bundle-03.webp",
 };
 
 interface BundleFocusRailProps {
@@ -224,7 +225,7 @@ export function BundleFocusRail({
                       .filter(([key, enabled]) => {
                         if (!enabled) return false;
                         const alwaysShow = ['businessAddress', 'liveCallAnswering', 'businessPhoneFax'];
-                        const bundleUpgrades = ['calloutFeature', 'tollFreeNumber', 'callLog', 'supervisedCallTransfer', 'messageTaking'];
+                        const bundleUpgrades = ['calloutFeature', 'tollFreeNumber', 'callLog', 'supervisedCallTransfer', 'messageTaking', 'appointmentMaking'];
                         return alwaysShow.includes(key) || bundleUpgrades.includes(key);
                       })
                       .map(([key]) => (

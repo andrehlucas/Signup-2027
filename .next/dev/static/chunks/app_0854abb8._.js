@@ -652,7 +652,8 @@ const bundles = [
             tollFreeNumber: false,
             callLog: false,
             supervisedCallTransfer: false,
-            messageTaking: false
+            messageTaking: false,
+            appointmentMaking: false
         }
     },
     {
@@ -674,7 +675,8 @@ const bundles = [
             tollFreeNumber: true,
             callLog: true,
             supervisedCallTransfer: false,
-            messageTaking: false
+            messageTaking: false,
+            appointmentMaking: false
         }
     },
     {
@@ -696,7 +698,8 @@ const bundles = [
             tollFreeNumber: true,
             callLog: true,
             supervisedCallTransfer: true,
-            messageTaking: false
+            messageTaking: false,
+            appointmentMaking: false
         }
     },
     {
@@ -718,7 +721,31 @@ const bundles = [
             tollFreeNumber: true,
             callLog: true,
             supervisedCallTransfer: true,
-            messageTaking: true
+            messageTaking: true,
+            appointmentMaking: false
+        }
+    },
+    {
+        id: 'prestige',
+        name: 'The Ultimate Office',
+        tier: 'PRESTIGE',
+        price: 199,
+        originalPrice: 259,
+        badge: 'The Prestige',
+        badgeColor: 'bg-[#36bff9]',
+        features: {
+            businessAddress: true,
+            liveCallAnswering: true,
+            callTransferring: true,
+            businessPhoneFax: true,
+            mailReceipt: true,
+            voicemailToEmail: true,
+            calloutFeature: true,
+            tollFreeNumber: false,
+            callLog: false,
+            supervisedCallTransfer: true,
+            messageTaking: false,
+            appointmentMaking: true
         }
     }
 ];
@@ -817,14 +844,16 @@ const featureLabels = {
     tollFreeNumber: 'Toll-Free Number',
     callLog: 'Call Log',
     supervisedCallTransfer: 'Supervised Call Transfer',
-    messageTaking: 'Message Taking'
+    messageTaking: 'Message Taking',
+    appointmentMaking: 'Appointment Making'
 };
 const addonToFeatureMap = {
     'toll-free': 'tollFreeNumber',
     'callout': 'calloutFeature',
     'call-log': 'callLog',
     'supervised-transfer': 'supervisedCallTransfer',
-    'message-taking': 'messageTaking'
+    'message-taking': 'messageTaking',
+    'appointment-scheduling': 'appointmentMaking'
 };
 const featureIndividualPrices = {
     businessAddress: 0,
@@ -837,7 +866,8 @@ const featureIndividualPrices = {
     tollFreeNumber: 10,
     callLog: 10,
     supervisedCallTransfer: 50,
-    messageTaking: 50
+    messageTaking: 50,
+    appointmentMaking: 100
 };
 const ESSENTIALS_PLAN = {
     id: 'essentials',

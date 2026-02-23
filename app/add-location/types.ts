@@ -32,6 +32,7 @@ export interface Bundle {
     callLog: boolean;
     supervisedCallTransfer: boolean;
     messageTaking: boolean;
+    appointmentMaking: boolean;
   };
 }
 
@@ -114,6 +115,7 @@ export const bundles: Bundle[] = [
       callLog: false,
       supervisedCallTransfer: false,
       messageTaking: false,
+      appointmentMaking: false,
     },
   },
   {
@@ -136,6 +138,7 @@ export const bundles: Bundle[] = [
       callLog: true,
       supervisedCallTransfer: false,
       messageTaking: false,
+      appointmentMaking: false,
     },
   },
   {
@@ -158,6 +161,7 @@ export const bundles: Bundle[] = [
       callLog: true,
       supervisedCallTransfer: true,
       messageTaking: false,
+      appointmentMaking: false,
     },
   },
   {
@@ -180,6 +184,30 @@ export const bundles: Bundle[] = [
       callLog: true,
       supervisedCallTransfer: true,
       messageTaking: true,
+      appointmentMaking: false,
+    },
+  },
+  {
+    id: 'prestige',
+    name: 'The Ultimate Office',
+    tier: 'PRESTIGE',
+    price: 199,
+    originalPrice: 259,
+    badge: 'The Prestige',
+    badgeColor: 'bg-[#36bff9]',
+    features: {
+      businessAddress: true,
+      liveCallAnswering: true,
+      callTransferring: true,
+      businessPhoneFax: true,
+      mailReceipt: true,
+      voicemailToEmail: true,
+      calloutFeature: true,
+      tollFreeNumber: false,
+      callLog: false,
+      supervisedCallTransfer: true,
+      messageTaking: false,
+      appointmentMaking: true,
     },
   },
 ];
@@ -302,6 +330,7 @@ export const featureLabels: Record<string, string> = {
   callLog: 'Call Log',
   supervisedCallTransfer: 'Supervised Call Transfer',
   messageTaking: 'Message Taking',
+  appointmentMaking: 'Appointment Making',
 };
 
 // Maps add-on IDs to their corresponding bundle feature keys
@@ -312,6 +341,7 @@ export const addonToFeatureMap: Record<string, keyof Bundle['features']> = {
   'call-log': 'callLog',
   'supervised-transfer': 'supervisedCallTransfer',
   'message-taking': 'messageTaking',
+  'appointment-scheduling': 'appointmentMaking',
 };
 
 // Add-on status types
@@ -331,6 +361,7 @@ export const featureIndividualPrices: Record<keyof Bundle['features'], number> =
   callLog: 10,
   supervisedCallTransfer: 50,
   messageTaking: 50,
+  appointmentMaking: 100,
 };
 
 // Essentials plan (base plan) information

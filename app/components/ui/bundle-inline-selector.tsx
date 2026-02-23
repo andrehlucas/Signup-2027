@@ -11,19 +11,22 @@ const CARD_HEIGHT = 200;
 const bundleDescriptions: Record<string, string> = {
   plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
   pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
+  prestige: "Everything in Essentials, plus callout, supervised transfer, and appointment making for full-service support.",
   premium: "Everything in Pro, plus message taking so your clients always reach you.",
 };
 
 const bundleBackgrounds: Record<string, string> = {
-  plus: "#F79009",
-  pro: "#3E4784",
-  premium: "#079455",
+  plus: "#6366F1",
+  pro: "#8B5CF6",
+  prestige: "#A855F7",
+  premium: "#7C3AED",
 };
 
 const bundleAccentColors: Record<string, string> = {
-  plus: "#F79009",
-  pro: "#3E4784",
-  premium: "#079455",
+  plus: "#6366F1",
+  pro: "#8B5CF6",
+  prestige: "#A855F7",
+  premium: "#7C3AED",
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -33,6 +36,7 @@ const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "tollFreeNumber", label: "Toll-Free Number" },
   { key: "calloutFeature", label: "Callout Feature" },
   { key: "supervisedCallTransfer", label: "Supervised Call Transfer" },
+  { key: "appointmentMaking", label: "Appointment Making" },
   { key: "messageTaking", label: "Message Taking" },
 ];
 
@@ -255,7 +259,7 @@ export function BundleInlineSelector({
       </div>
 
       {/* Desktop grid - hidden on mobile, shown on md+ */}
-      <div className="hidden md:grid md:grid-cols-3 gap-4 py-4">
+      <div className="hidden md:grid md:grid-cols-4 gap-4 py-4">
         {bundles.map((bundle) => {
           const isSelected = selectedBundleId === bundle.id;
           const bg = bundleBackgrounds[bundle.id] || bundleBackgrounds.plus;

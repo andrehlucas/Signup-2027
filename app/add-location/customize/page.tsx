@@ -187,6 +187,7 @@ export default function CustomizePage() {
       'call-log': 'callLog',
       'supervised-transfer': 'supervisedCallTransfer',
       'message-taking': 'messageTaking',
+      'appointment-scheduling': 'appointmentMaking',
     };
     const featureKey = addonToFeatureMap[addon.id];
     if (featureKey && selectedBundle.features[featureKey]) {
