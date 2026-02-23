@@ -1559,9 +1559,9 @@ const bundleBackgrounds = {
 };
 const bundleAccentColors = {
     plus: "#13678A",
-    pro: "#45C4B0",
-    premium: "#9AEBA3",
-    prestige: "#DAFDBA"
+    pro: "#2A9E8B",
+    premium: "#4A8F6A",
+    prestige: "#6B8F3A"
 };
 const comparisonFeatures = [
     {
