@@ -18,6 +18,7 @@ import {
   bundles,
   featureLabels,
   getStates,
+  getCitiesByState,
   getLocationsByState,
   Bundle,
   AvailableLocation,
@@ -30,11 +31,20 @@ export default function PickPlanPage() {
   const { trackComplete } = useFunnelTracking('pick_plan');
 
   const [selectedState, setSelectedState] = useState<string>('');
+  const [selectedCity, setSelectedCity] = useState<string>('');
 
   const states = useMemo(() => getStates(), []);
-  const availableLocations = useMemo(
+  const cities = useMemo(
+    () => (selectedState ? getCitiesByState(selectedState) : []),
+    [selectedState]
+  );
+  const allStateLocations = useMemo(
     () => (selectedState ? getLocationsByState(selectedState) : []),
     [selectedState]
+  );
+  const availableLocations = useMemo(
+    () => (selectedCity && selectedCity !== 'all') ? allStateLocations.filter(loc => loc.city === selectedCity) : allStateLocations,
+    [allStateLocations, selectedCity]
   );
 
   useEffect(() => {
@@ -45,6 +55,7 @@ export default function PickPlanPage() {
 
   const handleStateChange = (state: string) => {
     setSelectedState(state);
+    setSelectedCity('');
   };
 
   const handleLocationSelect = (location: AvailableLocation) => {
@@ -71,28 +82,51 @@ export default function PickPlanPage() {
           <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Your Location</h2>
 
-            <div className="max-w-sm mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                State
-              </label>
-              <Select value={selectedState} onValueChange={handleStateChange}>
-                <SelectTrigger data-testid="select-state">
-                  <SelectValue placeholder="Select a state" />
-                </SelectTrigger>
-                <SelectContent>
-                  {states.map((state) => (
-                    <SelectItem key={state} value={state} data-testid={`option-state-${state}`}>
-                      {state}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  State
+                </label>
+                <Select value={selectedState} onValueChange={handleStateChange}>
+                  <SelectTrigger data-testid="select-state">
+                    <SelectValue placeholder="Select a state" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {states.map((state) => (
+                      <SelectItem key={state} value={state} data-testid={`option-state-${state}`}>
+                        {state}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {selectedState && cities.length > 1 && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    City <span className="text-gray-400 font-normal">(optional)</span>
+                  </label>
+                  <Select value={selectedCity} onValueChange={setSelectedCity}>
+                    <SelectTrigger data-testid="select-city">
+                      <SelectValue placeholder="All cities" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all" data-testid="option-city-all">All cities</SelectItem>
+                      {cities.map((city) => (
+                        <SelectItem key={city} value={city} data-testid={`option-city-${city}`}>
+                          {city}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
             </div>
 
             {selectedState && availableLocations.length > 0 && (
               <div data-testid="locations-list">
                 <h3 className="text-sm font-medium text-gray-700 mb-3">
-                  Available Locations in {selectedState}
+                  Available Locations in {selectedCity && selectedCity !== 'all' ? selectedCity + ',' : ''} {selectedState}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {availableLocations.map((location) => (
