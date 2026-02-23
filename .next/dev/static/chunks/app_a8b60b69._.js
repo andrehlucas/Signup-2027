@@ -2626,6 +2626,7 @@ function CustomizePage() {
     const [footerVisible, setFooterVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [footerPulse, setFooterPulse] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const pulseTimerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const footerLockedUntilRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     const lastScrollY = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     const scrollThreshold = 5;
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -2636,6 +2637,10 @@ function CustomizePage() {
                     const delta = currentScrollY - lastScrollY.current;
                     if (Math.abs(delta) < scrollThreshold) return;
                     const atBottom = window.innerHeight + currentScrollY >= document.documentElement.scrollHeight - 10;
+                    if (Date.now() < footerLockedUntilRef.current) {
+                        lastScrollY.current = currentScrollY;
+                        return;
+                    }
                     if (delta > 0 && currentScrollY > 50) {
                         setFooterVisible(true);
                     } else if (delta < 0 && !atBottom) {
@@ -2914,7 +2919,8 @@ function CustomizePage() {
         }
         setFooterPulse(true);
         setFooterVisible(true);
-        pulseTimerRef.current = setTimeout(()=>setFooterPulse(false), 1500);
+        footerLockedUntilRef.current = Date.now() + 3000;
+        pulseTimerRef.current = setTimeout(()=>setFooterPulse(false), 2000);
         if (suggestionTriggeredFromContinue) {
             setSuggestionTriggeredFromContinue(false);
             setTimeout(()=>{
@@ -2983,12 +2989,12 @@ function CustomizePage() {
                             currentStep: 3
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 381,
+                            lineNumber: 388,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/add-location/customize/page.tsx",
-                        lineNumber: 380,
+                        lineNumber: 387,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3000,7 +3006,7 @@ function CustomizePage() {
                                 children: "Customize Your Office"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 385,
+                                lineNumber: 392,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3012,7 +3018,7 @@ function CustomizePage() {
                                         children: order.location.name
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 389,
+                                        lineNumber: 396,
                                         columnNumber: 17
                                     }, this),
                                     ", ",
@@ -3020,13 +3026,13 @@ function CustomizePage() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 388,
+                                lineNumber: 395,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/customize/page.tsx",
-                        lineNumber: 384,
+                        lineNumber: 391,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3038,7 +3044,7 @@ function CustomizePage() {
                                 children: "Add-ons"
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 394,
+                                lineNumber: 401,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3046,7 +3052,7 @@ function CustomizePage() {
                                 children: "Enhance your plan with additional features. Some add-ons may already be included in your bundle."
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 395,
+                                lineNumber: 402,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3074,7 +3080,7 @@ function CustomizePage() {
                                                                         children: addon.name
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 425,
+                                                                        lineNumber: 432,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     isIncluded ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -3082,7 +3088,7 @@ function CustomizePage() {
                                                                         children: "Included"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 427,
+                                                                        lineNumber: 434,
                                                                         columnNumber: 27
                                                                     }, this) : addon.packages && addon.packages.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         className: "font-semibold text-gray-900",
@@ -3093,7 +3099,7 @@ function CustomizePage() {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 431,
+                                                                        lineNumber: 438,
                                                                         columnNumber: 27
                                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         className: "font-semibold text-gray-900",
@@ -3104,13 +3110,13 @@ function CustomizePage() {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 435,
+                                                                        lineNumber: 442,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 424,
+                                                                lineNumber: 431,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3127,7 +3133,7 @@ function CustomizePage() {
                                                                                     className: "h-3 w-3"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 449,
+                                                                                    lineNumber: 456,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
@@ -3138,14 +3144,14 @@ function CustomizePage() {
                                                                                     className: "h-3 w-3"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 454,
+                                                                                    lineNumber: 461,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 441,
+                                                                        lineNumber: 448,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     !isIncluded && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3160,7 +3166,7 @@ function CustomizePage() {
                                                                                     className: "h-3 w-3 mr-1"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 468,
+                                                                                    lineNumber: 475,
                                                                                     columnNumber: 33
                                                                                 }, this),
                                                                                 "Remove"
@@ -3171,7 +3177,7 @@ function CustomizePage() {
                                                                                     className: "h-3 w-3 mr-1"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 473,
+                                                                                    lineNumber: 480,
                                                                                     columnNumber: 33
                                                                                 }, this),
                                                                                 "Add to Cart"
@@ -3179,13 +3185,13 @@ function CustomizePage() {
                                                                         }, void 0, true)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 459,
+                                                                        lineNumber: 466,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 440,
+                                                                lineNumber: 447,
                                                                 columnNumber: 23
                                                             }, this),
                                                             isExpanded && addon.detailedDescription && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3194,7 +3200,7 @@ function CustomizePage() {
                                                                 children: addon.detailedDescription
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 482,
+                                                                lineNumber: 489,
                                                                 columnNumber: 25
                                                             }, this),
                                                             !isIncluded && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3207,7 +3213,7 @@ function CustomizePage() {
                                                                             children: "Select Package"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                            lineNumber: 494,
+                                                                            lineNumber: 501,
                                                                             columnNumber: 31
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -3221,12 +3227,12 @@ function CustomizePage() {
                                                                                         placeholder: "Select a package"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 505,
+                                                                                        lineNumber: 512,
                                                                                         columnNumber: 35
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 501,
+                                                                                    lineNumber: 508,
                                                                                     columnNumber: 33
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -3241,40 +3247,40 @@ function CustomizePage() {
                                                                                             ]
                                                                                         }, pkg.id, true, {
                                                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                            lineNumber: 509,
+                                                                                            lineNumber: 516,
                                                                                             columnNumber: 37
                                                                                         }, this))
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 507,
+                                                                                    lineNumber: 514,
                                                                                     columnNumber: 33
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                            lineNumber: 497,
+                                                                            lineNumber: 504,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 493,
+                                                                    lineNumber: 500,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 491,
+                                                                lineNumber: 498,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 423,
+                                                        lineNumber: 430,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, addon.id, false, {
                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                    lineNumber: 412,
+                                                    lineNumber: 419,
                                                     columnNumber: 19
                                                 }, this);
                                             }),
@@ -3292,7 +3298,7 @@ function CustomizePage() {
                                                                     children: "Additional Extensions"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 536,
+                                                                    lineNumber: 543,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3300,13 +3306,13 @@ function CustomizePage() {
                                                                     children: "$25/mo each"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 537,
+                                                                    lineNumber: 544,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 535,
+                                                            lineNumber: 542,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3323,12 +3329,12 @@ function CustomizePage() {
                                                                         className: "h-3.5 w-3.5"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 548,
+                                                                        lineNumber: 555,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 540,
+                                                                    lineNumber: 547,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3337,7 +3343,7 @@ function CustomizePage() {
                                                                     children: order.extensionCount
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 550,
+                                                                    lineNumber: 557,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3350,12 +3356,12 @@ function CustomizePage() {
                                                                         className: "h-3.5 w-3.5"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 560,
+                                                                        lineNumber: 567,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 553,
+                                                                    lineNumber: 560,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 order.extensionCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3367,30 +3373,30 @@ function CustomizePage() {
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 563,
+                                                                    lineNumber: 570,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 539,
+                                                            lineNumber: 546,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                    lineNumber: 534,
+                                                    lineNumber: 541,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 528,
+                                                lineNumber: 535,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 400,
+                                        lineNumber: 407,
                                         columnNumber: 13
                                     }, this),
                                     !showAllAddons && sortedAddons.length > 6 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3398,7 +3404,7 @@ function CustomizePage() {
                                         "data-testid": "addons-gradient-overlay"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 573,
+                                        lineNumber: 580,
                                         columnNumber: 15
                                     }, this),
                                     sortedAddons.length > 6 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3415,7 +3421,7 @@ function CustomizePage() {
                                                         className: "h-4 w-4 ml-2"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 590,
+                                                        lineNumber: 597,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
@@ -3426,31 +3432,31 @@ function CustomizePage() {
                                                         className: "h-4 w-4 ml-2"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 595,
+                                                        lineNumber: 602,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true)
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 581,
+                                            lineNumber: 588,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 580,
+                                        lineNumber: 587,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 399,
+                                lineNumber: 406,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/customize/page.tsx",
-                        lineNumber: 393,
+                        lineNumber: 400,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3468,7 +3474,7 @@ function CustomizePage() {
                                             children: "Bundle & Save"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 613,
+                                            lineNumber: 620,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3480,20 +3486,20 @@ function CustomizePage() {
                                                     className: "h-3.5 w-3.5"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                    lineNumber: 619,
+                                                    lineNumber: 626,
                                                     columnNumber: 17
                                                 }, this),
                                                 "Close"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 614,
+                                            lineNumber: 621,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 612,
+                                    lineNumber: 619,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3501,7 +3507,7 @@ function CustomizePage() {
                                     children: "Upgrade your plan and save on popular features. Swipe to compare bundles."
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 623,
+                                    lineNumber: 630,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$bundle$2d$inline$2d$selector$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BundleInlineSelector"], {
@@ -3511,7 +3517,7 @@ function CustomizePage() {
                                     essentialsBundle: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["bundles"][0]
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 626,
+                                    lineNumber: 633,
                                     columnNumber: 13
                                 }, this),
                                 selectedBundle && selectedBundle.id !== 'essentials' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3525,23 +3531,23 @@ function CustomizePage() {
                                         children: "Revert to Essentials"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 634,
+                                        lineNumber: 641,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 633,
+                                    lineNumber: 640,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 611,
+                            lineNumber: 618,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/add-location/customize/page.tsx",
-                        lineNumber: 604,
+                        lineNumber: 611,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3557,7 +3563,7 @@ function CustomizePage() {
                                             children: "Your Business Phone Number"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 651,
+                                            lineNumber: 658,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3565,18 +3571,18 @@ function CustomizePage() {
                                             children: "Auto-assigned based on your location. You can change it if you prefer a different number."
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 652,
+                                            lineNumber: 659,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 650,
+                                    lineNumber: 657,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 649,
+                                lineNumber: 656,
                                 columnNumber: 11
                             }, this),
                             selectedPhone && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3591,12 +3597,12 @@ function CustomizePage() {
                                                     className: "h-5 w-5 text-white"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                    lineNumber: 662,
+                                                    lineNumber: 669,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 661,
+                                                lineNumber: 668,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3607,7 +3613,7 @@ function CustomizePage() {
                                                         children: selectedPhone.number
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 665,
+                                                        lineNumber: 672,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3615,19 +3621,19 @@ function CustomizePage() {
                                                         children: "Local Number"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 668,
+                                                        lineNumber: 675,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 664,
+                                                lineNumber: 671,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 660,
+                                        lineNumber: 667,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3639,18 +3645,18 @@ function CustomizePage() {
                                             className: "h-4 w-4 text-gray-500"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 677,
+                                            lineNumber: 684,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 671,
+                                        lineNumber: 678,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 659,
+                                lineNumber: 666,
                                 columnNumber: 13
                             }, this),
                             hasTollFree && selectedTollFree && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3665,12 +3671,12 @@ function CustomizePage() {
                                                     className: "h-5 w-5 text-white"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                    lineNumber: 686,
+                                                    lineNumber: 693,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 685,
+                                                lineNumber: 692,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3681,7 +3687,7 @@ function CustomizePage() {
                                                         children: selectedTollFree.number
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 689,
+                                                        lineNumber: 696,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3689,19 +3695,19 @@ function CustomizePage() {
                                                         children: "Toll-Free Number"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 692,
+                                                        lineNumber: 699,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 688,
+                                                lineNumber: 695,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 684,
+                                        lineNumber: 691,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3713,30 +3719,30 @@ function CustomizePage() {
                                             className: "h-4 w-4 text-gray-500"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 701,
+                                            lineNumber: 708,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 695,
+                                        lineNumber: 702,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 683,
+                                lineNumber: 690,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/add-location/customize/page.tsx",
-                        lineNumber: 648,
+                        lineNumber: 655,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/add-location/customize/page.tsx",
-                lineNumber: 379,
+                lineNumber: 386,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3765,7 +3771,7 @@ function CustomizePage() {
                                         className: "h-4 w-4 text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 727,
+                                        lineNumber: 734,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3773,7 +3779,7 @@ function CustomizePage() {
                                         children: "Active Bundle"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 728,
+                                        lineNumber: 735,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3784,7 +3790,7 @@ function CustomizePage() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 729,
+                                        lineNumber: 736,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3792,7 +3798,7 @@ function CustomizePage() {
                                         children: bundleExpanded ? 'Close' : 'Edit'
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 730,
+                                        lineNumber: 737,
                                         columnNumber: 17
                                     }, this)
                                 ]
@@ -3802,7 +3808,7 @@ function CustomizePage() {
                                         className: "h-4 w-4 text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 734,
+                                        lineNumber: 741,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3810,7 +3816,7 @@ function CustomizePage() {
                                         children: "Bundle & Save"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 735,
+                                        lineNumber: 742,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3818,32 +3824,32 @@ function CustomizePage() {
                                         children: "- Upgrade your plan and save on popular features"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 736,
+                                        lineNumber: 743,
                                         columnNumber: 17
                                     }, this),
                                     bundleExpanded ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
                                         className: "h-4 w-4 text-white ml-1"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 738,
+                                        lineNumber: 745,
                                         columnNumber: 19
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__["ChevronRight"], {
                                         className: "h-4 w-4 text-white ml-1"
                                     }, void 0, false, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 740,
+                                        lineNumber: 747,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true)
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 724,
+                            lineNumber: 731,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/add-location/customize/page.tsx",
-                        lineNumber: 712,
+                        lineNumber: 719,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3889,12 +3895,12 @@ function CustomizePage() {
                                                             className: "h-4 w-4 text-white"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 769,
+                                                            lineNumber: 776,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 759,
+                                                        lineNumber: 766,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -3925,17 +3931,17 @@ function CustomizePage() {
                                                                 className: "h-3 w-3 text-white"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 781,
+                                                                lineNumber: 788,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 773,
+                                                            lineNumber: 780,
                                                             columnNumber: 21
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 771,
+                                                        lineNumber: 778,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -3955,18 +3961,18 @@ function CustomizePage() {
                                                             className: "absolute inset-0 rounded-lg bg-green-400 pointer-events-none"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 787,
+                                                            lineNumber: 794,
                                                             columnNumber: 21
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 785,
+                                                        lineNumber: 792,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 758,
+                                                lineNumber: 765,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3981,7 +3987,7 @@ function CustomizePage() {
                                                                 children: displayBundleName
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 798,
+                                                                lineNumber: 805,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Popover"], {
@@ -3996,7 +4002,7 @@ function CustomizePage() {
                                                                                     className: "h-3.5 w-3.5"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 805,
+                                                                                    lineNumber: 812,
                                                                                     columnNumber: 25
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4004,18 +4010,18 @@ function CustomizePage() {
                                                                                     children: "See what's included"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 806,
+                                                                                    lineNumber: 813,
                                                                                     columnNumber: 25
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                            lineNumber: 801,
+                                                                            lineNumber: 808,
                                                                             columnNumber: 23
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 800,
+                                                                        lineNumber: 807,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PopoverContent"], {
@@ -4034,12 +4040,12 @@ function CustomizePage() {
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 811,
+                                                                                    lineNumber: 818,
                                                                                     columnNumber: 25
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                lineNumber: 810,
+                                                                                lineNumber: 817,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4052,7 +4058,7 @@ function CustomizePage() {
                                                                                                 className: "h-3.5 w-3.5 text-[#36bff9] flex-shrink-0"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 815,
+                                                                                                lineNumber: 822,
                                                                                                 columnNumber: 27
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4060,13 +4066,13 @@ function CustomizePage() {
                                                                                                 children: "Prestigious Business Address"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 816,
+                                                                                                lineNumber: 823,
                                                                                                 columnNumber: 27
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 814,
+                                                                                        lineNumber: 821,
                                                                                         columnNumber: 25
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4076,7 +4082,7 @@ function CustomizePage() {
                                                                                                 className: "h-3.5 w-3.5 text-[#36bff9] flex-shrink-0"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 819,
+                                                                                                lineNumber: 826,
                                                                                                 columnNumber: 27
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4084,13 +4090,13 @@ function CustomizePage() {
                                                                                                 children: "Live Call Answering"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 820,
+                                                                                                lineNumber: 827,
                                                                                                 columnNumber: 27
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 818,
+                                                                                        lineNumber: 825,
                                                                                         columnNumber: 25
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4100,7 +4106,7 @@ function CustomizePage() {
                                                                                                 className: "h-3.5 w-3.5 text-[#36bff9] flex-shrink-0"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 823,
+                                                                                                lineNumber: 830,
                                                                                                 columnNumber: 27
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4108,13 +4114,13 @@ function CustomizePage() {
                                                                                                 children: "Call Transferring"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 824,
+                                                                                                lineNumber: 831,
                                                                                                 columnNumber: 27
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 822,
+                                                                                        lineNumber: 829,
                                                                                         columnNumber: 25
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4124,7 +4130,7 @@ function CustomizePage() {
                                                                                                 className: "h-3.5 w-3.5 text-[#36bff9] flex-shrink-0"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 827,
+                                                                                                lineNumber: 834,
                                                                                                 columnNumber: 27
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4132,13 +4138,13 @@ function CustomizePage() {
                                                                                                 children: "2 Voicemail Boxes"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 828,
+                                                                                                lineNumber: 835,
                                                                                                 columnNumber: 27
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 826,
+                                                                                        lineNumber: 833,
                                                                                         columnNumber: 25
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4148,7 +4154,7 @@ function CustomizePage() {
                                                                                                 className: "h-3.5 w-3.5 text-[#36bff9] flex-shrink-0"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 831,
+                                                                                                lineNumber: 838,
                                                                                                 columnNumber: 27
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4156,13 +4162,13 @@ function CustomizePage() {
                                                                                                 children: "Business Phone/Fax Number"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 832,
+                                                                                                lineNumber: 839,
                                                                                                 columnNumber: 27
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 830,
+                                                                                        lineNumber: 837,
                                                                                         columnNumber: 25
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4172,7 +4178,7 @@ function CustomizePage() {
                                                                                                 className: "h-3.5 w-3.5 text-[#36bff9] flex-shrink-0"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 835,
+                                                                                                lineNumber: 842,
                                                                                                 columnNumber: 27
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4180,13 +4186,13 @@ function CustomizePage() {
                                                                                                 children: "Voicemail/Fax to Email"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 836,
+                                                                                                lineNumber: 843,
                                                                                                 columnNumber: 27
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 834,
+                                                                                        lineNumber: 841,
                                                                                         columnNumber: 25
                                                                                     }, this),
                                                                                     selectedBundle && Object.entries(selectedBundle.features).filter(([key, enabled])=>enabled && ![
@@ -4200,7 +4206,7 @@ function CustomizePage() {
                                                                                                     className: "h-3.5 w-3.5 text-[#36bff9] flex-shrink-0"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                    lineNumber: 842,
+                                                                                                    lineNumber: 849,
                                                                                                     columnNumber: 31
                                                                                                 }, this),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4208,37 +4214,37 @@ function CustomizePage() {
                                                                                                     children: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$types$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["featureLabels"][key]
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                    lineNumber: 843,
+                                                                                                    lineNumber: 850,
                                                                                                     columnNumber: 31
                                                                                                 }, this)
                                                                                             ]
                                                                                         }, key, true, {
                                                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                            lineNumber: 841,
+                                                                                            lineNumber: 848,
                                                                                             columnNumber: 29
                                                                                         }, this))
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                lineNumber: 813,
+                                                                                lineNumber: 820,
                                                                                 columnNumber: 23
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 809,
+                                                                        lineNumber: 816,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 799,
+                                                                lineNumber: 806,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 797,
+                                                        lineNumber: 804,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4255,13 +4261,13 @@ function CustomizePage() {
                                                                         children: "/mo"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 852,
+                                                                        lineNumber: 859,
                                                                         columnNumber: 125
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 852,
+                                                                lineNumber: 859,
                                                                 columnNumber: 19
                                                             }, this),
                                                             (order.addons.length > 0 || order.extensionCount > 0) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Popover"], {
@@ -4274,12 +4280,12 @@ function CustomizePage() {
                                                                             children: "See details"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                            lineNumber: 856,
+                                                                            lineNumber: 863,
                                                                             columnNumber: 25
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 855,
+                                                                        lineNumber: 862,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$popover$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["PopoverContent"], {
@@ -4295,12 +4301,12 @@ function CustomizePage() {
                                                                                     children: "Your Add-ons"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                    lineNumber: 865,
+                                                                                    lineNumber: 872,
                                                                                     columnNumber: 27
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                lineNumber: 864,
+                                                                                lineNumber: 871,
                                                                                 columnNumber: 25
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4317,7 +4323,7 @@ function CustomizePage() {
                                                                                                     ]
                                                                                                 }, void 0, true, {
                                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                    lineNumber: 870,
+                                                                                                    lineNumber: 877,
                                                                                                     columnNumber: 31
                                                                                                 }, this),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4329,13 +4335,13 @@ function CustomizePage() {
                                                                                                     ]
                                                                                                 }, void 0, true, {
                                                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                    lineNumber: 871,
+                                                                                                    lineNumber: 878,
                                                                                                     columnNumber: 31
                                                                                                 }, this)
                                                                                             ]
                                                                                         }, addon.id, true, {
                                                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                            lineNumber: 869,
+                                                                                            lineNumber: 876,
                                                                                             columnNumber: 29
                                                                                         }, this)),
                                                                                     order.extensionCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4350,7 +4356,7 @@ function CustomizePage() {
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 876,
+                                                                                                lineNumber: 883,
                                                                                                 columnNumber: 31
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4362,13 +4368,13 @@ function CustomizePage() {
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 877,
+                                                                                                lineNumber: 884,
                                                                                                 columnNumber: 31
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 875,
+                                                                                        lineNumber: 882,
                                                                                         columnNumber: 29
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4379,7 +4385,7 @@ function CustomizePage() {
                                                                                                 children: "Add-ons Total"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 881,
+                                                                                                lineNumber: 888,
                                                                                                 columnNumber: 29
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4391,49 +4397,49 @@ function CustomizePage() {
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                                lineNumber: 882,
+                                                                                                lineNumber: 889,
                                                                                                 columnNumber: 29
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                        lineNumber: 880,
+                                                                                        lineNumber: 887,
                                                                                         columnNumber: 27
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                                lineNumber: 867,
+                                                                                lineNumber: 874,
                                                                                 columnNumber: 25
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                        lineNumber: 863,
+                                                                        lineNumber: 870,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 854,
+                                                                lineNumber: 861,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 851,
+                                                        lineNumber: 858,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 796,
+                                                lineNumber: 803,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 757,
+                                        lineNumber: 764,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -4447,35 +4453,35 @@ function CustomizePage() {
                                                 className: "h-4 w-4 ml-1.5"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 900,
+                                                lineNumber: 907,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 893,
+                                        lineNumber: 900,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                lineNumber: 756,
+                                lineNumber: 763,
                                 columnNumber: 11
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 755,
+                            lineNumber: 762,
                             columnNumber: 9
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/add-location/customize/page.tsx",
-                        lineNumber: 747,
+                        lineNumber: 754,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/add-location/customize/page.tsx",
-                lineNumber: 708,
+                lineNumber: 715,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -4496,12 +4502,12 @@ function CustomizePage() {
                                                 className: "h-4 w-4 text-emerald-600"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 912,
+                                                lineNumber: 919,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 911,
+                                            lineNumber: 918,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTitle"], {
@@ -4509,26 +4515,26 @@ function CustomizePage() {
                                             children: "You Could Be Saving!"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 914,
+                                            lineNumber: 921,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 910,
+                                    lineNumber: 917,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Based on the add-ons you've selected, upgrading to a bundle could save you money every month."
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 916,
+                                    lineNumber: 923,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 909,
+                            lineNumber: 916,
                             columnNumber: 11
                         }, this),
                         bundleSuggestion && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4550,13 +4556,13 @@ function CustomizePage() {
                                                                 children: bundleSuggestion.bundle.tier
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 927,
+                                                                lineNumber: 934,
                                                                 columnNumber: 34
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 926,
+                                                        lineNumber: 933,
                                                         columnNumber: 21
                                                     }, this),
                                                     bundleSuggestion.savings > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4569,26 +4575,26 @@ function CustomizePage() {
                                                                 children: "/mo"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                lineNumber: 931,
+                                                                lineNumber: 938,
                                                                 columnNumber: 57
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 930,
+                                                        lineNumber: 937,
                                                         columnNumber: 23
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                         className: "text-lg font-bold text-emerald-700 mt-1",
                                                         children: "Same price, more features"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 934,
+                                                        lineNumber: 941,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 925,
+                                                lineNumber: 932,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4603,7 +4609,7 @@ function CustomizePage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 940,
+                                                        lineNumber: 947,
                                                         columnNumber: 21
                                                     }, this),
                                                     bundleSuggestion.bundle.originalPrice && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4615,24 +4621,24 @@ function CustomizePage() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                                        lineNumber: 942,
+                                                        lineNumber: 949,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/add-location/customize/page.tsx",
-                                                lineNumber: 939,
+                                                lineNumber: 946,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/add-location/customize/page.tsx",
-                                        lineNumber: 924,
+                                        lineNumber: 931,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 923,
+                                    lineNumber: 930,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4642,7 +4648,7 @@ function CustomizePage() {
                                             children: "These add-ons would be included in the bundle:"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 949,
+                                            lineNumber: 956,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4658,7 +4664,7 @@ function CustomizePage() {
                                                                     className: "h-3.5 w-3.5 text-emerald-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 956,
+                                                                    lineNumber: 963,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4666,13 +4672,13 @@ function CustomizePage() {
                                                                     children: addon.name
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                                    lineNumber: 957,
+                                                                    lineNumber: 964,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 955,
+                                                            lineNumber: 962,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4684,24 +4690,24 @@ function CustomizePage() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 959,
+                                                            lineNumber: 966,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, addon.id, true, {
                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                    lineNumber: 954,
+                                                    lineNumber: 961,
                                                     columnNumber: 21
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 952,
+                                            lineNumber: 959,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 948,
+                                    lineNumber: 955,
                                     columnNumber: 15
                                 }, this),
                                 bundleSuggestion.bonusFeatures.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4711,7 +4717,7 @@ function CustomizePage() {
                                             children: "Plus, you'll also get:"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 967,
+                                            lineNumber: 974,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4723,7 +4729,7 @@ function CustomizePage() {
                                                             className: "h-3.5 w-3.5 text-[#36bff9]"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 973,
+                                                            lineNumber: 980,
                                                             columnNumber: 25
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4731,7 +4737,7 @@ function CustomizePage() {
                                                             children: feature
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 974,
+                                                            lineNumber: 981,
                                                             columnNumber: 25
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -4739,30 +4745,30 @@ function CustomizePage() {
                                                             children: "FREE"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                                            lineNumber: 975,
+                                                            lineNumber: 982,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, feature, true, {
                                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                                    lineNumber: 972,
+                                                    lineNumber: 979,
                                                     columnNumber: 23
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 970,
+                                            lineNumber: 977,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 966,
+                                    lineNumber: 973,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 922,
+                            lineNumber: 929,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogFooter"], {
@@ -4777,7 +4783,7 @@ function CustomizePage() {
                                             className: "h-4 w-4 mr-2"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 991,
+                                            lineNumber: 998,
                                             columnNumber: 17
                                         }, this),
                                         "Proceed with ",
@@ -4785,7 +4791,7 @@ function CustomizePage() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 986,
+                                    lineNumber: 993,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -4798,14 +4804,14 @@ function CustomizePage() {
                                             className: "h-4 w-4 mr-2"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 1001,
+                                            lineNumber: 1008,
                                             columnNumber: 15
                                         }, this),
                                         "See All Bundles"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 995,
+                                    lineNumber: 1002,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -4816,24 +4822,24 @@ function CustomizePage() {
                                     children: "No thanks, continue to checkout"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1004,
+                                    lineNumber: 1011,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 984,
+                            lineNumber: 991,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/customize/page.tsx",
-                    lineNumber: 908,
+                    lineNumber: 915,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/add-location/customize/page.tsx",
-                lineNumber: 907,
+                lineNumber: 914,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -4849,20 +4855,20 @@ function CustomizePage() {
                                     children: "Select Phone Number"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1019,
+                                    lineNumber: 1026,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Choose a phone number for your new location. All numbers are local to your selected area."
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1020,
+                                    lineNumber: 1027,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 1018,
+                            lineNumber: 1025,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4876,7 +4882,7 @@ function CustomizePage() {
                                             className: "h-4 w-4 text-gray-500"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 1037,
+                                            lineNumber: 1044,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4884,25 +4890,25 @@ function CustomizePage() {
                                             children: phone.number
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 1038,
+                                            lineNumber: 1045,
                                             columnNumber: 17
                                         }, this),
                                         tempSelectedPhone?.id === phone.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
                                             className: "h-4 w-4 text-[#36bff9] ml-auto"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 1040,
+                                            lineNumber: 1047,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, phone.id, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1027,
+                                    lineNumber: 1034,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 1025,
+                            lineNumber: 1032,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogFooter"], {
@@ -4914,7 +4920,7 @@ function CustomizePage() {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1047,
+                                    lineNumber: 1054,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -4924,24 +4930,24 @@ function CustomizePage() {
                                     children: "Confirm Selection"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1054,
+                                    lineNumber: 1061,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 1046,
+                            lineNumber: 1053,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/customize/page.tsx",
-                    lineNumber: 1017,
+                    lineNumber: 1024,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/add-location/customize/page.tsx",
-                lineNumber: 1016,
+                lineNumber: 1023,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -4957,20 +4963,20 @@ function CustomizePage() {
                                     children: "Select Toll-Free Number"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1068,
+                                    lineNumber: 1075,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Choose a toll-free number for your business. Customers can call you at no charge."
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1069,
+                                    lineNumber: 1076,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 1067,
+                            lineNumber: 1074,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4984,7 +4990,7 @@ function CustomizePage() {
                                             className: "h-4 w-4 text-gray-500"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 1086,
+                                            lineNumber: 1093,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4992,25 +4998,25 @@ function CustomizePage() {
                                             children: phone.number
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 1087,
+                                            lineNumber: 1094,
                                             columnNumber: 17
                                         }, this),
                                         tempSelectedTollFree?.id === phone.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
                                             className: "h-4 w-4 text-green-500 ml-auto"
                                         }, void 0, false, {
                                             fileName: "[project]/app/add-location/customize/page.tsx",
-                                            lineNumber: 1089,
+                                            lineNumber: 1096,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, phone.id, true, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1076,
+                                    lineNumber: 1083,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 1074,
+                            lineNumber: 1081,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogFooter"], {
@@ -5022,7 +5028,7 @@ function CustomizePage() {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1096,
+                                    lineNumber: 1103,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -5032,34 +5038,34 @@ function CustomizePage() {
                                     children: "Confirm Selection"
                                 }, void 0, false, {
                                     fileName: "[project]/app/add-location/customize/page.tsx",
-                                    lineNumber: 1103,
+                                    lineNumber: 1110,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/add-location/customize/page.tsx",
-                            lineNumber: 1095,
+                            lineNumber: 1102,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/add-location/customize/page.tsx",
-                    lineNumber: 1066,
+                    lineNumber: 1073,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/add-location/customize/page.tsx",
-                lineNumber: 1065,
+                lineNumber: 1072,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/add-location/customize/page.tsx",
-        lineNumber: 378,
+        lineNumber: 385,
         columnNumber: 5
     }, this);
 }
-_s(CustomizePage, "nfGbykhAoSUsDm760PS7nfVviCk=", false, function() {
+_s(CustomizePage, "wPaxYSrRevRn/vEJ+/vwppWXhhU=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$add$2d$location$2f$context$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useOrder"],

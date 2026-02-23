@@ -65,6 +65,7 @@ export default function CustomizePage() {
   const [footerVisible, setFooterVisible] = useState(false);
   const [footerPulse, setFooterPulse] = useState(false);
   const pulseTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const footerLockedUntilRef = useRef<number>(0);
   const lastScrollY = useRef(0);
   const scrollThreshold = 5;
 
@@ -76,6 +77,11 @@ export default function CustomizePage() {
       if (Math.abs(delta) < scrollThreshold) return;
 
       const atBottom = (window.innerHeight + currentScrollY) >= (document.documentElement.scrollHeight - 10);
+
+      if (Date.now() < footerLockedUntilRef.current) {
+        lastScrollY.current = currentScrollY;
+        return;
+      }
 
       if (delta > 0 && currentScrollY > 50) {
         setFooterVisible(true);
@@ -317,8 +323,9 @@ export default function CustomizePage() {
     }
     setFooterPulse(true);
     setFooterVisible(true);
+    footerLockedUntilRef.current = Date.now() + 3000;
 
-    pulseTimerRef.current = setTimeout(() => setFooterPulse(false), 1500);
+    pulseTimerRef.current = setTimeout(() => setFooterPulse(false), 2000);
 
     if (suggestionTriggeredFromContinue) {
       setSuggestionTriggeredFromContinue(false);
