@@ -1116,7 +1116,7 @@ const sampleLocations = [
         stateCode: 'FL',
         zipCode: '33431',
         imageUrl: '/attached_assets/boca-raton-office.webp',
-        isPremium: false
+        isPremium: true
     },
     {
         id: 'loc-803',
@@ -1140,7 +1140,7 @@ const sampleLocations = [
         stateCode: 'FL',
         zipCode: '32801',
         imageUrl: '/attached_assets/orlando-office.webp',
-        isPremium: false
+        isPremium: true
     },
     {
         id: 'loc-885',
