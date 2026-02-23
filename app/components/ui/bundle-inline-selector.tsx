@@ -52,8 +52,8 @@ const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "tollFreeNumber", label: "Toll-Free Number" },
   { key: "calloutFeature", label: "Callout Feature" },
   { key: "supervisedCallTransfer", label: "Supervised Call Transfer" },
-  { key: "appointmentMaking", label: "Appointment Making" },
   { key: "messageTaking", label: "Message Taking" },
+  { key: "appointmentMaking", label: "Appointment Making" },
 ];
 
 function calculateSavings(bundle: Bundle): number {

@@ -1589,12 +1589,12 @@ const comparisonFeatures = [
         label: "Supervised Call Transfer"
     },
     {
-        key: "appointmentMaking",
-        label: "Appointment Making"
-    },
-    {
         key: "messageTaking",
         label: "Message Taking"
+    },
+    {
+        key: "appointmentMaking",
+        label: "Appointment Making"
     }
 ];
 function calculateSavings(bundle) {
