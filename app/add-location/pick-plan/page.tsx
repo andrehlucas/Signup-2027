@@ -18,8 +18,7 @@ import {
   bundles,
   featureLabels,
   getStates,
-  getCitiesByState,
-  getLocationsByCity,
+  getLocationsByState,
   Bundle,
   AvailableLocation,
 } from '../types';
@@ -31,16 +30,11 @@ export default function PickPlanPage() {
   const { trackComplete } = useFunnelTracking('pick_plan');
 
   const [selectedState, setSelectedState] = useState<string>('');
-  const [selectedCity, setSelectedCity] = useState<string>('');
 
   const states = useMemo(() => getStates(), []);
-  const cities = useMemo(
-    () => (selectedState ? getCitiesByState(selectedState) : []),
-    [selectedState]
-  );
   const availableLocations = useMemo(
-    () => (selectedCity ? getLocationsByCity(selectedCity) : []),
-    [selectedCity]
+    () => (selectedState ? getLocationsByState(selectedState) : []),
+    [selectedState]
   );
 
   useEffect(() => {
@@ -51,11 +45,6 @@ export default function PickPlanPage() {
 
   const handleStateChange = (state: string) => {
     setSelectedState(state);
-    setSelectedCity('');
-  };
-
-  const handleCityChange = (city: string) => {
-    setSelectedCity(city);
   };
 
   const handleLocationSelect = (location: AvailableLocation) => {
@@ -82,52 +71,28 @@ export default function PickPlanPage() {
           <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Your Location</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  State
-                </label>
-                <Select value={selectedState} onValueChange={handleStateChange}>
-                  <SelectTrigger data-testid="select-state">
-                    <SelectValue placeholder="Select a state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {states.map((state) => (
-                      <SelectItem key={state} value={state} data-testid={`option-state-${state}`}>
-                        {state}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  City
-                </label>
-                <Select
-                  value={selectedCity}
-                  onValueChange={handleCityChange}
-                  disabled={!selectedState}
-                >
-                  <SelectTrigger data-testid="select-city">
-                    <SelectValue placeholder={selectedState ? 'Select a city' : 'Select state first'} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {cities.map((city) => (
-                      <SelectItem key={city} value={city} data-testid={`option-city-${city}`}>
-                        {city}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="max-w-sm mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                State
+              </label>
+              <Select value={selectedState} onValueChange={handleStateChange}>
+                <SelectTrigger data-testid="select-state">
+                  <SelectValue placeholder="Select a state" />
+                </SelectTrigger>
+                <SelectContent>
+                  {states.map((state) => (
+                    <SelectItem key={state} value={state} data-testid={`option-state-${state}`}>
+                      {state}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
-            {selectedCity && (
+            {selectedState && availableLocations.length > 0 && (
               <div data-testid="locations-list">
                 <h3 className="text-sm font-medium text-gray-700 mb-3">
-                  Available Locations in {selectedCity}
+                  Available Locations in {selectedState}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {availableLocations.map((location) => (
@@ -185,13 +150,6 @@ export default function PickPlanPage() {
               <div className="text-center py-12 text-gray-500">
                 <MapPin className="h-12 w-12 mx-auto mb-3 text-gray-300" />
                 <p>Select a state to view available locations</p>
-              </div>
-            )}
-
-            {selectedState && !selectedCity && (
-              <div className="text-center py-12 text-gray-500">
-                <Building2 className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-                <p>Select a city to view available locations</p>
               </div>
             )}
           </div>

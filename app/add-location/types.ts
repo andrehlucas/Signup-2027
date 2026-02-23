@@ -681,6 +681,10 @@ export function getLocationsByCity(city: string): AvailableLocation[] {
   return sampleLocations.filter(loc => loc.city === city);
 }
 
+export function getLocationsByState(state: string): AvailableLocation[] {
+  return sampleLocations.filter(loc => loc.state === state);
+}
+
 export function getPhoneNumbersForLocation(location: AvailableLocation): PhoneNumber[] {
   const cityAreaCodeMap: Record<string, string[]> = {
     'Miami': ['305'],
