@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil, DollarSign, Star, Sparkles } from 'lucide-react';
+import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil, DollarSign, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -63,9 +63,8 @@ export default function CustomizePage() {
   const { trackComplete } = useFunnelTracking('customize');
 
   const [footerVisible, setFooterVisible] = useState(false);
-  const [bundleConfirmation, setBundleConfirmation] = useState<{ name: string; price: number } | null>(null);
   const [footerPulse, setFooterPulse] = useState(false);
-  const confirmationTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const pulseTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastScrollY = useRef(0);
   const scrollThreshold = 5;
 
@@ -92,8 +91,8 @@ export default function CustomizePage() {
 
   useEffect(() => {
     return () => {
-      if (confirmationTimerRef.current) {
-        clearTimeout(confirmationTimerRef.current);
+      if (pulseTimerRef.current) {
+        clearTimeout(pulseTimerRef.current);
       }
     };
   }, []);
@@ -313,18 +312,13 @@ export default function CustomizePage() {
     setBundle(bundle);
     setBundleExpanded(false);
 
-    if (confirmationTimerRef.current) {
-      clearTimeout(confirmationTimerRef.current);
+    if (pulseTimerRef.current) {
+      clearTimeout(pulseTimerRef.current);
     }
-    setBundleConfirmation({ name: bundle.tier, price: bundle.price });
     setFooterPulse(true);
     setFooterVisible(true);
 
-    confirmationTimerRef.current = setTimeout(() => {
-      setBundleConfirmation(null);
-    }, 3000);
-
-    setTimeout(() => setFooterPulse(false), 1500);
+    pulseTimerRef.current = setTimeout(() => setFooterPulse(false), 1500);
 
     if (suggestionTriggeredFromContinue) {
       setSuggestionTriggeredFromContinue(false);
@@ -711,55 +705,6 @@ export default function CustomizePage() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {bundleConfirmation && (
-          <motion.div
-            initial={{ opacity: 0, y: -30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-            className="fixed top-6 left-1/2 -translate-x-1/2 z-[60] w-[90%] max-w-md"
-            data-testid="bundle-confirmation-banner"
-          >
-            <div className="bg-gradient-to-r from-emerald-500 to-green-500 rounded-2xl shadow-2xl shadow-green-500/30 px-5 py-4 flex items-center gap-3">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', stiffness: 500, damping: 15, delay: 0.1 }}
-                className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0"
-              >
-                <Check className="h-5 w-5 text-white" />
-              </motion.div>
-              <div className="flex-1 min-w-0">
-                <motion.p
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.15 }}
-                  className="text-white font-bold text-base"
-                >
-                  {bundleConfirmation.name} Bundle Activated
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.25 }}
-                  className="text-white/80 text-sm"
-                >
-                  Your plan is now ${bundleConfirmation.price}/mo
-                </motion.p>
-              </div>
-              <motion.div
-                initial={{ opacity: 0, rotate: -30 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <Sparkles className="h-5 w-5 text-yellow-200" />
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <div
         className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${footerVisible ? 'bottom-0' : '-bottom-full'}`}
         data-testid="footer-wrapper"
@@ -810,10 +755,43 @@ export default function CustomizePage() {
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
-              <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-500 ${
-                footerPulse ? 'bg-green-500' : 'bg-[#36bff9]'
-              }`}>
-                <ShoppingCart className="h-4 w-4 text-white" />
+              <div className="relative flex-shrink-0">
+                <motion.div
+                  animate={footerPulse ? {
+                    scale: [1, 1.3, 0.9, 1.15, 1],
+                    rotate: [0, -8, 8, -4, 0],
+                  } : { scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.6, ease: 'easeInOut' }}
+                  className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors duration-500 ${
+                    footerPulse ? 'bg-green-500' : 'bg-[#36bff9]'
+                  }`}
+                >
+                  <ShoppingCart className="h-4 w-4 text-white" />
+                </motion.div>
+                <AnimatePresence>
+                  {footerPulse && (
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0, y: 0 }}
+                      animate={{ scale: 1, opacity: 1, y: -6 }}
+                      exit={{ scale: 0, opacity: 0, y: -12 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-green-500 border-2 border-white flex items-center justify-center"
+                      data-testid="cart-added-badge"
+                    >
+                      <Check className="h-3 w-3 text-white" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <AnimatePresence>
+                  {footerPulse && (
+                    <motion.div
+                      initial={{ scale: 0.5, opacity: 0.8 }}
+                      animate={{ scale: 2.5, opacity: 0 }}
+                      transition={{ duration: 0.8, ease: 'easeOut' }}
+                      className="absolute inset-0 rounded-lg bg-green-400 pointer-events-none"
+                    />
+                  )}
+                </AnimatePresence>
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
