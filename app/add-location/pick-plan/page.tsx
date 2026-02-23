@@ -210,19 +210,11 @@ export default function PickPlanPage() {
             <MapPin className="h-5 w-5 text-[#36bff9]" />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg font-bold text-gray-900" data-testid="heading-pick-plan">
-                {order.location.name}
-              </h1>
-              {order.location.isPremium && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold">
-                  <Star className="h-3 w-3 fill-amber-500" />
-                  Premium
-                </span>
-              )}
-            </div>
-            <p className="text-sm text-gray-500 truncate">
-              {order.location.address}, {order.location.city}, {order.location.stateCode} {order.location.zipCode}
+            <p className="text-sm font-semibold text-gray-900" data-testid="heading-pick-plan">
+              {order.location.address}
+            </p>
+            <p className="text-sm text-gray-500">
+              {order.location.addressLine2 && <>{order.location.addressLine2}, </>}{order.location.city}, {order.location.stateCode} {order.location.zipCode}
             </p>
           </div>
           <button
