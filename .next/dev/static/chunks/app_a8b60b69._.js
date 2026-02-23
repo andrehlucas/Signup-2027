@@ -572,8 +572,8 @@ const defaultSteps = [
     },
     {
         id: 2,
-        name: 'Pick Your Plan',
-        path: '/add-location/pick-plan'
+        name: 'Pick Your Location',
+        path: '/add-location'
     },
     {
         id: 3,
