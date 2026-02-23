@@ -2,53 +2,11 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
-import { Check, ChevronRight, Crown } from "lucide-react";
+import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle, featureIndividualPrices, ESSENTIALS_PLAN } from "@/app/add-location/types";
 
 const CARD_HEIGHT = 200;
-
-const prestigeBorderStyle = `
-@keyframes prestigeRotate {
-  0% { --prestige-angle: 0deg; }
-  100% { --prestige-angle: 360deg; }
-}
-@property --prestige-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-.prestige-border {
-  position: relative;
-  isolation: isolate;
-}
-.prestige-border::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 18px;
-  background: conic-gradient(
-    from var(--prestige-angle),
-    #DAFDBA, #9AEBA3, #45C4B0, #13678A, #45C4B0, #9AEBA3, #DAFDBA
-  );
-  animation: prestigeRotate 4s linear infinite;
-  z-index: -1;
-}
-.prestige-border::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 18px;
-  background: conic-gradient(
-    from var(--prestige-angle),
-    #DAFDBA, #9AEBA3, #45C4B0, #13678A, #45C4B0, #9AEBA3, #DAFDBA
-  );
-  animation: prestigeRotate 4s linear infinite;
-  filter: blur(12px);
-  opacity: 0.5;
-  z-index: -2;
-}
-`;
 
 function needsDarkText(hex: string): boolean {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -195,7 +153,6 @@ export function BundleInlineSelector({
       className={cn("w-full", className)}
       data-testid="bundle-inline-selector"
     >
-      <style dangerouslySetInnerHTML={{ __html: prestigeBorderStyle }} />
       {/* Mobile slider - hidden on md+ */}
       <div
         ref={containerRef}
@@ -239,8 +196,7 @@ export function BundleInlineSelector({
                   isCenter ? "z-20 shadow-lg" : "z-10 pointer-events-none shadow-md",
                   isSelected && isCenter
                     ? "ring-2 ring-[#36bff9]"
-                    : "",
-                  bundle.id === "prestige" && isCenter ? "prestige-border" : ""
+                    : ""
                 )}
                 style={{
                   width: centerCardWidth,
@@ -263,11 +219,10 @@ export function BundleInlineSelector({
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
                       <span
-                        className="text-xl font-bold tracking-tight flex items-center gap-1.5"
+                        className="text-xl font-bold tracking-tight"
                         style={{ fontFamily: "'Inter', sans-serif", color: cardTextColor(bg) }}
                         data-testid={`inline-badge-${bundle.id}`}
                       >
-                        {bundle.id === "prestige" && <Crown className="h-5 w-5" style={{ color: "#6B8F3A" }} />}
                         {bundle.tier}
                       </span>
                       <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
@@ -331,8 +286,7 @@ export function BundleInlineSelector({
               key={bundle.id}
               className={cn(
                 "rounded-2xl overflow-hidden shadow-lg transition-all",
-                isSelected ? "ring-2 ring-[#36bff9] scale-[1.02]" : "hover:scale-[1.01]",
-                bundle.id === "prestige" ? "prestige-border" : ""
+                isSelected ? "ring-2 ring-[#36bff9] scale-[1.02]" : "hover:scale-[1.01]"
               )}
               style={{
                 background: bg,
@@ -344,11 +298,10 @@ export function BundleInlineSelector({
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <span
-                      className="text-xl font-bold tracking-tight flex items-center gap-1.5"
+                      className="text-xl font-bold tracking-tight"
                       style={{ fontFamily: "'Inter', sans-serif", color: cardTextColor(bg) }}
                       data-testid={`inline-badge-${bundle.id}`}
                     >
-                      {bundle.id === "prestige" && <Crown className="h-5 w-5" style={{ color: "#6B8F3A" }} />}
                       {bundle.tier}
                     </span>
                     <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
