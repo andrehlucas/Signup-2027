@@ -8,6 +8,22 @@ import { Bundle, featureIndividualPrices, ESSENTIALS_PLAN } from "@/app/add-loca
 
 const CARD_HEIGHT = 200;
 
+function needsDarkText(hex: string): boolean {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.55;
+}
+
+function cardTextColor(bg: string): string {
+  return needsDarkText(bg) ? "#1a1a1a" : "#ffffff";
+}
+
+function cardSubTextColor(bg: string): string {
+  return needsDarkText(bg) ? "rgba(26,26,26,0.7)" : "rgba(255,255,255,0.7)";
+}
+
 const bundleDescriptions: Record<string, string> = {
   plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
   pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
@@ -16,17 +32,17 @@ const bundleDescriptions: Record<string, string> = {
 };
 
 const bundleBackgrounds: Record<string, string> = {
-  plus: "#6366F1",
-  pro: "#8B5CF6",
-  prestige: "#A855F7",
-  premium: "#7C3AED",
+  plus: "#13678A",
+  pro: "#45C4B0",
+  premium: "#9AEBA3",
+  prestige: "#DAFDBA",
 };
 
 const bundleAccentColors: Record<string, string> = {
-  plus: "#6366F1",
-  pro: "#8B5CF6",
-  prestige: "#A855F7",
-  premium: "#7C3AED",
+  plus: "#13678A",
+  pro: "#45C4B0",
+  premium: "#9AEBA3",
+  prestige: "#DAFDBA",
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -203,18 +219,18 @@ export function BundleInlineSelector({
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
                       <span
-                        className="text-xl font-bold tracking-tight text-white"
-                        style={{ fontFamily: "'Inter', sans-serif" }}
+                        className="text-xl font-bold tracking-tight"
+                        style={{ fontFamily: "'Inter', sans-serif", color: cardTextColor(bg) }}
                         data-testid={`inline-badge-${bundle.id}`}
                       >
                         {bundle.tier}
                       </span>
-                      <span className="text-lg font-bold text-white" data-testid={`inline-price-${bundle.id}`}>
-                        ${bundle.price}<span className="text-xs font-normal text-white/70">/mo</span>
+                      <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
+                        ${bundle.price}<span className="text-xs font-normal" style={{ color: cardSubTextColor(bg) }}>/mo</span>
                       </span>
                     </div>
 
-                    <p className="text-sm leading-relaxed text-white" data-testid={`inline-description-${bundle.id}`}>
+                    <p className="text-sm leading-relaxed" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
                       {bundleDescriptions[bundle.id] || bundle.name}
                     </p>
                   </div>
@@ -227,8 +243,8 @@ export function BundleInlineSelector({
                     className={cn(
                       "w-full py-2.5 rounded-xl text-sm font-semibold transition-all",
                       isSelected && isCenter
-                        ? "bg-white text-black hover:bg-white/90"
-                        : "bg-black/80 text-white hover:bg-black"
+                        ? needsDarkText(bg) ? "bg-black text-white hover:bg-black/90" : "bg-white text-black hover:bg-white/90"
+                        : needsDarkText(bg) ? "bg-black/80 text-white hover:bg-black" : "bg-black/80 text-white hover:bg-black"
                     )}
                     tabIndex={isCenter ? 0 : -1}
                     data-testid={`inline-select-bundle-${bundle.id}`}
@@ -282,23 +298,29 @@ export function BundleInlineSelector({
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <span
-                      className="text-xl font-bold tracking-tight text-white"
-                      style={{ fontFamily: "'Inter', sans-serif" }}
+                      className="text-xl font-bold tracking-tight"
+                      style={{ fontFamily: "'Inter', sans-serif", color: cardTextColor(bg) }}
                       data-testid={`inline-badge-${bundle.id}`}
                     >
                       {bundle.tier}
                     </span>
-                    <span className="text-lg font-bold text-white" data-testid={`inline-price-${bundle.id}`}>
-                      ${bundle.price}<span className="text-xs font-normal text-white/70">/mo</span>
+                    <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
+                      ${bundle.price}<span className="text-xs font-normal" style={{ color: cardSubTextColor(bg) }}>/mo</span>
                     </span>
                   </div>
 
-                  <p className="text-sm leading-relaxed text-white" data-testid={`inline-description-${bundle.id}`}>
+                  <p className="text-sm leading-relaxed" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
                     {bundleDescriptions[bundle.id] || bundle.name}
                   </p>
 
                   {bundleSavings > 0 && (
-                    <span className="text-xs font-semibold text-white/90 bg-white/20 rounded-full px-2.5 py-0.5 self-start">
+                    <span
+                      className="text-xs font-semibold rounded-full px-2.5 py-0.5 self-start"
+                      style={{
+                        color: cardTextColor(bg),
+                        backgroundColor: needsDarkText(bg) ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.2)",
+                      }}
+                    >
                       Save ${bundleSavings}/mo
                     </span>
                   )}
@@ -309,7 +331,7 @@ export function BundleInlineSelector({
                   className={cn(
                     "w-full py-2.5 rounded-xl text-sm font-semibold transition-all mt-3",
                     isSelected
-                      ? "bg-white text-black hover:bg-white/90"
+                      ? needsDarkText(bg) ? "bg-black text-white hover:bg-black/90" : "bg-white text-black hover:bg-white/90"
                       : "bg-black/80 text-white hover:bg-black"
                   )}
                   data-testid={`inline-select-bundle-${bundle.id}`}
