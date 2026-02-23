@@ -104,7 +104,7 @@ export default function PickPlanPage() {
               {selectedState && cities.length > 1 && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    City <span className="text-gray-400 font-normal">(optional)</span>
+                    City
                   </label>
                   <Select value={selectedCity} onValueChange={setSelectedCity}>
                     <SelectTrigger data-testid="select-city">
