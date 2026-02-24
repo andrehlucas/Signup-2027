@@ -1473,7 +1473,7 @@ function cardSubTextColor(bg) {
 const bundleDescriptions = {
     plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
     pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
-    prestige: "Everything in Essentials, plus callout, call log, toll-free, supervised transfer, and appointment making (20 appts/mo included) for full-service support.",
+    prestige: "Everything in PRO, plus appointment making (20 appts/mo included) for full-service support.",
     premium: "Everything in Pro, plus message taking so your clients always reach you."
 };
 const bundleBackgrounds = {
