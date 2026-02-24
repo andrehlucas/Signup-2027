@@ -901,10 +901,10 @@ const bundles = [
     {
         id: 'prestige',
         name: 'The Ultimate Office',
-        tier: 'PRESTIGE',
+        tier: 'PLATINUM',
         price: 199,
-        originalPrice: 259,
-        badge: 'The Prestige',
+        originalPrice: 279,
+        badge: 'The Platinum',
         badgeColor: 'bg-[#36bff9]',
         features: {
             businessAddress: true,
@@ -914,8 +914,8 @@ const bundles = [
             mailReceipt: true,
             voicemailToEmail: true,
             calloutFeature: true,
-            tollFreeNumber: false,
-            callLog: false,
+            tollFreeNumber: true,
+            callLog: true,
             supervisedCallTransfer: true,
             messageTaking: false,
             appointmentMaking: true
@@ -1534,7 +1534,7 @@ function cardSubTextColor(bg) {
 const bundleDescriptions = {
     plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
     pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
-    prestige: "Everything in Essentials, plus callout, supervised transfer, and appointment making for full-service support.",
+    prestige: "Everything in Essentials, plus callout, call log, toll-free, supervised transfer, and appointment making (20 appts/mo included) for full-service support.",
     premium: "Everything in Pro, plus message taking so your clients always reach you."
 };
 const bundleBackgrounds = {

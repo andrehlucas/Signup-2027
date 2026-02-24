@@ -229,13 +229,18 @@ export function BundleFocusRail({
                         return alwaysShow.includes(key) || bundleUpgrades.includes(key);
                       })
                       .map(([key]) => (
-                        <div key={key} className="flex items-center gap-2">
-                          <div className="w-5 h-5 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
-                            <Check className="h-3 w-3 text-[#36bff9]" />
+                        <div key={key} className="flex flex-col">
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-full bg-[#36bff9]/20 flex items-center justify-center flex-shrink-0">
+                              <Check className="h-3 w-3 text-[#36bff9]" />
+                            </div>
+                            <span className="text-white/80 text-sm leading-tight">
+                              {featureLabels[key]}
+                              {key === 'appointmentMaking' && (
+                                <span className="ml-1 text-[#36bff9] font-semibold">(20 appts/mo)</span>
+                              )}
+                            </span>
                           </div>
-                          <span className="text-white/80 text-sm leading-tight">
-                            {featureLabels[key]}
-                          </span>
                         </div>
                       ))}
                   </div>

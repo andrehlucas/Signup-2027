@@ -690,10 +690,10 @@ const bundles = [
     {
         id: 'prestige',
         name: 'The Ultimate Office',
-        tier: 'PRESTIGE',
+        tier: 'PLATINUM',
         price: 199,
-        originalPrice: 259,
-        badge: 'The Prestige',
+        originalPrice: 279,
+        badge: 'The Platinum',
         badgeColor: 'bg-[#36bff9]',
         features: {
             businessAddress: true,
@@ -703,8 +703,8 @@ const bundles = [
             mailReceipt: true,
             voicemailToEmail: true,
             calloutFeature: true,
-            tollFreeNumber: false,
-            callLog: false,
+            tollFreeNumber: true,
+            callLog: true,
             supervisedCallTransfer: true,
             messageTaking: false,
             appointmentMaking: true
