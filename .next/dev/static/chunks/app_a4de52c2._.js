@@ -479,6 +479,8 @@ __turbopack_context__.s([
     ()=>getIncludedAddonIds,
     "getLocationsByCity",
     ()=>getLocationsByCity,
+    "getLocationsByState",
+    ()=>getLocationsByState,
     "getPhoneNumbersForLocation",
     ()=>getPhoneNumbersForLocation,
     "getStates",
@@ -956,221 +958,142 @@ const availableAddons = [
 ];
 const sampleLocations = [
     {
-        id: 'loc-1',
-        name: 'Brickell Tower',
+        id: 'loc-1285',
+        name: 'Miami - Brickell Avenue',
         address: '848 Brickell Avenue',
-        addressLine2: 'Penthouse 5',
+        addressLine2: 'PH5',
         city: 'Miami',
         state: 'Florida',
         stateCode: 'FL',
         zipCode: '33131',
-        imageUrl: '/placeholder-building.jpg',
+        imageUrl: '/attached_assets/miami-office.webp',
         isPremium: true
     },
     {
-        id: 'loc-2',
-        name: 'Downtown Miami Center',
-        address: '100 SE 2nd Street',
-        addressLine2: 'Suite 400',
-        city: 'Miami',
+        id: 'loc-776',
+        name: 'Boca Raton - Corporate Blvd',
+        address: '1825 NW Corporate Blvd',
+        addressLine2: 'Suite 110',
+        city: 'Boca Raton',
         state: 'Florida',
         stateCode: 'FL',
-        zipCode: '33131',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: false
-    },
-    {
-        id: 'loc-3',
-        name: 'Coral Gables Executive',
-        address: '2655 S Le Jeune Rd',
-        addressLine2: 'Suite 300',
-        city: 'Coral Gables',
-        state: 'Florida',
-        stateCode: 'FL',
-        zipCode: '33134',
-        imageUrl: '/placeholder-building.jpg',
+        zipCode: '33431',
+        imageUrl: '/attached_assets/boca-raton-office.webp',
         isPremium: true
     },
     {
-        id: 'loc-4',
-        name: 'Fort Lauderdale Business Center',
-        address: '110 SE 6th Street',
-        addressLine2: 'Suite 1700',
+        id: 'loc-803',
+        name: 'Fort Lauderdale - Las Olas',
+        address: '515 E Las Olas Boulevard',
+        addressLine2: 'Suite 1301',
         city: 'Fort Lauderdale',
         state: 'Florida',
         stateCode: 'FL',
         zipCode: '33301',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: false
-    },
-    {
-        id: 'loc-5',
-        name: 'Manhattan Midtown',
-        address: '1 Penn Plaza',
-        addressLine2: 'Suite 6200',
-        city: 'New York',
-        state: 'New York',
-        stateCode: 'NY',
-        zipCode: '10119',
-        imageUrl: '/placeholder-building.jpg',
+        imageUrl: '/attached_assets/fort-lauderdale-office.jpg',
         isPremium: true
     },
     {
-        id: 'loc-6',
-        name: 'Wall Street Financial',
-        address: '14 Wall Street',
-        addressLine2: '20th Floor',
-        city: 'New York',
-        state: 'New York',
-        stateCode: 'NY',
-        zipCode: '10005',
-        imageUrl: '/placeholder-building.jpg',
+        id: 'loc-1499',
+        name: 'Orlando - Robinson Street',
+        address: '200 E Robinson Street',
+        addressLine2: 'Suite 1120',
+        city: 'Orlando',
+        state: 'Florida',
+        stateCode: 'FL',
+        zipCode: '32801',
+        imageUrl: '/attached_assets/orlando-office.webp',
         isPremium: true
     },
     {
-        id: 'loc-7',
-        name: 'Downtown LA Tower',
-        address: '633 W 5th Street',
-        addressLine2: 'Suite 2600',
-        city: 'Los Angeles',
-        state: 'California',
-        stateCode: 'CA',
-        zipCode: '90071',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: true
-    },
-    {
-        id: 'loc-8',
-        name: 'Santa Monica Business Park',
-        address: '2425 Olympic Blvd',
-        addressLine2: 'Suite 4000',
-        city: 'Santa Monica',
-        state: 'California',
-        stateCode: 'CA',
-        zipCode: '90404',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: false
-    },
-    {
-        id: 'loc-9',
-        name: 'Chicago Loop Center',
-        address: '111 W Jackson Blvd',
-        addressLine2: 'Suite 1700',
-        city: 'Chicago',
-        state: 'Illinois',
-        stateCode: 'IL',
-        zipCode: '60604',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: true
-    },
-    {
-        id: 'loc-10',
-        name: 'Houston Galleria',
-        address: '2929 Allen Parkway',
-        addressLine2: 'Suite 200',
-        city: 'Houston',
-        state: 'Texas',
-        stateCode: 'TX',
-        zipCode: '77019',
-        imageUrl: '/placeholder-building.jpg',
-        isPremium: false
-    },
-    {
-        id: 'loc-11',
-        name: 'Dallas Uptown',
-        address: '3131 McKinney Ave',
-        addressLine2: 'Suite 600',
-        city: 'Dallas',
-        state: 'Texas',
-        stateCode: 'TX',
-        zipCode: '75204',
-        imageUrl: '/placeholder-building.jpg',
+        id: 'loc-885',
+        name: 'Tampa - Truist Place',
+        address: '401 East Jackson Street',
+        addressLine2: 'Suite 2340',
+        city: 'Tampa',
+        state: 'Florida',
+        stateCode: 'FL',
+        zipCode: '33602',
+        imageUrl: '/attached_assets/tampa-office.webp',
         isPremium: true
     }
 ];
 const samplePhoneNumbers = [
     {
         id: 'pn-1',
-        number: '(305) 555-1234',
+        number: '(305) 847-9001',
         type: 'local',
         areaCode: '305',
         isAvailable: true
     },
     {
         id: 'pn-2',
-        number: '(305) 555-5678',
+        number: '(305) 847-9002',
         type: 'local',
         areaCode: '305',
         isAvailable: true
     },
     {
         id: 'pn-3',
-        number: '(305) 555-9012',
+        number: '(305) 847-9003',
         type: 'local',
         areaCode: '305',
         isAvailable: true
     },
     {
         id: 'pn-4',
-        number: '(786) 555-3456',
+        number: '(561) 988-6901',
         type: 'local',
-        areaCode: '786',
+        areaCode: '561',
         isAvailable: true
     },
     {
         id: 'pn-5',
-        number: '(786) 555-7890',
+        number: '(561) 988-6902',
         type: 'local',
-        areaCode: '786',
+        areaCode: '561',
         isAvailable: true
     },
     {
         id: 'pn-6',
-        number: '(212) 555-1234',
+        number: '(954) 903-3101',
         type: 'local',
-        areaCode: '212',
+        areaCode: '954',
         isAvailable: true
     },
     {
         id: 'pn-7',
-        number: '(212) 555-5678',
+        number: '(954) 903-3102',
         type: 'local',
-        areaCode: '212',
+        areaCode: '954',
         isAvailable: true
     },
     {
         id: 'pn-8',
-        number: '(310) 555-1234',
+        number: '(407) 559-2001',
         type: 'local',
-        areaCode: '310',
+        areaCode: '407',
         isAvailable: true
     },
     {
         id: 'pn-9',
-        number: '(310) 555-5678',
+        number: '(407) 559-2002',
         type: 'local',
-        areaCode: '310',
+        areaCode: '407',
         isAvailable: true
     },
     {
         id: 'pn-10',
-        number: '(713) 555-1234',
+        number: '(813) 315-3991',
         type: 'local',
-        areaCode: '713',
+        areaCode: '813',
         isAvailable: true
     },
     {
         id: 'pn-11',
-        number: '(312) 555-1234',
+        number: '(813) 315-3992',
         type: 'local',
-        areaCode: '312',
-        isAvailable: true
-    },
-    {
-        id: 'pn-12',
-        number: '(312) 555-5678',
-        type: 'local',
-        areaCode: '312',
+        areaCode: '813',
         isAvailable: true
     }
 ];
@@ -1233,26 +1156,28 @@ function getCitiesByState(state) {
 function getLocationsByCity(city) {
     return sampleLocations.filter((loc)=>loc.city === city);
 }
+function getLocationsByState(state) {
+    return sampleLocations.filter((loc)=>loc.state === state);
+}
 function getPhoneNumbersForLocation(location) {
-    const areaCodeMap = {
-        'FL': [
-            '305',
-            '786'
+    const cityAreaCodeMap = {
+        'Miami': [
+            '305'
         ],
-        'NY': [
-            '212'
+        'Boca Raton': [
+            '561'
         ],
-        'CA': [
-            '310'
+        'Fort Lauderdale': [
+            '954'
         ],
-        'TX': [
-            '713'
+        'Orlando': [
+            '407'
         ],
-        'IL': [
-            '312'
+        'Tampa': [
+            '813'
         ]
     };
-    const areaCodes = areaCodeMap[location.stateCode] || [
+    const areaCodes = cityAreaCodeMap[location.city] || [
         '305'
     ];
     return samplePhoneNumbers.filter((pn)=>areaCodes.includes(pn.areaCode));
