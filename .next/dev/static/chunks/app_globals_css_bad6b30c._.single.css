@@ -561,6 +561,11 @@ body {
   margin-right: -.25rem;
 }
 
+.-mx-4 {
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
 .mx-2 {
   margin-left: .5rem;
   margin-right: .5rem;
@@ -4045,6 +4050,11 @@ body {
 
   .md\:right-8 {
     right: 2rem;
+  }
+
+  .md\:mx-0 {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .md\:block {

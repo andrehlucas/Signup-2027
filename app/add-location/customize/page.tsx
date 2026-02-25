@@ -630,12 +630,14 @@ export default function CustomizePage() {
             <p className="text-sm text-gray-600 mb-2">
               Upgrade your plan and save on popular features. Swipe to compare bundles.
             </p>
-            <BundleInlineSelector
-              bundles={upgradeBundles}
-              selectedBundleId={selectedBundle?.id}
-              onSelect={handleBundleSelect}
-              essentialsBundle={bundles[0]}
-            />
+            <div className="-mx-4 md:mx-0">
+              <BundleInlineSelector
+                bundles={upgradeBundles}
+                selectedBundleId={selectedBundle?.id}
+                onSelect={handleBundleSelect}
+                essentialsBundle={bundles[0]}
+              />
+            </div>
             {selectedBundle && selectedBundle.id !== 'essentials' && (
               <div className="mt-3 flex justify-center">
                 <button
