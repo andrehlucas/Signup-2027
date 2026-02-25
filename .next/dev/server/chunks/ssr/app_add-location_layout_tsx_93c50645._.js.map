@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///home/runner/workspace/app/add-location/layout.tsx"],"sourcesContent":["'use client';\n\nexport default function AddLocationLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return <>{children}</>;\n}\n"],"names":[],"mappings":";;;;;AAAA;;AAEe,SAAS,kBAAkB,EACxC,QAAQ,EAGT;IACC,qBAAO;kBAAG;;AACZ","debugId":null}}]
-}

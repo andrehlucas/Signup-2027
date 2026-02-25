@@ -1,1 +1,0 @@
-{"version":3,"sources":["turbopack:///[project]/app/add-location/layout.tsx"],"sourcesContent":["'use client';\n\nexport default function AddLocationLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return <>{children}</>;\n}\n"],"names":[],"mappings":"uDAEe,SAAS,EAAkB,UACxC,CAAQ,CAGT,EACC,MAAO,CAAA,EAAA,EAAA,GAAA,EAAA,EAAA,QAAA,CAAA,UAAG,GACZ"}
