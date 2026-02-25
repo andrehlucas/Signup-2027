@@ -628,7 +628,7 @@ export default function CustomizePage() {
               </button>
             </div>
             <p className="text-sm text-gray-600 mb-2">
-              Upgrade your plan and save on popular features. Swipe to compare bundles.
+              Upgrade your plan and save on popular features.<span className="md:hidden"> Swipe to compare bundles.</span>
             </p>
             <div className="-mx-4 md:mx-0">
               <BundleInlineSelector
