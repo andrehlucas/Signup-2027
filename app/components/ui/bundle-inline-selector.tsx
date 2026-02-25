@@ -225,10 +225,33 @@ export function BundleInlineSelector({
                       >
                         {bundle.tier}
                       </span>
-                      <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
-                        ${bundle.price}<span className="text-xs font-normal" style={{ color: cardSubTextColor(bg) }}>/mo</span>
-                      </span>
+                      <div className="flex items-center gap-2">
+                        {bundle.originalPrice && bundle.originalPrice > bundle.price && (
+                          <span className="text-sm line-through opacity-60" style={{ color: cardTextColor(bg) }} data-testid={`inline-original-price-${bundle.id}`}>
+                            ${bundle.originalPrice}
+                          </span>
+                        )}
+                        <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
+                          ${bundle.price}<span className="text-xs font-normal" style={{ color: cardSubTextColor(bg) }}>/mo</span>
+                        </span>
+                      </div>
                     </div>
+
+                    {(() => {
+                      const cardSavings = calculateSavings(bundle);
+                      return cardSavings > 0 ? (
+                        <span
+                          className="inline-flex self-start items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full"
+                          style={{
+                            backgroundColor: needsDarkText(bg) ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.2)",
+                            color: cardTextColor(bg),
+                          }}
+                          data-testid={`inline-savings-badge-${bundle.id}`}
+                        >
+                          Save ${cardSavings}/mo
+                        </span>
+                      ) : null;
+                    })()}
 
                     <p className="text-sm leading-relaxed" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
                       {bundleDescriptions[bundle.id] || bundle.name}
