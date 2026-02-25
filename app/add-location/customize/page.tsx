@@ -615,7 +615,7 @@ export default function CustomizePage() {
           }`}
           data-testid="bundle-inline-section"
         >
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <div className="bg-white rounded-xl border border-gray-200 px-4 py-6">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold text-gray-900">Bundle & Save</h2>
               <button
