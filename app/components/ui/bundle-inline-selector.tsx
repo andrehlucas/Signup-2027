@@ -6,7 +6,7 @@ import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle, featureIndividualPrices, ESSENTIALS_PLAN } from "@/app/add-location/types";
 
-const CARD_HEIGHT = 200;
+const CARD_HEIGHT = 220;
 
 function needsDarkText(hex: string): boolean {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -215,35 +215,32 @@ export function BundleInlineSelector({
                 }}
                 data-testid={`inline-bundle-card-${bundle.id}`}
               >
-                <div className="p-5 flex flex-col justify-between h-full">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between">
+                <div className="px-5 pt-5 pb-4 flex flex-col justify-between h-full">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-baseline justify-between">
                       <span
-                        className="text-xl font-bold tracking-tight"
+                        className="text-lg font-bold tracking-tight"
                         style={{ fontFamily: "'Inter', sans-serif", color: cardTextColor(bg) }}
                         data-testid={`inline-badge-${bundle.id}`}
                       >
                         {bundle.tier}
                       </span>
-                      <div className="flex items-center gap-2">
-                        {bundle.originalPrice && bundle.originalPrice > bundle.price && (
-                          <span className="text-sm line-through opacity-60" style={{ color: cardTextColor(bg) }} data-testid={`inline-original-price-${bundle.id}`}>
-                            ${bundle.originalPrice}
-                          </span>
-                        )}
-                        <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
-                          ${bundle.price}<span className="text-xs font-normal" style={{ color: cardSubTextColor(bg) }}>/mo</span>
-                        </span>
-                      </div>
+                      <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
+                        ${bundle.price}<span className="text-xs font-normal opacity-70">/mo</span>
+                      </span>
                     </div>
+
+                    <p className="text-[13px] leading-relaxed opacity-85" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
+                      {bundleDescriptions[bundle.id] || bundle.name}
+                    </p>
 
                     {(() => {
                       const cardSavings = calculateSavings(bundle);
                       return cardSavings > 0 ? (
                         <span
-                          className="inline-flex self-start items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full"
+                          className="inline-flex self-start items-center text-xs font-semibold px-2.5 py-1 rounded-full"
                           style={{
-                            backgroundColor: needsDarkText(bg) ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.2)",
+                            backgroundColor: needsDarkText(bg) ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.18)",
                             color: cardTextColor(bg),
                           }}
                           data-testid={`inline-savings-badge-${bundle.id}`}
@@ -252,10 +249,6 @@ export function BundleInlineSelector({
                         </span>
                       ) : null;
                     })()}
-
-                    <p className="text-sm leading-relaxed" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
-                      {bundleDescriptions[bundle.id] || bundle.name}
-                    </p>
                   </div>
 
                   <button

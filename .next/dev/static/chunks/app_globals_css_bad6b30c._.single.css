@@ -2064,6 +2064,10 @@ body {
   padding-top: 1rem;
 }
 
+.pt-5 {
+  padding-top: 1.25rem;
+}
+
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -2104,6 +2108,10 @@ body {
 
 .text-\[10px\] {
   font-size: 10px;
+}
+
+.text-\[13px\] {
+  font-size: 13px;
 }
 
 .text-base {
@@ -2406,6 +2414,10 @@ body {
 
 .opacity-70 {
   opacity: .7;
+}
+
+.opacity-85 {
+  opacity: .85;
 }
 
 .opacity-90 {
