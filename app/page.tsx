@@ -100,24 +100,22 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-81px)] relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f0f6ff 0%, #f7f9fc 50%, #eef4ff 100%)' }} data-testid="signup-page">
-      {/* Decorative background shapes */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-        {/* Large soft circle top-right */}
-        <circle cx="92%" cy="-5%" r="280" fill="#0086C9" fillOpacity="0.06" />
-        {/* Medium circle bottom-left */}
-        <circle cx="4%" cy="95%" r="200" fill="#0086C9" fillOpacity="0.05" />
-        {/* Small accent dot cluster */}
-        <circle cx="88%" cy="60%" r="6" fill="#0086C9" fillOpacity="0.18" />
-        <circle cx="91%" cy="58%" r="3.5" fill="#0086C9" fillOpacity="0.12" />
-        <circle cx="85%" cy="63%" r="4" fill="#0086C9" fillOpacity="0.10" />
-        <circle cx="10%" cy="30%" r="5" fill="#0086C9" fillOpacity="0.12" />
-        <circle cx="13%" cy="27%" r="3" fill="#0086C9" fillOpacity="0.08" />
-        {/* Subtle wave arc top-left */}
-        <path d="M -60 180 Q 80 100 200 160 Q 320 220 420 140" stroke="#0086C9" strokeWidth="1.5" fill="none" strokeOpacity="0.12" />
-        <path d="M -60 210 Q 80 130 200 190 Q 320 250 420 170" stroke="#0086C9" strokeWidth="1" fill="none" strokeOpacity="0.08" />
-        {/* Red outline accent (small, bottom-right) */}
-        <rect x="calc(100% - 120px)" y="calc(100% - 100px)" width="80" height="50" rx="8" fill="none" stroke="#e63946" strokeWidth="1.5" strokeOpacity="0.15" />
+    <div className="min-h-[calc(100vh-81px)] relative overflow-hidden" style={{ backgroundColor: '#f4f7fb' }} data-testid="signup-page">
+      {/* Subtle dot-grid pattern */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
+        <defs>
+          <pattern id="dot-grid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+            <circle cx="1.5" cy="1.5" r="1.5" fill="#0086C9" fillOpacity="0.10" />
+          </pattern>
+          {/* Fade mask: visible on sides, transparent in the center where content lives */}
+          <mask id="grid-mask">
+            <rect width="100%" height="100%" fill="white" />
+            <rect x="20%" y="0" width="60%" height="100%" fill="black" />
+          </mask>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dot-grid)" mask="url(#grid-mask)" />
+        {/* Thin horizontal rule under the headline area */}
+        <line x1="0" y1="230" x2="100%" y2="230" stroke="#0086C9" strokeOpacity="0.06" strokeWidth="1" />
       </svg>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 lg:py-12">
