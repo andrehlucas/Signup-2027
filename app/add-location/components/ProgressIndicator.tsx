@@ -52,24 +52,24 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
                 {isComplete ? (
                   <>
                     <span
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#36bff9] shadow-sm transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#36bff9]/30 group-hover:ring-offset-2 flex-shrink-0"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0086C9] shadow-sm transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#0086C9]/30 group-hover:ring-offset-2 flex-shrink-0"
                       data-testid={`step-${step.id}-complete`}
                     >
                       <Check className="h-5 w-5 text-white" aria-hidden="true" strokeWidth={2.5} />
                     </span>
-                    <span className="ml-2.5 text-sm font-medium text-gray-700 group-hover:text-[#36bff9] hidden sm:block whitespace-nowrap">
+                    <span className="ml-2.5 text-sm font-medium text-gray-700 group-hover:text-[#0086C9] hidden sm:block whitespace-nowrap">
                       {step.name}
                     </span>
                   </>
                 ) : isCurrent ? (
                   <>
                     <span
-                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1a73d4] shadow-md flex-shrink-0 ring-4 ring-[#36bff9]/20"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0086C9] shadow-md flex-shrink-0 ring-4 ring-[#0086C9]/20"
                       data-testid={`step-${step.id}-current`}
                     >
                       <span className="text-white font-bold text-sm">{step.id}</span>
                     </span>
-                    <span className="ml-2.5 text-sm font-semibold text-[#1a73d4] hidden sm:block whitespace-nowrap">
+                    <span className="ml-2.5 text-sm font-semibold text-[#0086C9] hidden sm:block whitespace-nowrap">
                       {step.name}
                     </span>
                   </>
@@ -90,7 +90,7 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
 
               {stepIdx !== steps.length - 1 && (
                 <div
-                  className={`flex-1 h-0.5 mx-3 rounded-full ${isComplete ? 'bg-[#36bff9]' : 'bg-gray-200'}`}
+                  className={`flex-1 h-0.5 mx-3 rounded-full ${isComplete ? 'bg-[#0086C9]' : 'bg-gray-200'}`}
                   aria-hidden="true"
                 />
               )}

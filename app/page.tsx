@@ -104,18 +104,18 @@ export default function SignUpPage() {
       {/* Decorative background shapes */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
         {/* Large soft circle top-right */}
-        <circle cx="92%" cy="-5%" r="280" fill="#36bff9" fillOpacity="0.06" />
+        <circle cx="92%" cy="-5%" r="280" fill="#0086C9" fillOpacity="0.06" />
         {/* Medium circle bottom-left */}
-        <circle cx="4%" cy="95%" r="200" fill="#1a73d4" fillOpacity="0.05" />
+        <circle cx="4%" cy="95%" r="200" fill="#0086C9" fillOpacity="0.05" />
         {/* Small accent dot cluster */}
-        <circle cx="88%" cy="60%" r="6" fill="#36bff9" fillOpacity="0.18" />
-        <circle cx="91%" cy="58%" r="3.5" fill="#36bff9" fillOpacity="0.12" />
-        <circle cx="85%" cy="63%" r="4" fill="#36bff9" fillOpacity="0.10" />
-        <circle cx="10%" cy="30%" r="5" fill="#1a73d4" fillOpacity="0.12" />
-        <circle cx="13%" cy="27%" r="3" fill="#1a73d4" fillOpacity="0.08" />
+        <circle cx="88%" cy="60%" r="6" fill="#0086C9" fillOpacity="0.18" />
+        <circle cx="91%" cy="58%" r="3.5" fill="#0086C9" fillOpacity="0.12" />
+        <circle cx="85%" cy="63%" r="4" fill="#0086C9" fillOpacity="0.10" />
+        <circle cx="10%" cy="30%" r="5" fill="#0086C9" fillOpacity="0.12" />
+        <circle cx="13%" cy="27%" r="3" fill="#0086C9" fillOpacity="0.08" />
         {/* Subtle wave arc top-left */}
-        <path d="M -60 180 Q 80 100 200 160 Q 320 220 420 140" stroke="#36bff9" strokeWidth="1.5" fill="none" strokeOpacity="0.12" />
-        <path d="M -60 210 Q 80 130 200 190 Q 320 250 420 170" stroke="#36bff9" strokeWidth="1" fill="none" strokeOpacity="0.08" />
+        <path d="M -60 180 Q 80 100 200 160 Q 320 220 420 140" stroke="#0086C9" strokeWidth="1.5" fill="none" strokeOpacity="0.12" />
+        <path d="M -60 210 Q 80 130 200 190 Q 320 250 420 170" stroke="#0086C9" strokeWidth="1" fill="none" strokeOpacity="0.08" />
         {/* Red outline accent (small, bottom-right) */}
         <rect x="calc(100% - 120px)" y="calc(100% - 100px)" width="80" height="50" rx="8" fill="none" stroke="#e63946" strokeWidth="1.5" strokeOpacity="0.15" />
       </svg>
@@ -125,7 +125,7 @@ export default function SignUpPage() {
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-[2rem] font-extrabold leading-tight text-[#0f2044] max-w-xl mx-auto" data-testid="heading-signup">
             You're Only 4 Steps Away From<br className="hidden sm:block" />
-            <span className="text-[#1a73d4]"> Securing Your Virtual Office</span>
+            <span className="text-[#0086C9]"> Securing Your Virtual Office</span>
           </h1>
         </div>
 
@@ -167,7 +167,7 @@ export default function SignUpPage() {
 
               {/* Phone field with country selector */}
               <div>
-                <div className={`flex rounded-lg overflow-hidden border ${errors.phone ? 'border-red-400' : 'border-gray-200'} focus-within:ring-2 focus-within:ring-[#36bff9]/30 focus-within:border-[#36bff9] transition-all`}>
+                <div className={`flex rounded-lg overflow-hidden border ${errors.phone ? 'border-red-400' : 'border-gray-200'} focus-within:ring-2 focus-within:ring-[#0086C9]/30 focus-within:border-[#0086C9] transition-all`}>
                   <div className="relative flex-shrink-0">
                     <button
                       type="button"
@@ -267,7 +267,7 @@ export default function SignUpPage() {
                   />
                   <label htmlFor="terms" className="text-sm text-gray-500 cursor-pointer leading-relaxed">
                     I agree to the{' '}
-                    <a href="#" className="text-[#1a73d4] hover:underline font-medium" data-testid="link-terms">
+                    <a href="#" className="text-[#0086C9] hover:underline font-medium" data-testid="link-terms">
                       Terms of Use
                     </a>
                     .
@@ -280,7 +280,7 @@ export default function SignUpPage() {
 
               <Button
                 onClick={handleContinue}
-                className="w-full h-12 bg-[#1a73d4] hover:bg-[#1560b8] text-white text-base font-semibold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                className="w-full h-12 bg-[#0086C9] hover:bg-[#006ba3] text-white text-base font-semibold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 data-testid="button-continue"
               >
                 Continue
@@ -291,7 +291,7 @@ export default function SignUpPage() {
 
           {/* Trust / security note */}
           <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
-            <ShieldCheck className="h-3.5 w-3.5 text-[#36bff9]" />
+            <ShieldCheck className="h-3.5 w-3.5 text-[#0086C9]" />
             <span>Your information is encrypted and never shared with third parties.</span>
           </div>
         </div>
