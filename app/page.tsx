@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Checkbox } from '@/app/components/ui/checkbox';
@@ -100,28 +100,52 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="signup-page">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup">
-            You're Only 3 Steps Away From Securing Your New Virtual Office Solution!
+    <div className="min-h-[calc(100vh-81px)] relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f0f6ff 0%, #f7f9fc 50%, #eef4ff 100%)' }} data-testid="signup-page">
+      {/* Decorative background shapes */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        {/* Large soft circle top-right */}
+        <circle cx="92%" cy="-5%" r="280" fill="#36bff9" fillOpacity="0.06" />
+        {/* Medium circle bottom-left */}
+        <circle cx="4%" cy="95%" r="200" fill="#1a73d4" fillOpacity="0.05" />
+        {/* Small accent dot cluster */}
+        <circle cx="88%" cy="60%" r="6" fill="#36bff9" fillOpacity="0.18" />
+        <circle cx="91%" cy="58%" r="3.5" fill="#36bff9" fillOpacity="0.12" />
+        <circle cx="85%" cy="63%" r="4" fill="#36bff9" fillOpacity="0.10" />
+        <circle cx="10%" cy="30%" r="5" fill="#1a73d4" fillOpacity="0.12" />
+        <circle cx="13%" cy="27%" r="3" fill="#1a73d4" fillOpacity="0.08" />
+        {/* Subtle wave arc top-left */}
+        <path d="M -60 180 Q 80 100 200 160 Q 320 220 420 140" stroke="#36bff9" strokeWidth="1.5" fill="none" strokeOpacity="0.12" />
+        <path d="M -60 210 Q 80 130 200 190 Q 320 250 420 170" stroke="#36bff9" strokeWidth="1" fill="none" strokeOpacity="0.08" />
+        {/* Red outline accent (small, bottom-right) */}
+        <rect x="calc(100% - 120px)" y="calc(100% - 100px)" width="80" height="50" rx="8" fill="none" stroke="#e63946" strokeWidth="1.5" strokeOpacity="0.15" />
+      </svg>
+
+      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 lg:py-12">
+        {/* Headline */}
+        <div className="text-center mb-8">
+          <p className="text-sm font-semibold uppercase tracking-widest text-[#36bff9] mb-2">Virtual Office Sign-Up</p>
+          <h1 className="text-2xl md:text-[2rem] font-extrabold leading-tight text-[#0f2044] max-w-xl mx-auto" data-testid="heading-signup">
+            You're Only 4 Steps Away From<br className="hidden sm:block" />
+            <span className="text-[#1a73d4]"> Securing Your Virtual Office</span>
           </h1>
         </div>
 
-        <div className="mb-8">
+        {/* Progress indicator */}
+        <div className="mb-10 max-w-2xl mx-auto">
           <ProgressIndicator currentStep={1} />
         </div>
 
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8">
-            <div className="space-y-5">
+        {/* Form card */}
+        <div className="max-w-lg mx-auto">
+          <div className="bg-white rounded-2xl shadow-[0_4px_32px_rgba(26,115,212,0.10)] border border-blue-50 px-7 py-8">
+            <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Input
                     placeholder="First Name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className={`h-12 ${errors.firstName ? 'border-red-500' : ''}`}
+                    className={`h-11 rounded-lg text-sm ${errors.firstName ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
                     data-testid="input-first-name"
                   />
                   {errors.firstName && (
@@ -133,7 +157,7 @@ export default function SignUpPage() {
                     placeholder="Last Name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className={`h-12 ${errors.lastName ? 'border-red-500' : ''}`}
+                    className={`h-11 rounded-lg text-sm ${errors.lastName ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
                     data-testid="input-last-name"
                   />
                   {errors.lastName && (
@@ -142,21 +166,22 @@ export default function SignUpPage() {
                 </div>
               </div>
 
+              {/* Phone field with country selector */}
               <div>
-                <div className="relative flex">
-                  <div className="relative">
+                <div className={`flex rounded-lg overflow-hidden border ${errors.phone ? 'border-red-400' : 'border-gray-200'} focus-within:ring-2 focus-within:ring-[#36bff9]/30 focus-within:border-[#36bff9] transition-all`}>
+                  <div className="relative flex-shrink-0">
                     <button
                       type="button"
                       onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                      className={`flex items-center gap-1.5 h-12 px-3 border border-r-0 rounded-l-md bg-gray-50 hover:bg-gray-100 transition-colors ${errors.phone ? 'border-red-500' : 'border-input'}`}
+                      className="flex items-center gap-1.5 h-11 px-3 bg-gray-50 hover:bg-gray-100 transition-colors border-r border-gray-200"
                       data-testid="button-country-code"
                     >
-                      <span className="text-lg">{selectedCountry.flag}</span>
-                      <span className="text-sm text-gray-700">{countryCode}</span>
-                      <ChevronDown className="h-3 w-3 text-gray-500" />
+                      <span className="text-base leading-none">{selectedCountry.flag}</span>
+                      <span className="text-sm text-gray-600 font-medium">{countryCode}</span>
+                      <ChevronDown className="h-3 w-3 text-gray-400" />
                     </button>
                     {showCountryDropdown && (
-                      <div className="absolute top-full left-0 z-50 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto" data-testid="dropdown-country-codes">
+                      <div className="absolute top-full left-0 z-50 mt-1 w-48 bg-white border border-gray-200 rounded-xl shadow-xl max-h-60 overflow-y-auto" data-testid="dropdown-country-codes">
                         {countryCodes.map((c, idx) => (
                           <button
                             key={`${c.code}-${c.label}-${idx}`}
@@ -165,12 +190,12 @@ export default function SignUpPage() {
                               setCountryCode(c.code);
                               setShowCountryDropdown(false);
                             }}
-                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-left text-sm"
+                            className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-blue-50 text-left text-sm transition-colors"
                             data-testid={`option-country-${c.label}`}
                           >
-                            <span className="text-lg">{c.flag}</span>
-                            <span className="text-gray-700">{c.label}</span>
-                            <span className="text-gray-500">{c.code}</span>
+                            <span className="text-base">{c.flag}</span>
+                            <span className="text-gray-700 font-medium">{c.label}</span>
+                            <span className="text-gray-400 ml-auto">{c.code}</span>
                           </button>
                         ))}
                       </div>
@@ -182,7 +207,7 @@ export default function SignUpPage() {
                     placeholder="(555) 555 - 5555"
                     value={phone}
                     onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
-                    className={`h-12 rounded-l-none flex-1 ${errors.phone ? 'border-red-500' : ''}`}
+                    className="h-11 rounded-none border-0 flex-1 text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
                     data-testid="input-phone"
                   />
                 </div>
@@ -197,7 +222,7 @@ export default function SignUpPage() {
                   placeholder="Email Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`h-12 ${errors.email ? 'border-red-500' : ''}`}
+                  className={`h-11 rounded-lg text-sm ${errors.email ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
                   data-testid="input-email"
                 />
                 {errors.email && (
@@ -208,10 +233,10 @@ export default function SignUpPage() {
               <div>
                 <Input
                   type="email"
-                  placeholder="Please confirm your email"
+                  placeholder="Confirm Email Address"
                   value={confirmEmail}
                   onChange={(e) => setConfirmEmail(e.target.value)}
-                  className={`h-12 ${errors.confirmEmail ? 'border-red-500' : ''}`}
+                  className={`h-11 rounded-lg text-sm ${errors.confirmEmail ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
                   data-testid="input-confirm-email"
                 />
                 {errors.confirmEmail && (
@@ -221,10 +246,10 @@ export default function SignUpPage() {
 
               <div>
                 <Input
-                  placeholder="Company"
+                  placeholder="Company Name"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
-                  className={`h-12 ${errors.company ? 'border-red-500' : ''}`}
+                  className={`h-11 rounded-lg text-sm ${errors.company ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
                   data-testid="input-company"
                 />
                 {errors.company && (
@@ -241,9 +266,9 @@ export default function SignUpPage() {
                     className="mt-0.5"
                     data-testid="checkbox-terms"
                   />
-                  <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
+                  <label htmlFor="terms" className="text-sm text-gray-500 cursor-pointer leading-relaxed">
                     I agree to the{' '}
-                    <a href="#" className="text-[#36bff9] hover:underline" data-testid="link-terms">
+                    <a href="#" className="text-[#1a73d4] hover:underline font-medium" data-testid="link-terms">
                       Terms of Use
                     </a>
                     .
@@ -256,12 +281,19 @@ export default function SignUpPage() {
 
               <Button
                 onClick={handleContinue}
-                className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-lg font-semibold"
+                className="w-full h-12 bg-[#1a73d4] hover:bg-[#1560b8] text-white text-base font-semibold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 data-testid="button-continue"
               >
                 Continue
+                <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
+          </div>
+
+          {/* Trust / security note */}
+          <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#36bff9]" />
+            <span>Your information is encrypted and never shared with third parties.</span>
           </div>
         </div>
       </div>

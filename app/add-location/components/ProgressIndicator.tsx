@@ -34,76 +34,65 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
     <nav aria-label="Progress" className="w-full" data-testid="progress-indicator">
       <ol className="flex items-center justify-center">
         {steps.map((step, stepIdx) => {
+          const isComplete = step.id < currentStep;
+          const isCurrent = step.id === currentStep;
           const isClickable = step.id < currentStep;
 
           return (
             <li
               key={step.name}
-              className={`relative ${stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : ''}`}
+              className={`relative flex items-center ${stepIdx !== steps.length - 1 ? 'flex-1' : ''}`}
             >
-              {step.id < currentStep ? (
+              <div
+                className={`flex items-center ${isClickable ? 'cursor-pointer group' : ''} ${isCurrent ? 'cursor-default' : ''} z-10`}
+                onClick={() => handleStepClick(step)}
+                data-testid={`step-nav-${step.id}`}
+                aria-current={isCurrent ? 'step' : undefined}
+              >
+                {isComplete ? (
+                  <>
+                    <span
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#36bff9] shadow-sm transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#36bff9]/30 group-hover:ring-offset-2 flex-shrink-0"
+                      data-testid={`step-${step.id}-complete`}
+                    >
+                      <Check className="h-5 w-5 text-white" aria-hidden="true" strokeWidth={2.5} />
+                    </span>
+                    <span className="ml-2.5 text-sm font-medium text-gray-700 group-hover:text-[#36bff9] hidden sm:block whitespace-nowrap">
+                      {step.name}
+                    </span>
+                  </>
+                ) : isCurrent ? (
+                  <>
+                    <span
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1a73d4] shadow-md flex-shrink-0 ring-4 ring-[#36bff9]/20"
+                      data-testid={`step-${step.id}-current`}
+                    >
+                      <span className="text-white font-bold text-sm">{step.id}</span>
+                    </span>
+                    <span className="ml-2.5 text-sm font-semibold text-[#1a73d4] hidden sm:block whitespace-nowrap">
+                      {step.name}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span
+                      className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-gray-200 bg-white flex-shrink-0"
+                      data-testid={`step-${step.id}-upcoming`}
+                    >
+                      <span className="text-gray-400 text-sm">{step.id}</span>
+                    </span>
+                    <span className="ml-2.5 text-sm font-medium text-gray-400 hidden sm:block whitespace-nowrap">
+                      {step.name}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {stepIdx !== steps.length - 1 && (
                 <div
-                  className={`flex items-center ${isClickable ? 'cursor-pointer group' : ''}`}
-                  onClick={() => handleStepClick(step)}
-                  data-testid={`step-nav-${step.id}`}
-                >
-                  <span
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-[#36bff9] transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#36bff9]/30 group-hover:ring-offset-2"
-                    data-testid={`step-${step.id}-complete`}
-                  >
-                    <Check className="h-5 w-5 text-white" aria-hidden="true" />
-                  </span>
-                  <span className="ml-3 text-sm font-medium text-gray-900 group-hover:text-[#36bff9] hidden sm:block">
-                    {step.name}
-                  </span>
-                  {stepIdx !== steps.length - 1 && (
-                    <div
-                      className="absolute right-0 top-4 h-0.5 w-8 sm:w-20 bg-[#36bff9]"
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
-              ) : step.id === currentStep ? (
-                <div
-                  className="flex items-center cursor-pointer group"
-                  aria-current="step"
-                  onClick={() => handleStepClick(step)}
-                  data-testid={`step-nav-${step.id}`}
-                >
-                  <span
-                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#36bff9] bg-white transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#36bff9]/30 group-hover:ring-offset-2"
-                    data-testid={`step-${step.id}-current`}
-                  >
-                    <span className="text-[#36bff9] font-semibold">{step.id}</span>
-                  </span>
-                  <span className="ml-3 text-sm font-medium text-[#36bff9] hidden sm:block">
-                    {step.name}
-                  </span>
-                  {stepIdx !== steps.length - 1 && (
-                    <div
-                      className="absolute right-0 top-4 h-0.5 w-8 sm:w-20 bg-gray-200"
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
-              ) : (
-                <div className="flex items-center">
-                  <span
-                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white"
-                    data-testid={`step-${step.id}-upcoming`}
-                  >
-                    <span className="text-gray-500">{step.id}</span>
-                  </span>
-                  <span className="ml-3 text-sm font-medium text-gray-500 hidden sm:block">
-                    {step.name}
-                  </span>
-                  {stepIdx !== steps.length - 1 && (
-                    <div
-                      className="absolute right-0 top-4 h-0.5 w-8 sm:w-20 bg-gray-200"
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
+                  className={`flex-1 h-0.5 mx-3 rounded-full ${isComplete ? 'bg-[#36bff9]' : 'bg-gray-200'}`}
+                  aria-hidden="true"
+                />
               )}
             </li>
           );
