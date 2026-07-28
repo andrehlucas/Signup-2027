@@ -123,7 +123,6 @@ export default function SignUpPage() {
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 lg:py-12">
         {/* Headline */}
         <div className="text-center mb-8">
-          <p className="text-sm font-semibold uppercase tracking-widest text-[#36bff9] mb-2">Virtual Office Sign-Up</p>
           <h1 className="text-2xl md:text-[2rem] font-extrabold leading-tight text-[#0f2044] max-w-xl mx-auto" data-testid="heading-signup">
             You're Only 4 Steps Away From<br className="hidden sm:block" />
             <span className="text-[#1a73d4]"> Securing Your Virtual Office</span>
