@@ -4,5 +4,10 @@ export const modules: ModuleMap = {
   "./components/mockups/bg-variants/BlueBand.tsx": () => import("../components/mockups/bg-variants/BlueBand.tsx"),
   "./components/mockups/bg-variants/RuledLines.tsx": () => import("../components/mockups/bg-variants/RuledLines.tsx"),
   "./components/mockups/bg-variants/SplitPanel.tsx": () => import("../components/mockups/bg-variants/SplitPanel.tsx"),
-  "./components/mockups/bg-variants/WarmNeutral.tsx": () => import("../components/mockups/bg-variants/WarmNeutral.tsx")
+  "./components/mockups/bg-variants/WarmNeutral.tsx": () => import("../components/mockups/bg-variants/WarmNeutral.tsx"),
+  "./components/mockups/opus-funnel-v1/Checkout.tsx": () => import("../components/mockups/opus-funnel-v1/Checkout.tsx"),
+  "./components/mockups/opus-funnel-v1/Confirmation.tsx": () => import("../components/mockups/opus-funnel-v1/Confirmation.tsx"),
+  "./components/mockups/opus-funnel-v1/Customize.tsx": () => import("../components/mockups/opus-funnel-v1/Customize.tsx"),
+  "./components/mockups/opus-funnel-v1/Location.tsx": () => import("../components/mockups/opus-funnel-v1/Location.tsx"),
+  "./components/mockups/opus-funnel-v1/YourInfo.tsx": () => import("../components/mockups/opus-funnel-v1/YourInfo.tsx")
 };

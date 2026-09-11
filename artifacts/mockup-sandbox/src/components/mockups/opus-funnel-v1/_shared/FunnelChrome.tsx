@@ -1,0 +1,9 @@
+import React from "react";
+import "../_group.css";
+import { ShieldCheck } from "lucide-react";
+export const steps=["Your Info","Pick Your Location","Customize","Checkout"];
+export function FunnelChrome({current,children}:{current:number;children:React.ReactNode}){
+ return <div className="opus-shell"><header className="opus-top"><div className="opus-frame" style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center"}}><img className="opus-logo" src="/__mockup/images/opus-vo-main-logo.svg" alt="OPUS Virtual Offices"/><div className="opus-trust"><ShieldCheck size={15} color="#0086C9"/> Secure setup <b>·</b> No obligation</div></div></header><div className="opus-frame"><nav className="opus-progress" aria-label="Purchase progress">{steps.map((s,i)=><React.Fragment key={s}><div className={`opus-step ${i+1===current?"active":i+1<current?"done":""}`}><span className="opus-num">{i+1<current?"✓":i+1}</span><span>{s}</span></div>{i<3&&<div className="opus-connector"/>}</React.Fragment>)}</nav>{children}</div></div>
+}
+export function FooterActions({back="Back",next="Continue",onBack,onNext}:{back?:string;next?:string;onBack?:()=>void;onNext?:()=>void}){return <div className="opus-actions"><button className="opus-btn secondary" onClick={onBack}>{back}</button><button className="opus-btn" onClick={onNext}>{next} <span aria-hidden>→</span></button></div>}
+export function Field({label,id,type="text",placeholder,value,onChange}:{label:string;id:string;type?:string;placeholder?:string;value?:string;onChange?:(e:React.ChangeEvent<HTMLInputElement>)=>void}){return <label><span className="opus-label">{label}</span><input id={id} className="opus-input" type={type} placeholder={placeholder} value={value} onChange={onChange}/></label>}
