@@ -1,5 +1,5 @@
 {
-  "/api/funnel/events/route": "app/api/funnel/events/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
   "/add-location/pick-plan/page": "app/add-location/pick-plan/page.js"
 }
