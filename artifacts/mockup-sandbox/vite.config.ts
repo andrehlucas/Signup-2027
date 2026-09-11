@@ -47,9 +47,23 @@ export default defineConfig({
       : []),
   ],
   resolve: {
-    alias: {
-      '@': path.resolve(import.meta.dirname, 'src'),
-    },
+    alias: [
+      {
+        find: '@workspace/opus-vo-design-system/styles.css',
+        replacement: path.resolve(
+          import.meta.dirname,
+          '../opus-vo-design-system/src/index.css',
+        ),
+      },
+      {
+        find: '@workspace/opus-vo-design-system',
+        replacement: path.resolve(
+          import.meta.dirname,
+          '../opus-vo-design-system/src',
+        ),
+      },
+      { find: '@', replacement: path.resolve(import.meta.dirname, 'src') },
+    ],
   },
   root: path.resolve(import.meta.dirname),
   build: {

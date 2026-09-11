@@ -14,7 +14,13 @@
     "allowImportingTsExtensions": true,
     "types": ["node", "vite/client"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@workspace/opus-vo-design-system/styles.css": [
+        "../opus-vo-design-system/src/index.css"
+      ],
+      "@workspace/opus-vo-design-system/*": [
+        "../opus-vo-design-system/src/*"
+      ]
     }
   }
 }
