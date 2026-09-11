@@ -1,0 +1,1 @@
+- [Design-system linking](design-system-tailwind3-linking.md) — use the source alias until a deliberate Next.js upgrade allows normal local-package installation.

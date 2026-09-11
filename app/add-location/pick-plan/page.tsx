@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, ChevronRight, MapPin, Star, Building2 } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
+import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -132,7 +132,7 @@ export default function PickPlanPage() {
                   {availableLocations.map((location) => (
                     <div
                       key={location.id}
-                      className="flex flex-col rounded-lg border-2 border-gray-200 hover:border-[#36bff9] hover:shadow-md transition-all overflow-hidden"
+                      className="flex flex-col rounded-lg border-2 border-gray-200 hover:border-brand-300 hover:shadow-md transition-all overflow-hidden"
                       data-testid={`location-card-${location.id}`}
                     >
                       <div className="w-full bg-gray-200 flex items-center justify-center overflow-hidden" style={{ aspectRatio: '1.85 / 1' }}>
@@ -168,7 +168,8 @@ export default function PickPlanPage() {
                         </div>
                         <Button
                           onClick={() => handleLocationSelect(location)}
-                          className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white w-full"
+                          hierarchy="primary"
+                          className="w-full"
                           data-testid={`button-select-location-${location.id}`}
                         >
                           Select
@@ -207,7 +208,7 @@ export default function PickPlanPage() {
 
         <div className="bg-white rounded-xl border border-gray-200 p-5 mb-5 flex items-center gap-4" data-testid="review-location-card">
           <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-            <MapPin className="h-5 w-5 text-[#36bff9]" />
+            <MapPin className="h-5 w-5 text-brand-400" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-gray-900" data-testid="heading-pick-plan">
@@ -219,7 +220,7 @@ export default function PickPlanPage() {
           </div>
           <button
             onClick={() => setSubStep('location')}
-            className="text-sm text-[#36bff9] hover:text-[#2aa8e0] font-medium flex-shrink-0"
+            className="text-sm text-brand-400 hover:text-brand-500 font-medium flex-shrink-0"
             data-testid="button-change-location"
           >
             Change
@@ -227,7 +228,7 @@ export default function PickPlanPage() {
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-5" data-testid="review-package-card">
-          <div className="bg-[#36bff9] text-white flex items-center justify-between px-5 py-3">
+          <div className="bg-brand-400 text-white flex items-center justify-between px-5 py-3">
             <h3 className="text-base font-bold">{essentialsPlan.name}</h3>
             <div className="flex items-baseline gap-0.5">
               <span className="text-2xl font-bold">${essentialsPlan.price}</span>
@@ -240,7 +241,7 @@ export default function PickPlanPage() {
                 .filter(([, enabled]) => enabled)
                 .map(([key]) => (
                   <div key={key} className="flex items-start gap-2 text-xs" data-testid={`feature-${key}`}>
-                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-4 h-4 rounded-full bg-brand-400 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Check className="h-2.5 w-2.5 text-white" />
                     </div>
                     <span className="text-gray-700 leading-snug">{featureLabels[key]}</span>
@@ -252,7 +253,8 @@ export default function PickPlanPage() {
 
         <Button
           onClick={handleContinue}
-          className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-base font-semibold"
+          hierarchy="primary"
+          className="w-full"
           data-testid="button-continue-customize"
         >
           Continue to Add-ons

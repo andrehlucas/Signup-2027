@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronDown, ArrowRight, ShieldCheck } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
+import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { ProgressIndicator } from './add-location/components/ProgressIndicator';
@@ -134,7 +134,7 @@ export default function SignUpPage() {
 
         {/* Form card */}
         <div className="max-w-lg mx-auto">
-          <div className="bg-white rounded-2xl shadow-[0_4px_32px_rgba(26,115,212,0.10)] border border-blue-50 px-7 py-8">
+          <div className="bg-white rounded-2xl shadow-md border border-brand-50 px-7 py-8">
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -187,7 +187,7 @@ export default function SignUpPage() {
                               setCountryCode(c.code);
                               setShowCountryDropdown(false);
                             }}
-                            className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-blue-50 text-left text-sm transition-colors"
+                            className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-brand-50 text-left text-sm transition-colors"
                             data-testid={`option-country-${c.label}`}
                           >
                             <span className="text-base">{c.flag}</span>
@@ -278,7 +278,9 @@ export default function SignUpPage() {
 
               <Button
                 onClick={handleContinue}
-                className="w-full h-12 bg-[#0086C9] hover:bg-[#006ba3] text-white text-base font-semibold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                hierarchy="primary"
+                size="xl"
+                className="w-full"
                 data-testid="button-continue"
               >
                 Continue

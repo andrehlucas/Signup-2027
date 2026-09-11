@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { CheckCircle2 } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
+import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import { useOrder } from '../context';
 import Image from 'next/image';
 
@@ -30,7 +30,7 @@ function Fireworks() {
     };
     window.addEventListener('resize', handleResize);
 
-    const colors = ['#ff2d2d', '#ffdd00', '#00e676', '#2979ff', '#ff4081', '#36bff9', '#ff9100', '#d500f9', '#ffea00', '#00e5ff'];
+    const colors = ['#ff2d2d', '#ffdd00', '#00e676', '#2979ff', '#ff4081', '#36bffa', '#ff9100', '#d500f9', '#ffea00', '#00e5ff'];
 
     interface Spark {
       x: number;
@@ -258,7 +258,9 @@ export default function ThankYouPage() {
 
             <Button
               onClick={handleStartOver}
-              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-base rounded-md"
+              hierarchy="primary"
+              size="lg"
+              className="px-8"
               data-testid="button-begin-process"
             >
               Click Here To Begin The Process Now

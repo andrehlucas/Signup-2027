@@ -181,6 +181,32 @@
   --animate-spin: spin 1s linear infinite;
 }
 
+/* Official Opus VO primitive ramps. These variables keep the Tailwind 3
+   consumer on the same source of truth as the imported component package. */
+:root {
+  --brand-25: #f5fbff; --brand-50: #e0f2fe; --brand-100: #b9e6fe; --brand-200: #7cd4fd;
+  --brand-300: #36bffa; --brand-400: #0ba5ec; --brand-500: #0086c9; --brand-600: #026aa2;
+  --brand-700: #065986; --brand-800: #0b4a6f; --brand-900: #062c41;
+  --gray-25: #fdfdfd; --gray-50: #fafafa; --gray-100: #f5f5f5; --gray-200: #e9eaeb;
+  --gray-300: #d5d7da; --gray-400: #a4a7ae; --gray-500: #717680; --gray-600: #535862;
+  --gray-700: #414651; --gray-800: #252b37; --gray-900: #181d27; --gray-950: #0a0d12;
+  --error-25: #fffbfa; --error-50: #fef3f2; --error-100: #fee4e2; --error-200: #fecdca;
+  --error-300: #fda29b; --error-400: #f97066; --error-500: #f04438; --error-600: #d92d20;
+  --error-700: #b42318; --error-800: #912018; --error-900: #7a271a; --error-950: #55160c;
+  --warning-25: #fffcf5; --warning-50: #fffaeb; --warning-100: #fef0c7; --warning-200: #fedf89;
+  --warning-300: #fec84b; --warning-400: #fdb022; --warning-500: #f79009; --warning-600: #dc6803;
+  --warning-700: #b54708; --warning-800: #93370d; --warning-900: #7a2e0e; --warning-950: #4e1d09;
+  --success-25: #f6fef9; --success-50: #ecfdf3; --success-100: #dcfae6; --success-200: #abefc6;
+  --success-300: #75e0a7; --success-400: #47cd89; --success-500: #17b26a; --success-600: #079455;
+  --success-700: #067647; --success-800: #085d3a; --success-900: #074d31; --success-950: #053321;
+  --gray-blue-25: #fcfcfd; --gray-blue-50: #f8f9fc; --gray-blue-100: #eaecf5;
+  --gray-blue-200: #d5d9eb; --gray-blue-300: #b3b8db; --gray-blue-400: #717bbc;
+  --gray-blue-500: #4e5ba6; --gray-blue-600: #3e4784; --gray-blue-700: #363f72;
+  --gray-blue-800: #293056; --gray-blue-900: #101323;
+  /* Legacy names used by the funnel now resolve to official Opus values. */
+  --brand-50: #e0f2fe; --brand-100: #b9e6fe; --brand-500: #0086c9; --brand-600: #026aa2; --brand-700: #065986;
+}
+
 .animate-fade-in {
   animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
 }
@@ -276,48 +302,28 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --card: transparent;
-    --card-foreground: 222.2 47.4% 11.2%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 215 20.2% 65.1%;
+    --background: 0 0% 100%; --foreground: 216 24% 13%; --muted: 0 0% 96%;
+    --muted-foreground: 220 9% 46%; --popover: 0 0% 100%; --popover-foreground: 216 24% 13%;
+    --border: 0 0% 91%; --input: 0 0% 84%; --card: 0 0% 100%; --card-foreground: 216 24% 13%;
+    --primary: 201 98% 32%; --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%; --secondary-foreground: 220 16% 29%;
+    --accent: 204 94% 94%; --accent-foreground: 201 98% 32%;
+    --destructive: 4 86% 59%; --destructive-foreground: 0 0% 100%;
+    --ring: 198 96% 74%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-    --card: transparent;
-    --card-foreground: 213 31% 91%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 216 34% 17%;
+    --background: 216 21% 5%; --foreground: 0 0% 98%;
+    --muted: 218 16% 16%; --muted-foreground: 216 4% 60%;
+    --accent: 201 82% 24%; --accent-foreground: 198 96% 74%;
+    --popover: 216 17% 9%; --popover-foreground: 0 0% 98%;
+    --border: 218 19% 18%; --input: 225 8% 24%;
+    --card: 216 17% 9%; --card-foreground: 0 0% 98%;
+    --primary: 197 95% 60%; --primary-foreground: 201 83% 14%;
+    --secondary: 218 16% 16%; --secondary-foreground: 0 0% 81%;
+    --destructive: 4 77% 40%; --destructive-foreground: 4 86% 97%;
+    --ring: 201 98% 32%;
     --radius: 0.5rem;
   }
 }

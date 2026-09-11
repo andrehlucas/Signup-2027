@@ -4,8 +4,8 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil, DollarSign, Star } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
-import { Badge } from '@/app/components/ui/badge';
+import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
+import { Badge } from '@workspace/opus-vo-design-system/components/ui/badge';
 import {
   Dialog,
   DialogContent,
@@ -422,7 +422,7 @@ export default function CustomizePage() {
                       isIncluded
                         ? 'border-green-200 bg-green-50'
                         : isInCart
-                        ? 'border-[#36bff9] bg-blue-50'
+                        ? 'border-brand-300 bg-brand-50'
                         : 'border-gray-200 bg-white'
                     }`}
                     data-testid={`addon-card-${addon.id}`}
@@ -431,7 +431,7 @@ export default function CustomizePage() {
                       <div className="flex items-start justify-between mb-1">
                         <h4 className="font-medium text-gray-900">{addon.name}</h4>
                         {isIncluded ? (
-                          <Badge className="bg-green-100 text-green-700 border-0">
+                          <Badge color="success" variant="badge">
                             Included
                           </Badge>
                         ) : addon.packages && addon.packages.length > 0 ? (
@@ -447,7 +447,7 @@ export default function CustomizePage() {
                       <div className="flex items-center justify-between mt-2">
                         <button
                           onClick={() => toggleAddonExpanded(addon.id)}
-                          className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1"
+                           className="text-sm text-brand-400 hover:text-brand-500 flex items-center gap-1"
                           data-testid={`button-learn-more-${addon.id}`}
                         >
                           {isExpanded ? (
@@ -466,7 +466,8 @@ export default function CustomizePage() {
                           <Button
                             variant={isInCart ? 'outline' : 'default'}
                             size="sm"
-                            className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'bg-[#36bff9] hover:bg-[#2aa8e0]'}
+                             hierarchy={isInCart ? 'secondary' : 'primary'}
+                             className={isInCart ? 'border-error-300 text-error-600 hover:bg-error-50' : ''}
                             onClick={() => handleAddonToggle(addon)}
                             data-testid={`button-addon-${addon.id}`}
                           >
@@ -534,7 +535,7 @@ export default function CustomizePage() {
 
               <div
                 className={`rounded-lg border transition-all ${
-                  order.extensionCount > 0 ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 bg-white'
+                  order.extensionCount > 0 ? 'border-brand-300 bg-brand-50' : 'border-gray-200 bg-white'
                 }`}
                 data-testid="addon-card-additional-extensions"
               >
@@ -667,7 +668,7 @@ export default function CustomizePage() {
           {selectedPhone && (
             <div className="mt-4 flex items-center justify-between bg-gray-50 rounded-lg p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#36bff9] flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-brand-400 flex items-center justify-center">
                   <Phone className="h-5 w-5 text-white" />
                 </div>
                 <div>
@@ -772,7 +773,7 @@ export default function CustomizePage() {
                   } : { scale: 1, rotate: 0 }}
                   transition={{ duration: 0.6, ease: 'easeInOut' }}
                   className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors duration-500 ${
-                    footerPulse ? 'bg-green-500' : 'bg-[#36bff9]'
+                    footerPulse ? 'bg-success-500' : 'bg-brand-400'
                   }`}
                 >
                   <ShoppingCart className="h-4 w-4 text-white" />
@@ -808,7 +809,7 @@ export default function CustomizePage() {
                   <Popover>
                     <PopoverTrigger asChild>
                       <button
-                        className="inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors"
+                        className="inline-flex items-center gap-1 text-xs text-brand-400 hover:text-brand-500 font-medium transition-colors"
                         data-testid="button-see-included"
                       >
                         <Info className="h-3.5 w-3.5" />
@@ -821,34 +822,34 @@ export default function CustomizePage() {
                       </div>
                       <div className="px-4 py-3 space-y-2">
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                           <span className="text-gray-700">Prestigious Business Address</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                           <span className="text-gray-700">Live Call Answering</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                           <span className="text-gray-700">Call Transferring</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                           <span className="text-gray-700">2 Voicemail Boxes</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                           <span className="text-gray-700">Business Phone/Fax Number</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                           <span className="text-gray-700">Voicemail/Fax to Email</span>
                         </div>
                         {selectedBundle && Object.entries(selectedBundle.features)
                           .filter(([key, enabled]) => enabled && !['businessAddress', 'liveCallAnswering', 'callTransferring'].includes(key))
                           .map(([key]) => (
                             <div key={key} className="flex items-center gap-2 text-sm">
-                              <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                              <Check className="h-3.5 w-3.5 text-brand-400 flex-shrink-0" />
                               <span className="text-gray-700">{featureLabels[key]}</span>
                             </div>
                           ))
@@ -863,7 +864,7 @@ export default function CustomizePage() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <button
-                          className="inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors mb-0.5"
+                          className="inline-flex items-center gap-1 text-xs text-brand-400 hover:text-brand-500 font-medium transition-colors mb-0.5"
                           data-testid="button-see-addons"
                         >
                           See details
@@ -902,7 +903,8 @@ export default function CustomizePage() {
             <Button
               onClick={handleContinue}
               disabled={!selectedPhone}
-              className="h-10 px-6 bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0"
+              hierarchy="primary"
+              className="h-10 px-6 flex-shrink-0"
               data-testid="button-continue-checkout"
             >
               Continue
@@ -979,9 +981,9 @@ export default function CustomizePage() {
                   <div className="space-y-1.5">
                     {bundleSuggestion.bonusFeatures.map(feature => (
                       <div key={feature} className="flex items-center gap-2 text-sm">
-                        <Star className="h-3.5 w-3.5 text-[#36bff9]" />
+                        <Star className="h-3.5 w-3.5 text-brand-400" />
                         <span className="text-gray-600">{feature}</span>
-                        <Badge className="bg-blue-50 text-[#36bff9] border-0 text-[10px] px-1.5 py-0">FREE</Badge>
+                        <Badge color="brand" variant="badge" size="sm">FREE</Badge>
                       </div>
                     ))}
                   </div>
@@ -1038,7 +1040,7 @@ export default function CustomizePage() {
                 onClick={() => setTempSelectedPhone(phone)}
                 className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
                   tempSelectedPhone?.id === phone.id
-                    ? 'bg-blue-50 border-2 border-[#36bff9]'
+                    ? 'bg-brand-50 border-2 border-brand-300'
                     : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
                 }`}
                 data-testid={`phone-option-${phone.id}`}
@@ -1046,7 +1048,7 @@ export default function CustomizePage() {
                 <Phone className="h-4 w-4 text-gray-500" />
                 <span className="font-medium">{phone.number}</span>
                 {tempSelectedPhone?.id === phone.id && (
-                  <Check className="h-4 w-4 text-[#36bff9] ml-auto" />
+                  <Check className="h-4 w-4 text-brand-400 ml-auto" />
                 )}
               </div>
             ))}
@@ -1062,7 +1064,7 @@ export default function CustomizePage() {
             </Button>
             <Button
               onClick={handlePhoneConfirm}
-              className="bg-[#36bff9] hover:bg-[#2aa8e0]"
+              hierarchy="primary"
               data-testid="button-confirm-phone"
             >
               Confirm Selection

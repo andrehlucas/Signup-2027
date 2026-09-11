@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { MapPin, Star, Building2 } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
+import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -116,7 +116,7 @@ export default function LocationSelectionPage() {
                 {locations.map((location) => (
                   <div
                     key={location.id}
-                    className="flex flex-col rounded-lg border-2 border-gray-200 hover:border-[#36bff9] hover:shadow-md transition-all overflow-hidden"
+                    className="flex flex-col rounded-lg border-2 border-gray-200 hover:border-brand-300 hover:shadow-md transition-all overflow-hidden"
                     data-testid={`location-card-${location.id}`}
                   >
                     <div className="w-full bg-gray-200 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>
@@ -144,7 +144,8 @@ export default function LocationSelectionPage() {
                       </div>
                       <Button
                         onClick={() => handleLocationSelect(location)}
-                        className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white w-full"
+                        hierarchy="primary"
+                        className="w-full"
                         data-testid={`button-select-location-${location.id}`}
                       >
                         Select

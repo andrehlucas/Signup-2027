@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Clock, HelpCircle, Tag, X, Loader2 } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
+import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Input } from '@/app/components/ui/input';
 import { ProgressIndicator } from '../components/ProgressIndicator';
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
               <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
                   <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="h-5 w-5 text-[#36bff9]" />
+                    <MapPin className="h-5 w-5 text-brand-400" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -297,7 +297,7 @@ export default function CheckoutPage() {
 
                 <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
                   <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <Package className="h-5 w-5 text-[#36bff9]" />
+                    <Package className="h-5 w-5 text-brand-400" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -319,7 +319,7 @@ export default function CheckoutPage() {
 
                 <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
                   <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <Phone className="h-5 w-5 text-[#36bff9]" />
+                    <Phone className="h-5 w-5 text-brand-400" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -462,7 +462,7 @@ export default function CheckoutPage() {
                     onClick={() => setPaymentTerm(option.months)}
                     className={`relative p-4 rounded-lg border-2 cursor-pointer transition-all ${
                       paymentTerm === option.months
-                        ? 'border-[#36bff9] bg-blue-50'
+                        ? 'border-brand-300 bg-brand-50'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                     data-testid={`payment-term-${option.months}`}
@@ -477,7 +477,7 @@ export default function CheckoutPage() {
                     </div>
                     {paymentTerm === option.months && (
                       <div className="absolute top-2 right-2">
-                        <Check className="h-4 w-4 text-[#36bff9]" />
+                        <Check className="h-4 w-4 text-brand-400" />
                       </div>
                     )}
                   </div>
@@ -500,8 +500,8 @@ export default function CheckoutPage() {
                 Payment Method
               </h2>
 
-              <div className="flex items-center gap-3 mb-6 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#36bff9]">
+              <div className="flex items-center gap-3 mb-6 p-3 bg-brand-50 border border-brand-200 rounded-lg">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-brand-400">
                   <CreditCard className="h-5 w-5 text-white" />
                 </div>
                 <div>
@@ -753,7 +753,7 @@ export default function CheckoutPage() {
                                   <div className="space-y-2">
                                     {bundleExtras.map((label) => (
                                       <div key={label} className="flex items-center gap-1.5 text-xs text-gray-600">
-                                        <Check className="h-3 w-3 text-[#36bff9] shrink-0" />
+                                        <Check className="h-3 w-3 text-brand-400 shrink-0" />
                                         {label}
                                       </div>
                                     ))}
@@ -886,7 +886,8 @@ export default function CheckoutPage() {
               <Button
                 onClick={handleCheckout}
                 disabled={!order.agreementAccepted || isProcessing}
-                className="w-full bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
+                hierarchy="primary"
+                className="w-full"
                 data-testid="button-complete-checkout"
               >
                 {isProcessing ? (
