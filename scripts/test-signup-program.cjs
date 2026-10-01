@@ -44,6 +44,23 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.setViewportSize({ width: 375, height: 812 });
     await page.locator('[data-testid^="location-card-"]').first().click();
     await assertFooterVisible('button-continue');
+    const selectedLocationId = await page.locator('input[name="location"]:checked').getAttribute('data-testid');
+    const [backBounds, continueBounds] = await page.evaluate(() =>
+      ['button-back', 'button-continue'].map(id => {
+        const { x, y, height } = document.querySelector(`[data-testid="${id}"]`).getBoundingClientRect();
+        return { x, y, height };
+      })
+    );
+    assert.ok(backBounds.x < continueBounds.x, 'location Back is left of Continue');
+    assert.ok(Math.abs((backBounds.y + backBounds.height / 2) - (continueBounds.y + continueBounds.height / 2)) < 2, 'location footer buttons share a row on mobile');
+    fs.mkdirSync('screenshots', { recursive: true });
+    await page.screenshot({ path: 'screenshots/location-footer-mobile.png' });
+    await page.getByTestId('button-back').click();
+    await page.getByTestId('input-first-name').waitFor();
+    assert.equal(await page.getByTestId('input-first-name').inputValue(), 'Flow', 'Back retains user information');
+    await page.getByTestId('button-continue').click();
+    await page.getByTestId('location-selection-page').waitFor();
+    assert.equal(await page.getByTestId(selectedLocationId).isChecked(), true, 'Back retains location selection');
     await page.getByTestId('button-continue').click();
     await page.getByTestId('program-selection-page').waitFor();
     await page.setViewportSize({ width: 1280, height: 900 });
@@ -106,6 +123,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.goBack();
     await page.getByTestId('location-selection-page').waitFor();
     assert.equal(await page.getByTestId('select-state').isDisabled(), true);
+    assert.equal(await page.getByTestId('button-back').isDisabled(), true, 'location Back is locked during signup');
     await page.goForward();
     await page.getByTestId('program-selection-page').waitFor();
     assert.equal(await page.getByTestId('button-complete-signup').isDisabled(), true);

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Building2, Check, MapPin, Star } from 'lucide-react';
+import { ArrowLeft, Building2, Check, MapPin, Star } from 'lucide-react';
 import { Badge } from '@workspace/opus-vo-design-system/components/ui/badge';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
@@ -205,7 +205,11 @@ export default function LocationSelectionPage() {
             </div>
           )}
 
-          <div className="mt-6 flex flex-col items-start gap-3 border-t border-gray-100 pt-5">
+          <footer className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 pt-5">
+            <Button hierarchy="link-gray" size="lg" disabled={frozen} onClick={() => router.push('/')} data-testid="button-back">
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Back
+            </Button>
             <Button
               ref={continueRef}
               style={{ scrollMarginBlock: 16 }}
@@ -217,7 +221,7 @@ export default function LocationSelectionPage() {
             >
               Continue
             </Button>
-          </div>
+          </footer>
         </div>
       </div>
     </div>
