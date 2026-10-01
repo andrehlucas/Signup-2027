@@ -40,7 +40,7 @@
   box-shadow: 0 4px 12px color-mix(in srgb, var(--brand-400) 24%, transparent);
 }
 .description { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-600); }
-.pricing { min-height: 152px; margin-top: 16px; }
+.pricing { margin-top: 16px; }
 .priceRow { display: flex; align-items: baseline; gap: 6px; }
 .cta { margin-top: 20px; }
 .cta.cta {
@@ -64,10 +64,9 @@
 .price { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--gray-900); }
 .unit { font-size: 15px; font-weight: 500; color: var(--gray-600); }
 .monthlyNote, .annualDetails { margin-top: 5px; font-size: 14px; line-height: 20px; }
-.monthlyNote, .annualTotal, .equivalentNote { color: var(--gray-600); }
+.monthlyNote, .annualTotal { color: var(--gray-600); }
 .annualPromo { font-weight: 600; color: var(--success-700); }
 .annualTotal { font-variant-numeric: tabular-nums; }
-.equivalentNote { margin-top: 2px; font-size: 12px; line-height: 18px; }
 
 .features { flex: 1; padding: 20px 24px 24px; border-top: 1px solid var(--gray-100); background: var(--gray-25); }
 .featuresHeading { margin-bottom: 10px; font-size: 12px; font-weight: 700; line-height: 18px; letter-spacing: .05em; text-transform: uppercase; color: var(--gray-600); }

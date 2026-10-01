@@ -43,7 +43,7 @@
   box-shadow: 0 4px 12px color-mix(in srgb, var(--brand-400) 24%, transparent);
 }
 .ProgramCard_description__bK_pC { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-600); }
-.ProgramCard_pricing__Rhw7P { min-height: 152px; margin-top: 16px; }
+.ProgramCard_pricing__Rhw7P { margin-top: 16px; }
 .ProgramCard_priceRow__1RdJg { display: flex; align-items: baseline; gap: 6px; }
 .ProgramCard_cta__x0vTO { margin-top: 20px; }
 .ProgramCard_cta__x0vTO.ProgramCard_cta__x0vTO {
@@ -67,10 +67,9 @@
 .ProgramCard_price__UaqMd { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--gray-900); }
 .ProgramCard_unit__BD1q6 { font-size: 15px; font-weight: 500; color: var(--gray-600); }
 .ProgramCard_monthlyNote__vo338, .ProgramCard_annualDetails__6AbLW { margin-top: 5px; font-size: 14px; line-height: 20px; }
-.ProgramCard_monthlyNote__vo338, .ProgramCard_annualTotal__T3X1e, .ProgramCard_equivalentNote__tV_3X { color: var(--gray-600); }
+.ProgramCard_monthlyNote__vo338, .ProgramCard_annualTotal__T3X1e { color: var(--gray-600); }
 .ProgramCard_annualPromo__nFfrC { font-weight: 600; color: var(--success-700); }
 .ProgramCard_annualTotal__T3X1e { font-variant-numeric: tabular-nums; }
-.ProgramCard_equivalentNote__tV_3X { margin-top: 2px; font-size: 12px; line-height: 18px; }
 
 .ProgramCard_features__6ifRp { flex: 1; padding: 20px 24px 24px; border-top: 1px solid var(--gray-100); background: var(--gray-25); }
 .ProgramCard_featuresHeading__5Kruf { margin-bottom: 10px; font-size: 12px; font-weight: 700; line-height: 18px; letter-spacing: .05em; text-transform: uppercase; color: var(--gray-600); }

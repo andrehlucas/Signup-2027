@@ -65,9 +65,6 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
               <p className={styles.annualTotal}>
                 ${plan.annualTotal.toLocaleString('en-US')} due for the year · save ${plan.monthly * 2}
               </p>
-              <p className={styles.equivalentNote}>
-                Rounded monthly equivalent; exact equivalent is ${(plan.annualTotal / 12).toFixed(2)}/mo.
-              </p>
             </div>
           ) : (
             <p className={styles.monthlyNote}>Billed monthly · Or pay annually and get 2 months free</p>

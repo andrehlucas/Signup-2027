@@ -17,6 +17,12 @@ Reference fidelity applies to the card composition and blue gradient identity, n
 
 **How to apply:** Preserve those recognizable design choices when refining this page; do not restore excessive glow or hover movement solely to match the original reference.
 
+Do not reserve blank pricing height to keep monthly and yearly card heights identical.
+
+**Why:** After approving the polish, the user explicitly rejected the large empty area between the price and checkout button.
+
+**How to apply:** Let the pricing content determine its height and keep only normal spacing before the CTA, even if billing changes alter card height.
+
 The billing switcher's selected option must have an unmistakable filled treatment and a non-color selection cue.
 
 **Why:** The user found the reference's subtle white selected state too difficult to distinguish. Clear selection takes priority over reproducing that part of the ZIP exactly.

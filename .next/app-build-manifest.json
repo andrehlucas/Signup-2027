@@ -11,11 +11,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/api/funnel/events/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/funnel/events/route.js"
-    ],
     "/add-location/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -26,16 +21,16 @@
       "static/chunks/main-app.js",
       "static/chunks/app/add-location/page.js"
     ],
+    "/api/funnel/events/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/funnel/events/route.js"
+    ],
     "/add-location/program/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/add-location/program/page.css",
       "static/chunks/app/add-location/program/page.js"
-    ],
-    "/api/checkout/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/checkout/route.js"
     ]
   }
 }

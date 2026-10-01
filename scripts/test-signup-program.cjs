@@ -155,6 +155,12 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       assert.equal(await button.getAttribute('aria-label'), `${buttonLabel} with ${planName}`);
       assert.equal((await button.innerText()).trim(), buttonLabel);
       await assertCallToActionColor(`button-select-${planId}`);
+      const priceSpacing = await button.evaluate(element => {
+        const pricing = element.previousElementSibling;
+        const content = pricing.lastElementChild;
+        return element.getBoundingClientRect().top - content.getBoundingClientRect().bottom;
+      });
+      assert.ok(priceSpacing >= 16 && priceSpacing <= 24, 'checkout follows pricing content without reserved empty space');
       await button.hover();
       await assertCallToActionColor(`button-select-${planId}`);
       await page.mouse.move(0, 0);
@@ -182,12 +188,15 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       assert.equal(await page.getByText('Pay every month', { exact: true }).count(), 1);
       assert.equal(await page.getByText('Pay once a year', { exact: true }).count(), 1);
     };
-    const isFullyVisibleInViewport = async testId => page.waitForFunction(id => {
+    const isFullyVisibleInViewport = async testId => {
+      await page.getByTestId(testId).evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
+      return page.waitForFunction(id => {
       const element = document.querySelector(`[data-testid="${id}"]`);
       if (!element) return false;
       const { top, bottom } = element.getBoundingClientRect();
       return top >= 0 && bottom <= window.innerHeight;
-    }, testId, { timeout: 5000 });
+      }, testId, { timeout: 5000 });
+    };
     const cardClass = async planId => page.getByTestId(`program-card-${planId}`).getAttribute('class');
     const assertNoProgramFooter = async () => {
       assert.equal(await page.getByTestId('program-selection-page').locator('footer').count(), 0, 'program page has no navigation footer');
@@ -296,6 +305,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.match(await proCard.innerText(), /\$208/);
     assert.match(await proCard.innerText(), /month/i);
     assert.match(await proCard.innerText(), /\$2,490/);
+    assert.equal(await page.getByText(/Rounded monthly equivalent; exact equivalent/).count(), 0);
     await page.screenshot({ path: 'screenshots/program-desktop-yearly.png', fullPage: true });
     await page.setViewportSize({ width: 375, height: 812 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false, 'yearly layout has no mobile overflow');
