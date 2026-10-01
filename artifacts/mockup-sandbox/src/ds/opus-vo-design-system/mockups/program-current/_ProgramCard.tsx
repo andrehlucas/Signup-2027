@@ -44,7 +44,7 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
     >
       <div className={styles.top}>
         <h2 className={styles.title}>
-          <span>Opus Trucking</span>
+          <span className={styles.brandName}>Opus Trucking</span>
           <span className={plan.id === 'pro' ? styles.pro : styles.essentials}>{plan.label}</span>
         </h2>
         <p className={styles.description}>{plan.description}</p>

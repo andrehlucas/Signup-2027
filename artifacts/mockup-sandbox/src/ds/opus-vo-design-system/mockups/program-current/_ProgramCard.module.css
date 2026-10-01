@@ -26,7 +26,8 @@
 }
 
 .top { display: flex; flex-direction: column; padding: 20px 32px; }
-.title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; white-space: nowrap; font-size: 24px; font-weight: 800; line-height: 1.375; letter-spacing: -.025em; color: var(--color-gray-900); }
+.title { display: flex; min-width: 0; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin: 0; font-size: 24px; font-weight: 700; line-height: 1.33; letter-spacing: -.025em; color: var(--color-gray-900); }
+.brandName { flex: 0 1 auto; color: var(--color-gray-600); font-size: 12px; font-weight: 500; line-height: 1.5; letter-spacing: .05em; }
 .essentials { color: var(--color-brand-400); }
 .pro { color: var(--color-brand-600); }
 .description { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--color-gray-500); }
@@ -79,11 +80,13 @@
   .price { font-size: 40px; }
 }
 @media (max-width: 1023px) {
-  .title { font-size: 20px; }
+  .title { font-size: 20px; line-height: 1.4; }
 }
 @media (max-width: 359px) {
   .top { padding-right: 24px; padding-left: 24px; }
-  .title { font-size: 18px; }
+  .title { justify-content: flex-start; font-size: 20px; }
+  .brandName { flex-basis: 100%; }
+  .essentials, .pro { margin-left: auto; }
   .price { font-size: 28px; }
   .promo { font-size: 10px; }
 }
