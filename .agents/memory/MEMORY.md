@@ -3,3 +3,4 @@
 - [Signup and PHP checkout intent](signup-intent.md) — plan choice leads to an existing PHP checkout; defer its URL and handoff contract, and never imply payment or activation.
 - [Program-card visual reference](program-card-reference.md) — the supplied React cards take priority over generic minimalist styling for this signup step.
 - [Navigation hierarchy](navigation-hierarchy.md) — Back stays text-only; location advances from card buttons, not a footer Continue.
+- [Office photo sourcing](office-photo-sourcing.md) — use the main gallery image from the exact office page, not generic city or stock imagery.

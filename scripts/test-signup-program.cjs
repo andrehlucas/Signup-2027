@@ -232,6 +232,36 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await assertTextOnlyBack();
     await assertNavigationColor('step-1-complete');
     await assertNavigationColor('step-2-current');
+    const officialLocations = JSON.parse(fs.readFileSync('attached_assets/opus-popular-locations-sources.json', 'utf8'));
+    assert.equal(officialLocations.length, 16, 'all 16 requested locations have a verified source');
+    assert.equal(new Set(officialLocations.map(location => location.officialId)).size, 16, 'official location IDs are unique');
+    const locationStates = [...new Set(officialLocations.map(location => location.state))].sort();
+    let verifiedPhotos = 0;
+    for (const state of locationStates) {
+      await page.getByTestId('select-state').click();
+      await page.getByRole('option', { name: state, exact: true }).click();
+      const expectedLocations = officialLocations.filter(location => location.state === state);
+      assert.equal(await page.locator('[data-testid^="location-card-"]').count(), expectedLocations.length, `state filter shows the correct offices in ${state}`);
+      for (const location of expectedLocations) {
+        const id = `loc-${location.officialId}`;
+        const photo = page.getByTestId(`location-photo-${id}`);
+        assert.equal(await photo.getAttribute('src'), location.image.url, `${location.city} uses its official main gallery photo`);
+        assert.ok((await photo.getAttribute('alt')).includes(location.city), `${location.city} photo has descriptive alternative text`);
+        await photo.scrollIntoViewIfNeeded();
+        await photo.evaluate(async image => {
+          await image.decode();
+          const assertLoaded = image.naturalWidth > 0 && image.naturalHeight > 0;
+          if (!assertLoaded) throw new Error('Location photo did not load');
+        });
+        const card = page.getByTestId(`location-card-${id}`);
+        assert.ok((await card.innerText()).includes(location.address.match(/\d{5}$/)[0]), `${location.city} displays the verified ZIP code`);
+        assert.equal(await card.getByTestId(`button-choose-location-${id}`).isEnabled(), true);
+        verifiedPhotos += 1;
+      }
+      fs.mkdirSync('screenshots', { recursive: true });
+      await page.screenshot({ path: `screenshots/locations-${state.toLowerCase().replaceAll(' ', '-')}.png`, fullPage: true });
+    }
+    assert.equal(verifiedPhotos, 16, 'all 16 official location photos load successfully in the browser');
     await page.getByTestId('select-state').click();
     await page.getByRole('option', { name: 'Florida', exact: true }).click();
     await page.setViewportSize({ width: 375, height: 812 });
@@ -239,13 +269,32 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     const selectedLocationId = await page.locator('input[name="location"]:checked').getAttribute('data-testid');
     const locationButtons = page.locator('[data-testid^="button-choose-location-"]');
     assert.equal(await locationButtons.count(), await page.locator('[data-testid^="location-card-"]').count(), 'every location card has its own choose button');
+    for (const width of [320, 768]) {
+      await page.setViewportSize({ width, height: 900 });
+      assert.equal(await locationButtons.evaluateAll(buttons =>
+        buttons.every(button => button.scrollWidth <= button.clientWidth + 1)), true, `location button labels fit at ${width}px`);
+    }
+    await page.setViewportSize({ width: 375, height: 812 });
     const firstLocationButtonId = await locationButtons.first().getAttribute('data-testid');
     await locationButtons.first().scrollIntoViewIfNeeded();
     await assertActionVisible(firstLocationButtonId);
     await page.mouse.move(0, 0);
-    await assertNavigationColor(firstLocationButtonId);
+    const choiceProperties = ['backgroundImage', 'color', 'borderColor', 'borderRadius', 'boxShadow', 'fontWeight', 'fontSize', 'height', 'transitionProperty', 'transitionDuration'];
+    const getChoiceAppearance = testId => page.getByTestId(testId).evaluate((element, properties) =>
+      Object.fromEntries(properties.map(property => [property, getComputedStyle(element)[property]])), choiceProperties);
+    const locationChoiceAppearance = await getChoiceAppearance(firstLocationButtonId);
+    assert.ok(locationChoiceAppearance.backgroundImage.includes('linear-gradient'), 'location choice uses the program gradient');
+    assert.equal(locationChoiceAppearance.color, 'rgb(255, 255, 255)');
+    await locationButtons.first().hover();
+    assert.deepEqual(await getChoiceAppearance(firstLocationButtonId), locationChoiceAppearance, 'location hover preserves the approved button styling');
+    await page.mouse.move(0, 0);
     assert.equal(await locationButtons.first().locator('xpath=ancestor::label').count(), 0, 'choose button is outside the radio label');
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false, 'location buttons fit mobile cards');
+    for (const photo of await page.locator('[data-testid^="location-photo-"]').all()) {
+      await photo.scrollIntoViewIfNeeded();
+      await photo.evaluate(image => image.decode());
+    }
+    await locationButtons.first().scrollIntoViewIfNeeded();
     fs.mkdirSync('screenshots', { recursive: true });
     await page.screenshot({ path: 'screenshots/location-card-buttons-mobile.png', fullPage: true });
     await page.getByTestId('button-back').click();
@@ -277,6 +326,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await assertBillingFrequency('monthly');
     await assertCardCallToAction('essentials', 'Essentials');
     await assertCardCallToAction('pro', 'Pro');
+    assert.deepEqual(await getChoiceAppearance('button-select-essentials'), locationChoiceAppearance, 'location and program buttons share the same appearance and size');
     await assertDealBadge();
     const keyboardButton = page.getByTestId('button-select-essentials');
     await page.keyboard.press('Tab');

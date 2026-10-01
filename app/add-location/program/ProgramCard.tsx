@@ -2,6 +2,7 @@
 
 import { Check, X } from 'lucide-react';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
+import choiceStyles from '../components/ChoiceButton.module.css';
 import {
   truckingPrograms,
   truckingSharedFeaturesSummary,
@@ -74,7 +75,7 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
           type="button"
           hierarchy="primary"
           size="xl"
-          className={`${styles.cta} w-full`}
+          className={`${styles.cta} ${choiceStyles.button} w-full`}
           disabled={disabled}
           loading={loading}
           aria-label={`${buttonLabel} with ${plan.label}`}

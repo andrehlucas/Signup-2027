@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from '@/app/components/ui/select';
 import { ProgressIndicator } from './components/ProgressIndicator';
+import { LocationPhoto } from './components/LocationPhoto';
+import choiceStyles from './components/ChoiceButton.module.css';
 import { useOrder } from './context';
 import { useFunnelTracking } from '../hooks/use-funnel-tracking';
 import { getLocationsByState, getStates } from './types';
@@ -150,9 +152,7 @@ export default function LocationSelectionPage() {
                         data-testid={`location-card-${location.id}`}
                       >
                         <label htmlFor={`location-${location.id}`} className="flex flex-1 cursor-pointer flex-col">
-                          <div className="w-full bg-gray-100 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>
-                            <Building2 className="h-12 w-12 text-gray-400" aria-hidden="true" />
-                          </div>
+                          <LocationPhoto location={location} />
                           <div className="p-4 flex flex-col gap-3 flex-1">
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between gap-2 mb-2">
@@ -189,8 +189,8 @@ export default function LocationSelectionPage() {
                           <Button
                             type="button"
                             hierarchy="primary"
-                            size="lg"
-                            className="signup-action w-full"
+                            size="xl"
+                            className={`${choiceStyles.button} w-full`}
                             disabled={frozen}
                             onClick={() => handleContinue(location.id)}
                             aria-label={`Choose This Location: ${location.name}, ${location.address}`}

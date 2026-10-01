@@ -14,3 +14,9 @@ The location step advances through a choose button in each card, not a separate 
 **Why:** The user explicitly requested the location-card button as the action that takes the user to the next step.
 
 **How to apply:** Keep selection and advancing together in that action, preserve the text-only Back control, and do not restore the old separate Continue flow.
+
+Location-card choose buttons must match the program cards' checkout-button styling, rather than the wizard's flat Continue style.
+
+**Why:** The user explicitly requested the same styling as the program-card buttons after seeing the initial location buttons.
+
+**How to apply:** Preserve their matching blue gradient, white text, rounded corners, shadow, sizing, and interaction states without changing Back or the initial signup Continue.

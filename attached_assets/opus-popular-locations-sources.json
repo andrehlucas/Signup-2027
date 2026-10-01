@@ -1,0 +1,194 @@
+[
+  {
+    "city": "Atlanta",
+    "state": "Georgia",
+    "stateCode": "GA",
+    "officialId": "684",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/georgia/atlanta/location-684/",
+    "image": {
+      "alt": "Atlanta virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Atlanta-Virtual-Office-Space-3379-Peachtree-Road-NE.webp"
+    },
+    "address": "3379 Peachtree Road NE (Buckhead) Suite 655 Atlanta, GA 30326"
+  },
+  {
+    "city": "Austin",
+    "state": "Texas",
+    "stateCode": "TX",
+    "officialId": "1475",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/texas/austin/location-1475/",
+    "image": {
+      "alt": "Austin virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Opus-Virtual-Office-Austin-1005-Congress-Avenue-Exterior.webp"
+    },
+    "address": "1005 Congress Avenue Suite 925 Austin, TX 78701"
+  },
+  {
+    "city": "Beverly Hills",
+    "state": "California",
+    "stateCode": "CA",
+    "officialId": "936",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/california/beverly-hills/location-936/",
+    "image": {
+      "alt": "Beverly Hills virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Opus-Virtual-Office-Beverly-Hills-9350-Wilshire-Blvd-Classic-Office-Building.webp"
+    },
+    "address": "9350 Wilshire Blvd Suite 203 Beverly Hills, CA 90212"
+  },
+  {
+    "city": "Boca Raton",
+    "state": "Florida",
+    "stateCode": "FL",
+    "officialId": "776",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/florida/boca-raton/location-776/",
+    "image": {
+      "alt": "Boca Raton virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Boca-Raton-Virtual-Office-Space-1825-NW-Corporate-Blvd-.webp"
+    },
+    "address": "1825 NW Corporate Blvd Suite 110 Boca Raton, FL 33431"
+  },
+  {
+    "city": "Brooklyn",
+    "state": "New York",
+    "stateCode": "NY",
+    "officialId": "1477",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/new-york/brooklyn/location-1477/",
+    "image": {
+      "alt": "Brooklyn virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/32-Court-St-Brooklyn-NY-Building-Photo-1-HighDefinition.webp"
+    },
+    "address": "32 Court Street Suite 904 Brooklyn, NY 11201"
+  },
+  {
+    "city": "Chicago",
+    "state": "Illinois",
+    "stateCode": "IL",
+    "officialId": "1430",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/illinois/chicago/location-1430/",
+    "image": {
+      "alt": "Chicago virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/1430-01.bldg_-2.jpg"
+    },
+    "address": "122 South Michigan Avenue Suite 1390 Chicago, IL 60603"
+  },
+  {
+    "city": "Dallas",
+    "state": "Texas",
+    "stateCode": "TX",
+    "officialId": "1255",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/texas/dallas/location-1255/",
+    "image": {
+      "alt": "Dallas virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Opus-Virtual-Office-Dallas-3626-North-Hall-Street-Modern-Office-Building.webp"
+    },
+    "address": "3626 North Hall Street (Two Oak Lawn) Suite 610 Dallas, TX 75219"
+  },
+  {
+    "city": "Fort Lauderdale",
+    "state": "Florida",
+    "stateCode": "FL",
+    "officialId": "803",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/florida/fort-lauderdale/location-803/",
+    "image": {
+      "alt": "Fort Lauderdale virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/803-01.bldg_-1.jpg"
+    },
+    "address": "515 E Las Olas Boulevard Suite 1301 Fort Lauderdale, FL 33301"
+  },
+  {
+    "city": "Houston",
+    "state": "Texas",
+    "stateCode": "TX",
+    "officialId": "1323",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/texas/houston/location-1323/",
+    "image": {
+      "alt": "Houston virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Opus-Virtual-Office-Houston-3050-Post-Oak-Blvd-Glass-Tower-Exterior.webp"
+    },
+    "address": "3050 Post Oak Blvd Suite 510 Houston, TX 77056"
+  },
+  {
+    "city": "Los Angeles",
+    "state": "California",
+    "stateCode": "CA",
+    "officialId": "1362",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/california/los-angeles/location-1362/",
+    "image": {
+      "alt": "Los Angeles virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Opus-Virtual-Office-Los-Angeles-626-Wilshire-Blvd-Modern-Office-Building.webp"
+    },
+    "address": "626 Wilshire Blvd Suite 410 Los Angeles, CA 90017"
+  },
+  {
+    "city": "Miami",
+    "state": "Florida",
+    "stateCode": "FL",
+    "officialId": "1285",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/florida/miami/location-1285/",
+    "image": {
+      "alt": "Miami virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/wh_shay_zaidenberg-001.webp"
+    },
+    "address": "848 Brickell Avenue Suite PH5 Miami, FL 33131"
+  },
+  {
+    "city": "Nashville",
+    "state": "Tennessee",
+    "stateCode": "TN",
+    "officialId": "1476",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/tennessee/nashville/location-1476/",
+    "image": {
+      "alt": "Nashville virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Opus-Virtual-Office-Nashville-611-Commerce-Street-Downtown-Skyline-View.webp"
+    },
+    "address": "611 Commerce Street Suite 2611 Nashville, TN 37203"
+  },
+  {
+    "city": "New York",
+    "state": "New York",
+    "stateCode": "NY",
+    "officialId": "1450",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/new-york/new-york/location-1450/",
+    "image": {
+      "alt": "New York virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/1450-building-1746036916361.jpg"
+    },
+    "address": "26 Broadway Suite 934 New York, NY 10004"
+  },
+  {
+    "city": "Orlando",
+    "state": "Florida",
+    "stateCode": "FL",
+    "officialId": "1499",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/florida/orlando/location-1499/",
+    "image": {
+      "alt": "Orlando virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Opus-Virtual-Office-Orlando-200-E-Robinson-Street-Towering-Office-Building.webp"
+    },
+    "address": "200 E Robinson Street Suite 1120 Orlando, FL 32801"
+  },
+  {
+    "city": "Tampa",
+    "state": "Florida",
+    "stateCode": "FL",
+    "officialId": "885",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/florida/tampa/location-885/",
+    "image": {
+      "alt": "Tampa virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Tampa-FL-Virtual-Office-at-Truist-Place-401-E-Jackson-St.webp"
+    },
+    "address": "401 East Jackson Street Suite 2340 Tampa, FL 33602"
+  },
+  {
+    "city": "Wilmington",
+    "state": "Delaware",
+    "stateCode": "DE",
+    "officialId": "942",
+    "sourceUrl": "https://www.opusvirtualoffices.com/virtual-office/delaware/wilmington/location-942/",
+    "image": {
+      "alt": "Wilmington virtual office location 1",
+      "url": "https://www.opusvirtualoffices.com/wp-content-mgr/wp-content/uploads/Opus-Virtual-Office-Wilmington-1201-North-Market-Street-Exterior.webp"
+    },
+    "address": "1201 North Market Street Suite 111 Wilmington, DE 19801"
+  }
+]

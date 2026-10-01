@@ -29,9 +29,7 @@
 .title { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; margin: 0; color: var(--gray-900); }
 .brandName { display: flex; min-width: 0; align-items: center; gap: 10px; color: var(--gray-900); font-size: 22px; font-weight: 700; line-height: 30px; letter-spacing: -.025em; }
 .planBadge { justify-self: end; padding: 7px 12px; font-size: 16px; line-height: 22px; white-space: nowrap; }
-.planBadge,
-.cta.cta,
-.cta.cta:hover {
+.planBadge {
   border: 1px solid var(--brand-400);
   border-radius: 14px;
   background: linear-gradient(180deg, var(--brand-400) 0%, var(--brand-500) 100%);
@@ -43,24 +41,6 @@
 .pricing { margin-top: 16px; }
 .priceRow { display: flex; align-items: baseline; gap: 6px; }
 .cta { margin-top: 20px; }
-.cta.cta {
-  transition: transform 140ms cubic-bezier(.23, 1, .32, 1), box-shadow 140ms ease;
-}
-.cta.cta:active:not(:disabled):not(:focus-visible) { transform: scale(.98); }
-.cta.cta:focus-visible {
-  outline: 2px solid var(--brand-700);
-  outline-offset: 3px;
-}
-.cta.cta:disabled,
-.cta.cta:disabled:hover {
-  border-color: var(--gray-200);
-  background: var(--gray-200);
-  background-image: none;
-  color: var(--gray-700);
-  box-shadow: none;
-  opacity: 1;
-  cursor: not-allowed;
-}
 .price { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--gray-900); }
 .unit { font-size: 15px; font-weight: 500; color: var(--gray-600); }
 .monthlyNote, .annualDetails { margin-top: 5px; font-size: 14px; line-height: 20px; }
@@ -96,6 +76,4 @@
 @media (prefers-reduced-motion: reduce) {
   .card { transition: none; }
   .card:hover { transform: none; }
-  .cta.cta { transition: none; }
-  .cta.cta:active:not(:disabled) { transform: none; }
 }

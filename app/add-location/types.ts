@@ -1,3 +1,5 @@
+import { popularLocations } from './locations';
+
 export interface AvailableLocation {
   id: string;
   name: string;
@@ -8,6 +10,7 @@ export interface AvailableLocation {
   stateCode: string;
   zipCode: string;
   imageUrl: string;
+  sourceUrl?: string;
   isPremium: boolean;
   mapUrl?: string;
 }
@@ -581,68 +584,7 @@ export const availableAddons: Addon[] = [
   },
 ];
 
-export const sampleLocations: AvailableLocation[] = [
-  {
-    id: 'loc-1285',
-    name: 'Miami - Brickell Avenue',
-    address: '848 Brickell Avenue',
-    addressLine2: 'PH5',
-    city: 'Miami',
-    state: 'Florida',
-    stateCode: 'FL',
-    zipCode: '33131',
-    imageUrl: '/attached_assets/miami-office.webp',
-    isPremium: true,
-  },
-  {
-    id: 'loc-776',
-    name: 'Boca Raton - Corporate Blvd',
-    address: '1825 NW Corporate Blvd',
-    addressLine2: 'Suite 110',
-    city: 'Boca Raton',
-    state: 'Florida',
-    stateCode: 'FL',
-    zipCode: '33431',
-    imageUrl: '/attached_assets/boca-raton-office.webp',
-    isPremium: true,
-  },
-  {
-    id: 'loc-803',
-    name: 'Fort Lauderdale - Las Olas',
-    address: '515 E Las Olas Boulevard',
-    addressLine2: 'Suite 1301',
-    city: 'Fort Lauderdale',
-    state: 'Florida',
-    stateCode: 'FL',
-    zipCode: '33301',
-    imageUrl: '/attached_assets/fort-lauderdale-office.jpg',
-    isPremium: true,
-  },
-  {
-    id: 'loc-1499',
-    name: 'Orlando - Robinson Street',
-    address: '200 E Robinson Street',
-    addressLine2: 'Suite 1120',
-    city: 'Orlando',
-    state: 'Florida',
-    stateCode: 'FL',
-    zipCode: '32801',
-    imageUrl: '/attached_assets/orlando-office.webp',
-    isPremium: true,
-  },
-  {
-    id: 'loc-885',
-    name: 'Tampa - Truist Place',
-    address: '401 East Jackson Street',
-    addressLine2: 'Suite 2340',
-    city: 'Tampa',
-    state: 'Florida',
-    stateCode: 'FL',
-    zipCode: '33602',
-    imageUrl: '/attached_assets/tampa-office.webp',
-    isPremium: true,
-  },
-];
+export const sampleLocations: AvailableLocation[] = popularLocations;
 
 export const samplePhoneNumbers: PhoneNumber[] = [
   { id: 'pn-1', number: '(305) 847-9001', type: 'local', areaCode: '305', isAvailable: true },
