@@ -1,10 +1,10 @@
 ---
-name: Signup intent and completion semantics
-description: Signup records are unpaid selections, not purchases or activated services.
+name: Signup intent and external checkout
+description: Payment belongs to the existing PHP checkout; this project prepares selections and redirects.
 ---
 
-Treat completing signup as recording contact information, location, program, and billing preference, not as collecting payment or activating a paid service.
+Treat recorded signup details as unpaid selections, not purchases or activated services. The final program action is Continue to an existing external PHP checkout, not an in-app signup-success screen.
 
-**Why:** The implemented signup was explicitly requested without payment. The user has since specified that the program-card buttons should eventually proceed to payment and requested “Continue to payment” copy in the canvas preview. This changes the intended next step, but does not by itself connect checkout or authorize charging.
+**Why:** The user explicitly said their PHP checkout page already exists and asked to prepare this project without building the final page or supplying its destination yet.
 
-**How to apply:** Preserve the existing unpaid application behavior until payment implementation is requested. Do not treat payment-oriented mockup copy as evidence that checkout exists. When checkout is implemented, reconcile the remaining no-payment copy with that flow. Own pending signup state in the persistent flow context, since browser history can bypass disabled in-page navigation and otherwise allow a response to complete a changed selection.
+**How to apply:** Do not introduce a new payment provider or build a replacement checkout page. Keep the destination configurable and defer customer/selection field mapping until the PHP contract is supplied; do not invent parameters or expose contact details in redirect URLs. Missing configuration must not claim completion or activate services. Preserve pending-navigation locks and allow errors to leave selections editable.

@@ -32,10 +32,10 @@
       "static/css/app/add-location/program/page.css",
       "static/chunks/app/add-location/program/page.js"
     ],
-    "/api/signup/route": [
+    "/api/checkout/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/signup/route.js"
+      "static/chunks/app/api/checkout/route.js"
     ]
   }
 }

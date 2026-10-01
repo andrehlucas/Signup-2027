@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useRef, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
 import type { TruckingProgramId, ProgramBilling } from '../../shared/trucking-programs';
 import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo, AppliedPromo } from './types';
 
@@ -10,7 +10,7 @@ interface OrderContextType {
   signupComplete: boolean;
   signupPending: boolean;
   signupError: string;
-  submitSignup: () => Promise<'success' | 'error' | 'ignored'>;
+  continueToCheckout: () => Promise<'success' | 'error' | 'ignored'>;
   programId: TruckingProgramId | null;
   billing: ProgramBilling;
   setProgramId: (id: TruckingProgramId | null) => void;
@@ -75,6 +75,19 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   latest.current = { order, programId, billing };
   const locked = () => pendingRef.current || completeRef.current;
 
+  useEffect(() => {
+    const handleReturn = (event: PageTransitionEvent) => {
+      if (!event.persisted) return;
+      // Returning from the external checkout must not leave the wizard locked.
+      pendingRef.current = false;
+      completeRef.current = false;
+      setSignupPending(false);
+      setSignupComplete(false);
+    };
+    window.addEventListener('pageshow', handleReturn);
+    return () => window.removeEventListener('pageshow', handleReturn);
+  }, []);
+
   const setProgramId = (id: TruckingProgramId | null) => {
     if (locked()) return;
     setProgramIdState(id);
@@ -95,14 +108,14 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     return requestRef.current.id;
   };
 
-  const submitSignup = async (): Promise<'success' | 'error' | 'ignored'> => {
+  const continueToCheckout = async (): Promise<'success' | 'error' | 'ignored'> => {
     const { order: o, programId: p, billing: bl } = latest.current;
     if (locked() || !p || !o.location) return 'ignored';
     pendingRef.current = true;
     setSignupPending(true);
     setSignupError('');
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -113,17 +126,32 @@ export function OrderProvider({ children }: { children: ReactNode }) {
           billing: bl,
         }),
       });
-      let data: { status?: string; message?: string; error?: string } | null = null;
+      let data: { status?: string; checkoutUrl?: string; message?: string; error?: string } | null = null;
       try { data = await response.json(); } catch { data = null; }
       if (!response.ok) {
-        throw new Error(data?.message || data?.error || 'We could not complete your signup. Please try again.');
+        throw new Error(data?.message || data?.error || 'We could not open checkout. Please try again.');
       }
-      if (data?.status !== 'completed') throw new Error('We received an unexpected response. Please try again.');
+      const unexpectedResponse = 'We received an unexpected checkout response. Please try again.';
+      if (data?.status !== 'checkout_ready' || typeof data.checkoutUrl !== 'string') {
+        throw new Error(unexpectedResponse);
+      }
+      let destination: URL;
+      try {
+        destination = new URL(data.checkoutUrl);
+      } catch {
+        throw new Error(unexpectedResponse);
+      }
+      if (destination.protocol !== 'https:' || destination.username || destination.password) {
+        throw new Error(unexpectedResponse);
+      }
       completeRef.current = true;
       setSignupComplete(true);
+      window.location.assign(destination.href);
       return 'success';
     } catch (e) {
-      setSignupError(e instanceof Error ? e.message : 'We could not complete your signup. Please try again.');
+      completeRef.current = false;
+      setSignupComplete(false);
+      setSignupError(e instanceof Error ? e.message : 'We could not open checkout. Please try again.');
       return 'error';
     } finally {
       pendingRef.current = false;
@@ -283,7 +311,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         signupComplete,
         signupPending,
         signupError,
-        submitSignup,
+        continueToCheckout,
         programId,
         billing,
         setProgramId,

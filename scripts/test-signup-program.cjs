@@ -66,6 +66,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.setViewportSize({ width: 1280, height: 900 });
     assert.equal(await page.locator('[data-testid^="button-select-"]').count(), 0, 'cards have no navigation buttons');
     assert.equal(await page.getByTestId('button-complete-signup').isDisabled(), true, 'footer requires a program choice');
+    assert.equal(await page.getByTestId('button-complete-signup').innerText(), 'Continue');
+    assert.equal(await page.getByTestId('signup-success').count(), 0, 'program page has no signup-complete banner');
     assert.match(await page.getByTestId('program-card-essentials').innerText(), /\$199/);
     assert.match(await page.getByTestId('program-card-pro').innerText(), /\$249/);
     assert.match(await page.getByTestId('program-card-essentials').innerText(), /\$1,990/);
@@ -95,13 +97,23 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('radio-billing-pro-annual').check();
     await assertFooterVisible('button-complete-signup');
     assert.match(await page.getByTestId('program-card-pro').innerText(), /\$2,490/);
+    await page.getByTestId('button-complete-signup').click();
+    await page.getByTestId('signup-error').waitFor();
+    assert.match(await page.getByTestId('signup-error').innerText(), /Checkout is not connected yet/);
+    assert.equal(await page.getByTestId('radio-billing-pro-annual').isChecked(), true, 'missing checkout preserves selections');
+    assert.equal(await page.getByTestId('button-complete-signup').isEnabled(), true, 'missing checkout leaves the flow editable');
+    const checkoutUrl = 'https://checkout.example.test/checkout.php';
+    await page.route(checkoutUrl, route => route.fulfill({
+      contentType: 'text/html',
+      body: '<!doctype html><html><body><h1>Checkout test destination</h1></body></html>',
+    }));
     let calls = 0;
     let firstId;
     let finish;
     let held;
     const intercepted = new Promise(resolve => { held = resolve; });
     const release = new Promise(resolve => { finish = resolve; });
-    await page.route('**/api/signup', async route => {
+    await page.route('**/api/checkout', async route => {
       calls += 1;
       const body = route.request().postDataJSON();
       if (calls === 1) {
@@ -112,12 +124,27 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       assert.equal(body.requestId, firstId);
       assert.equal(body.programId, 'pro');
       assert.equal(body.billing, 'annual');
+      if (calls === 2) {
+        await route.fulfill({
+          status: 201,
+          contentType: 'application/json',
+          body: JSON.stringify({ status: 'checkout_ready', checkoutUrl: 'javascript:alert(1)' }),
+        });
+        return;
+      }
       held();
       await release;
-      await route.continue();
+      await route.fulfill({
+        status: 201,
+        contentType: 'application/json',
+        body: JSON.stringify({ status: 'checkout_ready', checkoutUrl, signupId: 'test-signup' }),
+      });
     });
     await page.getByTestId('button-complete-signup').click();
     await page.getByTestId('signup-error').waitFor();
+    await page.getByTestId('button-complete-signup').click();
+    await page.waitForFunction(() => document.querySelector('[data-testid="signup-error"]')?.textContent.includes('unexpected checkout response'));
+    assert.equal(await page.getByTestId('button-complete-signup').isEnabled(), true, 'unsafe checkout URL is rejected without locking the flow');
     await page.getByTestId('button-complete-signup').click();
     await intercepted;
     await page.goBack();
@@ -128,13 +155,15 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('program-selection-page').waitFor();
     assert.equal(await page.getByTestId('button-complete-signup').isDisabled(), true);
     assert.equal(await page.getByTestId('radio-billing-essentials-monthly').isDisabled(), true);
-    finish();
-    await page.getByTestId('signup-success').waitFor();
-    assert.equal(calls, 2, 'only failed request and one successful retry');
     assert.equal(await page.getByTestId('radio-billing-pro-annual').isChecked(), true);
-    assert.match(await page.getByTestId('signup-success').innerText(), /No payment was collected/);
+    assert.equal(await page.getByTestId('signup-success').count(), 0);
+    finish();
+    await page.waitForURL(checkoutUrl);
+    await page.getByRole('heading', { name: 'Checkout test destination' }).waitFor();
+    assert.equal(calls, 3, 'only failed request, rejected URL and successful retry');
+    assert.equal(page.url(), checkoutUrl, 'Continue redirects without putting customer details in the URL');
     assert.deepEqual(errors, []);
-    console.log('PASS: signup -> location -> program, pricing, mobile, retained choice, retry identity, pending back-navigation lock, no payment.');
+    console.log('PASS: location Back, program Continue, auto-scroll, retained choice, missing checkout, safe redirect, retry identity and pending navigation locks.');
   } finally {
     await browser.close();
   }

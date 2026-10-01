@@ -1,8 +1,8 @@
-// File: /home/runner/workspace/app/api/signup/route.ts
-import * as entry from '../../../../../app/api/signup/route.js'
+// File: /home/runner/workspace/app/api/checkout/route.ts
+import * as entry from '../../../../../app/api/checkout/route.js'
 import type { NextRequest } from 'next/server.js'
 
-type TEntry = typeof import('../../../../../app/api/signup/route.js')
+type TEntry = typeof import('../../../../../app/api/checkout/route.js')
 
 type SegmentParams<T extends Object = any> = T extends Record<string, any>
   ? { [K in keyof T]: T[K] extends string ? string | string[] | undefined : never }

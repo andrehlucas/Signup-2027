@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { MailAction, NotificationType } from "../shared/schema";
 import { completeSignup } from "./signup";
+import { prepareCheckout } from "./checkout";
 import { buildFunnelSummary } from "./funnel-summary";
 
 export function registerRoutes(app: Express): Server {
@@ -14,6 +15,17 @@ export function registerRoutes(app: Express): Server {
       // Never include request data or exception details in signup logs.
       console.error("Unable to complete signup.");
       res.status(500).json({ message: "Unable to complete signup right now. Please try again." });
+    }
+  });
+
+  app.post("/api/checkout", async (req, res) => {
+    try {
+      const result = await prepareCheckout(storage, req.body);
+      res.status(result.status).json(result.body);
+    } catch {
+      // Never include request data, destination URLs, or exception details in logs.
+      console.error("Unable to prepare checkout.");
+      res.status(500).json({ message: "Unable to prepare checkout right now. Please try again." });
     }
   });
 
