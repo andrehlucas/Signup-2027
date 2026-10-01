@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
     return [
       { source: '/add-location/pick-plan', destination: '/add-location', permanent: false },
       { source: '/add-location/customize', destination: '/add-location', permanent: false },
-      { source: '/add-location/checkout', destination: '/add-location', permanent: false },
       { source: '/add-location/thank-you', destination: '/add-location', permanent: false },
     ];
   },

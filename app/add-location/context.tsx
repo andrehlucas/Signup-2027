@@ -77,11 +77,13 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const setProgramId = (id: TruckingProgramId | null) => {
     if (locked()) return;
+    if (latest.current.programId !== id) setOrder(prev => ({ ...prev, agreementAccepted: false }));
     setProgramIdState(id);
     setSignupError('');
   };
   const setBilling = (b: ProgramBilling) => {
     if (locked()) return;
+    if (latest.current.billing !== b) setOrder(prev => ({ ...prev, agreementAccepted: false }));
     setBillingState(b);
     setSignupError('');
   };
@@ -138,13 +140,13 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const setUserInfo = (userInfo: UserInfo) => {
     if (locked()) return;
-    setOrder(prev => ({ ...prev, userInfo }));
+    setOrder(prev => ({ ...prev, userInfo, agreementAccepted: false }));
   };
 
   const setLocation = (location: AvailableLocation | null) => {
     if (locked()) return;
     setSignupError('');
-    setOrder(prev => ({ ...prev, location }));
+    setOrder(prev => ({ ...prev, location, agreementAccepted: false }));
     setProgramIdState(null);
   };
 
@@ -191,6 +193,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   };
 
   const setAgreementAccepted = (accepted: boolean) => {
+    if (locked()) return;
     setOrder(prev => ({ ...prev, agreementAccepted: accepted }));
   };
 
