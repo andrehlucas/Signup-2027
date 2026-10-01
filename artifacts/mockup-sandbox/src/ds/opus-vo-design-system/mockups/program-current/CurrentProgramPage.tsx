@@ -83,7 +83,7 @@ function ProgramSelectionPage() {
         {signupPending && <p className="mt-5 text-sm text-gray-600" role="status">Preparing checkout…</p>}
 
         <footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-6">
-          <Button className="signup-action" hierarchy="primary" size="lg" disabled={locked} onClick={() => router.push('/add-location')} data-testid="button-back">
+          <Button hierarchy="link-gray" size="lg" disabled={locked} onClick={() => router.push('/add-location')} data-testid="button-back">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back
           </Button>

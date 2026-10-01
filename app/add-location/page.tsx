@@ -206,7 +206,7 @@ export default function LocationSelectionPage() {
           )}
 
           <footer className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 pt-5">
-            <Button className="signup-action" hierarchy="primary" size="lg" disabled={frozen} onClick={() => router.push('/')} data-testid="button-back">
+            <Button hierarchy="link-gray" size="lg" disabled={frozen} onClick={() => router.push('/')} data-testid="button-back">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Back
             </Button>
