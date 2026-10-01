@@ -1,5 +1,6 @@
 /* Official Opus VO theme + funnel composition. */
 @import '@workspace/opus-vo-design-system/styles.css';
+@source "./mockups";
 
 .opus-shell {
   min-height: 100vh;
