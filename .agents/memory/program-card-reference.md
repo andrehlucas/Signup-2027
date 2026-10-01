@@ -11,6 +11,12 @@ For program-card presentation, prioritize the user's supplied TruckingPricingCar
 
 **Why:** The user explicitly requested bringing back the ZIP's switcher on 2026-10-01, superseding the earlier side-by-side pricing direction.
 
+Reference fidelity applies to the card composition and blue gradient identity, not to exaggerated decorative effects or tiny feature typography.
+
+**Why:** The user approved the Emil-inspired polish for the official page: more readable copy and restrained effects while retaining the supplied card structure and badge/checkout-button identity.
+
+**How to apply:** Preserve those recognizable design choices when refining this page; do not restore excessive glow or hover movement solely to match the original reference.
+
 The billing switcher's selected option must have an unmistakable filled treatment and a non-color selection cue.
 
 **Why:** The user found the reference's subtle white selected state too difficult to distinguish. Clear selection takes priority over reproducing that part of the ZIP exactly.

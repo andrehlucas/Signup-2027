@@ -24,6 +24,12 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       assert.equal(background.image, 'none', 'Back has no background image');
     };
     const assertNavigationColor = async (testId, disabled = false) => {
+      if (!disabled) {
+        await page.waitForFunction(id => {
+          const element = document.querySelector(`[data-testid="${id}"]`);
+          return element && getComputedStyle(element).backgroundColor === 'rgb(99, 161, 215)';
+        }, testId, { timeout: 5000 });
+      }
       const { background, foreground } = await page.getByTestId(testId).evaluate(element => {
         const styles = getComputedStyle(element);
         return { background: styles.backgroundColor, foreground: styles.color };
@@ -248,6 +254,24 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await assertCardCallToAction('essentials', 'Essentials');
     await assertCardCallToAction('pro', 'Pro');
     await assertDealBadge();
+    const keyboardButton = page.getByTestId('button-select-essentials');
+    await page.keyboard.press('Tab');
+    await keyboardButton.focus();
+    assert.equal(await keyboardButton.evaluate(node => node.matches(':focus-visible')), true);
+    assert.equal(await keyboardButton.evaluate(node => getComputedStyle(node).outlineStyle), 'solid', 'checkout keyboard focus is visible');
+    await page.keyboard.down('Space');
+    assert.equal(await keyboardButton.evaluate(node => getComputedStyle(node).transform), 'none', 'keyboard press does not animate');
+    // Blur before release so this focus check does not submit checkout.
+    await keyboardButton.evaluate(node => node.blur());
+    await page.keyboard.up('Space');
+    assert.equal(await page.getByTestId('signup-error').count(), 0);
+    if (process.env.REDUCED_MOTION === 'true') {
+      const card = page.getByTestId('program-card-essentials');
+      await card.hover();
+      assert.equal(await card.evaluate(node => getComputedStyle(node).transform), 'none');
+      assert.equal(await card.evaluate(node => getComputedStyle(node).transitionDuration), '0s');
+      await page.mouse.move(0, 0);
+    }
     const essentialsCard = page.getByTestId('program-card-essentials');
     const proCard = page.getByTestId('program-card-pro');
     const essentialsInitialClass = await cardClass('essentials');
@@ -276,6 +300,17 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.setViewportSize({ width: 375, height: 812 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false, 'yearly layout has no mobile overflow');
     await page.screenshot({ path: 'screenshots/program-mobile-yearly.png', fullPage: true });
+    for (const width of [320, 390, 768]) {
+      await page.setViewportSize({ width, height: 900 });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false, `yearly layout has no overflow at ${width}px`);
+      await page.getByTestId('button-billing-monthly').click();
+      await assertBillingFrequency('monthly');
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false, `monthly layout has no overflow at ${width}px`);
+      await page.getByTestId('button-billing-annual').focus();
+      await page.keyboard.press('Space');
+      await assertBillingFrequency('annual');
+    }
+    await page.setViewportSize({ width: 375, height: 812 });
     await page.getByTestId('button-billing-monthly').click();
     await assertBillingFrequency('monthly');
     if (process.env.VISUAL_ONLY === 'true') {

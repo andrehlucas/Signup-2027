@@ -812,6 +812,9 @@ body{
 .mb-6{
   margin-bottom: 1.5rem;
 }
+.mb-7{
+  margin-bottom: 1.75rem;
+}
 .mb-8{
   margin-bottom: 2rem;
 }
@@ -4242,6 +4245,11 @@ body{
 
   .md\:pl-6{
     padding-left: 1.5rem;
+  }
+
+  .md\:text-3xl{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
 
   .md\:text-\[2rem\]{
