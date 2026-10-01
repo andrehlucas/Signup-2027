@@ -3,13 +3,67 @@
 import { useEffect } from 'react';
 import './_preview.css';
 import { useRouter } from './_state';
-import { MapPin } from 'lucide-react';
+import { Check, Flame, MapPin } from 'lucide-react';
+import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
+import { Badge } from '@workspace/opus-vo-design-system/components/ui/badge';
 import { ProgressIndicator } from './_ProgressIndicator';
 import { useOrder } from './_state';
 import { useFunnelTracking } from './_state';
-import { truckingPrograms } from './_programs';
+import { truckingPrograms, type ProgramBilling } from './_programs';
 import { ProgramCard } from './_ProgramCard';
-import { BillingSwitcher } from './_BillingSwitcher';
+
+function BillingSwitcher({
+  billing,
+  disabled,
+  onChange,
+}: {
+  billing: ProgramBilling;
+  disabled: boolean;
+  onChange: (billing: ProgramBilling) => void;
+}) {
+  return (
+    <section className="mx-auto mb-8 flex max-w-md flex-col gap-3" aria-label="Billing options">
+      <div className="rounded-xl border border-gray-200 bg-white p-3 shadow-xs">
+        <p id="current-billing-label" className="mb-3 text-center text-sm font-medium text-gray-700">Billing frequency</p>
+        <div className="grid grid-cols-2 gap-2" role="group" aria-labelledby="current-billing-label" aria-describedby="current-billing-note">
+          {(['monthly', 'annual'] as const).map((frequency) => {
+            const selected = billing === frequency;
+            return (
+              <div key={frequency} className="flex min-w-0 flex-col gap-2">
+                <Button
+                  type="button"
+                  hierarchy={selected ? 'primary' : 'secondary'}
+                  size="lg"
+                  className="w-full"
+                  disabled={disabled}
+                  aria-pressed={selected}
+                  data-testid={`button-billing-${frequency}`}
+                  onClick={() => onChange(frequency)}
+                >
+                  <span className="flex h-4 w-4 items-center justify-center" aria-hidden="true">
+                    <Check className={`h-4 w-4 ${selected ? '' : 'invisible'}`} />
+                  </span>
+                  {frequency === 'monthly' ? 'Monthly' : 'Yearly'}
+                </Button>
+                <p className="text-center text-xs text-gray-600">
+                  {frequency === 'monthly' ? 'Pay every month' : 'Pay once a year'}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <Badge color="warning" variant="pill" size="md" leadingIcon={<Flame className="h-4 w-4" aria-hidden="true" />}>
+          Save over 16% with yearly billing
+        </Badge>
+        <p id="current-billing-note" className="text-center text-xs text-gray-600">
+          Pay for 10 months up front, get 12 months of service.
+        </p>
+      </div>
+    </section>
+  );
+}
 
 function hasValidUserInfo(u: ReturnType<typeof useOrder>['order']['userInfo']): boolean {
   const len = u.phone.replace(/\D/g, '').length;

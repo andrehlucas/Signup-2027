@@ -1,0 +1,22 @@
+.switcher {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing) * 3);
+  margin: 0 auto calc(var(--spacing) * 8);
+}
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 3);
+  flex-wrap: wrap;
+}
+.group {
+  display: inline-flex;
+  padding: var(--spacing);
+  gap: var(--spacing);
+  border: 1px solid var(--color-gray-200);
+  background: var(--color-white);
+  box-shadow: var(--shadow-xs);
+}
