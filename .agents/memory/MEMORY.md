@@ -1,3 +1,4 @@
 - [Design-system linking](design-system-tailwind3-linking.md) — use the source alias until a deliberate Next.js upgrade allows normal local-package installation.
 - [Preview selection](preview-selection.md) — stopping a managed artifact does not change preview selection; verify the selected artifact endpoint.
 - [Signup intent](signup-intent.md) — priced program choices are unpaid signup preferences, not purchases or service activation.
+- [Program-card visual reference](program-card-reference.md) — the supplied React cards take priority over generic minimalist styling for this signup step.

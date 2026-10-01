@@ -4,10 +4,12 @@ import { Check, X } from 'lucide-react';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
   truckingPrograms,
+  truckingSharedFeaturesSummary,
   truckingProOnlyFeatures,
   type ProgramBilling,
   type TruckingProgramId,
 } from '../../../shared/trucking-programs';
+import styles from './ProgramCard.module.css';
 
 type Program = (typeof truckingPrograms)[number];
 
@@ -19,40 +21,42 @@ interface ProgramCardProps {
   onSelect: (id: TruckingProgramId, billing?: ProgramBilling) => void;
 }
 
-export function ProgramCard({ plan, selected, billing, disabled, onSelect }: ProgramCardProps) {
-  const isPro = plan.id === 'pro';
-
+function Feature({ label, included = true }: { label: string; included?: boolean }) {
   return (
-    <div
-      className={`relative flex flex-col rounded-xl border bg-white transition-colors duration-200 motion-reduce:transition-none ${
-        selected ? 'border-brand-600 ring-1 ring-brand-600' : 'border-gray-200'
-      }`}
+    <li className={`${styles.feature} ${included ? '' : styles.excluded}`}>
+      <span className={styles.featureIcon}>
+        {included ? <Check aria-hidden="true" /> : <X aria-hidden="true" />}
+      </span>
+      <span>
+        {!included && <span className="sr-only">Not included: </span>}
+        {label}
+      </span>
+    </li>
+  );
+}
+
+/** Presentation adapted from the user's uploaded TruckingPricingCards export. */
+export function ProgramCard({ plan, selected, billing, disabled, onSelect }: ProgramCardProps) {
+  return (
+    <article
+      className={`${styles.card} ${selected ? styles.selected : ''}`}
       data-testid={`program-card-${plan.id}`}
     >
-      <div className="p-6 lg:p-8">
-        <div className="mb-3 flex min-h-6 items-center justify-between gap-3">
-          <span className="text-xs font-medium uppercase tracking-wide text-gray-500">Opus Trucking</span>
-          <span className={`flex items-center gap-1 text-xs font-medium text-brand-700 ${selected ? '' : 'invisible'}`}>
-            <Check className="h-4 w-4" aria-hidden="true" />
-            Selected
-          </span>
-        </div>
-        <h2 className="text-2xl font-semibold tracking-tight text-gray-900">
-          <span className="sr-only">Opus Trucking </span>{plan.label}
+      <div className={styles.top}>
+        <h2 className={styles.title}>
+          Opus Trucking<br />
+          <span className={plan.id === 'pro' ? styles.pro : styles.essentials}>{plan.label}</span>
         </h2>
-        <p className="mt-2 min-h-10 text-sm leading-5 text-gray-600">{plan.description}</p>
-
-        <div className="mt-6 grid grid-cols-2 gap-4 lg:gap-6">
+        <p className={styles.description}>{plan.description}</p>
+        <div className={styles.pricing}>
           {(['monthly', 'annual'] as const).map((frequency) => {
             const checked = selected && billing === frequency;
             return (
               <label
                 key={frequency}
-                className={`flex min-w-0 flex-col border-b-2 pb-3 transition-colors motion-reduce:transition-none ${
-                  disabled ? 'cursor-not-allowed' : 'cursor-pointer'
-                } ${checked ? 'border-brand-600' : 'border-gray-200 hover:border-brand-300'}`}
+                className={`${styles.priceOption} ${checked ? styles.checked : ''} ${disabled ? styles.disabled : ''}`}
               >
-                <span className="mb-3 flex items-center gap-2 text-sm font-medium text-gray-700">
+                <span className={styles.billingLabel}>
                   <input
                     type="radio"
                     name="program-billing"
@@ -65,51 +69,42 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
                   />
                   {frequency === 'monthly' ? 'Monthly' : 'Annual'}
                 </span>
-                <span className="text-3xl font-semibold leading-10 tracking-tight tabular-nums text-gray-900">
+                <span className={styles.price}>
                   ${frequency === 'monthly' ? plan.monthly : plan.annualTotal.toLocaleString('en-US')}
                 </span>
-                <span className="mt-1 text-sm text-gray-500">
-                  {frequency === 'monthly' ? '/ month' : '/ year'}
-                </span>
-                <span className={`mt-3 text-xs font-medium ${frequency === 'annual' ? 'text-brand-700' : 'text-gray-500'}`}>
+                <span className={styles.unit}>{frequency === 'monthly' ? '/ month' : '/ year'}</span>
+                <span className={frequency === 'annual' ? styles.promo : styles.note}>
                   {frequency === 'monthly' ? 'Billed monthly' : '2 months free'}
                 </span>
               </label>
             );
           })}
         </div>
-
-        <div className="mt-6 flex items-baseline gap-2">
-          <span className="shrink-0 whitespace-nowrap text-xl font-semibold tabular-nums text-gray-900">{plan.meetingHours} hours</span>
-          <span className="text-sm text-gray-600">meeting room access / month</span>
-        </div>
-        <ul className="mt-4 space-y-3">
-          {truckingProOnlyFeatures.map((feature) => (
-            <li key={feature} className={`flex items-center gap-3 text-sm ${isPro ? 'text-gray-700' : 'text-gray-500'}`}>
-              {isPro ? (
-                <Check className="h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
-              ) : (
-                <X className="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
-              )}
-              {!isPro && <span className="sr-only">Not included: </span>}
-              {feature}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="mt-auto px-6 pb-6 lg:px-8 lg:pb-8">
         <Button
-          hierarchy={selected ? 'primary' : 'secondary'}
+          hierarchy="primary"
           size="lg"
-          className="w-full"
+          className={styles.cta}
           aria-pressed={selected}
           disabled={disabled}
           onClick={() => onSelect(plan.id)}
           data-testid={`button-select-${plan.id}`}
         >
-          {selected ? `Selected ${plan.label}` : `Select ${plan.label}`}
+          {selected ? <><Check className="h-4 w-4" aria-hidden="true" /> Selected {plan.label}</> : 'Click here to get started'}
         </Button>
       </div>
-    </div>
+      <div className={styles.features}>
+        <h3 className={styles.featuresHeading}>What&apos;s included</h3>
+        <p className={styles.summary}>{truckingSharedFeaturesSummary}</p>
+        <ul className={styles.featureList}>
+          <Feature label={`${plan.meetingHours} Hours Meeting Room Access per month`} />
+          <Feature label="Vault" />
+          <Feature label="Digital Document Storage" />
+          <Feature label="Registered Agent" />
+          {truckingProOnlyFeatures.map((feature) => (
+            <Feature key={feature} label={feature} included={plan.id === 'pro'} />
+          ))}
+        </ul>
+      </div>
+    </article>
   );
 }

@@ -1,0 +1,90 @@
+/* Adapted from the uploaded TruckingPricingCards.css.
+   Keep the supplied composition; use the host's canonical Opus palette and Inter font. */
+.card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  border-radius: 30px;
+  background: white;
+  box-shadow: 0 20px 40px -16px color-mix(in srgb, var(--gray-900) 12%, transparent);
+  transition: transform 250ms cubic-bezier(.4, 0, .2, 1), box-shadow 250ms cubic-bezier(.4, 0, .2, 1);
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px -8px color-mix(in srgb, var(--brand-600) 25%, transparent);
+  }
+}
+
+.selected {
+  border-color: var(--brand-600);
+  outline: 2px solid var(--brand-600);
+  outline-offset: 2px;
+}
+
+.top { display: flex; flex-direction: column; padding: 20px 32px; }
+.title { font-size: 24px; font-weight: 800; line-height: 1.375; letter-spacing: -.025em; color: var(--gray-900); }
+.essentials { color: var(--brand-400); }
+.pro { color: var(--brand-600); }
+.description { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-500); }
+.pricing { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.priceOption {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.priceOption:hover { border-color: var(--brand-200); }
+.priceOption:focus-within { border-color: var(--brand-600); }
+.priceOption.checked { border-color: var(--brand-600); }
+.disabled { cursor: not-allowed; }
+.billingLabel { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--gray-500); }
+.price { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--gray-900); }
+.unit { font-size: 14px; font-weight: 500; color: var(--gray-500); }
+.promo, .note { font-size: 12px; line-height: 20px; }
+.promo { font-weight: 600; color: var(--success-700); }
+.note { color: var(--gray-500); }
+
+.card .cta {
+  width: 100%;
+  height: 52px;
+  margin-top: 20px;
+  border: 1px solid var(--brand-400);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--brand-400) 0%, var(--brand-500) 100%);
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--brand-400) 40%, transparent);
+  transition: transform 200ms cubic-bezier(.4, 0, .2, 1), box-shadow 200ms cubic-bezier(.4, 0, .2, 1);
+}
+.card .cta:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 26px color-mix(in srgb, var(--brand-400) 55%, transparent); }
+.card .cta:disabled { background: var(--brand-100); color: var(--brand-600); border-color: var(--brand-200); box-shadow: none; }
+.features { flex: 1; padding: 20px 24px 24px; border-top: 1px solid var(--gray-100); background: var(--gray-25); }
+.featuresHeading { margin-bottom: 12px; font-size: 10px; font-weight: 700; line-height: 1.5; letter-spacing: .05em; text-transform: uppercase; color: var(--gray-500); }
+.summary { font-size: 12px; line-height: 1.625; color: var(--gray-500); }
+.featureList { margin-top: 16px; }
+.feature + .feature { margin-top: 12px; }
+.feature { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; line-height: 18px; font-weight: 500; color: var(--gray-700); }
+.featureIcon { display: grid; width: 18px; height: 18px; flex-shrink: 0; place-content: center; border-radius: 9999px; background: var(--brand-400); color: white; }
+.featureIcon svg { width: 10px; height: 10px; stroke-width: 3; }
+.excluded { color: var(--gray-500); }
+.excluded .featureIcon { background: var(--gray-200); color: var(--gray-400); }
+
+@media (min-width: 1024px) {
+  .price { font-size: 40px; }
+}
+@media (max-width: 359px) {
+  .top { padding-right: 24px; padding-left: 24px; }
+  .price { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card, .card .cta { transition: none; }
+  .card:hover, .card .cta:hover:not(:disabled) { transform: none; }
+}

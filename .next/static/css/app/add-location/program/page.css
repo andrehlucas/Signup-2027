@@ -1,0 +1,93 @@
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/next@15.5.22_@babel+core@7.29.7_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/.pnpm/next@15.5.22_@babel+core@7.29.7_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./app/add-location/program/ProgramCard.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/* Adapted from the uploaded TruckingPricingCards.css.
+   Keep the supplied composition; use the host's canonical Opus palette and Inter font. */
+.ProgramCard_card__dJ0GK {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  border-radius: 30px;
+  background: white;
+  box-shadow: 0 20px 40px -16px color-mix(in srgb, var(--gray-900) 12%, transparent);
+  transition: transform 250ms cubic-bezier(.4, 0, .2, 1), box-shadow 250ms cubic-bezier(.4, 0, .2, 1);
+}
+
+@media (hover: hover) {
+  .ProgramCard_card__dJ0GK:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px -8px color-mix(in srgb, var(--brand-600) 25%, transparent);
+  }
+}
+
+.ProgramCard_selected__bsRFN {
+  border-color: var(--brand-600);
+  outline: 2px solid var(--brand-600);
+  outline-offset: 2px;
+}
+
+.ProgramCard_top__dyDzf { display: flex; flex-direction: column; padding: 20px 32px; }
+.ProgramCard_title____0XC { font-size: 24px; font-weight: 800; line-height: 1.375; letter-spacing: -.025em; color: var(--gray-900); }
+.ProgramCard_essentials__sYVfV { color: var(--brand-400); }
+.ProgramCard_pro__nbCze { color: var(--brand-600); }
+.ProgramCard_description__bK_pC { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-500); }
+.ProgramCard_pricing__Rhw7P { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.ProgramCard_priceOption__dobix {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.ProgramCard_priceOption__dobix:hover { border-color: var(--brand-200); }
+.ProgramCard_priceOption__dobix:focus-within { border-color: var(--brand-600); }
+.ProgramCard_priceOption__dobix.ProgramCard_checked__4Qjtf { border-color: var(--brand-600); }
+.ProgramCard_disabled__3OLE9 { cursor: not-allowed; }
+.ProgramCard_billingLabel__3i5Vs { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--gray-500); }
+.ProgramCard_price__UaqMd { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--gray-900); }
+.ProgramCard_unit__BD1q6 { font-size: 14px; font-weight: 500; color: var(--gray-500); }
+.ProgramCard_promo__TqmBe, .ProgramCard_note__4rCjH { font-size: 12px; line-height: 20px; }
+.ProgramCard_promo__TqmBe { font-weight: 600; color: var(--success-700); }
+.ProgramCard_note__4rCjH { color: var(--gray-500); }
+
+.ProgramCard_card__dJ0GK .ProgramCard_cta__x0vTO {
+  width: 100%;
+  height: 52px;
+  margin-top: 20px;
+  border: 1px solid var(--brand-400);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--brand-400) 0%, var(--brand-500) 100%);
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--brand-400) 40%, transparent);
+  transition: transform 200ms cubic-bezier(.4, 0, .2, 1), box-shadow 200ms cubic-bezier(.4, 0, .2, 1);
+}
+.ProgramCard_card__dJ0GK .ProgramCard_cta__x0vTO:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 26px color-mix(in srgb, var(--brand-400) 55%, transparent); }
+.ProgramCard_card__dJ0GK .ProgramCard_cta__x0vTO:disabled { background: var(--brand-100); color: var(--brand-600); border-color: var(--brand-200); box-shadow: none; }
+.ProgramCard_features__6ifRp { flex: 1; padding: 20px 24px 24px; border-top: 1px solid var(--gray-100); background: var(--gray-25); }
+.ProgramCard_featuresHeading__5Kruf { margin-bottom: 12px; font-size: 10px; font-weight: 700; line-height: 1.5; letter-spacing: .05em; text-transform: uppercase; color: var(--gray-500); }
+.ProgramCard_summary__irUgS { font-size: 12px; line-height: 1.625; color: var(--gray-500); }
+.ProgramCard_featureList__DZhWJ { margin-top: 16px; }
+.ProgramCard_feature__GVVFA + .ProgramCard_feature__GVVFA { margin-top: 12px; }
+.ProgramCard_feature__GVVFA { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; line-height: 18px; font-weight: 500; color: var(--gray-700); }
+.ProgramCard_featureIcon__dDxHs { display: grid; width: 18px; height: 18px; flex-shrink: 0; place-content: center; border-radius: 9999px; background: var(--brand-400); color: white; }
+.ProgramCard_featureIcon__dDxHs svg { width: 10px; height: 10px; stroke-width: 3; }
+.ProgramCard_excluded__n9Jo_ { color: var(--gray-500); }
+.ProgramCard_excluded__n9Jo_ .ProgramCard_featureIcon__dDxHs { background: var(--gray-200); color: var(--gray-400); }
+
+@media (min-width: 1024px) {
+  .ProgramCard_price__UaqMd { font-size: 40px; }
+}
+@media (max-width: 359px) {
+  .ProgramCard_top__dyDzf { padding-right: 24px; padding-left: 24px; }
+  .ProgramCard_price__UaqMd { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ProgramCard_card__dJ0GK, .ProgramCard_card__dJ0GK .ProgramCard_cta__x0vTO { transition: none; }
+  .ProgramCard_card__dJ0GK:hover, .ProgramCard_card__dJ0GK .ProgramCard_cta__x0vTO:hover:not(:disabled) { transform: none; }
+}

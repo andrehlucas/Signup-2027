@@ -2,20 +2,13 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, MapPin } from 'lucide-react';
+import { ArrowLeft, MapPin } from 'lucide-react';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
-import { truckingPrograms, truckingSharedFeaturesSummary } from '../../../shared/trucking-programs';
+import { truckingPrograms } from '../../../shared/trucking-programs';
 import { ProgramCard } from './ProgramCard';
-
-const sharedFeatures = [
-  ...truckingSharedFeaturesSummary.replace(/\.$/, '').split(', ').map((feature) => feature.replace(/^and /, '')),
-  'Vault',
-  'Digital Document Storage',
-  'Registered Agent',
-];
 
 function hasValidUserInfo(u: ReturnType<typeof useOrder>['order']['userInfo']): boolean {
   const len = u.phone.replace(/\D/g, '').length;
@@ -67,7 +60,7 @@ export default function ProgramSelectionPage() {
           </div>
         </header>
 
-        <fieldset disabled={locked} className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6" data-testid="programs-list">
+        <fieldset disabled={locked} className="mx-auto grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2" data-testid="programs-list">
           <legend className="sr-only">Programs</legend>
           {truckingPrograms.map((plan) => (
             <ProgramCard
@@ -85,23 +78,6 @@ export default function ProgramSelectionPage() {
           ))}
         </fieldset>
 
-        <section className="mt-8 border-b border-gray-200 pb-8" aria-labelledby="shared-features-heading">
-          <div className="grid gap-5 lg:grid-cols-3 lg:gap-8">
-            <div>
-              <h2 id="shared-features-heading" className="text-base font-semibold text-gray-900">Included in both programs</h2>
-              <p className="mt-2 text-sm leading-5 text-gray-600">The business essentials are covered,<br className="hidden lg:block" /> whichever program you choose.</p>
-            </div>
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-3 sm:gap-x-6 lg:col-span-2">
-              {sharedFeatures.map((feature) => (
-                <li key={feature} className="flex items-start gap-2 text-sm text-gray-600">
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
         {signupError && <p className="mt-5 text-sm text-error-700" role="alert" data-testid="signup-error">{signupError}</p>}
         {signupPending && <p className="mt-5 text-sm text-gray-600" role="status">Completing your signup…</p>}
         {signupComplete && (
@@ -110,7 +86,7 @@ export default function ProgramSelectionPage() {
           </p>
         )}
 
-        <footer className="mt-6 flex flex-wrap items-center justify-between gap-4">
+        <footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-6">
           <Button hierarchy="link-gray" size="lg" disabled={locked} onClick={() => router.push('/add-location')} data-testid="button-back">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back
