@@ -26,15 +26,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/add-location/page.js"
     ],
-    "/add-location/program/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/add-location/program/page.js"
-    ],
     "/api/signup/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/signup/route.js"
+    ],
+    "/add-location/program/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/add-location/program/page.js"
     ]
   }
 }
