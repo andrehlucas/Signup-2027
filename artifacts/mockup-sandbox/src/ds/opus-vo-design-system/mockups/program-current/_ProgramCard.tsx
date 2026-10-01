@@ -38,7 +38,7 @@ function Feature({ label, included = true }: { label: string; included?: boolean
 
 /** Presentation adapted from the user's uploaded TruckingPricingCards export. */
 export function ProgramCard({ plan, selected, billing, disabled, loading, onSelect }: ProgramCardProps) {
-  const buttonLabel = plan.id === 'essentials' ? 'Select Essentials Program' : `Select ${plan.label}`;
+  const buttonLabel = `Continue with ${plan.label}`;
   return (
     <article
       className={`${styles.card} ${selected ? styles.selected : ''}`}
@@ -80,7 +80,7 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
           className={`${styles.cta} w-full`}
           disabled={disabled}
           loading={loading}
-          aria-label={`${buttonLabel} and continue to checkout`}
+          aria-label={`${buttonLabel} to checkout`}
           onClick={() => onSelect(plan.id)}
           data-testid={`button-select-${plan.id}`}
         >
