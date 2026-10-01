@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Building2, Check, MapPin, Star } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building2, Check, MapPin, Star } from 'lucide-react';
 import { Badge } from '@workspace/opus-vo-design-system/components/ui/badge';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
@@ -15,7 +15,6 @@ import {
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { useOrder } from './context';
 import { useFunnelTracking } from '../hooks/use-funnel-tracking';
-import { useRevealContinue } from '../hooks/use-reveal-continue';
 import { getLocationsByState, getStates } from './types';
 
 function hasValidUserInfo(userInfo: ReturnType<typeof useOrder>['order']['userInfo']): boolean {
@@ -43,10 +42,10 @@ export default function LocationSelectionPage() {
     setSelectedState,
   } = useOrder();
   const [isReady, setIsReady] = useState(false);
-  const frozen = signupComplete || signupPending;
+  const [isAdvancing, setIsAdvancing] = useState(false);
+  const frozen = signupComplete || signupPending || isAdvancing;
   const isUserInfoValid = hasValidUserInfo(order.userInfo);
   const { trackComplete } = useFunnelTracking('pick_location');
-  const { continueRef, revealContinue } = useRevealContinue();
 
   useEffect(() => {
     if (!isUserInfoValid) {
@@ -74,11 +73,14 @@ export default function LocationSelectionPage() {
     const location = locations.find((availableLocation) => availableLocation.id === locationId);
     if (!location) return;
     setLocation(location);
-    revealContinue();
   };
 
-  const handleContinue = () => {
-    if (!selectedLocation) return;
+  const handleContinue = (locationId: string) => {
+    if (frozen) return;
+    const location = locations.find((availableLocation) => availableLocation.id === locationId);
+    if (!location) return;
+    setIsAdvancing(true);
+    if (order.location?.id !== location.id) setLocation(location);
     trackComplete();
     router.push('/add-location/program');
   };
@@ -126,8 +128,9 @@ export default function LocationSelectionPage() {
                 {locations.map((location) => {
                   const isSelected = selectedLocation?.id === location.id;
                   return (
-                    <label key={location.id} className="block cursor-pointer">
+                    <article key={location.id} className="block">
                       <input
+                        id={`location-${location.id}`}
                         type="radio"
                         name="location"
                         value={location.id}
@@ -146,45 +149,59 @@ export default function LocationSelectionPage() {
                         }`}
                         data-testid={`location-card-${location.id}`}
                       >
-                        <div className="w-full bg-gray-100 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>
-                          <Building2 className="h-12 w-12 text-gray-400" aria-hidden="true" />
-                        </div>
-                        <div className="p-4 flex flex-col gap-3 flex-1">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2 mb-2">
-                              <h2 className="font-medium text-gray-900">{location.name}</h2>
-                              {isSelected && (
-                                <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-white" aria-label="Selected">
-                                  <Check className="h-4 w-4" aria-hidden="true" />
-                                </span>
+                        <label htmlFor={`location-${location.id}`} className="flex flex-1 cursor-pointer flex-col">
+                          <div className="w-full bg-gray-100 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>
+                            <Building2 className="h-12 w-12 text-gray-400" aria-hidden="true" />
+                          </div>
+                          <div className="p-4 flex flex-col gap-3 flex-1">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2 mb-2">
+                                <h2 className="font-medium text-gray-900">{location.name}</h2>
+                                {isSelected && (
+                                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-white" aria-label="Selected">
+                                    <Check className="h-4 w-4" aria-hidden="true" />
+                                  </span>
+                                )}
+                              </div>
+                              {location.isPremium && (
+                                <Badge
+                                  color="warning"
+                                  variant="pill"
+                                  size="sm"
+                                  leadingIcon={<Star className="h-3 w-3 fill-current" />}
+                                  className="mb-2"
+                                >
+                                  Premium Location
+                                </Badge>
                               )}
-                            </div>
-                            {location.isPremium && (
-                              <Badge
-                                color="warning"
-                                variant="pill"
-                                size="sm"
-                                leadingIcon={<Star className="h-3 w-3 fill-current" />}
-                                className="mb-2"
-                              >
-                                Premium Location
-                              </Badge>
-                            )}
-                            <div className="text-sm text-gray-600">
-                              <p className="flex items-center gap-1">
-                                <MapPin className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
-                                {location.address}
-                              </p>
-                              {location.addressLine2 && <p className="ml-5">{location.addressLine2}</p>}
-                              <p className="ml-5">{location.city}, {location.stateCode} {location.zipCode}</p>
+                              <div className="text-sm text-gray-600">
+                                <p className="flex items-center gap-1">
+                                  <MapPin className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+                                  {location.address}
+                                </p>
+                                {location.addressLine2 && <p className="ml-5">{location.addressLine2}</p>}
+                                <p className="ml-5">{location.city}, {location.stateCode} {location.zipCode}</p>
+                              </div>
                             </div>
                           </div>
-                          <span className={`text-sm font-semibold ${isSelected ? 'text-brand-700' : 'text-gray-500'}`}>
-                            {isSelected ? 'Selected' : 'Choose this location'}
-                          </span>
+                        </label>
+                        <div className="px-4 pb-4">
+                          <Button
+                            type="button"
+                            hierarchy="primary"
+                            size="lg"
+                            className="signup-action w-full"
+                            disabled={frozen}
+                            onClick={() => handleContinue(location.id)}
+                            aria-label={`Choose This Location: ${location.name}, ${location.address}`}
+                            data-testid={`button-choose-location-${location.id}`}
+                          >
+                            Choose This Location
+                            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                          </Button>
                         </div>
                       </div>
-                    </label>
+                    </article>
                   );
                 })}
               </div>
@@ -209,18 +226,6 @@ export default function LocationSelectionPage() {
             <Button hierarchy="link-gray" size="lg" disabled={frozen} onClick={() => router.push('/')} data-testid="button-back">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Back
-            </Button>
-            <Button
-              className="signup-action"
-              ref={continueRef}
-              style={{ scrollMarginBlock: 16 }}
-              onClick={handleContinue}
-              hierarchy="primary"
-              size="lg"
-              disabled={!selectedLocation || frozen}
-              data-testid="button-continue"
-            >
-              Continue
             </Button>
           </footer>
         </div>

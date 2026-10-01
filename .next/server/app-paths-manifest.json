@@ -1,5 +1,6 @@
 {
   "/api/funnel/events/route": "app/api/funnel/events/route.js",
+  "/api/checkout/route": "app/api/checkout/route.js",
   "/page": "app/page.js",
   "/add-location/page": "app/add-location/page.js",
   "/add-location/program/page": "app/add-location/program/page.js"

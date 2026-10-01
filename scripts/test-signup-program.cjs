@@ -50,7 +50,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       const dark = Math.min(luminance(backgroundRgb), luminance(rgb(foreground)));
       assert.ok((light + 0.05) / (dark + 0.05) >= 4.5, `${testId} text meets WCAG AA contrast`);
     };
-    const assertFooterVisible = async (testId) => {
+    const assertActionVisible = async (testId) => {
       await page.waitForFunction(id => {
         const button = document.querySelector(`[data-testid="${id}"]`);
         if (!button || button.disabled) return false;
@@ -228,7 +228,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('checkbox-terms').click();
     await page.getByTestId('button-continue').click();
     await page.getByTestId('location-selection-page').waitFor();
-    await assertNavigationColor('button-continue', true);
+    assert.equal(await page.getByTestId('button-continue').count(), 0, 'location advances through card buttons, not a footer Continue');
     await assertTextOnlyBack();
     await assertNavigationColor('step-1-complete');
     await assertNavigationColor('step-2-current');
@@ -236,27 +236,35 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByRole('option', { name: 'Florida', exact: true }).click();
     await page.setViewportSize({ width: 375, height: 812 });
     await page.locator('[data-testid^="location-card-"]').first().click();
-    await assertFooterVisible('button-continue');
-    await assertNavigationColor('button-continue');
     const selectedLocationId = await page.locator('input[name="location"]:checked').getAttribute('data-testid');
-    const [backBounds, continueBounds] = await page.evaluate(() =>
-      ['button-back', 'button-continue'].map(id => {
-        const { x, y, height } = document.querySelector(`[data-testid="${id}"]`).getBoundingClientRect();
-        return { x, y, height };
-      })
-    );
-    assert.ok(backBounds.x < continueBounds.x, 'location Back is left of Continue');
-    assert.ok(Math.abs((backBounds.y + backBounds.height / 2) - (continueBounds.y + continueBounds.height / 2)) < 2, 'location footer buttons share a row on mobile');
+    const locationButtons = page.locator('[data-testid^="button-choose-location-"]');
+    assert.equal(await locationButtons.count(), await page.locator('[data-testid^="location-card-"]').count(), 'every location card has its own choose button');
+    const firstLocationButtonId = await locationButtons.first().getAttribute('data-testid');
+    await locationButtons.first().scrollIntoViewIfNeeded();
+    await assertActionVisible(firstLocationButtonId);
+    await page.mouse.move(0, 0);
+    await assertNavigationColor(firstLocationButtonId);
+    assert.equal(await locationButtons.first().locator('xpath=ancestor::label').count(), 0, 'choose button is outside the radio label');
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false, 'location buttons fit mobile cards');
     fs.mkdirSync('screenshots', { recursive: true });
-    await page.screenshot({ path: 'screenshots/location-footer-mobile.png' });
+    await page.screenshot({ path: 'screenshots/location-card-buttons-mobile.png', fullPage: true });
     await page.getByTestId('button-back').click();
     await page.getByTestId('input-first-name').waitFor();
     assert.equal(await page.getByTestId('input-first-name').inputValue(), 'Flow', 'Back retains user information');
     await page.getByTestId('button-continue').click();
     await page.getByTestId('location-selection-page').waitFor();
     assert.equal(await page.getByTestId(selectedLocationId).isChecked(), true, 'Back retains location selection');
-    await page.getByTestId('button-continue').click();
+    const nextLocationCard = page.locator('[data-testid^="location-card-"]').nth(1);
+    const nextLocationName = await nextLocationCard.locator('h2').innerText();
+    const nextLocationButtonId = await nextLocationCard.locator('[data-testid^="button-choose-location-"]').getAttribute('data-testid');
+    assert.equal(await nextLocationCard.locator('label input').count(), 0);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.screenshot({ path: 'screenshots/location-card-buttons-desktop.png', fullPage: true });
+    // Choose a different card directly, without first selecting its radio.
+    await page.getByTestId(nextLocationButtonId).focus();
+    await page.keyboard.press('Enter');
     await page.getByTestId('program-selection-page').waitFor();
+    assert.equal(await page.getByText(nextLocationName, { exact: true }).count(), 1, 'card button stores the clicked location before advancing');
     await page.setViewportSize({ width: 1280, height: 900 });
     await assertNoProgramFooter();
     await assertNavigationColor('step-3-current');
@@ -377,8 +385,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('step-nav-2').click();
     await page.getByTestId('location-selection-page').waitFor();
     assert.equal(await page.getByTestId('select-state').isDisabled(), false, 'location is editable before checkout is pending');
-    await page.getByTestId('button-continue').scrollIntoViewIfNeeded();
-    await page.getByTestId('button-continue').click();
+    await page.getByTestId(nextLocationButtonId).scrollIntoViewIfNeeded();
+    await page.getByTestId(nextLocationButtonId).click();
     await page.getByTestId('program-selection-page').waitFor();
     assert.equal(observedCheckoutRequests.length, 1, 'returning to the program page does not implicitly post checkout');
     await assertBillingFrequency('annual');
@@ -468,7 +476,10 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.equal(await page.getByTestId('select-state').isDisabled(), true);
     assert.equal(await page.getByTestId('button-back').isDisabled(), true, 'location Back is locked during signup');
     await assertTextOnlyBack();
-    await assertNavigationColor('button-continue', true);
+    for (const button of await page.locator('[data-testid^="button-choose-location-"]').all()) {
+      assert.equal(await button.isDisabled(), true, 'location card actions are locked during checkout');
+      await assertNavigationColor(await button.getAttribute('data-testid'), true);
+    }
     await assertNavigationColor('step-1-complete', true);
     assert.equal(await page.getByTestId('step-nav-1').isDisabled(), true, 'completed step navigation remains locked at location');
     await page.goForward();
