@@ -98,8 +98,9 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     };
     const assertCardCallToAction = async (planId, planName) => {
       const button = page.getByTestId(`button-select-${planId}`);
-      assert.equal(await button.getAttribute('aria-label'), `Select ${planName} and continue to checkout`);
-      assert.equal((await button.innerText()).trim(), `Select ${planName}`);
+      const buttonLabel = planId === 'essentials' ? 'Select Essentials Program' : `Select ${planName}`;
+      assert.equal(await button.getAttribute('aria-label'), `${buttonLabel} and continue to checkout`);
+      assert.equal((await button.innerText()).trim(), buttonLabel);
       await assertCallToActionColor(`button-select-${planId}`);
       await button.hover();
       await assertCallToActionColor(`button-select-${planId}`);
