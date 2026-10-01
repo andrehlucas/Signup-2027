@@ -51,6 +51,7 @@ export default function ProgramSelectionPage() {
     <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="program-selection-page">
       <div className="max-w-4xl lg:max-w-6xl mx-auto">
         <div className="mb-8"><ProgressIndicator currentStep={3} disabled={locked} /></div>
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
         <div className="mb-6">
           <h1 className="text-lg font-semibold text-gray-900 mb-1">Choose Your Program</h1>
           <p className="text-sm text-gray-600 mb-1">
@@ -61,7 +62,7 @@ export default function ProgramSelectionPage() {
           </p>
         </div>
         <div>
-          <fieldset disabled={locked} className="grid grid-cols-1 md:grid-cols-2 gap-6" data-testid="programs-list">
+          <fieldset disabled={locked} className="grid grid-cols-1 md:grid-cols-2 gap-4" data-testid="programs-list">
             <legend className="sr-only">Programs</legend>
             {truckingPrograms.map((plan) => {
               const selected = programId === plan.id;
@@ -69,22 +70,21 @@ export default function ProgramSelectionPage() {
               return (
                 <div
                   key={plan.id}
-                  className={`flex flex-col overflow-hidden rounded-3xl bg-white shadow-lg ${selected ? 'ring-2 ring-brand-500' : 'ring-1 ring-gray-200'}`}
+                  className={`flex flex-col overflow-hidden rounded-lg border-2 bg-white transition-colors ${selected ? 'border-brand-500 shadow-md' : 'border-gray-200'}`}
                   data-testid={`program-card-${plan.id}`}
                 >
-                  <div className="p-6">
-                    <h2 className="text-2xl font-bold leading-tight text-gray-900">
-                      Opus Trucking<br />
-                      <span className={isPro ? 'text-brand-800' : 'text-brand-400'}>{plan.label}</span>
+                  <div className="p-4">
+                    <h2 className="text-base font-semibold text-gray-900">
+                      {plan.name}
                     </h2>
-                    <p className="mt-3 text-sm text-gray-600">{plan.description}</p>
-                    <div className="mt-5 space-y-2">
+                    <p className="mt-2 text-sm text-gray-600">{plan.description}</p>
+                    <div className="mt-4 space-y-2">
                       {(['monthly', 'annual'] as const).map((b) => {
                         const checked = selected && billing === b;
                         return (
                           <label
                             key={b}
-                            className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 ${checked ? 'bg-brand-50 ring-1 ring-brand-300' : 'ring-1 ring-transparent'}`}
+                            className={`flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 ${checked ? 'bg-brand-50 ring-1 ring-brand-300' : 'ring-1 ring-transparent'}`}
                           >
                             <input
                               type="radio"
@@ -96,7 +96,7 @@ export default function ProgramSelectionPage() {
                             />
                             {b === 'monthly' ? (
                               <span className="text-gray-900">
-                                <span className="text-4xl font-extrabold">${plan.monthly}</span>
+                                <span className="text-3xl font-semibold">${plan.monthly}</span>
                                 <span className="ml-1 text-sm font-medium text-gray-600">/ mo</span>
                                 <span className="sr-only"> billed monthly</span>
                               </span>
@@ -112,8 +112,8 @@ export default function ProgramSelectionPage() {
                       })}
                     </div>
                     <Button
-                      className="mt-5 w-full rounded-xl bg-gradient-to-b from-brand-400 to-brand-600 text-white shadow-lg"
-                      hierarchy="primary"
+                      className="mt-4 w-full"
+                      hierarchy={selected ? 'primary' : 'secondary'}
                       size="lg"
                       aria-pressed={selected}
                       disabled={locked}
@@ -123,25 +123,25 @@ export default function ProgramSelectionPage() {
                       {selected ? `Selected ${plan.label}` : `Select ${plan.label}`}
                     </Button>
                   </div>
-                  <div className="flex-1 border-t border-gray-100 bg-gray-25 p-6">
-                    <h3 className="text-xs font-semibold uppercase text-gray-500">What’s included</h3>
+                  <div className="flex-1 border-t border-gray-100 bg-gray-50 p-4">
+                    <h3 className="text-sm font-medium text-gray-700">What’s included</h3>
                     <p className="mt-3 text-sm text-gray-600">{truckingSharedFeaturesSummary}</p>
                     <ul className="mt-4 space-y-3">
-                      <li className="flex items-center gap-3 text-sm font-medium text-gray-800">
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-400 text-white"><Check className="h-3 w-3" aria-hidden="true" /></span>
+                      <li className="flex items-start gap-2 text-sm text-gray-700">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
                         {plan.meetingHours} Hours Meeting Room Access per month
                       </li>
                       {highlighted.map((f) => (
-                        <li key={f} className="flex items-center gap-3 text-sm font-medium text-gray-800">
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-400 text-white"><Check className="h-3 w-3" aria-hidden="true" /></span>{f}
+                        <li key={f} className="flex items-start gap-2 text-sm text-gray-700">
+                          <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />{f}
                         </li>
                       ))}
                       {truckingProOnlyFeatures.map((f) => (
-                        <li key={f} className={`flex items-center gap-3 text-sm ${isPro ? 'font-medium text-gray-800' : 'text-gray-400'}`}>
+                        <li key={f} className={`flex items-start gap-2 text-sm ${isPro ? 'text-gray-700' : 'text-gray-400'}`}>
                           {isPro ? (
-                            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-400 text-white"><Check className="h-3 w-3" aria-hidden="true" /></span>
+                            <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
                           ) : (
-                            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-100 text-gray-400"><X className="h-3 w-3" aria-hidden="true" /></span>
+                            <X className="mt-0.5 h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
                           )}
                           {!isPro && <span className="sr-only">Not included: </span>}{f}
                         </li>
@@ -177,6 +177,7 @@ export default function ProgramSelectionPage() {
               Complete signup
             </Button>
           </div>
+        </div>
         </div>
       </div>
     </div>

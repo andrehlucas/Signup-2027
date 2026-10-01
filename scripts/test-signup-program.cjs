@@ -43,6 +43,11 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.setViewportSize({ width: 375, height: 812 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
     await page.screenshot({ path: 'screenshots/program-mobile.png', fullPage: true });
+    if (process.env.VISUAL_ONLY === 'true') {
+      assert.deepEqual(errors, []);
+      console.log('PASS: program cards display both prices, desktop/mobile layout, no overflow.');
+      return;
+    }
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.getByTestId('button-select-pro').click();
     await page.getByTestId('button-back').click();
