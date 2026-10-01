@@ -2,8 +2,9 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Check, X } from 'lucide-react';
+import { ArrowLeft, Check, MapPin, X } from 'lucide-react';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
+import { Badge } from '@workspace/opus-vo-design-system/components/ui/badge';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
@@ -53,8 +54,9 @@ export default function ProgramSelectionPage() {
         <div className="mb-8"><ProgressIndicator currentStep={3} disabled={locked} /></div>
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
         <div className="mb-6">
-          <h1 className="text-lg font-semibold text-gray-900 mb-1">Choose Your Program</h1>
-          <p className="text-sm text-gray-600 mb-1">
+          <h1 className="text-lg font-semibold text-gray-900 mb-2">Choose Your Program</h1>
+          <p className="mb-1 flex items-center gap-1.5 text-sm font-medium text-gray-900">
+            <MapPin className="h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
             {location.name} — {location.city}, {location.stateCode}
           </p>
           <p className="text-sm text-gray-600">
@@ -62,7 +64,7 @@ export default function ProgramSelectionPage() {
           </p>
         </div>
         <div>
-          <fieldset disabled={locked} className="grid grid-cols-1 md:grid-cols-2 gap-4" data-testid="programs-list">
+          <fieldset disabled={locked} className="grid grid-cols-1 md:grid-cols-2 gap-5" data-testid="programs-list">
             <legend className="sr-only">Programs</legend>
             {truckingPrograms.map((plan) => {
               const selected = programId === plan.id;
@@ -70,41 +72,44 @@ export default function ProgramSelectionPage() {
               return (
                 <div
                   key={plan.id}
-                  className={`flex flex-col overflow-hidden rounded-lg border-2 bg-white transition-colors ${selected ? 'border-brand-500 shadow-md' : 'border-gray-200'}`}
+                  className={`flex flex-col overflow-hidden rounded-xl border bg-white transition-[border-color,box-shadow] duration-200 motion-reduce:transition-none focus-within:ring-4 focus-within:ring-brand-100 ${selected ? 'border-brand-500 shadow-md ring-1 ring-brand-500' : 'border-gray-200 hover:border-brand-300'}`}
                   data-testid={`program-card-${plan.id}`}
                 >
-                  <div className="p-4">
-                    <h2 className="text-base font-semibold text-gray-900">
-                      {plan.name}
-                    </h2>
+                  <div className="p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <h2 className="text-base font-semibold text-gray-900">{plan.name}</h2>
+                        <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white ${selected ? '' : 'invisible'}`} aria-hidden="true">
+                          <Check className="h-4 w-4" />
+                        </span>
+                    </div>
                     <p className="mt-2 text-sm text-gray-600">{plan.description}</p>
-                    <div className="mt-4 space-y-2">
+                    <div className="mt-5 overflow-hidden rounded-lg border border-gray-200 divide-y divide-gray-200">
                       {(['monthly', 'annual'] as const).map((b) => {
                         const checked = selected && billing === b;
                         return (
                           <label
                             key={b}
-                            className={`flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 ${checked ? 'bg-brand-50 ring-1 ring-brand-300' : 'ring-1 ring-transparent'}`}
+                            className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors motion-reduce:transition-none focus-within:bg-brand-50 ${checked ? 'bg-brand-50' : 'bg-white hover:bg-gray-50'}`}
                           >
                             <input
                               type="radio"
                               name="program-billing"
-                              className="h-4 w-4 accent-brand-600"
+                              className="h-4 w-4 shrink-0 accent-brand-600"
                               checked={checked}
                               onChange={() => { setProgramId(plan.id); setBilling(b); }}
                               data-testid={`radio-billing-${plan.id}-${b}`}
                             />
                             {b === 'monthly' ? (
-                              <span className="text-gray-900">
-                                <span className="text-3xl font-semibold">${plan.monthly}</span>
-                                <span className="ml-1 text-sm font-medium text-gray-600">/ mo</span>
+                              <span className="flex min-w-0 flex-wrap items-baseline gap-x-1 text-gray-900">
+                                <span className="text-3xl font-semibold tabular-nums">${plan.monthly}</span>
+                                <span className="text-sm font-medium text-gray-600">/ mo</span>
                                 <span className="sr-only"> billed monthly</span>
                               </span>
                             ) : (
-                              <span className="text-gray-900">
-                                <span className="text-lg font-bold">${plan.annualTotal.toLocaleString('en-US')}</span>
-                                <span className="ml-1 text-sm font-medium text-gray-600">/ year</span>
-                                <span className="ml-2 text-xs text-success-700">2 months free</span>
+                              <span className="flex min-w-0 flex-wrap items-baseline gap-x-1 text-gray-900">
+                                <span className="text-lg font-semibold tabular-nums">${plan.annualTotal.toLocaleString('en-US')}</span>
+                                <span className="text-sm font-medium text-gray-600">/ year</span>
+                                <Badge className="ml-1" color="success" variant="pill" size="sm">2 months free</Badge>
                               </span>
                             )}
                           </label>
@@ -123,11 +128,11 @@ export default function ProgramSelectionPage() {
                       {selected ? `Selected ${plan.label}` : `Select ${plan.label}`}
                     </Button>
                   </div>
-                  <div className="flex-1 border-t border-gray-100 bg-gray-50 p-4">
-                    <h3 className="text-sm font-medium text-gray-700">What’s included</h3>
+                  <div className="flex-1 border-t border-gray-100 bg-gray-50 p-5">
+                    <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">What’s included</h3>
                     <p className="mt-3 text-sm text-gray-600">{truckingSharedFeaturesSummary}</p>
                     <ul className="mt-4 space-y-3">
-                      <li className="flex items-start gap-2 text-sm text-gray-700">
+                      <li className="flex items-start gap-2 text-sm font-medium text-gray-900">
                         <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
                         {plan.meetingHours} Hours Meeting Room Access per month
                       </li>
