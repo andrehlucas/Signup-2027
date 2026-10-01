@@ -15,6 +15,7 @@ import {
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { useOrder } from './context';
 import { useFunnelTracking } from '../hooks/use-funnel-tracking';
+import { useRevealContinue } from '../hooks/use-reveal-continue';
 import { getLocationsByState, getStates } from './types';
 
 function hasValidUserInfo(userInfo: ReturnType<typeof useOrder>['order']['userInfo']): boolean {
@@ -45,6 +46,7 @@ export default function LocationSelectionPage() {
   const frozen = signupComplete || signupPending;
   const isUserInfoValid = hasValidUserInfo(order.userInfo);
   const { trackComplete } = useFunnelTracking('pick_location');
+  const { continueRef, revealContinue } = useRevealContinue();
 
   useEffect(() => {
     if (!isUserInfoValid) {
@@ -72,6 +74,7 @@ export default function LocationSelectionPage() {
     const location = locations.find((availableLocation) => availableLocation.id === locationId);
     if (!location) return;
     setLocation(location);
+    revealContinue();
   };
 
   const handleContinue = () => {
@@ -204,6 +207,8 @@ export default function LocationSelectionPage() {
 
           <div className="mt-6 flex flex-col items-start gap-3 border-t border-gray-100 pt-5">
             <Button
+              ref={continueRef}
+              style={{ scrollMarginBlock: 16 }}
               onClick={handleContinue}
               hierarchy="primary"
               size="lg"

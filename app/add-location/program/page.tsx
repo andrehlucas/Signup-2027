@@ -7,6 +7,7 @@ import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
+import { useRevealContinue } from '../../hooks/use-reveal-continue';
 import { truckingPrograms } from '../../../shared/trucking-programs';
 import { ProgramCard } from './ProgramCard';
 
@@ -23,6 +24,7 @@ export default function ProgramSelectionPage() {
   const router = useRouter();
   const { order, programId, billing, signupComplete, setProgramId, setBilling, signupPending, signupError, submitSignup } = useOrder();
   const { trackComplete } = useFunnelTracking('choose_program');
+  const { continueRef, revealContinue } = useRevealContinue();
   const location = order.location;
   const valid = hasValidUserInfo(order.userInfo) && Boolean(location);
 
@@ -73,6 +75,7 @@ export default function ProgramSelectionPage() {
                 if (locked) return;
                 setProgramId(id);
                 if (frequency) setBilling(frequency);
+                revealContinue();
               }}
             />
           ))}
@@ -98,7 +101,7 @@ export default function ProgramSelectionPage() {
                 {' · '}{billing === 'monthly' ? 'Monthly' : 'Annual'}
               </p>
             )}
-            <Button hierarchy="primary" size="lg" disabled={!programId || locked} loading={signupPending} onClick={handleSubmit} data-testid="button-complete-signup">
+            <Button ref={continueRef} style={{ scrollMarginBlock: 16 }} hierarchy="primary" size="lg" disabled={!programId || locked} loading={signupPending} onClick={handleSubmit} data-testid="button-complete-signup">
               Complete signup
             </Button>
           </div>

@@ -9,9 +9,20 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     args: ['--no-sandbox', '--disable-dev-shm-usage'],
   });
   try {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    const page = await browser.newPage({
+      viewport: { width: 1280, height: 900 },
+      reducedMotion: process.env.REDUCED_MOTION === 'true' ? 'reduce' : 'no-preference',
+    });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
+    const assertFooterVisible = async (testId) => {
+      await page.waitForFunction(id => {
+        const button = document.querySelector(`[data-testid="${id}"]`);
+        if (!button || button.disabled) return false;
+        const { top, bottom } = button.getBoundingClientRect();
+        return top >= 0 && bottom <= window.innerHeight;
+      }, testId, { timeout: 5000 });
+    };
     await page.goto(process.env.TEST_BASE_URL, { waitUntil: 'networkidle' });
     await page.getByTestId('button-continue').click();
     await page.getByTestId('error-first-name').waitFor();
@@ -30,9 +41,12 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('location-selection-page').waitFor();
     await page.getByTestId('select-state').click();
     await page.getByRole('option', { name: 'Florida', exact: true }).click();
+    await page.setViewportSize({ width: 375, height: 812 });
     await page.locator('[data-testid^="location-card-"]').first().click();
+    await assertFooterVisible('button-continue');
     await page.getByTestId('button-continue').click();
     await page.getByTestId('program-selection-page').waitFor();
+    await page.setViewportSize({ width: 1280, height: 900 });
     assert.equal(await page.locator('[data-testid^="button-select-"]').count(), 0, 'cards have no navigation buttons');
     assert.equal(await page.getByTestId('button-complete-signup').isDisabled(), true, 'footer requires a program choice');
     assert.match(await page.getByTestId('program-card-essentials').innerText(), /\$199/);
@@ -50,13 +64,19 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       console.log('PASS: program cards display both prices, desktop/mobile layout, no overflow.');
       return;
     }
+    await page.getByTestId('radio-billing-essentials-monthly').check();
+    await assertFooterVisible('button-complete-signup');
+    await page.getByTestId('radio-billing-essentials-annual').check();
+    await assertFooterVisible('button-complete-signup');
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.getByTestId('radio-billing-pro-monthly').check();
+    await assertFooterVisible('button-complete-signup');
     assert.equal(await page.getByTestId('button-complete-signup').isEnabled(), true);
     await page.getByTestId('button-back').click();
     await page.getByTestId('button-continue').click();
     assert.equal(await page.getByTestId('radio-billing-pro-monthly').isChecked(), true);
     await page.getByTestId('radio-billing-pro-annual').check();
+    await assertFooterVisible('button-complete-signup');
     assert.match(await page.getByTestId('program-card-pro').innerText(), /\$2,490/);
     let calls = 0;
     let firstId;
