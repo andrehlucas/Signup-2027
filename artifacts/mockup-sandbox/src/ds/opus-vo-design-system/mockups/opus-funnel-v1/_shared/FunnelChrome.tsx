@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
 import { Button } from "@workspace/opus-vo-design-system/components/ui/button";
 
-export const steps = ["Your Info", "Pick Your Location", "Customize", "Checkout"];
+export const steps = ["Your Info", "Pick Your Location"];
 
 export function FunnelChrome({ current, children }: { current: number; children: React.ReactNode }) {
   return (
@@ -10,7 +10,7 @@ export function FunnelChrome({ current, children }: { current: number; children:
       <header className="opus-top">
         <div className="opus-frame">
           <img className="opus-logo" src="/__mockup/images/opus-vo-main-logo.svg" alt="OPUS Virtual Offices" />
-          <div className="opus-trust"><ShieldCheck size={15} aria-hidden="true" /> Secure setup <b>·</b> No obligation</div>
+          <div className="opus-trust"><ShieldCheck size={15} aria-hidden="true" /> Secure setup <b>·</b> No payment required</div>
         </div>
       </header>
       <div className="opus-frame">
@@ -20,7 +20,7 @@ export function FunnelChrome({ current, children }: { current: number; children:
               <div className={`opus-step ${index + 1 === current ? "active" : index + 1 < current ? "done" : ""}`}>
                 <span className="opus-num">{index + 1 < current ? "✓" : index + 1}</span><span>{step}</span>
               </div>
-              {index < 3 && <div className="opus-connector" />}
+              {index < steps.length - 1 && <div className="opus-connector" />}
             </React.Fragment>
           ))}
         </nav>

@@ -10,9 +10,6 @@ import { ProgressIndicator } from './add-location/components/ProgressIndicator';
 import { useOrder } from './add-location/context';
 import { useFunnelTracking } from './hooks/use-funnel-tracking';
 
-// Set to true to skip user info validation and go straight to Customize
-const SKIP_USER_INFO = true;
-
 const countryCodes = [
   { code: '+1', flag: '🇺🇸', label: 'US' },
   { code: '+1', flag: '🇨🇦', label: 'CA' },
@@ -82,21 +79,21 @@ export default function SignUpPage() {
   };
 
   const handleContinue = () => {
-    if (!SKIP_USER_INFO && !validate()) return;
+    if (!validate()) return;
 
     setUserInfo({
-      firstName: firstName.trim() || 'Test',
-      lastName: lastName.trim() || 'User',
-      phone: phone.replace(/\D/g, '') || '5551234567',
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      phone: phone.replace(/\D/g, ''),
       countryCode,
-      email: email.trim() || 'test@example.com',
-      confirmEmail: confirmEmail.trim() || 'test@example.com',
-      company: company.trim() || 'Test Company',
-      termsAccepted: SKIP_USER_INFO ? true : termsAccepted,
+      email: email.trim(),
+      confirmEmail: confirmEmail.trim(),
+      company: company.trim(),
+      termsAccepted,
     });
 
     trackComplete();
-    router.push('/add-location/customize');
+    router.push('/add-location');
   };
 
   return (
@@ -122,7 +119,7 @@ export default function SignUpPage() {
         {/* Headline */}
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-[2rem] font-extrabold leading-tight text-[#0f2044] max-w-xl mx-auto" data-testid="heading-signup">
-            You're Only 4 Steps Away From<br className="hidden sm:block" />
+            You're Only 2 Steps Away From<br className="hidden sm:block" />
             <span className="text-[#0086C9]"> Securing Your Virtual Office</span>
           </h1>
         </div>

@@ -94,9 +94,7 @@
 .opus-location img { width: 130px; height: 84px; border-radius: 6px; object-fit: cover; }
 .opus-location h3 { margin: 0 0 6px; color: var(--color-gray-800); font-size: 15px; }
 .opus-location p { margin: 2px 0; color: var(--color-gray-600); font-size: 12px; }
-.opus-radio { width: 19px; height: 19px; border: 1px solid var(--color-gray-300); border-radius: 999px; display: grid; place-items: center; }
-.opus-location.selected .opus-radio { border-color: var(--color-brand-600); }
-.opus-location.selected .opus-radio::after { content: ""; width: 9px; height: 9px; border-radius: 999px; background: var(--color-brand-600); }
+.opus-location-radio { width: 19px; height: 19px; margin: 0; accent-color: var(--color-brand-600); }
 .opus-plan { border: 1px solid var(--color-gray-200); border-radius: 10px; padding: 24px; background: hsl(var(--card)); cursor: pointer; }
 .opus-plan.selected { border: 2px solid var(--color-brand-600); padding: 23px; box-shadow: var(--shadow-xs); }
 .opus-plan h3, .opus-option h3 { margin: 0; color: var(--color-gray-800); font-size: 16px; }

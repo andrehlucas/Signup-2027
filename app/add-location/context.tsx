@@ -5,8 +5,12 @@ import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo, Ap
 
 interface OrderContextType {
   order: OrderState;
+  selectedState: string;
+  signupComplete: boolean;
   setUserInfo: (userInfo: UserInfo) => void;
   setLocation: (location: AvailableLocation | null) => void;
+  setSelectedState: (state: string) => void;
+  completeSignup: () => void;
   setBundle: (bundle: Bundle | null) => void;
   setPhoneNumber: (phoneNumber: PhoneNumber | null) => void;
   setTollFreePhoneNumber: (phoneNumber: PhoneNumber | null) => void;
@@ -48,6 +52,8 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [order, setOrder] = useState<OrderState>(initialOrder);
+  const [selectedState, setSelectedState] = useState('');
+  const [signupComplete, setSignupComplete] = useState(false);
 
   const setUserInfo = (userInfo: UserInfo) => {
     setOrder(prev => ({ ...prev, userInfo }));
@@ -55,6 +61,10 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const setLocation = (location: AvailableLocation | null) => {
     setOrder(prev => ({ ...prev, location }));
+  };
+
+  const completeSignup = () => {
+    setSignupComplete(true);
   };
 
   const setBundle = (bundle: Bundle | null) => {
@@ -104,6 +114,8 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const clearOrder = () => {
     setOrder(initialOrder);
+    setSelectedState('');
+    setSignupComplete(false);
   };
 
   const getCartTotal = () => {
@@ -176,8 +188,12 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     <OrderContext.Provider
       value={{
         order,
+        selectedState,
+        signupComplete,
         setUserInfo,
         setLocation,
+        setSelectedState,
+        completeSignup,
         setBundle,
         setPhoneNumber,
         setTollFreePhoneNumber,

@@ -1,1 +1,4 @@
-{}
+{
+  "/api/funnel/events/route": "app/api/funnel/events/route.js",
+  "/page": "app/page.js"
+}

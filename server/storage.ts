@@ -1,4 +1,5 @@
-import { UserType, InsertUser, Location, Mail, MailSettings, MailAction, Notification, NotificationPreferences, NotificationType, FunnelSession, FunnelEvent } from "../shared/schema";
+import { UserType, InsertUser, Location, Mail, MailSettings, MailAction, Notification, NotificationPreferences, NotificationType, FunnelSession, FunnelEvent, SignupRecord, NewSignup } from "../shared/schema";
+import { randomUUID } from "crypto";
 
 export interface BenefitData {
   id: string;
@@ -46,6 +47,9 @@ export interface IStorage {
   createFunnelEvent(event: FunnelEvent): Promise<FunnelEvent>;
   getFunnelEvents(): Promise<FunnelEvent[]>;
   getFunnelSessions(): Promise<FunnelSession[]>;
+
+  createSignup(signup: NewSignup): Promise<{ signup?: SignupRecord; created: boolean; conflict: boolean }>;
+  getSignupByRequestId(requestId: string): Promise<SignupRecord | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -58,6 +62,7 @@ export class MemStorage implements IStorage {
   private benefitItems: Map<string, BenefitData>;
   private funnelSessions: Map<string, FunnelSession>;
   private funnelEvents: Map<string, FunnelEvent>;
+  private signups: Map<string, SignupRecord>;
 
   constructor() {
     this.users = new Map();
@@ -69,6 +74,7 @@ export class MemStorage implements IStorage {
     this.benefitItems = new Map();
     this.funnelSessions = new Map();
     this.funnelEvents = new Map();
+    this.signups = new Map();
     
     this.seed();
   }
@@ -562,6 +568,29 @@ export class MemStorage implements IStorage {
 
   async getFunnelSessions(): Promise<FunnelSession[]> {
     return Array.from(this.funnelSessions.values());
+  }
+
+  async createSignup(signup: NewSignup): Promise<{ signup?: SignupRecord; created: boolean; conflict: boolean }> {
+    const existing = this.signups.get(signup.requestId);
+    if (existing) {
+      if (existing.requestFingerprint !== signup.requestFingerprint) {
+        return { created: false, conflict: true };
+      }
+      return { signup: existing, created: false, conflict: false };
+    }
+
+    const record: SignupRecord = {
+      ...signup,
+      id: randomUUID(),
+      status: 'completed',
+      createdAt: new Date().toISOString(),
+    };
+    this.signups.set(record.requestId, record);
+    return { signup: record, created: true, conflict: false };
+  }
+
+  async getSignupByRequestId(requestId: string): Promise<SignupRecord | undefined> {
+    return this.signups.get(requestId);
   }
 }
 
