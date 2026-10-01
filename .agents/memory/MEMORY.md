@@ -1,5 +1,5 @@
 - [Design-system linking](design-system-tailwind3-linking.md) — use the source alias until a deliberate Next.js upgrade allows normal local-package installation.
 - [Preview selection](preview-selection.md) — stopping a managed artifact does not change preview selection; verify the selected artifact endpoint.
-- [Signup and PHP checkout intent](signup-intent.md) — Continue will lead to an existing PHP checkout; defer its URL and handoff contract, and never imply payment or activation.
+- [Signup and PHP checkout intent](signup-intent.md) — plan choice leads to an existing PHP checkout; defer its URL and handoff contract, and never imply payment or activation.
 - [Program-card visual reference](program-card-reference.md) — the supplied React cards take priority over generic minimalist styling for this signup step.
 - [Navigation hierarchy](navigation-hierarchy.md) — Back stays text-only; primary button color changes must not turn it into a filled action.

@@ -30,9 +30,10 @@ export function useOrder() {
   return {
     order, programId, billing, signupComplete: false, setProgramId: selectProgram, setBilling: selectBilling,
     signupPending: false, signupError,
-    continueToCheckout: async (): Promise<'success' | 'error' | 'ignored'> => {
-      setSignupError('Checkout is not connected in this design preview.');
-      return 'error' as const;
-    },
+    continueToCheckout: async (selectedProgramId?: TruckingProgramId): Promise<'success' | 'error' | 'ignored'> => {
+        if (selectedProgramId) selectProgram(selectedProgramId);
+        setSignupError('Checkout is not connected in this design preview.');
+        return 'error' as const;
+      },
   };
 }

@@ -10,7 +10,7 @@ interface OrderContextType {
   signupComplete: boolean;
   signupPending: boolean;
   signupError: string;
-  continueToCheckout: () => Promise<'success' | 'error' | 'ignored'>;
+  continueToCheckout: (selectedProgramId?: TruckingProgramId) => Promise<'success' | 'error' | 'ignored'>;
   programId: TruckingProgramId | null;
   billing: ProgramBilling;
   setProgramId: (id: TruckingProgramId | null) => void;
@@ -108,9 +108,13 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     return requestRef.current.id;
   };
 
-  const continueToCheckout = async (): Promise<'success' | 'error' | 'ignored'> => {
-    const { order: o, programId: p, billing: bl } = latest.current;
+  const continueToCheckout = async (selectedProgramId?: TruckingProgramId): Promise<'success' | 'error' | 'ignored'> => {
+    const { order: o, programId: previousProgramId, billing: bl } = latest.current;
+    const p = selectedProgramId ?? previousProgramId;
     if (locked() || !p || !o.location) return 'ignored';
+    // Card selection and checkout share one snapshot; do not wait for React's state update.
+    latest.current = { ...latest.current, programId: p };
+    setProgramIdState(p);
     pendingRef.current = true;
     setSignupPending(true);
     setSignupError('');

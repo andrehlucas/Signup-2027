@@ -3,8 +3,7 @@
 import { useEffect } from 'react';
 import './_preview.css';
 import { useRouter } from './_state';
-import { ArrowLeft, MapPin } from 'lucide-react';
-import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
+import { MapPin } from 'lucide-react';
 import { ProgressIndicator } from './_ProgressIndicator';
 import { useOrder } from './_state';
 import { useFunnelTracking } from './_state';
@@ -23,7 +22,7 @@ function hasValidUserInfo(u: ReturnType<typeof useOrder>['order']['userInfo']): 
 
 function ProgramSelectionPage() {
   const router = useRouter();
-  const { order, programId, billing, signupComplete, setProgramId, setBilling, signupPending, signupError, continueToCheckout } = useOrder();
+  const { order, programId, billing, signupComplete, setBilling, signupPending, signupError, continueToCheckout } = useOrder();
   const { trackComplete } = useFunnelTracking('choose_program');
   const location = order.location;
   const valid = hasValidUserInfo(order.userInfo) && Boolean(location);
@@ -35,11 +34,9 @@ function ProgramSelectionPage() {
 
   if (!valid || !location) return null;
   const locked = signupPending || signupComplete;
-  const selectedPlan = truckingPrograms.find((plan) => plan.id === programId);
-
-  const handleSubmit = async () => {
-    if (!programId || locked) return;
-    const outcome = await continueToCheckout();
+  const handleSelect = async (id: (typeof truckingPrograms)[number]['id']) => {
+    if (locked) return;
+    const outcome = await continueToCheckout(id);
     if (outcome === 'success') trackComplete();
   };
 
@@ -51,7 +48,7 @@ function ProgramSelectionPage() {
         <header className="mb-8 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Choose Your Program</h1>
-            <p className="mt-2 text-sm text-gray-600">Select a program and billing preference, then continue to checkout.</p>
+            <p className="mt-2 text-sm text-gray-600">Choose a program and billing preference to go straight to checkout.</p>
           </div>
           <div className="flex items-start gap-3 md:max-w-xs md:border-l md:border-gray-200 md:pl-6">
             <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-600" aria-hidden="true" />
@@ -73,34 +70,14 @@ function ProgramSelectionPage() {
               selected={programId === plan.id}
               billing={billing}
               disabled={locked}
-              onSelect={(id) => {
-                if (locked) return;
-                setProgramId(id);
-              }}
+              loading={signupPending && programId === plan.id}
+              onSelect={handleSelect}
             />
           ))}
         </fieldset>
 
         {signupError && <p className="mt-5 text-sm text-error-700" role="alert" data-testid="signup-error">{signupError}</p>}
         {signupPending && <p className="mt-5 text-sm text-gray-600" role="status">Preparing checkout…</p>}
-
-        <footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-6">
-          <Button hierarchy="link-gray" size="lg" disabled={locked} onClick={() => router.push('/add-location')} data-testid="button-back">
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Back
-          </Button>
-          <div className="flex flex-wrap items-center justify-end gap-4">
-            {selectedPlan && (
-              <p className="text-sm text-gray-600">
-                <span className="font-medium text-gray-900">{selectedPlan.label}</span>
-                {' · '}{billing === 'monthly' ? 'Monthly' : 'Annual'}
-              </p>
-            )}
-            <Button className="signup-action" hierarchy="primary" size="lg" disabled={!programId || locked} loading={signupPending} onClick={handleSubmit} data-testid="button-complete-signup">
-              Continue
-            </Button>
-          </div>
-        </footer>
       </div>
     </div>
   );

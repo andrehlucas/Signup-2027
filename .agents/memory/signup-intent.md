@@ -3,7 +3,7 @@ name: Signup intent and external checkout
 description: Payment belongs to the existing PHP checkout; this project prepares selections and redirects.
 ---
 
-Treat recorded signup details as unpaid selections, not purchases or activated services. The final program action is Continue to an existing external PHP checkout, not an in-app signup-success screen.
+Treat recorded signup details as unpaid selections, not purchases or activated services. The final program action is the plan-choice button within each card, which leads to an existing external PHP checkout, not an in-app signup-success screen.
 
 **Why:** The user explicitly said their PHP checkout page already exists and asked to prepare this project without building the final page or supplying its destination yet.
 

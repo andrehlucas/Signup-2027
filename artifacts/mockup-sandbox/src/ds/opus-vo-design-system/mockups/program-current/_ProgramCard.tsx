@@ -1,6 +1,7 @@
 'use client';
 
 import { Check, X } from 'lucide-react';
+import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
   truckingPrograms,
   truckingSharedFeaturesSummary,
@@ -17,6 +18,7 @@ interface ProgramCardProps {
   selected: boolean;
   billing: ProgramBilling;
   disabled: boolean;
+  loading: boolean;
   onSelect: (id: TruckingProgramId) => void;
 }
 
@@ -35,7 +37,7 @@ function Feature({ label, included = true }: { label: string; included?: boolean
 }
 
 /** Presentation adapted from the user's uploaded TruckingPricingCards export. */
-export function ProgramCard({ plan, selected, billing, disabled, onSelect }: ProgramCardProps) {
+export function ProgramCard({ plan, selected, billing, disabled, loading, onSelect }: ProgramCardProps) {
   return (
     <article
       className={`${styles.card} ${selected ? styles.selected : ''}`}
@@ -44,17 +46,6 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
       <div className={styles.top}>
         <h2 className={styles.title}>
           <span className={styles.brandName}>
-            <input
-              type="radio"
-              name="program"
-              value={plan.id}
-              checked={selected}
-              disabled={disabled}
-              onChange={() => onSelect(plan.id)}
-              className={styles.programRadio}
-              data-testid={`radio-program-${plan.id}`}
-              aria-label={`Select Opus Trucking ${plan.label}`}
-            />
             <span>Opus Trucking</span>
           </span>
           <span className={styles.planBadge}>{plan.label}</span>
@@ -81,6 +72,19 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
             <p className={styles.monthlyNote}>Billed monthly · Or pay annually and get 2 months free</p>
           )}
         </div>
+        <Button
+          type="button"
+          hierarchy="primary"
+          size="xl"
+          className={`${styles.cta} signup-action w-full`}
+          disabled={disabled}
+          loading={loading}
+          aria-label={`Choose ${plan.label} and continue to checkout`}
+          onClick={() => onSelect(plan.id)}
+          data-testid={`button-select-${plan.id}`}
+        >
+          Click here to get started
+        </Button>
       </div>
       <div className={styles.features}>
         <h3 className={styles.featuresHeading}>What&apos;s included</h3>

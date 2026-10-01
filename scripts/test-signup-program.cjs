@@ -58,9 +58,47 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       assert.equal(await page.getByTestId('button-billing-monthly').getAttribute('aria-pressed'), monthlyPressed);
       assert.equal(await page.getByTestId('button-billing-annual').getAttribute('aria-pressed'), annualPressed);
     };
-    const assertNoProgramSelected = async () => {
-      assert.equal(await page.getByTestId('radio-program-essentials').isChecked(), false);
-      assert.equal(await page.getByTestId('radio-program-pro').isChecked(), false);
+    const assertCallToActionColor = async (testId, disabled = false) => {
+      // Wait for the shared button's 150ms background transition to settle.
+      await page.waitForFunction(({ id, disabled }) => {
+        const button = document.querySelector(`[data-testid="${id}"]`);
+        if (!button) return false;
+        const background = getComputedStyle(button).backgroundColor;
+        if (!disabled) return background === 'rgb(99, 161, 215)';
+        const channels = background.match(/[\d.]+/g).slice(0, 3).map(Number);
+        return Math.max(...channels) - Math.min(...channels) <= 8 &&
+          background !== 'rgb(99, 161, 215)';
+      }, { id: testId, disabled }, { timeout: 5000 });
+      const { background, isDisabled } = await page.getByTestId(testId).evaluate(element => ({
+        background: getComputedStyle(element).backgroundColor,
+        isDisabled: element.disabled,
+      }));
+      assert.equal(isDisabled, disabled, `${testId} disabled state`);
+      if (disabled) {
+        const rgb = background.match(/[\d.]+/g).slice(0, 3).map(Number);
+        assert.ok(Math.max(...rgb) - Math.min(...rgb) <= 8, `${testId} has a gray disabled background`);
+        assert.notEqual(background, 'rgb(99, 161, 215)');
+      } else {
+        assert.equal(background, 'rgb(99, 161, 215)', `${testId} uses #63a1d7`);
+      }
+    };
+    const assertCardCallToAction = async (planId, planName) => {
+      const button = page.getByTestId(`button-select-${planId}`);
+      assert.equal(await button.getAttribute('aria-label'), `Choose ${planName} and continue to checkout`);
+      assert.equal((await button.innerText()).trim(), 'Click here to get started');
+      await assertCallToActionColor(`button-select-${planId}`);
+    };
+    const isFullyVisibleInViewport = async testId => page.waitForFunction(id => {
+      const element = document.querySelector(`[data-testid="${id}"]`);
+      if (!element) return false;
+      const { top, bottom } = element.getBoundingClientRect();
+      return top >= 0 && bottom <= window.innerHeight;
+    }, testId, { timeout: 5000 });
+    const cardClass = async planId => page.getByTestId(`program-card-${planId}`).getAttribute('class');
+    const assertNoProgramFooter = async () => {
+      assert.equal(await page.getByTestId('program-selection-page').locator('footer').count(), 0, 'program page has no navigation footer');
+      assert.equal(await page.getByTestId('button-back').count(), 0, 'program page has no Back button');
+      assert.equal(await page.getByTestId('button-complete-signup').count(), 0, 'program page has no Continue footer button');
     };
     await page.goto(process.env.TEST_BASE_URL, { waitUntil: 'networkidle' });
     await assertNavigationColor('button-continue');
@@ -110,23 +148,21 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('button-continue').click();
     await page.getByTestId('program-selection-page').waitFor();
     await page.setViewportSize({ width: 1280, height: 900 });
-    assert.equal(await page.locator('[data-testid^="button-select-"]').count(), 0, 'cards have no navigation buttons');
-    assert.equal(await page.getByTestId('button-complete-signup').isDisabled(), true, 'footer requires a program choice');
-    await assertNavigationColor('button-complete-signup', true);
-    await assertTextOnlyBack();
+    await assertNoProgramFooter();
     await assertNavigationColor('step-3-current');
-    assert.equal(await page.getByTestId('button-complete-signup').innerText(), 'Continue');
     assert.equal(await page.getByTestId('signup-success').count(), 0, 'program page has no signup-complete banner');
     assert.equal(await page.getByRole('group', { name: 'Billing frequency', exact: true }).count(), 1);
     assert.equal(await page.getByRole('button', { name: 'Monthly', exact: true }).count(), 1);
     assert.equal(await page.getByRole('button', { name: /^Yearly\b/ }).count(), 1);
-    assert.equal(await page.getByTestId('radio-program-essentials').count(), 1);
-    assert.equal(await page.getByTestId('radio-program-pro').count(), 1);
+    assert.equal(await page.locator('[data-testid^="radio-program-"]').count(), 0, 'cards have no program radio controls');
     assert.equal(await page.locator('[data-testid^="radio-billing-"]').count(), 0, 'billing frequency is not selected per card');
     await assertBillingFrequency('monthly');
-    await assertNoProgramSelected();
+    await assertCardCallToAction('essentials', 'Essentials');
+    await assertCardCallToAction('pro', 'Pro');
     const essentialsCard = page.getByTestId('program-card-essentials');
     const proCard = page.getByTestId('program-card-pro');
+    const essentialsInitialClass = await cardClass('essentials');
+    const proInitialClass = await cardClass('pro');
     assert.match(await essentialsCard.innerText(), /\$199/);
     assert.match(await essentialsCard.innerText(), /month/i);
     assert.match(await proCard.innerText(), /\$249/);
@@ -139,7 +175,6 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.getByTestId('button-billing-annual').click();
     await assertBillingFrequency('annual');
-    await assertNoProgramSelected();
     assert.match(await essentialsCard.innerText(), /\$166/);
     assert.match(await essentialsCard.innerText(), /month/i);
     assert.match(await essentialsCard.innerText(), /\$1,990/);
@@ -152,56 +187,68 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.screenshot({ path: 'screenshots/program-mobile-yearly.png', fullPage: true });
     await page.getByTestId('button-billing-monthly').click();
     await assertBillingFrequency('monthly');
-    await assertNoProgramSelected();
     if (process.env.VISUAL_ONLY === 'true') {
       assert.deepEqual(errors, []);
       console.log('PASS: monthly and yearly program prices, desktop/mobile layout, no overflow.');
       return;
     }
-    await page.getByTestId('radio-program-essentials').check();
-    await assertFooterVisible('button-complete-signup');
-    assert.equal(await page.getByTestId('radio-program-essentials').isChecked(), true);
-    await page.getByTestId('button-billing-annual').click();
-    await assertBillingFrequency('annual');
-    assert.equal(await page.getByTestId('radio-program-essentials').isChecked(), true, 'billing switch retains Essentials selection');
-    assert.match(await essentialsCard.innerText(), /\$1,990/);
-    await page.getByTestId('button-billing-monthly').click();
-    await assertBillingFrequency('monthly');
-    assert.equal(await page.getByTestId('radio-program-essentials').isChecked(), true, 'switching back retains Essentials selection');
-    await page.setViewportSize({ width: 1280, height: 900 });
-    await page.getByTestId('radio-program-pro').check();
-    await assertFooterVisible('button-complete-signup');
-    assert.equal(await page.getByTestId('radio-program-essentials').isChecked(), false);
-    assert.equal(await page.getByTestId('radio-program-pro').isChecked(), true);
-    assert.equal(await page.getByTestId('button-complete-signup').isEnabled(), true);
-    await page.getByTestId('button-complete-signup').hover();
-    await assertNavigationColor('button-complete-signup');
-    await page.getByTestId('button-billing-annual').click();
-    await assertBillingFrequency('annual');
-    assert.equal(await page.getByTestId('radio-program-pro').isChecked(), true, 'annual switch retains Pro selection');
-    assert.match(await proCard.innerText(), /\$2,490/);
-    await page.getByTestId('button-back').scrollIntoViewIfNeeded();
-    await page.getByTestId('button-back').click();
-    await page.getByTestId('button-continue').scrollIntoViewIfNeeded();
-    await page.getByTestId('button-continue').click();
-    assert.equal(await page.getByTestId('radio-program-pro').isChecked(), true, 'Back retains program selection');
-    await assertBillingFrequency('annual');
-    assert.equal(await page.getByTestId('radio-program-pro').isChecked(), true, 'Back retains Pro selection with annual billing');
-    assert.match(await page.getByTestId('program-card-pro').innerText(), /\$2,490/);
-    await page.getByTestId('button-complete-signup').scrollIntoViewIfNeeded();
-    await page.getByTestId('button-complete-signup').click();
+    const observedCheckoutRequests = [];
+    page.on('request', request => {
+      if (request.method() === 'POST' && new URL(request.url()).pathname === '/api/checkout') {
+        observedCheckoutRequests.push(request.postDataJSON());
+      }
+    });
+    await page.setViewportSize({ width: 375, height: 812 });
+    const essentialsMonthlyRequest = page.waitForRequest(request =>
+      request.method() === 'POST' && new URL(request.url()).pathname === '/api/checkout'
+    );
+    await page.getByTestId('button-select-essentials').scrollIntoViewIfNeeded();
+    await isFullyVisibleInViewport('button-select-essentials');
+    await page.getByTestId('button-select-essentials').click();
+    const essentialsMonthlyPayload = (await essentialsMonthlyRequest).postDataJSON();
+    assert.equal(essentialsMonthlyPayload.programId, 'essentials', 'first Essentials click submits the clicked plan');
+    assert.equal(essentialsMonthlyPayload.billing, 'monthly', 'first Essentials click submits current monthly billing');
     await page.getByTestId('signup-error').waitFor();
     assert.match(await page.getByTestId('signup-error').innerText(), /Checkout is not connected yet/);
-    assert.equal(await page.getByTestId('radio-program-pro').isChecked(), true, 'missing checkout preserves program selection');
+    await isFullyVisibleInViewport('signup-error');
+    assert.notEqual(await cardClass('essentials'), essentialsInitialClass, 'failed checkout retains Essentials selection');
+    await assertCallToActionColor('button-select-essentials');
+    await assertCallToActionColor('button-select-pro');
+    assert.equal(observedCheckoutRequests.length, 1);
+
+    const selectedEssentialsClass = await cardClass('essentials');
+    await page.getByTestId('button-billing-annual').click();
     await assertBillingFrequency('annual');
-    assert.equal(await page.getByTestId('button-complete-signup').isEnabled(), true, 'missing checkout leaves the flow editable');
+    assert.equal(await cardClass('essentials'), selectedEssentialsClass, 'billing switch preserves Essentials selection');
+    assert.match(await essentialsCard.innerText(), /\$1,990/);
+    assert.equal(observedCheckoutRequests.length, 1, 'billing switcher does not post checkout');
+    await page.getByTestId('button-billing-monthly').click();
+    await assertBillingFrequency('monthly');
+    assert.equal(await cardClass('essentials'), selectedEssentialsClass, 'switching back to monthly preserves Essentials selection');
+    assert.equal(observedCheckoutRequests.length, 1, 'monthly switcher does not post checkout');
+    await page.getByTestId('button-billing-annual').click();
+    await assertBillingFrequency('annual');
+    assert.equal(await cardClass('essentials'), selectedEssentialsClass, 'latest annual selection preserves Essentials');
+    assert.equal(observedCheckoutRequests.length, 1, 'switching billing never posts checkout by itself');
+
+    await page.getByTestId('step-nav-2').click();
+    await page.getByTestId('location-selection-page').waitFor();
+    assert.equal(await page.getByTestId('select-state').isDisabled(), false, 'location is editable before checkout is pending');
+    await page.getByTestId('button-continue').scrollIntoViewIfNeeded();
+    await page.getByTestId('button-continue').click();
+    await page.getByTestId('program-selection-page').waitFor();
+    assert.equal(observedCheckoutRequests.length, 1, 'returning to the program page does not implicitly post checkout');
+    await assertBillingFrequency('annual');
+    assert.equal(await cardClass('essentials'), selectedEssentialsClass, 'program choice survives navigation to location and back');
+    assert.match(await essentialsCard.innerText(), /\$1,990/);
+    await assertNoProgramFooter();
     const checkoutUrl = 'https://checkout.example.test/checkout.php';
     await page.route(checkoutUrl, route => route.fulfill({
       contentType: 'text/html',
       body: '<!doctype html><html><body><h1>Checkout test destination</h1></body></html>',
     }));
     let calls = 0;
-    let firstId;
+    let proRequestId;
     let finish;
     let held;
     const intercepted = new Promise(resolve => { held = resolve; });
@@ -209,14 +256,14 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.route('**/api/checkout', async route => {
       calls += 1;
       const body = route.request().postDataJSON();
+      assert.equal(body.programId, 'pro', 'a new Pro click must not reuse the previously selected Essentials plan');
+      assert.equal(body.billing, 'annual', 'Pro click submits the latest global annual billing selection');
       if (calls === 1) {
-        firstId = body.requestId;
+        proRequestId = body.requestId;
         await route.fulfill({ status: 503, contentType: 'application/json', body: '{"message":"Test retry"}' });
         return;
       }
-      assert.equal(body.requestId, firstId);
-      assert.equal(body.programId, 'pro');
-      assert.equal(body.billing, 'annual');
+      assert.equal(body.requestId, proRequestId, 'retrying the same Pro annual selection keeps its request identity');
       if (calls === 2) {
         await route.fulfill({
           status: 201,
@@ -233,19 +280,46 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
         body: JSON.stringify({ status: 'checkout_ready', checkoutUrl, signupId: 'test-signup' }),
       });
     });
-    await page.getByTestId('button-complete-signup').scrollIntoViewIfNeeded();
-    await page.getByTestId('button-complete-signup').click();
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await assertCardCallToAction('pro', 'Pro');
+    await page.getByTestId('button-select-pro').scrollIntoViewIfNeeded();
+    await isFullyVisibleInViewport('button-select-pro');
+    await page.getByTestId('button-select-pro').click();
     await page.getByTestId('signup-error').waitFor();
-    await page.getByTestId('button-complete-signup').scrollIntoViewIfNeeded();
-    await page.getByTestId('button-complete-signup').click();
+    assert.equal(calls, 1, 'first Pro annual checkout fails once before retry');
+    assert.notEqual(await cardClass('pro'), proInitialClass, 'failed Pro checkout retains Pro selection');
+    assert.equal(await cardClass('essentials'), essentialsInitialClass, 'choosing Pro deselects the prior Essentials selection');
+    await assertCallToActionColor('button-select-pro');
+    await page.getByTestId('button-select-pro').click();
     await page.waitForFunction(() => document.querySelector('[data-testid="signup-error"]')?.textContent.includes('unexpected checkout response'));
-    assert.equal(await page.getByTestId('button-complete-signup').isEnabled(), true, 'unsafe checkout URL is rejected without locking the flow');
-    await page.getByTestId('button-complete-signup').scrollIntoViewIfNeeded();
-    await page.getByTestId('button-complete-signup').click();
+    assert.equal(await page.getByTestId('button-select-pro').isEnabled(), true, 'unsafe checkout URL is rejected without locking the flow');
+    await assertCallToActionColor('button-select-pro');
+    await page.getByTestId('button-select-pro').click();
     await intercepted;
+    assert.equal(calls, 3, 'only the failed request, rejected URL and pending successful retry are sent');
+    assert.equal(observedCheckoutRequests.length, 4, 'one Essentials request plus three Pro retries');
+    assert.equal(observedCheckoutRequests[1].programId, 'pro');
+    assert.equal(observedCheckoutRequests[1].billing, 'annual');
+    assert.equal(observedCheckoutRequests[2].requestId, observedCheckoutRequests[1].requestId);
+    assert.equal(observedCheckoutRequests[3].requestId, observedCheckoutRequests[1].requestId);
+    await assertCallToActionColor('button-select-essentials', true);
+    await assertCallToActionColor('button-select-pro', true);
     assert.equal(await page.getByTestId('button-billing-monthly').isDisabled(), true, 'monthly switch is locked while signup is pending');
     assert.equal(await page.getByTestId('button-billing-annual').isDisabled(), true, 'annual switch is locked while signup is pending');
     await assertBillingFrequency('annual');
+    assert.equal(await page.getByTestId('step-nav-2').isDisabled(), true, 'completed step navigation is locked while signup is pending');
+    await assertNavigationColor('step-2-complete', true);
+    await assertNoProgramFooter();
+    assert.equal(await page.getByTestId('signup-success').count(), 0, 'pending program page has no signup-complete banner');
+
+    for (const testId of ['button-select-essentials', 'button-select-pro']) {
+      await page.getByTestId(testId).evaluate(element => {
+        element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+      });
+    }
+    await page.waitForTimeout(100);
+    assert.equal(calls, 3, 'disabled card CTAs reject duplicate clicks while checkout is pending');
+
     await page.goBack();
     await page.getByTestId('location-selection-page').waitFor();
     assert.equal(await page.getByTestId('select-state').isDisabled(), true);
@@ -253,23 +327,27 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await assertTextOnlyBack();
     await assertNavigationColor('button-continue', true);
     await assertNavigationColor('step-1-complete', true);
+    assert.equal(await page.getByTestId('step-nav-1').isDisabled(), true, 'completed step navigation remains locked at location');
     await page.goForward();
     await page.getByTestId('program-selection-page').waitFor();
-    assert.equal(await page.getByTestId('button-complete-signup').isDisabled(), true);
-    await assertNavigationColor('button-complete-signup', true);
-    await assertTextOnlyBack();
+    await assertCallToActionColor('button-select-essentials', true);
+    await assertCallToActionColor('button-select-pro', true);
     assert.equal(await page.getByTestId('button-billing-monthly').isDisabled(), true, 'monthly switch remains locked after browser forward');
     assert.equal(await page.getByTestId('button-billing-annual').isDisabled(), true, 'annual switch remains locked after browser forward');
-    assert.equal(await page.getByTestId('radio-program-pro').isChecked(), true);
+    assert.equal(await page.getByTestId('step-nav-2').isDisabled(), true, 'completed step navigation remains locked after browser forward');
+    await assertNavigationColor('step-2-complete', true);
+    assert.notEqual(await cardClass('pro'), proInitialClass, 'selected Pro card remains selected after browser navigation');
     await assertBillingFrequency('annual');
+    await assertNoProgramFooter();
     assert.equal(await page.getByTestId('signup-success').count(), 0);
+    assert.equal(calls, 3, 'browser Back and Forward do not create checkout requests');
     finish();
     await page.waitForURL(checkoutUrl);
     await page.getByRole('heading', { name: 'Checkout test destination' }).waitFor();
     assert.equal(calls, 3, 'only failed request, rejected URL and successful retry');
     assert.equal(page.url(), checkoutUrl, 'Continue redirects without putting customer details in the URL');
     assert.deepEqual(errors, []);
-    console.log('PASS: location Back, program Continue, auto-scroll, retained choice, missing checkout, safe redirect, retry identity and pending navigation locks.');
+    console.log('PASS: location navigation, in-card checkout, retained selections, missing checkout, safe redirect, retry identity and pending navigation locks.');
   } finally {
     await browser.close();
   }
