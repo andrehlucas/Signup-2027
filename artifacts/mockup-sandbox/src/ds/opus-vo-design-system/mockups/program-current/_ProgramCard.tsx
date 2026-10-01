@@ -68,14 +68,12 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
                     data-testid={`radio-billing-${plan.id}-${frequency}`}
                   />
                   {frequency === 'monthly' ? 'Monthly' : 'Annual'}
+                  {frequency === 'annual' && <span className={styles.promo}>2 months free</span>}
                 </span>
                 <span className={styles.price}>
                   ${frequency === 'monthly' ? plan.monthly : plan.annualTotal.toLocaleString('en-US')}
                 </span>
-                <span className={styles.unit}>{frequency === 'monthly' ? '/ month' : '/ year'}</span>
-                <span className={frequency === 'annual' ? styles.promo : styles.note}>
-                  {frequency === 'monthly' ? 'Billed monthly' : '2 months free'}
-                </span>
+                <span className={styles.unit}>{frequency === 'monthly' ? 'Billed monthly' : 'Billed yearly'}</span>
               </label>
             );
           })}

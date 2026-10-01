@@ -47,9 +47,7 @@
 .billingLabel { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--color-gray-500); }
 .price { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--color-gray-900); }
 .unit { font-size: 14px; font-weight: 500; color: var(--color-gray-500); }
-.promo, .note { font-size: 12px; line-height: 20px; }
-.promo { font-weight: 600; color: var(--color-success-700); }
-.note { color: var(--color-gray-500); }
+.promo { margin-left: auto; font-size: 12px; line-height: 14px; text-align: right; font-weight: 600; color: var(--color-success-700); }
 
 .card .cta {
   width: 100%;
@@ -83,6 +81,10 @@
 @media (max-width: 359px) {
   .top { padding-right: 24px; padding-left: 24px; }
   .price { font-size: 28px; }
+  .promo { font-size: 10px; }
+}
+@media (max-width: 767px) {
+  .billingLabel { min-height: 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .card, .card .cta { transition: none; }
