@@ -21,7 +21,7 @@ function hasValidUserInfo(u: ReturnType<typeof useOrder>['order']['userInfo']): 
 
 export default function ProgramSelectionPage() {
   const router = useRouter();
-  const { order, programId, billing, signupComplete, setProgramId, setBilling, signupPending } = useOrder();
+  const { order, programId, billing, signupComplete, setProgramId, setBilling, signupPending, signupError, submitSignup } = useOrder();
   const { trackComplete } = useFunnelTracking('choose_program');
   const location = order.location;
   const valid = hasValidUserInfo(order.userInfo) && Boolean(location);
@@ -35,10 +35,10 @@ export default function ProgramSelectionPage() {
   const locked = signupPending || signupComplete;
   const selectedPlan = truckingPrograms.find((plan) => plan.id === programId);
 
-  const handleContinue = () => {
+  const handleSubmit = async () => {
     if (!programId || locked) return;
-    trackComplete();
-    router.push('/add-location/checkout');
+    const outcome = await submitSignup();
+    if (outcome === 'success') trackComplete();
   };
 
   return (
@@ -49,7 +49,7 @@ export default function ProgramSelectionPage() {
         <header className="mb-8 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Choose Your Program</h1>
-            <p className="mt-2 text-sm text-gray-600">Select a program and billing preference, then review your details at checkout.</p>
+            <p className="mt-2 text-sm text-gray-600">Select a program and billing preference. No payment will be collected.</p>
           </div>
           <div className="flex items-start gap-3 md:max-w-xs md:border-l md:border-gray-200 md:pl-6">
             <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-600" aria-hidden="true" />
@@ -78,6 +78,7 @@ export default function ProgramSelectionPage() {
           ))}
         </fieldset>
 
+        {signupError && <p className="mt-5 text-sm text-error-700" role="alert" data-testid="signup-error">{signupError}</p>}
         {signupPending && <p className="mt-5 text-sm text-gray-600" role="status">Completing your signup…</p>}
         {signupComplete && (
           <p className="mt-5 rounded-lg bg-success-50 px-4 py-3 text-sm font-medium text-success-700" role="status" data-testid="signup-success">
@@ -97,8 +98,8 @@ export default function ProgramSelectionPage() {
                 {' · '}{billing === 'monthly' ? 'Monthly' : 'Annual'}
               </p>
             )}
-            <Button hierarchy="primary" size="lg" disabled={!programId || locked} onClick={handleContinue} data-testid="button-continue-checkout">
-              Continue to checkout
+            <Button hierarchy="primary" size="lg" disabled={!programId || locked} loading={signupPending} onClick={handleSubmit} data-testid="button-complete-signup">
+              Complete signup
             </Button>
           </div>
         </footer>

@@ -18,7 +18,6 @@ const steps: Step[] = [
   { id: 1, name: 'Your Info', path: '/' },
   { id: 2, name: 'Pick Your Location', path: '/add-location' },
   { id: 3, name: 'Choose Your Program', path: '/add-location/program' },
-  { id: 4, name: 'Checkout', path: '/add-location/checkout' },
 ];
 
 export function ProgressIndicator({ currentStep, disabled = false }: ProgressIndicatorProps) {
@@ -51,7 +50,7 @@ export function ProgressIndicator({ currentStep, disabled = false }: ProgressInd
                   >
                     <Check className="h-5 w-5 text-white" aria-hidden="true" strokeWidth={2.5} />
                   </span>
-                  <span className="ml-2.5 text-sm font-medium text-gray-700 group-hover:text-brand-600 hidden md:block whitespace-nowrap">
+                  <span className="ml-2.5 text-sm font-medium text-gray-700 group-hover:text-brand-600 hidden sm:block whitespace-nowrap">
                     {step.name}
                   </span>
                 </button>
@@ -60,7 +59,6 @@ export function ProgressIndicator({ currentStep, disabled = false }: ProgressInd
                   className={`flex items-center z-10 ${isCurrent ? 'cursor-default' : ''}`}
                   data-testid={`step-nav-${step.id}`}
                   aria-current={isCurrent ? 'step' : undefined}
-                   aria-label={step.name}
                 >
                   <span
                     className={`flex h-9 w-9 items-center justify-center rounded-full flex-shrink-0 ${
@@ -74,7 +72,7 @@ export function ProgressIndicator({ currentStep, disabled = false }: ProgressInd
                       {step.id}
                     </span>
                   </span>
-                  <span className={`ml-2.5 text-sm hidden md:block whitespace-nowrap ${
+                  <span className={`ml-2.5 text-sm hidden sm:block whitespace-nowrap ${
                     isCurrent ? 'font-semibold text-brand-600' : 'font-medium text-gray-400'
                   }`}>
                     {step.name}

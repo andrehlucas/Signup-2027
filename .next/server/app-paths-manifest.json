@@ -2,7 +2,6 @@
   "/api/funnel/events/route": "app/api/funnel/events/route.js",
   "/api/signup/route": "app/api/signup/route.js",
   "/page": "app/page.js",
-  "/add-location/page": "app/add-location/page.js",
   "/add-location/program/page": "app/add-location/program/page.js",
-  "/add-location/checkout/page": "app/add-location/checkout/page.js"
+  "/add-location/page": "app/add-location/page.js"
 }

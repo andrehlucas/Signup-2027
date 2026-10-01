@@ -120,7 +120,7 @@ export default function SignUpPage() {
         {/* Headline */}
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-[2rem] font-extrabold leading-tight text-[#0f2044] max-w-xl mx-auto" data-testid="heading-signup">
-            You're Only 4 Steps Away From<br className="hidden sm:block" />
+            You're Only 3 Steps Away From<br className="hidden sm:block" />
             <span className="text-[#0086C9]"> Securing Your Virtual Office</span>
           </h1>
         </div>
