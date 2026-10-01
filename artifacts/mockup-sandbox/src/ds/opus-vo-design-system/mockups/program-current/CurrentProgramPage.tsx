@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import './_preview.css';
-import './CurrentProgramPage.css';
 import { useRouter } from './_state';
 import { ArrowLeft, MapPin } from 'lucide-react';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';

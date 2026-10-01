@@ -9,8 +9,8 @@ For program-card presentation, prioritize the user's supplied TruckingPricingCar
 
 **How to apply:** Preserve that visual identity when refining this step, using Opus palette tokens where possible. Keep monthly and annual prices visible side by side at equal sizes unless the user changes that requirement. Do not normalize the cards back to a generic minimalist comparison.
 
-Use the available right-hand space for a prominent program name, with readable brand context on the left.
+Use a blue-background badge on the right for the program name, with readable “Opus Trucking” context on the left.
 
-**Why:** The user rejected the weak tiny-brand treatment, but then explicitly corrected the stacked redesign: “tem tanto espaço a direita pro nome essential ou pro. Pq voce n usa?” The rejection was not permission to abandon right alignment.
+**Why:** The user rejected both the weak split typography and the stacked redesign, then explicitly selected “Selo à direita” when offered badge, colored header, or integrated-title directions. Right-hand space matters; plain text alone did not satisfy the requested emphasis.
 
-**How to apply:** Keep the program name visually dominant on the right at desktop widths, without reducing “Opus Trucking” to an unreadable micro-label. Adapt for narrow screens without assuming the user wants a stacked desktop title.
+**How to apply:** Preserve the selected badge direction when refining this preview unless the user changes it. Keep the brand readable, use official Opus blue tokens, and fit the badge at narrow widths without clipping.

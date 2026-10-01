@@ -26,11 +26,17 @@
 }
 
 .top { display: flex; flex-direction: column; padding: 20px 32px; }
-.title { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; gap: 0; margin: 0; color: var(--color-gray-900); }
-.brandName { color: var(--color-gray-700); font-size: 16px; font-weight: 600; line-height: 24px; letter-spacing: -.01em; }
-.essentials { color: var(--color-brand-400); }
-.pro { color: var(--color-brand-600); }
-.title .essentials, .title .pro { font-size: 30px; font-weight: 700; line-height: 38px; letter-spacing: -.025em; }
+.title { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; margin: 0; color: var(--color-gray-900); }
+.brandName { min-width: 0; color: var(--color-gray-800); font-size: 24px; font-weight: 800; line-height: 32px; letter-spacing: -.025em; }
+.planBadge { justify-self: end; padding: 8px 12px; font-size: 20px; line-height: 28px; white-space: nowrap; }
+.planBadge, .card .cta {
+  border: 1px solid var(--color-brand-400);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--color-brand-400) 0%, var(--color-brand-500) 100%);
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--color-brand-400) 40%, transparent);
+}
 .description { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--color-gray-500); }
 .pricing { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
 .priceOption {
@@ -46,22 +52,31 @@
 .priceOption:focus-within { border-color: var(--color-brand-600); }
 .priceOption.checked { border-color: var(--color-brand-600); }
 .disabled { cursor: not-allowed; }
-.billingLabel { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--color-gray-500); }
+.billingLabel { display: flex; flex-wrap: wrap; align-items: center; align-content: flex-start; min-height: 40px; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--color-gray-500); }
 .price { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--color-gray-900); }
 .unit { font-size: 14px; font-weight: 500; color: var(--color-gray-500); }
-.promo { margin-left: auto; font-size: 12px; line-height: 14px; text-align: right; font-weight: 600; color: var(--color-success-700); }
+.promo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  padding: 4px 8px;
+  border: 1px solid var(--color-success-600);
+  border-radius: 8px;
+  background: var(--color-success-700);
+  color: white;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
 
 .card .cta {
   width: 100%;
   height: 52px;
   margin-top: 20px;
-  border: 1px solid var(--color-brand-400);
-  border-radius: 16px;
-  background: linear-gradient(180deg, var(--color-brand-400) 0%, var(--color-brand-500) 100%);
   font-size: 16px;
-  font-weight: 700;
-  color: white;
-  box-shadow: 0 8px 20px color-mix(in srgb, var(--color-brand-400) 40%, transparent);
   transition: transform 200ms cubic-bezier(.4, 0, .2, 1), box-shadow 200ms cubic-bezier(.4, 0, .2, 1);
 }
 .card .cta:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 26px color-mix(in srgb, var(--color-brand-400) 55%, transparent); }
@@ -80,14 +95,16 @@
 @media (min-width: 1024px) {
   .price { font-size: 40px; }
 }
+@media (max-width: 1023px) {
+  .brandName { font-size: 20px; line-height: 28px; }
+  .billingLabel { min-height: 66px; }
+}
 @media (max-width: 359px) {
   .top { padding-right: 24px; padding-left: 24px; }
-  .title .essentials, .title .pro { font-size: 24px; line-height: 32px; }
+  .brandName { font-size: 18px; line-height: 24px; }
+  .planBadge { padding: 4px 8px; font-size: 16px; line-height: 24px; }
   .price { font-size: 28px; }
   .promo { font-size: 10px; }
-}
-@media (max-width: 767px) {
-  .billingLabel { min-height: 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .card, .card .cta { transition: none; }

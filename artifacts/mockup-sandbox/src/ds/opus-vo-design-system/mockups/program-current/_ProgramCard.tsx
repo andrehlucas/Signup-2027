@@ -45,7 +45,7 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
       <div className={styles.top}>
         <h2 className={styles.title}>
           <span className={styles.brandName}>Opus Trucking</span>
-          <span className={plan.id === 'pro' ? styles.pro : styles.essentials}>{plan.label}</span>
+          <span className={styles.planBadge}>{plan.label}</span>
         </h2>
         <p className={styles.description}>{plan.description}</p>
         <div className={styles.pricing}>
@@ -68,7 +68,11 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
                     data-testid={`radio-billing-${plan.id}-${frequency}`}
                   />
                   {frequency === 'monthly' ? 'Monthly' : 'Annual'}
-                  {frequency === 'annual' && <span className={styles.promo}>2 months free</span>}
+                  {frequency === 'annual' && (
+                    <span className={styles.promo}>
+                      <span>2 months free</span>
+                    </span>
+                  )}
                 </span>
                 <span className={styles.price}>
                   ${frequency === 'monthly' ? plan.monthly : plan.annualTotal.toLocaleString('en-US')}
@@ -87,7 +91,7 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
           onClick={() => onSelect(plan.id)}
           data-testid={`button-select-${plan.id}`}
         >
-          {selected ? <><Check className="h-4 w-4" aria-hidden="true" /> Selected {plan.label}</> : 'Click here to get started'}
+          Continue with {plan.label}
         </Button>
       </div>
       <div className={styles.features}>
