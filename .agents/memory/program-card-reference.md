@@ -9,8 +9,8 @@ For program-card presentation, prioritize the user's supplied TruckingPricingCar
 
 **How to apply:** Preserve that visual identity when refining this step, using Opus palette tokens where possible. Keep monthly and annual prices visible side by side at equal sizes unless the user changes that requirement. Do not normalize the cards back to a generic minimalist comparison.
 
-Keep the brand and program name visually connected; avoid a tiny brand label at the far left paired with an isolated program name at the far right.
+Use the available right-hand space for a prominent program name, with readable brand context on the left.
 
-**Why:** The user explicitly rejected that heading redesign as “horrivel,” despite having earlier requested inline right alignment. The later rejection supersedes that layout direction.
+**Why:** The user rejected the weak tiny-brand treatment, but then explicitly corrected the stacked redesign: “tem tanto espaço a direita pro nome essential ou pro. Pq voce n usa?” The rejection was not permission to abandon right alignment.
 
-**How to apply:** When refining card headings, prioritize a cohesive title composition and meaningful prominence for the program name. Do not restore the rejected split treatment merely to follow the older alignment request.
+**How to apply:** Keep the program name visually dominant on the right at desktop widths, without reducing “Opus Trucking” to an unreadable micro-label. Adapt for narrow screens without assuming the user wants a stacked desktop title.
