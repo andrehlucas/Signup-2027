@@ -24,7 +24,14 @@ export function BillingSwitcher({ billing, disabled, onChange }: BillingSwitcher
           onClick={() => onChange('monthly')}
           className={`${styles.segment} ${billing === 'monthly' ? styles.active : ''}`}
         >
-          Monthly
+          <span className={styles.segmentContent}>
+            <span className={styles.checkSlot} aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none">
+                <path d="m3.5 8.25 3 3 6-6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            <span>Monthly</span>
+          </span>
         </Button>
         <Button
           type="button"
@@ -36,7 +43,14 @@ export function BillingSwitcher({ billing, disabled, onChange }: BillingSwitcher
           onClick={() => onChange('annual')}
           className={`${styles.segment} ${styles.annualSegment} ${billing === 'annual' ? styles.active : ''}`}
         >
-          Yearly
+          <span className={styles.segmentContent}>
+            <span className={styles.checkSlot} aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none">
+                <path d="m3.5 8.25 3 3 6-6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            <span>Yearly</span>
+          </span>
           <span className={styles.savingBadge}>Save over 16%</span>
         </Button>
       </div>

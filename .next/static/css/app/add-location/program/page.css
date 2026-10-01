@@ -119,18 +119,77 @@
   padding-right: 16px;
   padding-left: 16px;
   color: var(--gray-600);
-  transition: color 150ms ease, background-color 150ms ease;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  font-weight: 500;
 }
 
-.BillingSwitcher_segment__I0rRb.BillingSwitcher_segment__I0rRb:hover:not(:disabled) {
-  color: var(--brand-700);
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_segment__I0rRb:hover:not(:disabled):not(.BillingSwitcher_active__zRI_h) {
+  border-color: transparent;
+  background: var(--brand-50);
+  color: var(--brand-800);
+  box-shadow: none;
 }
 
 .BillingSwitcher_segment__I0rRb.BillingSwitcher_active__zRI_h.BillingSwitcher_active__zRI_h {
-  border-color: var(--brand-200);
-  background: white;
+  border-color: var(--brand-600);
+  background: var(--brand-600);
+  color: white;
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--brand-600) 28%, transparent);
+  font-weight: 700;
+}
+
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_active__zRI_h.BillingSwitcher_active__zRI_h:hover:not(:disabled) {
+  border-color: var(--brand-600);
+  background: var(--brand-600);
+  color: white;
+}
+
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_segment__I0rRb:disabled {
+  border-color: var(--gray-200);
+  background: var(--gray-100);
+  color: var(--gray-700);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_active__zRI_h.BillingSwitcher_active__zRI_h:disabled {
+  border-color: var(--gray-300);
+  background: var(--gray-100);
+  color: var(--gray-700);
+  box-shadow: none;
+  font-weight: 700;
+}
+
+.BillingSwitcher_segmentContent__n4BRM {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.BillingSwitcher_checkSlot__kxjLl {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.BillingSwitcher_checkSlot__kxjLl svg {
+  width: 14px;
+  height: 14px;
+  visibility: hidden;
+}
+
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_active__zRI_h .BillingSwitcher_checkSlot__kxjLl svg {
+  visibility: visible;
+}
+
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_active__zRI_h:disabled .BillingSwitcher_checkSlot__kxjLl {
   color: var(--brand-700);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--gray-900) 8%, transparent);
 }
 
 .BillingSwitcher_annualSegment___r4Kj.BillingSwitcher_annualSegment___r4Kj { margin-left: 2px; }
@@ -141,16 +200,16 @@
   right: -8px;
   z-index: 1;
   padding: 4px 10px;
-  border: 2px solid var(--brand-25);
+  border: 2px solid var(--warning-200);
   border-radius: 9999px;
-  background: var(--brand-700);
+  background: linear-gradient(110deg, var(--warning-700), var(--error-700));
   color: white;
   font-size: 11px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: .025em;
   white-space: nowrap;
-  box-shadow: 0 3px 10px color-mix(in srgb, var(--brand-700) 18%, transparent);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--error-600) 20%, transparent);
 }
 
 .BillingSwitcher_note__pham_ {
