@@ -2355,9 +2355,6 @@ body{
 .underline-offset-4{
   text-underline-offset: 4px;
 }
-.accent-brand-600{
-  accent-color: var(--brand-600);
-}
 .opacity-0{
   opacity: 0;
 }
@@ -3213,22 +3210,6 @@ body{
 .focus-visible\:outline-none:focus-visible{
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-
-.focus-visible\:outline:focus-visible{
-  outline-style: solid;
-}
-
-.focus-visible\:outline-2:focus-visible{
-  outline-width: 2px;
-}
-
-.focus-visible\:outline-offset-2:focus-visible{
-  outline-offset: 2px;
-}
-
-.focus-visible\:outline-brand-600:focus-visible{
-  outline-color: var(--brand-600);
 }
 
 .focus-visible\:ring-0:focus-visible{

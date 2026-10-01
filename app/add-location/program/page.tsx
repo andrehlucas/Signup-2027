@@ -10,6 +10,7 @@ import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import { useRevealContinue } from '../../hooks/use-reveal-continue';
 import { truckingPrograms } from '../../../shared/trucking-programs';
 import { ProgramCard } from './ProgramCard';
+import { BillingSwitcher } from './BillingSwitcher';
 
 function hasValidUserInfo(u: ReturnType<typeof useOrder>['order']['userInfo']): boolean {
   const len = u.phone.replace(/\D/g, '').length;
@@ -62,6 +63,8 @@ export default function ProgramSelectionPage() {
           </div>
         </header>
 
+        <BillingSwitcher billing={billing} disabled={locked} onChange={setBilling} />
+
         <fieldset disabled={locked} className="mx-auto grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2" data-testid="programs-list">
           <legend className="sr-only">Programs</legend>
           {truckingPrograms.map((plan) => (
@@ -71,10 +74,9 @@ export default function ProgramSelectionPage() {
               selected={programId === plan.id}
               billing={billing}
               disabled={locked}
-              onSelect={(id, frequency) => {
+              onSelect={(id) => {
                 if (locked) return;
                 setProgramId(id);
-                if (frequency) setBilling(frequency);
                 revealContinue();
               }}
             />

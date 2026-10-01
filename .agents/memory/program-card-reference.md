@@ -7,7 +7,9 @@ For program-card presentation, prioritize the user's supplied TruckingPricingCar
 
 **Why:** The user rejected multiple neutral redesigns and explicitly supplied the desired cards. The rounded silhouette, blue accents, and lower benefits panel are intentional reference treatments, not accidental style drift. Later refinements moved the gradient treatment to the plan badges and removed in-card CTAs so navigation stays in the footer.
 
-**How to apply:** Preserve that visual identity when refining this step, using Opus palette tokens where possible. Keep monthly and annual prices visible side by side at equal sizes unless the user changes that requirement. Do not normalize the cards back to a generic minimalist comparison.
+**How to apply:** Preserve that visual identity when refining this step, using Opus palette tokens where possible. Use the uploaded reference's global Monthly / Yearly switcher rather than the earlier side-by-side billing choices. Do not normalize the cards back to a generic minimalist comparison.
+
+**Why:** The user explicitly requested bringing back the ZIP's switcher on 2026-10-01, superseding the earlier side-by-side pricing direction.
 
 Use a blue-background badge on the right for the program name, with readable “Opus Trucking” context on the left.
 

@@ -10,6 +10,7 @@ import { useOrder } from './_state';
 import { useFunnelTracking } from './_state';
 import { truckingPrograms } from './_programs';
 import { ProgramCard } from './_ProgramCard';
+import { BillingSwitcher } from './_BillingSwitcher';
 
 function hasValidUserInfo(u: ReturnType<typeof useOrder>['order']['userInfo']): boolean {
   const len = u.phone.replace(/\D/g, '').length;
@@ -61,6 +62,8 @@ function ProgramSelectionPage() {
           </div>
         </header>
 
+        <BillingSwitcher billing={billing} disabled={signupPending || signupComplete} onChange={setBilling} />
+
         <fieldset disabled={locked} className="mx-auto grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2" data-testid="programs-list">
           <legend className="sr-only">Programs</legend>
           {truckingPrograms.map((plan) => (
@@ -70,10 +73,9 @@ function ProgramSelectionPage() {
               selected={programId === plan.id}
               billing={billing}
               disabled={locked}
-              onSelect={(id, frequency) => {
+              onSelect={(id) => {
                 if (locked) return;
                 setProgramId(id);
-                if (frequency) setBilling(frequency);
               }}
             />
           ))}

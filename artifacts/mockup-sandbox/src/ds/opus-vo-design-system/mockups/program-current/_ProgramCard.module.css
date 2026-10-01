@@ -27,7 +27,9 @@
 
 .top { display: flex; flex-direction: column; padding: 20px 32px; }
 .title { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; margin: 0; color: var(--color-gray-900); }
-.brandName { min-width: 0; color: var(--color-gray-800); font-size: 24px; font-weight: 800; line-height: 32px; letter-spacing: -.025em; }
+.brandName { display: flex; min-width: 0; align-items: center; gap: 10px; color: var(--color-gray-800); font-size: 24px; font-weight: 800; line-height: 32px; letter-spacing: -.025em; }
+.programRadio { width: 18px; height: 18px; flex: 0 0 auto; accent-color: var(--color-brand-600); }
+.programRadio:focus-visible { outline: 2px solid var(--color-brand-600); outline-offset: 2px; }
 .planBadge { justify-self: end; padding: 8px 12px; font-size: 20px; line-height: 28px; white-space: nowrap; }
 .planBadge {
   border: 1px solid var(--color-brand-400);
@@ -38,39 +40,15 @@
   box-shadow: 0 8px 20px color-mix(in srgb, var(--color-brand-400) 40%, transparent);
 }
 .description { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--color-gray-500); }
-.pricing { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
-.priceOption {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 4px;
-  padding-bottom: 8px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-}
-.priceOption:hover { border-color: var(--color-brand-200); }
-.priceOption:focus-within { border-color: var(--color-brand-600); }
-.priceOption.checked { border-color: var(--color-brand-600); }
-.disabled { cursor: not-allowed; }
-.billingLabel { display: flex; flex-wrap: wrap; align-items: center; align-content: flex-start; min-height: 40px; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--color-gray-500); }
+.pricing { min-height: 122px; margin-top: 16px; }
+.priceRow { display: flex; align-items: baseline; gap: 6px; }
 .price { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--color-gray-900); }
-.unit { font-size: 14px; font-weight: 500; color: var(--color-gray-500); }
-.promo {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  margin-left: auto;
-  padding: 4px 8px;
-  border: 1px solid var(--color-success-600);
-  border-radius: 8px;
-  background: var(--color-success-700);
-  color: white;
-  font-size: 12px;
-  line-height: 14px;
-  font-weight: 800;
-  white-space: nowrap;
-}
+.unit { font-size: 16px; font-weight: 500; color: var(--color-gray-500); }
+.monthlyNote, .annualDetails { margin-top: 4px; font-size: 14px; line-height: 20px; }
+.monthlyNote, .annualTotal, .equivalentNote { color: var(--color-gray-500); }
+.annualPromo { font-weight: 600; color: var(--color-success-700); }
+.annualTotal { font-variant-numeric: tabular-nums; }
+.equivalentNote { font-size: 12px; line-height: 18px; }
 
 .features { flex: 1; padding: 20px 24px 24px; border-top: 1px solid var(--color-gray-100); background: var(--color-gray-25); }
 .featuresHeading { margin-bottom: 12px; font-size: 10px; font-weight: 700; line-height: 1.5; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-500); }
@@ -88,14 +66,12 @@
 }
 @media (max-width: 1023px) {
   .brandName { font-size: 20px; line-height: 28px; }
-  .billingLabel { min-height: 66px; }
 }
 @media (max-width: 359px) {
   .top { padding-right: 24px; padding-left: 24px; }
   .brandName { font-size: 18px; line-height: 24px; }
   .planBadge { padding: 4px 8px; font-size: 16px; line-height: 24px; }
   .price { font-size: 28px; }
-  .promo { font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .card { transition: none; }

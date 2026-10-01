@@ -17,7 +17,7 @@ interface ProgramCardProps {
   selected: boolean;
   billing: ProgramBilling;
   disabled: boolean;
-  onSelect: (id: TruckingProgramId, billing?: ProgramBilling) => void;
+  onSelect: (id: TruckingProgramId) => void;
 }
 
 function Feature({ label, included = true }: { label: string; included?: boolean }) {
@@ -43,43 +43,43 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
     >
       <div className={styles.top}>
         <h2 className={styles.title}>
-          <span className={styles.brandName}>Opus Trucking</span>
+          <span className={styles.brandName}>
+            <input
+              type="radio"
+              name="program"
+              value={plan.id}
+              checked={selected}
+              disabled={disabled}
+              onChange={() => onSelect(plan.id)}
+              className={styles.programRadio}
+              data-testid={`radio-program-${plan.id}`}
+              aria-label={`Select Opus Trucking ${plan.label}`}
+            />
+            <span>Opus Trucking</span>
+          </span>
           <span className={styles.planBadge}>{plan.label}</span>
         </h2>
         <p className={styles.description}>{plan.description}</p>
-        <div className={styles.pricing}>
-          {(['monthly', 'annual'] as const).map((frequency) => {
-            const checked = selected && billing === frequency;
-            return (
-              <label
-                key={frequency}
-                className={`${styles.priceOption} ${checked ? styles.checked : ''} ${disabled ? styles.disabled : ''}`}
-              >
-                <span className={styles.billingLabel}>
-                  <input
-                    type="radio"
-                    name="program-billing"
-                    value={`${plan.id}-${frequency}`}
-                    checked={checked}
-                    disabled={disabled}
-                    onChange={() => onSelect(plan.id, frequency)}
-                    className="h-4 w-4 shrink-0 accent-brand-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-                    data-testid={`radio-billing-${plan.id}-${frequency}`}
-                  />
-                  {frequency === 'monthly' ? 'Monthly' : 'Annual'}
-                  {frequency === 'annual' && (
-                    <span className={styles.promo}>
-                      <span>2 months free</span>
-                    </span>
-                  )}
-                </span>
-                <span className={styles.price}>
-                  ${frequency === 'monthly' ? plan.monthly : plan.annualTotal.toLocaleString('en-US')}
-                </span>
-                <span className={styles.unit}>{frequency === 'monthly' ? 'Billed monthly' : 'Billed yearly'}</span>
-              </label>
-            );
-          })}
+        <div className={styles.pricing} aria-live="polite">
+          <div className={styles.priceRow}>
+            <span className={styles.price}>
+              ${billing === 'monthly' ? plan.monthly : Math.round(plan.annualTotal / 12)}
+            </span>
+            <span className={styles.unit}>{billing === 'monthly' ? '/ mo' : '/ mo equiv.'}</span>
+          </div>
+          {billing === 'annual' ? (
+            <div className={styles.annualDetails}>
+              <p className={styles.annualPromo}>2 months free when paid annually</p>
+              <p className={styles.annualTotal}>
+                ${plan.annualTotal.toLocaleString('en-US')} due for the year · save ${plan.monthly * 2}
+              </p>
+              <p className={styles.equivalentNote}>
+                Rounded monthly equivalent; exact equivalent is ${(plan.annualTotal / 12).toFixed(2)}/mo.
+              </p>
+            </div>
+          ) : (
+            <p className={styles.monthlyNote}>Billed monthly · Or pay annually and get 2 months free</p>
+          )}
         </div>
       </div>
       <div className={styles.features}>

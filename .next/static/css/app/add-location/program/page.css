@@ -30,7 +30,9 @@
 
 .ProgramCard_top__dyDzf { display: flex; flex-direction: column; padding: 20px 32px; }
 .ProgramCard_title____0XC { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; margin: 0; color: var(--gray-900); }
-.ProgramCard_brandName__JaEBf { min-width: 0; color: var(--gray-800); font-size: 24px; font-weight: 800; line-height: 32px; letter-spacing: -.025em; }
+.ProgramCard_brandName__JaEBf { display: flex; min-width: 0; align-items: center; gap: 10px; color: var(--gray-800); font-size: 24px; font-weight: 800; line-height: 32px; letter-spacing: -.025em; }
+.ProgramCard_programRadio__iscN1 { width: 18px; height: 18px; flex: 0 0 auto; accent-color: var(--brand-600); }
+.ProgramCard_programRadio__iscN1:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
 .ProgramCard_planBadge___SjZv { justify-self: end; padding: 8px 12px; font-size: 20px; line-height: 28px; white-space: nowrap;
   border: 1px solid var(--brand-400);
   border-radius: 16px;
@@ -39,39 +41,15 @@
   color: white;
   box-shadow: 0 8px 20px color-mix(in srgb, var(--brand-400) 40%, transparent); }
 .ProgramCard_description__bK_pC { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-500); }
-.ProgramCard_pricing__Rhw7P { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
-.ProgramCard_priceOption__dobix {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  gap: 4px;
-  padding-bottom: 8px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-}
-.ProgramCard_priceOption__dobix:hover { border-color: var(--brand-200); }
-.ProgramCard_priceOption__dobix:focus-within { border-color: var(--brand-600); }
-.ProgramCard_priceOption__dobix.ProgramCard_checked__4Qjtf { border-color: var(--brand-600); }
-.ProgramCard_disabled__3OLE9 { cursor: not-allowed; }
-.ProgramCard_billingLabel__3i5Vs { display: flex; flex-wrap: wrap; align-items: center; align-content: flex-start; min-height: 40px; gap: 8px; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--gray-500); }
+.ProgramCard_pricing__Rhw7P { min-height: 122px; margin-top: 16px; }
+.ProgramCard_priceRow__1RdJg { display: flex; align-items: baseline; gap: 6px; }
 .ProgramCard_price__UaqMd { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--gray-900); }
-.ProgramCard_unit__BD1q6 { font-size: 14px; font-weight: 500; color: var(--gray-500); }
-.ProgramCard_promo__TqmBe {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  margin-left: auto;
-  padding: 4px 8px;
-  border: 1px solid var(--success-600);
-  border-radius: 8px;
-  background: var(--success-700);
-  color: white;
-  font-size: 12px;
-  line-height: 14px;
-  font-weight: 800;
-  white-space: nowrap;
-}
+.ProgramCard_unit__BD1q6 { font-size: 16px; font-weight: 500; color: var(--gray-500); }
+.ProgramCard_monthlyNote__vo338, .ProgramCard_annualDetails__6AbLW { margin-top: 4px; font-size: 14px; line-height: 20px; }
+.ProgramCard_monthlyNote__vo338, .ProgramCard_annualTotal__T3X1e, .ProgramCard_equivalentNote__tV_3X { color: var(--gray-500); }
+.ProgramCard_annualPromo__nFfrC { font-weight: 600; color: var(--success-700); }
+.ProgramCard_annualTotal__T3X1e { font-variant-numeric: tabular-nums; }
+.ProgramCard_equivalentNote__tV_3X { font-size: 12px; line-height: 18px; }
 
 .ProgramCard_features__6ifRp { flex: 1; padding: 20px 24px 24px; border-top: 1px solid var(--gray-100); background: var(--gray-25); }
 .ProgramCard_featuresHeading__5Kruf { margin-bottom: 12px; font-size: 10px; font-weight: 700; line-height: 1.5; letter-spacing: .05em; text-transform: uppercase; color: var(--gray-500); }
@@ -89,16 +67,92 @@
 }
 @media (max-width: 1023px) {
   .ProgramCard_brandName__JaEBf { font-size: 20px; line-height: 28px; }
-  .ProgramCard_billingLabel__3i5Vs { min-height: 66px; }
 }
 @media (max-width: 359px) {
   .ProgramCard_top__dyDzf { padding-right: 24px; padding-left: 24px; }
   .ProgramCard_brandName__JaEBf { font-size: 18px; line-height: 24px; }
   .ProgramCard_planBadge___SjZv { padding: 4px 8px; font-size: 16px; line-height: 24px; }
   .ProgramCard_price__UaqMd { font-size: 28px; }
-  .ProgramCard_promo__TqmBe { font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ProgramCard_card__dJ0GK { transition: none; }
   .ProgramCard_card__dJ0GK:hover { transform: none; }
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/next@15.5.22_@babel+core@7.29.7_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/.pnpm/next@15.5.22_@babel+core@7.29.7_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./app/add-location/program/BillingSwitcher.module.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.BillingSwitcher_switcher__eAb9t {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto 32px;
+}
+
+.BillingSwitcher_group__Vqj3c {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 4px;
+  border: 1px solid var(--brand-200);
+  border-radius: 12px;
+  background: var(--brand-25);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--gray-900) 9%, transparent);
+}
+
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_segment__I0rRb {
+  position: relative;
+  min-height: 44px;
+  border-radius: 8px;
+  padding-right: 16px;
+  padding-left: 16px;
+  color: var(--gray-600);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_segment__I0rRb:hover:not(:disabled) {
+  color: var(--brand-700);
+}
+
+.BillingSwitcher_segment__I0rRb.BillingSwitcher_active__zRI_h.BillingSwitcher_active__zRI_h {
+  border-color: var(--brand-200);
+  background: white;
+  color: var(--brand-700);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--gray-900) 8%, transparent);
+}
+
+.BillingSwitcher_annualSegment___r4Kj.BillingSwitcher_annualSegment___r4Kj { margin-left: 2px; }
+
+.BillingSwitcher_savingBadge__pQdXe {
+  position: absolute;
+  top: -12px;
+  right: -8px;
+  z-index: 1;
+  padding: 4px 10px;
+  border: 2px solid var(--brand-25);
+  border-radius: 9999px;
+  background: var(--brand-700);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .025em;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--brand-700) 18%, transparent);
+}
+
+.BillingSwitcher_note__pham_ {
+  color: var(--brand-700);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .BillingSwitcher_segment__I0rRb.BillingSwitcher_segment__I0rRb { padding-right: 24px; padding-left: 24px; }
+}
+
+@media (max-width: 359px) {
+  .BillingSwitcher_segment__I0rRb.BillingSwitcher_segment__I0rRb { padding-right: 12px; padding-left: 12px; }
+  .BillingSwitcher_savingBadge__pQdXe { right: -5px; padding-right: 6px; padding-left: 6px; font-size: 10px; }
 }
