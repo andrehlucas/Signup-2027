@@ -86,7 +86,7 @@ export default function LocationSelectionPage() {
   if (!isReady || !isUserInfoValid) return null;
 
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="location-selection-page">
+    <div className="signup-flow min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="location-selection-page">
       <div className="max-w-4xl lg:max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={2} disabled={frozen} />
@@ -206,11 +206,12 @@ export default function LocationSelectionPage() {
           )}
 
           <footer className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 pt-5">
-            <Button hierarchy="link-gray" size="lg" disabled={frozen} onClick={() => router.push('/')} data-testid="button-back">
+            <Button className="signup-action" hierarchy="primary" size="lg" disabled={frozen} onClick={() => router.push('/')} data-testid="button-back">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Back
             </Button>
             <Button
+              className="signup-action"
               ref={continueRef}
               style={{ scrollMarginBlock: 16 }}
               onClick={handleContinue}

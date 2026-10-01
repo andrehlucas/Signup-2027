@@ -83,7 +83,7 @@ function ProgramSelectionPage() {
         {signupPending && <p className="mt-5 text-sm text-gray-600" role="status">Preparing checkout…</p>}
 
         <footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-6">
-          <Button hierarchy="link-gray" size="lg" disabled={locked} onClick={() => router.push('/add-location')} data-testid="button-back">
+          <Button className="signup-action" hierarchy="primary" size="lg" disabled={locked} onClick={() => router.push('/add-location')} data-testid="button-back">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back
           </Button>
@@ -94,7 +94,7 @@ function ProgramSelectionPage() {
                 {' · '}{billing === 'monthly' ? 'Monthly' : 'Annual'}
               </p>
             )}
-            <Button hierarchy="primary" size="lg" disabled={!programId || locked} loading={signupPending} onClick={handleSubmit} data-testid="button-complete-signup">
+            <Button className="signup-action" hierarchy="primary" size="lg" disabled={!programId || locked} loading={signupPending} onClick={handleSubmit} data-testid="button-complete-signup">
               Continue
             </Button>
           </div>
@@ -105,7 +105,7 @@ function ProgramSelectionPage() {
 }
 
 export default function CurrentProgramPage() {
-  return <div className="program-current-preview min-h-screen bg-gray-50">
+  return <div className="signup-flow program-current-preview min-h-screen bg-gray-50">
     <header className="bg-white border-b border-gray-100 py-5 px-6 shadow-sm">
       <div className="max-w-4xl mx-auto flex items-center justify-center">
         <img src="/__mockup/images/opus-vo-main-logo.svg" alt="Opus Virtual Offices" className="h-11" />

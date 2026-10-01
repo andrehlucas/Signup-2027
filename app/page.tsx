@@ -98,7 +98,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-81px)] relative overflow-hidden" style={{ backgroundColor: '#f4f7fb' }} data-testid="signup-page">
+    <div className="signup-flow min-h-[calc(100vh-81px)] relative overflow-hidden" style={{ backgroundColor: '#f4f7fb' }} data-testid="signup-page">
       {/* Subtle dot-grid pattern */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
         <defs>
@@ -287,7 +287,7 @@ export default function SignUpPage() {
                 onClick={handleContinue}
                 hierarchy="primary"
                 size="xl"
-                className="w-full"
+                className="signup-action w-full"
                 data-testid="button-continue"
               >
                 Continue

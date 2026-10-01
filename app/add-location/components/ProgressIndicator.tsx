@@ -45,7 +45,7 @@ export function ProgressIndicator({ currentStep, disabled = false }: ProgressInd
                   aria-label={`Go back to ${step.name}`}
                 >
                   <span
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-500 shadow-sm transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-brand-200 group-hover:ring-offset-2 flex-shrink-0"
+                    className="signup-step-dot flex h-9 w-9 items-center justify-center rounded-full bg-brand-500 shadow-sm transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-brand-200 group-hover:ring-offset-2 flex-shrink-0"
                     data-testid={`step-${step.id}-complete`}
                   >
                     <Check className="h-5 w-5 text-white" aria-hidden="true" strokeWidth={2.5} />
@@ -61,7 +61,7 @@ export function ProgressIndicator({ currentStep, disabled = false }: ProgressInd
                   aria-current={isCurrent ? 'step' : undefined}
                 >
                   <span
-                    className={`flex h-9 w-9 items-center justify-center rounded-full flex-shrink-0 ${
+                    className={`signup-step-dot ${isCurrent ? '' : 'signup-step-dot--upcoming'} flex h-9 w-9 items-center justify-center rounded-full flex-shrink-0 ${
                       isCurrent
                         ? 'bg-brand-500 shadow-md ring-4 ring-brand-100'
                         : 'border-2 border-gray-200 bg-white'
@@ -82,7 +82,7 @@ export function ProgressIndicator({ currentStep, disabled = false }: ProgressInd
 
               {stepIdx !== steps.length - 1 && (
                 <div
-                  className={`flex-1 h-0.5 mx-3 rounded-full ${isComplete ? 'bg-brand-500' : 'bg-gray-200'}`}
+                  className={`flex-1 h-0.5 mx-3 rounded-full ${isComplete ? 'signup-step-connector--complete bg-brand-500' : 'bg-gray-200'}`}
                   aria-hidden="true"
                 />
               )}

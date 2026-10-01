@@ -1,3 +1,5 @@
+@import "../artifacts/opus-vo-design-system/src/signup-navigation.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

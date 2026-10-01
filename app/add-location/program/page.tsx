@@ -44,7 +44,7 @@ export default function ProgramSelectionPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="program-selection-page">
+    <div className="signup-flow min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="program-selection-page">
       <div className="mx-auto max-w-4xl lg:max-w-6xl">
         <div className="mb-8"><ProgressIndicator currentStep={3} disabled={locked} /></div>
 
@@ -85,7 +85,7 @@ export default function ProgramSelectionPage() {
         {(signupPending || signupComplete) && <p className="mt-5 text-sm text-gray-600" role="status">{signupComplete ? 'Redirecting to checkout…' : 'Preparing checkout…'}</p>}
 
         <footer className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 pt-6">
-          <Button hierarchy="link-gray" size="lg" disabled={locked} onClick={() => router.push('/add-location')} data-testid="button-back">
+          <Button className="signup-action" hierarchy="primary" size="lg" disabled={locked} onClick={() => router.push('/add-location')} data-testid="button-back">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back
           </Button>
@@ -96,7 +96,7 @@ export default function ProgramSelectionPage() {
                 {' · '}{billing === 'monthly' ? 'Monthly' : 'Annual'}
               </p>
             )}
-            <Button ref={continueRef} style={{ scrollMarginBlock: 16 }} hierarchy="primary" size="lg" disabled={!programId || locked} loading={signupPending} onClick={handleSubmit} data-testid="button-complete-signup">
+            <Button className="signup-action" ref={continueRef} style={{ scrollMarginBlock: 16 }} hierarchy="primary" size="lg" disabled={!programId || locked} loading={signupPending} onClick={handleSubmit} data-testid="button-complete-signup">
               Continue
             </Button>
           </div>

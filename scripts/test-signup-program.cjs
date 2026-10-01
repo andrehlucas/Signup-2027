@@ -15,6 +15,27 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
+    const assertNavigationColor = async (testId, disabled = false) => {
+      const { background, foreground } = await page.getByTestId(testId).evaluate(element => {
+        const styles = getComputedStyle(element);
+        return { background: styles.backgroundColor, foreground: styles.color };
+      });
+      const rgb = value => value.match(/[\d.]+/g).slice(0, 3).map(Number);
+      const backgroundRgb = rgb(background);
+      if (disabled) {
+        assert.ok(Math.max(...backgroundRgb) - Math.min(...backgroundRgb) <= 8, `${testId} has a gray disabled background`);
+        assert.notEqual(background, 'rgb(99, 161, 215)');
+      } else {
+        assert.equal(background, 'rgb(99, 161, 215)', `${testId} uses #63a1d7`);
+      }
+      const luminance = values => values.map(value => {
+        const channel = value / 255;
+        return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+      }).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
+      const light = Math.max(luminance(backgroundRgb), luminance(rgb(foreground)));
+      const dark = Math.min(luminance(backgroundRgb), luminance(rgb(foreground)));
+      assert.ok((light + 0.05) / (dark + 0.05) >= 4.5, `${testId} text meets WCAG AA contrast`);
+    };
     const assertFooterVisible = async (testId) => {
       await page.waitForFunction(id => {
         const button = document.querySelector(`[data-testid="${id}"]`);
@@ -24,6 +45,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       }, testId, { timeout: 5000 });
     };
     await page.goto(process.env.TEST_BASE_URL, { waitUntil: 'networkidle' });
+    await assertNavigationColor('button-continue');
+    await assertNavigationColor('step-1-current');
     await page.getByTestId('button-continue').click();
     await page.getByTestId('error-first-name').waitFor();
     for (const [field, value] of Object.entries({
@@ -39,11 +62,16 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('checkbox-terms').click();
     await page.getByTestId('button-continue').click();
     await page.getByTestId('location-selection-page').waitFor();
+    await assertNavigationColor('button-continue', true);
+    await assertNavigationColor('button-back');
+    await assertNavigationColor('step-1-complete');
+    await assertNavigationColor('step-2-current');
     await page.getByTestId('select-state').click();
     await page.getByRole('option', { name: 'Florida', exact: true }).click();
     await page.setViewportSize({ width: 375, height: 812 });
     await page.locator('[data-testid^="location-card-"]').first().click();
     await assertFooterVisible('button-continue');
+    await assertNavigationColor('button-continue');
     const selectedLocationId = await page.locator('input[name="location"]:checked').getAttribute('data-testid');
     const [backBounds, continueBounds] = await page.evaluate(() =>
       ['button-back', 'button-continue'].map(id => {
@@ -66,6 +94,9 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.setViewportSize({ width: 1280, height: 900 });
     assert.equal(await page.locator('[data-testid^="button-select-"]').count(), 0, 'cards have no navigation buttons');
     assert.equal(await page.getByTestId('button-complete-signup').isDisabled(), true, 'footer requires a program choice');
+    await assertNavigationColor('button-complete-signup', true);
+    await assertNavigationColor('button-back');
+    await assertNavigationColor('step-3-current');
     assert.equal(await page.getByTestId('button-complete-signup').innerText(), 'Continue');
     assert.equal(await page.getByTestId('signup-success').count(), 0, 'program page has no signup-complete banner');
     assert.match(await page.getByTestId('program-card-essentials').innerText(), /\$199/);
@@ -91,6 +122,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('radio-billing-pro-monthly').check();
     await assertFooterVisible('button-complete-signup');
     assert.equal(await page.getByTestId('button-complete-signup').isEnabled(), true);
+    await page.getByTestId('button-complete-signup').hover();
+    await assertNavigationColor('button-complete-signup');
     await page.getByTestId('button-back').click();
     await page.getByTestId('button-continue').click();
     assert.equal(await page.getByTestId('radio-billing-pro-monthly').isChecked(), true);
@@ -151,9 +184,14 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.getByTestId('location-selection-page').waitFor();
     assert.equal(await page.getByTestId('select-state').isDisabled(), true);
     assert.equal(await page.getByTestId('button-back').isDisabled(), true, 'location Back is locked during signup');
+    await assertNavigationColor('button-back', true);
+    await assertNavigationColor('button-continue', true);
+    await assertNavigationColor('step-1-complete', true);
     await page.goForward();
     await page.getByTestId('program-selection-page').waitFor();
     assert.equal(await page.getByTestId('button-complete-signup').isDisabled(), true);
+    await assertNavigationColor('button-complete-signup', true);
+    await assertNavigationColor('button-back', true);
     assert.equal(await page.getByTestId('radio-billing-essentials-monthly').isDisabled(), true);
     assert.equal(await page.getByTestId('radio-billing-pro-annual').isChecked(), true);
     assert.equal(await page.getByTestId('signup-success').count(), 0);
