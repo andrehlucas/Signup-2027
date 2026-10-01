@@ -82,6 +82,15 @@ export default defineConfig({
     strictPort: true,
     host: "0.0.0.0",
     allowedHosts: true,
+    // This registered preview is the existing entry point in the workspace.
+    // Serve the real signup app, not the component showroom, at that entry point.
+    proxy: {
+      "/": {
+        target: "http://127.0.0.1:5000",
+        changeOrigin: true,
+        ws: true,
+      },
+    },
     fs: {
       strict: true,
     },
@@ -90,5 +99,12 @@ export default defineConfig({
     port,
     host: "0.0.0.0",
     allowedHosts: true,
+    proxy: {
+      "/": {
+        target: "http://127.0.0.1:5000",
+        changeOrigin: true,
+        ws: true,
+      },
+    },
   },
 });

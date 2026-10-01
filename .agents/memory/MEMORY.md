@@ -1,1 +1,2 @@
 - [Design-system linking](design-system-tailwind3-linking.md) — use the source alias until a deliberate Next.js upgrade allows normal local-package installation.
+- [Preview selection](preview-selection.md) — stopping a managed artifact does not change preview selection; verify the selected artifact endpoint.
