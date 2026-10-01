@@ -83,14 +83,15 @@ export default function ProgramSelectionPage() {
                         </span>
                     </div>
                     <p className="mt-2 text-sm text-gray-600">{plan.description}</p>
-                    <div className="mt-5 overflow-hidden rounded-lg border border-gray-200 divide-y divide-gray-200">
+                    <div className="mt-5 grid grid-cols-2 overflow-hidden rounded-lg border border-gray-200 divide-x divide-gray-200">
                       {(['monthly', 'annual'] as const).map((b) => {
                         const checked = selected && billing === b;
                         return (
                           <label
                             key={b}
-                            className={`flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors motion-reduce:transition-none focus-within:bg-brand-50 ${checked ? 'bg-brand-50' : 'bg-white hover:bg-gray-50'}`}
+                            className={`flex min-w-0 cursor-pointer flex-col items-start gap-2 px-3 py-3 transition-colors motion-reduce:transition-none focus-within:bg-brand-50 ${checked ? 'bg-brand-50' : 'bg-white hover:bg-gray-50'}`}
                           >
+                            <span className="flex items-center gap-2 text-xs font-medium text-gray-600">
                             <input
                               type="radio"
                               name="program-billing"
@@ -99,19 +100,17 @@ export default function ProgramSelectionPage() {
                               onChange={() => { setProgramId(plan.id); setBilling(b); }}
                               data-testid={`radio-billing-${plan.id}-${b}`}
                             />
-                            {b === 'monthly' ? (
-                              <span className="flex min-w-0 flex-wrap items-baseline gap-x-1 text-gray-900">
-                                <span className="text-3xl font-semibold tabular-nums">${plan.monthly}</span>
-                                <span className="text-sm font-medium text-gray-600">/ mo</span>
-                                <span className="sr-only"> billed monthly</span>
-                              </span>
-                            ) : (
-                              <span className="flex min-w-0 flex-wrap items-baseline gap-x-1 text-gray-900">
-                                <span className="text-lg font-semibold tabular-nums">${plan.annualTotal.toLocaleString('en-US')}</span>
-                                <span className="text-sm font-medium text-gray-600">/ year</span>
-                                <Badge className="ml-1" color="success" variant="pill" size="sm">2 months free</Badge>
-                              </span>
-                            )}
+                              {b === 'monthly' ? 'Monthly' : 'Annual'}
+                            </span>
+                            <span className="text-xl font-semibold tabular-nums text-gray-900 lg:text-2xl">
+                              ${b === 'monthly' ? plan.monthly : plan.annualTotal.toLocaleString('en-US')}
+                            </span>
+                            <span className="text-xs font-medium text-gray-600">
+                              {b === 'monthly' ? '/ month' : '/ year'}
+                            </span>
+                            <span className={`mt-1 ${b === 'monthly' ? 'invisible' : ''}`} aria-hidden={b === 'monthly' ? true : undefined}>
+                              <Badge color="success" variant="pill" size="sm">2 months free</Badge>
+                            </span>
                           </label>
                         );
                       })}
