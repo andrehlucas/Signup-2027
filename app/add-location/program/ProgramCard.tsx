@@ -1,7 +1,6 @@
 'use client';
 
 import { Check, X } from 'lucide-react';
-import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
   truckingPrograms,
   truckingSharedFeaturesSummary,
@@ -44,8 +43,8 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
     >
       <div className={styles.top}>
         <h2 className={styles.title}>
-          Opus Trucking<br />
-          <span className={plan.id === 'pro' ? styles.pro : styles.essentials}>{plan.label}</span>
+          <span className={styles.brandName}>Opus Trucking</span>
+          <span className={styles.planBadge}>{plan.label}</span>
         </h2>
         <p className={styles.description}>{plan.description}</p>
         <div className={styles.pricing}>
@@ -68,29 +67,20 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
                     data-testid={`radio-billing-${plan.id}-${frequency}`}
                   />
                   {frequency === 'monthly' ? 'Monthly' : 'Annual'}
+                  {frequency === 'annual' && (
+                    <span className={styles.promo}>
+                      <span>2 months free</span>
+                    </span>
+                  )}
                 </span>
                 <span className={styles.price}>
                   ${frequency === 'monthly' ? plan.monthly : plan.annualTotal.toLocaleString('en-US')}
                 </span>
-                <span className={styles.unit}>{frequency === 'monthly' ? '/ month' : '/ year'}</span>
-                <span className={frequency === 'annual' ? styles.promo : styles.note}>
-                  {frequency === 'monthly' ? 'Billed monthly' : '2 months free'}
-                </span>
+                <span className={styles.unit}>{frequency === 'monthly' ? 'Billed monthly' : 'Billed yearly'}</span>
               </label>
             );
           })}
         </div>
-        <Button
-          hierarchy="primary"
-          size="lg"
-          className={styles.cta}
-          aria-pressed={selected}
-          disabled={disabled}
-          onClick={() => onSelect(plan.id)}
-          data-testid={`button-select-${plan.id}`}
-        >
-          {selected ? <><Check className="h-4 w-4" aria-hidden="true" /> Selected {plan.label}</> : 'Click here to get started'}
-        </Button>
       </div>
       <div className={styles.features}>
         <h3 className={styles.featuresHeading}>What&apos;s included</h3>

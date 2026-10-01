@@ -1,7 +1,6 @@
 'use client';
 
 import { Check, X } from 'lucide-react';
-import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
   truckingPrograms,
   truckingSharedFeaturesSummary,
@@ -82,17 +81,6 @@ export function ProgramCard({ plan, selected, billing, disabled, onSelect }: Pro
             );
           })}
         </div>
-        <Button
-          hierarchy="primary"
-          size="lg"
-          className={styles.cta}
-          aria-pressed={selected}
-          disabled={disabled}
-          onClick={() => onSelect(plan.id)}
-          data-testid={`button-select-${plan.id}`}
-        >
-          Continue with {plan.label}
-        </Button>
       </div>
       <div className={styles.features}>
         <h3 className={styles.featuresHeading}>What&apos;s included</h3>
