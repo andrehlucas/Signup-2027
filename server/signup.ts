@@ -1,6 +1,7 @@
 import { createHash } from 'crypto';
 import { z } from 'zod';
 import { sampleLocations } from '../app/add-location/types';
+import { truckingPrograms } from '../shared/trucking-programs';
 import type { IStorage } from './storage';
 
 const signupRequestSchema = z.object({
@@ -23,6 +24,14 @@ const signupRequestSchema = z.object({
     }),
   }).strict(),
   locationId: z.string().trim().min(1, 'Choose a location.').max(80, 'Location is invalid.'),
+  programId: z.enum(['essentials', 'pro'], {
+    required_error: 'Choose a program.',
+    invalid_type_error: 'Choose a valid program.',
+  }),
+  billing: z.enum(['monthly', 'annual'], {
+    required_error: 'Choose a billing option.',
+    invalid_type_error: 'Choose a valid billing option.',
+  }),
 }).strict();
 
 export type SignupCompletionResult =
@@ -45,7 +54,7 @@ export async function completeSignup(storage: IStorage, input: unknown): Promise
   }
 
   const { requestId } = parsed.data;
-  const { userInfo, locationId } = parsed.data;
+  const { userInfo, locationId, programId, billing } = parsed.data;
   if (userInfo.email.toLowerCase() !== userInfo.confirmEmail.toLowerCase()) {
     return {
       status: 400,
@@ -71,8 +80,10 @@ export async function completeSignup(storage: IStorage, input: unknown): Promise
     email: userInfo.email.toLowerCase(),
     confirmEmail: userInfo.confirmEmail.toLowerCase(),
   };
+  const program = truckingPrograms.find((candidate) => candidate.id === programId)!;
+  const quotedPrice = billing === 'monthly' ? program.monthly : program.annualTotal;
   const requestFingerprint = createHash('sha256')
-    .update(JSON.stringify({ userInfo: normalizedUserInfo, locationId }))
+    .update(JSON.stringify({ userInfo: normalizedUserInfo, locationId, programId, billing }))
     .digest('hex');
 
   const result = await storage.createSignup({
@@ -86,6 +97,11 @@ export async function completeSignup(storage: IStorage, input: unknown): Promise
     company: normalizedUserInfo.company,
     termsAccepted: true,
     locationId,
+    programId,
+    billing,
+    quotedMonthlyPrice: program.monthly,
+    quotedAnnualTotal: program.annualTotal,
+    quotedPrice,
   });
 
   if (result.conflict || !result.signup) {

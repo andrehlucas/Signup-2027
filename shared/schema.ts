@@ -96,6 +96,11 @@ export interface SignupRecord {
   company: string;
   termsAccepted: true;
   locationId: string;
+  programId: 'essentials' | 'pro';
+  billing: 'monthly' | 'annual';
+  quotedMonthlyPrice: number;
+  quotedAnnualTotal: number;
+  quotedPrice: number;
   status: 'completed';
   createdAt: string;
 }
@@ -131,5 +136,11 @@ export type FunnelEvent = typeof funnelEvents.$inferSelect;
 export type InsertFunnelEvent = z.infer<typeof insertFunnelEventSchema>;
 
 // Keep legacy steps in the type so previously recorded events remain readable.
-export type FunnelStep = 'your_info' | 'pick_location' | 'pick_plan' | 'customize' | 'checkout';
+export type FunnelStep =
+  | 'your_info'
+  | 'pick_location'
+  | 'choose_program'
+  | 'pick_plan'
+  | 'customize'
+  | 'checkout';
 export type FunnelEventType = 'enter' | 'complete';

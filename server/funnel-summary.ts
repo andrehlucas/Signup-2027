@@ -1,16 +1,14 @@
 import type { FunnelEvent, FunnelSession } from '../shared/schema';
 
-const stepOrder = ['your_info', 'pick_location'] as const;
-const finalStepAliases = new Set(['pick_location', 'pick_plan', 'customize', 'checkout']);
+const stepOrder = ['your_info', 'pick_location', 'choose_program'] as const;
 const stepLabels: Record<(typeof stepOrder)[number], string> = {
   your_info: 'Your Info',
   pick_location: 'Pick Your Location',
+  choose_program: 'Choose Your Program',
 };
 
 function currentStep(step: string): (typeof stepOrder)[number] | undefined {
-  if (step === 'your_info') return 'your_info';
-  if (finalStepAliases.has(step)) return 'pick_location';
-  return undefined;
+  return stepOrder.find((currentStepName) => currentStepName === step);
 }
 
 export function buildFunnelSummary(events: FunnelEvent[], sessions: FunnelSession[]) {
@@ -33,14 +31,9 @@ export function buildFunnelSummary(events: FunnelEvent[], sessions: FunnelSessio
     };
   });
 
-  const completedSessionIds = new Set(
-    sessions.filter((session) => session.completed).map((session) => session.sessionId),
-  );
+  const completedSessionIds = new Set<string>();
   events.forEach((event) => {
-    if (
-      event.eventType === 'complete' &&
-      (event.step === 'pick_location' || event.step === 'checkout')
-    ) {
+    if (event.step === 'choose_program' && event.eventType === 'complete') {
       completedSessionIds.add(event.sessionId);
     }
   });
@@ -72,6 +65,6 @@ export function buildFunnelSummary(events: FunnelEvent[], sessions: FunnelSessio
     recentEvents: [...events]
       .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
       .slice(0, 50)
-      .map((event) => ({ ...event, step: currentStep(event.step) ?? event.step })),
+      .map((event) => ({ ...event })),
   };
 }

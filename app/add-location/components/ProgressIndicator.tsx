@@ -11,14 +11,16 @@ interface Step {
 
 interface ProgressIndicatorProps {
   currentStep: number;
+  disabled?: boolean;
 }
 
 const steps: Step[] = [
   { id: 1, name: 'Your Info', path: '/' },
   { id: 2, name: 'Pick Your Location', path: '/add-location' },
+  { id: 3, name: 'Choose Your Program', path: '/add-location/program' },
 ];
 
-export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
+export function ProgressIndicator({ currentStep, disabled = false }: ProgressIndicatorProps) {
   const router = useRouter();
 
   return (
@@ -36,6 +38,7 @@ export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
               {isComplete ? (
                 <button
                   type="button"
+                  disabled={disabled}
                   onClick={() => router.push(step.path)}
                   className="flex items-center cursor-pointer group z-10 rounded focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-200"
                   data-testid={`step-nav-${step.id}`}

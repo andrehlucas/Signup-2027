@@ -33,7 +33,8 @@ function formatPhoneNumber(value: string): string {
 
 export default function SignUpPage() {
   const router = useRouter();
-  const { order, setUserInfo } = useOrder();
+  const { order, setUserInfo, signupPending, signupComplete } = useOrder();
+  const frozen = signupPending || signupComplete;
 
   const [firstName, setFirstName] = useState(order.userInfo.firstName);
   const [lastName, setLastName] = useState(order.userInfo.lastName);
@@ -79,7 +80,7 @@ export default function SignUpPage() {
   };
 
   const handleContinue = () => {
-    if (!validate()) return;
+    if (frozen || !validate()) return;
 
     setUserInfo({
       firstName: firstName.trim(),
@@ -119,14 +120,14 @@ export default function SignUpPage() {
         {/* Headline */}
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-[2rem] font-extrabold leading-tight text-[#0f2044] max-w-xl mx-auto" data-testid="heading-signup">
-            You're Only 2 Steps Away From<br className="hidden sm:block" />
+            You're Only 3 Steps Away From<br className="hidden sm:block" />
             <span className="text-[#0086C9]"> Securing Your Virtual Office</span>
           </h1>
         </div>
 
         {/* Progress indicator */}
         <div className="mb-10 max-w-2xl mx-auto">
-          <ProgressIndicator currentStep={1} />
+          <ProgressIndicator currentStep={1} disabled={frozen} />
         </div>
 
         {/* Form card */}
@@ -136,6 +137,7 @@ export default function SignUpPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Input
+                    disabled={frozen}
                     placeholder="First Name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -148,6 +150,7 @@ export default function SignUpPage() {
                 </div>
                 <div>
                   <Input
+                    disabled={frozen}
                     placeholder="Last Name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
@@ -166,6 +169,7 @@ export default function SignUpPage() {
                   <div className="relative flex-shrink-0">
                     <button
                       type="button"
+                      disabled={frozen}
                       onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                       className="flex items-center gap-1.5 h-11 px-3 bg-gray-50 hover:bg-gray-100 transition-colors border-r border-gray-200"
                       data-testid="button-country-code"
@@ -196,6 +200,7 @@ export default function SignUpPage() {
                     )}
                   </div>
                   <Input
+                    disabled={frozen}
                     type="tel"
                     inputMode="numeric"
                     placeholder="(555) 555 - 5555"
@@ -212,6 +217,7 @@ export default function SignUpPage() {
 
               <div>
                 <Input
+                    disabled={frozen}
                   type="email"
                   placeholder="Email Address"
                   value={email}
@@ -226,6 +232,7 @@ export default function SignUpPage() {
 
               <div>
                 <Input
+                    disabled={frozen}
                   type="email"
                   placeholder="Confirm Email Address"
                   value={confirmEmail}
@@ -240,6 +247,7 @@ export default function SignUpPage() {
 
               <div>
                 <Input
+                    disabled={frozen}
                   placeholder="Company Name"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
@@ -254,6 +262,7 @@ export default function SignUpPage() {
               <div>
                 <div className="flex items-start gap-3">
                   <Checkbox
+                    disabled={frozen}
                     id="terms"
                     checked={termsAccepted}
                     onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
@@ -274,6 +283,7 @@ export default function SignUpPage() {
               </div>
 
               <Button
+                disabled={frozen}
                 onClick={handleContinue}
                 hierarchy="primary"
                 size="xl"

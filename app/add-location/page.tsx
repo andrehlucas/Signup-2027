@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Building2, Check, MapPin, Star } from 'lucide-react';
 import { Badge } from '@workspace/opus-vo-design-system/components/ui/badge';
@@ -37,17 +37,14 @@ export default function LocationSelectionPage() {
     order,
     selectedState,
     signupComplete,
+    signupPending,
     setLocation,
     setSelectedState,
-    completeSignup,
   } = useOrder();
   const [isReady, setIsReady] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
-  const requestIdRef = useRef<string | null>(null);
-  const isSubmittingRef = useRef(false);
+  const frozen = signupComplete || signupPending;
   const isUserInfoValid = hasValidUserInfo(order.userInfo);
-  const { trackComplete } = useFunnelTracking('pick_location' as Parameters<typeof useFunnelTracking>[0]);
+  const { trackComplete } = useFunnelTracking('pick_location');
 
   useEffect(() => {
     if (!isUserInfoValid) {
@@ -65,72 +62,22 @@ export default function LocationSelectionPage() {
   const selectedLocation = order.location?.state === selectedState ? order.location : null;
 
   const handleStateChange = (state: string) => {
-    if (signupComplete) return;
+    if (frozen) return;
     setSelectedState(state);
     setLocation(null);
-    requestIdRef.current = crypto.randomUUID();
-    setError('');
   };
 
   const handleLocationSelect = (locationId: string) => {
-    if (signupComplete || order.location?.id === locationId) return;
+    if (frozen || order.location?.id === locationId) return;
     const location = locations.find((availableLocation) => availableLocation.id === locationId);
     if (!location) return;
     setLocation(location);
-    requestIdRef.current = crypto.randomUUID();
-    setError('');
   };
 
-  const handleCompleteSignup = async () => {
-    if (!selectedLocation || signupComplete || isSubmittingRef.current) return;
-
-    isSubmittingRef.current = true;
-    setIsSubmitting(true);
-    setError('');
-    requestIdRef.current ??= crypto.randomUUID();
-
-    try {
-      const response = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          requestId: requestIdRef.current,
-          userInfo: order.userInfo,
-          locationId: selectedLocation.id,
-        }),
-      });
-
-      let responseData: { status?: string; message?: string; error?: string } | null = null;
-      try {
-        responseData = await response.json();
-      } catch {
-        responseData = null;
-      }
-
-      if (!response.ok) {
-        throw new Error(
-          responseData?.message ||
-          responseData?.error ||
-          'We could not complete your signup. Please try again.'
-        );
-      }
-
-      if (responseData?.status !== 'completed') {
-        throw new Error('We received an unexpected response. Please try again.');
-      }
-
-      completeSignup();
-      trackComplete();
-    } catch (submissionError) {
-      setError(
-        submissionError instanceof Error
-          ? submissionError.message
-          : 'We could not complete your signup. Please try again.'
-      );
-    } finally {
-      isSubmittingRef.current = false;
-      setIsSubmitting(false);
-    }
+  const handleContinue = () => {
+    if (!selectedLocation) return;
+    trackComplete();
+    router.push('/add-location/program');
   };
 
   if (!isReady || !isUserInfoValid) return null;
@@ -139,7 +86,7 @@ export default function LocationSelectionPage() {
     <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="location-selection-page">
       <div className="max-w-4xl lg:max-w-6xl mx-auto">
         <div className="mb-8">
-          <ProgressIndicator currentStep={2} />
+          <ProgressIndicator currentStep={2} disabled={frozen} />
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
@@ -152,7 +99,7 @@ export default function LocationSelectionPage() {
             <Select
               value={selectedState}
               onValueChange={handleStateChange}
-              disabled={signupComplete}
+              disabled={frozen}
             >
               <SelectTrigger id="select-state" data-testid="select-state">
                 <SelectValue placeholder="Select a state" />
@@ -183,7 +130,7 @@ export default function LocationSelectionPage() {
                         value={location.id}
                         checked={isSelected}
                         onChange={() => handleLocationSelect(location.id)}
-                        disabled={signupComplete}
+                        disabled={frozen}
                         aria-label={`${location.city}, ${location.state} — ${location.address}`}
                         className="peer sr-only"
                         data-testid={`radio-location-${location.id}`}
@@ -255,34 +202,15 @@ export default function LocationSelectionPage() {
             </div>
           )}
 
-          {error && (
-            <p className="mt-5 text-sm text-red-700" role="alert" data-testid="signup-error">
-              {error}
-            </p>
-          )}
-
-          {isSubmitting && (
-            <p className="mt-5 text-sm text-gray-600" role="status">
-              Completing your signup…
-            </p>
-          )}
-
-          {signupComplete && (
-            <p className="mt-5 rounded-md bg-success-50 px-3 py-2 text-sm font-medium text-success-700" role="status" data-testid="signup-success">
-              Signup complete. No payment was collected.
-            </p>
-          )}
-
           <div className="mt-6 flex flex-col items-start gap-3 border-t border-gray-100 pt-5">
             <Button
-              onClick={handleCompleteSignup}
+              onClick={handleContinue}
               hierarchy="primary"
               size="lg"
-              disabled={!selectedLocation || signupComplete || isSubmitting}
-              loading={isSubmitting}
-              data-testid="button-complete-signup"
+              disabled={!selectedLocation || frozen}
+              data-testid="button-continue"
             >
-              Complete signup
+              Continue
             </Button>
           </div>
         </div>

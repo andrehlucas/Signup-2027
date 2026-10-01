@@ -1,12 +1,21 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useRef, useState, ReactNode } from 'react';
+import type { TruckingProgramId, ProgramBilling } from '../../shared/trucking-programs';
 import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo, AppliedPromo } from './types';
 
 interface OrderContextType {
   order: OrderState;
   selectedState: string;
   signupComplete: boolean;
+  signupPending: boolean;
+  signupError: string;
+  submitSignup: () => Promise<'success' | 'error' | 'ignored'>;
+  programId: TruckingProgramId | null;
+  billing: ProgramBilling;
+  setProgramId: (id: TruckingProgramId | null) => void;
+  setBilling: (billing: ProgramBilling) => void;
+  getSignupRequestId: () => string;
   setUserInfo: (userInfo: UserInfo) => void;
   setLocation: (location: AvailableLocation | null) => void;
   setSelectedState: (state: string) => void;
@@ -52,18 +61,95 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [order, setOrder] = useState<OrderState>(initialOrder);
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedStateRaw] = useState('');
   const [signupComplete, setSignupComplete] = useState(false);
+  const [programId, setProgramIdState] = useState<TruckingProgramId | null>(null);
+  const [billing, setBillingState] = useState<ProgramBilling>('monthly');
+  const requestRef = useRef<{ key: string; id: string } | null>(null);
+
+  const [signupPending, setSignupPending] = useState(false);
+  const [signupError, setSignupError] = useState('');
+  const pendingRef = useRef(false);
+  const completeRef = useRef(false);
+  const latest = useRef({ order, programId, billing });
+  latest.current = { order, programId, billing };
+  const locked = () => pendingRef.current || completeRef.current;
+
+  const setProgramId = (id: TruckingProgramId | null) => {
+    if (locked()) return;
+    setProgramIdState(id);
+    setSignupError('');
+  };
+  const setBilling = (b: ProgramBilling) => {
+    if (locked()) return;
+    setBillingState(b);
+    setSignupError('');
+  };
+
+  const getSignupRequestId = () => {
+    const { order: o, programId: p, billing: bl } = latest.current;
+    const key = JSON.stringify([o.userInfo, o.location?.id, p, bl]);
+    if (!requestRef.current || requestRef.current.key !== key) {
+      requestRef.current = { key, id: crypto.randomUUID() };
+    }
+    return requestRef.current.id;
+  };
+
+  const submitSignup = async (): Promise<'success' | 'error' | 'ignored'> => {
+    const { order: o, programId: p, billing: bl } = latest.current;
+    if (locked() || !p || !o.location) return 'ignored';
+    pendingRef.current = true;
+    setSignupPending(true);
+    setSignupError('');
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requestId: getSignupRequestId(),
+          userInfo: o.userInfo,
+          locationId: o.location.id,
+          programId: p,
+          billing: bl,
+        }),
+      });
+      let data: { status?: string; message?: string; error?: string } | null = null;
+      try { data = await response.json(); } catch { data = null; }
+      if (!response.ok) {
+        throw new Error(data?.message || data?.error || 'We could not complete your signup. Please try again.');
+      }
+      if (data?.status !== 'completed') throw new Error('We received an unexpected response. Please try again.');
+      completeRef.current = true;
+      setSignupComplete(true);
+      return 'success';
+    } catch (e) {
+      setSignupError(e instanceof Error ? e.message : 'We could not complete your signup. Please try again.');
+      return 'error';
+    } finally {
+      pendingRef.current = false;
+      setSignupPending(false);
+    }
+  };
+
+  const setSelectedState = (s: string) => {
+    if (locked()) return;
+    setSelectedStateRaw(s);
+  };
 
   const setUserInfo = (userInfo: UserInfo) => {
+    if (locked()) return;
     setOrder(prev => ({ ...prev, userInfo }));
   };
 
   const setLocation = (location: AvailableLocation | null) => {
+    if (locked()) return;
+    setSignupError('');
     setOrder(prev => ({ ...prev, location }));
+    setProgramIdState(null);
   };
 
   const completeSignup = () => {
+    completeRef.current = true;
     setSignupComplete(true);
   };
 
@@ -113,9 +199,14 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   };
 
   const clearOrder = () => {
+    if (pendingRef.current) return;
+    completeRef.current = false;
+    setSignupError('');
     setOrder(initialOrder);
-    setSelectedState('');
+    setSelectedStateRaw('');
     setSignupComplete(false);
+    setProgramIdState(null);
+    setBilling('monthly');
   };
 
   const getCartTotal = () => {
@@ -190,6 +281,14 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         order,
         selectedState,
         signupComplete,
+        signupPending,
+        signupError,
+        submitSignup,
+        programId,
+        billing,
+        setProgramId,
+        setBilling,
+        getSignupRequestId,
         setUserInfo,
         setLocation,
         setSelectedState,

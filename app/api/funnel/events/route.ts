@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       await storage.updateFunnelSession(sessionId, { lastSeenAt: timestamp });
     }
 
-    if ((step === 'pick_location' || step === 'checkout') && eventType === 'complete') {
+    if (step === 'choose_program' && eventType === 'complete') {
       await storage.updateFunnelSession(sessionId, { completed: true, lastSeenAt: timestamp });
     }
 

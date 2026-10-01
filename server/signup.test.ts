@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import type { FunnelEvent, FunnelSession } from '../shared/schema';
 import { MemStorage } from './storage';
 import { completeSignup } from './signup';
+import { buildFunnelSummary } from './funnel-summary';
 
 const requestId = 'd4b1f72c-3b92-4ff6-9a82-e74fa807ecf8';
 
@@ -19,6 +21,8 @@ function validInput(overrides: Record<string, unknown> = {}) {
       termsAccepted: true,
     },
     locationId: 'loc-1285',
+    programId: 'essentials',
+    billing: 'monthly',
     ...overrides,
   };
 }
@@ -31,6 +35,28 @@ test('signup requires the complete user information payload', async () => {
   assert.ok(result.body.errors?.['userInfo.firstName']);
   assert.ok(result.body.errors?.['userInfo.email']);
   assert.ok(result.body.errors?.['userInfo.termsAccepted']);
+  assert.equal(await storage.getSignupByRequestId(requestId), undefined);
+});
+
+test('signup requires a valid program and billing selection', async () => {
+  const storage = new MemStorage();
+  const { programId: _programId, ...withoutProgram } = validInput();
+  const missingProgram = await completeSignup(storage, withoutProgram);
+  assert.equal(missingProgram.status, 400);
+  assert.ok(missingProgram.body.errors?.programId);
+
+  const { billing: _billing, ...withoutBilling } = validInput();
+  const missingBilling = await completeSignup(storage, withoutBilling);
+  assert.equal(missingBilling.status, 400);
+  assert.ok(missingBilling.body.errors?.billing);
+
+  const invalidProgram = await completeSignup(storage, validInput({ programId: 'enterprise' }));
+  assert.equal(invalidProgram.status, 400);
+  assert.ok(invalidProgram.body.errors?.programId);
+
+  const invalidBilling = await completeSignup(storage, validInput({ billing: 'quarterly' }));
+  assert.equal(invalidBilling.status, 400);
+  assert.ok(invalidBilling.body.errors?.billing);
   assert.equal(await storage.getSignupByRequestId(requestId), undefined);
 });
 
@@ -85,6 +111,47 @@ test('signup is idempotent by request ID and conflicts on a changed payload', as
   assert.equal((await storage.getSignupByRequestId(requestId))?.id, first.body.id);
 });
 
+test('idempotency fingerprints include program and billing selections', async () => {
+  const storage = new MemStorage();
+  const first = await completeSignup(storage, validInput());
+  assert.equal(first.status, 201);
+
+  const changedProgram = await completeSignup(storage, validInput({ programId: 'pro' }));
+  assert.equal(changedProgram.status, 409);
+
+  const changedBilling = await completeSignup(storage, validInput({ billing: 'annual' }));
+  assert.equal(changedBilling.status, 409);
+});
+
+test('signup persists catalog prices quoted for each program and billing choice', async () => {
+  const storage = new MemStorage();
+  const locationsBefore = await storage.getLocations();
+  const choices = [
+    { programId: 'essentials', billing: 'monthly', monthlyPrice: 199, annualTotal: 1990, selectedPrice: 199 },
+    { programId: 'essentials', billing: 'annual', monthlyPrice: 199, annualTotal: 1990, selectedPrice: 1990 },
+    { programId: 'pro', billing: 'monthly', monthlyPrice: 249, annualTotal: 2490, selectedPrice: 249 },
+    { programId: 'pro', billing: 'annual', monthlyPrice: 249, annualTotal: 2490, selectedPrice: 2490 },
+  ] as const;
+
+  for (const [index, choice] of choices.entries()) {
+    const id = `d4b1f72c-3b92-4ff6-9a82-e74fa807ef0${index}`;
+    const result = await completeSignup(storage, validInput({
+      requestId: id,
+      programId: choice.programId,
+      billing: choice.billing,
+    }));
+    assert.equal(result.status, 201);
+    const record = await storage.getSignupByRequestId(id);
+    assert.equal(record?.programId, choice.programId);
+    assert.equal(record?.billing, choice.billing);
+    assert.equal(record?.quotedMonthlyPrice, choice.monthlyPrice);
+    assert.equal(record?.quotedAnnualTotal, choice.annualTotal);
+    assert.equal(record?.quotedPrice, choice.selectedPrice);
+  }
+
+  assert.deepEqual(await storage.getLocations(), locationsBefore);
+});
+
 test('successful signup stores a separate record without adding a catalog location', async () => {
   const storage = new MemStorage();
   const locationsBefore = await storage.getLocations();
@@ -100,4 +167,40 @@ test('successful signup stores a separate record without adding a catalog locati
   assert.equal(record?.firstName, 'Alex');
   assert.equal(record?.company, 'Example Co');
   assert.equal(record?.status, 'completed');
+});
+
+test('funnel analytics reports the three current stages and only choose_program completion', () => {
+  const event = (id: string, sessionId: string, step: string, eventType: string): FunnelEvent => ({
+    id,
+    sessionId,
+    step,
+    eventType,
+    timestamp: '2026-02-09T12:00:00Z',
+    duration: null,
+    metadata: null,
+  } as FunnelEvent);
+  const summary = buildFunnelSummary(
+    [
+      event('info-enter', 'new-session', 'your_info', 'enter'),
+      event('location-enter', 'new-session', 'pick_location', 'enter'),
+      event('location-complete', 'new-session', 'pick_location', 'complete'),
+      event('program-enter', 'new-session', 'choose_program', 'enter'),
+      event('program-complete', 'new-session', 'choose_program', 'complete'),
+      event('legacy-checkout', 'legacy-session', 'checkout', 'complete'),
+    ],
+    [
+      { sessionId: 'new-session', completed: false } as FunnelSession,
+      { sessionId: 'legacy-session', completed: true } as FunnelSession,
+    ],
+  );
+
+  assert.deepEqual(summary.steps.map(({ step }) => step), [
+    'your_info',
+    'pick_location',
+    'choose_program',
+  ]);
+  assert.equal(summary.steps.find(({ step }) => step === 'pick_location')?.completed, 1);
+  assert.equal(summary.steps.find(({ step }) => step === 'choose_program')?.completed, 1);
+  assert.deepEqual(summary.sessions, { total: 2, completed: 1 });
+  assert.ok(summary.recentEvents.some(({ step }) => step === 'checkout'));
 });
