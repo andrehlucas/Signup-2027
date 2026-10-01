@@ -15,13 +15,15 @@ The billing switcher's selected option must have an unmistakable filled treatmen
 
 **Why:** The user found the reference's subtle white selected state too difficult to distinguish. Clear selection takes priority over reproducing that part of the ZIP exactly.
 
-**How to apply:** Preserve the stronger selected/unselected distinction when refining the switcher, including its hover and disabled states.
+**How to apply:** Preserve the stronger selected/unselected distinction when refining the switcher, including its hover and disabled states. Keep the approved equal-width options and their payment-frequency descriptions, with the promotional badge below the group rather than overlaid on Yearly.
+
+**Why:** On 2026-10-01 the user explicitly chose this separated, descriptive switcher for the official page after comparing alternatives. This supersedes the ZIP's compact switcher and floating offer badge, not the existing card design.
 
 The savings badge is a warm promotional accent, distinct from the blue billing-selection state.
 
 **Why:** The user requested a “hot deal” color treatment for the savings badge rather than another blue element.
 
-**How to apply:** Keep the offer accent visually separate from selection feedback and preserve readable small text.
+**How to apply:** Keep the offer accent visually separate from selection feedback and preserve readable small text. The chosen switcher uses a soft warm pill with dark warm text; its approval supersedes the earlier orange/red gradient badge.
 
 The card's button chooses the plan and starts checkout in one action; the program page must not have a separate navigation footer.
 

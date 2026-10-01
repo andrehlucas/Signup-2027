@@ -53,6 +53,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       }, testId, { timeout: 5000 });
     };
     const assertBillingFrequency = async frequency => {
+      // Check resting colors after pointer/keyboard activation, not hover colors.
+      await page.mouse.move(0, 0);
       const monthlyPressed = frequency === 'monthly' ? 'true' : 'false';
       const annualPressed = frequency === 'annual' ? 'true' : 'false';
       assert.equal(await page.getByTestId('button-billing-monthly').getAttribute('aria-pressed'), monthlyPressed);
@@ -69,13 +71,14 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
           return [current, inactive].every(style => {
             const channels = style.backgroundColor.match(/[\d.]+/g).slice(0, 3).map(Number);
             return Math.max(...channels) - Math.min(...channels) <= 8 &&
-              style.backgroundImage === 'none' && style.boxShadow === 'none';
+              style.backgroundImage === 'none' && style.boxShadow === 'none' &&
+              style.color === 'rgb(65, 70, 81)';
           });
         }
         return current.backgroundColor === 'rgb(2, 106, 162)' &&
           current.color === 'rgb(255, 255, 255)' &&
           inactive.backgroundColor !== current.backgroundColor &&
-          inactive.color !== current.color && inactive.boxShadow === 'none';
+          inactive.color !== current.color;
       }, { selectedId, otherId }, { timeout: 5000 });
       if (await page.getByTestId(selectedId).isDisabled()) {
         await assertNavigationColor(selectedId, true);
@@ -86,7 +89,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
           return { background: style.backgroundColor, border: style.borderColor, shadow: style.boxShadow };
         });
         assert.equal(colors.border, colors.background, 'selected billing option has a solid matching border');
-        assert.notEqual(colors.shadow, 'none', 'only the selected billing option has a shadow');
+        assert.notEqual(colors.shadow, 'none', 'billing option has the approved subtle shadow');
         // White text on official brand-600 meets WCAG AA.
         const luminance = [2, 106, 162].map(value => {
           const channel = value / 255;
@@ -94,6 +97,13 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
         }).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
         assert.ok(1.05 / (luminance + 0.05) >= 4.5, 'selected billing text meets WCAG AA contrast');
       }
+      const selected = page.getByTestId(selectedId);
+      const other = page.getByTestId(otherId);
+      const selectedBox = await selected.boundingBox();
+      const otherBox = await other.boundingBox();
+      assert.ok(Math.abs(selectedBox.width - otherBox.width) <= 1, 'billing options have equal widths');
+      assert.equal(await selected.locator('svg').evaluate(node => getComputedStyle(node).visibility), 'visible');
+      assert.equal(await other.locator('svg').evaluate(node => getComputedStyle(node).visibility), 'hidden');
     };
     const assertCallToActionColor = async (testId, disabled = false) => {
       // Wait for all shared button styles to finish their 150ms transition.
@@ -144,21 +154,27 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       await page.mouse.move(0, 0);
     };
     const assertDealBadge = async () => {
-      const styles = await page.getByText('Save over 16%', { exact: true }).evaluate(element => {
+      // The design-system Badge nests its text inside the styled pill.
+      const badge = page.getByText('Save over 16% with yearly billing', { exact: true }).locator('..');
+      const styles = await badge.evaluate(element => {
         const style = getComputedStyle(element);
-        return { image: style.backgroundImage, foreground: style.color, border: style.borderColor };
+        return { background: style.backgroundColor, image: style.backgroundImage, foreground: style.color, border: style.borderColor, insideButton: Boolean(element.closest('button')) };
       });
-      assert.ok(styles.image.includes('linear-gradient'), 'offer badge has a hot-deal gradient');
-      for (const endpoint of [[181, 71, 8], [180, 35, 24]]) {
-        assert.ok(styles.image.includes(`rgb(${endpoint.join(', ')})`), 'offer gradient uses warm design-system colors');
-        const luminance = endpoint.map(value => {
+      assert.equal(styles.background, 'rgb(255, 250, 235)', 'approved warm warning background');
+      assert.equal(styles.image, 'none', 'approved offer uses a soft fill, not the previous gradient');
+      assert.equal(styles.foreground, 'rgb(181, 71, 8)');
+      const luminance = channels => channels.map(value => {
           const channel = value / 255;
           return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
         }).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
-        assert.ok(1.05 / (luminance + 0.05) >= 4.5, 'white offer text contrasts against both gradient endpoints');
-      }
-      assert.equal(styles.foreground, 'rgb(255, 255, 255)');
+      assert.ok((luminance([255, 250, 235]) + .05) / (luminance([181, 71, 8]) + .05) >= 4.5, 'offer text meets AA contrast');
       assert.equal(styles.border, 'rgb(254, 223, 137)', 'offer badge has a warm outline');
+      assert.equal(styles.insideButton, false, 'offer is separate from the Yearly button');
+      const badgeBox = await badge.boundingBox();
+      const yearlyBox = await page.getByTestId('button-billing-annual').boundingBox();
+      assert.ok(badgeBox.y > yearlyBox.y + yearlyBox.height, 'offer sits below the options without overlap');
+      assert.equal(await page.getByText('Pay every month', { exact: true }).count(), 1);
+      assert.equal(await page.getByText('Pay once a year', { exact: true }).count(), 1);
     };
     const isFullyVisibleInViewport = async testId => page.waitForFunction(id => {
       const element = document.querySelector(`[data-testid="${id}"]`);
@@ -244,6 +260,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.screenshot({ path: 'screenshots/program-desktop.png', fullPage: true });
     await page.setViewportSize({ width: 375, height: 812 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
+    await assertBillingFrequency('monthly');
+    await assertDealBadge();
     await page.screenshot({ path: 'screenshots/program-mobile.png', fullPage: true });
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.getByTestId('button-billing-annual').click();
