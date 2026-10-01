@@ -42,7 +42,7 @@
   color: white;
   box-shadow: 0 4px 12px color-mix(in srgb, var(--brand-400) 24%, transparent);
 }
-.ProgramCard_description__bK_pC { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-600); }
+.ProgramCard_description__bK_pC { margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-600); }
 .ProgramCard_pricing__Rhw7P { margin-top: 16px; }
 .ProgramCard_priceRow__1RdJg { display: flex; align-items: baseline; gap: 6px; }
 .ProgramCard_cta__x0vTO { margin-top: 20px; }

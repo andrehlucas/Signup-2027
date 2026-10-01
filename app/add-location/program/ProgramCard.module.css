@@ -39,7 +39,7 @@
   color: white;
   box-shadow: 0 4px 12px color-mix(in srgb, var(--brand-400) 24%, transparent);
 }
-.description { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-600); }
+.description { margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-600); }
 .pricing { margin-top: 16px; }
 .priceRow { display: flex; align-items: baseline; gap: 6px; }
 .cta { margin-top: 20px; }

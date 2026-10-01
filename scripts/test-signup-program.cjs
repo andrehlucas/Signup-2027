@@ -161,6 +161,13 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
         return element.getBoundingClientRect().top - content.getBoundingClientRect().bottom;
       });
       assert.ok(priceSpacing >= 16 && priceSpacing <= 24, 'checkout follows pricing content without reserved empty space');
+      const descriptionHeight = await button.evaluate(element => {
+        const description = element.previousElementSibling.previousElementSibling;
+        return description.getBoundingClientRect().height;
+      });
+      if (page.viewportSize().width === 1280) {
+        assert.ok(descriptionHeight < 30, 'single-line description has no reserved blank height above pricing');
+      }
       await button.hover();
       await assertCallToActionColor(`button-select-${planId}`);
       await page.mouse.move(0, 0);
