@@ -76,14 +76,14 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
           type="button"
           hierarchy="primary"
           size="xl"
-          className={`${styles.cta} signup-action w-full`}
+          className={`${styles.cta} w-full`}
           disabled={disabled}
           loading={loading}
-          aria-label={`Choose ${plan.label} and continue to checkout`}
+          aria-label={`Select ${plan.label} and continue to checkout`}
           onClick={() => onSelect(plan.id)}
           data-testid={`button-select-${plan.id}`}
         >
-          Click here to get started
+          Select {plan.label}
         </Button>
       </div>
       <div className={styles.features}>

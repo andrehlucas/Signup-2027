@@ -17,6 +17,12 @@ The card's button chooses the plan and starts checkout in one action; the progra
 
 **How to apply:** Keep plan choice and checkout submission atomic, with the current billing frequency. Preserve the location page's footer; this direction applies only to the program page.
 
+The in-card checkout buttons should match the plan badges' visual treatment, rather than the flat color of the wizard's Continue buttons.
+
+**Why:** The user explicitly requested matching the Essentials / Pro badge style for the card buttons.
+
+**How to apply:** Keep the same badge gradient, white text, border, radius, and shadow on enabled card buttons, while preserving gray disabled states and the separate navigation styles.
+
 Use a blue-background badge on the right for the program name, with readable “Opus Trucking” context on the left.
 
 **Why:** The user rejected both the weak split typography and the stacked redesign, then explicitly selected “Selo à direita” when offered badge, colored header, or integrated-title directions. Right-hand space matters; plain text alone did not satisfy the requested emphasis.

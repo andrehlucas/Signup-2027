@@ -29,7 +29,9 @@
 .title { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; margin: 0; color: var(--color-gray-900); }
 .brandName { display: flex; min-width: 0; align-items: center; gap: 10px; color: var(--color-gray-800); font-size: 24px; font-weight: 800; line-height: 32px; letter-spacing: -.025em; }
 .planBadge { justify-self: end; padding: 8px 12px; font-size: 20px; line-height: 28px; white-space: nowrap; }
-.planBadge {
+.planBadge,
+.cta.cta,
+.cta.cta:hover {
   border: 1px solid var(--color-brand-400);
   border-radius: 16px;
   background: linear-gradient(180deg, var(--color-brand-400) 0%, var(--color-brand-500) 100%);
@@ -40,7 +42,17 @@
 .description { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--color-gray-500); }
 .pricing { min-height: 122px; margin-top: 16px; }
 .priceRow { display: flex; align-items: baseline; gap: 6px; }
-.cta { margin-top: 20px; border-radius: 16px; }
+.cta { margin-top: 20px; }
+.cta.cta:disabled,
+.cta.cta:disabled:hover {
+  border-color: var(--color-gray-200);
+  background: var(--color-gray-200);
+  background-image: none;
+  color: var(--color-gray-700);
+  box-shadow: none;
+  opacity: 1;
+  cursor: not-allowed;
+}
 .price { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--color-gray-900); }
 .unit { font-size: 16px; font-weight: 500; color: var(--color-gray-500); }
 .monthlyNote, .annualDetails { margin-top: 4px; font-size: 14px; line-height: 20px; }

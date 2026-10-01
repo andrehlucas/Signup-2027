@@ -59,15 +59,22 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       assert.equal(await page.getByTestId('button-billing-annual').getAttribute('aria-pressed'), annualPressed);
     };
     const assertCallToActionColor = async (testId, disabled = false) => {
-      // Wait for the shared button's 150ms background transition to settle.
+      // Wait for all shared button styles to finish their 150ms transition.
       await page.waitForFunction(({ id, disabled }) => {
         const button = document.querySelector(`[data-testid="${id}"]`);
         if (!button) return false;
         const background = getComputedStyle(button).backgroundColor;
-        if (!disabled) return background === 'rgb(99, 161, 215)';
+        const styles = getComputedStyle(button);
+        if (!disabled) {
+          const badge = button.closest('article')?.querySelector('h2 > span:last-child');
+          if (!badge || !styles.backgroundImage.includes('linear-gradient')) return false;
+          const badgeStyles = getComputedStyle(badge);
+          return ['backgroundImage', 'color', 'borderColor', 'borderRadius', 'boxShadow', 'fontWeight']
+            .every(key => styles[key] === badgeStyles[key]);
+        }
         const channels = background.match(/[\d.]+/g).slice(0, 3).map(Number);
         return Math.max(...channels) - Math.min(...channels) <= 8 &&
-          background !== 'rgb(99, 161, 215)';
+          styles.backgroundImage === 'none' && styles.boxShadow === 'none';
       }, { id: testId, disabled }, { timeout: 5000 });
       const { background, isDisabled } = await page.getByTestId(testId).evaluate(element => ({
         background: getComputedStyle(element).backgroundColor,
@@ -75,18 +82,28 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       }));
       assert.equal(isDisabled, disabled, `${testId} disabled state`);
       if (disabled) {
-        const rgb = background.match(/[\d.]+/g).slice(0, 3).map(Number);
-        assert.ok(Math.max(...rgb) - Math.min(...rgb) <= 8, `${testId} has a gray disabled background`);
-        assert.notEqual(background, 'rgb(99, 161, 215)');
+        await assertNavigationColor(testId, true);
+        const image = await page.getByTestId(testId).evaluate(element => getComputedStyle(element).backgroundImage);
+        assert.equal(image, 'none', `${testId} has no disabled gradient`);
       } else {
-        assert.equal(background, 'rgb(99, 161, 215)', `${testId} uses #63a1d7`);
+        const styles = await page.getByTestId(testId).evaluate(element => {
+          const badge = element.closest('article').querySelector('h2 > span:last-child');
+          const properties = ['backgroundImage', 'color', 'borderColor', 'borderRadius', 'boxShadow', 'fontWeight'];
+          const snapshot = node => Object.fromEntries(properties.map(key => [key, getComputedStyle(node)[key]]));
+          return { button: snapshot(element), badge: snapshot(badge) };
+        });
+        assert.deepEqual(styles.button, styles.badge, `${testId} matches its plan badge`);
+        assert.equal(styles.button.color, 'rgb(255, 255, 255)', `${testId} has white text`);
       }
     };
     const assertCardCallToAction = async (planId, planName) => {
       const button = page.getByTestId(`button-select-${planId}`);
-      assert.equal(await button.getAttribute('aria-label'), `Choose ${planName} and continue to checkout`);
-      assert.equal((await button.innerText()).trim(), 'Click here to get started');
+      assert.equal(await button.getAttribute('aria-label'), `Select ${planName} and continue to checkout`);
+      assert.equal((await button.innerText()).trim(), `Select ${planName}`);
       await assertCallToActionColor(`button-select-${planId}`);
+      await button.hover();
+      await assertCallToActionColor(`button-select-${planId}`);
+      await page.mouse.move(0, 0);
     };
     const isFullyVisibleInViewport = async testId => page.waitForFunction(id => {
       const element = document.querySelector(`[data-testid="${id}"]`);

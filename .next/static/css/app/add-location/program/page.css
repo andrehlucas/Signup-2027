@@ -31,17 +31,31 @@
 .ProgramCard_top__dyDzf { display: flex; flex-direction: column; padding: 20px 32px; }
 .ProgramCard_title____0XC { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; margin: 0; color: var(--gray-900); }
 .ProgramCard_brandName__JaEBf { display: flex; min-width: 0; align-items: center; gap: 10px; color: var(--gray-800); font-size: 24px; font-weight: 800; line-height: 32px; letter-spacing: -.025em; }
-.ProgramCard_planBadge___SjZv { justify-self: end; padding: 8px 12px; font-size: 20px; line-height: 28px; white-space: nowrap;
+.ProgramCard_planBadge___SjZv { justify-self: end; padding: 8px 12px; font-size: 20px; line-height: 28px; white-space: nowrap; }
+.ProgramCard_planBadge___SjZv,
+.ProgramCard_cta__x0vTO.ProgramCard_cta__x0vTO,
+.ProgramCard_cta__x0vTO.ProgramCard_cta__x0vTO:hover {
   border: 1px solid var(--brand-400);
   border-radius: 16px;
   background: linear-gradient(180deg, var(--brand-400) 0%, var(--brand-500) 100%);
   font-weight: 700;
   color: white;
-  box-shadow: 0 8px 20px color-mix(in srgb, var(--brand-400) 40%, transparent); }
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--brand-400) 40%, transparent);
+}
 .ProgramCard_description__bK_pC { min-height: 46px; margin-top: 8px; font-size: 14px; line-height: 1.625; color: var(--gray-500); }
 .ProgramCard_pricing__Rhw7P { min-height: 122px; margin-top: 16px; }
 .ProgramCard_priceRow__1RdJg { display: flex; align-items: baseline; gap: 6px; }
-.ProgramCard_cta__x0vTO { margin-top: 20px; border-radius: 16px; }
+.ProgramCard_cta__x0vTO { margin-top: 20px; }
+.ProgramCard_cta__x0vTO.ProgramCard_cta__x0vTO:disabled,
+.ProgramCard_cta__x0vTO.ProgramCard_cta__x0vTO:disabled:hover {
+  border-color: var(--gray-200);
+  background: var(--gray-200);
+  background-image: none;
+  color: var(--gray-700);
+  box-shadow: none;
+  opacity: 1;
+  cursor: not-allowed;
+}
 .ProgramCard_price__UaqMd { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.025em; font-variant-numeric: tabular-nums; color: var(--gray-900); }
 .ProgramCard_unit__BD1q6 { font-size: 16px; font-weight: 500; color: var(--gray-500); }
 .ProgramCard_monthlyNote__vo338, .ProgramCard_annualDetails__6AbLW { margin-top: 4px; font-size: 14px; line-height: 20px; }
