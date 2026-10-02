@@ -52,8 +52,8 @@ export function BillingSwitcher({ billing, disabled, onChange }: BillingSwitcher
         <Badge color="warning" variant="pill" size="md" leadingIcon={<Flame className="h-4 w-4" aria-hidden="true" />}>
           Save over 16% with yearly billing
         </Badge>
-        <p id={`${id}-note`} className="text-center text-xs text-gray-600">
-          Pay for 10 months up front, get 12 months of service.
+        <p id={`${id}-note`} className={`${styles.promoNote} text-center`}>
+          2 months free when paid annually
         </p>
       </div>
     </section>

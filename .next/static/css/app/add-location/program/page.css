@@ -87,7 +87,6 @@
 .ProgramCard_unit__BD1q6 { font-size: 15px; font-weight: 500; color: var(--gray-600); }
 .ProgramCard_monthlyNote__vo338, .ProgramCard_annualDetails__6AbLW { margin-top: 5px; font-size: 14px; line-height: 20px; }
 .ProgramCard_monthlyNote__vo338, .ProgramCard_annualTotal__T3X1e { color: var(--gray-600); }
-.ProgramCard_annualPromo__nFfrC { font-weight: 600; color: var(--success-700); }
 .ProgramCard_annualTotal__T3X1e { font-variant-numeric: tabular-nums; }
 
 .ProgramCard_features__6ifRp { flex: 1; padding: 20px 24px 24px; border-top: 1px solid var(--gray-100); background: var(--gray-25); }
@@ -133,4 +132,11 @@
   background: var(--gray-100);
   color: var(--gray-700);
   box-shadow: none;
+}
+
+.BillingSwitcher_promoNote__X_fSP {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--success-700);
 }

@@ -10,3 +10,10 @@
   color: var(--gray-700);
   box-shadow: none;
 }
+
+.promoNote {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--success-700);
+}

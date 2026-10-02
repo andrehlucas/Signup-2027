@@ -45,7 +45,6 @@
 .unit { font-size: 15px; font-weight: 500; color: var(--gray-600); }
 .monthlyNote, .annualDetails { margin-top: 5px; font-size: 14px; line-height: 20px; }
 .monthlyNote, .annualTotal { color: var(--gray-600); }
-.annualPromo { font-weight: 600; color: var(--success-700); }
 .annualTotal { font-variant-numeric: tabular-nums; }
 
 .features { flex: 1; padding: 20px 24px 24px; border-top: 1px solid var(--gray-100); background: var(--gray-25); }

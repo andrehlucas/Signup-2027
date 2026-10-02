@@ -194,6 +194,26 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       assert.ok(badgeBox.y > yearlyBox.y + yearlyBox.height, 'offer sits below the options without overlap');
       assert.equal(await page.getByText('Pay every month', { exact: true }).count(), 1);
       assert.equal(await page.getByText('Pay once a year', { exact: true }).count(), 1);
+      const promo = page.getByText('2 months free when paid annually', { exact: true });
+      assert.equal(await promo.count(), 1, 'annual offer appears only once');
+      assert.equal(await promo.locator('xpath=ancestor::section').getAttribute('aria-label'), 'Billing options', 'annual offer is below the billing switcher');
+      assert.equal(await page.getByText('Pay for 10 months up front, get 12 months of service.', { exact: true }).count(), 0, 'old billing explanation is removed');
+      assert.equal(await page.locator('[data-testid^="program-card-"]').filter({ hasText: /2 months free/ }).count(), 0, 'annual offer is removed from both cards in either billing mode');
+      const promoStyle = await promo.evaluate(element => {
+        const style = getComputedStyle(element);
+        return { color: style.color, fontSize: style.fontSize, fontWeight: style.fontWeight, lineHeight: style.lineHeight, token: getComputedStyle(document.documentElement).getPropertyValue('--success-700').trim() };
+      });
+      assert.equal(promoStyle.fontSize, '14px');
+      assert.equal(promoStyle.fontWeight, '600');
+      assert.equal(promoStyle.lineHeight, '20px');
+      assert.equal(await promo.evaluate(element => {
+        const reference = document.createElement('span');
+        reference.style.color = 'var(--success-700)';
+        document.body.append(reference);
+        const matches = getComputedStyle(element).color === getComputedStyle(reference).color;
+        reference.remove();
+        return matches;
+      }), true, 'annual offer retains the original success-green color');
     };
     const isFullyVisibleInViewport = async testId => {
       await page.getByTestId(testId).evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
@@ -364,6 +384,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.getByTestId('button-billing-annual').click();
     await assertBillingFrequency('annual');
+    await assertDealBadge();
     assert.match(await essentialsCard.innerText(), /\$166/);
     assert.match(await essentialsCard.innerText(), /month/i);
     assert.match(await essentialsCard.innerText(), /\$1,990/);

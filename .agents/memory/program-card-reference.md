@@ -5,6 +5,12 @@ description: Why program cards intentionally differ from the restrained default 
 
 For program-card presentation, prioritize the user's supplied TruckingPricingCards React reference over generic taste or design-consistency recommendations.
 
+Keep the annual free-months offer once beneath the shared billing switcher, with its green emphasis, rather than repeating it inside the plan cards.
+
+**Why:** The user explicitly moved that promotional message out of the cards and into the switcher's explanatory-text position.
+
+**How to apply:** Keep the shared offer visible with either billing selection. Leave the cards' actual billing terms, yearly totals, and savings amounts intact without restoring duplicated free-months copy.
+
 **Why:** The user rejected multiple neutral redesigns and explicitly supplied the desired cards. The rounded silhouette, blue accents, and lower benefits panel are intentional reference treatments, not accidental style drift. Later refinements moved the gradient treatment to the plan badges.
 
 **How to apply:** Preserve that visual identity when refining this step, using Opus palette tokens where possible. Use the uploaded reference's global Monthly / Yearly switcher rather than the earlier side-by-side billing choices. Do not normalize the cards back to a generic minimalist comparison.

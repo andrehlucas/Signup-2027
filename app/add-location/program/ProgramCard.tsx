@@ -62,13 +62,12 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
           </div>
           {billing === 'annual' ? (
             <div className={styles.annualDetails}>
-              <p className={styles.annualPromo}>2 months free when paid annually</p>
               <p className={styles.annualTotal}>
                 ${plan.annualTotal.toLocaleString('en-US')} due for the year · save ${plan.monthly * 2}
               </p>
             </div>
           ) : (
-            <p className={styles.monthlyNote}>Billed monthly · Or pay annually and get 2 months free</p>
+            <p className={styles.monthlyNote}>Billed monthly</p>
           )}
         </div>
         <Button
