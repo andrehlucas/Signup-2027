@@ -48,7 +48,7 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
       <div className={styles.top}>
         <h2 className={styles.title}>
           <span className={styles.brandName}>
-            <span>Opus Trucking</span>
+            <span>{plan.name}</span>
           </span>
           <span className={styles.planBadge}>{plan.label}</span>
         </h2>
