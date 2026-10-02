@@ -5,17 +5,17 @@ description: Why program cards intentionally differ from the restrained default 
 
 For program-card presentation, prioritize the user's supplied TruckingPricingCards React reference over generic taste or design-consistency recommendations.
 
-Keep the annual free-months offer once beneath the shared billing switcher, with its green emphasis, rather than repeating it inside the plan cards.
+Do not restore the shared billing-frequency section or its annual free-months offer on the official program page.
 
-**Why:** The user explicitly moved that promotional message out of the cards and into the switcher's explanatory-text position.
+**Why:** The user subsequently selected the entire billing-frequency section and requested its deletion.
 
-**How to apply:** Keep the shared offer visible with either billing selection. Leave the cards' actual billing terms, yearly totals, and savings amounts intact without restoring duplicated free-months copy.
+**How to apply:** Leave the program cards and existing pricing behavior intact without reintroducing the removed section or duplicated free-months copy.
 
 **Why:** The user rejected multiple neutral redesigns and explicitly supplied the desired cards. The rounded silhouette, blue accents, and lower benefits panel are intentional reference treatments, not accidental style drift. Later refinements moved the gradient treatment to the plan badges.
 
-**How to apply:** Preserve that visual identity when refining this step, using Opus palette tokens where possible. Use the uploaded reference's global Monthly / Yearly switcher rather than the earlier side-by-side billing choices. Do not normalize the cards back to a generic minimalist comparison.
+**How to apply:** Preserve that visual identity when refining this step, using Opus palette tokens where possible. Do not normalize the cards back to a generic minimalist comparison.
 
-**Why:** The user explicitly requested bringing back the ZIP's switcher on 2026-10-01, superseding the earlier side-by-side pricing direction.
+The earlier request to bring back the ZIP's switcher is superseded by the user's deletion of the whole billing-frequency section.
 
 Reference fidelity applies to the card composition and blue gradient identity, not to exaggerated decorative effects or tiny feature typography.
 

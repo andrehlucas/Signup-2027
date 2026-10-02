@@ -118,25 +118,3 @@
   .ProgramCard_card__dJ0GK { transition: none; }
   .ProgramCard_card__dJ0GK:hover { transform: none; }
 }
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/.pnpm/next@15.5.22_@babel+core@7.29.7_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/.pnpm/next@15.5.22_@babel+core@7.29.7_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./app/add-location/program/BillingSwitcher.module.css ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.BillingSwitcher_panel__R5Nft,
-.BillingSwitcher_option__IeN6G {
-  /* Tailwind 3 equivalent of the approved design-system shadow-xs. */
-  box-shadow: var(--shadows-shadow-xs);
-}
-
-.BillingSwitcher_option__IeN6G.BillingSwitcher_option__IeN6G:disabled {
-  border-color: var(--gray-200);
-  background: var(--gray-100);
-  color: var(--gray-700);
-  box-shadow: none;
-}
-
-.BillingSwitcher_promoNote__X_fSP {
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
-  color: var(--success-700);
-}

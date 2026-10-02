@@ -8,7 +8,6 @@ import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import { truckingPrograms, type TruckingProgramId } from '../../../shared/trucking-programs';
 import { ProgramCard } from './ProgramCard';
-import { BillingSwitcher } from './BillingSwitcher';
 
 function hasValidUserInfo(u: ReturnType<typeof useOrder>['order']['userInfo']): boolean {
   const len = u.phone.replace(/\D/g, '').length;
@@ -21,7 +20,7 @@ function hasValidUserInfo(u: ReturnType<typeof useOrder>['order']['userInfo']): 
 
 export default function ProgramSelectionPage() {
   const router = useRouter();
-  const { order, programId, billing, signupComplete, setBilling, signupPending, signupError, continueToCheckout } = useOrder();
+  const { order, programId, billing, signupComplete, signupPending, signupError, continueToCheckout } = useOrder();
   const { trackComplete } = useFunnelTracking('choose_program');
   const errorRef = useRef<HTMLParagraphElement>(null);
   const location = order.location;
@@ -66,8 +65,6 @@ export default function ProgramSelectionPage() {
             </div>
           </div>
         </header>
-
-        <BillingSwitcher billing={billing} disabled={locked} onChange={setBilling} />
 
         <fieldset disabled={locked} className="grid grid-cols-1 gap-4 md:grid-cols-2" data-testid="programs-list">
           <legend className="sr-only">Programs</legend>

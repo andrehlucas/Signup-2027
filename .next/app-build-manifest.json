@@ -21,12 +21,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/add-location/layout.js"
     ],
-    "/add-location/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/add-location/page.css",
-      "static/chunks/app/add-location/page.js"
-    ],
     "/add-location/program/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
