@@ -9,7 +9,7 @@ Do not restore the shared billing-frequency section or its annual free-months of
 
 **Why:** The user subsequently selected the entire billing-frequency section and requested its deletion.
 
-**How to apply:** Leave the program cards and existing pricing behavior intact without reintroducing the removed section or duplicated free-months copy.
+**How to apply:** Do not reintroduce the removed shared section. The user subsequently requested the bold “Billed monthly - Or pay annually and get 2 months free” note in both cards, superseding the earlier removal of card-level promotional copy.
 
 **Why:** The user rejected multiple neutral redesigns and explicitly supplied the desired cards. The rounded silhouette, blue accents, and lower benefits panel are intentional reference treatments, not accidental style drift. Later refinements moved the gradient treatment to the plan badges.
 

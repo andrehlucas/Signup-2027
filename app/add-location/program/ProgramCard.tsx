@@ -66,7 +66,7 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
               </p>
             </div>
           ) : (
-            <p className={styles.monthlyNote}>Billed monthly</p>
+            <p className={`${styles.monthlyNote} font-bold`}>Billed monthly - Or pay annually and get 2 months free</p>
           )}
         </div>
         <Button
