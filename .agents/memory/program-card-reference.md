@@ -55,8 +55,8 @@ The in-card checkout buttons should match the plan badges' visual treatment, rat
 
 **How to apply:** Keep the same badge gradient, white text, border, radius, and shadow on enabled card buttons, while preserving gray disabled states and the separate navigation styles.
 
-Use a blue-background badge on the right for the program name, with readable “Opus Trucking” context on the left.
+Use the full program names in the headings without separate Essentials or Pro badges.
 
-**Why:** The user rejected both the weak split typography and the stacked redesign, then explicitly selected “Selo à direita” when offered badge, colored header, or integrated-title directions. Right-hand space matters; plain text alone did not satisfy the requested emphasis.
+**Why:** The user changed the headings to “Opus Trucking Essentials” and “Opus Trucking Pro”, then explicitly deleted both separate badges, superseding the earlier right-side badge direction.
 
-**How to apply:** Preserve the selected badge direction when refining this preview unless the user changes it. Keep the brand readable, use official Opus blue tokens, and fit the badge at narrow widths without clipping.
+**How to apply:** Do not restore the redundant plan-name badges. Preserve the existing checkout-button treatment independently.
