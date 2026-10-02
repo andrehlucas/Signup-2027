@@ -50,7 +50,7 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
           <span className={styles.brandName}>
             <span>{plan.name}</span>
           </span>
-          <span className={styles.planBadge}>{plan.label}</span>
+          {plan.id !== 'essentials' && <span className={styles.planBadge}>{plan.label}</span>}
         </h2>
         <p className={styles.description}>{plan.description}</p>
         <div className={styles.pricing} aria-live="polite">
