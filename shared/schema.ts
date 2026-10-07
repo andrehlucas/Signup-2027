@@ -96,7 +96,7 @@ export interface SignupRecord {
   company: string;
   termsAccepted: true;
   locationId: string;
-  programId: 'essentials' | 'pro';
+  programId: 'essentials' | 'pro' | 'works';
   billing: 'monthly' | 'annual';
   quotedMonthlyPrice: number;
   quotedAnnualTotal: number;

@@ -51,9 +51,15 @@ The card's button chooses the plan and starts checkout in one action; the progra
 
 The in-card checkout buttons should match the plan badges' visual treatment, rather than the flat color of the wizard's Continue buttons.
 
-**Why:** The user explicitly requested matching the Essentials / Pro badge style for the card buttons.
+**Why:** The user explicitly requested matching the Essentials / Pro badge style for the card buttons, then reaffirmed “keep the styling from the buttons” when approving the three-plan redesign.
 
 **How to apply:** Keep the same badge gradient, white text, border, radius, and shadow on enabled card buttons, while preserving gray disabled states and the separate navigation styles.
+
+The approved three-plan canvas design supersedes the earlier two-card composition, but not the original gradient checkout-button styling.
+
+**Why:** The user approved applying the CSV-based Essential, Pro, and Works cards to the app and specifically retained the existing buttons.
+
+**How to apply:** Preserve the three-plan feature grouping and names while keeping the original checkout actions and their loading/disabled behavior.
 
 Use the full program names in the headings without separate Essentials or Pro badges.
 

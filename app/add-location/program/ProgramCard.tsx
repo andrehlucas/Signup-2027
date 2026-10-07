@@ -1,16 +1,17 @@
 'use client';
 
-import { Check, X } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
-import choiceStyles from '../components/ChoiceButton.module.css';
 import {
   truckingPrograms,
-  truckingSharedFeaturesSummary,
-  truckingProOnlyFeatures,
-  type ProgramBilling,
+  truckingSharedFeatures,
+  truckingProFeatures,
+  truckingWorksFeatures,
   type TruckingProgramId,
+  type ProgramBilling,
 } from '../../../shared/trucking-programs';
 import styles from './ProgramCard.module.css';
+import choiceStyles from '../components/ChoiceButton.module.css';
 
 type Program = (typeof truckingPrograms)[number];
 
@@ -23,78 +24,87 @@ interface ProgramCardProps {
   onSelect: (id: TruckingProgramId) => void;
 }
 
-function Feature({ label, included = true }: { label: string; included?: boolean }) {
+function Feature({ label }: { label: string }) {
   return (
-    <li className={`${styles.feature} ${included ? '' : styles.excluded}`}>
-      <span className={styles.featureIcon}>
-        {included ? <Check aria-hidden="true" /> : <X aria-hidden="true" />}
+    <li className="flex items-start gap-3 text-sm font-medium text-gray-700">
+      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-600 text-primary-foreground">
+        <Check className="h-3 w-3" strokeWidth={3} aria-hidden="true" />
       </span>
-      <span>
-        {!included && <span className="sr-only">Not included: </span>}
-        {label}
-      </span>
+      <span>{label}</span>
     </li>
   );
 }
 
-/** Presentation adapted from the user's uploaded TruckingPricingCards export. */
+function FeatureGroup({ title, features }: { title: string; features: readonly string[] }) {
+  return (
+    <section className="flex flex-col gap-4">
+      <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-600">{title}</h3>
+      <ul className="flex flex-col gap-3">
+        {features.map((feature) => <Feature key={feature} label={feature} />)}
+      </ul>
+    </section>
+  );
+}
+
+/** Retains the extracted Opus card's price / CTA / checked-inclusions composition. */
 export function ProgramCard({ plan, selected, billing, disabled, loading, onSelect }: ProgramCardProps) {
-  const buttonLabel = 'Continue to Checkout';
   return (
     <article
-      className={`${styles.card} ${selected ? styles.selected : ''}`}
+      className={`${styles.card} flex min-w-0 flex-col overflow-hidden rounded-xl border border-gray-200 bg-card shadow-xs ${selected ? styles.selected : ''}`}
+      aria-labelledby={`plan-title-${plan.id}`}
       data-testid={`program-card-${plan.id}`}
     >
-      <div className={styles.top}>
-        <h2 className={styles.title}>
-          <span className={styles.brandName}>
-            <span>{plan.name}</span>
-          </span>
-        </h2>
-        <p className={styles.description}>{plan.description}</p>
-        <div className={styles.pricing} aria-live="polite">
-          <div className={styles.priceRow}>
-            <span className={styles.price}>
-              ${billing === 'monthly' ? plan.monthly : Math.round(plan.annualTotal / 12)}
-            </span>
-            <span className={styles.unit}>{billing === 'monthly' ? '/ mo' : '/ mo equiv.'}</span>
+      <div className="flex flex-col gap-5 p-6">
+        <div className="flex flex-col gap-2">
+          <h2 id={`plan-title-${plan.id}`} className="text-xl font-semibold tracking-tight text-gray-900">
+            <span className="block">Opus Trucking -</span>
+            <span className="block">{plan.label}</span>
+          </h2>
+          <p className={`${styles.description} text-sm text-gray-600`}>{plan.description}</p>
+        </div>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-baseline gap-2">
+            <span className="text-4xl font-bold tracking-tight text-gray-900">${billing === 'annual' ? Math.round(plan.annualTotal / 12) : plan.monthly}</span>
+            <span className="text-sm font-medium text-gray-600">{billing === 'annual' ? '/mo equiv.' : '/mo'}</span>
           </div>
-          {billing === 'annual' ? (
-            <div className={styles.annualDetails}>
-              <p className={styles.annualTotal}>
-                ${plan.annualTotal.toLocaleString('en-US')} due for the year · save ${plan.monthly * 2}
-              </p>
-            </div>
-          ) : (
-            <p className={`${styles.monthlyNote} font-bold`}>Billed monthly - Or pay annually and get 2 months free</p>
-          )}
+          <p className="text-sm font-bold text-gray-700">
+            {billing === 'monthly' ? 'Billed monthly - Or pay annually and get 2 months free' : `${plan.annualTotal.toLocaleString('en-US')} due for the year · save ${plan.monthly * 2}`}
+          </p>
         </div>
         <Button
           type="button"
           hierarchy="primary"
           size="xl"
-          className={`${styles.cta} ${choiceStyles.button} w-full`}
+          className={`${choiceStyles.button} w-full`}
+          trailingIcon={<ArrowRight className="h-5 w-5" />}
           disabled={disabled}
           loading={loading}
-          aria-label={`${buttonLabel} with ${plan.label}`}
+          aria-label={`Continue to Checkout with ${plan.name}`}
+          aria-pressed={selected}
           onClick={() => onSelect(plan.id)}
           data-testid={`button-select-${plan.id}`}
         >
-          {buttonLabel}
+          Continue to Checkout
         </Button>
+        <div className="flex items-center justify-between gap-2 text-xs font-medium text-gray-600">
+          <span>{plan.featureCount} included features</span>
+          <span className={selected ? 'text-brand-700' : ''}>
+            {selected ? 'Selected' : billing === 'annual' ? 'Annual plan' : 'Monthly plan'}
+          </span>
+        </div>
       </div>
-      <div className={styles.features}>
-        <h3 className={styles.featuresHeading}>What&apos;s included</h3>
-        <p className={styles.summary}>{truckingSharedFeaturesSummary}</p>
-        <ul className={styles.featureList}>
-          <Feature label={`${plan.meetingHours} Hours Meeting Room Access per month`} />
-          <Feature label="Vault" />
-          <Feature label="Digital Document Storage" />
-          <Feature label="Registered Agent" />
-          {truckingProOnlyFeatures.map((feature) => (
-            <Feature key={feature} label={feature} included={plan.id === 'pro'} />
-          ))}
-        </ul>
+      <div className="flex flex-1 flex-col gap-6 border-t border-gray-200 bg-gray-25 p-6">
+        <FeatureGroup title="Business & compliance · all plans" features={truckingSharedFeatures} />
+        {plan.id !== 'essentials' && (
+          <div className="border-t border-gray-200 pt-6">
+            <FeatureGroup title="Call handling · Pro & Works" features={truckingProFeatures} />
+          </div>
+        )}
+        {plan.id === 'works' && (
+          <div className="border-t border-gray-200 pt-6">
+            <FeatureGroup title="More communication · Works" features={truckingWorksFeatures} />
+          </div>
+        )}
       </div>
     </article>
   );

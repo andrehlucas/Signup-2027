@@ -24,7 +24,7 @@ const signupRequestSchema = z.object({
     }),
   }).strict(),
   locationId: z.string().trim().min(1, 'Choose a location.').max(80, 'Location is invalid.'),
-  programId: z.enum(['essentials', 'pro'], {
+  programId: z.enum(['essentials', 'pro', 'works'], {
     required_error: 'Choose a program.',
     invalid_type_error: 'Choose a valid program.',
   }),

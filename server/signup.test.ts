@@ -127,10 +127,12 @@ test('signup persists catalog prices quoted for each program and billing choice'
   const storage = new MemStorage();
   const locationsBefore = await storage.getLocations();
   const choices = [
-    { programId: 'essentials', billing: 'monthly', monthlyPrice: 199, annualTotal: 1990, selectedPrice: 199 },
-    { programId: 'essentials', billing: 'annual', monthlyPrice: 199, annualTotal: 1990, selectedPrice: 1990 },
-    { programId: 'pro', billing: 'monthly', monthlyPrice: 249, annualTotal: 2490, selectedPrice: 249 },
-    { programId: 'pro', billing: 'annual', monthlyPrice: 249, annualTotal: 2490, selectedPrice: 2490 },
+    { programId: 'essentials', billing: 'monthly', monthlyPrice: 129, annualTotal: 1290, selectedPrice: 129 },
+    { programId: 'essentials', billing: 'annual', monthlyPrice: 129, annualTotal: 1290, selectedPrice: 1290 },
+    { programId: 'pro', billing: 'monthly', monthlyPrice: 179, annualTotal: 1790, selectedPrice: 179 },
+    { programId: 'pro', billing: 'annual', monthlyPrice: 179, annualTotal: 1790, selectedPrice: 1790 },
+    { programId: 'works', billing: 'monthly', monthlyPrice: 239, annualTotal: 2390, selectedPrice: 239 },
+    { programId: 'works', billing: 'annual', monthlyPrice: 239, annualTotal: 2390, selectedPrice: 2390 },
   ] as const;
 
   for (const [index, choice] of choices.entries()) {

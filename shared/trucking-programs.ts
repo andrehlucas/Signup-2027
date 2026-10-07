@@ -1,32 +1,62 @@
-export type TruckingProgramId = 'essentials' | 'pro';
 export type ProgramBilling = 'monthly' | 'annual';
+export type TruckingProgramId = 'essentials' | 'pro' | 'works';
+
+// Source: Opus_Trucking_Plans(Sheet4_(3))_1791404015280.csv.
+export const truckingSharedFeatures = [
+  'Professional Business Address',
+  'Digital Trucking Compliance Vault',
+  'Mail Receipt & Forwarding',
+  'Digital Mail Notification by MailX',
+  'FMCSA & Inspector Meeting Room Access (5 hours/mo)',
+  'Business Occupancy Agreement',
+  'Registered Agent Services',
+] as const;
+
+export const truckingProFeatures = [
+  'Professional Live Call Answering',
+  'Business Phone & Fax Numbers',
+  'Personalized Call Transferring',
+  'Business Number Callout App',
+  'Voicemail/Fax Converted to Email',
+  'Call History & Activity Logs',
+] as const;
+
+export const truckingWorksFeatures = [
+  'Dedicated Toll-Free Business Number',
+  'Live Message Taking',
+  'Business Text Messaging',
+  'Professional Business Email Address',
+] as const;
 
 export const truckingPrograms = [
   {
     id: 'essentials',
-    name: 'Opus Trucking Essentials',
-    label: 'Essentials',
-    description: 'A professional business base, wherever the road takes you.',
-    monthly: 199,
-    annualTotal: 1990,
+    name: 'Opus Trucking - The Essential',
+    label: 'The Essential',
+    description: 'Your business address, mail and compliance essentials.',
+    monthly: 129,
+    annualTotal: 1290,
     meetingHours: 5,
+    featureCount: 7,
   },
   {
     id: 'pro',
-    name: 'Opus Trucking Pro',
-    label: 'Pro',
-    description: 'More ways to stay connected, with extra room to meet.',
-    monthly: 249,
-    annualTotal: 2490,
-    meetingHours: 10,
+    name: 'Opus Trucking - The Pro',
+    label: 'The Pro',
+    description: 'Your essentials, plus professional call handling on the road.',
+    monthly: 179,
+    annualTotal: 1790,
+    meetingHours: 5,
+    featureCount: 13,
   },
-] as const;
-
-export const truckingSharedFeaturesSummary =
-  'Business Address, Live Call Answering, Call Transferring, Callout, Toll-Free, Call Logs, Mail Receipt, Digital Mail Scanning, and Occupancy Agreement.';
-
-export const truckingProOnlyFeatures = [
-  'Texting',
-  'Custom Business Email',
-  'Message Taking',
+  {
+    id: 'works',
+    name: 'Opus Trucking - The Works',
+    label: 'The Works',
+    description: 'Your essentials and call handling, with more ways to connect.',
+    monthly: 239,
+    annualTotal: 2390,
+    meetingHours: 5,
+    featureCount: 17,
+  },
 ] as const;

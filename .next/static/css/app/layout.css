@@ -1799,6 +1799,9 @@ body{
 .bg-gray-200{
   background-color: var(--gray-200);
 }
+.bg-gray-25{
+  background-color: var(--gray-25);
+}
 .bg-gray-300{
   background-color: var(--gray-300);
 }

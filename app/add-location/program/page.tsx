@@ -49,13 +49,13 @@ export default function ProgramSelectionPage() {
 
   return (
     <div className="signup-flow min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="program-selection-page">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-7xl">
         <div className="mb-7"><ProgressIndicator currentStep={3} disabled={locked} /></div>
 
         <header className="mb-7 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-gray-900 md:text-3xl">Choose Your Program</h1>
-            <p className="mt-2 text-base text-gray-600">Choose a program and billing preference to go straight to checkout.</p>
+            <p className="mt-2 text-base text-gray-600">Choose the address, compliance and communication support that fits your operation.</p>
           </div>
           <div className="flex items-start gap-3 md:max-w-xs md:border-l md:border-gray-200 md:pl-6">
             <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-600" aria-hidden="true" />
@@ -66,7 +66,7 @@ export default function ProgramSelectionPage() {
           </div>
         </header>
 
-        <fieldset disabled={locked} className="grid grid-cols-1 gap-4 md:grid-cols-2" data-testid="programs-list">
+        <fieldset disabled={locked} className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3" data-testid="programs-list">
           <legend className="sr-only">Programs</legend>
           {truckingPrograms.map((plan) => (
             <ProgramCard
