@@ -1,0 +1,25 @@
+/* Product-specific composition of the freshly extracted Opus program card.
+   All appearance uses the consuming design-system utilities and token values. */
+.card {
+  transition: transform 180ms ease;
+}
+
+.selected {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: calc(var(--spacing) * 1);
+}
+
+.description {
+  min-height: calc(var(--spacing) * 10);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(calc(var(--spacing) * -1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .card:hover { transform: none; }
+}
