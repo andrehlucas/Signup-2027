@@ -66,7 +66,7 @@ export default function ProgramSelectionPage() {
           </div>
         </header>
 
-        <fieldset disabled={locked} className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3" data-testid="programs-list">
+        <fieldset disabled={locked} className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-3" data-testid="programs-list">
           <legend className="sr-only">Programs</legend>
           {truckingPrograms.map((plan) => (
             <ProgramCard
