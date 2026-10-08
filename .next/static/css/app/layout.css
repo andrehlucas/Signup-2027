@@ -1307,9 +1307,6 @@ body{
      -moz-user-select: none;
           user-select: none;
 }
-.list-disc{
-  list-style-type: disc;
-}
 .list-none{
   list-style-type: none;
 }
@@ -2064,9 +2061,6 @@ body{
 .pl-4{
   padding-left: 1rem;
 }
-.pl-5{
-  padding-left: 1.25rem;
-}
 .pl-8{
   padding-left: 2rem;
 }
@@ -2159,6 +2153,9 @@ body{
   font-size: 0.75rem;
   line-height: 1rem;
 }
+.font-black{
+  font-weight: 900;
+}
 .font-bold{
   font-weight: 700;
 }
@@ -2173,9 +2170,6 @@ body{
 }
 .font-semibold{
   font-weight: 600;
-}
-.font-black{
-  font-weight: 900;
 }
 .uppercase{
   text-transform: uppercase;
@@ -2245,6 +2239,9 @@ body{
 .text-\[\#c11574\]{
   --tw-text-opacity: 1;
   color: rgb(193 21 116 / var(--tw-text-opacity, 1));
+}
+.text-\[color\:var\(--brand-500\)\]{
+  color: var(--brand-500);
 }
 .text-accent-foreground{
   color: hsl(var(--accent-foreground));
@@ -2364,9 +2361,6 @@ body{
 }
 .text-white{
   color: var(--white);
-}
-.text-\[color\:var\(--brand-500\)\]{
-  color: var(--brand-500);
 }
 .underline{
   text-decoration-line: underline;
