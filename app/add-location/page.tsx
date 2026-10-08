@@ -2,8 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Building2, Check, MapPin, Star } from 'lucide-react';
-import { Badge } from '@workspace/opus-vo-design-system/components/ui/badge';
+import { ArrowLeft, ArrowRight, Building2, Check, MapPin } from 'lucide-react';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
   Select,
@@ -163,17 +162,6 @@ export default function LocationSelectionPage() {
                                   </span>
                                 )}
                               </div>
-                              {location.isPremium && (
-                                <Badge
-                                  color="warning"
-                                  variant="pill"
-                                  size="sm"
-                                  leadingIcon={<Star className="h-3 w-3 fill-current" />}
-                                  className="mb-2"
-                                >
-                                  Premium Location
-                                </Badge>
-                              )}
                               <div className="text-sm text-gray-600">
                                 <p className="flex items-center gap-1">
                                   <MapPin className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
