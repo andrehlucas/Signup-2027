@@ -36,7 +36,7 @@ function FeatureGroup({ title, features, headingClassName = 'text-xs font-semibo
   return (
     <section className="flex flex-col gap-4">
       {title && <h3 className={headingClassName}>{title}</h3>}
-      <ul className="list-disc space-y-3 pl-5">
+      <ul className="list-none space-y-3">
         {features.map((feature) => <Feature key={feature} label={feature} />)}
       </ul>
     </section>

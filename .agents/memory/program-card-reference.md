@@ -59,7 +59,7 @@ The approved three-plan canvas design supersedes the earlier two-card compositio
 
 **Why:** The user approved applying the CSV-based Essential, Pro, and Works cards to the app and specifically retained the existing buttons.
 
-**How to apply:** Preserve the three-plan names and original checkout actions with their loading/disabled behavior. Subsequent refinements use plain bullets, no internal divider lines, and one “Additional features” group for each upgraded plan.
+**How to apply:** Preserve the three-plan names and original checkout actions with their loading/disabled behavior. Subsequent refinements use plain feature text without bullets or checkmarks, no internal divider lines, and one “Additional features” group for each upgraded plan.
 
 Use the full program names in the headings without separate Essentials or Pro badges.
 
