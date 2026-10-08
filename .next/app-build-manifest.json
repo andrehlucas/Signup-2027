@@ -21,22 +21,17 @@
       "static/chunks/main-app.js",
       "static/chunks/app/add-location/layout.js"
     ],
-    "/add-location/program/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/add-location/program/page.css",
-      "static/chunks/app/add-location/program/page.js"
-    ],
     "/add-location/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/add-location/page.css",
       "static/chunks/app/add-location/page.js"
     ],
-    "/api/checkout/route": [
+    "/add-location/program/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/checkout/route.js"
+      "static/css/app/add-location/program/page.css",
+      "static/chunks/app/add-location/program/page.js"
     ]
   }
 }
