@@ -32,10 +32,10 @@ function Feature({ label }: { label: string }) {
   );
 }
 
-function FeatureGroup({ title, features, headingClassName = 'text-xs font-semibold uppercase tracking-wide text-gray-600' }: { title: string; features: readonly string[]; headingClassName?: string }) {
+function FeatureGroup({ title, features, headingClassName = 'text-xs font-semibold uppercase tracking-wide text-gray-600' }: { title?: string; features: readonly string[]; headingClassName?: string }) {
   return (
     <section className="flex flex-col gap-4">
-      <h3 className={headingClassName}>{title}</h3>
+      {title && <h3 className={headingClassName}>{title}</h3>}
       <ul className="list-disc space-y-3 pl-5">
         {features.map((feature) => <Feature key={feature} label={feature} />)}
       </ul>
@@ -87,7 +87,7 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-6 bg-gray-25 p-6 pt-[0px]">
-        <FeatureGroup title="Business & compliance · all plans" features={truckingSharedFeatures} />
+        <FeatureGroup features={truckingSharedFeatures} />
         {plan.id !== 'essentials' && (
           <FeatureGroup
             title="Additional features"
