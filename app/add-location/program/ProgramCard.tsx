@@ -56,7 +56,7 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
     >
       <div className="flex flex-col gap-5 p-6">
         <div className="flex flex-col gap-2">
-          <h2 id={`plan-title-${plan.id}`} className="whitespace-nowrap text-base font-semibold tracking-tight text-gray-900 xl:text-xl">
+          <h2 id={`plan-title-${plan.id}`} className="whitespace-nowrap font-semibold tracking-tight text-gray-900 xl:text-xl text-[20px]">
             {plan.name}
           </h2>
           <p className={`${styles.description} text-sm text-gray-600`}>{plan.description}</p>
