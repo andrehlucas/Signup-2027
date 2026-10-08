@@ -86,7 +86,7 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
           <span>{plan.featureCount} included features</span>
         </div>
       </div>
-      <div className="flex flex-1 flex-col gap-6 bg-gray-25 p-6">
+      <div className="flex flex-1 flex-col gap-6 bg-gray-25 p-6 pt-[0px]">
         <FeatureGroup title="Business & compliance · all plans" features={truckingSharedFeatures} />
         {plan.id !== 'essentials' && (
           <FeatureGroup
