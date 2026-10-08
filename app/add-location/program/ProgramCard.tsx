@@ -56,9 +56,8 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
     >
       <div className="flex flex-col gap-5 p-6">
         <div className="flex flex-col gap-2">
-          <h2 id={`plan-title-${plan.id}`} className="text-xl font-semibold tracking-tight text-gray-900">
-            <span className="block">Opus Trucking -</span>
-            <span className="block">{plan.label}</span>
+          <h2 id={`plan-title-${plan.id}`} className="whitespace-nowrap text-base font-semibold tracking-tight text-gray-900 xl:text-xl">
+            {plan.name}
           </h2>
           <p className={`${styles.description} text-sm text-gray-600`}>{plan.description}</p>
         </div>
@@ -88,9 +87,6 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
         </Button>
         <div className="flex items-center justify-between gap-2 text-xs font-medium text-gray-600">
           <span>{plan.featureCount} included features</span>
-          <span className={selected ? 'text-brand-700' : ''}>
-            {selected ? 'Selected' : billing === 'annual' ? 'Annual plan' : 'Monthly plan'}
-          </span>
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-6 border-t border-gray-200 bg-gray-25 p-6">

@@ -4333,6 +4333,14 @@ body{
   }
 }
 
+@media (min-width: 1280px){
+
+  .xl\:text-xl{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
 .\[\&\:has\(\[aria-selected\]\)\]\:bg-accent:has([aria-selected]){
   background-color: hsl(var(--accent));
 }
