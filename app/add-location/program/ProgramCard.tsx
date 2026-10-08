@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
 import {
   truckingPrograms,
@@ -26,11 +26,8 @@ interface ProgramCardProps {
 
 function Feature({ label }: { label: string }) {
   return (
-    <li className="flex items-start gap-3 text-sm font-medium text-gray-700">
-      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-600 text-primary-foreground">
-        <Check className="h-3 w-3" strokeWidth={3} aria-hidden="true" />
-      </span>
-      <span>{label}</span>
+    <li className="text-sm font-medium text-gray-700">
+      {label}
     </li>
   );
 }
@@ -39,14 +36,14 @@ function FeatureGroup({ title, features }: { title: string; features: readonly s
   return (
     <section className="flex flex-col gap-4">
       <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-600">{title}</h3>
-      <ul className="flex flex-col gap-3">
+      <ul className="list-disc space-y-3 pl-5">
         {features.map((feature) => <Feature key={feature} label={feature} />)}
       </ul>
     </section>
   );
 }
 
-/** Retains the extracted Opus card's price / CTA / checked-inclusions composition. */
+/** Retains the approved Opus card's price, checkout action and feature composition. */
 export function ProgramCard({ plan, selected, billing, disabled, loading, onSelect }: ProgramCardProps) {
   return (
     <article
@@ -89,17 +86,13 @@ export function ProgramCard({ plan, selected, billing, disabled, loading, onSele
           <span>{plan.featureCount} included features</span>
         </div>
       </div>
-      <div className="flex flex-1 flex-col gap-6 border-t border-gray-200 bg-gray-25 p-6">
+      <div className="flex flex-1 flex-col gap-6 bg-gray-25 p-6">
         <FeatureGroup title="Business & compliance · all plans" features={truckingSharedFeatures} />
         {plan.id !== 'essentials' && (
-          <div className="border-t border-gray-200 pt-6">
-            <FeatureGroup title="Call handling · Pro & Works" features={truckingProFeatures} />
-          </div>
-        )}
-        {plan.id === 'works' && (
-          <div className="border-t border-gray-200 pt-6">
-            <FeatureGroup title="More communication · Works" features={truckingWorksFeatures} />
-          </div>
+          <FeatureGroup
+            title="Additional features"
+            features={plan.id === 'works' ? [...truckingProFeatures, ...truckingWorksFeatures] : truckingProFeatures}
+          />
         )}
       </div>
     </article>

@@ -1310,6 +1310,9 @@ body{
 .list-none{
   list-style-type: none;
 }
+.list-disc{
+  list-style-type: disc;
+}
 .grid-cols-1{
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
@@ -2097,6 +2100,9 @@ body{
 .pt-8{
   padding-top: 2rem;
 }
+.pl-5{
+  padding-left: 1.25rem;
+}
 .text-left{
   text-align: left;
 }
@@ -2146,6 +2152,9 @@ body{
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
+}
+.text-\[20px\]{
+  font-size: 20px;
 }
 .font-bold{
   font-weight: 700;
