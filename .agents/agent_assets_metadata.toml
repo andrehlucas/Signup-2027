@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "xe6U8XXuh5M8527odWKDT"
+uri = "file://generated-artifacts/opus-location-images.zip"
+type = "unspecified"
+title = "Opus location images"
+description = "All 16 location-card photos in their original formats, named by location, with a CSV index of source image URLs. ZIP size: 2.1 MB."
+logical_id = "b412526c-8165-42a4-adc3-a369c477e990"
+content_hash = "sha256:54c79ff3fdc3a22bb77c885e5429af3f0f735d582bf8eeda62bd86d91dc0b1c4"
+size = 2142944
+mtime_ms = 1792079733206
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:c977a1c3-aadc-4b53-9cf3-59ba3c9a38c6/b412526c-8165-42a4-adc3-a369c477e990/4be26ff4-1b2a-4d54-894a-19f09979bfd8"
+storage_version_token = "1792079739918422"
+content_type = "application/octet-stream"
