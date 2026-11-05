@@ -1,10 +1,13 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo, AppliedPromo } from './types';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo, AppliedPromo, getPhoneNumbersForLocation } from './types';
+import { DRAFT_KEY, decodeDraft, encodeDraft, LocationFilters } from './draft';
 
 interface OrderContextType {
   order: OrderState;
+  locationFilters: LocationFilters;
+  setLocationFilters: (filters: LocationFilters) => void;
   setUserInfo: (userInfo: UserInfo) => void;
   setLocation: (location: AvailableLocation | null) => void;
   setBundle: (bundle: Bundle | null) => void;
@@ -49,13 +52,58 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [order, setOrder] = useState<OrderState>(initialOrder);
+  const [locationFilters, setLocationFilters] = useState<LocationFilters>({ state: '', city: '' });
+  const [ready, setReady] = useState(false);
+  const [draftNotice, setDraftNotice] = useState('');
+  const [locationNotice, setLocationNotice] = useState('');
 
-  const setUserInfo = (userInfo: UserInfo) => {
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(DRAFT_KEY);
+      if (saved) {
+        try {
+          const restored = decodeDraft(saved, initialOrder);
+          setOrder(restored.order);
+          setLocationFilters(restored.filters);
+        } catch {
+          sessionStorage.removeItem(DRAFT_KEY);
+          setDraftNotice('Your saved enrollment draft expired or could not be restored. Please start again.');
+        }
+      }
+    } catch {
+      setDraftNotice('Draft saving is unavailable in this browser. Keep this tab open to retain your selections.');
+    }
+    setReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!ready) return;
+    try {
+      const hasDraft = Object.values(order.userInfo).some(value => typeof value === 'string' && value && value !== '+1' && value !== 'US')
+        || order.location || order.bundle || locationFilters.state;
+      if (hasDraft) sessionStorage.setItem(DRAFT_KEY, encodeDraft(order, locationFilters));
+      else sessionStorage.removeItem(DRAFT_KEY);
+    } catch {
+      setDraftNotice('Your latest changes could not be saved. Keep this tab open to retain your selections.');
+    }
+  }, [ready, order, locationFilters]);
+
+  const setUserInfo = useCallback((userInfo: UserInfo) => {
     setOrder(prev => ({ ...prev, userInfo }));
-  };
+  }, []);
 
   const setLocation = (location: AvailableLocation | null) => {
-    setOrder(prev => ({ ...prev, location }));
+    const needsNewPhone = location && order.phoneNumber &&
+      !getPhoneNumbersForLocation(location).some(phone => phone.id === order.phoneNumber?.id && phone.isAvailable);
+    setLocationNotice(needsNewPhone
+      ? 'Your plan and add-ons have been kept. Your previous local phone number is not available at this location; a new local number will be assigned in Customize.'
+      : '');
+    setOrder(prev => {
+      const phoneStillAvailable = location && prev.phoneNumber &&
+        getPhoneNumbersForLocation(location).some(phone => phone.id === prev.phoneNumber?.id && phone.isAvailable);
+      return { ...prev, location, phoneNumber: phoneStillAvailable ? prev.phoneNumber : null };
+    });
+    if (location) setLocationFilters({ state: location.state, city: location.city });
   };
 
   const setBundle = (bundle: Bundle | null) => {
@@ -105,6 +153,11 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const clearOrder = () => {
     setOrder(initialOrder);
+    setLocationFilters({ state: '', city: '' });
+    setDraftNotice('');
+    setLocationNotice('');
+    try { sessionStorage.removeItem(DRAFT_KEY); }
+    catch { setDraftNotice('The browser could not clear the saved draft. Clear this site’s data before using a shared device.'); }
   };
 
   const getCartTotal = () => {
@@ -177,6 +230,8 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     <OrderContext.Provider
       value={{
         order,
+        locationFilters,
+        setLocationFilters,
         setUserInfo,
         setLocation,
         setBundle,
@@ -193,7 +248,9 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         getCartItems,
       }}
     >
-      {children}
+      {draftNotice && <p role="status" className="mx-auto max-w-4xl px-4 py-3 text-sm text-gray-700">{draftNotice}</p>}
+      {locationNotice && <p role="status" className="mx-auto max-w-4xl px-4 py-3 text-sm text-gray-700">{locationNotice}</p>}
+      {ready ? children : <p role="status" className="p-8 text-center text-sm text-gray-600">Restoring your enrollment…</p>}
     </OrderContext.Provider>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
@@ -48,6 +48,10 @@ export default function SignUpPage() {
   const [termsAccepted, setTermsAccepted] = useState(order.userInfo.termsAccepted);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { trackComplete } = useFunnelTracking('your_info');
+
+  useEffect(() => {
+    setUserInfo({ firstName, lastName, phone: phone.replace(/\D/g, ''), countryRegion, countryCode, email, confirmEmail, company, termsAccepted });
+  }, [firstName, lastName, phone, countryRegion, countryCode, email, confirmEmail, company, termsAccepted, setUserInfo]);
 
   const selectedCountry = countryCodes.find((country) => country.region === countryRegion) || countryCodes[0];
 

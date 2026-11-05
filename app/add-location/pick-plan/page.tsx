@@ -3,26 +3,16 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import type { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ChevronDown, ChevronRight, MapPin, Star, Building2 } from 'lucide-react';
+import { Check, ChevronDown, ChevronRight, MapPin } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/app/components/ui/select';
 import { ProgressIndicator } from '../components/ProgressIndicator';
+import { LocationSelector } from '../components/LocationSelector';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import {
   bundles,
   featureLabels,
-  getStates,
-  getCitiesByState,
-  getLocationsByState,
-  Bundle,
   AvailableLocation,
 } from '../types';
 
@@ -36,30 +26,14 @@ const planTierColors: Record<string, { accent: string; surface: string }> = {
 
 export default function PickPlanPage() {
   const router = useRouter();
-  const { order, setLocation, setBundle } = useOrder();
+  const { order, setLocation, setBundle, setLocationFilters } = useOrder();
   const bundleComparisonHeadingRef = useRef<HTMLHeadingElement>(null);
   const [subStep, setSubStep] = useState<'location' | 'review'>(order.location ? 'review' : 'location');
   const { trackComplete } = useFunnelTracking('pick_plan');
 
-  const [selectedState, setSelectedState] = useState<string>('');
-  const [selectedCity, setSelectedCity] = useState<string>('');
-
-  const states = useMemo(() => getStates(), []);
   const upgradeBundles = useMemo(
     () => bundles.filter((bundle) => bundle.id !== 'essentials'),
     []
-  );
-  const cities = useMemo(
-    () => (selectedState ? getCitiesByState(selectedState) : []),
-    [selectedState]
-  );
-  const allStateLocations = useMemo(
-    () => (selectedState ? getLocationsByState(selectedState) : []),
-    [selectedState]
-  );
-  const availableLocations = useMemo(
-    () => (selectedCity && selectedCity !== 'all') ? allStateLocations.filter(loc => loc.city === selectedCity) : allStateLocations,
-    [allStateLocations, selectedCity]
   );
 
   useEffect(() => {
@@ -68,14 +42,22 @@ export default function PickPlanPage() {
     }
   }, [order.location, order.bundle, setBundle]);
 
-  const handleStateChange = (state: string) => {
-    setSelectedState(state);
-    setSelectedCity('');
-  };
-
   const handleLocationSelect = (location: AvailableLocation) => {
     setLocation(location);
-    setBundle(bundles[0]);
+    setSubStep('review');
+  };
+
+  const handleChangeLocation = () => {
+    if (order.location) {
+      setLocationFilters({ state: order.location.state, city: order.location.city });
+    }
+    setSubStep('location');
+  };
+
+  const handleCancelLocationChange = () => {
+    if (order.location) {
+      setLocationFilters({ state: order.location.state, city: order.location.city });
+    }
     setSubStep('review');
   };
 
@@ -105,114 +87,10 @@ export default function PickPlanPage() {
             <ProgressIndicator currentStep={2} />
           </div>
 
-          <div className="signup-surface p-5 md:p-6 mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Your Location</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  State
-                </label>
-                <Select value={selectedState} onValueChange={handleStateChange}>
-                  <SelectTrigger data-testid="select-state">
-                    <SelectValue placeholder="Select a state" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {states.map((state) => (
-                      <SelectItem key={state} value={state} data-testid={`option-state-${state}`}>
-                        {state}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {selectedState && cities.length > 1 && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    City
-                  </label>
-                  <Select value={selectedCity} onValueChange={setSelectedCity}>
-                    <SelectTrigger data-testid="select-city">
-                      <SelectValue placeholder="All cities" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all" data-testid="option-city-all">All cities</SelectItem>
-                      {cities.map((city) => (
-                        <SelectItem key={city} value={city} data-testid={`option-city-${city}`}>
-                          {city}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-            </div>
-
-            {selectedState && availableLocations.length > 0 && (
-              <div data-testid="locations-list">
-                <h3 className="text-sm font-medium text-gray-700 mb-3">
-                  Available Locations in {selectedCity && selectedCity !== 'all' ? selectedCity + ',' : ''} {selectedState}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {availableLocations.map((location) => (
-                    <div
-                      key={location.id}
-                      className="flex flex-col rounded-xl border border-gray-200 hover:border-gray-400 transition-colors overflow-hidden"
-                      data-testid={`location-card-${location.id}`}
-                    >
-                      <div className="w-full bg-gray-100 flex items-center justify-center overflow-hidden" style={{ aspectRatio: '1.85 / 1' }}>
-                        {location.imageUrl && location.imageUrl !== '/placeholder-building.jpg' ? (
-                          <img
-                            src={location.imageUrl}
-                            alt={location.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <Building2 className="h-12 w-12 text-gray-400" />
-                        )}
-                      </div>
-                      <div className="p-4 flex flex-col gap-3 flex-1">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <h4 className="font-medium text-gray-900">{location.name}</h4>
-                            {location.isPremium && (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-xs font-semibold">
-                                <Star className="h-3 w-3 fill-amber-500" />
-                                Premium Location
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-sm text-gray-600">
-                            <p className="flex items-center gap-1">
-                              <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
-                              {location.address}
-                            </p>
-                            <p className="ml-5">{location.addressLine2}</p>
-                            <p className="ml-5">{location.city}, {location.stateCode} {location.zipCode}</p>
-                          </div>
-                        </div>
-                        <Button
-                          onClick={() => handleLocationSelect(location)}
-                          className="signup-primary w-full"
-                          data-testid={`button-select-location-${location.id}`}
-                        >
-                          Select
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {!selectedState && (
-              <div className="text-center py-12 text-gray-500">
-                <MapPin className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-                <p>Select a state to view available locations</p>
-              </div>
-            )}
-          </div>
+          <LocationSelector
+            onSelect={handleLocationSelect}
+            onCancel={order.location ? handleCancelLocationChange : undefined}
+          />
         </div>
       </div>
     );
@@ -290,7 +168,7 @@ export default function PickPlanPage() {
             <div className="flex flex-shrink-0 items-center gap-1 self-start sm:gap-2 sm:self-auto">
               <button
                 type="button"
-                onClick={() => setSubStep('location')}
+                onClick={handleChangeLocation}
                 className="inline-flex min-h-11 items-center whitespace-nowrap rounded-md px-2 text-sm font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 transition-[color,transform] duration-150 ease-out hover:text-gray-900 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
                 data-testid="button-change-location"
               >

@@ -27,6 +27,7 @@ import {
   PopoverTrigger,
 } from '@/app/components/ui/popover';
 import { ProgressIndicator } from '../components/ProgressIndicator';
+import { BundleSuggestionDialog } from '../components/BundleSuggestionDialog';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
@@ -907,114 +908,26 @@ export default function CustomizePage() {
       </div>
       </div>
 
-      <Dialog open={bundleSuggestionOpen} onOpenChange={setBundleSuggestionOpen}>
-        <DialogContent className="sm:max-w-lg" data-testid="bundle-suggestion-modal">
-          <DialogHeader>
-            <div className="flex items-center gap-2 mb-1">
-              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                <DollarSign className="h-4 w-4 text-gray-600" />
-              </div>
-              <DialogTitle className="text-xl">You Could Be Saving!</DialogTitle>
-            </div>
-            <DialogDescription>
-              Based on the add-ons you've selected, upgrading to a bundle could save you money every month.
-            </DialogDescription>
-          </DialogHeader>
-
-          {bundleSuggestion && (
-            <div className="space-y-4 py-2">
-              <div className="bg-[#f7fbfd] border border-gray-200 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <p className="text-sm font-medium text-gray-800">
-                      Upgrade to <span className="font-bold">{bundleSuggestion.bundle.tier}</span>
-                    </p>
-                    {bundleSuggestion.savings > 0 ? (
-                      <p className="text-2xl font-bold text-gray-900 mt-1">
-                        Save ${bundleSuggestion.savings}<span className="text-sm font-normal">/mo</span>
-                      </p>
-                    ) : (
-                      <p className="text-lg font-bold text-gray-900 mt-1">
-                        Same price, more features
-                      </p>
-                    )}
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm text-gray-600">${bundleSuggestion.bundle.price}/mo</p>
-                    {bundleSuggestion.bundle.originalPrice && (
-                      <p className="text-xs text-gray-500 line-through">${bundleSuggestion.bundle.originalPrice}/mo</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">
-                  These add-ons would be included in the bundle:
-                </p>
-                <div className="space-y-2">
-                  {bundleSuggestion.matchingAddons.map(addon => (
-                    <div key={addon.id} className="flex items-center justify-between text-sm bg-gray-50 rounded-lg px-3 py-2" data-testid={`suggestion-addon-${addon.id}`}>
-                      <div className="flex items-center gap-2">
-                        <Check className="h-3.5 w-3.5 text-gray-600" />
-                        <span className="text-gray-700">{addon.name}</span>
-                      </div>
-                      <span className="text-gray-400 line-through">${addon.price}/mo</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {bundleSuggestion.bonusFeatures.length > 0 && (
-                <div>
-                  <p className="text-sm font-medium text-gray-700 mb-2">
-                    Plus, you&apos;ll also get:
-                  </p>
-                  <div className="space-y-1.5">
-                    {bundleSuggestion.bonusFeatures.map(feature => (
-                      <div key={feature} className="flex items-center gap-2 text-sm">
-                        <Star className="h-3.5 w-3.5 text-gray-500" />
-                        <span className="text-gray-600">{feature}</span>
-                        <Badge className="bg-gray-100 text-gray-700 border border-gray-200 text-xs px-1.5 py-0">FREE</Badge>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          <DialogFooter className="flex-col gap-2 sm:flex-col sm:gap-2 sm:space-x-0">
-            {bundleSuggestion && (
-              <Button
-                onClick={handleSuggestionProceedWithBundle}
-                className="signup-primary w-full h-11"
-                data-testid="button-suggestion-proceed-bundle"
-              >
-                <Check className="h-4 w-4 mr-2" />
-                Proceed with {bundleSuggestion.bundle.tier}
-              </Button>
-            )}
-            <Button
-              variant="outline"
-              onClick={handleSuggestionSeeBundles}
-              className="w-full h-11"
-              data-testid="button-suggestion-see-bundles"
-            >
-              <DollarSign className="h-4 w-4 mr-2" />
-              See All Bundles
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={handleSuggestionDismiss}
-              className="w-full h-11 text-gray-500 hover:text-gray-700"
-              data-testid="button-suggestion-dismiss"
-            >
-              No thanks, continue to checkout
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <BundleSuggestionDialog
+        open={bundleSuggestionOpen}
+        onOpenChange={setBundleSuggestionOpen}
+        suggestion={bundleSuggestion}
+        currentMonthly={monthly}
+        upgradedMonthly={
+          bundleSuggestion
+            ? monthly
+              + bundleSuggestion.bundle.price
+              - selectedBundle.price
+              - bundleSuggestion.matchingAddons.reduce(
+                (sum, addon) => sum + (addon.billingCycle === 'monthly' ? addon.price : 0),
+                0
+              )
+            : monthly
+        }
+        onUpgrade={handleSuggestionProceedWithBundle}
+        onKeepCurrent={handleSuggestionDismiss}
+        onCompare={handleSuggestionSeeBundles}
+      />
 
       <Dialog open={phoneModalOpen} onOpenChange={setPhoneModalOpen}>
         <DialogContent className="sm:max-w-md" data-testid="phone-selection-modal">
