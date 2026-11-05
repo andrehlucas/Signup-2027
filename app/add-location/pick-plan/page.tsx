@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, ChevronRight, MapPin, Star, Building2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
+import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import {
   Select,
   SelectContent,
@@ -34,6 +35,10 @@ export default function PickPlanPage() {
   const [selectedCity, setSelectedCity] = useState<string>('');
 
   const states = useMemo(() => getStates(), []);
+  const upgradeBundles = useMemo(
+    () => bundles.filter((bundle) => bundle.id !== 'essentials'),
+    []
+  );
   const cities = useMemo(
     () => (selectedState ? getCitiesByState(selectedState) : []),
     [selectedState]
@@ -48,10 +53,10 @@ export default function PickPlanPage() {
   );
 
   useEffect(() => {
-    if (order.location) {
+    if (order.location && !order.bundle) {
       setBundle(bundles[0]);
     }
-  }, [order.location]);
+  }, [order.location, order.bundle, setBundle]);
 
   const handleStateChange = (state: string) => {
     setSelectedState(state);
@@ -197,10 +202,11 @@ export default function PickPlanPage() {
   }
 
   const essentialsPlan = bundles[0];
+  const essentialsSelected = order.bundle?.id === essentialsPlan.id;
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-8 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="mb-6">
           <ProgressIndicator currentStep={2} />
         </div>
@@ -226,16 +232,26 @@ export default function PickPlanPage() {
           </button>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-5" data-testid="review-package-card">
+        <div
+          className={`bg-white rounded-xl border overflow-hidden mb-5 ${
+            essentialsSelected ? 'border-[#36bff9]' : 'border-gray-200'
+          }`}
+          data-testid="review-package-card"
+        >
           <div className="bg-[#36bff9] text-white flex items-center justify-between px-5 py-3">
-            <h3 className="text-base font-bold">{essentialsPlan.name}</h3>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/85">
+                {essentialsPlan.tier}
+              </p>
+              <h3 className="text-base font-bold">{essentialsPlan.name}</h3>
+            </div>
             <div className="flex items-baseline gap-0.5">
               <span className="text-2xl font-bold">${essentialsPlan.price}</span>
               <span className="text-white/80 text-xs">/mo</span>
             </div>
           </div>
           <div className="px-5 py-4">
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
               {Object.entries(essentialsPlan.features)
                 .filter(([, enabled]) => enabled)
                 .map(([key]) => (
@@ -248,7 +264,47 @@ export default function PickPlanPage() {
                 ))}
             </div>
           </div>
+          <div className="px-5 pb-4">
+            <Button
+              type="button"
+              variant="outline"
+              aria-pressed={essentialsSelected}
+              onClick={() => setBundle(essentialsPlan)}
+              className={`w-full sm:w-auto ${
+                essentialsSelected
+                  ? 'border-[#36bff9] bg-sky-50 text-gray-900'
+                  : 'text-gray-700'
+              }`}
+              data-testid="button-select-essentials"
+            >
+              {essentialsSelected ? (
+                <>
+                  <Check className="h-4 w-4 text-[#1689b8]" />
+                  Selected
+                </>
+              ) : (
+                'Select The Essentials'
+              )}
+            </Button>
+          </div>
         </div>
+
+        <section className="mb-5" aria-labelledby="bundle-comparison-title">
+          <div className="mb-1">
+            <h2 id="bundle-comparison-title" className="text-lg font-semibold text-gray-900">
+              Compare bundles
+            </h2>
+            <p className="text-sm text-gray-600">
+              Compare the optional features included with each upgrade.
+            </p>
+          </div>
+          <BundleInlineSelector
+            bundles={upgradeBundles}
+            selectedBundleId={order.bundle?.id}
+            onSelect={setBundle}
+            essentialsBundle={essentialsPlan}
+          />
+        </section>
 
         <Button
           onClick={handleContinue}
