@@ -102,7 +102,7 @@ export default function SignUpPage() {
 
   return (
     <div className="signup-shell p-4 lg:p-8" data-testid="signup-page">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-2xl mx-auto">
         <div className="text-center mb-4">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup">
             Set up your virtual office
