@@ -21,15 +21,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/add-location/layout.js"
     ],
-    "/add-location/pick-plan/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/add-location/pick-plan/page.js"
-    ],
     "/add-location/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/add-location/page.js"
+    ],
+    "/add-location/pick-plan/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/add-location/pick-plan/page.js"
     ],
     "/add-location/customize/page": [
       "static/chunks/webpack.js",

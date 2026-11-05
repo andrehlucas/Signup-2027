@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ChevronRight, MapPin, Star, Building2 } from 'lucide-react';
+import { Check, ChevronDown, ChevronRight, MapPin, Star, Building2 } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import {
@@ -25,9 +25,18 @@ import {
   AvailableLocation,
 } from '../types';
 
+const planTierColors: Record<string, { accent: string; surface: string }> = {
+  essentials: { accent: '#596579', surface: '#f2f4f6' },
+  plus: { accent: '#185f58', surface: '#edf6f4' },
+  pro: { accent: '#345b91', surface: '#eef2f8' },
+  premium: { accent: '#80591e', surface: '#f7f2e9' },
+  prestige: { accent: '#754965', surface: '#f5eef3' },
+};
+
 export default function PickPlanPage() {
   const router = useRouter();
   const { order, setLocation, setBundle } = useOrder();
+  const bundleComparisonHeadingRef = useRef<HTMLHeadingElement>(null);
   const [subStep, setSubStep] = useState<'location' | 'review'>(order.location ? 'review' : 'location');
   const { trackComplete } = useFunnelTracking('pick_plan');
 
@@ -74,6 +83,17 @@ export default function PickPlanPage() {
       trackComplete({ bundle: order.bundle.name });
       router.push('/add-location/customize');
     }
+  };
+
+  const handleChangePlan = () => {
+    const heading = bundleComparisonHeadingRef.current;
+    if (!heading) return;
+
+    heading.focus({ preventScroll: true });
+    heading.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'start',
+    });
   };
 
   if (subStep === 'location') {
@@ -202,7 +222,9 @@ export default function PickPlanPage() {
   }
 
   const essentialsPlan = bundles[0];
-  const essentialsSelected = order.bundle?.id === essentialsPlan.id;
+  const selectedPlanTheme = order.bundle
+    ? planTierColors[order.bundle.id] || planTierColors.essentials
+    : null;
 
   return (
     <div className="signup-shell px-4 pt-4 pb-8 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
@@ -212,86 +234,113 @@ export default function PickPlanPage() {
         </div>
 
         <div
-          className={`signup-surface overflow-hidden mb-5 ${
-            essentialsSelected ? 'border-[#006d91]' : 'border-gray-200'
-          }`}
+          className="signup-surface mb-5 p-5 md:p-6"
           data-testid="review-package-card"
         >
-          <div className="p-5 flex items-center gap-4 border-b border-gray-200" data-testid="review-location-card">
-            <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-              <MapPin className="h-5 w-5 text-gray-500" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900" data-testid="heading-pick-plan">
-                {order.location.address}
-              </p>
-              <p className="text-sm text-gray-500">
-                {order.location.addressLine2 && <>{order.location.addressLine2}, </>}{order.location.city}, {order.location.stateCode} {order.location.zipCode}
-              </p>
-            </div>
-            <button
-              onClick={() => setSubStep('location')}
-              className="text-sm text-gray-700 hover:text-gray-900 font-medium flex-shrink-0"
-              data-testid="button-change-location"
-            >
-              Change
-            </button>
-          </div>
+          <h1 className="mb-5 text-lg font-semibold text-gray-900">Your selection</h1>
+          <div className="grid grid-cols-1 divide-y divide-gray-200 md:grid-cols-2 md:divide-x md:divide-y-0">
+            <section className="pb-5 md:pr-6 md:pb-0" data-testid="review-location-card" aria-labelledby="selected-address-title">
+              <div className="mb-4 flex items-start justify-between gap-3">
+                <h2 id="selected-address-title" className="text-sm font-semibold text-gray-700">
+                  Your business address
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setSubStep('location')}
+                  className="flex-shrink-0 text-sm font-medium text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
+                  data-testid="button-change-location"
+                >
+                  Change location
+                </button>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-1 h-4 w-4 flex-shrink-0 text-gray-500" />
+                <div className="min-w-0">
+                  <p className="text-lg font-semibold leading-snug text-gray-900" data-testid="heading-pick-plan">
+                    {order.location.address}
+                  </p>
+                  {order.location.addressLine2 && (
+                    <p className="mt-1 text-sm text-gray-600">{order.location.addressLine2}</p>
+                  )}
+                  <p className="text-sm text-gray-600">
+                    {order.location.city}, {order.location.stateCode} {order.location.zipCode}
+                  </p>
+                </div>
+              </div>
+            </section>
 
-          <div className="bg-gray-50 text-[#101828] flex items-center justify-between px-5 py-3 border-b border-gray-200">
-            <div>
-              <p className="text-xs font-semibold text-[#475467]">
-                {essentialsPlan.tier}
-              </p>
-              <h3 className="text-base font-bold">{essentialsPlan.name}</h3>
-            </div>
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-2xl font-bold">${essentialsPlan.price}</span>
-              <span className="text-[#475467] text-xs">/mo</span>
-            </div>
-          </div>
-          <div className="px-5 py-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
-              {Object.entries(essentialsPlan.features)
-                .filter(([, enabled]) => enabled)
-                .map(([key]) => (
-                  <div key={key} className="flex items-start gap-2 text-xs" data-testid={`feature-${key}`}>
-                    <div className="w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="h-2.5 w-2.5 text-gray-700" />
+            <section className="pt-5 md:pl-6 md:pt-0" aria-labelledby="selected-plan-title">
+              <div className="mb-4 flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <h2 id="selected-plan-title" className="text-sm font-semibold text-gray-700">
+                    Your selected plan
+                  </h2>
+                  {order.bundle ? (
+                    <div className="mt-2">
+                      <span
+                        className="inline-flex rounded-md px-2 py-1 text-lg font-bold md:text-xl"
+                        style={{ color: selectedPlanTheme?.accent, backgroundColor: selectedPlanTheme?.surface }}
+                        data-testid="selected-plan-name"
+                      >
+                        {order.bundle.tier}
+                      </span>
+                      <p className="mt-1 text-sm text-gray-600">{order.bundle.name}</p>
                     </div>
-                    <span className="text-gray-700 leading-snug">{featureLabels[key]}</span>
-                  </div>
-                ))}
-            </div>
-          </div>
-          <div className="px-5 pb-4">
-            <Button
-              type="button"
-              variant="outline"
-              aria-pressed={essentialsSelected}
-              onClick={() => setBundle(essentialsPlan)}
-              className={`w-full sm:w-auto ${
-                essentialsSelected
-                  ? 'border-[#006d91] bg-gray-50 text-gray-900'
-                  : 'text-gray-700'
-              }`}
-              data-testid="button-select-essentials"
-            >
-              {essentialsSelected ? (
-                <>
-                  <Check className="h-4 w-4 text-[#1689b8]" />
-                  Selected
-                </>
-              ) : (
-                'Select The Essentials'
+                  ) : (
+                    <p className="mt-2 text-sm text-gray-600" data-testid="selected-plan-name">
+                      Choose a plan below. Your selection will appear here.
+                    </p>
+                  )}
+                </div>
+                {order.bundle && (
+                  <p className="flex flex-shrink-0 items-baseline gap-1 text-gray-900" data-testid="selected-plan-price">
+                    <span className="text-2xl font-bold tabular-nums">${order.bundle.price}</span>
+                    <span className="text-xs text-gray-600">/mo</span>
+                  </p>
+                )}
+              </div>
+
+              {order.bundle && (
+                <details className="group border-t border-gray-100 pt-3" data-testid="details-included-services">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2">
+                    View included services
+                    <ChevronDown className="h-4 w-4 flex-shrink-0 transition-transform group-open:rotate-180" />
+                  </summary>
+                  <ul className="mt-3 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2">
+                    {Object.entries(order.bundle.features)
+                      .filter(([, enabled]) => enabled)
+                      .map(([key]) => (
+                        <li key={key} className="flex items-start gap-2 text-sm" data-testid={`feature-${key}`}>
+                          <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-gray-600" />
+                          <span className="leading-snug text-gray-700">
+                            {featureLabels[key] || key}{key === 'appointmentMaking' && ' (20/mo)'}
+                          </span>
+                        </li>
+                      ))}
+                  </ul>
+                </details>
               )}
-            </Button>
+
+              <button
+                type="button"
+                onClick={handleChangePlan}
+                className="mt-4 text-sm font-medium text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
+                data-testid="button-change-plan"
+              >
+                Change plan
+              </button>
+            </section>
           </div>
         </div>
 
         <section className="mb-5" aria-labelledby="bundle-comparison-title">
           <div className="mb-1">
-            <h2 id="bundle-comparison-title" className="text-lg font-semibold text-gray-900">
+            <h2
+              id="bundle-comparison-title"
+              ref={bundleComparisonHeadingRef}
+              tabIndex={-1}
+              className="scroll-mt-6 text-lg font-semibold text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#345b91] focus:ring-offset-2"
+            >
               Compare bundles
             </h2>
             <p className="text-sm text-gray-600">
@@ -308,6 +357,7 @@ export default function PickPlanPage() {
 
         <Button
           onClick={handleContinue}
+          disabled={!order.bundle}
           className="signup-primary w-full h-12 text-base"
           data-testid="button-continue-customize"
         >

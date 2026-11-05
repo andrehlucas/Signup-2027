@@ -281,7 +281,7 @@ export function BundleInlineSelector({
       </div>
 
       {/* Desktop grid - hidden on mobile, shown on md+ */}
-      <div className="hidden md:grid md:grid-cols-4 gap-4 py-4">
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 py-4">
         {bundles.map((bundle) => {
           const isSelected = selectedBundleId === bundle.id;
           const theme = bundleThemes[bundle.id] || bundleThemes.plus;
@@ -368,6 +368,41 @@ export function BundleInlineSelector({
             </div>
           );
         })}
+      </div>
+
+      <div className="mt-4" data-testid="essentials-baseline-option">
+        <button
+          type="button"
+          aria-pressed={selectedBundleId === essentialsBundle.id}
+          onClick={() => onSelect(essentialsBundle)}
+          className={cn(
+            "w-full rounded-lg border px-4 py-3 text-left transition-colors",
+            selectedBundleId === essentialsBundle.id
+              ? "border-[#344054] bg-gray-50"
+              : "border-gray-200 bg-white hover:bg-gray-50"
+          )}
+          data-testid="button-select-essentials"
+        >
+          <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="text-xs font-medium text-gray-500">Baseline plan</span>
+            <span className="text-sm font-semibold text-gray-900">{essentialsBundle.tier}</span>
+            <span className="text-sm text-gray-600">{essentialsBundle.name}</span>
+            <span className="ml-auto flex items-baseline gap-1 text-gray-900">
+              <span className="text-lg font-bold">${essentialsBundle.price}</span>
+              <span className="text-xs text-gray-600">/mo</span>
+            </span>
+            <span className="flex items-center gap-1 text-sm font-semibold text-gray-800 sm:border-l sm:border-gray-200 sm:pl-3">
+              {selectedBundleId === essentialsBundle.id ? (
+                <>
+                  <Check className="h-4 w-4" />
+                  Selected
+                </>
+              ) : (
+                "Select Essentials"
+              )}
+            </span>
+          </span>
+        </button>
       </div>
 
       {/* Mobile comparison table */}
