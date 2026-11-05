@@ -160,80 +160,80 @@ export default function AnalyticsDashboard() {
   const avgTimeTotal = data.steps.reduce((sum, s) => sum + s.avgDuration, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 lg:p-8" data-testid="analytics-dashboard">
+    <div className="signup-shell p-3 sm:p-4 lg:p-8" data-testid="analytics-dashboard">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <Link href="/">
-              <Button variant="ghost" size="icon" data-testid="button-back">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-5 sm:mb-6">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-4">
+            <Link href="/" className="shrink-0">
+              <Button variant="ghost" size="icon" className="h-10 w-10" data-testid="button-back">
                 <ArrowLeft className="h-5 w-5" />
               </Button>
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900" data-testid="heading-analytics">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight" data-testid="heading-analytics">
                 Sign-Up Funnel Analytics
               </h1>
               <p className="text-sm text-gray-500">Track where users drop off in the sign-up flow</p>
             </div>
           </div>
-          <Button onClick={fetchData} variant="outline" data-testid="button-refresh">
+          <Button onClick={fetchData} variant="outline" size="sm" className="shrink-0" data-testid="button-refresh">
             <RefreshCw className="h-4 w-4 mr-2" />
             Refresh
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-6 sm:mb-8">
           <Card data-testid="card-total-sessions">
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                  <Users className="h-5 w-5 text-[#36bff9]" />
+            <CardContent className="p-3 sm:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-[#eaf8fe] items-center justify-center">
+                  <Users className="h-5 w-5 text-[#006d91]" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Total Sessions</p>
-                  <p className="text-2xl font-bold text-gray-900" data-testid="text-total-sessions">{data.sessions.total}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 tabular-nums" data-testid="text-total-sessions">{data.sessions.total}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card data-testid="card-completed">
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-                  <CheckCircle2 className="h-5 w-5 text-green-600" />
+            <CardContent className="p-3 sm:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-[#eaf8fe] items-center justify-center">
+                  <CheckCircle2 className="h-5 w-5 text-[#006d91]" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Completed</p>
-                  <p className="text-2xl font-bold text-gray-900" data-testid="text-completed">{data.sessions.completed}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 tabular-nums" data-testid="text-completed">{data.sessions.completed}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card data-testid="card-conversion">
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                  <TrendingDown className="h-5 w-5 text-purple-600" />
+            <CardContent className="p-3 sm:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-[#eaf8fe] items-center justify-center">
+                  <TrendingDown className="h-5 w-5 text-[#006d91]" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Conversion Rate</p>
-                  <p className="text-2xl font-bold text-gray-900" data-testid="text-conversion">{conversionRate}%</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 tabular-nums" data-testid="text-conversion">{conversionRate}%</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card data-testid="card-avg-time">
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
-                  <Clock className="h-5 w-5 text-amber-600" />
+            <CardContent className="p-3 sm:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-[#eaf8fe] items-center justify-center">
+                  <Clock className="h-5 w-5 text-[#006d91]" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Avg. Total Time</p>
-                  <p className="text-2xl font-bold text-gray-900" data-testid="text-avg-time">{formatDuration(avgTimeTotal)}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 tabular-nums" data-testid="text-avg-time">{formatDuration(avgTimeTotal)}</p>
                 </div>
               </div>
             </CardContent>

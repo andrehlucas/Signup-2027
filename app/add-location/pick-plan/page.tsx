@@ -78,13 +78,13 @@ export default function PickPlanPage() {
 
   if (subStep === 'location') {
     return (
-      <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="pick-plan-page-location">
+      <div className="signup-shell p-4 lg:p-8" data-testid="pick-plan-page-location">
         <div className="max-w-4xl lg:max-w-6xl mx-auto">
           <div className="mb-8">
             <ProgressIndicator currentStep={2} />
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+          <div className="signup-surface p-5 md:p-6 mb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Your Location</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -137,10 +137,10 @@ export default function PickPlanPage() {
                   {availableLocations.map((location) => (
                     <div
                       key={location.id}
-                      className="flex flex-col rounded-lg border-2 border-gray-200 hover:border-[#36bff9] hover:shadow-md transition-all overflow-hidden"
+                      className="flex flex-col rounded-xl border border-gray-200 hover:border-[#006d91] transition-colors overflow-hidden"
                       data-testid={`location-card-${location.id}`}
                     >
-                      <div className="w-full bg-gray-200 flex items-center justify-center overflow-hidden" style={{ aspectRatio: '1.85 / 1' }}>
+                      <div className="w-full bg-gray-100 flex items-center justify-center overflow-hidden" style={{ aspectRatio: '1.85 / 1' }}>
                         {location.imageUrl && location.imageUrl !== '/placeholder-building.jpg' ? (
                           <img
                             src={location.imageUrl}
@@ -173,7 +173,7 @@ export default function PickPlanPage() {
                         </div>
                         <Button
                           onClick={() => handleLocationSelect(location)}
-                          className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white w-full"
+                          className="signup-primary w-full"
                           data-testid={`button-select-location-${location.id}`}
                         >
                           Select
@@ -205,13 +205,13 @@ export default function PickPlanPage() {
   const essentialsSelected = order.bundle?.id === essentialsPlan.id;
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-8 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
+    <div className="signup-shell px-4 pt-4 pb-8 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
       <div className="max-w-5xl mx-auto">
         <div className="mb-6">
           <ProgressIndicator currentStep={2} />
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-5 mb-5 flex items-center gap-4" data-testid="review-location-card">
+        <div className="signup-surface p-5 mb-5 flex items-center gap-4" data-testid="review-location-card">
           <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
             <MapPin className="h-5 w-5 text-[#36bff9]" />
           </div>
@@ -225,7 +225,7 @@ export default function PickPlanPage() {
           </div>
           <button
             onClick={() => setSubStep('location')}
-            className="text-sm text-[#36bff9] hover:text-[#2aa8e0] font-medium flex-shrink-0"
+            className="text-sm text-[#006d91] hover:text-[#005675] font-medium flex-shrink-0"
             data-testid="button-change-location"
           >
             Change
@@ -233,21 +233,21 @@ export default function PickPlanPage() {
         </div>
 
         <div
-          className={`bg-white rounded-xl border overflow-hidden mb-5 ${
-            essentialsSelected ? 'border-[#36bff9]' : 'border-gray-200'
+          className={`signup-surface overflow-hidden mb-5 ${
+            essentialsSelected ? 'border-[#006d91]' : 'border-gray-200'
           }`}
           data-testid="review-package-card"
         >
-          <div className="bg-[#36bff9] text-white flex items-center justify-between px-5 py-3">
+          <div className="bg-[#eaf8fe] text-[#101828] flex items-center justify-between px-5 py-3 border-b border-gray-200">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/85">
+              <p className="text-xs font-semibold text-[#475467]">
                 {essentialsPlan.tier}
               </p>
               <h3 className="text-base font-bold">{essentialsPlan.name}</h3>
             </div>
             <div className="flex items-baseline gap-0.5">
               <span className="text-2xl font-bold">${essentialsPlan.price}</span>
-              <span className="text-white/80 text-xs">/mo</span>
+              <span className="text-[#475467] text-xs">/mo</span>
             </div>
           </div>
           <div className="px-5 py-4">
@@ -257,7 +257,7 @@ export default function PickPlanPage() {
                 .map(([key]) => (
                   <div key={key} className="flex items-start gap-2 text-xs" data-testid={`feature-${key}`}>
                     <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="h-2.5 w-2.5 text-white" />
+                      <Check className="h-2.5 w-2.5 text-[#101828]" />
                     </div>
                     <span className="text-gray-700 leading-snug">{featureLabels[key]}</span>
                   </div>
@@ -272,7 +272,7 @@ export default function PickPlanPage() {
               onClick={() => setBundle(essentialsPlan)}
               className={`w-full sm:w-auto ${
                 essentialsSelected
-                  ? 'border-[#36bff9] bg-sky-50 text-gray-900'
+                  ? 'border-[#006d91] bg-sky-50 text-gray-900'
                   : 'text-gray-700'
               }`}
               data-testid="button-select-essentials"
@@ -308,7 +308,7 @@ export default function PickPlanPage() {
 
         <Button
           onClick={handleContinue}
-          className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-base font-semibold"
+          className="signup-primary w-full h-12 text-base"
           data-testid="button-continue-customize"
         >
           Continue to Add-ons

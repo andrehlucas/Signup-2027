@@ -32,17 +32,17 @@ const bundleDescriptions: Record<string, string> = {
 };
 
 const bundleBackgrounds: Record<string, string> = {
-  plus: "#13678A",
-  pro: "#45C4B0",
-  premium: "#9AEBA3",
-  prestige: "#DAFDBA",
+  plus: "#ffffff",
+  pro: "#ffffff",
+  premium: "#ffffff",
+  prestige: "#ffffff",
 };
 
 const bundleAccentColors: Record<string, string> = {
-  plus: "#13678A",
-  pro: "#2A9E8B",
-  premium: "#4A8F6A",
-  prestige: "#6B8F3A",
+  plus: "#006d91",
+  pro: "#006d91",
+  premium: "#006d91",
+  prestige: "#006d91",
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -192,10 +192,10 @@ export function BundleInlineSelector({
               <motion.div
                 key={`${bundle.id}-${absIndex}`}
                 className={cn(
-                  "absolute top-0 rounded-2xl overflow-hidden",
-                  isCenter ? "z-20 shadow-lg" : "z-10 pointer-events-none shadow-md",
+                  "absolute top-0 rounded-xl overflow-hidden border transition-colors",
+                  isCenter ? "z-20 border-gray-300" : "z-10 pointer-events-none border-gray-200",
                   isSelected && isCenter
-                    ? "ring-2 ring-[#36bff9]"
+                    ? "ring-2 ring-[#006d91]"
                     : ""
                 )}
                 style={{
@@ -230,7 +230,7 @@ export function BundleInlineSelector({
                       </span>
                     </div>
 
-                    <p className="text-[13px] leading-relaxed opacity-85" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
+                    <p className="text-sm leading-relaxed opacity-85" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
                       {bundleDescriptions[bundle.id] || bundle.name}
                     </p>
 
@@ -240,7 +240,7 @@ export function BundleInlineSelector({
                         <span
                           className="inline-flex self-start items-center text-xs font-semibold px-2.5 py-1 rounded-full"
                           style={{
-                            backgroundColor: needsDarkText(bg) ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.18)",
+                            backgroundColor: "#eaf8fe",
                             color: cardTextColor(bg),
                           }}
                           data-testid={`inline-savings-badge-${bundle.id}`}
@@ -257,10 +257,10 @@ export function BundleInlineSelector({
                       if (isCenter) onSelect(bundle);
                     }}
                     className={cn(
-                      "w-full py-2.5 rounded-xl text-sm font-semibold transition-all",
+                      "w-full py-2.5 rounded-md text-sm font-semibold transition-colors",
                       isSelected && isCenter
-                        ? needsDarkText(bg) ? "bg-black text-white hover:bg-black/90" : "bg-white text-black hover:bg-white/90"
-                        : needsDarkText(bg) ? "bg-black/80 text-white hover:bg-black" : "bg-black/80 text-white hover:bg-black"
+                        ? "bg-[#36bff9] text-[#101828] hover:bg-[#2aa8e0]"
+                        : "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50"
                     )}
                     tabIndex={isCenter ? 0 : -1}
                     data-testid={`inline-select-bundle-${bundle.id}`}
@@ -282,7 +282,7 @@ export function BundleInlineSelector({
 
         <button
           onClick={handleNext}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-1.5 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-30 p-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-50 transition-colors"
           aria-label="Next bundle"
           data-testid="inline-bundle-next"
         >
@@ -301,8 +301,8 @@ export function BundleInlineSelector({
             <div
               key={bundle.id}
               className={cn(
-                "rounded-2xl overflow-hidden shadow-lg transition-all",
-                isSelected ? "ring-2 ring-[#36bff9] scale-[1.02]" : "hover:scale-[1.01]"
+                "rounded-xl overflow-hidden border transition-colors",
+                isSelected ? "border-[#006d91] ring-2 ring-[#006d91]/20" : "border-gray-200 hover:border-gray-400"
               )}
               style={{
                 background: bg,
@@ -334,7 +334,7 @@ export function BundleInlineSelector({
                       className="text-xs font-semibold rounded-full px-2.5 py-0.5 self-start"
                       style={{
                         color: cardTextColor(bg),
-                        backgroundColor: needsDarkText(bg) ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.2)",
+                        backgroundColor: "#eaf8fe",
                       }}
                     >
                       Save ${bundleSavings}/mo
@@ -345,10 +345,10 @@ export function BundleInlineSelector({
                 <button
                   onClick={() => onSelect(bundle)}
                   className={cn(
-                    "w-full py-2.5 rounded-xl text-sm font-semibold transition-all mt-3",
+                    "w-full py-2.5 rounded-md text-sm font-semibold transition-colors mt-3",
                     isSelected
-                      ? needsDarkText(bg) ? "bg-black text-white hover:bg-black/90" : "bg-white text-black hover:bg-white/90"
-                      : "bg-black/80 text-white hover:bg-black"
+                      ? "bg-[#36bff9] text-[#101828] hover:bg-[#2aa8e0]"
+                      : "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50"
                   )}
                   data-testid={`inline-select-bundle-${bundle.id}`}
                 >

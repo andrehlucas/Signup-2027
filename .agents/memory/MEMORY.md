@@ -1,0 +1,1 @@
+- [State-dependent visual checks](stateful-visual-checks.md) — retain enrollment state in one browser session; never submit checkout just to obtain a screenshot.

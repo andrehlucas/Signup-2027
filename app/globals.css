@@ -276,49 +276,58 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --opus-page: #f7f9fb;
+    --opus-surface: #ffffff;
+    --opus-blue: #36bff9;
+    --opus-blue-hover: #2aa8e0;
+    --opus-blue-ink: #006d91;
+    --opus-ink: #101828;
+    --opus-muted: #475467;
+    --opus-rule: #dfe5eb;
+    --opus-soft-blue: #eaf8fe;
+    --background: 210 29% 98%;
+    --foreground: 220 24% 11%;
+    --muted: 210 28% 96%;
+    --muted-foreground: 215 16% 35%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47.4% 11.2%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --card: transparent;
-    --card-foreground: 222.2 47.4% 11.2%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 215 20.2% 65.1%;
-    --radius: 0.5rem;
+    --popover-foreground: 220 24% 11%;
+    --border: 214 20% 89%;
+    --input: 214 20% 85%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 24% 11%;
+    --primary: 197 93% 59%;
+    --primary-foreground: 220 24% 11%;
+    --secondary: 210 28% 96%;
+    --secondary-foreground: 220 24% 11%;
+    --accent: 197 80% 95%;
+    --accent-foreground: 197 100% 28%;
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 197 100% 28%;
+    --radius: 0.625rem;
   }
 
   .dark {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
-    --accent: 216 34% 17%;
-    --accent-foreground: 210 40% 98%;
-    --popover: 224 71% 4%;
-    --popover-foreground: 215 20.2% 65.1%;
-    --border: 216 34% 17%;
-    --input: 216 34% 17%;
-    --card: transparent;
-    --card-foreground: 213 31% 91%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 1.2%;
-    --secondary: 222.2 47.4% 11.2%;
-    --secondary-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 216 34% 17%;
-    --radius: 0.5rem;
+    --background: 220 24% 11%;
+    --foreground: 210 28% 96%;
+    --muted: 220 20% 17%;
+    --muted-foreground: 215 16% 70%;
+    --accent: 197 36% 20%;
+    --accent-foreground: 197 80% 90%;
+    --popover: 220 24% 11%;
+    --popover-foreground: 210 28% 96%;
+    --border: 220 18% 25%;
+    --input: 220 18% 25%;
+    --card: 220 24% 13%;
+    --card-foreground: 210 28% 96%;
+    --primary: 197 93% 59%;
+    --primary-foreground: 220 24% 11%;
+    --secondary: 220 20% 17%;
+    --secondary-foreground: 210 28% 96%;
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 197 93% 59%;
+    --radius: 0.625rem;
   }
 }
 
@@ -329,7 +338,50 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    color: var(--opus-ink);
   }
+}
+
+.signup-shell {
+  min-height: calc(100vh - 73px);
+  background: var(--opus-page);
+  color: var(--opus-ink);
+}
+
+@layer components {
+  .signup-surface {
+    background: var(--opus-surface);
+    border: 1px solid var(--opus-rule);
+    border-radius: 12px;
+  }
+}
+
+.signup-primary {
+  background: var(--opus-blue);
+  color: var(--opus-ink);
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.signup-primary:hover {
+  background: var(--opus-blue-hover);
+  color: var(--opus-ink);
+}
+
+.signup-secondary {
+  border: 1px solid var(--opus-rule);
+  background: var(--opus-surface);
+  color: var(--opus-ink);
+  box-shadow: none;
+}
+
+.signup-secondary:hover {
+  background: #f2f7fa;
+}
+
+.signup-shell ::selection {
+  background: #bcecff;
+  color: var(--opus-ink);
 }
 
 @media screen and (max-width: 768px) {

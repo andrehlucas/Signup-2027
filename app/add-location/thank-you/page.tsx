@@ -217,13 +217,13 @@ export default function ThankYouPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-white" data-testid="thank-you-page">
+    <div className="min-h-[calc(100vh-73px)] bg-[#f7f9fb]" data-testid="thank-you-page">
       <Fireworks />
 
       <div className="max-w-6xl mx-auto px-4 py-8 lg:py-12">
         <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12 mb-10">
           <div className="flex-1">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight" data-testid="heading-thank-you">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-5 leading-tight" data-testid="heading-thank-you">
               Congratulations on your new office!
             </h1>
 
@@ -258,7 +258,7 @@ export default function ThankYouPage() {
 
             <Button
               onClick={handleStartOver}
-              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-base rounded-md"
+              className="signup-primary h-12 w-full whitespace-normal px-6 text-base rounded-md sm:w-auto"
               data-testid="button-begin-process"
             >
               Click Here To Begin The Process Now

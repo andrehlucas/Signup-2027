@@ -56,13 +56,13 @@ export default function LocationSelectionPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="location-selection-page">
+    <div className="signup-shell p-4 lg:p-8" data-testid="location-selection-page">
       <div className="max-w-4xl lg:max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={2} />
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+        <div className="signup-surface p-5 md:p-6 mb-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Your Location</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -116,10 +116,10 @@ export default function LocationSelectionPage() {
                 {locations.map((location) => (
                   <div
                     key={location.id}
-                    className="flex flex-col rounded-lg border-2 border-gray-200 hover:border-[#36bff9] hover:shadow-md transition-all overflow-hidden"
+                    className="flex flex-col rounded-xl border border-gray-200 hover:border-[#006d91] transition-colors overflow-hidden"
                     data-testid={`location-card-${location.id}`}
                   >
-                    <div className="w-full bg-gray-200 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>
+                    <div className="w-full bg-gray-100 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>
                       <Building2 className="h-12 w-12 text-gray-400" />
                     </div>
                     <div className="p-4 flex flex-col gap-3 flex-1">
@@ -144,7 +144,7 @@ export default function LocationSelectionPage() {
                       </div>
                       <Button
                         onClick={() => handleLocationSelect(location)}
-                        className="bg-[#36bff9] hover:bg-[#2aa8e0] text-white w-full"
+                        className="signup-primary w-full"
                         data-testid={`button-select-location-${location.id}`}
                       >
                         Select

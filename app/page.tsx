@@ -101,7 +101,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="signup-page">
+    <div className="signup-shell p-4 lg:p-8" data-testid="signup-page">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-4">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup">
@@ -117,7 +117,7 @@ export default function SignUpPage() {
         </div>
 
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-8">
+          <div className="signup-surface p-5 md:p-8">
             <form
               className="space-y-4"
               noValidate
@@ -303,7 +303,7 @@ export default function SignUpPage() {
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-[#101828] text-lg font-semibold"
+                className="signup-primary w-full h-12 text-[#101828] text-lg font-semibold"
                 data-testid="button-continue"
               >
                 Continue

@@ -257,24 +257,24 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 lg:p-8" data-testid="checkout-page">
+    <div className="signup-shell p-4 lg:p-8" data-testid="checkout-page">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={4} />
         </div>
 
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="heading-checkout">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-testid="heading-checkout">
             Complete Your Order
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sm md:text-base text-gray-600">
             Review your selections and complete checkout
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-start">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="order-summary-section">
+            <div className="signup-surface p-5 md:p-6" data-testid="order-summary-section">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
 
               <div className="space-y-4">
@@ -387,7 +387,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="promo-code-section">
+            <div className="signup-surface p-5 md:p-6" data-testid="promo-code-section">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                 <Tag className="h-5 w-5" />
                 Promo Code
@@ -448,7 +448,7 @@ export default function CheckoutPage() {
               )}
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="payment-term-section">
+            <div className="signup-surface p-5 md:p-6" data-testid="payment-term-section">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                 <Clock className="h-5 w-5" />
                 Payment Term
@@ -462,7 +462,7 @@ export default function CheckoutPage() {
                     onClick={() => setPaymentTerm(option.months)}
                     className={`relative p-4 rounded-lg border-2 cursor-pointer transition-all ${
                       paymentTerm === option.months
-                        ? 'border-[#36bff9] bg-blue-50'
+                        ? 'border-[#006d91] bg-[#eaf8fe]'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                     data-testid={`payment-term-${option.months}`}
@@ -494,7 +494,7 @@ export default function CheckoutPage() {
               )}
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="payment-method-section">
+            <div className="signup-surface p-5 md:p-6" data-testid="payment-method-section">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                 <CreditCard className="h-5 w-5" />
                 Payment Method
@@ -502,7 +502,7 @@ export default function CheckoutPage() {
 
               <div className="flex items-center gap-3 mb-6 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                 <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#36bff9]">
-                  <CreditCard className="h-5 w-5 text-white" />
+                  <CreditCard className="h-5 w-5 text-[#101828]" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">Credit / Debit Card</p>
@@ -672,7 +672,7 @@ export default function CheckoutPage() {
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-6" data-testid="agreement-section">
+            <div className="signup-surface p-5 md:p-6" data-testid="agreement-section">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                 <FileText className="h-5 w-5" />
                 Terms & Agreements
@@ -700,7 +700,7 @@ export default function CheckoutPage() {
 
           <div className="lg:col-span-1" ref={summaryContainerRef}>
             <div 
-              className={`bg-white rounded-xl border border-gray-200 p-6 transition-none ${
+              className={`signup-surface p-5 md:p-6 transition-none ${
                 isSticky ? 'lg:fixed lg:top-6' : ''
               }`}
               style={isSticky && summaryWidth ? { width: summaryWidth } : undefined}
@@ -886,7 +886,7 @@ export default function CheckoutPage() {
               <Button
                 onClick={handleCheckout}
                 disabled={!order.agreementAccepted || isProcessing}
-                className="w-full bg-[#36bff9] hover:bg-[#2aa8e0] text-white"
+                className="signup-primary w-full"
                 data-testid="button-complete-checkout"
               >
                 {isProcessing ? (

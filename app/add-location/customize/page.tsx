@@ -382,22 +382,22 @@ export default function CustomizePage() {
   const displayBundleName = selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : 'The Essentials';
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="customize-page">
+    <div className="signup-shell px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="customize-page">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={3} />
         </div>
 
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2" data-testid="heading-customize">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-testid="heading-customize">
             Customize Your Office
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sm md:text-base text-gray-600">
             for <span className="font-medium">{order.location.name}</span>, {order.location.city}
           </p>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="addons-section">
+        <div className="signup-surface p-5 md:p-6 mb-6" data-testid="addons-section">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">Add-ons</h2>
           <p className="text-sm text-gray-600 mb-6">
             Enhance your plan with additional features. Some add-ons may already be included in your bundle.
@@ -420,9 +420,9 @@ export default function CustomizePage() {
                     key={addon.id}
                     className={`rounded-lg border transition-all ${
                       isIncluded
-                        ? 'border-green-200 bg-green-50'
+                        ? 'border-gray-200 bg-gray-50'
                         : isInCart
-                        ? 'border-[#36bff9] bg-blue-50'
+                        ? 'border-[#006d91] bg-[#eaf8fe]'
                         : 'border-gray-200 bg-white'
                     }`}
                     data-testid={`addon-card-${addon.id}`}
@@ -431,7 +431,7 @@ export default function CustomizePage() {
                       <div className="flex items-start justify-between mb-1">
                         <h4 className="font-medium text-gray-900">{addon.name}</h4>
                         {isIncluded ? (
-                          <Badge className="bg-green-100 text-green-700 border-0">
+                          <Badge className="bg-[#eaf8fe] text-[#006d91] border border-[#b8e8fb]">
                             Included
                           </Badge>
                         ) : addon.packages && addon.packages.length > 0 ? (
@@ -447,7 +447,7 @@ export default function CustomizePage() {
                       <div className="flex items-center justify-between mt-2">
                         <button
                           onClick={() => toggleAddonExpanded(addon.id)}
-                          className="text-sm text-[#36bff9] hover:text-[#2aa8e0] flex items-center gap-1"
+                          className="text-sm text-[#006d91] hover:text-[#005675] flex items-center gap-1"
                           data-testid={`button-learn-more-${addon.id}`}
                         >
                           {isExpanded ? (
@@ -466,7 +466,7 @@ export default function CustomizePage() {
                           <Button
                             variant={isInCart ? 'outline' : 'default'}
                             size="sm"
-                            className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'bg-[#36bff9] hover:bg-[#2aa8e0]'}
+                            className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'signup-primary'}
                             onClick={() => handleAddonToggle(addon)}
                             data-testid={`button-addon-${addon.id}`}
                           >
@@ -534,7 +534,7 @@ export default function CustomizePage() {
 
               <div
                 className={`rounded-lg border transition-all ${
-                  order.extensionCount > 0 ? 'border-[#36bff9] bg-blue-50' : 'border-gray-200 bg-white'
+                  order.extensionCount > 0 ? 'border-[#006d91] bg-[#eaf8fe]' : 'border-gray-200 bg-white'
                 }`}
                 data-testid="addon-card-additional-extensions"
               >
@@ -615,7 +615,7 @@ export default function CustomizePage() {
           }`}
           data-testid="bundle-inline-section"
         >
-          <div className="bg-white rounded-xl border border-gray-200 px-4 py-6">
+          <div className="signup-surface px-4 py-6">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold text-gray-900">Bundle & Save</h2>
               <button
@@ -654,7 +654,7 @@ export default function CustomizePage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6" data-testid="phone-section">
+        <div className="signup-surface p-5 md:p-6 mb-6" data-testid="phone-section">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Business Phone Number</h2>
@@ -668,7 +668,7 @@ export default function CustomizePage() {
             <div className="mt-4 flex items-center justify-between bg-gray-50 rounded-lg p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-[#36bff9] flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-white" />
+                  <Phone className="h-5 w-5 text-[#101828]" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900" data-testid="selected-phone-number">
@@ -691,8 +691,8 @@ export default function CustomizePage() {
           {hasTollFree && selectedTollFree && (
             <div className="mt-3 flex items-center justify-between bg-gray-50 rounded-lg p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-white" />
+                <div className="w-10 h-10 rounded-full bg-[#eaf8fe] flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-[#006d91]" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900" data-testid="selected-tollfree-number">
@@ -727,26 +727,26 @@ export default function CustomizePage() {
               }, 100);
             }
           }}
-          className="bg-gradient-to-r from-[#15803d] to-[#22c55e] cursor-pointer hover:from-[#166534] hover:to-[#16a34a] transition-all"
+          className="cursor-pointer border-y border-[#b8e8fb] bg-[#eaf8fe] transition-colors hover:bg-[#dff4fd]"
           data-testid="bundle-save-banner"
         >
           <div className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2">
             {selectedBundle && selectedBundle.id !== 'essentials' ? (
               <>
-                <Star className="h-4 w-4 text-white" />
-                <span className="text-sm font-semibold text-white">Active Bundle</span>
-                <span className="text-xs text-green-100/80 hidden sm:inline">- {displayBundleName}</span>
-                <span className="text-xs font-medium text-white ml-1">{bundleExpanded ? 'Close' : 'Edit'}</span>
+                <Star className="h-4 w-4 text-[#006d91]" />
+                <span className="text-sm font-semibold text-[#101828]">Active Bundle</span>
+                <span className="text-xs text-[#475467] hidden sm:inline">- {displayBundleName}</span>
+                <span className="text-xs font-medium text-[#006d91] ml-1">{bundleExpanded ? 'Close' : 'Edit'}</span>
               </>
             ) : (
               <>
-                <DollarSign className="h-4 w-4 text-white" />
-                <span className="text-sm font-semibold text-white">Bundle & Save</span>
-                <span className="text-xs text-green-100/80 hidden sm:inline">- Upgrade your plan and save on popular features</span>
+                <DollarSign className="h-4 w-4 text-[#006d91]" />
+                <span className="text-sm font-semibold text-[#101828]">Bundle & Save</span>
+                <span className="text-xs text-[#475467] hidden sm:inline">- Upgrade your plan and save on popular features</span>
                 {bundleExpanded ? (
-                  <ChevronDown className="h-4 w-4 text-white ml-1" />
+                  <ChevronDown className="h-4 w-4 text-[#006d91] ml-1" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-white ml-1" />
+                  <ChevronRight className="h-4 w-4 text-[#006d91] ml-1" />
                 )}
               </>
             )}
@@ -754,11 +754,7 @@ export default function CustomizePage() {
         </div>
 
         <div
-          className={`bg-white border-t border-gray-200 transition-all duration-500 ${
-            footerPulse
-              ? 'shadow-[0_-4px_20px_rgba(34,197,94,0.3)] border-t-green-400'
-              : 'shadow-[0_-4px_12px_rgba(0,0,0,0.08)]'
-          }`}
+          className="bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(16,24,40,0.08)]"
           data-testid="sticky-footer"
         >
         <div className="max-w-6xl mx-auto px-4 py-6">
@@ -771,11 +767,9 @@ export default function CustomizePage() {
                     rotate: [0, -8, 8, -4, 0],
                   } : { scale: 1, rotate: 0 }}
                   transition={{ duration: 0.6, ease: 'easeInOut' }}
-                  className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors duration-500 ${
-                    footerPulse ? 'bg-green-500' : 'bg-[#36bff9]'
-                  }`}
+                  className="w-9 h-9 rounded-lg flex items-center justify-center bg-[#36bff9]"
                 >
-                  <ShoppingCart className="h-4 w-4 text-white" />
+                  <ShoppingCart className="h-4 w-4 text-[#101828]" />
                 </motion.div>
                 <AnimatePresence>
                   {footerPulse && (
@@ -784,7 +778,7 @@ export default function CustomizePage() {
                       animate={{ scale: 1, opacity: 1, y: -6 }}
                       exit={{ scale: 0, opacity: 0, y: -12 }}
                       transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-green-500 border-2 border-white flex items-center justify-center"
+                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#006d91] border-2 border-white flex items-center justify-center"
                       data-testid="cart-added-badge"
                     >
                       <Check className="h-3 w-3 text-white" />
@@ -797,7 +791,7 @@ export default function CustomizePage() {
                       initial={{ scale: 0.5, opacity: 0.8 }}
                       animate={{ scale: 2.5, opacity: 0 }}
                       transition={{ duration: 0.8, ease: 'easeOut' }}
-                      className="absolute inset-0 rounded-lg bg-green-400 pointer-events-none"
+                      className="absolute inset-0 rounded-lg bg-[#36bff9] pointer-events-none"
                     />
                   )}
                 </AnimatePresence>
@@ -808,7 +802,7 @@ export default function CustomizePage() {
                   <Popover>
                     <PopoverTrigger asChild>
                       <button
-                        className="inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors"
+                        className="inline-flex items-center gap-1 text-xs text-[#006d91] hover:text-[#005675] font-medium transition-colors"
                         data-testid="button-see-included"
                       >
                         <Info className="h-3.5 w-3.5" />
@@ -863,7 +857,7 @@ export default function CustomizePage() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <button
-                          className="inline-flex items-center gap-1 text-xs text-[#36bff9] hover:text-[#2aa8e0] font-medium transition-colors mb-0.5"
+                          className="inline-flex items-center gap-1 text-xs text-[#006d91] hover:text-[#005675] font-medium transition-colors mb-0.5"
                           data-testid="button-see-addons"
                         >
                           See details
@@ -902,7 +896,7 @@ export default function CustomizePage() {
             <Button
               onClick={handleContinue}
               disabled={!selectedPhone}
-              className="h-10 px-6 bg-[#36bff9] hover:bg-[#2aa8e0] text-white flex-shrink-0"
+              className="signup-primary h-10 px-6 flex-shrink-0"
               data-testid="button-continue-checkout"
             >
               Continue
@@ -917,8 +911,8 @@ export default function CustomizePage() {
         <DialogContent className="sm:max-w-lg" data-testid="bundle-suggestion-modal">
           <DialogHeader>
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
-                <DollarSign className="h-4 w-4 text-emerald-600" />
+              <div className="w-8 h-8 rounded-full bg-[#eaf8fe] flex items-center justify-center">
+                <DollarSign className="h-4 w-4 text-[#006d91]" />
               </div>
               <DialogTitle className="text-xl">You Could Be Saving!</DialogTitle>
             </div>
@@ -929,26 +923,26 @@ export default function CustomizePage() {
 
           {bundleSuggestion && (
             <div className="space-y-4 py-2">
-              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+              <div className="bg-[#f7fbfd] border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <p className="text-sm font-medium text-emerald-800">
+                    <p className="text-sm font-medium text-gray-800">
                       Upgrade to <span className="font-bold">{bundleSuggestion.bundle.tier}</span>
                     </p>
                     {bundleSuggestion.savings > 0 ? (
-                      <p className="text-2xl font-bold text-emerald-700 mt-1">
+                      <p className="text-2xl font-bold text-[#006d91] mt-1">
                         Save ${bundleSuggestion.savings}<span className="text-sm font-normal">/mo</span>
                       </p>
                     ) : (
-                      <p className="text-lg font-bold text-emerald-700 mt-1">
+                      <p className="text-lg font-bold text-[#006d91] mt-1">
                         Same price, more features
                       </p>
                     )}
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-emerald-600">${bundleSuggestion.bundle.price}/mo</p>
+                    <p className="text-sm text-gray-600">${bundleSuggestion.bundle.price}/mo</p>
                     {bundleSuggestion.bundle.originalPrice && (
-                      <p className="text-xs text-emerald-500 line-through">${bundleSuggestion.bundle.originalPrice}/mo</p>
+                      <p className="text-xs text-gray-500 line-through">${bundleSuggestion.bundle.originalPrice}/mo</p>
                     )}
                   </div>
                 </div>
@@ -962,7 +956,7 @@ export default function CustomizePage() {
                   {bundleSuggestion.matchingAddons.map(addon => (
                     <div key={addon.id} className="flex items-center justify-between text-sm bg-gray-50 rounded-lg px-3 py-2" data-testid={`suggestion-addon-${addon.id}`}>
                       <div className="flex items-center gap-2">
-                        <Check className="h-3.5 w-3.5 text-emerald-500" />
+                        <Check className="h-3.5 w-3.5 text-[#006d91]" />
                         <span className="text-gray-700">{addon.name}</span>
                       </div>
                       <span className="text-gray-400 line-through">${addon.price}/mo</span>
@@ -981,7 +975,7 @@ export default function CustomizePage() {
                       <div key={feature} className="flex items-center gap-2 text-sm">
                         <Star className="h-3.5 w-3.5 text-[#36bff9]" />
                         <span className="text-gray-600">{feature}</span>
-                        <Badge className="bg-blue-50 text-[#36bff9] border-0 text-[10px] px-1.5 py-0">FREE</Badge>
+                        <Badge className="bg-blue-50 text-[#006d91] border-0 text-xs px-1.5 py-0">FREE</Badge>
                       </div>
                     ))}
                   </div>
@@ -994,7 +988,7 @@ export default function CustomizePage() {
             {bundleSuggestion && (
               <Button
                 onClick={handleSuggestionProceedWithBundle}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-11"
+                className="signup-primary w-full h-11"
                 data-testid="button-suggestion-proceed-bundle"
               >
                 <Check className="h-4 w-4 mr-2" />
@@ -1038,7 +1032,7 @@ export default function CustomizePage() {
                 onClick={() => setTempSelectedPhone(phone)}
                 className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
                   tempSelectedPhone?.id === phone.id
-                    ? 'bg-blue-50 border-2 border-[#36bff9]'
+                    ? 'bg-[#eaf8fe] border-2 border-[#006d91]'
                     : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
                 }`}
                 data-testid={`phone-option-${phone.id}`}
@@ -1062,7 +1056,7 @@ export default function CustomizePage() {
             </Button>
             <Button
               onClick={handlePhoneConfirm}
-              className="bg-[#36bff9] hover:bg-[#2aa8e0]"
+              className="signup-primary"
               data-testid="button-confirm-phone"
             >
               Confirm Selection
@@ -1087,7 +1081,7 @@ export default function CustomizePage() {
                 onClick={() => setTempSelectedTollFree(phone)}
                 className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
                   tempSelectedTollFree?.id === phone.id
-                    ? 'bg-green-50 border-2 border-green-500'
+                    ? 'bg-[#eaf8fe] border-2 border-[#006d91]'
                     : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
                 }`}
                 data-testid={`tollfree-option-${phone.id}`}
@@ -1095,7 +1089,7 @@ export default function CustomizePage() {
                 <Phone className="h-4 w-4 text-gray-500" />
                 <span className="font-medium">{phone.number}</span>
                 {tempSelectedTollFree?.id === phone.id && (
-                  <Check className="h-4 w-4 text-green-500 ml-auto" />
+                  <Check className="h-4 w-4 text-[#006d91] ml-auto" />
                 )}
               </div>
             ))}
@@ -1111,7 +1105,7 @@ export default function CustomizePage() {
             </Button>
             <Button
               onClick={handleTollFreeConfirm}
-              className="bg-green-500 hover:bg-green-600"
+              className="signup-primary"
               data-testid="button-confirm-tollfree"
             >
               Confirm Selection

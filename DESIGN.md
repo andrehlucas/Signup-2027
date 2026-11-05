@@ -66,6 +66,11 @@ components:
     textColor: "{colors.text-primary}"
     rounded: "{rounded.lg}"
     padding: "24px 32px"
+  static-surface:
+    backgroundColor: "{colors.surface-white}"
+    border: "1px solid {colors.border-subtle}"
+    rounded: "{rounded.lg}"
+    elevation: "none"
 ---
 
 # Design System: Opus Virtual Offices
@@ -143,6 +148,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 - **Primary:** Brand Blue fill, Primary Ink semibold text, compact rounded corners, and a generous full-width treatment for the main signup action.
 - **Hover / Focus:** Darken to Brand Blue Hover on hover. Keep the visible focus ring and keyboard interaction from the shared button component.
 - **Secondary / Outline:** Use a light surface and thin neutral border where a secondary action is needed; do not give it the visual weight of the primary action.
+- **Across enrollment routes:** Use the same Brand Blue fill with Primary Ink text for primary controls; avoid white-on-Brand-Blue labels. Secondary controls remain white with a fine neutral outline.
 
 ### Cards / Containers
 - **Character:** Quiet and task-focused.
@@ -151,6 +157,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 - **Shadow Strategy:** No resting shadow on the main form card; use a subtle border instead.
 - **Border:** Fine neutral outline.
 - **Internal Padding:** More spacious on desktop and reduced on mobile.
+- **Route consistency:** Location, plan, add-on, checkout, and confirmation surfaces use the same flat white surface, subtle rule, and 12px corner. Selected package and add-on states use a clear blue-ink outline with a pale blue tint rather than colored gradients.
 
 ### Inputs / Fields
 - **Character:** Plain, readable, and easy to scan.
@@ -162,6 +169,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 - **Style:** A centered logo in a simple white header with a thin divider below.
 - **Progress:** Four equal-width, 4px-high rounded bars sit above left-aligned semibold labels. Brand Blue fills the current and completed bars; upcoming bars are neutral gray. Completed steps support keyboard-accessible backward navigation; future steps are not interactive.
 - **Responsive:** Use a wider single row on desktop and a two-column, two-row grid on phones. Keep every label on one line without truncation or horizontal scrolling.
+- **Analytics:** Keep funnel charts and reporting data unchanged; reduce mobile header and KPI padding while retaining two KPI columns on compact viewports.
 
 ### Checkbox
 - **Style:** A compact square control aligned with its consent copy.
