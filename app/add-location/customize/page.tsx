@@ -984,7 +984,7 @@ export default function CustomizePage() {
             </div>
           )}
 
-          <DialogFooter className="flex-col sm:flex-col gap-2 sm:gap-2">
+          <DialogFooter className="flex-col gap-2 sm:flex-col sm:gap-2 sm:space-x-0">
             {bundleSuggestion && (
               <Button
                 onClick={handleSuggestionProceedWithBundle}
@@ -1007,7 +1007,7 @@ export default function CustomizePage() {
             <Button
               variant="ghost"
               onClick={handleSuggestionDismiss}
-              className="w-full text-gray-500 hover:text-gray-700"
+              className="w-full h-11 text-gray-500 hover:text-gray-700"
               data-testid="button-suggestion-dismiss"
             >
               No thanks, continue to checkout
