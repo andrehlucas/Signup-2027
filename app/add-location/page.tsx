@@ -116,7 +116,7 @@ export default function LocationSelectionPage() {
                 {locations.map((location) => (
                   <div
                     key={location.id}
-                    className="flex flex-col rounded-xl border border-gray-200 hover:border-[#006d91] transition-colors overflow-hidden"
+                    className="flex flex-col rounded-xl border border-gray-200 hover:border-gray-400 transition-colors overflow-hidden"
                     data-testid={`location-card-${location.id}`}
                   >
                     <div className="w-full bg-gray-100 flex items-center justify-center" style={{ aspectRatio: '1.85 / 1' }}>

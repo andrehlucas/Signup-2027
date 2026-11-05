@@ -103,7 +103,7 @@ export const bundles: Bundle[] = [
     tier: 'The Essentials',
     price: 99,
     badge: 'The Essentials',
-    badgeColor: 'bg-[#36bff9]',
+    badgeColor: 'bg-gray-100',
     features: {
       businessAddress: true,
       liveCallAnswering: true,
@@ -126,7 +126,7 @@ export const bundles: Bundle[] = [
     price: 119,
     originalPrice: 129,
     badge: 'Popular Upgrades',
-    badgeColor: 'bg-[#36bff9]',
+    badgeColor: 'bg-gray-100',
     features: {
       businessAddress: true,
       liveCallAnswering: true,
@@ -149,7 +149,7 @@ export const bundles: Bundle[] = [
     price: 149,
     originalPrice: 179,
     badge: 'The Professional',
-    badgeColor: 'bg-[#36bff9]',
+    badgeColor: 'bg-gray-100',
     features: {
       businessAddress: true,
       liveCallAnswering: true,
@@ -172,7 +172,7 @@ export const bundles: Bundle[] = [
     price: 179,
     originalPrice: 229,
     badge: 'The Best Value',
-    badgeColor: 'bg-[#36bff9]',
+    badgeColor: 'bg-gray-100',
     features: {
       businessAddress: true,
       liveCallAnswering: true,
@@ -195,7 +195,7 @@ export const bundles: Bundle[] = [
     price: 199,
     originalPrice: 279,
     badge: 'The Platinum',
-    badgeColor: 'bg-[#36bff9]',
+    badgeColor: 'bg-gray-100',
     features: {
       businessAddress: true,
       liveCallAnswering: true,

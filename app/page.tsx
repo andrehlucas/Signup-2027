@@ -288,7 +288,7 @@ export default function SignUpPage() {
                       href="https://www.opusvirtualoffices.com/opus-virtual-offices-terms-of-use/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#006d91] underline underline-offset-2 hover:text-[#005675]"
+                      className="text-gray-800 underline underline-offset-2 hover:text-gray-950"
                       data-testid="link-terms"
                     >
                       Terms of Use
@@ -303,7 +303,7 @@ export default function SignUpPage() {
 
               <Button
                 type="submit"
-                className="signup-primary w-full h-12 text-[#101828] text-lg font-semibold"
+                className="signup-primary w-full h-12 text-lg font-semibold"
                 data-testid="button-continue"
               >
                 Continue

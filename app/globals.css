@@ -281,6 +281,8 @@
     --opus-blue: #36bff9;
     --opus-blue-hover: #2aa8e0;
     --opus-blue-ink: #006d91;
+    --opus-action: #344054;
+    --opus-action-hover: #263241;
     --opus-ink: #101828;
     --opus-muted: #475467;
     --opus-rule: #dfe5eb;
@@ -295,8 +297,8 @@
     --input: 214 20% 85%;
     --card: 0 0% 100%;
     --card-foreground: 220 24% 11%;
-    --primary: 197 93% 59%;
-    --primary-foreground: 220 24% 11%;
+    --primary: 218 24% 27%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 210 28% 96%;
     --secondary-foreground: 220 24% 11%;
     --accent: 197 80% 95%;
@@ -320,8 +322,8 @@
     --input: 220 18% 25%;
     --card: 220 24% 13%;
     --card-foreground: 210 28% 96%;
-    --primary: 197 93% 59%;
-    --primary-foreground: 220 24% 11%;
+    --primary: 218 24% 27%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 220 20% 17%;
     --secondary-foreground: 210 28% 96%;
     --destructive: 0 62% 40%;
@@ -357,15 +359,15 @@
 }
 
 .signup-primary {
-  background: var(--opus-blue);
-  color: var(--opus-ink);
+  background: var(--opus-action);
+  color: #ffffff;
   font-weight: 600;
   box-shadow: none;
 }
 
 .signup-primary:hover {
-  background: var(--opus-blue-hover);
-  color: var(--opus-ink);
+  background: var(--opus-action-hover);
+  color: #ffffff;
 }
 
 .signup-secondary {

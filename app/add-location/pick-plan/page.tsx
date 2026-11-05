@@ -137,7 +137,7 @@ export default function PickPlanPage() {
                   {availableLocations.map((location) => (
                     <div
                       key={location.id}
-                      className="flex flex-col rounded-xl border border-gray-200 hover:border-[#006d91] transition-colors overflow-hidden"
+                      className="flex flex-col rounded-xl border border-gray-200 hover:border-gray-400 transition-colors overflow-hidden"
                       data-testid={`location-card-${location.id}`}
                     >
                       <div className="w-full bg-gray-100 flex items-center justify-center overflow-hidden" style={{ aspectRatio: '1.85 / 1' }}>
@@ -213,7 +213,7 @@ export default function PickPlanPage() {
 
         <div className="signup-surface p-5 mb-5 flex items-center gap-4" data-testid="review-location-card">
           <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-            <MapPin className="h-5 w-5 text-[#36bff9]" />
+            <MapPin className="h-5 w-5 text-gray-500" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-gray-900" data-testid="heading-pick-plan">
@@ -225,7 +225,7 @@ export default function PickPlanPage() {
           </div>
           <button
             onClick={() => setSubStep('location')}
-            className="text-sm text-[#006d91] hover:text-[#005675] font-medium flex-shrink-0"
+            className="text-sm text-gray-700 hover:text-gray-900 font-medium flex-shrink-0"
             data-testid="button-change-location"
           >
             Change
@@ -238,7 +238,7 @@ export default function PickPlanPage() {
           }`}
           data-testid="review-package-card"
         >
-          <div className="bg-[#eaf8fe] text-[#101828] flex items-center justify-between px-5 py-3 border-b border-gray-200">
+          <div className="bg-gray-50 text-[#101828] flex items-center justify-between px-5 py-3 border-b border-gray-200">
             <div>
               <p className="text-xs font-semibold text-[#475467]">
                 {essentialsPlan.tier}
@@ -256,8 +256,8 @@ export default function PickPlanPage() {
                 .filter(([, enabled]) => enabled)
                 .map(([key]) => (
                   <div key={key} className="flex items-start gap-2 text-xs" data-testid={`feature-${key}`}>
-                    <div className="w-4 h-4 rounded-full bg-[#36bff9] flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="h-2.5 w-2.5 text-[#101828]" />
+                    <div className="w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="h-2.5 w-2.5 text-gray-700" />
                     </div>
                     <span className="text-gray-700 leading-snug">{featureLabels[key]}</span>
                   </div>
@@ -272,7 +272,7 @@ export default function PickPlanPage() {
               onClick={() => setBundle(essentialsPlan)}
               className={`w-full sm:w-auto ${
                 essentialsSelected
-                  ? 'border-[#006d91] bg-sky-50 text-gray-900'
+                  ? 'border-[#006d91] bg-gray-50 text-gray-900'
                   : 'text-gray-700'
               }`}
               data-testid="button-select-essentials"

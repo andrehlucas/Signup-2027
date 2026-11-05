@@ -279,8 +279,8 @@ export default function CheckoutPage() {
 
               <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="h-5 w-5 text-[#36bff9]" />
+                  <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="h-5 w-5 text-gray-600" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -296,8 +296,8 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <Package className="h-5 w-5 text-[#36bff9]" />
+                  <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                    <Package className="h-5 w-5 text-gray-600" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -318,8 +318,8 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <Phone className="h-5 w-5 text-[#36bff9]" />
+                  <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                    <Phone className="h-5 w-5 text-gray-600" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
@@ -462,7 +462,7 @@ export default function CheckoutPage() {
                     onClick={() => setPaymentTerm(option.months)}
                     className={`relative p-4 rounded-lg border-2 cursor-pointer transition-all ${
                       paymentTerm === option.months
-                        ? 'border-[#006d91] bg-[#eaf8fe]'
+                        ? 'border-[#006d91] bg-gray-50'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                     data-testid={`payment-term-${option.months}`}
@@ -477,7 +477,7 @@ export default function CheckoutPage() {
                     </div>
                     {paymentTerm === option.months && (
                       <div className="absolute top-2 right-2">
-                        <Check className="h-4 w-4 text-[#36bff9]" />
+                        <Check className="h-4 w-4 text-gray-600" />
                       </div>
                     )}
                   </div>
@@ -500,9 +500,9 @@ export default function CheckoutPage() {
                 Payment Method
               </h2>
 
-              <div className="flex items-center gap-3 mb-6 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#36bff9]">
-                  <CreditCard className="h-5 w-5 text-[#101828]" />
+              <div className="flex items-center gap-3 mb-6 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gray-200">
+                  <CreditCard className="h-5 w-5 text-gray-700" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">Credit / Debit Card</p>
@@ -753,7 +753,7 @@ export default function CheckoutPage() {
                                   <div className="space-y-2">
                                     {bundleExtras.map((label) => (
                                       <div key={label} className="flex items-center gap-1.5 text-xs text-gray-600">
-                                        <Check className="h-3 w-3 text-[#36bff9] shrink-0" />
+                                        <Check className="h-3 w-3 text-gray-600 shrink-0" />
                                         {label}
                                       </div>
                                     ))}

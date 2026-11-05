@@ -422,7 +422,7 @@ export default function CustomizePage() {
                       isIncluded
                         ? 'border-gray-200 bg-gray-50'
                         : isInCart
-                        ? 'border-[#006d91] bg-[#eaf8fe]'
+                        ? 'border-[#006d91] bg-gray-50'
                         : 'border-gray-200 bg-white'
                     }`}
                     data-testid={`addon-card-${addon.id}`}
@@ -431,7 +431,7 @@ export default function CustomizePage() {
                       <div className="flex items-start justify-between mb-1">
                         <h4 className="font-medium text-gray-900">{addon.name}</h4>
                         {isIncluded ? (
-                          <Badge className="bg-[#eaf8fe] text-[#006d91] border border-[#b8e8fb]">
+                          <Badge className="bg-gray-100 text-gray-700 border border-gray-200">
                             Included
                           </Badge>
                         ) : addon.packages && addon.packages.length > 0 ? (
@@ -447,7 +447,7 @@ export default function CustomizePage() {
                       <div className="flex items-center justify-between mt-2">
                         <button
                           onClick={() => toggleAddonExpanded(addon.id)}
-                          className="text-sm text-[#006d91] hover:text-[#005675] flex items-center gap-1"
+                          className="text-sm text-gray-700 hover:text-gray-900 flex items-center gap-1"
                           data-testid={`button-learn-more-${addon.id}`}
                         >
                           {isExpanded ? (
@@ -534,7 +534,7 @@ export default function CustomizePage() {
 
               <div
                 className={`rounded-lg border transition-all ${
-                  order.extensionCount > 0 ? 'border-[#006d91] bg-[#eaf8fe]' : 'border-gray-200 bg-white'
+                  order.extensionCount > 0 ? 'border-[#006d91] bg-gray-50' : 'border-gray-200 bg-white'
                 }`}
                 data-testid="addon-card-additional-extensions"
               >
@@ -667,8 +667,8 @@ export default function CustomizePage() {
           {selectedPhone && (
             <div className="mt-4 flex items-center justify-between bg-gray-50 rounded-lg p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#36bff9] flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-[#101828]" />
+                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-gray-600" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900" data-testid="selected-phone-number">
@@ -691,8 +691,8 @@ export default function CustomizePage() {
           {hasTollFree && selectedTollFree && (
             <div className="mt-3 flex items-center justify-between bg-gray-50 rounded-lg p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#eaf8fe] flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-[#006d91]" />
+                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                  <Phone className="h-5 w-5 text-gray-600" />
                 </div>
                 <div>
                   <p className="font-medium text-gray-900" data-testid="selected-tollfree-number">
@@ -727,26 +727,26 @@ export default function CustomizePage() {
               }, 100);
             }
           }}
-          className="cursor-pointer border-y border-[#b8e8fb] bg-[#eaf8fe] transition-colors hover:bg-[#dff4fd]"
+          className="cursor-pointer border-y border-gray-200 bg-gray-50 transition-colors hover:bg-gray-100"
           data-testid="bundle-save-banner"
         >
           <div className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2">
             {selectedBundle && selectedBundle.id !== 'essentials' ? (
               <>
-                <Star className="h-4 w-4 text-[#006d91]" />
+                <Star className="h-4 w-4 text-gray-600" />
                 <span className="text-sm font-semibold text-[#101828]">Active Bundle</span>
                 <span className="text-xs text-[#475467] hidden sm:inline">- {displayBundleName}</span>
-                <span className="text-xs font-medium text-[#006d91] ml-1">{bundleExpanded ? 'Close' : 'Edit'}</span>
+                <span className="text-xs font-medium text-gray-700 ml-1">{bundleExpanded ? 'Close' : 'Edit'}</span>
               </>
             ) : (
               <>
-                <DollarSign className="h-4 w-4 text-[#006d91]" />
+                <DollarSign className="h-4 w-4 text-gray-600" />
                 <span className="text-sm font-semibold text-[#101828]">Bundle & Save</span>
                 <span className="text-xs text-[#475467] hidden sm:inline">- Upgrade your plan and save on popular features</span>
                 {bundleExpanded ? (
-                  <ChevronDown className="h-4 w-4 text-[#006d91] ml-1" />
+                  <ChevronDown className="h-4 w-4 text-gray-600 ml-1" />
                 ) : (
-                  <ChevronRight className="h-4 w-4 text-[#006d91] ml-1" />
+                  <ChevronRight className="h-4 w-4 text-gray-600 ml-1" />
                 )}
               </>
             )}
@@ -767,9 +767,9 @@ export default function CustomizePage() {
                     rotate: [0, -8, 8, -4, 0],
                   } : { scale: 1, rotate: 0 }}
                   transition={{ duration: 0.6, ease: 'easeInOut' }}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center bg-[#36bff9]"
+                  className="w-9 h-9 rounded-lg flex items-center justify-center bg-gray-100"
                 >
-                  <ShoppingCart className="h-4 w-4 text-[#101828]" />
+                  <ShoppingCart className="h-4 w-4 text-gray-700" />
                 </motion.div>
                 <AnimatePresence>
                   {footerPulse && (
@@ -778,7 +778,7 @@ export default function CustomizePage() {
                       animate={{ scale: 1, opacity: 1, y: -6 }}
                       exit={{ scale: 0, opacity: 0, y: -12 }}
                       transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#006d91] border-2 border-white flex items-center justify-center"
+                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#344054] border-2 border-white flex items-center justify-center"
                       data-testid="cart-added-badge"
                     >
                       <Check className="h-3 w-3 text-white" />
@@ -791,7 +791,7 @@ export default function CustomizePage() {
                       initial={{ scale: 0.5, opacity: 0.8 }}
                       animate={{ scale: 2.5, opacity: 0 }}
                       transition={{ duration: 0.8, ease: 'easeOut' }}
-                      className="absolute inset-0 rounded-lg bg-[#36bff9] pointer-events-none"
+                      className="absolute inset-0 rounded-lg bg-gray-300 pointer-events-none"
                     />
                   )}
                 </AnimatePresence>
@@ -802,7 +802,7 @@ export default function CustomizePage() {
                   <Popover>
                     <PopoverTrigger asChild>
                       <button
-                        className="inline-flex items-center gap-1 text-xs text-[#006d91] hover:text-[#005675] font-medium transition-colors"
+                        className="inline-flex items-center gap-1 text-xs text-gray-700 hover:text-gray-900 font-medium transition-colors"
                         data-testid="button-see-included"
                       >
                         <Info className="h-3.5 w-3.5" />
@@ -815,34 +815,34 @@ export default function CustomizePage() {
                       </div>
                       <div className="px-4 py-3 space-y-2">
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
                           <span className="text-gray-700">Prestigious Business Address</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
                           <span className="text-gray-700">Live Call Answering</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
                           <span className="text-gray-700">Call Transferring</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
                           <span className="text-gray-700">2 Voicemail Boxes</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
                           <span className="text-gray-700">Business Phone/Fax Number</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
                           <span className="text-gray-700">Voicemail/Fax to Email</span>
                         </div>
                         {selectedBundle && Object.entries(selectedBundle.features)
                           .filter(([key, enabled]) => enabled && !['businessAddress', 'liveCallAnswering', 'callTransferring'].includes(key))
                           .map(([key]) => (
                             <div key={key} className="flex items-center gap-2 text-sm">
-                              <Check className="h-3.5 w-3.5 text-[#36bff9] flex-shrink-0" />
+                              <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
                               <span className="text-gray-700">{featureLabels[key]}</span>
                             </div>
                           ))
@@ -857,7 +857,7 @@ export default function CustomizePage() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <button
-                          className="inline-flex items-center gap-1 text-xs text-[#006d91] hover:text-[#005675] font-medium transition-colors mb-0.5"
+                          className="inline-flex items-center gap-1 text-xs text-gray-700 hover:text-gray-900 font-medium transition-colors mb-0.5"
                           data-testid="button-see-addons"
                         >
                           See details
@@ -911,8 +911,8 @@ export default function CustomizePage() {
         <DialogContent className="sm:max-w-lg" data-testid="bundle-suggestion-modal">
           <DialogHeader>
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-8 h-8 rounded-full bg-[#eaf8fe] flex items-center justify-center">
-                <DollarSign className="h-4 w-4 text-[#006d91]" />
+              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                <DollarSign className="h-4 w-4 text-gray-600" />
               </div>
               <DialogTitle className="text-xl">You Could Be Saving!</DialogTitle>
             </div>
@@ -930,11 +930,11 @@ export default function CustomizePage() {
                       Upgrade to <span className="font-bold">{bundleSuggestion.bundle.tier}</span>
                     </p>
                     {bundleSuggestion.savings > 0 ? (
-                      <p className="text-2xl font-bold text-[#006d91] mt-1">
+                      <p className="text-2xl font-bold text-gray-900 mt-1">
                         Save ${bundleSuggestion.savings}<span className="text-sm font-normal">/mo</span>
                       </p>
                     ) : (
-                      <p className="text-lg font-bold text-[#006d91] mt-1">
+                      <p className="text-lg font-bold text-gray-900 mt-1">
                         Same price, more features
                       </p>
                     )}
@@ -956,7 +956,7 @@ export default function CustomizePage() {
                   {bundleSuggestion.matchingAddons.map(addon => (
                     <div key={addon.id} className="flex items-center justify-between text-sm bg-gray-50 rounded-lg px-3 py-2" data-testid={`suggestion-addon-${addon.id}`}>
                       <div className="flex items-center gap-2">
-                        <Check className="h-3.5 w-3.5 text-[#006d91]" />
+                        <Check className="h-3.5 w-3.5 text-gray-600" />
                         <span className="text-gray-700">{addon.name}</span>
                       </div>
                       <span className="text-gray-400 line-through">${addon.price}/mo</span>
@@ -973,9 +973,9 @@ export default function CustomizePage() {
                   <div className="space-y-1.5">
                     {bundleSuggestion.bonusFeatures.map(feature => (
                       <div key={feature} className="flex items-center gap-2 text-sm">
-                        <Star className="h-3.5 w-3.5 text-[#36bff9]" />
+                        <Star className="h-3.5 w-3.5 text-gray-500" />
                         <span className="text-gray-600">{feature}</span>
-                        <Badge className="bg-blue-50 text-[#006d91] border-0 text-xs px-1.5 py-0">FREE</Badge>
+                        <Badge className="bg-gray-100 text-gray-700 border border-gray-200 text-xs px-1.5 py-0">FREE</Badge>
                       </div>
                     ))}
                   </div>
@@ -1032,7 +1032,7 @@ export default function CustomizePage() {
                 onClick={() => setTempSelectedPhone(phone)}
                 className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
                   tempSelectedPhone?.id === phone.id
-                    ? 'bg-[#eaf8fe] border-2 border-[#006d91]'
+                    ? 'bg-gray-50 border-2 border-[#006d91]'
                     : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
                 }`}
                 data-testid={`phone-option-${phone.id}`}
@@ -1040,7 +1040,7 @@ export default function CustomizePage() {
                 <Phone className="h-4 w-4 text-gray-500" />
                 <span className="font-medium">{phone.number}</span>
                 {tempSelectedPhone?.id === phone.id && (
-                  <Check className="h-4 w-4 text-[#36bff9] ml-auto" />
+                  <Check className="h-4 w-4 text-gray-700 ml-auto" />
                 )}
               </div>
             ))}
@@ -1081,7 +1081,7 @@ export default function CustomizePage() {
                 onClick={() => setTempSelectedTollFree(phone)}
                 className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
                   tempSelectedTollFree?.id === phone.id
-                    ? 'bg-[#eaf8fe] border-2 border-[#006d91]'
+                    ? 'bg-gray-50 border-2 border-[#006d91]'
                     : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
                 }`}
                 data-testid={`tollfree-option-${phone.id}`}
@@ -1089,7 +1089,7 @@ export default function CustomizePage() {
                 <Phone className="h-4 w-4 text-gray-500" />
                 <span className="font-medium">{phone.number}</span>
                 {tempSelectedTollFree?.id === phone.id && (
-                  <Check className="h-4 w-4 text-[#006d91] ml-auto" />
+                  <Check className="h-4 w-4 text-gray-700 ml-auto" />
                 )}
               </div>
             ))}

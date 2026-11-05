@@ -5,6 +5,8 @@ colors:
   brand-blue: "#36bff9"
   brand-blue-hover: "#2aa8e0"
   brand-blue-ink: "#006d91"
+  action-charcoal: "#344054"
+  action-charcoal-hover: "#263241"
   opus-red: "#ff1e27"
   page-gray: "#f9fafb"
   surface-white: "#ffffff"
@@ -45,15 +47,15 @@ spacing:
   xl: "32px"
 components:
   button-primary:
-    backgroundColor: "{colors.brand-blue}"
-    textColor: "{colors.text-primary}"
+    backgroundColor: "{colors.action-charcoal}"
+    textColor: "{colors.surface-white}"
     typography: "{typography.title}"
     rounded: "{rounded.sm}"
     padding: "12px 16px"
     height: "48px"
   button-primary-hover:
-    backgroundColor: "{colors.brand-blue-hover}"
-    textColor: "{colors.text-primary}"
+    backgroundColor: "{colors.action-charcoal-hover}"
+    textColor: "{colors.surface-white}"
     rounded: "{rounded.sm}"
   field:
     backgroundColor: "{colors.surface-white}"
@@ -81,22 +83,23 @@ components:
 
 The interface is a clear, professional path through a focused enrollment task. A centered form, visible step progress, and one prominent action keep attention on completing the current step. Inter typography and restrained neutral surfaces support quick scanning without competing with the form.
 
-Brand Blue identifies active progress and primary actions. The Opus logo anchors the white header; its red mark is a supporting brand detail rather than a recurring interface accent. Static surfaces are defined by fine borders, while elevation is reserved for transient menus and popovers.
+Neutral charcoal identifies primary actions across the enrollment flow. Brand Blue is reserved for the current progress segment, subtle selected outlines, and keyboard focus. The Opus logo anchors the white header; its red mark is a supporting brand detail rather than a recurring interface accent. Static surfaces are defined by fine borders, while elevation is reserved for transient menus and popovers.
 
 **Key Characteristics:**
 - Clear, direct form hierarchy
-- Professional neutral surfaces with a focused blue action color
+- Neutral surfaces and charcoal actions with restrained blue state cues
 - Progress indicators make the multi-step flow visible
 - Borders define static cards and fields; shadows belong to overlays
 
 ## Colors
 
-The palette is built around Brand Blue and a quiet range of white, cool gray, and deep slate; Opus Red appears in the logo.
+The palette is built around white, cool gray, deep slate, and charcoal actions. Brand Blue is a limited interaction accent; Opus Red appears in the logo.
 
 ### Primary
-- **Brand Blue**: Primary buttons, links, the active progress step, and completed progress markers.
-- **Brand Blue Hover**: Hover state for primary actions.
-- **Brand Blue Ink**: Readable blue links, active progress labels, and outline markers on light surfaces. Keep dark Primary Ink text on the light Brand Blue button fill for sufficient contrast.
+- **Action Charcoal**: Primary buttons, paired with white text for strong contrast.
+- **Action Charcoal Hover**: A slightly darker hover state for primary actions.
+- **Brand Blue**: Current progress segment, subtle selected outlines, and keyboard focus.
+- **Brand Blue Ink**: Readable active-step label and focus treatments on light surfaces.
 
 ### Secondary
 - **Opus Red**: Logo detail. Keep it in the brand mark rather than promoting it to a competing action color.
@@ -145,10 +148,10 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 
 ### Buttons
 - **Character:** Clear and direct; primary actions are easy to identify.
-- **Primary:** Brand Blue fill, Primary Ink semibold text, compact rounded corners, and a generous full-width treatment for the main signup action.
-- **Hover / Focus:** Darken to Brand Blue Hover on hover. Keep the visible focus ring and keyboard interaction from the shared button component.
+- **Primary:** Action Charcoal fill, white semibold text, compact rounded corners, and a generous full-width treatment for the main signup action.
+- **Hover / Focus:** Darken to Action Charcoal Hover on hover. Keep a restrained blue focus ring and the keyboard interaction from the shared button component.
 - **Secondary / Outline:** Use a light surface and thin neutral border where a secondary action is needed; do not give it the visual weight of the primary action.
-- **Across enrollment routes:** Use the same Brand Blue fill with Primary Ink text for primary controls; avoid white-on-Brand-Blue labels. Secondary controls remain white with a fine neutral outline.
+- **Across enrollment routes:** Use the same charcoal fill with white text for primary controls. Secondary controls remain white with a fine neutral outline.
 
 ### Cards / Containers
 - **Character:** Quiet and task-focused.
@@ -157,7 +160,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 - **Shadow Strategy:** No resting shadow on the main form card; use a subtle border instead.
 - **Border:** Fine neutral outline.
 - **Internal Padding:** More spacious on desktop and reduced on mobile.
-- **Route consistency:** Location, plan, add-on, checkout, and confirmation surfaces use the same flat white surface, subtle rule, and 12px corner. Selected package and add-on states use a clear blue-ink outline with a pale blue tint rather than colored gradients.
+- **Route consistency:** Location, plan, add-on, checkout, and confirmation surfaces use the same flat white surface, subtle rule, and 12px corner. Selected package and add-on states use a thin blue-ink outline with a neutral fill rather than colored gradients.
 
 ### Inputs / Fields
 - **Character:** Plain, readable, and easy to scan.
@@ -167,7 +170,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 
 ### Navigation
 - **Style:** A centered logo in a simple white header with a thin divider below.
-- **Progress:** Four equal-width, 4px-high rounded bars sit above left-aligned semibold labels. Brand Blue fills the current and completed bars; upcoming bars are neutral gray. Completed steps support keyboard-accessible backward navigation; future steps are not interactive.
+- **Progress:** Four equal-width, 4px-high rounded bars sit above left-aligned semibold labels. Brand Blue marks the current bar; completed bars use slate and upcoming bars use neutral gray. Completed steps support keyboard-accessible backward navigation; future steps are not interactive.
 - **Responsive:** Use a wider single row on desktop and a two-column, two-row grid on phones. Keep every label on one line without truncation or horizontal scrolling.
 - **Analytics:** Keep funnel charts and reporting data unchanged; reduce mobile header and KPI padding while retaining two KPI columns on compact viewports.
 
@@ -178,8 +181,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** use Brand Blue consistently for the primary action and active or completed progress.
-- **Do** keep the captured signup color consistent; the shared blue utility is close but not identical.
+- **Do** use charcoal for primary actions and reserve Brand Blue for current progress, selected outlines, and focus.
 - **Do** keep the logo centered in a clean white header.
 - **Do** use fine borders to separate the static form card and fields from the page canvas.
 - **Do** keep the step sequence visible while adapting its labels for narrow screens.

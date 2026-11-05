@@ -41,7 +41,7 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
               <span
                 aria-hidden="true"
                 className={`block h-1 w-full rounded-full ${
-                  isCompleted || isCurrent ? 'bg-[#36bff9]' : 'bg-gray-200'
+                  isCurrent ? 'bg-[#36bff9]' : isCompleted ? 'bg-slate-400' : 'bg-gray-200'
                 }`}
                 data-testid={`step-${step.id}-${isCompleted ? 'complete' : isCurrent ? 'current' : 'upcoming'}`}
               />
@@ -50,7 +50,7 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
                   isCurrent
                     ? 'text-[#006d91]'
                     : isCompleted
-                      ? 'text-gray-900 group-hover:text-[#006d91]'
+                      ? 'text-gray-900 group-hover:text-gray-700'
                       : 'text-gray-500'
                 }`}
               >

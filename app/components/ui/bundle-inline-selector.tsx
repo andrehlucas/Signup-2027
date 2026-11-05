@@ -39,10 +39,10 @@ const bundleBackgrounds: Record<string, string> = {
 };
 
 const bundleAccentColors: Record<string, string> = {
-  plus: "#006d91",
-  pro: "#006d91",
-  premium: "#006d91",
-  prestige: "#006d91",
+  plus: "#475467",
+  pro: "#475467",
+  premium: "#475467",
+  prestige: "#475467",
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -118,7 +118,7 @@ export function BundleInlineSelector({
 
   const currentIndex = wrap(0, count, activeIndex);
   const activeBundle = bundles[currentIndex];
-  const accentColor = bundleAccentColors[activeBundle.id] || "#36bff9";
+  const accentColor = bundleAccentColors[activeBundle.id] || "#475467";
   const savings = calculateSavings(activeBundle);
 
   const cardPadding = 8;
@@ -195,7 +195,7 @@ export function BundleInlineSelector({
                   "absolute top-0 rounded-xl overflow-hidden border transition-colors",
                   isCenter ? "z-20 border-gray-300" : "z-10 pointer-events-none border-gray-200",
                   isSelected && isCenter
-                    ? "ring-2 ring-[#006d91]"
+                    ? "ring-2 ring-[#006d91]/15"
                     : ""
                 )}
                 style={{
@@ -240,7 +240,7 @@ export function BundleInlineSelector({
                         <span
                           className="inline-flex self-start items-center text-xs font-semibold px-2.5 py-1 rounded-full"
                           style={{
-                            backgroundColor: "#eaf8fe",
+                            backgroundColor: "#f2f4f7",
                             color: cardTextColor(bg),
                           }}
                           data-testid={`inline-savings-badge-${bundle.id}`}
@@ -259,7 +259,7 @@ export function BundleInlineSelector({
                     className={cn(
                       "w-full py-2.5 rounded-md text-sm font-semibold transition-colors",
                       isSelected && isCenter
-                        ? "bg-[#36bff9] text-[#101828] hover:bg-[#2aa8e0]"
+                        ? "bg-[#344054] text-white hover:bg-[#263241]"
                         : "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50"
                     )}
                     tabIndex={isCenter ? 0 : -1}
@@ -302,7 +302,7 @@ export function BundleInlineSelector({
               key={bundle.id}
               className={cn(
                 "rounded-xl overflow-hidden border transition-colors",
-                isSelected ? "border-[#006d91] ring-2 ring-[#006d91]/20" : "border-gray-200 hover:border-gray-400"
+                isSelected ? "border-[#006d91] ring-2 ring-[#006d91]/15" : "border-gray-200 hover:border-gray-400"
               )}
               style={{
                 background: bg,
@@ -334,7 +334,7 @@ export function BundleInlineSelector({
                       className="text-xs font-semibold rounded-full px-2.5 py-0.5 self-start"
                       style={{
                         color: cardTextColor(bg),
-                        backgroundColor: "#eaf8fe",
+                       backgroundColor: "#f2f4f7",
                       }}
                     >
                       Save ${bundleSavings}/mo
@@ -347,7 +347,7 @@ export function BundleInlineSelector({
                   className={cn(
                     "w-full py-2.5 rounded-md text-sm font-semibold transition-colors mt-3",
                     isSelected
-                      ? "bg-[#36bff9] text-[#101828] hover:bg-[#2aa8e0]"
+                      ? "bg-[#344054] text-white hover:bg-[#263241]"
                       : "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50"
                   )}
                   data-testid={`inline-select-bundle-${bundle.id}`}
@@ -469,7 +469,7 @@ export function BundleInlineSelector({
               <span
                 key={bundle.id}
                 className="text-center text-xs font-bold"
-                style={{ width: "80px", color: bundleAccentColors[bundle.id] || "#36bff9" }}
+                style={{ width: "80px", color: bundleAccentColors[bundle.id] || "#475467" }}
               >
                 {bundle.tier}
               </span>
@@ -504,7 +504,7 @@ export function BundleInlineSelector({
                     return (
                       <div key={bundle.id} className="flex justify-center" style={{ width: "80px" }}>
                         {bundleHas ? (
-                          <Check className="h-3.5 w-3.5" style={{ color: bundleAccentColors[bundle.id] || "#36bff9" }} />
+                          <Check className="h-3.5 w-3.5" style={{ color: bundleAccentColors[bundle.id] || "#475467" }} />
                         ) : (
                           <span className="text-gray-300 text-xs">—</span>
                         )}

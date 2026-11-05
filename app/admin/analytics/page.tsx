@@ -186,8 +186,8 @@ export default function AnalyticsDashboard() {
           <Card data-testid="card-total-sessions">
             <CardContent className="p-3 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-[#eaf8fe] items-center justify-center">
-                  <Users className="h-5 w-5 text-[#006d91]" />
+                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-gray-100 items-center justify-center">
+                  <Users className="h-5 w-5 text-gray-600" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Total Sessions</p>
@@ -200,8 +200,8 @@ export default function AnalyticsDashboard() {
           <Card data-testid="card-completed">
             <CardContent className="p-3 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-[#eaf8fe] items-center justify-center">
-                  <CheckCircle2 className="h-5 w-5 text-[#006d91]" />
+                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-gray-100 items-center justify-center">
+                  <CheckCircle2 className="h-5 w-5 text-gray-600" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Completed</p>
@@ -214,8 +214,8 @@ export default function AnalyticsDashboard() {
           <Card data-testid="card-conversion">
             <CardContent className="p-3 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-[#eaf8fe] items-center justify-center">
-                  <TrendingDown className="h-5 w-5 text-[#006d91]" />
+                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-gray-100 items-center justify-center">
+                  <TrendingDown className="h-5 w-5 text-gray-600" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Conversion Rate</p>
@@ -228,8 +228,8 @@ export default function AnalyticsDashboard() {
           <Card data-testid="card-avg-time">
             <CardContent className="p-3 sm:p-6">
               <div className="flex items-center gap-2 sm:gap-3">
-                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-[#eaf8fe] items-center justify-center">
-                  <Clock className="h-5 w-5 text-[#006d91]" />
+                <div className="hidden sm:flex w-10 h-10 rounded-lg bg-gray-100 items-center justify-center">
+                  <Clock className="h-5 w-5 text-gray-600" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Avg. Total Time</p>
