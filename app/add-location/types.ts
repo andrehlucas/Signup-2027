@@ -77,6 +77,7 @@ export interface UserInfo {
   lastName: string;
   phone: string;
   countryCode: string;
+  countryRegion: string;
   email: string;
   confirmEmail: string;
   company: string;

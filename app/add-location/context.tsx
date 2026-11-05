@@ -26,6 +26,7 @@ const initialUserInfo: UserInfo = {
   lastName: '',
   phone: '',
   countryCode: '+1',
+  countryRegion: 'US',
   email: '',
   confirmEmail: '',
   company: '',

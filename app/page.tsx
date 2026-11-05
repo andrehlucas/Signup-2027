@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronDown } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Checkbox } from '@/app/components/ui/checkbox';
@@ -10,58 +9,59 @@ import { ProgressIndicator } from './add-location/components/ProgressIndicator';
 import { useOrder } from './add-location/context';
 import { useFunnelTracking } from './hooks/use-funnel-tracking';
 
-// Set to true to skip user info validation and go straight to Customize
-const SKIP_USER_INFO = true;
-
 const countryCodes = [
-  { code: '+1', flag: '🇺🇸', label: 'US' },
-  { code: '+1', flag: '🇨🇦', label: 'CA' },
-  { code: '+44', flag: '🇬🇧', label: 'UK' },
-  { code: '+61', flag: '🇦🇺', label: 'AU' },
-  { code: '+49', flag: '🇩🇪', label: 'DE' },
-  { code: '+33', flag: '🇫🇷', label: 'FR' },
-  { code: '+81', flag: '🇯🇵', label: 'JP' },
-  { code: '+86', flag: '🇨🇳', label: 'CN' },
-  { code: '+91', flag: '🇮🇳', label: 'IN' },
-  { code: '+52', flag: '🇲🇽', label: 'MX' },
-  { code: '+55', flag: '🇧🇷', label: 'BR' },
+  { code: '+1', flag: '🇺🇸', region: 'US', name: 'United States' },
+  { code: '+1', flag: '🇨🇦', region: 'CA', name: 'Canada' },
+  { code: '+44', flag: '🇬🇧', region: 'GB', name: 'United Kingdom' },
+  { code: '+61', flag: '🇦🇺', region: 'AU', name: 'Australia' },
+  { code: '+49', flag: '🇩🇪', region: 'DE', name: 'Germany' },
+  { code: '+33', flag: '🇫🇷', region: 'FR', name: 'France' },
+  { code: '+81', flag: '🇯🇵', region: 'JP', name: 'Japan' },
+  { code: '+86', flag: '🇨🇳', region: 'CN', name: 'China' },
+  { code: '+91', flag: '🇮🇳', region: 'IN', name: 'India' },
+  { code: '+52', flag: '🇲🇽', region: 'MX', name: 'Mexico' },
+  { code: '+55', flag: '🇧🇷', region: 'BR', name: 'Brazil' },
 ];
 
-function formatPhoneNumber(value: string): string {
+function formatPhoneNumber(value: string, region: string): string {
   const digits = value.replace(/\D/g, '');
+  if (region !== 'US' && region !== 'CA') return digits;
   if (digits.length <= 3) return digits;
   if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)} - ${digits.slice(6, 10)}`;
+  const mainNumber = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)} - ${digits.slice(6, 10)}`;
+  return digits.length > 10 ? `${mainNumber} ${digits.slice(10)}` : mainNumber;
 }
 
 export default function SignUpPage() {
   const router = useRouter();
   const { order, setUserInfo } = useOrder();
 
+  const initialCountryRegion = order.userInfo.countryRegion || 'US';
   const [firstName, setFirstName] = useState(order.userInfo.firstName);
   const [lastName, setLastName] = useState(order.userInfo.lastName);
-  const [phone, setPhone] = useState(formatPhoneNumber(order.userInfo.phone));
+  const [phone, setPhone] = useState(formatPhoneNumber(order.userInfo.phone, initialCountryRegion));
+  const [countryRegion, setCountryRegion] = useState(initialCountryRegion);
   const [countryCode, setCountryCode] = useState(order.userInfo.countryCode || '+1');
   const [email, setEmail] = useState(order.userInfo.email);
   const [confirmEmail, setConfirmEmail] = useState(order.userInfo.confirmEmail);
   const [company, setCompany] = useState(order.userInfo.company);
   const [termsAccepted, setTermsAccepted] = useState(order.userInfo.termsAccepted);
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { trackComplete } = useFunnelTracking('your_info');
 
-  const selectedCountry = countryCodes.find(c => c.code === countryCode) || countryCodes[0];
+  const selectedCountry = countryCodes.find((country) => country.region === countryRegion) || countryCodes[0];
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
+    const phoneDigits = phone.replace(/\D/g, '');
 
     if (!firstName.trim()) newErrors.firstName = 'First name is required';
     if (!lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!phone.trim()) {
+    if (!phoneDigits) {
       newErrors.phone = 'Phone number is required';
-    } else if (phone.replace(/[\s()-]/g, '').length < 7) {
+    } else if (phoneDigits.length < 7) {
       newErrors.phone = 'Please enter a valid phone number (at least 7 digits)';
-    } else if (phone.replace(/[\s()-]/g, '').length > 15) {
+    } else if (phoneDigits.length > 15) {
       newErrors.phone = 'Phone number is too long';
     }
     if (!email.trim()) {
@@ -82,153 +82,192 @@ export default function SignUpPage() {
   };
 
   const handleContinue = () => {
-    if (!SKIP_USER_INFO && !validate()) return;
+    if (!validate()) return;
 
     setUserInfo({
-      firstName: firstName.trim() || 'Test',
-      lastName: lastName.trim() || 'User',
-      phone: phone.replace(/\D/g, '') || '5551234567',
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      phone: phone.replace(/\D/g, ''),
       countryCode,
-      email: email.trim() || 'test@example.com',
-      confirmEmail: confirmEmail.trim() || 'test@example.com',
-      company: company.trim() || 'Test Company',
-      termsAccepted: SKIP_USER_INFO ? true : termsAccepted,
+      countryRegion,
+      email: email.trim(),
+      confirmEmail: confirmEmail.trim(),
+      company: company.trim(),
+      termsAccepted,
     });
 
     trackComplete();
-    router.push('/add-location/customize');
+    router.push('/add-location');
   };
 
   return (
     <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="signup-page">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup">
-            You're Only 3 Steps Away From Securing Your New Virtual Office Solution!
+            Set up your virtual office
           </h1>
+          <p className="mt-2 text-sm md:text-base text-gray-600">
+            Enter your business contact details to begin enrollment.
+          </p>
         </div>
 
-        <div className="mb-8">
+        <div className="mb-6">
           <ProgressIndicator currentStep={1} />
         </div>
 
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8">
-            <div className="space-y-5">
+          <div className="bg-white rounded-xl border border-gray-200 p-5 md:p-8">
+            <form
+              className="space-y-4"
+              noValidate
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleContinue();
+              }}
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
+                  <label htmlFor="first-name" className="mb-1.5 block text-sm font-medium text-gray-700">
+                    First name
+                  </label>
                   <Input
-                    placeholder="First Name"
+                    id="first-name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     className={`h-12 ${errors.firstName ? 'border-red-500' : ''}`}
+                    autoComplete="given-name"
+                    aria-invalid={Boolean(errors.firstName)}
+                    aria-describedby={errors.firstName ? 'error-first-name' : undefined}
                     data-testid="input-first-name"
                   />
                   {errors.firstName && (
-                    <p className="text-red-500 text-xs mt-1" data-testid="error-first-name">{errors.firstName}</p>
+                    <p id="error-first-name" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-first-name">{errors.firstName}</p>
                   )}
                 </div>
                 <div>
+                  <label htmlFor="last-name" className="mb-1.5 block text-sm font-medium text-gray-700">
+                    Last name
+                  </label>
                   <Input
-                    placeholder="Last Name"
+                    id="last-name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     className={`h-12 ${errors.lastName ? 'border-red-500' : ''}`}
+                    autoComplete="family-name"
+                    aria-invalid={Boolean(errors.lastName)}
+                    aria-describedby={errors.lastName ? 'error-last-name' : undefined}
                     data-testid="input-last-name"
                   />
                   {errors.lastName && (
-                    <p className="text-red-500 text-xs mt-1" data-testid="error-last-name">{errors.lastName}</p>
+                    <p id="error-last-name" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-last-name">{errors.lastName}</p>
                   )}
                 </div>
               </div>
 
               <div>
-                <div className="relative flex">
-                  <div className="relative">
-                    <button
-                      type="button"
-                      onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                      className={`flex items-center gap-1.5 h-12 px-3 border border-r-0 rounded-l-md bg-gray-50 hover:bg-gray-100 transition-colors ${errors.phone ? 'border-red-500' : 'border-input'}`}
-                      data-testid="button-country-code"
-                    >
-                      <span className="text-lg">{selectedCountry.flag}</span>
-                      <span className="text-sm text-gray-700">{countryCode}</span>
-                      <ChevronDown className="h-3 w-3 text-gray-500" />
-                    </button>
-                    {showCountryDropdown && (
-                      <div className="absolute top-full left-0 z-50 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto" data-testid="dropdown-country-codes">
-                        {countryCodes.map((c, idx) => (
-                          <button
-                            key={`${c.code}-${c.label}-${idx}`}
-                            type="button"
-                            onClick={() => {
-                              setCountryCode(c.code);
-                              setShowCountryDropdown(false);
-                            }}
-                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-left text-sm"
-                            data-testid={`option-country-${c.label}`}
-                          >
-                            <span className="text-lg">{c.flag}</span>
-                            <span className="text-gray-700">{c.label}</span>
-                            <span className="text-gray-500">{c.code}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                <label htmlFor="phone-number" className="mb-1.5 block text-sm font-medium text-gray-700">
+                  Phone number
+                </label>
+                <div className="flex flex-col gap-2 min-[380px]:flex-row min-[380px]:gap-0">
+                  <select
+                    id="country-region"
+                    value={countryRegion}
+                    onChange={(event) => {
+                      const region = event.target.value;
+                      const country = countryCodes.find((item) => item.region === region);
+                      if (!country) return;
+                      setCountryRegion(region);
+                      setCountryCode(country.code);
+                      setPhone((currentPhone) => formatPhoneNumber(currentPhone, region));
+                    }}
+                    aria-label="Country and calling code"
+                    className={`h-12 w-full rounded-md border bg-gray-50 px-3 text-sm text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006d91] min-[380px]:w-36 min-[380px]:rounded-r-none min-[380px]:border-r-0 ${
+                      errors.phone ? 'border-red-500' : 'border-input'
+                    }`}
+                    data-testid="select-country-region"
+                  >
+                    {countryCodes.map((country) => (
+                      <option key={country.region} value={country.region} data-testid={`option-country-${country.region}`}>
+                        {country.flag} {country.name} ({country.code})
+                      </option>
+                    ))}
+                  </select>
                   <Input
+                    id="phone-number"
                     type="tel"
-                    inputMode="numeric"
-                    placeholder="(555) 555 - 5555"
+                    inputMode="tel"
                     value={phone}
-                    onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
-                    className={`h-12 rounded-l-none flex-1 ${errors.phone ? 'border-red-500' : ''}`}
+                    onChange={(e) => setPhone(formatPhoneNumber(e.target.value, countryRegion))}
+                    autoComplete="tel-national"
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby={errors.phone ? 'error-phone' : undefined}
+                    className={`h-12 rounded-md flex-1 min-w-0 min-[380px]:rounded-l-none ${errors.phone ? 'border-red-500' : ''}`}
                     data-testid="input-phone"
                   />
                 </div>
                 {errors.phone && (
-                  <p className="text-red-500 text-xs mt-1" data-testid="error-phone">{errors.phone}</p>
+                  <p id="error-phone" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-phone">{errors.phone}</p>
                 )}
               </div>
 
               <div>
+                <label htmlFor="email-address" className="mb-1.5 block text-sm font-medium text-gray-700">
+                  Email address
+                </label>
                 <Input
+                  id="email-address"
                   type="email"
-                  placeholder="Email Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className={`h-12 ${errors.email ? 'border-red-500' : ''}`}
+                  autoComplete="email"
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? 'error-email' : undefined}
                   data-testid="input-email"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-xs mt-1" data-testid="error-email">{errors.email}</p>
+                  <p id="error-email" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-email">{errors.email}</p>
                 )}
               </div>
 
               <div>
+                <label htmlFor="confirm-email" className="mb-1.5 block text-sm font-medium text-gray-700">
+                  Confirm email address
+                </label>
                 <Input
+                  id="confirm-email"
                   type="email"
-                  placeholder="Please confirm your email"
+                  placeholder="Re-enter your email address"
                   value={confirmEmail}
                   onChange={(e) => setConfirmEmail(e.target.value)}
                   className={`h-12 ${errors.confirmEmail ? 'border-red-500' : ''}`}
+                  autoComplete="off"
+                  aria-invalid={Boolean(errors.confirmEmail)}
+                  aria-describedby={errors.confirmEmail ? 'error-confirm-email' : undefined}
                   data-testid="input-confirm-email"
                 />
                 {errors.confirmEmail && (
-                  <p className="text-red-500 text-xs mt-1" data-testid="error-confirm-email">{errors.confirmEmail}</p>
+                  <p id="error-confirm-email" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-confirm-email">{errors.confirmEmail}</p>
                 )}
               </div>
 
               <div>
+                <label htmlFor="company-name" className="mb-1.5 block text-sm font-medium text-gray-700">
+                  Company name
+                </label>
                 <Input
-                  placeholder="Company"
+                  id="company-name"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                   className={`h-12 ${errors.company ? 'border-red-500' : ''}`}
+                  autoComplete="organization"
+                  aria-invalid={Boolean(errors.company)}
+                  aria-describedby={errors.company ? 'error-company' : undefined}
                   data-testid="input-company"
                 />
                 {errors.company && (
-                  <p className="text-red-500 text-xs mt-1" data-testid="error-company">{errors.company}</p>
+                  <p id="error-company" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-company">{errors.company}</p>
                 )}
               </div>
 
@@ -239,29 +278,37 @@ export default function SignUpPage() {
                     checked={termsAccepted}
                     onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
                     className="mt-0.5"
+                    aria-invalid={Boolean(errors.terms)}
+                    aria-describedby={errors.terms ? 'error-terms' : undefined}
                     data-testid="checkbox-terms"
                   />
                   <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
                     I agree to the{' '}
-                    <a href="#" className="text-[#36bff9] hover:underline" data-testid="link-terms">
+                    <a
+                      href="https://www.opusvirtualoffices.com/opus-virtual-offices-terms-of-use/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#006d91] underline underline-offset-2 hover:text-[#005675]"
+                      data-testid="link-terms"
+                    >
                       Terms of Use
                     </a>
                     .
                   </label>
                 </div>
                 {errors.terms && (
-                  <p className="text-red-500 text-xs mt-1" data-testid="error-terms">{errors.terms}</p>
+                  <p id="error-terms" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-terms">{errors.terms}</p>
                 )}
               </div>
 
               <Button
-                onClick={handleContinue}
-                className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-lg font-semibold"
+                type="submit"
+                className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-[#101828] text-lg font-semibold"
                 data-testid="button-continue"
               >
                 Continue
               </Button>
-            </div>
+            </form>
           </div>
         </div>
       </div>

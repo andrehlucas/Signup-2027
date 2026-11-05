@@ -42,8 +42,10 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
               className={`relative ${stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : ''}`}
             >
               {step.id < currentStep ? (
-                <div
-                  className={`flex items-center ${isClickable ? 'cursor-pointer group' : ''}`}
+                <button
+                  type="button"
+                  aria-label={`Return to ${step.name}`}
+                  className={`flex items-center group rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006d91] focus-visible:ring-offset-2 ${isClickable ? 'cursor-pointer' : ''}`}
                   onClick={() => handleStepClick(step)}
                   data-testid={`step-nav-${step.id}`}
                 >
@@ -51,32 +53,31 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
                     className="flex h-8 w-8 items-center justify-center rounded-full bg-[#36bff9] transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#36bff9]/30 group-hover:ring-offset-2"
                     data-testid={`step-${step.id}-complete`}
                   >
-                    <Check className="h-5 w-5 text-white" aria-hidden="true" />
+                    <Check className="h-5 w-5 text-[#101828]" aria-hidden="true" />
                   </span>
-                  <span className="ml-3 text-sm font-medium text-gray-900 group-hover:text-[#36bff9] hidden sm:block">
+                  <span className="ml-3 text-sm font-medium text-gray-900 group-hover:text-[#006d91] hidden sm:block">
                     {step.name}
                   </span>
                   {stepIdx !== steps.length - 1 && (
                     <div
-                      className="absolute right-0 top-4 h-0.5 w-8 sm:w-20 bg-[#36bff9]"
+                      className="absolute right-0 top-4 h-0.5 w-8 sm:w-20 bg-[#006d91]"
                       aria-hidden="true"
                     />
                   )}
-                </div>
+                </button>
               ) : step.id === currentStep ? (
                 <div
-                  className="flex items-center cursor-pointer group"
+                  className="flex items-center"
                   aria-current="step"
-                  onClick={() => handleStepClick(step)}
                   data-testid={`step-nav-${step.id}`}
                 >
                   <span
-                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#36bff9] bg-white transition-transform group-hover:scale-110 group-hover:ring-2 group-hover:ring-[#36bff9]/30 group-hover:ring-offset-2"
+                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#006d91] bg-white"
                     data-testid={`step-${step.id}-current`}
                   >
-                    <span className="text-[#36bff9] font-semibold">{step.id}</span>
+                    <span className="text-[#006d91] font-semibold">{step.id}</span>
                   </span>
-                  <span className="ml-3 text-sm font-medium text-[#36bff9] hidden sm:block">
+                  <span className="ml-3 text-sm font-medium text-[#006d91] hidden sm:block">
                     {step.name}
                   </span>
                   {stepIdx !== steps.length - 1 && (
@@ -109,6 +110,9 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
           );
         })}
       </ol>
+      <p className="mt-2 text-center text-xs font-medium text-[#006d91] sm:hidden">
+        Step {currentStep} of {steps.length} · {steps.find((step) => step.id === currentStep)?.name}
+      </p>
     </nav>
   );
 }
