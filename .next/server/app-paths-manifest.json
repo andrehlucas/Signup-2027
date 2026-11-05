@@ -1,8 +1,1 @@
-{
-  "/api/funnel/events/route": "app/api/funnel/events/route.js",
-  "/page": "app/page.js",
-  "/add-location/page": "app/add-location/page.js",
-  "/add-location/pick-plan/page": "app/add-location/pick-plan/page.js",
-  "/add-location/customize/page": "app/add-location/customize/page.js",
-  "/add-location/checkout/page": "app/add-location/checkout/page.js"
-}
+{}
