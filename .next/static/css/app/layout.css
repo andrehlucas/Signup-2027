@@ -596,6 +596,45 @@ video {
     border: 1px solid var(--opus-rule);
     border-radius: 12px;
   }
+.signup-shell .signup-surface {
+    background:
+      linear-gradient(
+        145deg,
+        #ffffff 0%,
+        #fbfcfd 48%,
+        #ffffff 100%
+      );
+    box-shadow:
+      0 8px 24px rgba(26, 42, 58, 0.035),
+      inset 0 1px 0 rgba(255, 255, 255, 0.94);
+  }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .signup-shell .signup-surface {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.84) 0%,
+          rgba(255, 255, 255, 0.76) 48%,
+          rgba(255, 255, 255, 0.86) 100%
+        );
+      backdrop-filter: blur(14px) saturate(1.04);
+    }
+  }
+@media (prefers-reduced-transparency: reduce) {
+    .signup-shell .signup-surface {
+      background: linear-gradient(145deg, #ffffff 0%, #fbfcfd 52%, #ffffff 100%);
+      backdrop-filter: none;
+    }
+  }
+@media (forced-colors: active) {
+    .signup-shell .signup-surface {
+      color: CanvasText;
+      background: Canvas;
+      border-color: CanvasText;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+  }
 .sr-only {
   position: absolute;
   width: 1px;

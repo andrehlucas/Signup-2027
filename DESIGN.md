@@ -157,10 +157,11 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 - **Character:** Quiet and task-focused.
 - **Corner Style:** Rounded more generously than fields.
 - **Background:** White against the light-gray page canvas.
-- **Shadow Strategy:** No resting shadow on the main form card; use a subtle border instead.
+- **Shadow Strategy:** Keep depth quiet; use a fine border and a low-offset, soft shadow only on enrollment glass surfaces.
 - **Border:** Fine neutral outline.
 - **Internal Padding:** More spacious on desktop and reduced on mobile.
 - **Route consistency:** Location, plan, add-on, checkout, and confirmation surfaces use the same flat white surface, subtle rule, and 12px corner. Selected package and add-on states use a thin blue-ink outline with a neutral fill rather than colored gradients.
+- **Liquid Glass exception:** Border-led surfaces remain the default. Within enrollment only, `.signup-shell .signup-surface` gets a restrained translucent white material, a static diagonal reflection, and subtle backdrop blur. Form fields stay opaque; browsers without backdrop filters get an opaque gradient fallback, while reduced-transparency and forced-colors settings disable the glass treatment.
 - **Bundle tier exception:** Essentials remains neutral. PLUS uses teal `#185f58` on `#edf6f4`, PRO blue `#345b91` on `#eef2f8`, PREMIUM amber `#80591e` on `#f7f2e9`, and PLATINUM plum `#754965` on `#f5eef3`. Keep each tier’s tint and dark accent consistent on desktop cards, mobile carousel cards, comparison headers, and feature checks. Color identifies the tier; readable text, checks, and the exact upgrade-feature list carry the meaning.
 - **Plan review summary:** Lead with the actual selected tier and monthly price, then show the full address in one compact row with quiet edit actions. Keep enabled services in a full-width native “View included services” disclosure. Avoid generic recap headings and duplicate plan marketing names. Essentials remains selectable for $99/mo in the comparison area; never imply a selection before one exists.
 

@@ -6,15 +6,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/add-location/layout": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/add-location/layout.js"
+      "static/chunks/app/page.js"
     ],
-    "/add-location/customize/page": [
+    "/api/funnel/events/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/add-location/customize/page.js"
+      "static/chunks/app/api/funnel/events/route.js"
     ]
   }
 }
