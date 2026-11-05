@@ -181,15 +181,15 @@ export default function SignUpPage() {
                       setCountryCode(country.code);
                       setPhone((currentPhone) => formatPhoneNumber(currentPhone, region));
                     }}
-                    aria-label="Country and calling code"
+                    aria-label={`Country and calling code: ${selectedCountry.name} (${countryCode})`}
                     className={`h-12 w-full rounded-md border bg-gray-50 px-3 text-sm text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006d91] min-[380px]:w-36 min-[380px]:rounded-r-none min-[380px]:border-r-0 ${
                       errors.phone ? 'border-red-500' : 'border-input'
                     }`}
                     data-testid="select-country-region"
                   >
                     {countryCodes.map((country) => (
-                      <option key={country.region} value={country.region} data-testid={`option-country-${country.region}`}>
-                        {country.flag} {country.name} ({country.code})
+                      <option key={country.region} value={country.region} aria-label={`${country.name} (${country.code})`} data-testid={`option-country-${country.region}`}>
+                        {country.flag} {country.region} ({country.code})
                       </option>
                     ))}
                   </select>

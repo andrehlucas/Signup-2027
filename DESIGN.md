@@ -4,6 +4,7 @@ description: Clear, direct enrollment for virtual office services.
 colors:
   brand-blue: "#36bff9"
   brand-blue-hover: "#2aa8e0"
+  brand-blue-ink: "#006d91"
   opus-red: "#ff1e27"
   page-gray: "#f9fafb"
   surface-white: "#ffffff"
@@ -45,14 +46,14 @@ spacing:
 components:
   button-primary:
     backgroundColor: "{colors.brand-blue}"
-    textColor: "{colors.surface-white}"
+    textColor: "{colors.text-primary}"
     typography: "{typography.title}"
     rounded: "{rounded.sm}"
     padding: "12px 16px"
     height: "48px"
   button-primary-hover:
     backgroundColor: "{colors.brand-blue-hover}"
-    textColor: "{colors.surface-white}"
+    textColor: "{colors.text-primary}"
     rounded: "{rounded.sm}"
   field:
     backgroundColor: "{colors.surface-white}"
@@ -90,6 +91,7 @@ The palette is built around Brand Blue and a quiet range of white, cool gray, an
 ### Primary
 - **Brand Blue**: Primary buttons, links, the active progress step, and completed progress markers.
 - **Brand Blue Hover**: Hover state for primary actions.
+- **Brand Blue Ink**: Readable blue links, active progress labels, and outline markers on light surfaces. Keep dark Primary Ink text on the light Brand Blue button fill for sufficient contrast.
 
 ### Secondary
 - **Opus Red**: Logo detail. Keep it in the brand mark rather than promoting it to a competing action color.
@@ -121,7 +123,7 @@ The palette is built around Brand Blue and a quiet range of white, cool gray, an
 
 The signup screen uses a centered single-column composition. The logo sits in a full-width white header; the main heading and four-step progress indicator sit above a centered form card. The form card is constrained to a comfortable reading width, with wider desktop padding and tighter mobile padding.
 
-Name fields sit side by side when space allows and stack on narrow screens. The phone, email, company, and consent controls remain in a clear vertical sequence, ending in a full-width primary action. Progress labels are visible on wider screens and give way to the numbered markers on smaller screens. Preserve generous separation between the page heading, progress, and form.
+Name fields sit side by side when space allows and stack on narrow screens. Persistent labels identify each field. The phone, email, company, and consent controls remain in a clear vertical sequence, ending in a full-width primary action. Progress labels are visible on wider screens; smaller screens show numbered markers and a compact current-step summary. Preserve generous separation between the page heading, progress, and form.
 
 ## Elevation & Depth
 
@@ -138,7 +140,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 
 ### Buttons
 - **Character:** Clear and direct; primary actions are easy to identify.
-- **Primary:** Brand Blue fill, white semibold text, compact rounded corners, and a generous full-width treatment for the main signup action.
+- **Primary:** Brand Blue fill, Primary Ink semibold text, compact rounded corners, and a generous full-width treatment for the main signup action.
 - **Hover / Focus:** Darken to Brand Blue Hover on hover. Keep the visible focus ring and keyboard interaction from the shared button component.
 - **Secondary / Outline:** Use a light surface and thin neutral border where a secondary action is needed; do not give it the visual weight of the primary action.
 
@@ -159,7 +161,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 ### Navigation
 - **Style:** A centered logo in a simple white header with a thin divider below.
 - **Progress:** Four numbered circular markers connect in a horizontal sequence. Brand Blue marks the current and completed steps; neutral outlines and text mark upcoming steps.
-- **Mobile:** Keep the numbered markers visible and hide step labels when horizontal space is limited.
+- **Mobile:** Keep the numbered markers visible and show the current step name and total step count beneath them.
 
 ### Checkbox
 - **Style:** A compact square control aligned with its consent copy.

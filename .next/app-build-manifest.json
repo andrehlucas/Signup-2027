@@ -15,21 +15,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/funnel/events/route.js"
-    ],
-    "/add-location/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/add-location/layout.js"
-    ],
-    "/add-location/customize/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/add-location/customize/page.js"
-    ],
-    "/add-location/pick-plan/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/add-location/pick-plan/page.js"
     ]
   }
 }
