@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-05T15:40:59Z",
+  "title": "Design System: Opus Virtual Offices",
+  "extensions": {
+    "colorMeta": {
+      "brand-blue": {
+        "role": "primary",
+        "displayName": "Brand Blue",
+        "canonical": "#36bff9",
+        "tonalRamp": [
+          "#07334a",
+          "#075b7c",
+          "#087ca4",
+          "#099acb",
+          "#1aaee8",
+          "#36bff9",
+          "#82d8fc",
+          "#e7f7fe"
+        ]
+      },
+      "brand-blue-hover": {
+        "role": "primary",
+        "displayName": "Brand Blue Hover",
+        "canonical": "#2aa8e0",
+        "tonalRamp": [
+          "#062d40",
+          "#07536f",
+          "#087399",
+          "#0989b8",
+          "#169bcd",
+          "#2aa8e0",
+          "#75c9ed",
+          "#e5f5fc"
+        ]
+      },
+      "opus-red": {
+        "role": "secondary",
+        "displayName": "Opus Red",
+        "canonical": "#ff1e27",
+        "tonalRamp": [
+          "#4d0608",
+          "#800d13",
+          "#ad1219",
+          "#d51a22",
+          "#ff1e27",
+          "#ff555b",
+          "#ff999c",
+          "#fff0f0"
+        ]
+      },
+      "page-gray": {
+        "role": "neutral",
+        "displayName": "Page Gray",
+        "canonical": "#f9fafb",
+        "tonalRamp": [
+          "#1f2937",
+          "#374151",
+          "#4b5563",
+          "#6b7280",
+          "#9ca3af",
+          "#d1d5db",
+          "#e5e7eb",
+          "#f9fafb"
+        ]
+      },
+      "surface-white": {
+        "role": "neutral",
+        "displayName": "Surface White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#1f2937",
+          "#374151",
+          "#4b5563",
+          "#6b7280",
+          "#9ca3af",
+          "#d1d5db",
+          "#e5e7eb",
+          "#ffffff"
+        ]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Primary Ink",
+        "canonical": "#101828",
+        "tonalRamp": [
+          "#101828",
+          "#1f2937",
+          "#344054",
+          "#475467",
+          "#667085",
+          "#98a2b3",
+          "#d0d5dd",
+          "#f9fafb"
+        ]
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "#475467",
+        "tonalRamp": [
+          "#101828",
+          "#1f2937",
+          "#344054",
+          "#475467",
+          "#667085",
+          "#98a2b3",
+          "#d0d5dd",
+          "#f9fafb"
+        ]
+      },
+      "border-subtle": {
+        "role": "neutral",
+        "displayName": "Subtle Rule",
+        "canonical": "#eaecf0",
+        "tonalRamp": [
+          "#101828",
+          "#344054",
+          "#475467",
+          "#667085",
+          "#98a2b3",
+          "#d0d5dd",
+          "#eaecf0",
+          "#f9fafb"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Rule",
+        "canonical": "hsl(214.3 31.8% 91.4%)",
+        "tonalRamp": [
+          "#101828",
+          "#344054",
+          "#475467",
+          "#667085",
+          "#98a2b3",
+          "#d0d5dd",
+          "#e4e7ec",
+          "#f9fafb"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "The main task heading."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Prominent actions and section headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Instructions and explanatory copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, step names, and compact supporting text."
+      }
+    },
+    "shadows": [
+      {
+        "name": "transient-menu",
+        "value": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)",
+        "purpose": "Lift dropdown menus and popovers above static page surfaces."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Signup Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The full-width primary action at the end of the signup form.",
+      "html": "<button class=\"ds-signup-primary\">Continue</button>",
+      "css": ".ds-signup-primary { width: 100%; height: 48px; padding: 12px 16px; border: 0; border-radius: 6px; background: #36bff9; color: #fff; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 18px; font-weight: 600; line-height: 28px; cursor: pointer; transition: background-color 160ms ease; } .ds-signup-primary:hover { background: #2aa8e0; } .ds-signup-primary:focus-visible { outline: 2px solid hsl(215 20.2% 65.1%); outline-offset: 2px; } .ds-signup-primary:active { filter: brightness(0.96); } .ds-signup-primary:disabled { cursor: not-allowed; opacity: 0.5; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "A single-line field used for name, phone, email, and company details.",
+      "html": "<input class=\"ds-text-input\" type=\"text\" placeholder=\"First Name\" aria-label=\"First Name\" />",
+      "css": ".ds-text-input { display: block; width: 100%; height: 48px; padding: 12px; border: 1px solid hsl(214.3 31.8% 91.4%); border-radius: 6px; background: #fff; color: #101828; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px; } .ds-text-input::placeholder { color: #667085; opacity: 1; } .ds-text-input:focus-visible { outline: 2px solid hsl(215 20.2% 65.1%); outline-offset: 1px; } .ds-text-input:disabled { cursor: not-allowed; opacity: 0.5; }"
+    },
+    {
+      "name": "Signup Form Card",
+      "kind": "card",
+      "refersTo": "signup-card",
+      "description": "The static white container for the enrollment fields.",
+      "html": "<section class=\"ds-signup-card\"><p>Form content</p></section>",
+      "css": ".ds-signup-card { padding: 24px; border: 1px solid #eaecf0; border-radius: 12px; background: #fff; color: #101828; } @media (min-width: 768px) { .ds-signup-card { padding: 32px; } }"
+    },
+    {
+      "name": "Progress Step",
+      "kind": "nav",
+      "refersTo": "progress-current",
+      "description": "A numbered marker and label for the current step in the four-step flow.",
+      "html": "<nav class=\"ds-progress\" aria-label=\"Progress\"><ol><li class=\"ds-progress-step\"><span class=\"ds-progress-marker\" aria-current=\"step\">1</span><span class=\"ds-progress-label\">Your Info</span></li></ol></nav>",
+      "css": ".ds-progress { color: #475467; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } .ds-progress-step { display: flex; align-items: center; gap: 12px; } .ds-progress-marker { display: inline-flex; width: 32px; height: 32px; align-items: center; justify-content: center; border: 2px solid #36bff9; border-radius: 9999px; background: #fff; color: #36bff9; font-size: 14px; font-weight: 600; } .ds-progress-label { color: #36bff9; font-size: 14px; font-weight: 500; line-height: 20px; } .ds-progress-marker:focus-visible { outline: 2px solid #36bff9; outline-offset: 2px; }"
+    },
+    {
+      "name": "Consent Checkbox",
+      "kind": "input",
+      "description": "A compact agreement checkbox with adjacent readable consent text.",
+      "html": "<label class=\"ds-consent\"><input type=\"checkbox\" /><span>I agree to the Terms of Use.</span></label>",
+      "css": ".ds-consent { display: flex; align-items: flex-start; gap: 12px; color: #475467; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 20px; cursor: pointer; } .ds-consent input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: #36bff9; } .ds-consent input:focus-visible { outline: 2px solid hsl(215 20.2% 65.1%); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Guided Business Signup",
+    "overview": "The interface is a clear, professional path through a focused enrollment task. A centered form, visible step progress, and one prominent action keep attention on completing the current step. Inter typography and restrained neutral surfaces support quick scanning without competing with the form.\n\nBrand Blue identifies active progress and primary actions. The Opus logo anchors the white header; its red mark is a supporting brand detail rather than a recurring interface accent. Static surfaces are defined by fine borders, while elevation is reserved for transient menus and popovers.",
+    "keyCharacteristics": [
+      "Clear, direct form hierarchy",
+      "Professional neutral surfaces with a focused blue action color",
+      "Progress indicators make the multi-step flow visible",
+      "Borders define static cards and fields; shadows belong to overlays"
+    ],
+    "rules": [],
+    "dos": [
+      "Do use Brand Blue consistently for the primary action and active or completed progress.",
+      "Do keep the logo centered in a clean white header.",
+      "Do use fine borders to separate the static form card and fields from the page canvas.",
+      "Do keep the step sequence visible while adapting its labels for narrow screens."
+    ],
+    "donts": [
+      "Don't use Opus Red as a second primary action color; it is a logo accent in the current system.",
+      "Don't add heavy shadows to static cards or form fields.",
+      "Don't introduce decorative gradients, display fonts, or extra accent colors that are absent from the incumbent interface."
+    ]
+  }
+}
