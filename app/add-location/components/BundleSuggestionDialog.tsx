@@ -166,7 +166,7 @@ export function BundleSuggestionDialog({
             type="button"
             onClick={onUpgrade}
             disabled={!suggestion}
-            className="min-h-11 w-full bg-[#006d91] font-semibold text-white hover:bg-[#005875] hover:text-white focus-visible:ring-[#006d91]"
+            className="signup-primary min-h-11 w-full focus-visible:ring-[#006d91]"
             data-testid="button-suggestion-proceed-bundle"
           >
             {suggestion ? `Continue with ${suggestion.bundle.tier}` : 'Upgrade unavailable'}
@@ -174,7 +174,7 @@ export function BundleSuggestionDialog({
           <Button
             type="button"
             onClick={onKeepCurrent}
-            className="min-h-11 w-full bg-[#006d91] font-semibold text-white hover:bg-[#005875] hover:text-white focus-visible:ring-[#006d91]"
+            className="signup-primary min-h-11 w-full focus-visible:ring-[#006d91]"
             data-testid="button-suggestion-dismiss"
           >
             Keep current setup

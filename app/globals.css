@@ -281,8 +281,8 @@
     --opus-blue: #36bff9;
     --opus-blue-hover: #2aa8e0;
     --opus-blue-ink: #006d91;
-    --opus-action: #344054;
-    --opus-action-hover: #263241;
+    --opus-action: var(--opus-blue);
+    --opus-action-hover: var(--opus-blue-hover);
     --opus-ink: #101828;
     --opus-muted: #475467;
     --opus-rule: #dfe5eb;
