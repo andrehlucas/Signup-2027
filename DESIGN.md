@@ -162,7 +162,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 - **Internal Padding:** More spacious on desktop and reduced on mobile.
 - **Route consistency:** Location, plan, add-on, checkout, and confirmation surfaces use the same flat white surface, subtle rule, and 12px corner. Selected package and add-on states use a thin blue-ink outline with a neutral fill rather than colored gradients.
 - **Bundle tier exception:** Essentials remains neutral. PLUS uses teal `#185f58` on `#edf6f4`, PRO blue `#345b91` on `#eef2f8`, PREMIUM amber `#80591e` on `#f7f2e9`, and PLATINUM plum `#754965` on `#f5eef3`. Keep each tier’s tint and dark accent consistent on desktop cards, mobile carousel cards, comparison headers, and feature checks. Color identifies the tier; readable text, checks, and the exact upgrade-feature list carry the meaning.
-- **Plan review summary:** The address and the actual selected bundle are shown side by side on desktop and stacked on mobile. Show the selected tier and live monthly price; keep enabled services in a native “View included services” disclosure. The neutral Essentials baseline remains selectable for $99/mo in the comparison area. Never imply a selected plan before one exists.
+- **Plan review summary:** Lead with the actual selected tier and monthly price, then show the full address in one compact row with quiet edit actions. Keep enabled services in a full-width native “View included services” disclosure. Avoid generic recap headings and duplicate plan marketing names. Essentials remains selectable for $99/mo in the comparison area; never imply a selection before one exists.
 
 ### Inputs / Fields
 - **Character:** Plain, readable, and easy to scan.
