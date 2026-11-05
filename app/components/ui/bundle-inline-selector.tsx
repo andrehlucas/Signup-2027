@@ -6,43 +6,13 @@ import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle, featureIndividualPrices, ESSENTIALS_PLAN } from "@/app/add-location/types";
 
-const CARD_HEIGHT = 220;
+const CARD_HEIGHT = 304;
 
-function needsDarkText(hex: string): boolean {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return luminance > 0.55;
-}
-
-function cardTextColor(bg: string): string {
-  return needsDarkText(bg) ? "#1a1a1a" : "#ffffff";
-}
-
-function cardSubTextColor(bg: string): string {
-  return needsDarkText(bg) ? "rgba(26,26,26,0.7)" : "rgba(255,255,255,0.7)";
-}
-
-const bundleDescriptions: Record<string, string> = {
-  plus: "Everything in Essentials, plus call log, toll-free number, and callout to boost your reach.",
-  pro: "Essentials and Plus features combined with supervised call transfer for seamless client handling.",
-  prestige: "Everything in PRO, plus appointment making (20 appts/mo included) for full-service support.",
-  premium: "Everything in Pro, plus message taking so your clients always reach you.",
-};
-
-const bundleBackgrounds: Record<string, string> = {
-  plus: "#ffffff",
-  pro: "#ffffff",
-  premium: "#ffffff",
-  prestige: "#ffffff",
-};
-
-const bundleAccentColors: Record<string, string> = {
-  plus: "#475467",
-  pro: "#475467",
-  premium: "#475467",
-  prestige: "#475467",
+const bundleThemes: Record<string, { surface: string; accent: string; border: string }> = {
+  plus: { surface: "#edf6f4", accent: "#185f58", border: "#b9d7d1" },
+  pro: { surface: "#eef2f8", accent: "#345b91", border: "#bdcbe0" },
+  premium: { surface: "#f7f2e9", accent: "#80591e", border: "#d9c8a7" },
+  prestige: { surface: "#f5eef3", accent: "#754965", border: "#d6c0cf" },
 };
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
@@ -53,8 +23,14 @@ const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "calloutFeature", label: "Callout Feature" },
   { key: "supervisedCallTransfer", label: "Supervised Call Transfer" },
   { key: "messageTaking", label: "Message Taking" },
-  { key: "appointmentMaking", label: "Appointment Making" },
+  { key: "appointmentMaking", label: "Appointment Making (20/mo)" },
 ];
+
+function getUpgradeFeatures(bundle: Bundle, essentialsBundle: Bundle) {
+  return comparisonFeatures.filter(
+    ({ key }) => bundle.features[key] && !essentialsBundle.features[key]
+  );
+}
 
 function calculateSavings(bundle: Bundle): number {
   let alaCarteTotal = ESSENTIALS_PLAN.price;
@@ -118,7 +94,8 @@ export function BundleInlineSelector({
 
   const currentIndex = wrap(0, count, activeIndex);
   const activeBundle = bundles[currentIndex];
-  const accentColor = bundleAccentColors[activeBundle.id] || "#475467";
+  const activeTheme = bundleThemes[activeBundle.id] || bundleThemes.plus;
+  const accentColor = activeTheme.accent;
   const savings = calculateSavings(activeBundle);
 
   const cardPadding = 8;
@@ -173,7 +150,8 @@ export function BundleInlineSelector({
             const isCenter = offset === 0;
             const isPrev = offset === -1;
             const isSelected = selectedBundleId === bundle.id;
-            const bg = bundleBackgrounds[bundle.id] || bundleBackgrounds.plus;
+            const theme = bundleThemes[bundle.id] || bundleThemes.plus;
+            const upgradeFeatures = getUpgradeFeatures(bundle, essentialsBundle);
 
             let left = centerLeft;
             let cardOpacity = 1;
@@ -193,15 +171,16 @@ export function BundleInlineSelector({
                 key={`${bundle.id}-${absIndex}`}
                 className={cn(
                   "absolute top-0 rounded-xl overflow-hidden border transition-colors",
-                  isCenter ? "z-20 border-gray-300" : "z-10 pointer-events-none border-gray-200",
+                  isCenter ? "z-20" : "z-10 pointer-events-none",
                   isSelected && isCenter
-                    ? "ring-2 ring-[#006d91]/15"
+                    ? "ring-2 ring-gray-900/10"
                     : ""
                 )}
                 style={{
                   width: centerCardWidth,
                   height: CARD_HEIGHT,
-                  background: bg,
+                  background: theme.surface,
+                  borderColor: isSelected && isCenter ? theme.accent : theme.border,
                 }}
                 initial={false}
                 animate={{
@@ -220,19 +199,29 @@ export function BundleInlineSelector({
                     <div className="flex items-baseline justify-between">
                       <span
                         className="text-lg font-bold tracking-tight"
-                        style={{ fontFamily: "'Inter', sans-serif", color: cardTextColor(bg) }}
+                        style={{ fontFamily: "'Inter', sans-serif", color: theme.accent }}
                         data-testid={`inline-badge-${bundle.id}`}
                       >
                         {bundle.tier}
                       </span>
-                      <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
-                        ${bundle.price}<span className="text-xs font-normal opacity-70">/mo</span>
+                      <span className="text-lg font-bold" style={{ color: theme.accent }} data-testid={`inline-price-${bundle.id}`}>
+                        ${bundle.price}<span className="text-xs font-normal">/mo</span>
                       </span>
                     </div>
 
-                    <p className="text-sm leading-relaxed opacity-85" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
-                      {bundleDescriptions[bundle.id] || bundle.name}
-                    </p>
+                    <div className="space-y-1" data-testid={`inline-description-${bundle.id}`}>
+                      <p className="text-xs font-semibold" style={{ color: theme.accent }}>
+                        Essentials included, plus:
+                      </p>
+                      <ul className="space-y-0.5">
+                        {upgradeFeatures.map((feature) => (
+                          <li key={feature.key} className="flex items-start gap-1.5 text-xs leading-4 text-gray-800">
+                            <Check className="mt-0.5 h-3 w-3 shrink-0" style={{ color: theme.accent }} aria-hidden="true" />
+                            <span>{feature.label}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
                     {(() => {
                       const cardSavings = calculateSavings(bundle);
@@ -240,8 +229,9 @@ export function BundleInlineSelector({
                         <span
                           className="inline-flex self-start items-center text-xs font-semibold px-2.5 py-1 rounded-full"
                           style={{
-                            backgroundColor: "#f2f4f7",
-                            color: cardTextColor(bg),
+                            backgroundColor: theme.surface,
+                            color: theme.accent,
+                            border: `1px solid ${theme.border}`,
                           }}
                           data-testid={`inline-savings-badge-${bundle.id}`}
                         >
@@ -294,7 +284,8 @@ export function BundleInlineSelector({
       <div className="hidden md:grid md:grid-cols-4 gap-4 py-4">
         {bundles.map((bundle) => {
           const isSelected = selectedBundleId === bundle.id;
-          const bg = bundleBackgrounds[bundle.id] || bundleBackgrounds.plus;
+          const theme = bundleThemes[bundle.id] || bundleThemes.plus;
+          const upgradeFeatures = getUpgradeFeatures(bundle, essentialsBundle);
           const bundleSavings = calculateSavings(bundle);
 
           return (
@@ -302,10 +293,11 @@ export function BundleInlineSelector({
               key={bundle.id}
               className={cn(
                 "rounded-xl overflow-hidden border transition-colors",
-                isSelected ? "border-[#006d91] ring-2 ring-[#006d91]/15" : "border-gray-200 hover:border-gray-400"
+                isSelected ? "ring-2 ring-gray-900/10" : "hover:brightness-[0.99]"
               )}
               style={{
-                background: bg,
+                background: theme.surface,
+                borderColor: isSelected ? theme.accent : theme.border,
                 minHeight: CARD_HEIGHT,
               }}
               data-testid={`inline-bundle-card-${bundle.id}`}
@@ -315,26 +307,37 @@ export function BundleInlineSelector({
                   <div className="flex items-center justify-between">
                     <span
                       className="text-xl font-bold tracking-tight"
-                      style={{ fontFamily: "'Inter', sans-serif", color: cardTextColor(bg) }}
+                      style={{ fontFamily: "'Inter', sans-serif", color: theme.accent }}
                       data-testid={`inline-badge-${bundle.id}`}
                     >
                       {bundle.tier}
                     </span>
-                    <span className="text-lg font-bold" style={{ color: cardTextColor(bg) }} data-testid={`inline-price-${bundle.id}`}>
-                      ${bundle.price}<span className="text-xs font-normal" style={{ color: cardSubTextColor(bg) }}>/mo</span>
+                    <span className="text-lg font-bold" style={{ color: theme.accent }} data-testid={`inline-price-${bundle.id}`}>
+                      ${bundle.price}<span className="text-xs font-normal">/mo</span>
                     </span>
                   </div>
 
-                  <p className="text-sm leading-relaxed" style={{ color: cardTextColor(bg) }} data-testid={`inline-description-${bundle.id}`}>
-                    {bundleDescriptions[bundle.id] || bundle.name}
-                  </p>
+                  <div className="space-y-1.5" data-testid={`inline-description-${bundle.id}`}>
+                    <p className="text-xs font-semibold" style={{ color: theme.accent }}>
+                      Essentials included, plus:
+                    </p>
+                    <ul className="space-y-1">
+                      {upgradeFeatures.map((feature) => (
+                        <li key={feature.key} className="flex items-start gap-2 text-xs leading-4 text-gray-800">
+                          <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: theme.accent }} aria-hidden="true" />
+                          <span>{feature.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
                   {bundleSavings > 0 && (
                     <span
                       className="text-xs font-semibold rounded-full px-2.5 py-0.5 self-start"
                       style={{
-                        color: cardTextColor(bg),
-                       backgroundColor: "#f2f4f7",
+                       color: theme.accent,
+                       backgroundColor: theme.surface,
+                       border: `1px solid ${theme.border}`,
                       }}
                     >
                       Save ${bundleSavings}/mo
@@ -370,9 +373,16 @@ export function BundleInlineSelector({
       {/* Mobile comparison table */}
       <div className="mt-2 px-2 md:hidden" data-testid="inline-comparison-table">
         <div className="flex items-center gap-2 mb-3" data-testid="comparison-header">
-          <span className="flex-1 min-w-0 text-xs font-medium text-gray-900" data-testid="text-what-you-get">What you get:</span>
+        <span className="flex-1 min-w-0 text-xs font-medium text-gray-900" data-testid="text-what-you-get">Included features</span>
           <div className="flex items-center flex-shrink-0" style={{ width: "140px" }}>
-            <span className="text-center text-xs font-medium text-gray-500" style={{ width: "70px" }} data-testid="text-essentials-col">Essentials</span>
+            <span
+              className="text-center text-xs font-medium text-gray-600"
+              style={{ width: "70px" }}
+              aria-label="Essentials baseline plan"
+              data-testid="text-essentials-col"
+            >
+              Essentials
+            </span>
             <div className="relative overflow-hidden" style={{ width: "70px", height: "16px" }}>
               <AnimatePresence mode="wait">
                 <motion.span
@@ -381,8 +391,8 @@ export function BundleInlineSelector({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.25, ease: "easeInOut" }}
-                  className="absolute inset-0 flex items-center justify-center text-xs font-bold"
-                  style={{ color: accentColor }}
+                className="absolute inset-0 flex items-center justify-center rounded-sm text-xs font-bold"
+                  style={{ color: accentColor, backgroundColor: activeTheme.surface }}
                   data-testid={`text-bundle-col-${activeBundle.id}`}
                 >
                   {activeBundle.tier}
@@ -462,14 +472,24 @@ export function BundleInlineSelector({
       {/* Desktop comparison table - all bundles shown as columns */}
       <div className="hidden md:block mt-4 px-2" data-testid="inline-comparison-table-desktop">
         <div className="flex items-center gap-2 mb-3" data-testid="comparison-header-desktop">
-          <span className="flex-1 min-w-0 text-xs font-medium text-gray-900">What you get:</span>
+        <span className="flex-1 min-w-0 text-xs font-medium text-gray-900">Included features</span>
           <div className="flex items-center flex-shrink-0" style={{ width: `${(bundles.length + 1) * 80}px` }}>
-            <span className="text-center text-xs font-medium text-gray-500" style={{ width: "80px" }}>Essentials</span>
+            <span
+              className="text-center text-xs font-medium text-gray-600"
+              style={{ width: "80px" }}
+              aria-label="Essentials baseline plan"
+            >
+              Essentials
+            </span>
             {bundles.map((bundle) => (
               <span
                 key={bundle.id}
                 className="text-center text-xs font-bold"
-                style={{ width: "80px", color: bundleAccentColors[bundle.id] || "#475467" }}
+                  aria-label={`${bundle.tier} upgrade plan`}
+                style={{
+                  width: "80px",
+                  color: (bundleThemes[bundle.id] || bundleThemes.plus).accent,
+                }}
               >
                 {bundle.tier}
               </span>
@@ -504,7 +524,10 @@ export function BundleInlineSelector({
                     return (
                       <div key={bundle.id} className="flex justify-center" style={{ width: "80px" }}>
                         {bundleHas ? (
-                          <Check className="h-3.5 w-3.5" style={{ color: bundleAccentColors[bundle.id] || "#475467" }} />
+                          <Check
+                            className="h-3.5 w-3.5"
+                            style={{ color: (bundleThemes[bundle.id] || bundleThemes.plus).accent }}
+                          />
                         ) : (
                           <span className="text-gray-300 text-xs">—</span>
                         )}
