@@ -26,12 +26,11 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
   return (
     <nav
       aria-label="Enrollment progress"
-      className="mx-auto w-full max-w-lg"
+      className="mx-auto w-full max-w-3xl"
       data-testid="progress-indicator"
     >
       <ol
-        className="grid gap-3 sm:gap-5"
-        style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
+        className="grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-flow-col sm:auto-cols-fr sm:grid-cols-none sm:gap-5"
       >
         {steps.map((step) => {
           const isCompleted = step.id < currentStep;
@@ -47,7 +46,7 @@ export function ProgressIndicator({ currentStep, steps = defaultSteps }: Progres
                 data-testid={`step-${step.id}-${isCompleted ? 'complete' : isCurrent ? 'current' : 'upcoming'}`}
               />
               <span
-                className={`block text-xs font-semibold leading-5 sm:text-sm ${
+                className={`block whitespace-nowrap text-xs font-semibold leading-5 sm:text-sm ${
                   isCurrent
                     ? 'text-[#006d91]'
                     : isCompleted

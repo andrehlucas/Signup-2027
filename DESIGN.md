@@ -161,7 +161,7 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 ### Navigation
 - **Style:** A centered logo in a simple white header with a thin divider below.
 - **Progress:** Four equal-width, 4px-high rounded bars sit above left-aligned semibold labels. Brand Blue fills the current and completed bars; upcoming bars are neutral gray. Completed steps support keyboard-accessible backward navigation; future steps are not interactive.
-- **Mobile:** Keep all four bars and labels visible. Reduce the gaps and allow labels to wrap without horizontal scrolling.
+- **Responsive:** Use a wider single row on desktop and a two-column, two-row grid on phones. Keep every label on one line without truncation or horizontal scrolling.
 
 ### Checkbox
 - **Style:** A compact square control aligned with its consent copy.
