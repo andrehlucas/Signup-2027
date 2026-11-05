@@ -123,7 +123,7 @@ The palette is built around Brand Blue and a quiet range of white, cool gray, an
 
 The signup screen uses a centered single-column composition. The logo sits in a full-width white header; the main heading and four-step progress indicator sit above a centered form card. The form card is constrained to a comfortable reading width, with wider desktop padding and tighter mobile padding.
 
-Name fields sit side by side when space allows and stack on narrow screens. Persistent labels identify each field. The phone, email, company, and consent controls remain in a clear vertical sequence, ending in a full-width primary action. Progress labels are visible on wider screens; smaller screens show numbered markers and a compact current-step summary. Preserve generous separation between the page heading, progress, and form.
+Name fields sit side by side when space allows and stack on narrow screens. Persistent labels identify each field. The phone, email, company, and consent controls remain in a clear vertical sequence, ending in a full-width primary action. Progress uses four equal-width thin bars with their labels beneath, visible at every screen size. Preserve generous separation between the page heading, progress, and form.
 
 ## Elevation & Depth
 
@@ -134,7 +134,7 @@ The system is flat and border-led. The main signup card has a white surface and 
 
 ## Shapes
 
-Fields and controls use compact, gently rounded corners. The main form card has a more generous rounded edge, while progress markers are circular. Borders stay thin and understated; avoid decorative clipping or oversized pill shapes except where the component is inherently circular.
+Fields and controls use compact, gently rounded corners. The main form card has a more generous rounded edge, while progress segments use thin bars with rounded ends. Borders stay thin and understated; avoid decorative clipping or oversized pill shapes.
 
 ## Components
 
@@ -160,8 +160,8 @@ Fields and controls use compact, gently rounded corners. The main form card has 
 
 ### Navigation
 - **Style:** A centered logo in a simple white header with a thin divider below.
-- **Progress:** Four numbered circular markers connect in a horizontal sequence. Brand Blue marks the current and completed steps; neutral outlines and text mark upcoming steps.
-- **Mobile:** Keep the numbered markers visible and show the current step name and total step count beneath them.
+- **Progress:** Four equal-width, 4px-high rounded bars sit above left-aligned semibold labels. Brand Blue fills the current and completed bars; upcoming bars are neutral gray. Completed steps support keyboard-accessible backward navigation; future steps are not interactive.
+- **Mobile:** Keep all four bars and labels visible. Reduce the gaps and allow labels to wrap without horizontal scrolling.
 
 ### Checkbox
 - **Style:** A compact square control aligned with its consent copy.
