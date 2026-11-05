@@ -44,15 +44,6 @@
       ],
       "@shared/*": [
         "./shared/*"
-      ],
-      "@workspace/opus-vo-design-system/*": [
-        "./artifacts/opus-vo-design-system/*"
-      ],
-      "react": [
-        "./node_modules/@types/react/index.d.ts"
-      ],
-      "react-dom": [
-        "./node_modules/@types/react-dom/index.d.ts"
       ]
     }
   }

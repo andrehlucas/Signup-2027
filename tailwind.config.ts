@@ -4,41 +4,10 @@ const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./artifacts/opus-vo-design-system/src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        brand: {
-          25: "var(--brand-25)", 50: "var(--brand-50)", 100: "var(--brand-100)", 200: "var(--brand-200)",
-          300: "var(--brand-300)", 400: "var(--brand-400)", 500: "var(--brand-500)", 600: "var(--brand-600)",
-          700: "var(--brand-700)", 800: "var(--brand-800)", 900: "var(--brand-900)",
-        },
-        gray: {
-          25: "var(--gray-25)", 50: "var(--gray-50)", 100: "var(--gray-100)", 200: "var(--gray-200)",
-          300: "var(--gray-300)", 400: "var(--gray-400)", 500: "var(--gray-500)", 600: "var(--gray-600)",
-          700: "var(--gray-700)", 800: "var(--gray-800)", 900: "var(--gray-900)", 950: "var(--gray-950)",
-        },
-        error: {
-          25: "var(--error-25)", 50: "var(--error-50)", 100: "var(--error-100)", 200: "var(--error-200)",
-          300: "var(--error-300)", 400: "var(--error-400)", 500: "var(--error-500)", 600: "var(--error-600)",
-          700: "var(--error-700)", 800: "var(--error-800)", 900: "var(--error-900)", 950: "var(--error-950)",
-        },
-        warning: {
-          25: "var(--warning-25)", 50: "var(--warning-50)", 100: "var(--warning-100)", 200: "var(--warning-200)",
-          300: "var(--warning-300)", 400: "var(--warning-400)", 500: "var(--warning-500)", 600: "var(--warning-600)",
-          700: "var(--warning-700)", 800: "var(--warning-800)", 900: "var(--warning-900)", 950: "var(--warning-950)",
-        },
-        success: {
-          25: "var(--success-25)", 50: "var(--success-50)", 100: "var(--success-100)", 200: "var(--success-200)",
-          300: "var(--success-300)", 400: "var(--success-400)", 500: "var(--success-500)", 600: "var(--success-600)",
-          700: "var(--success-700)", 800: "var(--success-800)", 900: "var(--success-900)", 950: "var(--success-950)",
-        },
-        "gray-blue": {
-          25: "var(--gray-blue-25)", 50: "var(--gray-blue-50)", 100: "var(--gray-blue-100)", 200: "var(--gray-blue-200)",
-          300: "var(--gray-blue-300)", 400: "var(--gray-blue-400)", 500: "var(--gray-blue-500)", 600: "var(--gray-blue-600)",
-          700: "var(--gray-blue-700)", 800: "var(--gray-blue-800)", 900: "var(--gray-blue-900)",
-        },
         basewhite: "var(--basewhite)",
         "black-900": "var(--black-900)",
         "blue-light100": "var(--blue-light100)",

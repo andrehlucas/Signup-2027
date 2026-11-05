@@ -2,33 +2,8 @@ import { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { MailAction, NotificationType } from "../shared/schema";
-import { completeSignup } from "./signup";
-import { prepareCheckout } from "./checkout";
-import { buildFunnelSummary } from "./funnel-summary";
 
 export function registerRoutes(app: Express): Server {
-  app.post("/api/signup", async (req, res) => {
-    try {
-      const result = await completeSignup(storage, req.body);
-      res.status(result.status).json(result.body);
-    } catch {
-      // Never include request data or exception details in signup logs.
-      console.error("Unable to complete signup.");
-      res.status(500).json({ message: "Unable to complete signup right now. Please try again." });
-    }
-  });
-
-  app.post("/api/checkout", async (req, res) => {
-    try {
-      const result = await prepareCheckout(storage, req.body);
-      res.status(result.status).json(result.body);
-    } catch {
-      // Never include request data, destination URLs, or exception details in logs.
-      console.error("Unable to prepare checkout.");
-      res.status(500).json({ message: "Unable to prepare checkout right now. Please try again." });
-    }
-  });
-
   app.get("/api/user", async (_req, res) => {
     try {
       // For now, return the first seeded user as "current user"
@@ -310,7 +285,7 @@ export function registerRoutes(app: Express): Server {
         await storage.updateFunnelSession(sessionId, { lastSeenAt: timestamp });
       }
 
-      if (step === 'choose_program' && eventType === 'complete') {
+      if (step === 'checkout' && eventType === 'complete') {
         await storage.updateFunnelSession(sessionId, { completed: true, lastSeenAt: timestamp });
       }
 
@@ -332,19 +307,74 @@ export function registerRoutes(app: Express): Server {
 
   app.get("/api/funnel/summary", async (_req, res) => {
     if (!FUNNEL_TRACKING_ENABLED) {
-      res.json({
-        enabled: false,
-        steps: [],
-        sessions: { total: 0, completed: 0 },
-        trends: [],
-        recentEvents: [],
-      });
+      res.json({ enabled: false, steps: [], sessions: { total: 0, completed: 0 }, events: [] });
       return;
     }
     try {
       const events = await storage.getFunnelEvents();
       const sessions = await storage.getFunnelSessions();
-      res.json({ enabled: true, ...buildFunnelSummary(events, sessions) });
+
+      const stepOrder: string[] = ['your_info', 'customize', 'checkout'];
+      const stepLabels: Record<string, string> = {
+        your_info: 'Your Info',
+        customize: 'Customize',
+        checkout: 'Checkout',
+      };
+
+      const stepStats = stepOrder.map(step => {
+        const enterEvents = events.filter(e => e.step === step && e.eventType === 'enter');
+        const completeEvents = events.filter(e => e.step === step && e.eventType === 'complete');
+        const uniqueEnterSessions = new Set(enterEvents.map(e => e.sessionId)).size;
+        const uniqueCompleteSessions = new Set(completeEvents.map(e => e.sessionId)).size;
+
+        const durations = completeEvents
+          .filter(e => e.duration !== null && e.duration !== undefined)
+          .map(e => e.duration as number);
+        const avgDuration = durations.length > 0
+          ? Math.round(durations.reduce((a, b) => a + b, 0) / durations.length)
+          : 0;
+
+        return {
+          step,
+          label: stepLabels[step] || step,
+          entered: uniqueEnterSessions,
+          completed: uniqueCompleteSessions,
+          avgDuration,
+        };
+      });
+
+      const totalSessions = sessions.length;
+      const completedSessions = sessions.filter(s => s.completed).length;
+
+      const dailyData: Record<string, Record<string, Set<string>>> = {};
+      events.forEach(e => {
+        const day = e.timestamp.split('T')[0];
+        if (!dailyData[day]) dailyData[day] = {};
+        if (!dailyData[day][e.step]) dailyData[day][e.step] = new Set();
+        if (e.eventType === 'enter') {
+          dailyData[day][e.step].add(e.sessionId);
+        }
+      });
+
+      const trends = Object.entries(dailyData)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([date, steps]) => {
+          const row: Record<string, number | string> = { date };
+          stepOrder.forEach(step => {
+            row[step] = steps[step] ? steps[step].size : 0;
+          });
+          return row;
+        });
+
+      res.json({
+        enabled: true,
+        steps: stepStats,
+        sessions: { total: totalSessions, completed: completedSessions },
+        trends,
+        recentEvents: events
+          .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+          .slice(0, 50),
+      });
     } catch (error) {
       console.error("Error fetching funnel summary:", error);
       res.status(500).json({ message: "Internal server error" });

@@ -30,7 +30,6 @@ async function sendFunnelEvent(data: {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-      keepalive: true,
     });
   } catch {
     // Silently fail - tracking should never break the user experience

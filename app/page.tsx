@@ -2,13 +2,16 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, ArrowRight, ShieldCheck } from 'lucide-react';
-import { Button } from '@workspace/opus-vo-design-system/components/ui/button';
+import { ChevronDown } from 'lucide-react';
+import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { ProgressIndicator } from './add-location/components/ProgressIndicator';
 import { useOrder } from './add-location/context';
 import { useFunnelTracking } from './hooks/use-funnel-tracking';
+
+// Set to true to skip user info validation and go straight to Customize
+const SKIP_USER_INFO = true;
 
 const countryCodes = [
   { code: '+1', flag: '🇺🇸', label: 'US' },
@@ -33,8 +36,7 @@ function formatPhoneNumber(value: string): string {
 
 export default function SignUpPage() {
   const router = useRouter();
-  const { order, setUserInfo, signupPending, signupComplete } = useOrder();
-  const frozen = signupPending || signupComplete;
+  const { order, setUserInfo } = useOrder();
 
   const [firstName, setFirstName] = useState(order.userInfo.firstName);
   const [lastName, setLastName] = useState(order.userInfo.lastName);
@@ -80,68 +82,46 @@ export default function SignUpPage() {
   };
 
   const handleContinue = () => {
-    if (frozen || !validate()) return;
+    if (!SKIP_USER_INFO && !validate()) return;
 
     setUserInfo({
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      phone: phone.replace(/\D/g, ''),
+      firstName: firstName.trim() || 'Test',
+      lastName: lastName.trim() || 'User',
+      phone: phone.replace(/\D/g, '') || '5551234567',
       countryCode,
-      email: email.trim(),
-      confirmEmail: confirmEmail.trim(),
-      company: company.trim(),
-      termsAccepted,
+      email: email.trim() || 'test@example.com',
+      confirmEmail: confirmEmail.trim() || 'test@example.com',
+      company: company.trim() || 'Test Company',
+      termsAccepted: SKIP_USER_INFO ? true : termsAccepted,
     });
 
     trackComplete();
-    router.push('/add-location');
+    router.push('/add-location/customize');
   };
 
   return (
-    <div className="signup-flow min-h-[calc(100vh-81px)] relative overflow-hidden" style={{ backgroundColor: '#f4f7fb' }} data-testid="signup-page">
-      {/* Subtle dot-grid pattern */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true">
-        <defs>
-          <pattern id="dot-grid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
-            <circle cx="1.5" cy="1.5" r="1.5" fill="#0086C9" fillOpacity="0.10" />
-          </pattern>
-          {/* Fade mask: visible on sides, transparent in the center where content lives */}
-          <mask id="grid-mask">
-            <rect width="100%" height="100%" fill="white" />
-            <rect x="20%" y="0" width="60%" height="100%" fill="black" />
-          </mask>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#dot-grid)" mask="url(#grid-mask)" />
-        {/* Thin horizontal rule under the headline area */}
-        <line x1="0" y1="230" x2="100%" y2="230" stroke="#0086C9" strokeOpacity="0.06" strokeWidth="1" />
-      </svg>
-
-      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 lg:py-12">
-        {/* Headline */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-[2rem] font-extrabold leading-tight text-[#0f2044] max-w-xl mx-auto" data-testid="heading-signup">
-            You're Only 3 Steps Away From<br className="hidden sm:block" />
-            <span className="text-[#0086C9]"> Securing Your Virtual Office</span>
+    <div className="min-h-[calc(100vh-73px)] bg-gray-50 p-4 lg:p-8" data-testid="signup-page">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup">
+            You're Only 3 Steps Away From Securing Your New Virtual Office Solution!
           </h1>
         </div>
 
-        {/* Progress indicator */}
-        <div className="mb-10 max-w-2xl mx-auto">
-          <ProgressIndicator currentStep={1} disabled={frozen} />
+        <div className="mb-8">
+          <ProgressIndicator currentStep={1} />
         </div>
 
-        {/* Form card */}
-        <div className="max-w-lg mx-auto">
-          <div className="bg-white rounded-2xl shadow-md border border-brand-50 px-7 py-8">
-            <div className="space-y-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8">
+            <div className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Input
-                    disabled={frozen}
                     placeholder="First Name"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className={`h-11 rounded-lg text-sm ${errors.firstName ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
+                    className={`h-12 ${errors.firstName ? 'border-red-500' : ''}`}
                     data-testid="input-first-name"
                   />
                   {errors.firstName && (
@@ -150,11 +130,10 @@ export default function SignUpPage() {
                 </div>
                 <div>
                   <Input
-                    disabled={frozen}
                     placeholder="Last Name"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className={`h-11 rounded-lg text-sm ${errors.lastName ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
+                    className={`h-12 ${errors.lastName ? 'border-red-500' : ''}`}
                     data-testid="input-last-name"
                   />
                   {errors.lastName && (
@@ -163,23 +142,21 @@ export default function SignUpPage() {
                 </div>
               </div>
 
-              {/* Phone field with country selector */}
               <div>
-                <div className={`flex rounded-lg overflow-hidden border ${errors.phone ? 'border-red-400' : 'border-gray-200'} focus-within:ring-2 focus-within:ring-[#0086C9]/30 focus-within:border-[#0086C9] transition-all`}>
-                  <div className="relative flex-shrink-0">
+                <div className="relative flex">
+                  <div className="relative">
                     <button
                       type="button"
-                      disabled={frozen}
                       onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                      className="flex items-center gap-1.5 h-11 px-3 bg-gray-50 hover:bg-gray-100 transition-colors border-r border-gray-200"
+                      className={`flex items-center gap-1.5 h-12 px-3 border border-r-0 rounded-l-md bg-gray-50 hover:bg-gray-100 transition-colors ${errors.phone ? 'border-red-500' : 'border-input'}`}
                       data-testid="button-country-code"
                     >
-                      <span className="text-base leading-none">{selectedCountry.flag}</span>
-                      <span className="text-sm text-gray-600 font-medium">{countryCode}</span>
-                      <ChevronDown className="h-3 w-3 text-gray-400" />
+                      <span className="text-lg">{selectedCountry.flag}</span>
+                      <span className="text-sm text-gray-700">{countryCode}</span>
+                      <ChevronDown className="h-3 w-3 text-gray-500" />
                     </button>
                     {showCountryDropdown && (
-                      <div className="absolute top-full left-0 z-50 mt-1 w-48 bg-white border border-gray-200 rounded-xl shadow-xl max-h-60 overflow-y-auto" data-testid="dropdown-country-codes">
+                      <div className="absolute top-full left-0 z-50 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto" data-testid="dropdown-country-codes">
                         {countryCodes.map((c, idx) => (
                           <button
                             key={`${c.code}-${c.label}-${idx}`}
@@ -188,25 +165,24 @@ export default function SignUpPage() {
                               setCountryCode(c.code);
                               setShowCountryDropdown(false);
                             }}
-                            className="w-full flex items-center gap-2 px-3 py-2.5 hover:bg-brand-50 text-left text-sm transition-colors"
+                            className="w-full flex items-center gap-2 px-3 py-2 hover:bg-gray-50 text-left text-sm"
                             data-testid={`option-country-${c.label}`}
                           >
-                            <span className="text-base">{c.flag}</span>
-                            <span className="text-gray-700 font-medium">{c.label}</span>
-                            <span className="text-gray-400 ml-auto">{c.code}</span>
+                            <span className="text-lg">{c.flag}</span>
+                            <span className="text-gray-700">{c.label}</span>
+                            <span className="text-gray-500">{c.code}</span>
                           </button>
                         ))}
                       </div>
                     )}
                   </div>
                   <Input
-                    disabled={frozen}
                     type="tel"
                     inputMode="numeric"
                     placeholder="(555) 555 - 5555"
                     value={phone}
                     onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
-                    className="h-11 rounded-none border-0 flex-1 text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className={`h-12 rounded-l-none flex-1 ${errors.phone ? 'border-red-500' : ''}`}
                     data-testid="input-phone"
                   />
                 </div>
@@ -217,12 +193,11 @@ export default function SignUpPage() {
 
               <div>
                 <Input
-                    disabled={frozen}
                   type="email"
                   placeholder="Email Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`h-11 rounded-lg text-sm ${errors.email ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
+                  className={`h-12 ${errors.email ? 'border-red-500' : ''}`}
                   data-testid="input-email"
                 />
                 {errors.email && (
@@ -232,12 +207,11 @@ export default function SignUpPage() {
 
               <div>
                 <Input
-                    disabled={frozen}
                   type="email"
-                  placeholder="Confirm Email Address"
+                  placeholder="Please confirm your email"
                   value={confirmEmail}
                   onChange={(e) => setConfirmEmail(e.target.value)}
-                  className={`h-11 rounded-lg text-sm ${errors.confirmEmail ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
+                  className={`h-12 ${errors.confirmEmail ? 'border-red-500' : ''}`}
                   data-testid="input-confirm-email"
                 />
                 {errors.confirmEmail && (
@@ -247,11 +221,10 @@ export default function SignUpPage() {
 
               <div>
                 <Input
-                    disabled={frozen}
-                  placeholder="Company Name"
+                  placeholder="Company"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
-                  className={`h-11 rounded-lg text-sm ${errors.company ? 'border-red-400 focus-visible:ring-red-200' : 'border-gray-200'}`}
+                  className={`h-12 ${errors.company ? 'border-red-500' : ''}`}
                   data-testid="input-company"
                 />
                 {errors.company && (
@@ -262,16 +235,15 @@ export default function SignUpPage() {
               <div>
                 <div className="flex items-start gap-3">
                   <Checkbox
-                    disabled={frozen}
                     id="terms"
                     checked={termsAccepted}
                     onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
                     className="mt-0.5"
                     data-testid="checkbox-terms"
                   />
-                  <label htmlFor="terms" className="text-sm text-gray-500 cursor-pointer leading-relaxed">
+                  <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
                     I agree to the{' '}
-                    <a href="#" className="text-[#0086C9] hover:underline font-medium" data-testid="link-terms">
+                    <a href="#" className="text-[#36bff9] hover:underline" data-testid="link-terms">
                       Terms of Use
                     </a>
                     .
@@ -283,23 +255,13 @@ export default function SignUpPage() {
               </div>
 
               <Button
-                disabled={frozen}
                 onClick={handleContinue}
-                hierarchy="primary"
-                size="xl"
-                className="signup-action w-full"
+                className="w-full h-12 bg-[#36bff9] hover:bg-[#2aa8e0] text-white text-lg font-semibold"
                 data-testid="button-continue"
               >
                 Continue
-                <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
-          </div>
-
-          {/* Trust / security note */}
-          <div className="flex items-center justify-center gap-2 mt-4 text-xs text-gray-400">
-            <ShieldCheck className="h-3.5 w-3.5 text-[#0086C9]" />
-            <span>Your information is encrypted and never shared with third parties.</span>
           </div>
         </div>
       </div>

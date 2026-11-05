@@ -36,8 +36,7 @@ interface FunnelSummary {
   }>;
 }
 
-const stepColors = ['#36bff9', '#2aa8e0', '#1478a5'];
-const currentStepOrder = ['your_info', 'pick_location', 'choose_program'];
+const stepColors = ['#36bff9', '#2aa8e0', '#1e90d0', '#1678b8'];
 
 const funnelChartConfig: ChartConfig = {
   entered: { label: 'Entered', color: '#36bff9' },
@@ -46,8 +45,9 @@ const funnelChartConfig: ChartConfig = {
 
 const trendChartConfig: ChartConfig = {
   your_info: { label: 'Your Info', color: '#36bff9' },
-  pick_location: { label: 'Pick Your Location', color: '#2aa8e0' },
-  choose_program: { label: 'Choose Your Program', color: '#1478a5' },
+  pick_plan: { label: 'Pick Your Plan', color: '#2aa8e0' },
+  customize: { label: 'Customize', color: '#1e90d0' },
+  checkout: { label: 'Checkout', color: '#1678b8' },
 };
 
 function formatDuration(seconds: number): string {
@@ -60,18 +60,11 @@ function formatDuration(seconds: number): string {
 function getStepLabel(step: string): string {
   const labels: Record<string, string> = {
     your_info: 'Your Info',
-    pick_location: 'Pick Your Location',
-    choose_program: 'Choose Your Program',
-    pick_plan: 'Legacy: Pick Plan',
-    customize: 'Legacy: Customize',
-    checkout: 'Legacy: Checkout',
+    pick_plan: 'Pick Your Plan',
+    customize: 'Customize',
+    checkout: 'Checkout',
   };
   return labels[step] || step;
-}
-
-function getStepColorIndex(step: string): number {
-  const index = currentStepOrder.indexOf(step);
-  return index < 0 ? 0 : index;
 }
 
 export default function AnalyticsDashboard() {
@@ -369,8 +362,9 @@ export default function AnalyticsDashboard() {
                     <YAxis tick={{ fontSize: 11 }} />
                     <ChartTooltip content={<ChartTooltipContent />} />
                     <Line type="monotone" dataKey="your_info" name="Your Info" stroke="#36bff9" strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="pick_location" name="Pick Your Location" stroke="#2aa8e0" strokeWidth={2} dot={{ r: 3 }} />
-                    <Line type="monotone" dataKey="choose_program" name="Choose Your Program" stroke="#1478a5" strokeWidth={2} dot={{ r: 3 }} />
+                    <Line type="monotone" dataKey="pick_plan" name="Pick Your Plan" stroke="#2aa8e0" strokeWidth={2} dot={{ r: 3 }} />
+                    <Line type="monotone" dataKey="customize" name="Customize" stroke="#1e90d0" strokeWidth={2} dot={{ r: 3 }} />
+                    <Line type="monotone" dataKey="checkout" name="Checkout" stroke="#1678b8" strokeWidth={2} dot={{ r: 3 }} />
                   </LineChart>
                 </ChartContainer>
               ) : (
@@ -413,7 +407,9 @@ export default function AnalyticsDashboard() {
                             <span
                               className="w-2 h-2 rounded-full"
                               style={{
-                                backgroundColor: stepColors[getStepColorIndex(event.step)],
+                                backgroundColor: stepColors[
+                                  ['your_info', 'pick_plan', 'customize', 'checkout'].indexOf(event.step) % stepColors.length
+                                ],
                               }}
                             />
                             {getStepLabel(event.step)}

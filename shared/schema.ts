@@ -84,29 +84,6 @@ export type InsertNotification = z.infer<typeof insertNotificationSchema>;
 export type NotificationPreferences = typeof notificationPreferences.$inferSelect;
 export type InsertNotificationPreferences = z.infer<typeof insertNotificationPreferencesSchema>;
 
-export interface SignupRecord {
-  id: string;
-  requestId: string;
-  requestFingerprint: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  countryCode: string;
-  email: string;
-  company: string;
-  termsAccepted: true;
-  locationId: string;
-  programId: 'essentials' | 'pro' | 'works';
-  billing: 'monthly' | 'annual';
-  quotedMonthlyPrice: number;
-  quotedAnnualTotal: number;
-  quotedPrice: number;
-  status: 'completed';
-  createdAt: string;
-}
-
-export type NewSignup = Omit<SignupRecord, 'id' | 'status' | 'createdAt'>;
-
 export const funnelSessions = pgTable("funnel_sessions", {
   id: varchar("id").primaryKey(),
   sessionId: text("session_id").notNull(),
@@ -135,12 +112,5 @@ export type InsertFunnelSession = z.infer<typeof insertFunnelSessionSchema>;
 export type FunnelEvent = typeof funnelEvents.$inferSelect;
 export type InsertFunnelEvent = z.infer<typeof insertFunnelEventSchema>;
 
-// Keep legacy steps in the type so previously recorded events remain readable.
-export type FunnelStep =
-  | 'your_info'
-  | 'pick_location'
-  | 'choose_program'
-  | 'pick_plan'
-  | 'customize'
-  | 'checkout';
+export type FunnelStep = 'your_info' | 'pick_plan' | 'customize' | 'checkout';
 export type FunnelEventType = 'enter' | 'complete';

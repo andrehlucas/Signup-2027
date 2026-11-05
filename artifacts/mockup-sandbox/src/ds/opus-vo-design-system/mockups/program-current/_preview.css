@@ -1,7 +1,0 @@
-@import "../../../../../../opus-vo-design-system/src/signup-navigation.css";
-
-.program-current-preview {
-  font-family: var(--font-sans);
-  /* Match the source app's root sizing rather than the sandbox defaults. */
-  font-size: 16px;
-}
