@@ -211,33 +211,33 @@ export default function PickPlanPage() {
           <ProgressIndicator currentStep={2} />
         </div>
 
-        <div className="signup-surface p-5 mb-5 flex items-center gap-4" data-testid="review-location-card">
-          <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-            <MapPin className="h-5 w-5 text-gray-500" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-gray-900" data-testid="heading-pick-plan">
-              {order.location.address}
-            </p>
-            <p className="text-sm text-gray-500">
-              {order.location.addressLine2 && <>{order.location.addressLine2}, </>}{order.location.city}, {order.location.stateCode} {order.location.zipCode}
-            </p>
-          </div>
-          <button
-            onClick={() => setSubStep('location')}
-            className="text-sm text-gray-700 hover:text-gray-900 font-medium flex-shrink-0"
-            data-testid="button-change-location"
-          >
-            Change
-          </button>
-        </div>
-
         <div
           className={`signup-surface overflow-hidden mb-5 ${
             essentialsSelected ? 'border-[#006d91]' : 'border-gray-200'
           }`}
           data-testid="review-package-card"
         >
+          <div className="p-5 flex items-center gap-4 border-b border-gray-200" data-testid="review-location-card">
+            <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+              <MapPin className="h-5 w-5 text-gray-500" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-900" data-testid="heading-pick-plan">
+                {order.location.address}
+              </p>
+              <p className="text-sm text-gray-500">
+                {order.location.addressLine2 && <>{order.location.addressLine2}, </>}{order.location.city}, {order.location.stateCode} {order.location.zipCode}
+              </p>
+            </div>
+            <button
+              onClick={() => setSubStep('location')}
+              className="text-sm text-gray-700 hover:text-gray-900 font-medium flex-shrink-0"
+              data-testid="button-change-location"
+            >
+              Change
+            </button>
+          </div>
+
           <div className="bg-gray-50 text-[#101828] flex items-center justify-between px-5 py-3 border-b border-gray-200">
             <div>
               <p className="text-xs font-semibold text-[#475467]">
