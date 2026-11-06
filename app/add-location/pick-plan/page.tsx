@@ -206,16 +206,16 @@ export default function PickPlanPage() {
               <div className="min-w-0" aria-live="polite">
                 <p className="text-xs font-medium text-gray-600">Business phone number</p>
                 {assignedPhone ? (
-                  <>
-                    <p className="mt-0.5 text-sm font-semibold tabular-nums text-gray-900" data-testid="review-business-phone">{assignedPhone.number}</p>
+                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <p className="shrink-0 text-sm font-semibold tabular-nums text-gray-900" data-testid="review-business-phone">{assignedPhone.number}</p>
                     <p
-                      className="mt-2 flex items-start gap-2 rounded-md bg-amber-50 px-3 py-2 text-xs leading-5 text-amber-900"
+                      className="flex items-start gap-2 rounded-md bg-amber-50 px-3 py-2 text-xs leading-5 text-amber-900"
                       data-testid="phone-lock-notice"
                     >
                       <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
                       <span>Phone numbers locked for another <strong className="font-semibold">30 minutes</strong></span>
                     </p>
-                  </>
+                  </div>
                 ) : (
                   <p className="mt-1 text-sm text-gray-700" role="status">No local numbers are currently available. Choose another location to continue.</p>
                 )}
