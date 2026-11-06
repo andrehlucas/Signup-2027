@@ -3,3 +3,4 @@
 - [CTA color intent](cta-color-intent.md) — brand-color enrollment buttons mean bright cyan with white text, not dark teal or charcoal.
 - [International phone validation](international-phone-validation.md) — shared calling codes and number ranges must not cause valid territory numbers to be rejected.
 - [Filter popover focus](filter-popover-focus.md) — adjacent searchable filters need immediate focus handoff; delayed close animations can disrupt the next field.
+- [Bundle comparison visibility](bundle-comparison-visibility.md) — show bundle cards by default; collapse only the feature matrix behind Compare Bundles.

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
+import type { ReactNode } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
@@ -48,6 +49,9 @@ interface BundleInlineSelectorProps {
   onSelect: (bundle: Bundle) => void;
   essentialsBundle: Bundle;
   className?: string;
+  comparisonOpen?: boolean;
+  comparisonControl?: ReactNode;
+  comparisonId?: string;
 }
 
 function wrap(min: number, max: number, v: number) {
@@ -61,6 +65,9 @@ export function BundleInlineSelector({
   onSelect,
   essentialsBundle,
   className,
+  comparisonOpen = true,
+  comparisonControl,
+  comparisonId,
 }: BundleInlineSelectorProps) {
   const getInitialIndex = useCallback(() => {
     if (!selectedBundleId) return 0;
@@ -405,6 +412,8 @@ export function BundleInlineSelector({
         </button>
       </div>
 
+      {comparisonControl}
+      <div id={comparisonId} hidden={!comparisonOpen}>
       {/* Mobile comparison table */}
       <div className="mt-2 px-2 md:hidden" data-testid="inline-comparison-table">
         <div className="flex items-center gap-2 mb-3" data-testid="comparison-header">
@@ -574,6 +583,7 @@ export function BundleInlineSelector({
             );
           })}
         </div>
+      </div>
       </div>
     </div>
   );

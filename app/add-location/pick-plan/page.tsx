@@ -30,7 +30,7 @@ const planTierColors: Record<string, { accent: string; surface: string }> = {
 export default function PickPlanPage() {
   const router = useRouter();
   const { order, setLocation, setBundle, setLocationFilters, setPhoneNumber } = useOrder();
-  const bundleComparisonTriggerRef = useRef<HTMLButtonElement>(null);
+  const bundleCardsRef = useRef<HTMLDivElement>(null);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [subStep, setSubStep] = useState<'location' | 'review'>(order.location ? 'review' : 'location');
   const [phoneDialogOpen, setPhoneDialogOpen] = useState(false);
@@ -84,10 +84,9 @@ export default function PickPlanPage() {
   };
 
   const handleChangePlan = (event: MouseEvent<HTMLButtonElement>) => {
-    setComparisonOpen(true);
     const keyboard = event.detail === 0;
     requestAnimationFrame(() => {
-      const trigger = bundleComparisonTriggerRef.current;
+      const trigger = bundleCardsRef.current;
       if (!trigger) return;
       trigger.focus({ preventScroll: true });
       trigger.scrollIntoView({
@@ -266,10 +265,21 @@ export default function PickPlanPage() {
           onSave={setPhoneNumber}
         />
 
-        <section className="mb-5" aria-labelledby="bundle-comparison-title">
-          <h2 id="bundle-comparison-title">
+        <section className="mb-5" aria-labelledby="bundle-cards-title">
+          <div ref={bundleCardsRef} tabIndex={-1} className="scroll-mt-6 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2">
+            <h2 id="bundle-cards-title" className="mb-3 text-lg font-semibold text-gray-900">
+              Choose your bundle
+            </h2>
+            <BundleInlineSelector
+              bundles={upgradeBundles}
+              selectedBundleId={order.bundle?.id}
+              onSelect={setBundle}
+              essentialsBundle={essentialsPlan}
+              comparisonOpen={comparisonOpen}
+              comparisonId="bundle-comparison-content"
+              comparisonControl={
+          <h2 id="bundle-comparison-title" className="mt-2">
             <button
-              ref={bundleComparisonTriggerRef}
               type="button"
               aria-expanded={comparisonOpen}
               aria-controls="bundle-comparison-content"
@@ -281,20 +291,8 @@ export default function PickPlanPage() {
               <ChevronDown className={`h-4 w-4 shrink-0 ${comparisonOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
             </button>
           </h2>
-          <div id="bundle-comparison-content" hidden={!comparisonOpen}>
-            {comparisonOpen && (
-              <>
-                <p className="mb-1 text-sm text-gray-600">
-                  Compare the optional features included with each upgrade.
-                </p>
-                <BundleInlineSelector
-                  bundles={upgradeBundles}
-                  selectedBundleId={order.bundle?.id}
-                  onSelect={setBundle}
-                  essentialsBundle={essentialsPlan}
-                />
-              </>
-            )}
+              }
+            />
           </div>
         </section>
 
