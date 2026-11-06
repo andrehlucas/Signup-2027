@@ -267,9 +267,26 @@ export default function PickPlanPage() {
 
         <section className="mb-5" aria-labelledby="bundle-cards-title">
           <div ref={bundleCardsRef} tabIndex={-1} className="scroll-mt-6 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2">
-            <h2 id="bundle-cards-title" className="mb-3 text-lg font-semibold text-gray-900">
-              Choose your bundle
-            </h2>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+              <h2 id="bundle-cards-title" className="text-lg font-semibold text-gray-900">
+                Choose your bundle
+              </h2>
+              {order.bundle?.id === essentialsPlan.id ? (
+                <span className="inline-flex min-h-11 items-center gap-1.5 text-sm text-gray-600" role="status" data-testid="essentials-selected-status">
+                  <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                  Essentials selected
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setBundle(essentialsPlan)}
+                  className="inline-flex min-h-11 items-center rounded-md text-sm font-medium text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
+                  data-testid="button-return-to-essentials"
+                >
+                  Return to Essentials · ${essentialsPlan.price}/mo
+                </button>
+              )}
+            </div>
             <BundleInlineSelector
               bundles={upgradeBundles}
               selectedBundleId={order.bundle?.id}
