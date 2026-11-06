@@ -15,7 +15,7 @@ interface ProgressIndicatorProps {
 
 const defaultSteps: Step[] = [
   { id: 1, name: 'Your Info', path: '/' },
-  { id: 2, name: 'Pick Your Location', path: '/add-location' },
+  { id: 2, name: 'Pick Your Location', path: '/add-location/pick-plan' },
   { id: 3, name: 'Customize', path: '/add-location/customize' },
   { id: 4, name: 'Checkout', path: '/add-location/checkout' },
 ];

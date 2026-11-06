@@ -191,15 +191,19 @@ export default function PickPlanPage() {
               >
                 Change location
               </button>
-              <span className="h-4 w-px bg-gray-200" aria-hidden="true" />
-              <button
-                type="button"
-                onClick={handleChangePlan}
-                className="inline-flex min-h-11 items-center whitespace-nowrap rounded-md px-2 text-sm font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 transition-[color,transform] duration-150 ease-out hover:text-gray-900 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
-                data-testid="button-change-plan"
-              >
-                Change plan
-              </button>
+              {order.bundle && order.bundle.id !== essentialsPlan.id && (
+                <>
+                  <span className="h-4 w-px bg-gray-200" aria-hidden="true" />
+                  <button
+                    type="button"
+                    onClick={handleChangePlan}
+                    className="inline-flex min-h-11 items-center whitespace-nowrap rounded-md px-2 text-sm font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 transition-[color,transform] duration-150 ease-out hover:text-gray-900 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
+                    data-testid="button-change-plan"
+                  >
+                    Change Bundle
+                  </button>
+                </>
+              )}
             </div>
           </div>
 

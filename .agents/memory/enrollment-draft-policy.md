@@ -9,6 +9,12 @@ Location selection and changing a location are the same task. Preserve the custo
 
 **How to apply:** Reuse the same selector and preserve purchase intent when adding locations or eligibility rules.
 
+Returning to completed Step 2 from Customize means confirming the existing plan, address and business number, not restarting location search.
+
+**Why:** The user explicitly requested the confirmation screen when using “Pick Your Location” to navigate back from Customize.
+
+**How to apply:** Direct completed-step navigation to plan/location review, preserve the bundle and optional add-ons, and reserve the location picker for initial selection or the explicit Change location action.
+
 Draft recovery is deliberately limited to the current browser-tab session, with short-lived drafts, rather than indefinite cross-session storage.
 
 **Why:** Enrollment contains contact details. Refresh recovery should not leave an indefinitely remembered enrollment on a shared device or be mistaken for an account-backed saved order.
