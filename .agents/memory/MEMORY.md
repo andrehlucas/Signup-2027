@@ -1,3 +1,4 @@
 - [State-dependent visual checks](stateful-visual-checks.md) — retain enrollment state in one browser session; never submit checkout just to obtain a screenshot.
 - [Enrollment draft policy](enrollment-draft-policy.md) — keep refresh recovery session-scoped; changing an address must not silently downgrade the plan.
 - [CTA color intent](cta-color-intent.md) — brand-color enrollment buttons mean bright cyan with white text, not dark teal or charcoal.
+- [International phone validation](international-phone-validation.md) — shared calling codes and number ranges must not cause valid territory numbers to be rejected.

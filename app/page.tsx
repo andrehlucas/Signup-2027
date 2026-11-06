@@ -1,7 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ClipboardEvent } from 'react';
 import { ChevronDown } from 'lucide-react';
+import PhoneInput from 'react-phone-number-input/input-max';
+import { getCountryCallingCode, type E164Number } from 'libphonenumber-js/max';
+import { phoneCountries, phoneCountry, phoneValue, nationalPhone, phoneExample, validPhone, pastedPhone } from './lib/phone';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
@@ -10,39 +13,16 @@ import { ProgressIndicator } from './add-location/components/ProgressIndicator';
 import { useOrder } from './add-location/context';
 import { useFunnelTracking } from './hooks/use-funnel-tracking';
 
-const countryCodes = [
-  { code: '+1', flag: '🇺🇸', region: 'US', name: 'United States' },
-  { code: '+1', flag: '🇨🇦', region: 'CA', name: 'Canada' },
-  { code: '+44', flag: '🇬🇧', region: 'GB', name: 'United Kingdom' },
-  { code: '+61', flag: '🇦🇺', region: 'AU', name: 'Australia' },
-  { code: '+49', flag: '🇩🇪', region: 'DE', name: 'Germany' },
-  { code: '+33', flag: '🇫🇷', region: 'FR', name: 'France' },
-  { code: '+81', flag: '🇯🇵', region: 'JP', name: 'Japan' },
-  { code: '+86', flag: '🇨🇳', region: 'CN', name: 'China' },
-  { code: '+91', flag: '🇮🇳', region: 'IN', name: 'India' },
-  { code: '+52', flag: '🇲🇽', region: 'MX', name: 'Mexico' },
-  { code: '+55', flag: '🇧🇷', region: 'BR', name: 'Brazil' },
-];
-
-function formatPhoneNumber(value: string, region: string): string {
-  const digits = value.replace(/\D/g, '');
-  if (region !== 'US' && region !== 'CA') return digits;
-  if (digits.length <= 3) return digits;
-  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
-  const mainNumber = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)} - ${digits.slice(6, 10)}`;
-  return digits.length > 10 ? `${mainNumber} ${digits.slice(10)}` : mainNumber;
-}
-
 export default function SignUpPage() {
   const router = useRouter();
   const { order, setUserInfo } = useOrder();
 
-  const initialCountryRegion = order.userInfo.countryRegion || 'US';
+  const initialCountryRegion = phoneCountry(order.userInfo.countryRegion || 'US');
   const [firstName, setFirstName] = useState(order.userInfo.firstName);
   const [lastName, setLastName] = useState(order.userInfo.lastName);
-  const [phone, setPhone] = useState(formatPhoneNumber(order.userInfo.phone, initialCountryRegion));
+  const [phone, setPhone] = useState<E164Number | undefined>(() => phoneValue(order.userInfo.phone, initialCountryRegion));
   const [countryRegion, setCountryRegion] = useState(initialCountryRegion);
-  const [countryCode, setCountryCode] = useState(order.userInfo.countryCode || '+1');
+  const countryCode = `+${getCountryCallingCode(countryRegion)}`;
   const [email, setEmail] = useState(order.userInfo.email);
   const [confirmEmail, setConfirmEmail] = useState(order.userInfo.confirmEmail);
   const [company, setCompany] = useState(order.userInfo.company);
@@ -51,23 +31,28 @@ export default function SignUpPage() {
   const { trackComplete } = useFunnelTracking('your_info');
 
   useEffect(() => {
-    setUserInfo({ firstName, lastName, phone: phone.replace(/\D/g, ''), countryRegion, countryCode, email, confirmEmail, company, termsAccepted });
+    setUserInfo({ firstName, lastName, phone: nationalPhone(phone, countryRegion), countryRegion, countryCode, email, confirmEmail, company, termsAccepted });
   }, [firstName, lastName, phone, countryRegion, countryCode, email, confirmEmail, company, termsAccepted, setUserInfo]);
 
-  const selectedCountry = countryCodes.find((country) => country.region === countryRegion) || countryCodes[0];
+  const selectedCountry = phoneCountries.find((country) => country.region === countryRegion)!;
+  const examplePhone = phoneExample(countryRegion);
+
+  const clearPhoneError = () => {
+    setErrors(current => {
+      const { phone: _phone, ...remaining } = current;
+      return remaining;
+    });
+  };
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    const phoneDigits = phone.replace(/\D/g, '');
 
     if (!firstName.trim()) newErrors.firstName = 'First name is required';
     if (!lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!phoneDigits) {
+    if (!phone) {
       newErrors.phone = 'Phone number is required';
-    } else if (phoneDigits.length < 7) {
-      newErrors.phone = 'Please enter a valid phone number (at least 7 digits)';
-    } else if (phoneDigits.length > 15) {
-      newErrors.phone = 'Phone number is too long';
+    } else if (!validPhone(phone, countryRegion)) {
+      newErrors.phone = `Enter a valid phone number for ${selectedCountry.name}${examplePhone ? `, for example ${examplePhone}` : ''}.`;
     }
     if (!email.trim()) {
       newErrors.email = 'Email address is required';
@@ -92,7 +77,7 @@ export default function SignUpPage() {
     setUserInfo({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
-      phone: phone.replace(/\D/g, ''),
+      phone: nationalPhone(phone, countryRegion),
       countryCode,
       countryRegion,
       email: email.trim(),
@@ -180,12 +165,11 @@ export default function SignUpPage() {
                     id="country-region"
                     value={countryRegion}
                     onChange={(event) => {
-                      const region = event.target.value;
-                      const country = countryCodes.find((item) => item.region === region);
-                      if (!country) return;
+                      const region = phoneCountry(event.target.value);
+                      const national = nationalPhone(phone, countryRegion);
                       setCountryRegion(region);
-                      setCountryCode(country.code);
-                      setPhone((currentPhone) => formatPhoneNumber(currentPhone, region));
+                      setPhone(phoneValue(national, region));
+                      clearPhoneError();
                     }}
                     aria-label={`Country and calling code: ${selectedCountry.name} (${countryCode})`}
                     className={`h-12 w-full appearance-none rounded-md border bg-gray-50 pl-3 pr-10 text-sm text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006d91] min-[380px]:rounded-r-none min-[380px]:border-r-0 ${
@@ -193,7 +177,7 @@ export default function SignUpPage() {
                     }`}
                     data-testid="select-country-region"
                   >
-                    {countryCodes.map((country) => (
+                    {phoneCountries.map((country) => (
                       <option key={country.region} value={country.region} aria-label={`${country.name} (${country.code})`} data-testid={`option-country-${country.region}`}>
                         {country.flag} {country.region} ({country.code})
                       </option>
@@ -204,12 +188,28 @@ export default function SignUpPage() {
                     className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600"
                   />
                   </div>
-                  <Input
+                  <PhoneInput
                     id="phone-number"
+                    inputComponent={Input}
+                    country={countryRegion}
                     type="tel"
                     inputMode="tel"
                     value={phone}
-                    onChange={(e) => setPhone(formatPhoneNumber(e.target.value, countryRegion))}
+                    onChange={(value) => {
+                      setPhone(value);
+                      clearPhoneError();
+                    }}
+                    onPaste={(event: ClipboardEvent<HTMLInputElement>) => {
+                      const text = event.clipboardData.getData('text');
+                      if (!/^\s*(\+|00)/.test(text)) return;
+                      const pasted = pastedPhone(text, countryRegion);
+                      if (!pasted) return;
+                      event.preventDefault();
+                      setCountryRegion(pasted.region);
+                      setPhone(pasted.value);
+                      clearPhoneError();
+                    }}
+                    placeholder={examplePhone}
                     autoComplete="tel-national"
                     aria-invalid={Boolean(errors.phone)}
                     aria-describedby={errors.phone ? 'error-phone' : undefined}
