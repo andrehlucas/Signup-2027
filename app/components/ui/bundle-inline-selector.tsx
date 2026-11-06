@@ -377,6 +377,8 @@ export function BundleInlineSelector({
         })}
       </div>
 
+      {comparisonControl}
+      <div id={comparisonId} hidden={!comparisonOpen}>
       <div className="mt-4" data-testid="essentials-baseline-option">
         <button
           type="button"
@@ -412,8 +414,6 @@ export function BundleInlineSelector({
         </button>
       </div>
 
-      {comparisonControl}
-      <div id={comparisonId} hidden={!comparisonOpen}>
       {/* Mobile comparison table */}
       <div className="mt-2 px-2 md:hidden" data-testid="inline-comparison-table">
         <div className="flex items-center gap-2 mb-3" data-testid="comparison-header">
