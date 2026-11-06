@@ -432,6 +432,15 @@ export function getIncludedAddonIds(bundle: Bundle | null): string[] {
 
 export const availableAddons: Addon[] = [
   {
+    id: 'custom-business-email',
+    name: 'Custom Business Email',
+    description: 'Create custom email addresses using your business domain.',
+    detailedDescription: 'Create custom email addresses using your business domain, such as you@yourcompany.com. Includes domain registration, 10gb secure email hosting, and access from any device to help your business look more professional and replace generic email addresses, such as Gmail, Yahoo, etc...',
+    price: 10,
+    billingCycle: 'monthly',
+    category: 'email',
+  },
+  {
     id: 'toll-free',
     name: 'Toll Free Number',
     description: 'Get a professional 1-800 number for your business',

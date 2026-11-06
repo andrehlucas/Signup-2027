@@ -35,6 +35,14 @@ test('restores contact details, location, plan, package, phone and filters', () 
   assert.deepEqual(saved.filters, filters);
 });
 
+test('restores custom business email from the catalog with its monthly price', () => {
+  const email = availableAddons.find(addon => addon.id === 'custom-business-email')!;
+  const saved = decodeDraft(encodeDraft({ ...order, addons: [email] }, filters, now), empty, now);
+  assert.equal(saved.order.addons[0].id, email.id);
+  assert.equal(saved.order.addons[0].price, 10);
+  assert.equal(saved.order.addons[0].billingCycle, 'monthly');
+});
+
 test('preserves nationwide browsing and states without listed offices on refresh', () => {
   for (const state of ['', 'California', 'Alaska']) {
     const savedFilters = { state, city: 'all' };

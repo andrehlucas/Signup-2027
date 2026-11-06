@@ -32,6 +32,7 @@ Customers enroll online by providing business contact information, choosing a lo
 - Mail pickup is free. Forwarding is available at most locations and incurs postage/shipping charges. Mail acceptance requires approval of the required USPS documentation.
 - Meeting rooms are available only at selected premium locations and are charged separately by the hour.
 - Outbound calling, texting, toll-free numbers, custom email, call recording/logs, supervised transfers, message taking, and appointment scheduling are optional upgrades, not automatic inclusions in the $99 offer.
+- Custom Business Email is an optional $10/month add-on. The user-supplied offer includes custom addresses on the business domain, domain registration, 10gb secure email hosting, and access from any device. Do not imply that selecting it in the prototype provisions a domain or mailbox.
 - Do not promise universal bank approval or business-registration eligibility; qualify these claims.
 - Recheck prices, promotions, setup fees, and location counts against current approved sources before publication.
 

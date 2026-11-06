@@ -39,11 +39,13 @@ import {
   getPhoneNumbersForLocation,
   sampleTollFreeNumbers,
   addonToFeatureMap,
+  isAddonIncludedInBundle,
   Bundle,
   PhoneNumber,
   Addon,
 } from '../types';
 import { useToast } from '@/app/hooks/use-toast';
+import { getInitialCustomizationAddons, sortCustomizationAddons } from '../addon-presentation';
 
 export default function CustomizePage() {
   const router = useRouter();
@@ -189,20 +191,7 @@ export default function CustomizePage() {
   };
 
   const isAddonIncluded = (addon: Addon): boolean => {
-    if (!selectedBundle) return false;
-    const addonToFeatureMap: Record<string, keyof Bundle['features']> = {
-      'toll-free': 'tollFreeNumber',
-      'callout': 'calloutFeature',
-      'call-log': 'callLog',
-      'supervised-transfer': 'supervisedCallTransfer',
-      'message-taking': 'messageTaking',
-      'appointment-scheduling': 'appointmentMaking',
-    };
-    const featureKey = addonToFeatureMap[addon.id];
-    if (featureKey && selectedBundle.features[featureKey]) {
-      return true;
-    }
-    return false;
+    return isAddonIncludedInBundle(addon.id, selectedBundle);
   };
 
   const toggleAddonExpanded = (addonId: string) => {
@@ -217,34 +206,10 @@ export default function CustomizePage() {
     });
   };
 
-  const addonPriorityOrder: Record<string, number> = {
-    'callout': 1,
-    'toll-free': 2,
-    'supervised-transfer': 3,
-    'message-taking': 4,
-    'appointment-scheduling': 5,
-    'texting': 6,
-    'call-recording': 7,
-    'additional-extensions': 8,
-    'fax-out': 9,
-    'conf-bridge': 10,
-    'int-transfer': 11,
-    'call-log': 12,
-  };
-
-  const sortedAddons = useMemo(() => {
-    const addonsToSort = availableAddons.filter(addon => addon.id !== 'additional-extensions');
-    return addonsToSort.sort((a, b) => {
-      const aIncluded = isAddonIncluded(a);
-      const bIncluded = isAddonIncluded(b);
-      if (aIncluded && !bIncluded) return -1;
-      if (!aIncluded && bIncluded) return 1;
-      
-      const aPriority = addonPriorityOrder[a.id] || 999;
-      const bPriority = addonPriorityOrder[b.id] || 999;
-      return aPriority - bPriority;
-    });
-  }, [selectedBundle]);
+  const sortedAddons = useMemo(() => sortCustomizationAddons(availableAddons), []);
+  const initialAddons = getInitialCustomizationAddons(sortedAddons, selectedBundle);
+  const hasMoreAddons = initialAddons.length < sortedAddons.length;
+  const visibleAddons = showAllAddons ? sortedAddons : initialAddons;
 
   const upgradeBundles = bundles.filter(b => b.id !== 'essentials');
 
@@ -400,7 +365,7 @@ export default function CustomizePage() {
               className="grid grid-cols-1 gap-4 md:grid-cols-2"
               data-testid="addons-grid"
             >
-              {(showAllAddons ? sortedAddons : sortedAddons.slice(0, 6)).map((addon) => {
+              {visibleAddons.map((addon) => {
                 const isIncluded = isAddonIncluded(addon);
                 const isInCart = order.addons.find(a => a.id === addon.id);
                 const isExpanded = expandedAddons.has(addon.id);
@@ -418,11 +383,11 @@ export default function CustomizePage() {
                     data-testid={`addon-card-${addon.id}`}
                   >
                     <div className="flex h-full flex-col p-4">
-                      <div className="mb-2 flex items-start justify-between gap-3">
+                      <div className="mb-2 flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
                         <h3 className="min-w-0 font-medium text-gray-900">{addon.name}</h3>
                         {isIncluded ? (
                           <Badge className="shrink-0 bg-gray-100 text-gray-700 border border-gray-200">
-                            Included
+                            Included on {selectedBundle.tier}
                           </Badge>
                         ) : addon.packages && addon.packages.length > 0 ? (
                           <span className="shrink-0 text-sm font-semibold text-gray-900">
@@ -524,7 +489,7 @@ export default function CustomizePage() {
                 );
               })}
 
-              {(showAllAddons || sortedAddons.length <= 6) && <div
+              {(showAllAddons || !hasMoreAddons) && <div
                 className={`rounded-lg border transition-all ${
                   order.extensionCount > 0 ? 'border-[#006d91] bg-gray-50' : 'border-gray-200 bg-white'
                 }`}
@@ -568,7 +533,7 @@ export default function CustomizePage() {
               </div>}
             </div>
 
-            {sortedAddons.length > 6 && (
+            {hasMoreAddons && (
               <div className="mt-4 flex justify-center">
                 <Button
                   variant="outline"
