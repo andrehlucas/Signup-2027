@@ -144,12 +144,6 @@ export default function PickPlanPage() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl" data-testid="review-office-heading">
                 Your new office details
               </h1>
-              {order.bundle && (
-                <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-medium text-gray-600">
-                  <Check className="h-3.5 w-3.5" style={{ color: selectedPlanTheme?.accent }} />
-                  Selected
-                </span>
-              )}
             </div>
 
             {order.bundle && (
