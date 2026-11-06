@@ -15,6 +15,12 @@ Draft recovery is deliberately limited to the current browser-tab session, with 
 
 **How to apply:** Keep card details out of draft persistence and require fresh final agreement consent. If longer-term or cross-device recovery is requested, treat that as a separate privacy and authenticated-storage decision.
 
+Preview reset requests should affect only the requesting browser tab, not invalidate other enrollments or change production behavior.
+
+**Why:** Restarting the server is separate from clearing a person's browser draft. The user confirmed clearing their own selections and starting over, not resetting every visitor.
+
+**How to apply:** Use an explicit, one-time development reset action. Do not bump the shared draft version just to clear a test session; preserve normal refresh recovery afterward.
+
 A location can offer multiple local phone area codes, not just one.
 
 **Why:** The user explicitly stated that a location may offer multiple area codes and requested a filter for choosing among them.

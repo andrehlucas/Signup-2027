@@ -54,12 +54,23 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   const [order, setOrder] = useState<OrderState>(initialOrder);
   const [locationFilters, setLocationFilters] = useState<LocationFilters>({ country: 'US', state: '', city: '' });
   const [ready, setReady] = useState(false);
+  const [draftResetFailed, setDraftResetFailed] = useState(false);
   const [draftNotice, setDraftNotice] = useState('');
   const [locationNotice, setLocationNotice] = useState('');
 
   useEffect(() => {
+    const url = new URL(window.location.href);
+    // Explicit, tab-local Preview reset; normal refreshes still recover the draft.
+    const resetRequested = process.env.NODE_ENV === 'development'
+      && url.pathname === '/' && url.searchParams.get('resetEnrollment') === '1';
     try {
-      const saved = sessionStorage.getItem(DRAFT_KEY);
+      if (resetRequested) {
+        sessionStorage.removeItem(DRAFT_KEY);
+        url.searchParams.delete('resetEnrollment');
+        window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
+        setDraftNotice('Your previous enrollment was cleared. Start again below.');
+      }
+      const saved = resetRequested ? null : sessionStorage.getItem(DRAFT_KEY);
       if (saved) {
         try {
           const restored = decodeDraft(saved, initialOrder);
@@ -71,13 +82,16 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         }
       }
     } catch {
-      setDraftNotice('Draft saving is unavailable in this browser. Keep this tab open to retain your selections.');
+      setDraftResetFailed(resetRequested);
+      setDraftNotice(resetRequested
+        ? 'Your browser could not clear the saved enrollment. Clear this site’s data before using a shared device.'
+        : 'Draft saving is unavailable in this browser. Keep this tab open to retain your selections.');
     }
     setReady(true);
   }, []);
 
   useEffect(() => {
-    if (!ready) return;
+    if (!ready || draftResetFailed) return;
     try {
       const hasDraft = Object.values(order.userInfo).some(value => typeof value === 'string' && value && value !== '+1' && value !== 'US')
         || order.location || order.bundle || locationFilters.state || locationFilters.country && locationFilters.country !== 'US';
@@ -86,7 +100,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     } catch {
       setDraftNotice('Your latest changes could not be saved. Keep this tab open to retain your selections.');
     }
-  }, [ready, order, locationFilters]);
+  }, [ready, order, locationFilters, draftResetFailed]);
 
   const setUserInfo = useCallback((userInfo: UserInfo) => {
     setOrder(prev => ({ ...prev, userInfo }));
