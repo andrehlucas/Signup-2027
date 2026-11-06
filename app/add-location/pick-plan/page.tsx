@@ -271,12 +271,7 @@ export default function PickPlanPage() {
               <h2 id="bundle-cards-title" className="text-lg font-semibold text-gray-900">
                 Choose your bundle
               </h2>
-              {order.bundle?.id === essentialsPlan.id ? (
-                <span className="inline-flex min-h-11 items-center gap-1.5 text-sm text-gray-600" role="status" data-testid="essentials-selected-status">
-                  <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                  Essentials selected
-                </span>
-              ) : (
+              {order.bundle && order.bundle.id !== essentialsPlan.id && (
                 <button
                   type="button"
                   onClick={() => setBundle(essentialsPlan)}
