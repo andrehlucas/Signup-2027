@@ -267,7 +267,7 @@ export default function PickPlanPage() {
           <div ref={bundleCardsRef} tabIndex={-1} className="scroll-mt-6 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
               <h2 id="bundle-cards-title" className="text-lg font-semibold text-gray-900">
-                Choose your bundle
+                Bundle &amp; Save
               </h2>
               {order.bundle && order.bundle.id !== essentialsPlan.id && (
                 <button
