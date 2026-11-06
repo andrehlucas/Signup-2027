@@ -144,20 +144,6 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
 
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
-          <label htmlFor="location-country" className="mb-2 block text-sm font-medium text-gray-700">
-            Country / region
-          </label>
-          <SearchableLocationFilter
-            id="location-country"
-            label="Country / region"
-            value={selectedCountry}
-            onChange={country => setLocationFilters({ country: country as LocationCountry, state: '', city: 'all' })}
-            options={LOCATION_COUNTRIES}
-            placeholder="United States"
-            testId="select-country"
-          />
-        </div>
-        <div>
           <label htmlFor="location-state" className="mb-2 block text-sm font-medium text-gray-700">
             {regionLabel}
           </label>
@@ -190,6 +176,20 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
             ]}
             placeholder="All cities"
             testId="select-city"
+          />
+        </div>
+        <div>
+          <label htmlFor="location-country" className="mb-2 block text-sm font-medium text-gray-700">
+            Country / region
+          </label>
+          <SearchableLocationFilter
+            id="location-country"
+            label="Country / region"
+            value={selectedCountry}
+            onChange={country => setLocationFilters({ country: country as LocationCountry, state: '', city: 'all' })}
+            options={LOCATION_COUNTRIES}
+            placeholder="United States"
+            testId="select-country"
           />
         </div>
       </div>
