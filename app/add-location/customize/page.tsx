@@ -23,6 +23,7 @@ import {
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { BundleSuggestionDialog } from '../components/BundleSuggestionDialog';
 import { EnrollmentSummaryFooter } from '../components/EnrollmentSummaryFooter';
+import { useScrollFooterVisibility } from '../use-scroll-footer-visibility';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
@@ -60,38 +61,10 @@ export default function CustomizePage() {
   const bundleSectionRef = useRef<HTMLDivElement>(null);
   const { trackComplete } = useFunnelTracking('customize');
 
-  const [footerVisible, setFooterVisible] = useState(false);
   const [footerPulse, setFooterPulse] = useState(false);
   const pulseTimerRef = useRef<NodeJS.Timeout | null>(null);
   const footerLockedUntilRef = useRef<number>(0);
-  const lastScrollY = useRef(0);
-  const scrollThreshold = 5;
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const delta = currentScrollY - lastScrollY.current;
-
-      if (Math.abs(delta) < scrollThreshold) return;
-
-      const atBottom = (window.innerHeight + currentScrollY) >= (document.documentElement.scrollHeight - 10);
-
-      if (Date.now() < footerLockedUntilRef.current) {
-        lastScrollY.current = currentScrollY;
-        return;
-      }
-
-      if (delta > 0 && currentScrollY > 50) {
-        setFooterVisible(true);
-      } else if (delta < 0 && !atBottom) {
-        setFooterVisible(false);
-      }
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [footerVisible, setFooterVisible] = useScrollFooterVisibility({ lockedUntilRef: footerLockedUntilRef });
 
   useEffect(() => {
     return () => {
@@ -625,8 +598,10 @@ export default function CustomizePage() {
       </div>
 
       <div
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${footerVisible ? 'bottom-0' : '-bottom-full'}`}
+        className={`fixed inset-x-0 bottom-0 z-50 transition-[transform,opacity] duration-200 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-opacity ${footerVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}`}
         data-testid="footer-wrapper"
+        aria-hidden={!footerVisible}
+        ref={(element) => { if (element) element.inert = !footerVisible; }}
       >
         <button
           type="button"

@@ -6,3 +6,4 @@
 - [Bundle comparison visibility](bundle-comparison-visibility.md) — show bundle cards by default; collapse only the feature matrix behind Compare Bundles.
 - [Add-on preview readability](addon-preview-readability.md) — show two-line previews and whole actionable cards; never crop the grid to simulate a collapsed list.
 - [Preview proxy boundary](preview-proxy-boundary.md) — distinguish stale public port URLs from app failures; upstream proxy errors cannot be repaired by app redirects.
+- [Enrollment footer behavior](enrollment-footer-behavior.md) — review and Customize summaries reveal on scroll; keep Continue available when no scrolling is possible.

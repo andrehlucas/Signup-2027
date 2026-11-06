@@ -9,6 +9,7 @@ import { ProgressIndicator } from '../components/ProgressIndicator';
 import { LocationSelector } from '../components/LocationSelector';
 import { LocalPhoneNumberDialog } from '../components/LocalPhoneNumberDialog';
 import { EnrollmentSummaryFooter } from '../components/EnrollmentSummaryFooter';
+import { useScrollFooterVisibility } from '../use-scroll-footer-visibility';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import {
@@ -33,6 +34,7 @@ export default function PickPlanPage() {
   const bundleCardsRef = useRef<HTMLDivElement>(null);
   const [comparisonOpen, setComparisonOpen] = useState(false);
   const [subStep, setSubStep] = useState<'location' | 'review'>(order.location ? 'review' : 'location');
+  const [footerVisible] = useScrollFooterVisibility({ enabled: subStep === 'review' });
   const [phoneDialogOpen, setPhoneDialogOpen] = useState(false);
   const phoneNumbers = useMemo(
     () => order.location ? getPhoneNumbersForLocation(order.location).filter(number => number.isAvailable) : [],
@@ -313,7 +315,12 @@ export default function PickPlanPage() {
         </section>
 
       </div>
-      <div className="fixed inset-x-0 bottom-0 z-50" data-testid="footer-wrapper">
+      <div
+        className={`fixed inset-x-0 bottom-0 z-50 transition-[transform,opacity] duration-200 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-opacity ${footerVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}`}
+        data-testid="footer-wrapper"
+        aria-hidden={!footerVisible}
+        ref={(element) => { if (element) element.inert = !footerVisible; }}
+      >
         <EnrollmentSummaryFooter
           phoneNumber={assignedPhone}
           onContinue={handleContinue}
