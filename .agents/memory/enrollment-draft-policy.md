@@ -31,7 +31,7 @@ When a customer changes bundles after choosing paid add-ons, immediately exclude
 
 **Why:** Returning to plan review can retain earlier paid selections before a later step cleans them up. Showing the raw stored extras would temporarily charge the same service twice.
 
-**How to apply:** Derive billable extras from the current bundle's inclusions, not merely from stored add-on presence. Preserve genuinely optional selections and extension quantities across steps.
+**How to apply:** Derive billable extras from the current bundle's inclusions, not merely from stored add-on presence. Preserve genuinely optional selections across steps; retired Additional Extensions must not produce charges.
 
 Office search offers United States by default, Canada and Puerto Rico as country/region choices, independently of the customer's contact-phone country.
 

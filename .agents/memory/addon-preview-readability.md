@@ -15,8 +15,8 @@ Keep the first five add-ons in this order: Callout, Custom Business Email, Super
 
 **How to apply:** Preserve the first five across every bundle; include all additional bundled add-ons in the initial view. Round an odd initial count up by showing the next real optional add-on, preserving the catalog order. The user explicitly requested an even number of cards. Keep Show all even too, without hiding included services or duplicating cards. Inclusion comes from the selected bundle, not an add-on's default price.
 
-Customize's additional phone services panel is for additional extensions and the selected toll-free number only, not the primary local business number.
+Additional Extensions is no longer offered in enrollment. Customize's additional phone services panel is for the selected toll-free number only, not the primary local business number.
 
-**Why:** The user explicitly requested separating these extras from the primary number.
+**Why:** The user explicitly requested removing Additional Extensions after previously separating phone extras from the primary number.
 
-**How to apply:** Keep the primary local number in the order summary and its selection on plan review. Keep extension quantity controls in the additional-services panel, without duplicating them in the add-on grid.
+**How to apply:** Keep the primary local number in the order summary and its selection on plan review. Hide the extra-services panel when no toll-free number is selected or included. Never reintroduce extension controls or charges from an older draft; preserve the customer's other selections.

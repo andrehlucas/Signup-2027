@@ -16,7 +16,6 @@ interface OrderContextType {
   addAddon: (addon: Addon) => void;
   removeAddon: (addonId: string) => void;
   updateAddon: (addon: Addon) => void;
-  setExtensionCount: (count: number) => void;
   setAgreementAccepted: (accepted: boolean) => void;
   setAppliedPromo: (promo: AppliedPromo | null) => void;
   clearOrder: () => void;
@@ -151,10 +150,6 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     }));
   };
 
-  const setExtensionCount = (count: number) => {
-    setOrder(prev => ({ ...prev, extensionCount: Math.max(0, count) }));
-  };
-
   const setAgreementAccepted = (accepted: boolean) => {
     setOrder(prev => ({ ...prev, agreementAccepted: accepted }));
   };
@@ -187,10 +182,6 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         oneTime += addon.price;
       }
     });
-
-    if (order.extensionCount > 0) {
-      monthly += order.extensionCount * 25;
-    }
 
     return { monthly, oneTime };
   };
@@ -225,16 +216,6 @@ export function OrderProvider({ children }: { children: ReactNode }) {
       });
     });
 
-    if (order.extensionCount > 0) {
-      items.push({
-        id: 'additional-extensions',
-        name: 'Additional Extensions',
-        price: order.extensionCount * 25,
-        type: 'addon',
-        quantity: order.extensionCount,
-      });
-    }
-
     return items;
   };
 
@@ -252,7 +233,6 @@ export function OrderProvider({ children }: { children: ReactNode }) {
         addAddon,
         removeAddon,
         updateAddon,
-        setExtensionCount,
         setAgreementAccepted,
         setAppliedPromo,
         clearOrder,

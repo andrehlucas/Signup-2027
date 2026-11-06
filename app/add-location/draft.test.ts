@@ -29,10 +29,24 @@ test('restores contact details, location, plan, package, phone and filters', () 
   assert.equal(saved.order.phoneNumber?.id, order.phoneNumber?.id);
   assert.equal(saved.order.addons[0].selectedPackage?.id, selectedPackage.id);
   assert.equal(saved.order.addons[0].price, selectedPackage.price);
-  assert.equal(saved.order.extensionCount, 2);
+  assert.equal(saved.order.extensionCount, 0);
   assert.equal(saved.order.agreementAccepted, false);
   assert.equal(saved.order.appliedPromo, null);
   assert.deepEqual(saved.filters, { ...filters, country: 'US' });
+});
+
+test('retired extensions cannot return or add charges from a legacy draft', () => {
+  const legacy = JSON.parse(encodeDraft(order, filters, now));
+  legacy.extensionCount = 5;
+  legacy.addons.push({ id: 'additional-extensions' });
+  const saved = decodeDraft(JSON.stringify(legacy), empty, now);
+  assert.equal(saved.order.extensionCount, 0);
+  assert.ok(!saved.order.addons.some(addon => addon.id === 'additional-extensions'));
+  assert.equal(saved.order.location?.id, order.location?.id);
+  assert.equal(saved.order.bundle?.id, order.bundle?.id);
+  assert.equal(saved.order.phoneNumber?.id, order.phoneNumber?.id);
+  assert.equal(saved.order.addons[0].id, order.addons[0].id);
+  assert.equal(JSON.parse(encodeDraft(order, filters, now)).extensionCount, 0);
 });
 
 test('restores custom business email from the catalog with its monthly price', () => {

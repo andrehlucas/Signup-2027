@@ -6,15 +6,9 @@ import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle, featureIndividualPrices, ESSENTIALS_PLAN } from "@/app/add-location/types";
+import { bundleThemes } from "@/app/add-location/bundle-theme";
 
 const CARD_HEIGHT = 304;
-
-const bundleThemes: Record<string, { surface: string; accent: string; border: string }> = {
-  plus: { surface: "#edf6f4", accent: "#185f58", border: "#b9d7d1" },
-  pro: { surface: "#eef2f8", accent: "#345b91", border: "#bdcbe0" },
-  premium: { surface: "#f7f2e9", accent: "#80591e", border: "#d9c8a7" },
-  prestige: { surface: "#f5eef3", accent: "#754965", border: "#d6c0cf" },
-};
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "businessAddress", label: "Prestigious Business Address" },

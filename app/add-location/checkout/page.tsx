@@ -53,7 +53,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const { order, removeAddon, setExtensionCount, setAgreementAccepted, setAppliedPromo, getCartTotal } = useOrder();
+  const { order, removeAddon, setAgreementAccepted, setAppliedPromo, getCartTotal } = useOrder();
   const [isProcessing, setIsProcessing] = useState(false);
   const [promoCode, setPromoCode] = useState('');
   const [promoError, setPromoError] = useState('');
@@ -365,23 +365,6 @@ export default function CheckoutPage() {
                         </div>
                       </div>
                     ))}
-                    {order.extensionCount > 0 && (
-                      <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
-                        <p className="text-sm font-medium text-gray-900">Additional Extensions ({order.extensionCount})</p>
-                        <div className="flex items-center gap-2">
-                          <p className="text-sm font-medium text-gray-900">${order.extensionCount * 10}/mo</p>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-7 w-7 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                            onClick={() => setExtensionCount(0)}
-                            data-testid="button-remove-extensions"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

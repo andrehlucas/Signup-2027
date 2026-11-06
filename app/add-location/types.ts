@@ -569,15 +569,6 @@ export const availableAddons: Addon[] = [
     category: 'phone',
   },
   {
-    id: 'additional-extensions',
-    name: 'Additional Extensions',
-    description: 'Add more extensions to your phone system. Further customization available from Phone System page.',
-    detailedDescription: 'Expand your phone system with additional extensions for team members or departments. Each extension gets a unique number and voicemail. Manage call routing and forwarding rules independently.',
-    price: 25,
-    billingCycle: 'monthly',
-    category: 'phone',
-  },
-  {
     id: 'appointment-scheduling',
     name: 'Appointment Scheduling',
     description: 'Professional appointment booking handled by our receptionists',

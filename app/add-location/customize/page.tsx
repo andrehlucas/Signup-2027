@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Pencil, DollarSign, Star } from 'lucide-react';
+import { Check, Phone, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Pencil, DollarSign, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -40,12 +40,14 @@ import {
 } from '../types';
 import { useToast } from '@/app/hooks/use-toast';
 import { getInitialCustomizationAddons, sortCustomizationAddons } from '../addon-presentation';
+import { bundleThemes } from '../bundle-theme';
 
 export default function CustomizePage() {
   const router = useRouter();
-  const { order, setBundle, setPhoneNumber, setTollFreePhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
+  const { order, setBundle, setPhoneNumber, setTollFreePhoneNumber, addAddon, removeAddon, updateAddon, getCartTotal } = useOrder();
   const { toast } = useToast();
   const selectedBundle = order.bundle;
+  const includedTheme = selectedBundle ? bundleThemes[selectedBundle.id] : undefined;
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAllAddons, setShowAllAddons] = useState(false);
@@ -362,20 +364,38 @@ export default function CustomizePage() {
                 return (
                   <div
                     key={addon.id}
-                    className={`rounded-lg border transition-all ${
+                    className={`rounded-lg border transition-colors ${
                       isIncluded
                         ? 'border-gray-200 bg-gray-50'
                         : isInCart
                         ? 'border-[#006d91] bg-gray-50'
                         : 'border-gray-200 bg-white'
                     }`}
+                    style={isIncluded && includedTheme ? {
+                      backgroundColor: includedTheme.surface,
+                      borderColor: includedTheme.border,
+                    } : undefined}
+                    data-addon-status={isIncluded ? 'included' : isInCart ? 'selected' : 'available'}
                     data-testid={`addon-card-${addon.id}`}
                   >
                     <div className="flex h-full flex-col p-4">
                       <div className="mb-2 flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-                        <h3 className="min-w-0 font-medium text-gray-900">{addon.name}</h3>
+                        <h3
+                          className={`min-w-0 text-gray-900 ${isIncluded ? 'font-semibold' : 'font-medium'}`}
+                          style={isIncluded ? { color: includedTheme?.accent } : undefined}
+                        >
+                          {addon.name}
+                        </h3>
                         {isIncluded ? (
-                          <Badge className="shrink-0 bg-gray-100 text-gray-700 border border-gray-200">
+                          <Badge
+                            className="max-w-full gap-1.5 border bg-white text-gray-700 shadow-none"
+                            style={includedTheme ? {
+                              color: includedTheme.accent,
+                              borderColor: includedTheme.border,
+                              backgroundColor: '#ffffff',
+                            } : undefined}
+                          >
+                            <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                             Included on {selectedBundle.tier}
                           </Badge>
                         ) : addon.packages && addon.packages.length > 0 ? (
@@ -391,6 +411,7 @@ export default function CustomizePage() {
                       <p
                         id={`addon-description-${addon.id}`}
                         className={`min-h-10 text-sm leading-5 text-gray-600 ${isExpanded ? '' : 'line-clamp-2'}`}
+                        style={isIncluded ? { color: includedTheme?.accent } : undefined}
                         data-testid={`addon-details-${addon.id}`}
                       >
                         {addon.detailedDescription || addon.description}
@@ -403,6 +424,10 @@ export default function CustomizePage() {
                           aria-controls={`addon-description-${addon.id}`}
                           aria-label={`${isExpanded ? 'Show less about' : 'Read more about'} ${addon.name}`}
                           className="flex min-h-11 items-center gap-1 rounded-sm text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
+                          style={isIncluded && includedTheme ? {
+                            color: includedTheme.accent,
+                            textDecorationColor: includedTheme.border,
+                          } : undefined}
                           data-testid={`button-learn-more-${addon.id}`}
                         >
                           {isExpanded ? (
@@ -551,55 +576,17 @@ export default function CustomizePage() {
           </div>
         </div>
 
+        {hasTollFree && selectedTollFree && (
         <div className="signup-surface p-5 md:p-6 mb-6" data-testid="phone-section">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-semibold text-gray-900 mb-1">Additional Phone Services</h2>
               <p className="text-sm text-gray-600">
-                Add extra extensions and manage your toll-free number.
+                Manage your toll-free number.
               </p>
             </div>
           </div>
 
-          <div className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-4" data-testid="addon-card-additional-extensions">
-            <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
-              <h3 className="font-medium text-gray-900">Additional Extensions</h3>
-              <span className="text-sm font-semibold text-gray-900">$25/mo each</span>
-            </div>
-            <div className="mt-3 flex flex-wrap items-center gap-3">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setExtensionCount(order.extensionCount - 1)}
-                disabled={order.extensionCount === 0}
-                aria-label="Remove an additional extension"
-                className="h-11 w-11"
-                data-testid="button-extension-decrease"
-              >
-                <Minus className="h-4 w-4" aria-hidden="true" />
-              </Button>
-              <span className="min-w-6 text-center font-medium text-gray-900" aria-label="Additional extension count" aria-live="polite" data-testid="extension-count">
-                {order.extensionCount}
-              </span>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setExtensionCount(order.extensionCount + 1)}
-                aria-label="Add an additional extension"
-                className="h-11 w-11"
-                data-testid="button-extension-increase"
-              >
-                <Plus className="h-4 w-4" aria-hidden="true" />
-              </Button>
-              {order.extensionCount > 0 && (
-                <span className="text-sm text-gray-600" data-testid="extensions-monthly-total">
-                  ${order.extensionCount * 25}/mo
-                </span>
-              )}
-            </div>
-          </div>
-
-          {hasTollFree && selectedTollFree && (
             <div className="mt-3 flex items-center justify-between bg-gray-50 rounded-lg p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
@@ -622,8 +609,8 @@ export default function CustomizePage() {
                 <Pencil className="h-4 w-4 text-gray-500" />
               </Button>
             </div>
-          )}
         </div>
+        )}
       </div>
 
       <div

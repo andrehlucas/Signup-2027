@@ -44,7 +44,7 @@ export function encodeDraft(order: OrderState, filters: LocationFilters, now = D
     phoneId: order.phoneNumber?.id ?? null,
     tollFreePhoneId: order.tollFreePhoneNumber?.id ?? null,
     addons: order.addons.map(addon => ({ id: addon.id, packageId: addon.selectedPackage?.id })),
-    extensionCount: order.extensionCount,
+    extensionCount: 0,
     filters,
   });
 }
@@ -76,7 +76,8 @@ export function decodeDraft(raw: string, initial: OrderState, now = Date.now()) 
   return {
     order: {
       ...initial, userInfo: draft.userInfo, location, bundle, phoneNumber, tollFreePhoneNumber,
-      addons, extensionCount: draft.extensionCount,
+      // Retain legacy draft compatibility without restoring the retired extension offer.
+      addons, extensionCount: 0,
       // Consent and promotions must be confirmed again, not trusted from storage.
       agreementAccepted: false, appliedPromo: null,
     } satisfies OrderState,

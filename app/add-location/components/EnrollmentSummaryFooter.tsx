@@ -27,7 +27,7 @@ export function EnrollmentSummaryFooter({
 
   const paidAddons = order.addons.filter(addon => !isAddonIncludedInBundle(addon.id, bundle));
   const addonMonthly = paidAddons.filter(addon => addon.billingCycle === 'monthly')
-    .reduce((sum, addon) => sum + addon.price, 0) + order.extensionCount * 25;
+    .reduce((sum, addon) => sum + addon.price, 0);
   const addonOneTime = paidAddons.filter(addon => addon.billingCycle === 'one-time')
     .reduce((sum, addon) => sum + addon.price, 0);
   const monthly = bundle.price + addonMonthly;
@@ -105,7 +105,7 @@ export function EnrollmentSummaryFooter({
                 <p className="text-lg font-bold leading-tight text-gray-900" data-testid="footer-monthly-total">
                   ${monthly}<span className="text-sm font-normal text-gray-500">/mo</span>
                 </p>
-                {(paidAddons.length > 0 || order.extensionCount > 0) && (
+                {paidAddons.length > 0 && (
                   <Popover>
                     <PopoverTrigger asChild>
                       <button type="button" className="min-h-6 rounded-sm text-xs font-medium text-gray-700 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]" data-testid="button-see-addons">
@@ -121,12 +121,6 @@ export function EnrollmentSummaryFooter({
                             <span className="shrink-0 font-medium text-gray-900">${addon.price}{addon.billingCycle === 'monthly' ? '/mo' : ' one-time'}</span>
                           </div>
                         ))}
-                        {order.extensionCount > 0 && (
-                          <div className="flex justify-between gap-3">
-                            <span>Additional Extensions ({order.extensionCount})</span>
-                            <span className="shrink-0 font-medium">${order.extensionCount * 25}/mo</span>
-                          </div>
-                        )}
                         <div className="flex justify-between gap-3 border-t border-gray-100 pt-2 font-semibold">
                           <span>Add-ons Total</span><span>${addonMonthly}/mo</span>
                         </div>
