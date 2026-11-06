@@ -54,7 +54,7 @@ export default function CustomizePage() {
   const [tollFreeModalOpen, setTollFreeModalOpen] = useState(false);
   const [selectedTollFree, setSelectedTollFree] = useState<PhoneNumber | null>(order.tollFreePhoneNumber);
   const [tempSelectedTollFree, setTempSelectedTollFree] = useState<PhoneNumber | null>(null);
-  const [bundleExpanded, setBundleExpanded] = useState(false);
+  const [bundleComparisonOpen, setBundleComparisonOpen] = useState(false);
   const [bundleSuggestionOpen, setBundleSuggestionOpen] = useState(false);
   const [suggestionTriggeredFromContinue, setSuggestionTriggeredFromContinue] = useState(false);
   const bundleSectionRef = useRef<HTMLDivElement>(null);
@@ -264,7 +264,6 @@ export default function CustomizePage() {
 
   const handleBundleSelect = (bundle: Bundle) => {
     setBundle(bundle);
-    setBundleExpanded(false);
 
     if (pulseTimerRef.current) {
       clearTimeout(pulseTimerRef.current);
@@ -296,13 +295,18 @@ export default function CustomizePage() {
     router.push('/add-location/checkout');
   };
 
+  const focusBundles = () => {
+    bundleSectionRef.current?.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'start',
+    });
+    bundleSectionRef.current?.focus({ preventScroll: true });
+  };
+
   const handleSuggestionSeeBundles = () => {
     setBundleSuggestionOpen(false);
     setSuggestionTriggeredFromContinue(true);
-    setBundleExpanded(true);
-    setTimeout(() => {
-      bundleSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 100);
+    focusBundles();
   };
 
   const handleSuggestionProceedWithBundle = () => {
@@ -532,22 +536,14 @@ export default function CustomizePage() {
 
         <div
           ref={bundleSectionRef}
-          className={`overflow-hidden transition-all duration-400 ease-in-out ${
-            bundleExpanded ? 'max-h-[800px] opacity-100 mb-6' : 'max-h-0 opacity-0'
-          }`}
+          className="mb-6 scroll-mt-6 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]"
+          tabIndex={-1}
+          aria-labelledby="customize-bundle-title"
           data-testid="bundle-inline-section"
         >
           <div className="signup-surface px-4 py-6">
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-lg font-semibold text-gray-900">Bundle & Save</h2>
-              <button
-                onClick={() => setBundleExpanded(false)}
-                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
-                data-testid="button-close-bundle-section"
-              >
-                <X className="h-3.5 w-3.5" />
-                Close
-              </button>
+              <h2 id="customize-bundle-title" className="text-lg font-semibold text-gray-900">Bundle & Save</h2>
             </div>
             <p className="text-sm text-gray-600 mb-2">
               Upgrade your plan and save on popular features.<span className="md:hidden"> Swipe to compare bundles.</span>
@@ -558,6 +554,21 @@ export default function CustomizePage() {
                 selectedBundleId={selectedBundle?.id}
                 onSelect={handleBundleSelect}
                 essentialsBundle={bundles[0]}
+                comparisonOpen={bundleComparisonOpen}
+                comparisonId="customize-bundle-comparison"
+                comparisonControl={
+                  <button
+                    type="button"
+                    onClick={() => setBundleComparisonOpen(open => !open)}
+                    aria-expanded={bundleComparisonOpen}
+                    aria-controls="customize-bundle-comparison"
+                    className="my-3 inline-flex min-h-11 items-center gap-1 rounded-sm text-sm font-medium text-gray-700 underline underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]"
+                    data-testid="button-toggle-customize-bundle-comparison"
+                  >
+                    Compare Bundles
+                    {bundleComparisonOpen ? <ChevronUp className="h-4 w-4" aria-hidden="true" /> : <ChevronDown className="h-4 w-4" aria-hidden="true" />}
+                  </button>
+                }
               />
             </div>
             {selectedBundle && selectedBundle.id !== 'essentials' && (
@@ -617,40 +628,30 @@ export default function CustomizePage() {
         className={`fixed left-0 right-0 z-50 transition-all duration-300 ease-in-out ${footerVisible ? 'bottom-0' : '-bottom-full'}`}
         data-testid="footer-wrapper"
       >
-        <div
-          onClick={() => {
-            setBundleExpanded(!bundleExpanded);
-            if (!bundleExpanded) {
-              setTimeout(() => {
-                bundleSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }, 100);
-            }
-          }}
-          className="cursor-pointer border-y border-gray-200 bg-gray-50 transition-colors hover:bg-gray-100"
+        <button
+          type="button"
+          onClick={focusBundles}
+          className="w-full cursor-pointer border-y border-gray-200 bg-gray-50 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]"
           data-testid="bundle-save-banner"
         >
-          <div className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2">
+          <span className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2">
             {selectedBundle && selectedBundle.id !== 'essentials' ? (
               <>
                 <Star className="h-4 w-4 text-gray-600" />
                 <span className="text-sm font-semibold text-[#101828]">Active Bundle</span>
                 <span className="text-xs text-[#475467] hidden sm:inline">- {displayBundleName}</span>
-                <span className="text-xs font-medium text-gray-700 ml-1">{bundleExpanded ? 'Close' : 'Edit'}</span>
+                <span className="text-xs font-medium text-gray-700 ml-1">Edit</span>
               </>
             ) : (
               <>
                 <DollarSign className="h-4 w-4 text-gray-600" />
                 <span className="text-sm font-semibold text-[#101828]">Bundle & Save</span>
                 <span className="text-xs text-[#475467] hidden sm:inline">- Upgrade your plan and save on popular features</span>
-                {bundleExpanded ? (
-                  <ChevronDown className="h-4 w-4 text-gray-600 ml-1" />
-                ) : (
-                  <ChevronRight className="h-4 w-4 text-gray-600 ml-1" />
-                )}
+                <ChevronUp className="h-4 w-4 text-gray-600 ml-1" />
               </>
             )}
-          </div>
-        </div>
+          </span>
+        </button>
 
         <EnrollmentSummaryFooter
           phoneNumber={selectedPhone}
