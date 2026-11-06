@@ -5,3 +5,4 @@
 - [Filter popover focus](filter-popover-focus.md) — adjacent searchable filters need immediate focus handoff; delayed close animations can disrupt the next field.
 - [Bundle comparison visibility](bundle-comparison-visibility.md) — show bundle cards by default; collapse only the feature matrix behind Compare Bundles.
 - [Add-on preview readability](addon-preview-readability.md) — show two-line previews and whole actionable cards; never crop the grid to simulate a collapsed list.
+- [Preview proxy boundary](preview-proxy-boundary.md) — distinguish stale public port URLs from app failures; upstream proxy errors cannot be repaired by app redirects.
