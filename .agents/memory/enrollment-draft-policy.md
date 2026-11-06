@@ -44,3 +44,9 @@ Office search offers United States by default, Canada and Puerto Rico as country
 **Why:** The user requested these three choices with US preselected.
 
 **How to apply:** Scope states/provinces and cities to the office country, reset those search filters on country changes, and preserve the previously confirmed office/plan until another actual location is selected. Do not invent overseas inventory to populate an empty region.
+
+A fresh location search starts with no office results until a state/province/territory or city is selected.
+
+**Why:** The user explicitly requested empty results on first load rather than automatically listing offices.
+
+**How to apply:** Show a search prompt before a geographic selection, distinguish it from a real search with no matches, and return to that prompt when filters are cleared. A country choice alone is not a search. Keep saved geographic searches and selected-office editing intact rather than wiping an existing draft on every visit.

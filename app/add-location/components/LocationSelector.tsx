@@ -99,16 +99,18 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
   const countryLocations = useMemo(() => getCountryLocations(selectedCountry, sampleLocations), [selectedCountry]);
   const selectedState = locationFilters.state;
   const selectedCity = locationFilters.city || 'all';
+  const hasLocationSearch = Boolean(selectedState || selectedCity !== 'all');
   const cities = useMemo(
     () => getLocationCityOptions(selectedState, countryLocations),
     [selectedState, countryLocations]
   );
   const locations = useMemo(() => {
+    if (!hasLocationSearch) return [];
     const stateLocations = selectedState ? countryLocations.filter(location => location.state === selectedState) : countryLocations;
     return selectedCity && selectedCity !== 'all'
       ? stateLocations.filter((location) => location.city === selectedCity)
       : stateLocations;
-  }, [selectedState, selectedCity, countryLocations]);
+  }, [selectedState, selectedCity, countryLocations, hasLocationSearch]);
 
   const handleStateChange = (state: string) => {
     setLocationFilters({ country: selectedCountry, state: state === 'all' ? '' : state, city: 'all' });
@@ -192,7 +194,12 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
         </div>
       </div>
 
-      {locations.length > 0 ? (
+      {!hasLocationSearch ? (
+        <div className="py-10 text-center text-gray-600" role="status" data-testid="locations-search-prompt">
+          <MapPin className="mx-auto mb-3 h-10 w-10 text-gray-400" aria-hidden="true" />
+          <p className="text-sm">Select a {regionLabel.toLowerCase()} or city to see available locations.</p>
+        </div>
+      ) : locations.length > 0 ? (
         <div data-testid="locations-list">
           <h3 className="mb-3 text-sm font-medium text-gray-700">
             {selectedState
@@ -221,7 +228,7 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
             onClick={() => setLocationFilters({ country: selectedCountry, state: '', city: 'all' })}
             data-testid="button-search-all-states"
           >
-            {selectedCountry === 'US' ? 'Search all states' : `Search all ${countryName}`}
+            Clear filters
           </Button>
         </div>
       )}
