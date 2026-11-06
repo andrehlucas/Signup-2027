@@ -1,3 +1,5 @@
+import { US_STATES } from '../lib/us-states';
+
 export interface AvailableLocation {
   id: string;
   name: string;
@@ -669,8 +671,22 @@ export const sampleTollFreeNumbers: PhoneNumber[] = [
 ];
 
 export function getStates(): string[] {
-  const states = [...new Set(sampleLocations.map(loc => loc.state))];
-  return states.sort();
+  return [...US_STATES];
+}
+
+export function getLocationCityOptions(state = '', catalog = sampleLocations) {
+  const cities = new Map<string, { value: string; label: string; city: string; state: string }>();
+  for (const location of catalog) {
+    if (state && location.state !== state) continue;
+    const key = `${location.state}::${location.city}`;
+    cities.set(key, {
+      value: state ? location.city : key,
+      label: state ? location.city : `${location.city}, ${location.stateCode}`,
+      city: location.city,
+      state: location.state,
+    });
+  }
+  return [...cities.values()].sort((a, b) => a.label.localeCompare(b.label, 'en'));
 }
 
 export function getCitiesByState(state: string): string[] {

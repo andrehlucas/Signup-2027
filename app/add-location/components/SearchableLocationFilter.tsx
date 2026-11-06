@@ -63,7 +63,14 @@ export function SearchableLocationFilter({
         align="start"
         className="w-[var(--radix-popover-trigger-width)] max-w-[calc(100vw-2rem)] overflow-hidden p-0 data-[state=open]:animate-none data-[state=closed]:animate-none"
       >
-        <Command defaultValue={value} loop>
+        <Command
+          defaultValue={value}
+          loop
+          filter={(optionValue, search, keywords = []) => {
+            const query = search.trim().toLocaleLowerCase('en');
+            return [optionValue, ...keywords].some(text => text.toLocaleLowerCase('en').includes(query)) ? 1 : 0;
+          }}
+        >
           <CommandInput
             value={query}
             onValueChange={setQuery}

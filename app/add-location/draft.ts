@@ -65,7 +65,8 @@ export function decodeDraft(raw: string, initial: OrderState, now = Date.now()) 
     const selectedPackage = addon.packages.find(item => item.id === saved.packageId) ?? addon.packages[0];
     return [{ ...addon, selectedPackage, price: selectedPackage.price }];
   }).filter((addon, index, all) => all.findIndex(item => item.id === addon.id) === index);
-  const state = getStates().includes(draft.filters.state) ? draft.filters.state : location?.state ?? '';
+  const state = draft.filters.state === '' || getStates().includes(draft.filters.state)
+    ? draft.filters.state : location?.state ?? '';
   const city = draft.filters.city === 'all' || getCitiesByState(state).includes(draft.filters.city)
     ? draft.filters.city : '';
   return {

@@ -35,6 +35,16 @@ test('restores contact details, location, plan, package, phone and filters', () 
   assert.deepEqual(saved.filters, filters);
 });
 
+test('preserves nationwide browsing and states without listed offices on refresh', () => {
+  for (const state of ['', 'California', 'Alaska']) {
+    const savedFilters = { state, city: 'all' };
+    const saved = decodeDraft(encodeDraft(order, savedFilters, now), empty, now);
+    assert.deepEqual(saved.filters, savedFilters);
+    assert.equal(saved.order.location?.id, location.id);
+    assert.equal(saved.order.bundle?.id, bundles[2].id);
+  }
+});
+
 test('stores identifiers, not trusted prices, agreement consent or card data', () => {
   const raw = JSON.parse(encodeDraft(order, filters, now));
   assert.equal(raw.bundle, undefined);

@@ -7,9 +7,10 @@ import { SearchableLocationFilter } from './SearchableLocationFilter';
 import { useOrder } from '../context';
 import {
   AvailableLocation,
-  getCitiesByState,
+  getLocationCityOptions,
   getLocationsByState,
   getStates,
+  sampleLocations,
 } from '../types';
 
 interface LocationSelectorProps {
@@ -93,26 +94,29 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
   const { order, locationFilters, setLocationFilters } = useOrder();
   const states = useMemo(() => getStates(), []);
   const selectedState = locationFilters.state;
-  const selectedCity = locationFilters.city || (selectedState ? 'all' : '');
+  const selectedCity = locationFilters.city || 'all';
   const cities = useMemo(
-    () => (selectedState ? getCitiesByState(selectedState) : []),
+    () => getLocationCityOptions(selectedState),
     [selectedState]
   );
   const locations = useMemo(() => {
-    if (!selectedState) return [];
-    const stateLocations = getLocationsByState(selectedState);
+    const stateLocations = selectedState ? getLocationsByState(selectedState) : sampleLocations;
     return selectedCity && selectedCity !== 'all'
       ? stateLocations.filter((location) => location.city === selectedCity)
       : stateLocations;
   }, [selectedState, selectedCity]);
 
   const handleStateChange = (state: string) => {
-    setLocationFilters({ state, city: state ? 'all' : '' });
+    setLocationFilters({ state: state === 'all' ? '' : state, city: 'all' });
   };
 
   const handleCityChange = (city: string) => {
-    if (!selectedState) return;
-    setLocationFilters({ state: selectedState, city });
+    if (city === 'all') {
+      setLocationFilters({ state: selectedState, city: 'all' });
+      return;
+    }
+    const option = cities.find(option => option.value === city);
+    if (option) setLocationFilters({ state: option.state, city: option.city });
   };
 
   return (
@@ -140,10 +144,13 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
           <SearchableLocationFilter
             id="location-state"
             label="State"
-            value={selectedState}
+            value={selectedState || 'all'}
             onChange={handleStateChange}
-            options={states.map(state => ({ value: state, label: state }))}
-            placeholder="Select a state"
+            options={[
+              { value: 'all', label: 'All states' },
+              ...states.map(state => ({ value: state, label: state })),
+            ]}
+            placeholder="All states"
             testId="select-state"
           />
         </div>
@@ -157,26 +164,22 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
             label="City"
             value={selectedCity}
             onChange={handleCityChange}
-            disabled={!selectedState}
             options={[
               { value: 'all', label: 'All cities' },
-              ...cities.map(city => ({ value: city, label: city })),
+              ...cities,
             ]}
-            placeholder={selectedState ? 'All cities' : 'Select a state first'}
+            placeholder="All cities"
             testId="select-city"
           />
         </div>
       </div>
 
-      {!selectedState ? (
-        <div className="py-10 text-center text-gray-500">
-          <MapPin className="mx-auto mb-3 h-10 w-10 text-gray-300" aria-hidden="true" />
-          <p>Select a state to view available locations</p>
-        </div>
-      ) : locations.length > 0 ? (
+      {locations.length > 0 ? (
         <div data-testid="locations-list">
           <h3 className="mb-3 text-sm font-medium text-gray-700">
-            Available locations in {selectedCity === 'all' ? selectedState : `${selectedCity}, ${selectedState}`}
+            {selectedState
+              ? `Available locations in ${selectedCity === 'all' ? selectedState : `${selectedCity}, ${selectedState}`}`
+              : 'Available locations across all states'}
           </h3>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {locations.map((location) => (
@@ -192,7 +195,16 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
       ) : (
         <div className="py-10 text-center text-gray-500" data-testid="locations-empty">
           <Building2 className="mx-auto mb-3 h-10 w-10 text-gray-300" aria-hidden="true" />
-          <p>No locations are available for this selection.</p>
+          <p>No locations are currently listed{selectedState ? ` in ${selectedState}` : ' for this selection'}.</p>
+          <Button
+            type="button"
+            variant="link"
+            className="mt-2 text-gray-700 underline underline-offset-4"
+            onClick={() => setLocationFilters({ state: '', city: 'all' })}
+            data-testid="button-search-all-states"
+          >
+            Search all states
+          </Button>
         </div>
       )}
     </div>
