@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import type { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ChevronDown, ChevronRight, MapPin, Phone } from 'lucide-react';
+import { Check, ChevronDown, ChevronRight, MapPin, Phone, TriangleAlert } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import { ProgressIndicator } from '../components/ProgressIndicator';
@@ -208,7 +208,13 @@ export default function PickPlanPage() {
                 {assignedPhone ? (
                   <>
                     <p className="mt-0.5 text-sm font-semibold tabular-nums text-gray-900" data-testid="review-business-phone">{assignedPhone.number}</p>
-                    <p className="mt-1 text-xs leading-5 text-gray-600" data-testid="phone-lock-notice">Phone numbers locked for another 30 minutes</p>
+                    <p
+                      className="mt-2 flex items-start gap-2 rounded-md bg-amber-50 px-3 py-2 text-xs leading-5 text-amber-900"
+                      data-testid="phone-lock-notice"
+                    >
+                      <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
+                      <span>Phone numbers locked for another <strong className="font-semibold">30 minutes</strong></span>
+                    </p>
                   </>
                 ) : (
                   <p className="mt-1 text-sm text-gray-700" role="status">No local numbers are currently available. Choose another location to continue.</p>
