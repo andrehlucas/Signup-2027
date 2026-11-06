@@ -14,3 +14,9 @@ Draft recovery is deliberately limited to the current browser-tab session, with 
 **Why:** Enrollment contains contact details. Refresh recovery should not leave an indefinitely remembered enrollment on a shared device or be mistaken for an account-backed saved order.
 
 **How to apply:** Keep card details out of draft persistence and require fresh final agreement consent. If longer-term or cross-device recovery is requested, treat that as a separate privacy and authenticated-storage decision.
+
+A location can offer multiple local phone area codes, not just one.
+
+**Why:** The user explicitly stated that a location may offer multiple area codes and requested a filter for choosing among them.
+
+**How to apply:** Derive supported area codes from that location's available phone inventory, preserve compatible customer choices, and do not treat changing a filter as saving a different number. Prototype options must not be represented as carrier reservations.

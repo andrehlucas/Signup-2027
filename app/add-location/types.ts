@@ -647,6 +647,14 @@ export const sampleLocations: AvailableLocation[] = [
   },
 ];
 
+const localAreaCodesByCity: Record<string, string[]> = {
+  Miami: ['305', '786'],
+  'Boca Raton': ['561', '728'],
+  'Fort Lauderdale': ['954', '754'],
+  Orlando: ['407', '689'],
+  Tampa: ['813', '656'],
+};
+
 export const samplePhoneNumbers: PhoneNumber[] = [
   { id: 'pn-1', number: '(305) 847-9001', type: 'local', areaCode: '305', isAvailable: true },
   { id: 'pn-2', number: '(305) 847-9002', type: 'local', areaCode: '305', isAvailable: true },
@@ -659,6 +667,16 @@ export const samplePhoneNumbers: PhoneNumber[] = [
   { id: 'pn-9', number: '(407) 559-2002', type: 'local', areaCode: '407', isAvailable: true },
   { id: 'pn-10', number: '(813) 315-3991', type: 'local', areaCode: '813', isAvailable: true },
   { id: 'pn-11', number: '(813) 315-3992', type: 'local', areaCode: '813', isAvailable: true },
+  // Fictional 555-0100–0107 numbers for exercising the prototype, not carrier inventory.
+  ...Object.values(localAreaCodesByCity).flat().flatMap(areaCode =>
+    Array.from({ length: 8 }, (_, index): PhoneNumber => ({
+      id: `demo-local-${areaCode}-${index}`,
+      number: `(${areaCode}) 555-${String(100 + index).padStart(4, '0')}`,
+      type: 'local',
+      areaCode,
+      isAvailable: true,
+    }))
+  ),
 ];
 
 export const sampleTollFreeNumbers: PhoneNumber[] = [
@@ -703,14 +721,7 @@ export function getLocationsByState(state: string): AvailableLocation[] {
 }
 
 export function getPhoneNumbersForLocation(location: AvailableLocation): PhoneNumber[] {
-  const cityAreaCodeMap: Record<string, string[]> = {
-    'Miami': ['305'],
-    'Boca Raton': ['561'],
-    'Fort Lauderdale': ['954'],
-    'Orlando': ['407'],
-    'Tampa': ['813'],
-  };
-  const areaCodes = cityAreaCodeMap[location.city] || [];
+  const areaCodes = localAreaCodesByCity[location.city] || [];
   return samplePhoneNumbers.filter(pn => areaCodes.includes(pn.areaCode));
 }
 

@@ -28,6 +28,7 @@ import {
 } from '@/app/components/ui/popover';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { BundleSuggestionDialog } from '../components/BundleSuggestionDialog';
+import { LocalPhoneNumberDialog } from '../components/LocalPhoneNumberDialog';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
@@ -51,7 +52,6 @@ export default function CustomizePage() {
   const selectedBundle = order.bundle;
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
-  const [tempSelectedPhone, setTempSelectedPhone] = useState<PhoneNumber | null>(null);
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAllAddons, setShowAllAddons] = useState(false);
   const [tollFreeModalOpen, setTollFreeModalOpen] = useState(false);
@@ -163,16 +163,7 @@ export default function CustomizePage() {
     setTollFreeModalOpen(true);
   };
 
-  const handlePhoneConfirm = () => {
-    if (tempSelectedPhone) {
-      setSelectedPhone(tempSelectedPhone);
-      setPhoneNumber(tempSelectedPhone);
-    }
-    setPhoneModalOpen(false);
-  };
-
   const handleOpenPhoneModal = () => {
-    setTempSelectedPhone(selectedPhone);
     setPhoneModalOpen(true);
   };
 
@@ -929,54 +920,17 @@ export default function CustomizePage() {
         onCompare={handleSuggestionSeeBundles}
       />
 
-      <Dialog open={phoneModalOpen} onOpenChange={setPhoneModalOpen}>
-        <DialogContent className="sm:max-w-md" data-testid="phone-selection-modal">
-          <DialogHeader>
-            <DialogTitle>Select Phone Number</DialogTitle>
-            <DialogDescription>
-              Choose a phone number for your new location. All numbers are local to your selected area.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-2 py-4 max-h-60 overflow-y-auto">
-            {phoneNumbers.map((phone) => (
-              <div
-                key={phone.id}
-                onClick={() => setTempSelectedPhone(phone)}
-                className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
-                  tempSelectedPhone?.id === phone.id
-                    ? 'bg-gray-50 border-2 border-[#006d91]'
-                    : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
-                }`}
-                data-testid={`phone-option-${phone.id}`}
-              >
-                <Phone className="h-4 w-4 text-gray-500" />
-                <span className="font-medium">{phone.number}</span>
-                {tempSelectedPhone?.id === phone.id && (
-                  <Check className="h-4 w-4 text-gray-700 ml-auto" />
-                )}
-              </div>
-            ))}
-          </div>
-
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setPhoneModalOpen(false)}
-              data-testid="button-cancel-phone"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handlePhoneConfirm}
-              className="signup-primary"
-              data-testid="button-confirm-phone"
-            >
-              Confirm Selection
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <LocalPhoneNumberDialog
+        open={phoneModalOpen}
+        onOpenChange={setPhoneModalOpen}
+        numbers={phoneNumbers}
+        selected={selectedPhone}
+        city={order.location?.city || 'your location'}
+        onSave={phone => {
+          setSelectedPhone(phone);
+          setPhoneNumber(phone);
+        }}
+      />
 
       <Dialog open={tollFreeModalOpen} onOpenChange={setTollFreeModalOpen}>
         <DialogContent className="sm:max-w-md" data-testid="tollfree-selection-modal">

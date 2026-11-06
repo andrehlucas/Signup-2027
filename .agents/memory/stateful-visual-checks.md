@@ -20,3 +20,9 @@ Treat generated development bundles as disposable after framework or dependency 
 **Why:** This project's saved development output survived dependency updates and the browser reported missing Webpack modules and failed script parsing even while the server returned successful pages.
 
 **How to apply:** Keep development output separate from production/restored builds, regenerate incompatible caches, and verify a cold, hydrated browser session rather than only a warm reload.
+
+Verify long selection dialogs at short mobile heights, not only mobile widths in a tall viewport.
+
+**Why:** Expanding the phone list exposed footer clipping and scrolling constraints that were not apparent in a tall phone screenshot.
+
+**How to apply:** After viewport emulation settles, check a short screen such as 320×568: the list must scroll independently while filters and Save/Cancel remain reachable. Avoid intrinsic fieldset sizing for a constrained flex scroll region; retain radio-group semantics with an explicitly shrinkable wrapper.
