@@ -1,13 +1,15 @@
 import { z } from 'zod';
 import {
-  availableAddons, bundles, getCitiesByState, getPhoneNumbersForLocation, getStates,
+  availableAddons, bundles, getPhoneNumbersForLocation,
   sampleLocations, sampleTollFreeNumbers, OrderState,
 } from './types';
+import { getCountryLocations, getLocationRegions, LOCATION_COUNTRY_CODES, type LocationCountry } from './location-regions';
 
 export const DRAFT_KEY = 'opus-enrollment-draft-v1';
 export const DRAFT_TTL = 24 * 60 * 60 * 1000;
 
 export interface LocationFilters {
+  country?: LocationCountry;
   state: string;
   city: string;
 }
@@ -28,7 +30,7 @@ const draftSchema = z.object({
   tollFreePhoneId: z.string().nullable(),
   addons: z.array(z.object({ id: z.string(), packageId: z.string().optional() })).max(100),
   extensionCount: z.number().int().min(0).max(1000),
-  filters: z.object({ state: z.string(), city: z.string() }),
+  filters: z.object({ country: z.enum(LOCATION_COUNTRY_CODES).default('US'), state: z.string(), city: z.string() }),
 });
 
 // Store catalog references, never copied prices or payment-card fields.
@@ -65,9 +67,11 @@ export function decodeDraft(raw: string, initial: OrderState, now = Date.now()) 
     const selectedPackage = addon.packages.find(item => item.id === saved.packageId) ?? addon.packages[0];
     return [{ ...addon, selectedPackage, price: selectedPackage.price }];
   }).filter((addon, index, all) => all.findIndex(item => item.id === addon.id) === index);
-  const state = draft.filters.state === '' || getStates().includes(draft.filters.state)
-    ? draft.filters.state : location?.state ?? '';
-  const city = draft.filters.city === 'all' || getCitiesByState(state).includes(draft.filters.city)
+  const country = draft.filters.country;
+  const countryLocations = getCountryLocations(country, sampleLocations);
+  const state = draft.filters.state === '' || getLocationRegions(country).includes(draft.filters.state)
+    ? draft.filters.state : location && (location.countryCode ?? 'US') === country ? location.state : '';
+  const city = draft.filters.city === 'all' || countryLocations.some(item => (!state || item.state === state) && item.city === draft.filters.city)
     ? draft.filters.city : '';
   return {
     order: {
@@ -76,6 +80,6 @@ export function decodeDraft(raw: string, initial: OrderState, now = Date.now()) 
       // Consent and promotions must be confirmed again, not trusted from storage.
       agreementAccepted: false, appliedPromo: null,
     } satisfies OrderState,
-    filters: { state, city },
+    filters: { country, state, city },
   };
 }

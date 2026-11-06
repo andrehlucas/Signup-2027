@@ -21,9 +21,18 @@ test('every bundle keeps all included add-ons visible without displacing the pre
     for (const id of getIncludedAddonIds(bundle)) {
       assert.ok(visible.some(addon => addon.id === id), `${bundle.tier}: ${id}`);
     }
-    assert.ok(visible.every(addon => preferred.includes(addon.id) || isAddonIncludedInBundle(addon.id, bundle)));
+    const requiredCount = sorted.filter(addon => preferred.includes(addon.id) || isAddonIncludedInBundle(addon.id, bundle)).length;
+    assert.equal(visible.length, Math.ceil(requiredCount / 2) * 2, bundle.tier);
+    assert.equal(new Set(visible.map(addon => addon.id)).size, visible.length);
   }
-  assert.deepEqual(getInitialCustomizationAddons(sorted, null).map(addon => addon.id), preferred);
+  assert.deepEqual(getInitialCustomizationAddons(sorted, null).slice(0, 5).map(addon => addon.id), preferred);
+  assert.equal(getInitialCustomizationAddons(sorted, null).length % 2, 0);
+});
+
+test('the complete catalog also fills two-column rows without duplicate or placeholder cards', () => {
+  const sorted = sortCustomizationAddons(availableAddons);
+  assert.equal(sorted.length % 2, 0, 'Keep the full add-on catalog even when adding or removing features');
+  assert.equal(new Set(sorted.map(addon => addon.id)).size, sorted.length);
 });
 
 test('custom business email is a $10 monthly optional add-on with the supplied details', () => {

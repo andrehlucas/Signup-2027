@@ -1,6 +1,8 @@
 import { US_STATES } from '../lib/us-states';
+import type { LocationCountry } from './location-regions';
 
 export interface AvailableLocation {
+  countryCode?: LocationCountry;
   id: string;
   name: string;
   address: string;

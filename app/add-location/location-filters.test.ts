@@ -1,6 +1,28 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { getLocationCityOptions, getStates, getLocationsByState, sampleLocations } from './types';
+import { getCountryLocations, getLocationRegions, LOCATION_COUNTRIES } from './location-regions';
+
+test('offers US, Canada and Puerto Rico with country-appropriate regions', () => {
+  assert.deepEqual(LOCATION_COUNTRIES.map(country => country.value), ['US', 'CA', 'PR']);
+  assert.equal(getLocationRegions('US').length, 51);
+  assert.equal(getLocationRegions('CA').length, 13);
+  assert.ok(getLocationRegions('CA').includes('Ontario'));
+  assert.ok(!getLocationRegions('CA').includes('Florida'));
+  assert.deepEqual(getLocationRegions('PR'), ['Puerto Rico']);
+});
+
+test('country filtering never shows US offices as Canadian or Puerto Rican inventory', () => {
+  assert.equal(getCountryLocations('US', sampleLocations).length, sampleLocations.length);
+  assert.deepEqual(getCountryLocations('CA', sampleLocations), []);
+  assert.deepEqual(getCountryLocations('PR', sampleLocations), []);
+  const canada = { ...sampleLocations[0], id: 'test-ca', countryCode: 'CA' as const, city: 'Toronto', state: 'Ontario', stateCode: 'ON' };
+  const puertoRico = { ...sampleLocations[0], id: 'test-pr', countryCode: 'PR' as const, city: 'San Juan', state: 'Puerto Rico', stateCode: 'PR' };
+  const catalog = [...sampleLocations, canada, puertoRico];
+  assert.deepEqual(getCountryLocations('CA', catalog), [canada]);
+  assert.deepEqual(getCountryLocations('PR', catalog), [puertoRico]);
+  assert.deepEqual(getLocationCityOptions('', getCountryLocations('CA', catalog)).map(option => option.label), ['Toronto, ON']);
+});
 
 test('offers all 50 states plus DC without inventing office locations', () => {
   const states = getStates();

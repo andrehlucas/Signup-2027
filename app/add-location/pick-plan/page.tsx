@@ -3,12 +3,12 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import type { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ChevronDown, ChevronRight, MapPin, Phone, TriangleAlert } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
+import { Check, ChevronDown, MapPin, Phone, TriangleAlert } from 'lucide-react';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { LocationSelector } from '../components/LocationSelector';
 import { LocalPhoneNumberDialog } from '../components/LocalPhoneNumberDialog';
+import { EnrollmentSummaryFooter } from '../components/EnrollmentSummaryFooter';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import {
@@ -64,14 +64,14 @@ export default function PickPlanPage() {
 
   const handleChangeLocation = () => {
     if (order.location) {
-      setLocationFilters({ state: order.location.state, city: order.location.city });
+      setLocationFilters({ country: order.location.countryCode ?? 'US', state: order.location.state, city: order.location.city });
     }
     setSubStep('location');
   };
 
   const handleCancelLocationChange = () => {
     if (order.location) {
-      setLocationFilters({ state: order.location.state, city: order.location.city });
+      setLocationFilters({ country: order.location.countryCode ?? 'US', state: order.location.state, city: order.location.city });
     }
     setSubStep('review');
   };
@@ -123,7 +123,7 @@ export default function PickPlanPage() {
     : null;
 
   return (
-    <div className="signup-shell px-4 pt-4 pb-8 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
+    <div className="signup-shell px-4 pt-4 pb-64 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
       <div className="max-w-5xl mx-auto">
         <div className="mb-6">
           <ProgressIndicator currentStep={2} />
@@ -308,15 +308,16 @@ export default function PickPlanPage() {
           </div>
         </section>
 
-        <Button
-          onClick={handleContinue}
+      </div>
+      <div className="fixed inset-x-0 bottom-0 z-50" data-testid="footer-wrapper">
+        <EnrollmentSummaryFooter
+          phoneNumber={assignedPhone}
+          onContinue={handleContinue}
           disabled={!order.bundle || !assignedPhone}
-          className="signup-primary w-full h-12 text-base"
-          data-testid="button-continue-customize"
-        >
-          Continue to Add-ons
-          <ChevronRight className="h-4 w-4 ml-1.5" />
-        </Button>
+          continueTestId="button-continue-customize"
+          continueLabel="Continue to add-ons"
+          compactWidth
+        />
       </div>
     </div>
   );

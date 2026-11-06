@@ -32,7 +32,7 @@ test('restores contact details, location, plan, package, phone and filters', () 
   assert.equal(saved.order.extensionCount, 2);
   assert.equal(saved.order.agreementAccepted, false);
   assert.equal(saved.order.appliedPromo, null);
-  assert.deepEqual(saved.filters, filters);
+  assert.deepEqual(saved.filters, { ...filters, country: 'US' });
 });
 
 test('restores custom business email from the catalog with its monthly price', () => {
@@ -47,10 +47,27 @@ test('preserves nationwide browsing and states without listed offices on refresh
   for (const state of ['', 'California', 'Alaska']) {
     const savedFilters = { state, city: 'all' };
     const saved = decodeDraft(encodeDraft(order, savedFilters, now), empty, now);
-    assert.deepEqual(saved.filters, savedFilters);
+    assert.deepEqual(saved.filters, { ...savedFilters, country: 'US' });
     assert.equal(saved.order.location?.id, location.id);
     assert.equal(saved.order.bundle?.id, bundles[2].id);
   }
+});
+
+test('preserves Canada and Puerto Rico browsing without replacing the selected US office', () => {
+  for (const savedFilters of [
+    { country: 'CA' as const, state: 'Ontario', city: 'all' },
+    { country: 'PR' as const, state: 'Puerto Rico', city: 'all' },
+  ]) {
+    const saved = decodeDraft(encodeDraft(order, savedFilters, now), empty, now);
+    assert.deepEqual(saved.filters, savedFilters);
+    assert.equal(saved.order.location?.id, location.id);
+    assert.equal(saved.order.bundle?.id, order.bundle?.id);
+  }
+});
+
+test('country changes cannot restore a state or city from a different country', () => {
+  const saved = decodeDraft(encodeDraft(order, { country: 'CA', state: 'Florida', city: 'Miami' }, now), empty, now);
+  assert.deepEqual(saved.filters, { country: 'CA', state: '', city: '' });
 });
 
 test('stores identifiers, not trusted prices, agreement consent or card data', () => {

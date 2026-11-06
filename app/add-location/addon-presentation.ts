@@ -16,7 +16,13 @@ export function sortCustomizationAddons(addons: Addon[]): Addon[] {
 }
 
 export function getInitialCustomizationAddons(addons: Addon[], bundle: Bundle | null): Addon[] {
-  return addons.filter(addon =>
+  const required = addons.filter(addon =>
     preferredAddonIds.includes(addon.id) || isAddonIncludedInBundle(addon.id, bundle)
   );
+  const visibleIds = new Set(required.map(addon => addon.id));
+  if (visibleIds.size % 2 !== 0) {
+    const nextAddon = addons.find(addon => !visibleIds.has(addon.id));
+    if (nextAddon) visibleIds.add(nextAddon.id);
+  }
+  return addons.filter(addon => visibleIds.has(addon.id));
 }

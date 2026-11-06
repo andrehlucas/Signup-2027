@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Minus, Phone, MapPin, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil, DollarSign, Star } from 'lucide-react';
+import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Pencil, DollarSign, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -21,14 +20,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/app/components/ui/select';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/app/components/ui/popover';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { BundleSuggestionDialog } from '../components/BundleSuggestionDialog';
-import { LocalPhoneNumberDialog } from '../components/LocalPhoneNumberDialog';
+import { EnrollmentSummaryFooter } from '../components/EnrollmentSummaryFooter';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
@@ -52,7 +46,6 @@ export default function CustomizePage() {
   const { order, setBundle, setPhoneNumber, setTollFreePhoneNumber, addAddon, removeAddon, updateAddon, setExtensionCount, getCartTotal } = useOrder();
   const { toast } = useToast();
   const selectedBundle = order.bundle;
-  const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAllAddons, setShowAllAddons] = useState(false);
@@ -163,10 +156,6 @@ export default function CustomizePage() {
   const handleOpenTollFreeModal = () => {
     setTempSelectedTollFree(selectedTollFree);
     setTollFreeModalOpen(true);
-  };
-
-  const handleOpenPhoneModal = () => {
-    setPhoneModalOpen(true);
   };
 
   const handleAddonToggle = (addon: Addon) => {
@@ -489,48 +478,6 @@ export default function CustomizePage() {
                 );
               })}
 
-              {(showAllAddons || !hasMoreAddons) && <div
-                className={`rounded-lg border transition-all ${
-                  order.extensionCount > 0 ? 'border-[#006d91] bg-gray-50' : 'border-gray-200 bg-white'
-                }`}
-                data-testid="addon-card-additional-extensions"
-              >
-                <div className="p-4">
-                  <div className="flex items-start justify-between mb-1">
-                    <h4 className="font-medium text-gray-900">Additional Extensions</h4>
-                    <span className="font-semibold text-gray-900">$25/mo each</span>
-                  </div>
-                  <div className="flex items-center gap-3 mt-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setExtensionCount(order.extensionCount - 1)}
-                      disabled={order.extensionCount === 0}
-                      className="h-7 w-7 p-0"
-                      data-testid="button-extension-decrease"
-                    >
-                      <Minus className="h-3.5 w-3.5" />
-                    </Button>
-                    <span className="font-medium text-gray-900 min-w-[1.5rem] text-center text-sm" data-testid="extension-count">
-                      {order.extensionCount}
-                    </span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setExtensionCount(order.extensionCount + 1)}
-                      className="h-7 w-7 p-0"
-                      data-testid="button-extension-increase"
-                    >
-                      <Plus className="h-3.5 w-3.5" />
-                    </Button>
-                    {order.extensionCount > 0 && (
-                      <span className="text-sm text-gray-600 ml-1">
-                        = ${order.extensionCount * 25}/mo
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>}
             </div>
 
             {hasMoreAddons && (
@@ -607,36 +554,50 @@ export default function CustomizePage() {
         <div className="signup-surface p-5 md:p-6 mb-6" data-testid="phone-section">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-1">Your Business Phone Number</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-1">Additional Phone Services</h2>
               <p className="text-sm text-gray-600">
-                Auto-assigned based on your location. You can change it if you prefer a different number.
+                Add extra extensions and manage your toll-free number.
               </p>
             </div>
           </div>
 
-          {selectedPhone && (
-            <div className="mt-4 flex items-center justify-between bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-gray-600" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900" data-testid="selected-phone-number">
-                    {selectedPhone.number}
-                  </p>
-                  <p className="text-sm text-gray-500">Local Number</p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleOpenPhoneModal}
-                data-testid="button-change-phone"
-              >
-                <Pencil className="h-4 w-4 text-gray-500" />
-              </Button>
+          <div className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-4" data-testid="addon-card-additional-extensions">
+            <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
+              <h3 className="font-medium text-gray-900">Additional Extensions</h3>
+              <span className="text-sm font-semibold text-gray-900">$25/mo each</span>
             </div>
-          )}
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setExtensionCount(order.extensionCount - 1)}
+                disabled={order.extensionCount === 0}
+                aria-label="Remove an additional extension"
+                className="h-11 w-11"
+                data-testid="button-extension-decrease"
+              >
+                <Minus className="h-4 w-4" aria-hidden="true" />
+              </Button>
+              <span className="min-w-6 text-center font-medium text-gray-900" aria-label="Additional extension count" aria-live="polite" data-testid="extension-count">
+                {order.extensionCount}
+              </span>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setExtensionCount(order.extensionCount + 1)}
+                aria-label="Add an additional extension"
+                className="h-11 w-11"
+                data-testid="button-extension-increase"
+              >
+                <Plus className="h-4 w-4" aria-hidden="true" />
+              </Button>
+              {order.extensionCount > 0 && (
+                <span className="text-sm text-gray-600" data-testid="extensions-monthly-total">
+                  ${order.extensionCount * 25}/mo
+                </span>
+              )}
+            </div>
+          </div>
 
           {hasTollFree && selectedTollFree && (
             <div className="mt-3 flex items-center justify-between bg-gray-50 rounded-lg p-4">
@@ -655,6 +616,7 @@ export default function CustomizePage() {
                 variant="ghost"
                 size="icon"
                 onClick={handleOpenTollFreeModal}
+                aria-label="Change toll-free number"
                 data-testid="button-change-tollfree"
               >
                 <Pencil className="h-4 w-4 text-gray-500" />
@@ -703,174 +665,14 @@ export default function CustomizePage() {
           </div>
         </div>
 
-        <div
-          className="bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(16,24,40,0.08)]"
-          data-testid="sticky-footer"
-        >
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="mb-3 flex flex-col gap-2 border-b border-gray-100 pb-3 text-sm text-gray-600 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-            <div className="flex min-w-0 items-start gap-2" data-testid="footer-office-address">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              <span className="min-w-0 break-words leading-5">
-                <span className="sr-only">Office address: </span>
-                {order.location.address}{order.location.addressLine2 ? `, ${order.location.addressLine2}` : ''}, {order.location.city}, {order.location.stateCode} {order.location.zipCode}
-              </span>
-            </div>
-            {selectedPhone && (
-              <div className="flex shrink-0 items-center gap-2" data-testid="footer-business-phone">
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                <span className="sr-only">Business phone number: </span>
-                <span className="font-medium leading-5 text-gray-800">{selectedPhone.number}</span>
-              </div>
-            )}
-          </div>
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="relative flex-shrink-0">
-                <motion.div
-                  animate={footerPulse ? {
-                    scale: [1, 1.3, 0.9, 1.15, 1],
-                    rotate: [0, -8, 8, -4, 0],
-                  } : { scale: 1, rotate: 0 }}
-                  transition={{ duration: 0.6, ease: 'easeInOut' }}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center bg-gray-100"
-                >
-                  <ShoppingCart className="h-4 w-4 text-gray-700" />
-                </motion.div>
-                <AnimatePresence>
-                  {footerPulse && (
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0, y: 0 }}
-                      animate={{ scale: 1, opacity: 1, y: -6 }}
-                      exit={{ scale: 0, opacity: 0, y: -12 }}
-                      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-                      className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#344054] border-2 border-white flex items-center justify-center"
-                      data-testid="cart-added-badge"
-                    >
-                      <Check className="h-3 w-3 text-white" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                <AnimatePresence>
-                  {footerPulse && (
-                    <motion.div
-                      initial={{ scale: 0.5, opacity: 0.8 }}
-                      animate={{ scale: 2.5, opacity: 0 }}
-                      transition={{ duration: 0.8, ease: 'easeOut' }}
-                      className="absolute inset-0 rounded-lg bg-gray-300 pointer-events-none"
-                    />
-                  )}
-                </AnimatePresence>
-              </div>
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <p className="text-sm font-semibold text-gray-900 leading-tight" data-testid="footer-package-name">{displayBundleName}</p>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button
-                        className="inline-flex items-center gap-1 text-xs text-gray-700 hover:text-gray-900 font-medium transition-colors"
-                        data-testid="button-see-included"
-                      >
-                        <Info className="h-3.5 w-3.5" />
-                        <span className="hidden sm:inline">See what's included</span>
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent side="top" align="center" className="w-72 p-0" data-testid="popover-included-features">
-                      <div className="px-4 py-3 border-b border-gray-100">
-                        <p className="text-sm font-semibold text-gray-900">{displayBundleName} includes:</p>
-                      </div>
-                      <div className="px-4 py-3 space-y-2">
-                        <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
-                          <span className="text-gray-700">Prestigious Business Address</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
-                          <span className="text-gray-700">Live Call Answering</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
-                          <span className="text-gray-700">Call Transferring</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
-                          <span className="text-gray-700">2 Voicemail Boxes</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
-                          <span className="text-gray-700">Business Phone/Fax Number</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
-                          <span className="text-gray-700">Voicemail/Fax to Email</span>
-                        </div>
-                        {selectedBundle && Object.entries(selectedBundle.features)
-                          .filter(([key, enabled]) => enabled && !['businessAddress', 'liveCallAnswering', 'callTransferring'].includes(key))
-                          .map(([key]) => (
-                            <div key={key} className="flex items-center gap-2 text-sm">
-                              <Check className="h-3.5 w-3.5 text-gray-600 flex-shrink-0" />
-                              <span className="text-gray-700">{featureLabels[key]}</span>
-                            </div>
-                          ))
-                        }
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                <div className="flex items-end gap-2">
-                  <p className="text-lg font-bold text-gray-900 leading-tight" data-testid="footer-monthly-total">${monthly}<span className="text-sm font-normal text-gray-500">/mo</span></p>
-                  {(order.addons.length > 0 || order.extensionCount > 0) && (
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <button
-                          className="inline-flex items-center gap-1 text-xs text-gray-700 hover:text-gray-900 font-medium transition-colors mb-0.5"
-                          data-testid="button-see-addons"
-                        >
-                          See details
-                        </button>
-                      </PopoverTrigger>
-                    <PopoverContent side="top" align="center" className="w-72 p-0" data-testid="popover-addon-breakdown">
-                        <div className="px-4 py-3 border-b border-gray-100">
-                          <p className="text-sm font-semibold text-gray-900">Your Add-ons</p>
-                        </div>
-                        <div className="px-4 py-3 space-y-2">
-                          {order.addons.map((addon) => (
-                            <div key={addon.id} className="flex items-center justify-between text-sm">
-                              <span className="text-gray-700">{addon.name}{addon.selectedPackage ? ` (${addon.selectedPackage.name})` : ''}</span>
-                              <span className="font-medium text-gray-900 flex-shrink-0 ml-3">${addon.price}/mo</span>
-                            </div>
-                          ))}
-                          {order.extensionCount > 0 && (
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-gray-700">Additional Extensions ({order.extensionCount})</span>
-                              <span className="font-medium text-gray-900 flex-shrink-0 ml-3">${order.extensionCount * 25}/mo</span>
-                            </div>
-                          )}
-                          <div className="flex items-center justify-between text-sm pt-2 border-t border-gray-100">
-                            <span className="font-semibold text-gray-900">Add-ons Total</span>
-                            <span className="font-semibold text-gray-900">
-                              ${order.addons.reduce((sum, a) => sum + a.price, 0) + order.extensionCount * 25}/mo
-                            </span>
-                          </div>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                  )}
-                </div>
-              </div>
-            </div>
-            <Button
-              onClick={handleContinue}
-              disabled={!selectedPhone}
-              className="signup-primary h-10 px-6 flex-shrink-0"
-              data-testid="button-continue-checkout"
-            >
-              Continue
-              <ChevronRight className="h-4 w-4 ml-1.5" />
-            </Button>
-          </div>
-        </div>
-      </div>
+        <EnrollmentSummaryFooter
+          phoneNumber={selectedPhone}
+          onContinue={handleContinue}
+          disabled={!selectedPhone}
+          continueTestId="button-continue-checkout"
+          continueLabel="Continue to checkout"
+          pulse={footerPulse}
+        />
       </div>
 
       <BundleSuggestionDialog
@@ -892,18 +694,6 @@ export default function CustomizePage() {
         onUpgrade={handleSuggestionProceedWithBundle}
         onKeepCurrent={handleSuggestionDismiss}
         onCompare={handleSuggestionSeeBundles}
-      />
-
-      <LocalPhoneNumberDialog
-        open={phoneModalOpen}
-        onOpenChange={setPhoneModalOpen}
-        numbers={phoneNumbers}
-        selected={selectedPhone}
-        city={order.location?.city || 'your location'}
-        onSave={phone => {
-          setSelectedPhone(phone);
-          setPhoneNumber(phone);
-        }}
       />
 
       <Dialog open={tollFreeModalOpen} onOpenChange={setTollFreeModalOpen}>

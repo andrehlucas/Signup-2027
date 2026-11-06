@@ -52,7 +52,7 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [order, setOrder] = useState<OrderState>(initialOrder);
-  const [locationFilters, setLocationFilters] = useState<LocationFilters>({ state: '', city: '' });
+  const [locationFilters, setLocationFilters] = useState<LocationFilters>({ country: 'US', state: '', city: '' });
   const [ready, setReady] = useState(false);
   const [draftNotice, setDraftNotice] = useState('');
   const [locationNotice, setLocationNotice] = useState('');
@@ -80,7 +80,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     if (!ready) return;
     try {
       const hasDraft = Object.values(order.userInfo).some(value => typeof value === 'string' && value && value !== '+1' && value !== 'US')
-        || order.location || order.bundle || locationFilters.state;
+        || order.location || order.bundle || locationFilters.state || locationFilters.country && locationFilters.country !== 'US';
       if (hasDraft) sessionStorage.setItem(DRAFT_KEY, encodeDraft(order, locationFilters));
       else sessionStorage.removeItem(DRAFT_KEY);
     } catch {
@@ -101,7 +101,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     setOrder(prev => {
       return { ...prev, location, phoneNumber: resolveLocalPhoneNumber(location, prev.phoneNumber) };
     });
-    if (location) setLocationFilters({ state: location.state, city: location.city });
+    if (location) setLocationFilters({ country: location.countryCode ?? 'US', state: location.state, city: location.city });
   };
 
   const setBundle = (bundle: Bundle | null) => {
@@ -151,7 +151,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const clearOrder = () => {
     setOrder(initialOrder);
-    setLocationFilters({ state: '', city: '' });
+    setLocationFilters({ country: 'US', state: '', city: '' });
     setDraftNotice('');
     setLocationNotice('');
     try { sessionStorage.removeItem(DRAFT_KEY); }

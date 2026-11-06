@@ -8,10 +8,9 @@ import { useOrder } from '../context';
 import {
   AvailableLocation,
   getLocationCityOptions,
-  getLocationsByState,
-  getStates,
   sampleLocations,
 } from '../types';
+import { getCountryLocations, getLocationRegions, LOCATION_COUNTRIES, type LocationCountry } from '../location-regions';
 
 interface LocationSelectorProps {
   onSelect: (location: AvailableLocation) => void;
@@ -92,31 +91,36 @@ function LocationCard({
 
 export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) {
   const { order, locationFilters, setLocationFilters } = useOrder();
-  const states = useMemo(() => getStates(), []);
+  const selectedCountry = locationFilters.country ?? 'US';
+  const countryName = LOCATION_COUNTRIES.find(country => country.value === selectedCountry)!.label;
+  const regionLabel = selectedCountry === 'CA' ? 'Province / territory' : selectedCountry === 'PR' ? 'Territory' : 'State';
+  const allRegionsLabel = selectedCountry === 'CA' ? 'All provinces / territories' : selectedCountry === 'PR' ? 'All areas' : 'All states';
+  const states = useMemo(() => getLocationRegions(selectedCountry), [selectedCountry]);
+  const countryLocations = useMemo(() => getCountryLocations(selectedCountry, sampleLocations), [selectedCountry]);
   const selectedState = locationFilters.state;
   const selectedCity = locationFilters.city || 'all';
   const cities = useMemo(
-    () => getLocationCityOptions(selectedState),
-    [selectedState]
+    () => getLocationCityOptions(selectedState, countryLocations),
+    [selectedState, countryLocations]
   );
   const locations = useMemo(() => {
-    const stateLocations = selectedState ? getLocationsByState(selectedState) : sampleLocations;
+    const stateLocations = selectedState ? countryLocations.filter(location => location.state === selectedState) : countryLocations;
     return selectedCity && selectedCity !== 'all'
       ? stateLocations.filter((location) => location.city === selectedCity)
       : stateLocations;
-  }, [selectedState, selectedCity]);
+  }, [selectedState, selectedCity, countryLocations]);
 
   const handleStateChange = (state: string) => {
-    setLocationFilters({ state: state === 'all' ? '' : state, city: 'all' });
+    setLocationFilters({ country: selectedCountry, state: state === 'all' ? '' : state, city: 'all' });
   };
 
   const handleCityChange = (city: string) => {
     if (city === 'all') {
-      setLocationFilters({ state: selectedState, city: 'all' });
+      setLocationFilters({ country: selectedCountry, state: selectedState, city: 'all' });
       return;
     }
     const option = cities.find(option => option.value === city);
-    if (option) setLocationFilters({ state: option.state, city: option.city });
+    if (option) setLocationFilters({ country: selectedCountry, state: option.state, city: option.city });
   };
 
   return (
@@ -136,21 +140,35 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
         )}
       </div>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div>
+          <label htmlFor="location-country" className="mb-2 block text-sm font-medium text-gray-700">
+            Country / region
+          </label>
+          <SearchableLocationFilter
+            id="location-country"
+            label="Country / region"
+            value={selectedCountry}
+            onChange={country => setLocationFilters({ country: country as LocationCountry, state: '', city: 'all' })}
+            options={LOCATION_COUNTRIES}
+            placeholder="United States"
+            testId="select-country"
+          />
+        </div>
         <div>
           <label htmlFor="location-state" className="mb-2 block text-sm font-medium text-gray-700">
-            State
+            {regionLabel}
           </label>
           <SearchableLocationFilter
             id="location-state"
-            label="State"
+            label={regionLabel}
             value={selectedState || 'all'}
             onChange={handleStateChange}
             options={[
-              { value: 'all', label: 'All states' },
+              { value: 'all', label: allRegionsLabel },
               ...states.map(state => ({ value: state, label: state })),
             ]}
-            placeholder="All states"
+            placeholder={allRegionsLabel}
             testId="select-state"
           />
         </div>
@@ -179,7 +197,7 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
           <h3 className="mb-3 text-sm font-medium text-gray-700">
             {selectedState
               ? `Available locations in ${selectedCity === 'all' ? selectedState : `${selectedCity}, ${selectedState}`}`
-              : 'Available locations across all states'}
+              : `Available locations in ${countryName}`}
           </h3>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {locations.map((location) => (
@@ -195,15 +213,15 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
       ) : (
         <div className="py-10 text-center text-gray-500" data-testid="locations-empty">
           <Building2 className="mx-auto mb-3 h-10 w-10 text-gray-300" aria-hidden="true" />
-          <p>No locations are currently listed{selectedState ? ` in ${selectedState}` : ' for this selection'}.</p>
+          <p>No locations are currently listed in {selectedState ? `${selectedState}, ` : ''}{countryName}.</p>
           <Button
             type="button"
             variant="link"
             className="mt-2 text-gray-700 underline underline-offset-4"
-            onClick={() => setLocationFilters({ state: '', city: 'all' })}
+            onClick={() => setLocationFilters({ country: selectedCountry, state: '', city: 'all' })}
             data-testid="button-search-all-states"
           >
-            Search all states
+            {selectedCountry === 'US' ? 'Search all states' : `Search all ${countryName}`}
           </Button>
         </div>
       )}

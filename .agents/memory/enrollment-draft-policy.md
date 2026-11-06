@@ -20,3 +20,15 @@ A location can offer multiple local phone area codes, not just one.
 **Why:** The user explicitly stated that a location may offer multiple area codes and requested a filter for choosing among them.
 
 **How to apply:** Derive supported area codes from that location's available phone inventory, preserve compatible customer choices, and do not treat changing a filter as saving a different number. Prototype options must not be represented as carrier reservations.
+
+When a customer changes bundles after choosing paid add-ons, immediately exclude newly included services from the displayed total and paid-add-on breakdown.
+
+**Why:** Returning to plan review can retain earlier paid selections before a later step cleans them up. Showing the raw stored extras would temporarily charge the same service twice.
+
+**How to apply:** Derive billable extras from the current bundle's inclusions, not merely from stored add-on presence. Preserve genuinely optional selections and extension quantities across steps.
+
+Office search offers United States by default, Canada and Puerto Rico as country/region choices, independently of the customer's contact-phone country.
+
+**Why:** The user requested these three choices with US preselected.
+
+**How to apply:** Scope states/provinces and cities to the office country, reset those search filters on country changes, and preserve the previously confirmed office/plan until another actual location is selected. Do not invent overseas inventory to populate an empty region.
