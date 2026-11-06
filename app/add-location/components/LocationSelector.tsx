@@ -144,24 +144,6 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
 
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
-          <label htmlFor="location-state" className="mb-2 block text-sm font-medium text-gray-700">
-            {regionLabel}
-          </label>
-          <SearchableLocationFilter
-            id="location-state"
-            label={regionLabel}
-            value={selectedState || 'all'}
-            onChange={handleStateChange}
-            options={[
-              { value: 'all', label: allRegionsLabel },
-              ...states.map(state => ({ value: state, label: state })),
-            ]}
-            placeholder={allRegionsLabel}
-            testId="select-state"
-          />
-        </div>
-
-        <div>
           <label htmlFor="location-city" className="mb-2 block text-sm font-medium text-gray-700">
             City
           </label>
@@ -176,6 +158,23 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
             ]}
             placeholder="All cities"
             testId="select-city"
+          />
+        </div>
+        <div>
+          <label htmlFor="location-state" className="mb-2 block text-sm font-medium text-gray-700">
+            {regionLabel}
+          </label>
+          <SearchableLocationFilter
+            id="location-state"
+            label={regionLabel}
+            value={selectedState || 'all'}
+            onChange={handleStateChange}
+            options={[
+              { value: 'all', label: allRegionsLabel },
+              ...states.map(state => ({ value: state, label: state })),
+            ]}
+            placeholder={allRegionsLabel}
+            testId="select-state"
           />
         </div>
         <div>

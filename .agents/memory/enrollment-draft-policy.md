@@ -43,7 +43,7 @@ Office search offers United States by default, Canada and Puerto Rico as country
 
 **Why:** The user requested these three choices with US preselected and expects country changes to be less frequent than state/city searches.
 
-**How to apply:** Prioritize State and City before Country / region in the filter order. Scope states/provinces and cities to the office country, reset those search filters on country changes, and preserve the previously confirmed office/plan until another actual location is selected. Do not invent overseas inventory to populate an empty region.
+**How to apply:** Keep City first, State second, and Country / region last, as requested by the user. Scope states/provinces and cities to the office country, reset those search filters on country changes, and preserve the previously confirmed office/plan until another actual location is selected. Do not invent overseas inventory to populate an empty region.
 
 A fresh location search starts with no office results until a state/province/territory or city is selected.
 
