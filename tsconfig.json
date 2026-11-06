@@ -1,10 +1,11 @@
 {
   "include": [
-    "app/**/*",
-    "shared/**/*",
-    "lib/**/*",
+    ".next/dev/types/**/*.ts",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    "app/**/*",
+    "lib/**/*",
+    "shared/**/*",
+    ".next-dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

@@ -14,3 +14,9 @@ Verify interactivity, not just server-rendered markup, before testing the flow.
 **Why:** Development asset reload failures can leave a readable form without hydrated client handlers. An HTTP 200 and visible fields do not prove that the enrollment flow works.
 
 **How to apply:** Start with a clean automation cache and wait for client hydration, then retain that interactive session for the state-dependent screens.
+
+Treat generated development bundles as disposable after framework or dependency changes; do not reuse restored build artifacts as proof that the client is compatible.
+
+**Why:** This project's saved development output survived dependency updates and the browser reported missing Webpack modules and failed script parsing even while the server returned successful pages.
+
+**How to apply:** Keep development output separate from production/restored builds, regenerate incompatible caches, and verify a cold, hydrated browser session rather than only a warm reload.
