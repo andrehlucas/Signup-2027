@@ -24,7 +24,7 @@ export default function LocationSelectionPage() {
   return (
     <div className="signup-shell p-4 lg:p-8" data-testid="location-selection-page">
       <div className="max-w-4xl lg:max-w-6xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-3 sm:mb-8">
           <ProgressIndicator currentStep={2} />
         </div>
 

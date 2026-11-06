@@ -84,7 +84,7 @@ export default function SignUpPage() {
           </p>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-3 sm:mb-6">
           <ProgressIndicator currentStep={1} />
         </div>
 

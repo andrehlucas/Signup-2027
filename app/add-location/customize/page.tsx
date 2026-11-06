@@ -309,7 +309,7 @@ export default function CustomizePage() {
   return (
     <div className="signup-shell px-4 pt-4 pb-64 lg:px-8 lg:pt-8" data-testid="customize-page">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-3 sm:mb-8">
           <ProgressIndicator currentStep={3} />
         </div>
 

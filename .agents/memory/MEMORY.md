@@ -8,3 +8,4 @@
 - [Preview proxy boundary](preview-proxy-boundary.md) — distinguish stale public port URLs from app failures; upstream proxy errors cannot be repaired by app redirects.
 - [Enrollment footer behavior](enrollment-footer-behavior.md) — review and Customize summaries reveal on scroll; keep Continue available when no scrolling is possible.
 - [Swipeable press feedback](swipeable-press-feedback.md) — native :active may not fire for touch inside draggable bundle cards; preserve swipe gestures and clear pointer feedback.
+- [Mobile stepper policy](mobile-stepper-policy.md) — compact progress header is mobile-only; preserve the full desktop stepper and completed-step confirmation navigation.

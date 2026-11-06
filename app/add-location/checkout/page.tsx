@@ -259,7 +259,7 @@ export default function CheckoutPage() {
   return (
     <div className="signup-shell p-4 lg:p-8" data-testid="checkout-page">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-3 sm:mb-8">
           <ProgressIndicator currentStep={4} />
         </div>
 
