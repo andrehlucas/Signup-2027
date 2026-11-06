@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Minus, Phone, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil, DollarSign, Star } from 'lucide-react';
+import { Check, Minus, Phone, MapPin, Plus, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Info, Pencil, DollarSign, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { Badge } from '@/app/components/ui/badge';
 import {
@@ -374,7 +374,7 @@ export default function CustomizePage() {
   const displayBundleName = selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : 'The Essentials';
 
   return (
-    <div className="signup-shell px-4 pt-4 pb-48 lg:px-8 lg:pt-8" data-testid="customize-page">
+    <div className="signup-shell px-4 pt-4 pb-64 lg:px-8 lg:pt-8" data-testid="customize-page">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <ProgressIndicator currentStep={3} />
@@ -742,7 +742,23 @@ export default function CustomizePage() {
           className="bg-white border-t border-gray-200 shadow-[0_-4px_12px_rgba(16,24,40,0.08)]"
           data-testid="sticky-footer"
         >
-        <div className="max-w-6xl mx-auto px-4 py-6">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <div className="mb-3 flex flex-col gap-2 border-b border-gray-100 pb-3 text-sm text-gray-600 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+            <div className="flex min-w-0 items-start gap-2" data-testid="footer-office-address">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+              <span className="min-w-0 break-words leading-5">
+                <span className="sr-only">Office address: </span>
+                {order.location.address}{order.location.addressLine2 ? `, ${order.location.addressLine2}` : ''}, {order.location.city}, {order.location.stateCode} {order.location.zipCode}
+              </span>
+            </div>
+            {selectedPhone && (
+              <div className="flex shrink-0 items-center gap-2" data-testid="footer-business-phone">
+                <Phone className="h-4 w-4" aria-hidden="true" />
+                <span className="sr-only">Business phone number: </span>
+                <span className="font-medium leading-5 text-gray-800">{selectedPhone.number}</span>
+              </div>
+            )}
+          </div>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
               <div className="relative flex-shrink-0">
