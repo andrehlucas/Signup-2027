@@ -3,13 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Building2, Check, MapPin, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/app/components/ui/select';
+import { SearchableLocationFilter } from './SearchableLocationFilter';
 import { useOrder } from '../context';
 import {
   AvailableLocation,
@@ -143,41 +137,34 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
           <label htmlFor="location-state" className="mb-2 block text-sm font-medium text-gray-700">
             State
           </label>
-          <Select value={selectedState} onValueChange={handleStateChange}>
-            <SelectTrigger id="location-state" data-testid="select-state">
-              <SelectValue placeholder="Select a state" />
-            </SelectTrigger>
-            <SelectContent>
-              {states.map((state) => (
-                <SelectItem key={state} value={state} data-testid={`option-state-${state}`}>
-                  {state}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <SearchableLocationFilter
+            id="location-state"
+            label="State"
+            value={selectedState}
+            onChange={handleStateChange}
+            options={states.map(state => ({ value: state, label: state }))}
+            placeholder="Select a state"
+            testId="select-state"
+          />
         </div>
 
         <div>
           <label htmlFor="location-city" className="mb-2 block text-sm font-medium text-gray-700">
             City
           </label>
-          <Select
+          <SearchableLocationFilter
+            id="location-city"
+            label="City"
             value={selectedCity}
-            onValueChange={handleCityChange}
+            onChange={handleCityChange}
             disabled={!selectedState}
-          >
-            <SelectTrigger id="location-city" data-testid="select-city">
-              <SelectValue placeholder={selectedState ? 'All cities' : 'Select a state first'} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all" data-testid="option-city-all">All cities</SelectItem>
-              {cities.map((city) => (
-                <SelectItem key={city} value={city} data-testid={`option-city-${city}`}>
-                  {city}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={[
+              { value: 'all', label: 'All cities' },
+              ...cities.map(city => ({ value: city, label: city })),
+            ]}
+            placeholder={selectedState ? 'All cities' : 'Select a state first'}
+            testId="select-city"
+          />
         </div>
       </div>
 
