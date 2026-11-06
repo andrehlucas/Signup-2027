@@ -4,7 +4,8 @@ import { useState, useEffect, type ClipboardEvent } from 'react';
 import { ChevronDown } from 'lucide-react';
 import PhoneInput from 'react-phone-number-input/input-max';
 import { getCountryCallingCode, type E164Number } from 'libphonenumber-js/max';
-import { phoneCountries, phoneCountry, phoneValue, nationalPhone, phoneExample, validPhone, pastedPhone } from './lib/phone';
+import { phoneCountries, phoneCountry, phoneValue, nationalPhone, phoneExample, pastedPhone } from './lib/phone';
+import { SIGNUP_LIMITS, validateSignup, type SignupField } from './lib/signup-validation';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
@@ -27,7 +28,13 @@ export default function SignUpPage() {
   const [confirmEmail, setConfirmEmail] = useState(order.userInfo.confirmEmail);
   const [company, setCompany] = useState(order.userInfo.company);
   const [termsAccepted, setTermsAccepted] = useState(order.userInfo.termsAccepted);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Partial<Record<SignupField, boolean>>>({});
+  const [submitted, setSubmitted] = useState(false);
+  const validationErrors = validateSignup({ firstName, lastName, phone, countryRegion, email, confirmEmail, company, termsAccepted });
+  const errors = Object.fromEntries(
+    Object.entries(validationErrors).filter(([field]) => submitted || touched[field as SignupField])
+  );
+  const markTouched = (field: SignupField) => setTouched(current => ({ ...current, [field]: true }));
   const { trackComplete } = useFunnelTracking('your_info');
 
   useEffect(() => {
@@ -37,42 +44,17 @@ export default function SignUpPage() {
   const selectedCountry = phoneCountries.find((country) => country.region === countryRegion)!;
   const examplePhone = phoneExample(countryRegion);
 
-  const clearPhoneError = () => {
-    setErrors(current => {
-      const { phone: _phone, ...remaining } = current;
-      return remaining;
-    });
-  };
-
-  const validate = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!lastName.trim()) newErrors.lastName = 'Last name is required';
-    if (!phone) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!validPhone(phone, countryRegion)) {
-      newErrors.phone = `Enter a valid phone number for ${selectedCountry.name}${examplePhone ? `, for example ${examplePhone}` : ''}.`;
-    }
-    if (!email.trim()) {
-      newErrors.email = 'Email address is required';
-    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-    if (!confirmEmail.trim()) {
-      newErrors.confirmEmail = 'Please confirm your email';
-    } else if (email !== confirmEmail) {
-      newErrors.confirmEmail = 'Email addresses do not match';
-    }
-    if (!company.trim()) newErrors.company = 'Company name is required';
-    if (!termsAccepted) newErrors.terms = 'You must agree to the Terms of Use';
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleContinue = () => {
-    if (!validate()) return;
+    setSubmitted(true);
+    const firstError = Object.keys(validationErrors)[0] as SignupField | undefined;
+    if (firstError) {
+      const fieldIds: Record<SignupField, string> = {
+        firstName: 'first-name', lastName: 'last-name', phone: 'phone-number',
+        email: 'email-address', confirmEmail: 'confirm-email', company: 'company-name', terms: 'terms',
+      };
+      requestAnimationFrame(() => document.getElementById(fieldIds[firstError])?.focus());
+      return;
+    }
 
     setUserInfo({
       firstName: firstName.trim(),
@@ -123,8 +105,15 @@ export default function SignUpPage() {
                   </label>
                   <Input
                     id="first-name"
+                    name="given-name"
+                    type="text"
+                    required
+                    maxLength={SIGNUP_LIMITS.name}
+                    autoCapitalize="words"
+                    spellCheck={false}
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    onBlur={() => markTouched('firstName')}
                     className={`h-12 ${errors.firstName ? 'border-red-500' : ''}`}
                     autoComplete="given-name"
                     aria-invalid={Boolean(errors.firstName)}
@@ -141,8 +130,15 @@ export default function SignUpPage() {
                   </label>
                   <Input
                     id="last-name"
+                    name="family-name"
+                    type="text"
+                    required
+                    maxLength={SIGNUP_LIMITS.name}
+                    autoCapitalize="words"
+                    spellCheck={false}
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
+                    onBlur={() => markTouched('lastName')}
                     className={`h-12 ${errors.lastName ? 'border-red-500' : ''}`}
                     autoComplete="family-name"
                     aria-invalid={Boolean(errors.lastName)}
@@ -169,7 +165,6 @@ export default function SignUpPage() {
                       const national = nationalPhone(phone, countryRegion);
                       setCountryRegion(region);
                       setPhone(phoneValue(national, region));
-                      clearPhoneError();
                     }}
                     aria-label={`Country and calling code: ${selectedCountry.name} (${countryCode})`}
                     className={`h-12 w-full appearance-none rounded-md border bg-gray-50 pl-3 pr-10 text-sm text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006d91] min-[380px]:rounded-r-none min-[380px]:border-r-0 ${
@@ -190,6 +185,8 @@ export default function SignUpPage() {
                   </div>
                   <PhoneInput
                     id="phone-number"
+                    name="phone"
+                    required
                     inputComponent={Input}
                     country={countryRegion}
                     type="tel"
@@ -197,8 +194,8 @@ export default function SignUpPage() {
                     value={phone}
                     onChange={(value) => {
                       setPhone(value);
-                      clearPhoneError();
                     }}
+                    onBlur={() => markTouched('phone')}
                     onPaste={(event: ClipboardEvent<HTMLInputElement>) => {
                       const text = event.clipboardData.getData('text');
                       if (!/^\s*(\+|00)/.test(text)) return;
@@ -207,7 +204,6 @@ export default function SignUpPage() {
                       event.preventDefault();
                       setCountryRegion(pasted.region);
                       setPhone(pasted.value);
-                      clearPhoneError();
                     }}
                     placeholder={examplePhone}
                     autoComplete="tel-national"
@@ -228,9 +224,17 @@ export default function SignUpPage() {
                 </label>
                 <Input
                   id="email-address"
+                  name="email"
                   type="email"
+                  inputMode="email"
+                  required
+                  maxLength={SIGNUP_LIMITS.email}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => markTouched('email')}
                   className={`h-12 ${errors.email ? 'border-red-500' : ''}`}
                   autoComplete="email"
                   aria-invalid={Boolean(errors.email)}
@@ -248,10 +252,18 @@ export default function SignUpPage() {
                 </label>
                 <Input
                   id="confirm-email"
+                  name="confirm-email"
                   type="email"
+                  inputMode="email"
+                  required
+                  maxLength={SIGNUP_LIMITS.email}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                   placeholder="Re-enter your email address"
                   value={confirmEmail}
                   onChange={(e) => setConfirmEmail(e.target.value)}
+                  onBlur={() => markTouched('confirmEmail')}
                   className={`h-12 ${errors.confirmEmail ? 'border-red-500' : ''}`}
                   autoComplete="off"
                   aria-invalid={Boolean(errors.confirmEmail)}
@@ -269,8 +281,13 @@ export default function SignUpPage() {
                 </label>
                 <Input
                   id="company-name"
+                  name="organization"
+                  type="text"
+                  required
+                  maxLength={SIGNUP_LIMITS.company}
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
+                  onBlur={() => markTouched('company')}
                   className={`h-12 ${errors.company ? 'border-red-500' : ''}`}
                   autoComplete="organization"
                   aria-invalid={Boolean(errors.company)}
@@ -286,8 +303,11 @@ export default function SignUpPage() {
                 <div className="flex items-start gap-3">
                   <Checkbox
                     id="terms"
+                    name="terms"
+                    required
                     checked={termsAccepted}
-                    onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                    onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                    onBlur={() => markTouched('terms')}
                     className="mt-0.5"
                     aria-invalid={Boolean(errors.terms)}
                     aria-describedby={errors.terms ? 'error-terms' : undefined}
