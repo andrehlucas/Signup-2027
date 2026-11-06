@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
@@ -174,6 +175,7 @@ export default function SignUpPage() {
                   Phone number
                 </label>
                 <div className="flex flex-col gap-2 min-[380px]:flex-row min-[380px]:gap-0">
+                  <div className="relative w-full min-[380px]:w-36 min-[380px]:shrink-0">
                   <select
                     id="country-region"
                     value={countryRegion}
@@ -186,7 +188,7 @@ export default function SignUpPage() {
                       setPhone((currentPhone) => formatPhoneNumber(currentPhone, region));
                     }}
                     aria-label={`Country and calling code: ${selectedCountry.name} (${countryCode})`}
-                    className={`h-12 w-full rounded-md border bg-gray-50 px-3 text-sm text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006d91] min-[380px]:w-36 min-[380px]:rounded-r-none min-[380px]:border-r-0 ${
+                    className={`h-12 w-full appearance-none rounded-md border bg-gray-50 pl-3 pr-10 text-sm text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006d91] min-[380px]:rounded-r-none min-[380px]:border-r-0 ${
                       errors.phone ? 'border-red-500' : 'border-input'
                     }`}
                     data-testid="select-country-region"
@@ -197,6 +199,11 @@ export default function SignUpPage() {
                       </option>
                     ))}
                   </select>
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600"
+                  />
+                  </div>
                   <Input
                     id="phone-number"
                     type="tel"
