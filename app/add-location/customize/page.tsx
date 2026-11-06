@@ -397,12 +397,10 @@ export default function CustomizePage() {
 
           <div className="relative">
             <div 
-              className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300 ${
-                !showAllAddons ? 'max-h-[380px] overflow-hidden' : ''
-              }`}
+              className="grid grid-cols-1 gap-4 md:grid-cols-2"
               data-testid="addons-grid"
             >
-              {sortedAddons.map((addon) => {
+              {(showAllAddons ? sortedAddons : sortedAddons.slice(0, 6)).map((addon) => {
                 const isIncluded = isAddonIncluded(addon);
                 const isInCart = order.addons.find(a => a.id === addon.id);
                 const isExpanded = expandedAddons.has(addon.id);
@@ -419,27 +417,38 @@ export default function CustomizePage() {
                     }`}
                     data-testid={`addon-card-${addon.id}`}
                   >
-                    <div className="p-4">
-                      <div className="flex items-start justify-between mb-1">
-                        <h4 className="font-medium text-gray-900">{addon.name}</h4>
+                    <div className="flex h-full flex-col p-4">
+                      <div className="mb-2 flex items-start justify-between gap-3">
+                        <h3 className="min-w-0 font-medium text-gray-900">{addon.name}</h3>
                         {isIncluded ? (
-                          <Badge className="bg-gray-100 text-gray-700 border border-gray-200">
+                          <Badge className="shrink-0 bg-gray-100 text-gray-700 border border-gray-200">
                             Included
                           </Badge>
                         ) : addon.packages && addon.packages.length > 0 ? (
-                          <span className="font-semibold text-gray-900">
+                          <span className="shrink-0 text-sm font-semibold text-gray-900">
                             From ${addon.packages[0].price}/mo
                           </span>
                         ) : (
-                          <span className="font-semibold text-gray-900">
+                          <span className="shrink-0 text-sm font-semibold text-gray-900">
                             ${addon.price}/mo
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center justify-between mt-2">
+                      <p
+                        id={`addon-description-${addon.id}`}
+                        className={`min-h-10 text-sm leading-5 text-gray-600 ${isExpanded ? '' : 'line-clamp-2'}`}
+                        data-testid={`addon-details-${addon.id}`}
+                      >
+                        {addon.detailedDescription || addon.description}
+                      </p>
+                      <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
                         <button
+                          type="button"
                           onClick={() => toggleAddonExpanded(addon.id)}
-                          className="text-sm text-gray-700 hover:text-gray-900 flex items-center gap-1"
+                          aria-expanded={isExpanded}
+                          aria-controls={`addon-description-${addon.id}`}
+                          aria-label={`${isExpanded ? 'Show less about' : 'Read more about'} ${addon.name}`}
+                          className="flex min-h-11 items-center gap-1 rounded-sm text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
                           data-testid={`button-learn-more-${addon.id}`}
                         >
                           {isExpanded ? (
@@ -449,7 +458,7 @@ export default function CustomizePage() {
                             </>
                           ) : (
                             <>
-                              Learn more
+                              Read more
                               <ChevronDown className="h-3 w-3" />
                             </>
                           )}
@@ -458,7 +467,7 @@ export default function CustomizePage() {
                           <Button
                             variant={isInCart ? 'outline' : 'default'}
                             size="sm"
-                            className={isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'signup-primary'}
+                            className={`min-h-11 ${isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'signup-primary'}`}
                             onClick={() => handleAddonToggle(addon)}
                             data-testid={`button-addon-${addon.id}`}
                           >
@@ -476,15 +485,6 @@ export default function CustomizePage() {
                           </Button>
                         )}
                       </div>
-
-                      {isExpanded && addon.detailedDescription && (
-                        <div 
-                          className="text-sm text-gray-600 bg-gray-50 rounded-md p-3 mt-2 border border-gray-100"
-                          data-testid={`addon-details-${addon.id}`}
-                        >
-                          {addon.detailedDescription}
-                        </div>
-                      )}
 
                       {!isIncluded && (
                         <div className="space-y-3">
@@ -524,7 +524,7 @@ export default function CustomizePage() {
                 );
               })}
 
-              <div
+              {(showAllAddons || sortedAddons.length <= 6) && <div
                 className={`rounded-lg border transition-all ${
                   order.extensionCount > 0 ? 'border-[#006d91] bg-gray-50' : 'border-gray-200 bg-white'
                 }`}
@@ -565,18 +565,11 @@ export default function CustomizePage() {
                     )}
                   </div>
                 </div>
-              </div>
+              </div>}
             </div>
 
-            {!showAllAddons && sortedAddons.length > 6 && (
-              <div 
-                className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none"
-                data-testid="addons-gradient-overlay"
-              />
-            )}
-
             {sortedAddons.length > 6 && (
-              <div className={`flex justify-center ${!showAllAddons ? '-mt-4 relative z-10' : 'mt-4'}`}>
+              <div className="mt-4 flex justify-center">
                 <Button
                   variant="outline"
                   onClick={() => setShowAllAddons(!showAllAddons)}

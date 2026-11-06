@@ -4,3 +4,4 @@
 - [International phone validation](international-phone-validation.md) — shared calling codes and number ranges must not cause valid territory numbers to be rejected.
 - [Filter popover focus](filter-popover-focus.md) — adjacent searchable filters need immediate focus handoff; delayed close animations can disrupt the next field.
 - [Bundle comparison visibility](bundle-comparison-visibility.md) — show bundle cards by default; collapse only the feature matrix behind Compare Bundles.
+- [Add-on preview readability](addon-preview-readability.md) — show two-line previews and whole actionable cards; never crop the grid to simulate a collapsed list.
