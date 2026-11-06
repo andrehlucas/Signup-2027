@@ -34,7 +34,7 @@ export function EnrollmentSummaryFooter({
 
   return (
     <div className="border-t border-gray-200 bg-white shadow-[0_-4px_12px_rgba(16,24,40,0.08)]" data-testid="sticky-footer">
-      <div className={`${compactWidth ? 'max-w-5xl' : 'max-w-6xl'} mx-auto px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]`}>
+      <div className={`${compactWidth ? 'max-w-5xl' : 'max-w-6xl'} mx-auto py-4 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pb-[max(1rem,env(safe-area-inset-bottom))]`}>
         <div className="mb-3 flex flex-col gap-2 border-b border-gray-100 pb-3 text-sm text-gray-600 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
           <div className="flex min-w-0 items-start gap-2" data-testid="footer-office-address">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />

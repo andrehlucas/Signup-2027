@@ -15,14 +15,22 @@ export function useScrollFooterVisibility({
     setVisible(false);
     if (!enabled) return;
 
-    let lastScrollY = window.scrollY;
+    // Safari reports offsets beyond either edge while rubber-banding. The
+    // rebound from below the page is not an intentional upward scroll.
+    const clampScrollY = (y: number) => Math.min(
+      Math.max(0, y),
+      Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
+    );
+    let lastScrollY = clampScrollY(window.scrollY);
     const cannotScroll = () => document.documentElement.scrollHeight <= window.innerHeight;
     // The only Continue action must remain reachable if the whole page fits.
     if (cannotScroll()) setVisible(true);
 
     const handleScroll = () => {
-      const currentScrollY = Math.max(0, window.scrollY);
-      const delta = currentScrollY - lastScrollY;
+      const currentScrollY = clampScrollY(window.scrollY);
+      // Clamp the previous offset too: Safari's browser toolbar can resize
+      // the viewport and change the bottom boundary between scroll events.
+      const delta = currentScrollY - clampScrollY(lastScrollY);
       if (Math.abs(delta) < 5) return;
       lastScrollY = currentScrollY;
       if (delta < 0 && lockedUntilRef) lockedUntilRef.current = 0;
@@ -33,6 +41,7 @@ export function useScrollFooterVisibility({
       else if (Date.now() >= (lockedUntilRef?.current ?? 0)) setVisible(true);
     };
     const handleResize = () => {
+      lastScrollY = clampScrollY(window.scrollY);
       if (cannotScroll()) setVisible(true);
       else if (window.scrollY <= 50) setVisible(false);
     };

@@ -1,9 +1,8 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
 import { Toaster } from '@/app/components/ui/toaster';
-import { MobileZoomReset } from '@/app/components/MobileZoomReset';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -21,6 +20,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  interactiveWidget: 'resizes-content',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,18 +36,17 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body>
         <Providers>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-[100svh] bg-gray-50">
             <header className="bg-white border-b border-gray-200 py-4 px-6">
               <div className="max-w-4xl mx-auto flex items-center justify-center">
                 <img src="/opus-vo-main-logo.svg" alt="Opus Virtual Offices" className="h-10" data-testid="img-logo" />
               </div>
             </header>
-            <main>
+            <main className="pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
               {children}
             </main>
           </div>
           <Toaster />
-          <MobileZoomReset />
         </Providers>
       </body>
     </html>

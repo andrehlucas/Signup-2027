@@ -4,7 +4,7 @@ import { useState, useEffect, type ClipboardEvent } from 'react';
 import { ChevronDown } from 'lucide-react';
 import PhoneInput from 'react-phone-number-input/input-max';
 import { getCountryCallingCode, type E164Number } from 'libphonenumber-js/max';
-import { phoneCountries, phoneCountry, phoneValue, nationalPhone, phoneExample, pastedPhone } from './lib/phone';
+import { phoneCountries, phoneCountry, phoneValue, nationalPhone, phoneExample, pastedPhone, validPhone } from './lib/phone';
 import { SIGNUP_LIMITS, validateSignup, type SignupField } from './lib/signup-validation';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/app/components/ui/button';
@@ -23,6 +23,9 @@ export default function SignUpPage() {
   const [lastName, setLastName] = useState(order.userInfo.lastName);
   const [phone, setPhone] = useState<E164Number | undefined>(() => phoneValue(order.userInfo.phone, initialCountryRegion));
   const [countryRegion, setCountryRegion] = useState(initialCountryRegion);
+  // Let touch browsers own the caret: contact autofill doesn't behave like typing.
+  // Keep smart mid-number editing for mouse/keyboard users.
+  const [smartPhoneCaret, setSmartPhoneCaret] = useState(false);
   const countryCode = `+${getCountryCallingCode(countryRegion)}`;
   const [email, setEmail] = useState(order.userInfo.email);
   const [confirmEmail, setConfirmEmail] = useState(order.userInfo.confirmEmail);
@@ -36,6 +39,14 @@ export default function SignUpPage() {
   );
   const markTouched = (field: SignupField) => setTouched(current => ({ ...current, [field]: true }));
   const { trackComplete } = useFunnelTracking('your_info');
+
+  useEffect(() => {
+    const touchInput = window.matchMedia('(pointer: coarse)');
+    const updateCaret = () => setSmartPhoneCaret(!touchInput.matches);
+    updateCaret();
+    touchInput.addEventListener('change', updateCaret);
+    return () => touchInput.removeEventListener('change', updateCaret);
+  }, []);
 
   useEffect(() => {
     setUserInfo({ firstName, lastName, phone: nationalPhone(phone, countryRegion), countryRegion, countryCode, email, confirmEmail, company, termsAccepted });
@@ -188,11 +199,20 @@ export default function SignUpPage() {
                     name="phone"
                     required
                     inputComponent={Input}
-                    country={countryRegion}
+                    defaultCountry={countryRegion}
+                    smartCaret={smartPhoneCaret}
                     type="tel"
                     inputMode="tel"
                     value={phone}
                     onChange={(value) => {
+                      const resolved = value ? pastedPhone(value, countryRegion) : undefined;
+                      // Only switch for a complete number with a different calling code.
+                      // Shared territories keep the user's choice, even if metadata
+                      // resolves their number to another territory (e.g. AX/FI).
+                      if (resolved && validPhone(resolved.value, resolved.region)
+                        && getCountryCallingCode(resolved.region) !== getCountryCallingCode(countryRegion)) {
+                        setCountryRegion(resolved.region);
+                      }
                       setPhone(value);
                     }}
                     onBlur={() => markTouched('phone')}
@@ -206,7 +226,10 @@ export default function SignUpPage() {
                       setPhone(pasted.value);
                     }}
                     placeholder={examplePhone}
-                    autoComplete="tel-national"
+                    autoComplete="tel"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
                     aria-invalid={Boolean(errors.phone)}
                     aria-describedby={errors.phone ? 'error-phone' : undefined}
                     className={`h-12 rounded-md flex-1 min-w-0 min-[380px]:rounded-l-none ${errors.phone ? 'border-red-500' : ''}`}

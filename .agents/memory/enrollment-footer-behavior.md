@@ -14,3 +14,9 @@ Keep the established footer slide animation; do not replace it with an opacity f
 **Why:** The user explicitly objected to the unrequested animation change and reported that upward scrolling no longer dismissed the footer as expected.
 
 **How to apply:** Treat motion and visibility as separate concerns. An intentional upward scroll must dismiss the footer even during temporary bundle-total feedback or immediately after reaching the page bottom.
+
+Repeated downward scrolling at the bottom must leave the mobile footer visible, including while Safari's overscroll rebounds.
+
+**Why:** The user explicitly requested that continuing to scroll down after reaching the bottom must not hide the footer. A rubber-band return is not an intentional scroll up.
+
+**How to apply:** Determine direction from bounded document scroll positions rather than raw overscroll offsets. Keep genuine upward dismissal, the existing slide animation and the no-scroll Continue fallback.

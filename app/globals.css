@@ -342,10 +342,16 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     color: var(--opus-ink);
   }
+  html {
+    /* Avoid Safari inflating form typography when the phone rotates. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
 }
 
 .signup-shell {
   min-height: calc(100vh - 73px);
+  min-height: calc(100svh - 73px);
   background: var(--opus-page);
   color: var(--opus-ink);
 }
@@ -432,7 +438,7 @@
   color: var(--opus-ink);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px), (pointer: coarse) {
   input,
   textarea,
   select {
