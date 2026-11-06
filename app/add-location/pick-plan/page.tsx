@@ -206,7 +206,10 @@ export default function PickPlanPage() {
               <div className="min-w-0" aria-live="polite">
                 <p className="text-xs font-medium text-gray-600">Business phone number</p>
                 {assignedPhone ? (
-                  <p className="mt-0.5 text-sm font-semibold tabular-nums text-gray-900" data-testid="review-business-phone">{assignedPhone.number}</p>
+                  <>
+                    <p className="mt-0.5 text-sm font-semibold tabular-nums text-gray-900" data-testid="review-business-phone">{assignedPhone.number}</p>
+                    <p className="mt-1 text-xs leading-5 text-gray-600" data-testid="phone-lock-notice">Phone numbers locked for another 30 minutes</p>
+                  </>
                 ) : (
                   <p className="mt-1 text-sm text-gray-700" role="status">No local numbers are currently available. Choose another location to continue.</p>
                 )}
