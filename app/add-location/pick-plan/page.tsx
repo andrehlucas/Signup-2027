@@ -141,32 +141,27 @@ export default function PickPlanPage() {
             aria-atomic="true"
           >
             <div className="min-w-0">
-              {order.bundle ? (
-                <div className="flex flex-col items-start gap-y-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3">
-                  <h1
-                    className="text-2xl font-bold leading-tight tracking-tight sm:text-[28px]"
-                    style={{ color: selectedPlanTheme?.accent }}
-                    data-testid="selected-plan-name"
-                  >
-                    {order.bundle.tier}
-                  </h1>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-600">
-                    <Check className="h-3.5 w-3.5" style={{ color: selectedPlanTheme?.accent }} />
-                    Selected
-                  </span>
-                </div>
-              ) : (
-                <h1 className="text-xl font-semibold text-gray-900" data-testid="selected-plan-name">
-                  Choose a plan
-                </h1>
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl" data-testid="review-office-heading">
+                Your new office details
+              </h1>
+              {order.bundle && (
+                <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-medium text-gray-600">
+                  <Check className="h-3.5 w-3.5" style={{ color: selectedPlanTheme?.accent }} />
+                  Selected
+                </span>
               )}
             </div>
 
             {order.bundle && (
-              <p className="flex flex-shrink-0 items-baseline gap-1.5 text-gray-900" data-testid="selected-plan-price">
-                <span className="text-2xl font-bold tabular-nums">${order.bundle.price}</span>
-                <span className="text-sm text-gray-600">/mo</span>
-              </p>
+              <div className="shrink-0 text-right">
+                <p className="flex items-baseline justify-end gap-1.5 text-gray-900" data-testid="selected-plan-price">
+                  <span className="text-2xl font-bold tabular-nums">${order.bundle.price}</span>
+                  <span className="text-sm text-gray-600">/mo</span>
+                </p>
+                <p className="mt-1 text-sm font-semibold" style={{ color: selectedPlanTheme?.accent }} data-testid="selected-plan-name">
+                  {order.bundle.tier}
+                </p>
+              </div>
             )}
           </div>
 
@@ -176,13 +171,16 @@ export default function PickPlanPage() {
           >
             <div className="flex min-w-0 items-start gap-2.5 sm:flex-1">
               <MapPin className="mt-1 h-4 w-4 flex-shrink-0 text-gray-500" aria-hidden="true" />
-              <p className="min-w-0 break-words text-sm leading-6" data-testid="heading-pick-plan">
-                <span className="font-semibold text-gray-900">{order.location.address}</span>
-                <span className="text-gray-600">
-                  {order.location.addressLine2 ? `, ${order.location.addressLine2}` : ''}
-                  {`, ${order.location.city}, ${order.location.stateCode} ${order.location.zipCode}`}
-                </span>
-              </p>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-gray-600">Your new office address</p>
+                <p className="min-w-0 break-words text-sm leading-6" data-testid="heading-pick-plan">
+                  <span className="font-semibold text-gray-900">{order.location.address}</span>
+                  <span className="text-gray-600">
+                    {order.location.addressLine2 ? `, ${order.location.addressLine2}` : ''}
+                    {`, ${order.location.city}, ${order.location.stateCode} ${order.location.zipCode}`}
+                  </span>
+                </p>
+              </div>
             </div>
             <div className="flex flex-shrink-0 items-center gap-1 self-start sm:gap-2 sm:self-auto">
               <button
@@ -213,7 +211,7 @@ export default function PickPlanPage() {
             <div className="flex min-w-0 items-start gap-2.5">
               <Phone className="mt-1 h-4 w-4 shrink-0 text-gray-500" aria-hidden="true" />
               <div className="min-w-0" aria-live="polite">
-                <p className="text-xs font-medium text-gray-600">Business phone number</p>
+                <p className="text-xs font-medium text-gray-600">Your new office phone number</p>
                 {assignedPhone ? (
                   <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2">
                     <p className="shrink-0 text-sm font-semibold tabular-nums text-gray-900" data-testid="review-business-phone">{assignedPhone.number}</p>
