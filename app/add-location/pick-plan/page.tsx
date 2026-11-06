@@ -5,6 +5,7 @@ import type { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, ChevronDown, MapPin, Phone, TriangleAlert } from 'lucide-react';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
+import feedbackStyles from '@/app/components/ui/bundle-feedback.module.css';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { LocationSelector } from '../components/LocationSelector';
 import { LocalPhoneNumberDialog } from '../components/LocalPhoneNumberDialog';
@@ -33,6 +34,7 @@ export default function PickPlanPage() {
   const { order, setLocation, setBundle, setLocationFilters, setPhoneNumber } = useOrder();
   const bundleCardsRef = useRef<HTMLDivElement>(null);
   const [comparisonOpen, setComparisonOpen] = useState(false);
+  const [comparisonPointerMotion, setComparisonPointerMotion] = useState(false);
   const [subStep, setSubStep] = useState<'location' | 'review'>(order.location ? 'review' : 'location');
   const [footerVisible] = useScrollFooterVisibility({ enabled: subStep === 'review' });
   const [phoneDialogOpen, setPhoneDialogOpen] = useState(false);
@@ -293,12 +295,15 @@ export default function PickPlanPage() {
               type="button"
               aria-expanded={comparisonOpen}
               aria-controls="bundle-comparison-content"
-              onClick={() => setComparisonOpen(open => !open)}
+              onClick={(event) => {
+                setComparisonPointerMotion(event.detail !== 0);
+                setComparisonOpen(open => !open);
+              }}
               className="inline-flex min-h-11 scroll-mt-6 items-center gap-2 rounded-md text-sm font-semibold text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
               data-testid="button-toggle-bundle-comparison"
             >
               Compare Bundles
-              <ChevronDown className={`h-4 w-4 shrink-0 ${comparisonOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+              <ChevronDown className={`h-4 w-4 shrink-0 ${feedbackStyles.chevron} ${comparisonPointerMotion ? feedbackStyles.pointer : ''} ${comparisonOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
             </button>
           </h2>
               }

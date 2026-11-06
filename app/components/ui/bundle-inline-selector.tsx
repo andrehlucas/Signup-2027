@@ -1,14 +1,32 @@
 "use client";
 
 import { useState, useCallback, useEffect, useRef } from "react";
-import type { ReactNode } from "react";
+import type { ReactNode, PointerEvent as ReactPointerEvent, SyntheticEvent } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Bundle, featureIndividualPrices, ESSENTIALS_PLAN } from "@/app/add-location/types";
 import { bundleThemes } from "@/app/add-location/bundle-theme";
+import feedbackStyles from "./bundle-feedback.module.css";
 
 const CARD_HEIGHT = 304;
+
+function clearPointerPress(event: SyntheticEvent<HTMLButtonElement>) {
+  delete event.currentTarget.dataset.bundlePressed;
+}
+
+const pointerPressFeedback = {
+  onPointerDown(event: ReactPointerEvent<HTMLButtonElement>) {
+    if (event.isPrimary && event.button === 0) {
+      event.currentTarget.dataset.bundlePressed = "true";
+    }
+  },
+  onPointerUp: clearPointerPress,
+  onPointerCancel: clearPointerPress,
+  onPointerLeave: clearPointerPress,
+  onLostPointerCapture: clearPointerPress,
+  onBlur: clearPointerPress,
+};
 
 const comparisonFeatures: { key: keyof Bundle["features"]; label: string }[] = [
   { key: "businessAddress", label: "Prestigious Business Address" },
@@ -243,12 +261,14 @@ export function BundleInlineSelector({
                   </div>
 
                   <button
+                    {...pointerPressFeedback}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (isCenter) onSelect(bundle);
                     }}
                     className={cn(
-                      "w-full py-2.5 rounded-md text-sm font-semibold transition-colors",
+                      "w-full py-2.5 rounded-md text-sm font-semibold",
+                      feedbackStyles.press,
                       isSelected && isCenter
                         ? "bg-[#344054] text-white hover:bg-[#263241]"
                         : "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50"
@@ -347,9 +367,11 @@ export function BundleInlineSelector({
                 </div>
 
                 <button
+                  {...pointerPressFeedback}
                   onClick={() => onSelect(bundle)}
                   className={cn(
-                    "w-full py-2.5 rounded-md text-sm font-semibold transition-colors mt-3",
+                    "w-full py-2.5 rounded-md text-sm font-semibold mt-3",
+                    feedbackStyles.press,
                     isSelected
                       ? "bg-[#344054] text-white hover:bg-[#263241]"
                       : "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50"
