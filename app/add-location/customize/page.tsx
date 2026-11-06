@@ -598,7 +598,7 @@ export default function CustomizePage() {
       </div>
 
       <div
-        className={`fixed inset-x-0 bottom-0 z-50 transition-[transform,opacity] duration-200 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-opacity ${footerVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}`}
+        className={`fixed inset-x-0 z-50 transition-[bottom] duration-300 ease-in-out motion-reduce:transition-none ${footerVisible ? 'bottom-0' : '-bottom-full pointer-events-none'}`}
         data-testid="footer-wrapper"
         aria-hidden={!footerVisible}
         ref={(element) => { if (element) element.inert = !footerVisible; }}

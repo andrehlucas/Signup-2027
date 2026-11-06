@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useState, type MutableRefObject } from 'react';
 
 export function useScrollFooterVisibility({
   enabled = true,
   lockedUntilRef,
 }: {
   enabled?: boolean;
-  lockedUntilRef?: RefObject<number>;
+  lockedUntilRef?: MutableRefObject<number>;
 } = {}) {
   const [visible, setVisible] = useState(false);
 
@@ -25,13 +25,12 @@ export function useScrollFooterVisibility({
       const delta = currentScrollY - lastScrollY;
       if (Math.abs(delta) < 5) return;
       lastScrollY = currentScrollY;
-      if (Date.now() < (lockedUntilRef?.current ?? 0)) return;
-
-      const atBottom = window.innerHeight + currentScrollY >= document.documentElement.scrollHeight - 10;
+      if (delta < 0 && lockedUntilRef) lockedUntilRef.current = 0;
       if (cannotScroll()) setVisible(true);
       else if (currentScrollY <= 50) setVisible(false);
-      else if (delta > 0) setVisible(true);
-      else if (!atBottom) setVisible(false);
+      // Intentional upward scrolling takes priority over bundle-total feedback.
+      else if (delta < 0) setVisible(false);
+      else if (Date.now() >= (lockedUntilRef?.current ?? 0)) setVisible(true);
     };
     const handleResize = () => {
       if (cannotScroll()) setVisible(true);
