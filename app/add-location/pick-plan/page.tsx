@@ -3,17 +3,20 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import type { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, ChevronDown, ChevronRight, MapPin } from 'lucide-react';
+import { Check, ChevronDown, ChevronRight, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { LocationSelector } from '../components/LocationSelector';
+import { LocalPhoneNumberDialog } from '../components/LocalPhoneNumberDialog';
 import { useOrder } from '../context';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import {
   bundles,
   featureLabels,
   AvailableLocation,
+  getPhoneNumbersForLocation,
+  resolveLocalPhoneNumber,
 } from '../types';
 
 const planTierColors: Record<string, { accent: string; surface: string }> = {
@@ -26,9 +29,15 @@ const planTierColors: Record<string, { accent: string; surface: string }> = {
 
 export default function PickPlanPage() {
   const router = useRouter();
-  const { order, setLocation, setBundle, setLocationFilters } = useOrder();
+  const { order, setLocation, setBundle, setLocationFilters, setPhoneNumber } = useOrder();
   const bundleComparisonHeadingRef = useRef<HTMLHeadingElement>(null);
   const [subStep, setSubStep] = useState<'location' | 'review'>(order.location ? 'review' : 'location');
+  const [phoneDialogOpen, setPhoneDialogOpen] = useState(false);
+  const phoneNumbers = useMemo(
+    () => order.location ? getPhoneNumbersForLocation(order.location).filter(number => number.isAvailable) : [],
+    [order.location]
+  );
+  const assignedPhone = resolveLocalPhoneNumber(order.location, order.phoneNumber);
   const { trackComplete } = useFunnelTracking('pick_plan');
 
   const upgradeBundles = useMemo(
@@ -41,6 +50,11 @@ export default function PickPlanPage() {
       setBundle(bundles[0]);
     }
   }, [order.location, order.bundle, setBundle]);
+
+  useEffect(() => {
+    // Also fills the phone for drafts saved before assignment happened on this step.
+    if (assignedPhone?.id !== order.phoneNumber?.id) setPhoneNumber(assignedPhone);
+  }, [assignedPhone, order.phoneNumber, setPhoneNumber]);
 
   const handleLocationSelect = (location: AvailableLocation) => {
     setLocation(location);
@@ -62,7 +76,7 @@ export default function PickPlanPage() {
   };
 
   const handleContinue = () => {
-    if (order.location && order.bundle) {
+    if (order.location && order.bundle && assignedPhone) {
       trackComplete({ bundle: order.bundle.name });
       router.push('/add-location/customize');
     }
@@ -186,8 +200,30 @@ export default function PickPlanPage() {
             </div>
           </div>
 
+          <div className="flex items-center justify-between gap-3 border-t border-gray-100 px-5 py-3 sm:px-6" data-testid="review-phone-row">
+            <div className="flex min-w-0 items-start gap-2.5">
+              <Phone className="mt-1 h-4 w-4 shrink-0 text-gray-500" aria-hidden="true" />
+              <div className="min-w-0" aria-live="polite">
+                <p className="text-xs font-medium text-gray-600">Business phone number</p>
+                {assignedPhone ? (
+                  <p className="mt-0.5 text-sm font-semibold tabular-nums text-gray-900" data-testid="review-business-phone">{assignedPhone.number}</p>
+                ) : (
+                  <p className="mt-1 text-sm text-gray-700" role="status">No local numbers are currently available. Choose another location to continue.</p>
+                )}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setPhoneDialogOpen(true)}
+              disabled={phoneNumbers.length === 0}
+              aria-label="Edit business phone number"
+              className="inline-flex min-h-11 shrink-0 items-center rounded-md px-2 text-sm font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              data-testid="button-edit-review-phone"
+            >Edit</button>
+          </div>
+
           {order.bundle && (
-            <details className="group border-t border-gray-100" data-testid="details-included-services">
+            <details open className="group border-t border-gray-100" data-testid="details-included-services">
               <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-5 text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#345b91] sm:px-6">
                 View included services
                 <ChevronDown className="h-4 w-4 flex-shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none" />
@@ -207,6 +243,15 @@ export default function PickPlanPage() {
             </details>
           )}
         </div>
+
+        <LocalPhoneNumberDialog
+          open={phoneDialogOpen}
+          onOpenChange={setPhoneDialogOpen}
+          numbers={phoneNumbers}
+          selected={assignedPhone}
+          city={order.location.city}
+          onSave={setPhoneNumber}
+        />
 
         <section className="mb-5" aria-labelledby="bundle-comparison-title">
           <div className="mb-1">
@@ -232,7 +277,7 @@ export default function PickPlanPage() {
 
         <Button
           onClick={handleContinue}
-          disabled={!order.bundle}
+          disabled={!order.bundle || !assignedPhone}
           className="signup-primary w-full h-12 text-base"
           data-testid="button-continue-customize"
         >

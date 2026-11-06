@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo, AppliedPromo, getPhoneNumbersForLocation } from './types';
+import { AvailableLocation, Bundle, PhoneNumber, Addon, OrderState, UserInfo, AppliedPromo, getPhoneNumbersForLocation, resolveLocalPhoneNumber } from './types';
 import { DRAFT_KEY, decodeDraft, encodeDraft, LocationFilters } from './draft';
 
 interface OrderContextType {
@@ -96,12 +96,10 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     const needsNewPhone = location && order.phoneNumber &&
       !getPhoneNumbersForLocation(location).some(phone => phone.id === order.phoneNumber?.id && phone.isAvailable);
     setLocationNotice(needsNewPhone
-      ? 'Your plan and add-ons have been kept. Your previous local phone number is not available at this location; a new local number will be assigned in Customize.'
+      ? `Your plan and add-ons have been kept. Your previous local phone number is not available at this location; ${resolveLocalPhoneNumber(location, null) ? 'a new local number has been assigned for your selected location.' : 'no local numbers are currently available here. Please choose another location.'}`
       : '');
     setOrder(prev => {
-      const phoneStillAvailable = location && prev.phoneNumber &&
-        getPhoneNumbersForLocation(location).some(phone => phone.id === prev.phoneNumber?.id && phone.isAvailable);
-      return { ...prev, location, phoneNumber: phoneStillAvailable ? prev.phoneNumber : null };
+      return { ...prev, location, phoneNumber: resolveLocalPhoneNumber(location, prev.phoneNumber) };
     });
     if (location) setLocationFilters({ state: location.state, city: location.city });
   };

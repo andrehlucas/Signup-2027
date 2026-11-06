@@ -710,6 +710,12 @@ export function getPhoneNumbersForLocation(location: AvailableLocation): PhoneNu
     'Orlando': ['407'],
     'Tampa': ['813'],
   };
-  const areaCodes = cityAreaCodeMap[location.city] || ['305'];
+  const areaCodes = cityAreaCodeMap[location.city] || [];
   return samplePhoneNumbers.filter(pn => areaCodes.includes(pn.areaCode));
+}
+
+export function resolveLocalPhoneNumber(location: AvailableLocation | null, current: PhoneNumber | null): PhoneNumber | null {
+  if (!location) return null;
+  const available = getPhoneNumbersForLocation(location).filter(number => number.isAvailable);
+  return available.find(number => number.id === current?.id) || available[0] || null;
 }

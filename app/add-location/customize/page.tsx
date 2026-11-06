@@ -112,7 +112,7 @@ export default function CustomizePage() {
 
   const phoneNumbers = useMemo(() => {
     if (!order.location) return [];
-    return getPhoneNumbersForLocation(order.location);
+    return getPhoneNumbersForLocation(order.location).filter(phone => phone.isAvailable);
   }, [order.location]);
 
   useEffect(() => {
