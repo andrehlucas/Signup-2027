@@ -4,7 +4,6 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, Phone, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Pencil, DollarSign, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
-import { Badge } from '@/app/components/ui/badge';
 import {
   Dialog,
   DialogContent,
@@ -40,7 +39,7 @@ import {
   Addon,
 } from '../types';
 import { useToast } from '@/app/hooks/use-toast';
-import { getInitialCustomizationAddons, sortCustomizationAddons } from '../addon-presentation';
+import { getInitialCustomizationAddons, partitionCustomizationAddons, sortCustomizationAddons } from '../addon-presentation';
 import { bundleThemes } from '../bundle-theme';
 
 export default function CustomizePage() {
@@ -171,9 +170,10 @@ export default function CustomizePage() {
   };
 
   const sortedAddons = useMemo(() => sortCustomizationAddons(availableAddons), []);
+  const { includedAddons, optionalAddons } = partitionCustomizationAddons(sortedAddons, selectedBundle);
   const initialAddons = getInitialCustomizationAddons(sortedAddons, selectedBundle);
-  const hasMoreAddons = initialAddons.length < sortedAddons.length;
-  const visibleAddons = showAllAddons ? sortedAddons : initialAddons;
+  const hasMoreAddons = initialAddons.length < optionalAddons.length;
+  const visibleAddons = showAllAddons ? optionalAddons : initialAddons;
 
   const upgradeBundles = bundles.filter(b => b.id !== 'essentials');
 
@@ -328,13 +328,44 @@ export default function CustomizePage() {
             Enhance your plan with additional features. Some add-ons may already be included in your bundle.
           </p>
 
+          {includedAddons.length > 0 && (
+            <div
+              role="region"
+              aria-labelledby="included-addons-label"
+              tabIndex={0}
+              className="mb-5 max-w-full overflow-x-auto overscroll-x-contain rounded-md py-1 text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
+              data-testid="included-addons-summary"
+            >
+              <div className="flex w-max items-center gap-3 whitespace-nowrap">
+                <span id="included-addons-label" className="font-semibold">
+                  Included on {selectedBundle.tier}:
+                </span>
+                <ul role="list" className="flex items-center gap-2">
+                  {includedAddons.map(addon => (
+                    <li
+                      key={addon.id}
+                      className="inline-flex shrink-0 items-center rounded-full border border-gray-200 bg-gray-50 px-3 py-1 font-medium"
+                      style={includedTheme ? {
+                        backgroundColor: includedTheme.surface,
+                        borderColor: includedTheme.border,
+                        color: includedTheme.accent,
+                      } : undefined}
+                      data-testid={`included-addon-${addon.id}`}
+                    >
+                      {addon.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
           <div className="relative">
             <div 
               className="grid grid-cols-1 gap-4 md:grid-cols-2"
               data-testid="addons-grid"
             >
               {visibleAddons.map((addon) => {
-                const isIncluded = isAddonIncluded(addon);
                 const isInCart = order.addons.find(a => a.id === addon.id);
                 const isExpanded = expandedAddons.has(addon.id);
 
@@ -342,40 +373,19 @@ export default function CustomizePage() {
                   <div
                     key={addon.id}
                     className={`rounded-lg border transition-colors ${
-                      isIncluded
-                        ? 'border-gray-200 bg-gray-50'
-                        : isInCart
+                      isInCart
                         ? 'border-[#006d91] bg-gray-50'
                         : 'border-gray-200 bg-white'
                     }`}
-                    style={isIncluded && includedTheme ? {
-                      backgroundColor: includedTheme.surface,
-                      borderColor: includedTheme.border,
-                    } : undefined}
-                    data-addon-status={isIncluded ? 'included' : isInCart ? 'selected' : 'available'}
+                    data-addon-status={isInCart ? 'selected' : 'available'}
                     data-testid={`addon-card-${addon.id}`}
                   >
                     <div className="flex h-full flex-col p-4">
                       <div className="mb-2 flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-                        <h3
-                          className={`min-w-0 text-gray-900 ${isIncluded ? 'font-semibold' : 'font-medium'}`}
-                          style={isIncluded ? { color: includedTheme?.accent } : undefined}
-                        >
+                        <h3 className="min-w-0 font-medium text-gray-900">
                           {addon.name}
                         </h3>
-                        {isIncluded ? (
-                          <Badge
-                            className="max-w-full gap-1.5 border bg-white text-gray-700 shadow-none"
-                            style={includedTheme ? {
-                              color: includedTheme.accent,
-                              borderColor: includedTheme.border,
-                              backgroundColor: '#ffffff',
-                            } : undefined}
-                          >
-                            <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                            Included on {selectedBundle.tier}
-                          </Badge>
-                        ) : addon.packages && addon.packages.length > 0 ? (
+                        {addon.packages && addon.packages.length > 0 ? (
                           <span className="shrink-0 text-sm font-semibold text-gray-900">
                             From ${addon.packages[0].price}/mo
                           </span>
@@ -388,7 +398,6 @@ export default function CustomizePage() {
                       <p
                         id={`addon-description-${addon.id}`}
                         className={`min-h-10 text-sm leading-5 text-gray-600 ${isExpanded ? '' : 'line-clamp-2'}`}
-                        style={isIncluded ? { color: includedTheme?.accent } : undefined}
                         data-testid={`addon-details-${addon.id}`}
                       >
                         {addon.detailedDescription || addon.description}
@@ -401,10 +410,6 @@ export default function CustomizePage() {
                           aria-controls={`addon-description-${addon.id}`}
                           aria-label={`${isExpanded ? 'Show less about' : 'Read more about'} ${addon.name}`}
                           className="flex min-h-11 items-center gap-1 rounded-sm text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
-                          style={isIncluded && includedTheme ? {
-                            color: includedTheme.accent,
-                            textDecorationColor: includedTheme.border,
-                          } : undefined}
                           data-testid={`button-learn-more-${addon.id}`}
                         >
                           {isExpanded ? (
@@ -419,8 +424,7 @@ export default function CustomizePage() {
                             </>
                           )}
                         </button>
-                        {!isIncluded && (
-                          <Button
+                        <Button
                             variant={isInCart ? 'outline' : 'default'}
                             size="sm"
                             className={`min-h-11 ${isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'signup-primary'}`}
@@ -438,12 +442,10 @@ export default function CustomizePage() {
                                 Add to Cart
                               </>
                             )}
-                          </Button>
-                        )}
+                        </Button>
                       </div>
 
-                      {!isIncluded && (
-                        <div className="space-y-3">
+                      <div className="space-y-3">
                           {isInCart && addon.packages && addon.packages.length > 0 && (
                             <div className="pt-2 border-t border-gray-200">
                               <label className="text-xs font-medium text-gray-700 mb-1 block">
@@ -473,8 +475,7 @@ export default function CustomizePage() {
                               </Select>
                             </div>
                           )}
-                        </div>
-                      )}
+                      </div>
                     </div>
                   </div>
                 );

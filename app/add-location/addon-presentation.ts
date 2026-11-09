@@ -16,13 +16,23 @@ export function sortCustomizationAddons(addons: Addon[]): Addon[] {
 }
 
 export function getInitialCustomizationAddons(addons: Addon[], bundle: Bundle | null): Addon[] {
-  const required = addons.filter(addon =>
-    preferredAddonIds.includes(addon.id) || isAddonIncludedInBundle(addon.id, bundle)
-  );
+  const { optionalAddons } = partitionCustomizationAddons(addons, bundle);
+  const required = optionalAddons.filter(addon => preferredAddonIds.includes(addon.id));
   const visibleIds = new Set(required.map(addon => addon.id));
-  if (visibleIds.size % 2 !== 0) {
-    const nextAddon = addons.find(addon => !visibleIds.has(addon.id));
-    if (nextAddon) visibleIds.add(nextAddon.id);
+  const targetCount = Math.min(optionalAddons.length, Math.ceil(Math.max(2, visibleIds.size) / 2) * 2);
+  for (const addon of optionalAddons) {
+    if (visibleIds.size >= targetCount) break;
+    visibleIds.add(addon.id);
   }
-  return addons.filter(addon => visibleIds.has(addon.id));
+  return optionalAddons.filter(addon => visibleIds.has(addon.id));
+}
+
+export function partitionCustomizationAddons(addons: Addon[], bundle: Bundle | null) {
+  const includedAddons: Addon[] = [];
+  const optionalAddons: Addon[] = [];
+  for (const addon of addons) {
+    if (addon.id === 'additional-extensions') continue;
+    (isAddonIncludedInBundle(addon.id, bundle) ? includedAddons : optionalAddons).push(addon);
+  }
+  return { includedAddons, optionalAddons };
 }

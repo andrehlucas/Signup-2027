@@ -1,19 +1,19 @@
 ---
 name: Add-on preview readability
-description: Intent behind two-column add-on cards, expandable descriptions and complete-card disclosure.
+description: Intent behind optional add-on cards, included-feature pills and complete-card disclosure.
 ---
 
-Add-ons use two columns where readable, with two-line description previews and an independent Read more/Show less disclosure. Reading details must not select or purchase an add-on.
+Optional add-ons use two columns where readable, with two-line description previews and an independent Read more/Show less disclosure. Reading details must not select or purchase an add-on.
 
 **Why:** The user requested a two-column design with visible descriptions and click-to-read-more.
 
 **How to apply:** Keep phone layouts readable with a single column. When shortening the overall catalog, show complete cards and a Show all control rather than a fixed-height crop or fading overlay: descriptions have variable heights, and cropping can hide actionable buttons or expanded text.
 
-Keep the first five add-ons in this order: Callout, Custom Business Email, Supervised Transfer, Message Taking, Appointment Scheduling. Show all other add-ons included in the selected bundle without requiring Show all, labeled “Included on {bundle}”.
+Keep optional add-ons in this priority order: Callout, Custom Business Email, Supervised Transfer, Message Taking, Appointment Scheduling, omitting any already included in the selected bundle.
 
-**Why:** The user explicitly requested this ordering and visibility. Sorting included items first would displace the required sequence.
+**Why:** The user requested this order, then explicitly replaced included-service cards with a compact summary to distinguish included services from optional purchases.
 
-**How to apply:** Preserve the first five across every bundle; include all additional bundled add-ons in the initial view. Round an odd initial count up by showing the next real optional add-on, preserving the catalog order. The user explicitly requested an even number of cards. Keep Show all even too, without hiding included services or duplicating cards. Inclusion comes from the selected bundle, not an add-on's default price.
+**How to apply:** Put each included add-on name in its own pill, in a single line between the blurb and optional cards, labeled “Included on {bundle}:”, without descriptions or purchase controls. The user explicitly requested pills for individual features. Allow horizontal scrolling on narrow screens and omit the summary when nothing is included. Keep included services out of both the initial and expanded optional grid. Round an odd initial optional preview up with the next real optional service when available; Show all must expose every optional service even when that produces an odd total. Never duplicate or invent cards to fill a row. Inclusion comes from the selected bundle, not an add-on's default price.
 
 Additional Extensions is no longer offered in enrollment. Customize's additional phone services panel is for the selected toll-free number only, not the primary local business number.
 
