@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { Building2, Check, MapPin, Star } from 'lucide-react';
 import { Button } from '@/app/components/ui/button';
 import { SearchableLocationFilter } from './SearchableLocationFilter';
+import { MobileCountrySelector } from './MobileCountrySelector';
 import { useOrder } from '../context';
 import {
   AvailableLocation,
@@ -125,20 +126,29 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
     if (option) setLocationFilters({ country: selectedCountry, state: option.state, city: option.city });
   };
 
+  const handleCountryChange = (country: LocationCountry) => {
+    setLocationFilters({ country, state: '', city: 'all' });
+  };
+
   return (
     <div className="signup-surface mb-6 p-5 md:p-6">
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <h2 className="text-lg font-semibold text-gray-900">Select Your Location</h2>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-x-2 gap-y-3 md:gap-4">
+        <h2 className="min-w-0 flex-1 text-lg font-semibold text-gray-900">Select Your Location</h2>
+        <div className="md:hidden">
+          <MobileCountrySelector value={selectedCountry} onChange={handleCountryChange} />
+        </div>
         {onCancel && (
-          <Button
-            type="button"
-            variant="outline"
-            className="signup-secondary"
-            onClick={onCancel}
-            data-testid="button-cancel-location"
-          >
-            Cancel
-          </Button>
+          <div className="flex w-full justify-end md:w-auto">
+            <Button
+              type="button"
+              variant="outline"
+              className="signup-secondary"
+              onClick={onCancel}
+              data-testid="button-cancel-location"
+            >
+              Cancel
+            </Button>
+          </div>
         )}
       </div>
 
@@ -177,7 +187,7 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
             testId="select-state"
           />
         </div>
-        <div>
+        <div className="hidden md:block">
           <label htmlFor="location-country" className="mb-2 block text-sm font-medium text-gray-700">
             Country / region
           </label>
@@ -185,7 +195,7 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
             id="location-country"
             label="Country / region"
             value={selectedCountry}
-            onChange={country => setLocationFilters({ country: country as LocationCountry, state: '', city: 'all' })}
+            onChange={country => handleCountryChange(country as LocationCountry)}
             options={LOCATION_COUNTRIES}
             placeholder="United States"
             testId="select-country"
