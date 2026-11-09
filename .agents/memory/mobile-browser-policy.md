@@ -11,6 +11,12 @@ Keep the viewport stable during field focus and blur; do not reintroduce a scrip
 
 Test contact autofill separately from typing and pasting. Allow an international number even when the current country selector differs, without rejecting territories that share calling codes.
 
-**Why:** The user reported a crash specifically when using Safari contact suggestions. Those replacements can bypass paste handlers and arrive without ordinary caret or character data. Browser-owned caret handling on touch devices prioritizes reliable autofill over smart cursor repositioning.
+**Why:** The user repeatedly reported crashes when accepting browser contact suggestions. Those replacements can bypass paste handlers and arrive without ordinary caret or character data. Disabling smart cursor behavior only for touch devices left another autofill crash path: pointer capability does not identify whether a number was typed or supplied by the browser.
 
-**How to apply:** Exercise whole-field replacement, international prefixes, missing caret data, draft recovery and invalid-number validation. Do not disable autocomplete as a workaround. Simulated input events are regression checks, not proof that the native Safari suggestion UI works on an actual iPhone.
+**How to apply:** Preserve native telephone semantics and autocomplete. Never require selection access for whole-field replacement on either desktop or mobile. Treat the normalized number and its country as one result: autofill can emit both input and change before React commits a country change. Exercise replacement events with missing caret/character data, repeated fills of the same number, international prefixes, draft recovery and invalid-number validation. Do not disable autocomplete as a workaround. Simulated input events are regression checks, not proof that the native Safari suggestion UI works on an actual iPhone.
+
+For headless focus/blur checks, ensure the document really has focus, not merely that `activeElement` names the field.
+
+**Why:** A background CDP page can update `activeElement` without delivering the real focus events needed by React's blur handler. This can produce a false failure when testing autofill reconciliation.
+
+**How to apply:** Enable focus emulation for focus/blur journeys and distinguish a missing browser event from a broken form handler.

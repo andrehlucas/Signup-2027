@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, type ClipboardEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
-import PhoneInput from 'react-phone-number-input/input-max';
+import { ContactPhoneInput } from './components/ContactPhoneInput';
 import { getCountryCallingCode, type E164Number } from 'libphonenumber-js/max';
-import { phoneCountries, phoneCountry, phoneValue, nationalPhone, phoneExample, pastedPhone, validPhone } from './lib/phone';
+import { phoneCountries, phoneCountry, phoneValue, nationalPhone, phoneExample } from './lib/phone';
 import { SIGNUP_LIMITS, validateSignup, type SignupField } from './lib/signup-validation';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/app/components/ui/button';
@@ -23,9 +23,6 @@ export default function SignUpPage() {
   const [lastName, setLastName] = useState(order.userInfo.lastName);
   const [phone, setPhone] = useState<E164Number | undefined>(() => phoneValue(order.userInfo.phone, initialCountryRegion));
   const [countryRegion, setCountryRegion] = useState(initialCountryRegion);
-  // Let touch browsers own the caret: contact autofill doesn't behave like typing.
-  // Keep smart mid-number editing for mouse/keyboard users.
-  const [smartPhoneCaret, setSmartPhoneCaret] = useState(false);
   const countryCode = `+${getCountryCallingCode(countryRegion)}`;
   const [email, setEmail] = useState(order.userInfo.email);
   const [confirmEmail, setConfirmEmail] = useState(order.userInfo.confirmEmail);
@@ -39,14 +36,6 @@ export default function SignUpPage() {
   );
   const markTouched = (field: SignupField) => setTouched(current => ({ ...current, [field]: true }));
   const { trackComplete } = useFunnelTracking('your_info');
-
-  useEffect(() => {
-    const touchInput = window.matchMedia('(pointer: coarse)');
-    const updateCaret = () => setSmartPhoneCaret(!touchInput.matches);
-    updateCaret();
-    touchInput.addEventListener('change', updateCaret);
-    return () => touchInput.removeEventListener('change', updateCaret);
-  }, []);
 
   useEffect(() => {
     setUserInfo({ firstName, lastName, phone: nationalPhone(phone, countryRegion), countryRegion, countryCode, email, confirmEmail, company, termsAccepted });
@@ -194,37 +183,19 @@ export default function SignUpPage() {
                     className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600"
                   />
                   </div>
-                  <PhoneInput
+                  <ContactPhoneInput
                     id="phone-number"
                     name="phone"
                     required
-                    inputComponent={Input}
-                    defaultCountry={countryRegion}
-                    smartCaret={smartPhoneCaret}
+                    country={countryRegion}
                     type="tel"
                     inputMode="tel"
                     value={phone}
-                    onChange={(value) => {
-                      const resolved = value ? pastedPhone(value, countryRegion) : undefined;
-                      // Only switch for a complete number with a different calling code.
-                      // Shared territories keep the user's choice, even if metadata
-                      // resolves their number to another territory (e.g. AX/FI).
-                      if (resolved && validPhone(resolved.value, resolved.region)
-                        && getCountryCallingCode(resolved.region) !== getCountryCallingCode(countryRegion)) {
-                        setCountryRegion(resolved.region);
-                      }
-                      setPhone(value);
+                    onPhoneChange={(entry) => {
+                      setCountryRegion(entry.country);
+                      setPhone(entry.value);
                     }}
                     onBlur={() => markTouched('phone')}
-                    onPaste={(event: ClipboardEvent<HTMLInputElement>) => {
-                      const text = event.clipboardData.getData('text');
-                      if (!/^\s*(\+|00)/.test(text)) return;
-                      const pasted = pastedPhone(text, countryRegion);
-                      if (!pasted) return;
-                      event.preventDefault();
-                      setCountryRegion(pasted.region);
-                      setPhone(pasted.value);
-                    }}
                     placeholder={examplePhone}
                     autoComplete="tel"
                     autoCapitalize="none"
