@@ -535,7 +535,7 @@ export default function CustomizePage() {
                     onClick={() => setBundleComparisonOpen(open => !open)}
                     aria-expanded={bundleComparisonOpen}
                     aria-controls="customize-bundle-comparison"
-                    className="my-3 inline-flex min-h-11 items-center gap-1 rounded-sm text-sm font-medium text-gray-700 underline underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]"
+                    className="my-3 inline-flex min-h-11 items-center gap-1 rounded-sm pl-2 text-sm font-medium text-gray-700 underline underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] md:pl-0"
                     data-testid="button-toggle-customize-bundle-comparison"
                   >
                     Compare Bundles
