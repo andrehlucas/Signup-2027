@@ -333,18 +333,18 @@ export default function CustomizePage() {
               role="region"
               aria-labelledby="included-addons-label"
               tabIndex={0}
-              className="mb-5 max-w-full overflow-x-auto overscroll-x-contain rounded-md py-1 text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
+              className="mb-5 max-w-full rounded-md py-1 text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 md:overflow-x-auto md:overscroll-x-contain"
               data-testid="included-addons-summary"
             >
-              <div className="flex w-max items-center gap-3 whitespace-nowrap">
-                <span id="included-addons-label" className="font-semibold">
+              <div className="flex w-full flex-col items-start gap-3 md:w-max md:flex-row md:items-center md:whitespace-nowrap">
+                <span id="included-addons-label" className="text-base font-semibold md:text-sm">
                   Included on {selectedBundle.tier}:
                 </span>
-                <ul role="list" className="flex items-center gap-2">
+                <ul role="list" className="flex w-full flex-wrap items-center gap-2 md:w-auto md:flex-nowrap">
                   {includedAddons.map(addon => (
                     <li
                       key={addon.id}
-                      className="inline-flex shrink-0 items-center rounded-full border border-gray-200 bg-gray-50 px-3 py-1 font-medium"
+                      className="inline-flex min-w-0 max-w-full shrink-0 items-center whitespace-normal break-words rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-base font-medium md:max-w-none md:whitespace-nowrap md:py-1 md:text-sm"
                       style={includedTheme ? {
                         backgroundColor: includedTheme.surface,
                         borderColor: includedTheme.border,
@@ -361,6 +361,9 @@ export default function CustomizePage() {
           )}
 
           <div className="relative">
+            <h3 className="mb-3 text-base font-semibold text-gray-900 md:hidden" data-testid="optional-addons-title">
+              Optional add-ons
+            </h3>
             <div 
               className="grid grid-cols-1 gap-4 md:grid-cols-2"
               data-testid="addons-grid"
