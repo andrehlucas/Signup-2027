@@ -1,4 +1,29 @@
-@tailwind base;
+/*
+ * Cascade order (lowest -> highest priority):
+ *   reset        Astryx reset
+ *   tw-base      Tailwind v3 preflight + this file's `@layer base` rules
+ *   astryx-base  Astryx component styles
+ *   astryx-theme Astryx theme tokens (neutral)
+ *   (unlayered)  Tailwind components/utilities and the rest of this file
+ *
+ * Tailwind v3 emits unlayered CSS, and unlayered rules beat every layer, so
+ * its preflight would otherwise override Astryx components (button
+ * backgrounds, input padding, borders). Wrapping `@tailwind base` in a
+ * native layer below Astryx fixes that, while Tailwind utility classes stay
+ * unlayered and can still override Astryx when passed via `className`.
+ *
+ * The order itself is declared in app/layers.css, which layout.tsx loads
+ * first; it is repeated here so this file is correct on its own.
+ */
+@layer reset, tw-base, astryx-base, astryx-theme;
+
+@import '@astryxdesign/core/reset.css';
+@import '@astryxdesign/core/astryx.css';
+@import '@astryxdesign/theme-neutral/theme.css';
+
+@layer tw-base {
+  @tailwind base;
+}
 @tailwind components;
 @tailwind utilities;
 
@@ -330,6 +355,33 @@
     --destructive-foreground: 0 0% 100%;
     --ring: 197 93% 59%;
     --radius: 0.625rem;
+  }
+}
+
+/*
+ * Astryx compatibility for the existing (pre-Astryx) pages.
+ * The neutral theme gives bare <p>, <h1>-<h6> and <small> elements Astryx
+ * typography (size, leading, colour, font). Tailwind's preflight leaves those
+ * properties alone, so without this block legacy text that relies on
+ * inheritance would change size and colour. Astryx's own <Text>/<Heading>
+ * components style themselves via classes and are unaffected.
+ * Delete this block once the redesign no longer has legacy markup.
+ */
+@layer base {
+  p {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+  }
+  small {
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
   }
 }
 

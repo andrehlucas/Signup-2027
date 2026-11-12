@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
+import './layers.css';
 import './globals.css';
 import { Providers } from './providers';
 import { Toaster } from '@/app/components/ui/toaster';
@@ -33,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} data-theme="light">
       <body>
         <Providers>
           <div className="min-h-[100svh] bg-gray-50">
