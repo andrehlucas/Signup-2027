@@ -127,6 +127,10 @@ export const opusTheme = defineTheme({
     // rather than the neutral theme's saturated pink.
     '--color-error-muted': '#fef3f2',
     '--color-on-error-muted': '#b42318',
+    // Confirmations (included items, applied promo, savings): soft green,
+    // dark green text (~6:1).
+    '--color-success-muted': '#ecfdf3',
+    '--color-on-success-muted': '#067647',
     // Notices (e.g. the phone-number lock): soft amber, dark amber text (~5:1).
     '--color-warning-muted': '#fffaeb',
     '--color-on-warning-muted': '#b54708',
