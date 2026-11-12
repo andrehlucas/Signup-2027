@@ -14,6 +14,7 @@
  */
 import { defineTheme } from '@astryxdesign/core/theme';
 import { neutralTheme } from '@astryxdesign/theme-neutral';
+import { bundleThemes, essentialsTierTheme } from '../../add-location/bundle-theme';
 
 // DESIGN.md palette
 const actionCharcoal = '#344054';
@@ -66,9 +67,21 @@ const typeTokens = {
   '--text-supporting-leading': '1.4286',
 } as const;
 
+// Bundle tier colours (DESIGN.md "Bundle tier exception"), emitted as
+// --opus-tier-<id>-{surface,accent,border}. bundle-theme.ts stays the single
+// source; components apply them with tierScope() from that file.
+const tierTokens = Object.fromEntries(
+  Object.entries({ essentials: essentialsTierTheme, ...bundleThemes }).flatMap(([id, tier]) => [
+    [`--opus-tier-${id}-surface`, tier.surface],
+    [`--opus-tier-${id}-accent`, tier.accent],
+    [`--opus-tier-${id}-border`, tier.border],
+  ]),
+);
+
 export const opusTheme = defineTheme({
   name: 'opus',
   extends: neutralTheme,
+  localTokens: tierTokens,
 
   typography: {
     // Body is 16px in DESIGN.md (Astryx default base is 14px).
@@ -114,6 +127,9 @@ export const opusTheme = defineTheme({
     // rather than the neutral theme's saturated pink.
     '--color-error-muted': '#fef3f2',
     '--color-on-error-muted': '#b42318',
+    // Notices (e.g. the phone-number lock): soft amber, dark amber text (~5:1).
+    '--color-warning-muted': '#fffaeb',
+    '--color-on-warning-muted': '#b54708',
     '--color-border-emphasized': fieldBorder, // input outlines
 
     // ---- Focus: restrained blue ring ----

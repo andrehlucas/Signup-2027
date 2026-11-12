@@ -2,8 +2,15 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { Check, ChevronRight, Info, MapPin, Phone, ShoppingCart } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/popover';
+import { Button } from '@astryxdesign/core/Button';
+import { Divider } from '@astryxdesign/core/Divider';
+import { HStack } from '@astryxdesign/core/HStack';
+import { Icon } from '@astryxdesign/core/Icon';
+import { Popover } from '@astryxdesign/core/Popover';
+import { StackItem } from '@astryxdesign/core/Stack';
+import { Text } from '@astryxdesign/core/Text';
+import { VisuallyHidden } from '@astryxdesign/core/VisuallyHidden';
+import { VStack } from '@astryxdesign/core/VStack';
 import { useOrder } from '../context';
 import { featureLabels, isAddonIncludedInBundle, type PhoneNumber } from '../types';
 
@@ -33,111 +40,148 @@ export function EnrollmentSummaryFooter({
   const monthly = bundle.price + addonMonthly;
 
   return (
-    <div className="border-t border-gray-200 bg-white shadow-[0_-4px_12px_rgba(16,24,40,0.08)]" data-testid="sticky-footer">
-      <div className={`${compactWidth ? 'max-w-5xl' : 'max-w-6xl'} mx-auto py-4 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pb-[max(1rem,env(safe-area-inset-bottom))]`}>
-        <div className="mb-3 flex flex-col gap-2 border-b border-gray-100 pb-3 text-sm text-gray-600 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-          <div className="flex min-w-0 items-start gap-2" data-testid="footer-office-address">
-            <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-            <span className="min-w-0 break-words leading-5">
-              <span className="sr-only">Office address: </span>
+    <VStack
+      // Sticky bar chrome: top rule and an upward shadow, from theme tokens.
+      className="border-t border-[var(--color-border)] bg-[var(--color-background-surface)] shadow-[0_-4px_12px_var(--color-shadow)]"
+      data-testid="sticky-footer"
+    >
+      <VStack
+        gap={3}
+        width="100%"
+        maxWidth={compactWidth ? 1024 : 1152}
+        className="mx-auto py-4 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pb-[max(1rem,env(safe-area-inset-bottom))]"
+      >
+        <HStack gap={2} hAlign="between" vAlign="start" wrap="wrap">
+          <HStack gap={2} vAlign="start" data-testid="footer-office-address">
+            <Icon icon={MapPin} size="sm" color="secondary" />
+            <Text type="supporting" color="secondary">
+              <VisuallyHidden>Office address: </VisuallyHidden>
               {location.address}{location.addressLine2 ? `, ${location.addressLine2}` : ''}, {location.city}, {location.stateCode} {location.zipCode}
-            </span>
-          </div>
+            </Text>
+          </HStack>
           {phoneNumber && (
-            <div className="flex shrink-0 items-center gap-2" data-testid="footer-business-phone">
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              <span className="sr-only">Business phone number: </span>
-              <span className="font-medium leading-5 text-gray-800">{phoneNumber.number}</span>
-            </div>
+            <HStack gap={2} vAlign="center" data-testid="footer-business-phone">
+              <Icon icon={Phone} size="sm" color="secondary" />
+              <VisuallyHidden>Business phone number: </VisuallyHidden>
+              <Text type="supporting" weight="medium" hasTabularNumbers>{phoneNumber.number}</Text>
+            </HStack>
           )}
-        </div>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="relative hidden shrink-0 min-[380px]:block">
-              <motion.div
-                animate={pulse ? { scale: [1, 1.3, 0.9, 1.15, 1], rotate: [0, -8, 8, -4, 0] } : { scale: 1, rotate: 0 }}
-                transition={{ duration: 0.6, ease: 'easeInOut' }}
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100"
-              >
-                <ShoppingCart className="h-4 w-4 text-gray-700" aria-hidden="true" />
-              </motion.div>
-              <AnimatePresence>
-                {pulse && (
-                  <motion.div
-                    initial={{ scale: 0, opacity: 0, y: 0 }}
-                    animate={{ scale: 1, opacity: 1, y: -6 }}
-                    exit={{ scale: 0, opacity: 0, y: -12 }}
-                    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-                    className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-[#344054]"
-                    data-testid="cart-added-badge"
-                  >
-                    <Check className="h-3 w-3 text-white" aria-hidden="true" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-x-1.5">
-                <p className="text-sm font-semibold leading-tight text-gray-900" data-testid="footer-package-name">{bundle.tier}</p>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <button type="button" aria-label={`See what's included in ${bundle.tier}`}
-                      className="inline-flex min-h-6 items-center gap-1 rounded-sm text-xs font-medium text-gray-700 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]"
-                      data-testid="button-see-included">
-                      <Info className="h-3.5 w-3.5" aria-hidden="true" />
-                      <span className="hidden sm:inline">See what's included</span>
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent side="top" align="start" className="max-h-[60dvh] w-72 overflow-y-auto p-0" data-testid="popover-included-features">
-                    <p className="border-b border-gray-100 px-4 py-3 text-sm font-semibold text-gray-900">{bundle.tier} includes:</p>
-                    <ul className="space-y-2 px-4 py-3">
-                      {Object.entries(bundle.features).filter(([, enabled]) => enabled).map(([key]) => (
-                        <li key={key} className="flex items-start gap-2 text-sm text-gray-700">
-                          <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-600" aria-hidden="true" />
-                          <span>{featureLabels[key] || key}{key === 'appointmentMaking' && ' (20/mo)'}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </PopoverContent>
-                </Popover>
-              </div>
-              <div className="flex flex-wrap items-end gap-x-2">
-                <p className="text-lg font-bold leading-tight text-gray-900" data-testid="footer-monthly-total">
-                  ${monthly}<span className="text-sm font-normal text-gray-500">/mo</span>
-                </p>
-                {paidAddons.length > 0 && (
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button type="button" className="min-h-6 rounded-sm text-xs font-medium text-gray-700 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]" data-testid="button-see-addons">
-                        See details
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent side="top" align="start" className="max-h-[60dvh] w-72 overflow-y-auto p-0" data-testid="popover-addon-breakdown">
-                      <p className="border-b border-gray-100 px-4 py-3 text-sm font-semibold text-gray-900">Your Add-ons</p>
-                      <div className="space-y-2 px-4 py-3 text-sm">
-                        {paidAddons.map(addon => (
-                          <div key={addon.id} className="flex items-start justify-between gap-3">
-                            <span className="text-gray-700">{addon.name}{addon.selectedPackage ? ` (${addon.selectedPackage.name})` : ''}</span>
-                            <span className="shrink-0 font-medium text-gray-900">${addon.price}{addon.billingCycle === 'monthly' ? '/mo' : ' one-time'}</span>
-                          </div>
+        </HStack>
+
+        <Divider />
+
+        <HStack gap={3} vAlign="center" wrap="wrap">
+          {/* Cart mark; pulses when Customize adds an add-on. */}
+          <VStack className="relative hidden shrink-0 min-[380px]:flex">
+            <motion.div
+              animate={pulse ? { scale: [1, 1.3, 0.9, 1.15, 1], rotate: [0, -8, 8, -4, 0] } : { scale: 1, rotate: 0 }}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-element)] bg-[var(--color-background-muted)]"
+            >
+              <Icon icon={ShoppingCart} size="sm" />
+            </motion.div>
+            <AnimatePresence>
+              {pulse && (
+                <motion.div
+                  initial={{ scale: 0, opacity: 0, y: 0 }}
+                  animate={{ scale: 1, opacity: 1, y: -6 }}
+                  exit={{ scale: 0, opacity: 0, y: -12 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                  className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-[var(--color-background-surface)] bg-[var(--color-accent)] text-[var(--color-on-accent)]"
+                  data-testid="cart-added-badge"
+                >
+                  <Check className="h-3 w-3" aria-hidden="true" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </VStack>
+
+          <StackItem size="fill">
+            <VStack gap={0}>
+              <HStack gap={1} vAlign="center" wrap="wrap">
+                <Text weight="semibold" data-testid="footer-package-name">{bundle.tier}</Text>
+                <Popover
+                  label={`${bundle.tier} includes`}
+                  placement="above"
+                  alignment="start"
+                  padding={4}
+                  data-testid="popover-included-features"
+                  content={
+                    <VStack gap={2}>
+                      <Text weight="semibold">{bundle.tier} includes:</Text>
+                      <VStack as="ul" gap={2}>
+                        {Object.entries(bundle.features).filter(([, enabled]) => enabled).map(([key]) => (
+                          <HStack as="li" key={key} gap={2} vAlign="start">
+                            <Icon icon={Check} size="sm" color="secondary" />
+                            <Text type="supporting">{featureLabels[key] || key}{key === 'appointmentMaking' && ' (20/mo)'}</Text>
+                          </HStack>
                         ))}
-                        <div className="flex justify-between gap-3 border-t border-gray-100 pt-2 font-semibold">
-                          <span>Add-ons Total</span><span>${addonMonthly}/mo</span>
-                        </div>
-                        {addonOneTime > 0 && <p className="text-gray-600">One-time add-ons: ${addonOneTime}</p>}
-                      </div>
-                    </PopoverContent>
+                      </VStack>
+                    </VStack>
+                  }
+                >
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    label="See what's included"
+                    aria-label={`See what's included in ${bundle.tier}`}
+                    icon={<Icon icon={Info} size="sm" />}
+                    data-testid="button-see-included"
+                  />
+                </Popover>
+              </HStack>
+              <HStack gap={2} vAlign="center" wrap="wrap">
+                <Text size="lg" weight="bold" hasTabularNumbers data-testid="footer-monthly-total">
+                  ${monthly}<Text type="supporting" color="secondary">/mo</Text>
+                </Text>
+                {paidAddons.length > 0 && (
+                  <Popover
+                    label="Your Add-ons"
+                    placement="above"
+                    alignment="start"
+                    padding={4}
+                    data-testid="popover-addon-breakdown"
+                    content={
+                      <VStack gap={2}>
+                        <Text weight="semibold">Your Add-ons</Text>
+                        {paidAddons.map(addon => (
+                          <HStack key={addon.id} gap={3} hAlign="between" vAlign="start">
+                            <Text type="supporting">{addon.name}{addon.selectedPackage ? ` (${addon.selectedPackage.name})` : ''}</Text>
+                            <Text type="supporting" weight="medium" hasTabularNumbers>${addon.price}{addon.billingCycle === 'monthly' ? '/mo' : ' one-time'}</Text>
+                          </HStack>
+                        ))}
+                        <Divider />
+                        <HStack gap={3} hAlign="between">
+                          <Text type="supporting" weight="semibold">Add-ons Total</Text>
+                          <Text type="supporting" weight="semibold" hasTabularNumbers>${addonMonthly}/mo</Text>
+                        </HStack>
+                        {addonOneTime > 0 && <Text type="supporting" color="secondary">One-time add-ons: ${addonOneTime}</Text>}
+                      </VStack>
+                    }
+                  >
+                    <Button type="button" variant="ghost" size="sm" label="See details" data-testid="button-see-addons" />
                   </Popover>
                 )}
-              </div>
-            </div>
-          </div>
-          <Button onClick={onContinue} disabled={disabled} aria-label={continueLabel}
-            className="signup-primary h-11 shrink-0 px-6" data-testid={continueTestId}>
-            Continue <ChevronRight className="ml-1.5 h-4 w-4" aria-hidden="true" />
-          </Button>
-        </div>
-      </div>
-    </div>
+              </HStack>
+            </VStack>
+          </StackItem>
+
+          {/* Stays at the end when the row wraps on narrow phones. */}
+          <StackItem className="ml-auto">
+          <Button
+            type="button"
+            variant="primary"
+            label="Continue"
+            aria-label={continueLabel}
+            endContent={<Icon icon={ChevronRight} size="sm" />}
+            onClick={onContinue}
+            isDisabled={disabled}
+            data-testid={continueTestId}
+          />
+          </StackItem>
+        </HStack>
+      </VStack>
+    </VStack>
   );
 }

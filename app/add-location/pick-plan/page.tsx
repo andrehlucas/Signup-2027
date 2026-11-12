@@ -4,15 +4,25 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import type { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { VStack } from '@astryxdesign/core/VStack';
-import { Check, ChevronDown, MapPin, Phone, TriangleAlert } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, MapPin, Phone, TriangleAlert } from 'lucide-react';
+import { Button } from '@astryxdesign/core/Button';
+import { Card } from '@astryxdesign/core/Card';
+import { Collapsible } from '@astryxdesign/core/Collapsible';
+import { Divider } from '@astryxdesign/core/Divider';
+import { Grid } from '@astryxdesign/core/Grid';
+import { Heading } from '@astryxdesign/core/Heading';
+import { HStack } from '@astryxdesign/core/HStack';
+import { Icon } from '@astryxdesign/core/Icon';
+import { StackItem } from '@astryxdesign/core/Stack';
+import { Text } from '@astryxdesign/core/Text';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
-import feedbackStyles from '@/app/components/ui/bundle-feedback.module.css';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { LocationSelector } from '../components/LocationSelector';
 import { LocalPhoneNumberDialog } from '../components/LocalPhoneNumberDialog';
 import { EnrollmentSummaryFooter } from '../components/EnrollmentSummaryFooter';
 import { useScrollFooterVisibility } from '../use-scroll-footer-visibility';
 import { useOrder } from '../context';
+import { tierScope } from '../bundle-theme';
 import { useFunnelTracking } from '../../hooks/use-funnel-tracking';
 import {
   bundles,
@@ -22,20 +32,11 @@ import {
   resolveLocalPhoneNumber,
 } from '../types';
 
-const planTierColors: Record<string, { accent: string; surface: string }> = {
-  essentials: { accent: '#596579', surface: '#f2f4f6' },
-  plus: { accent: '#185f58', surface: '#edf6f4' },
-  pro: { accent: '#345b91', surface: '#eef2f8' },
-  premium: { accent: '#80591e', surface: '#f7f2e9' },
-  prestige: { accent: '#754965', surface: '#f5eef3' },
-};
-
 export default function PickPlanPage() {
   const router = useRouter();
   const { order, setLocation, setBundle, setLocationFilters, setPhoneNumber } = useOrder();
-  const bundleCardsRef = useRef<HTMLDivElement>(null);
+  const bundleCardsRef = useRef<HTMLElement>(null);
   const [comparisonOpen, setComparisonOpen] = useState(false);
-  const [comparisonPointerMotion, setComparisonPointerMotion] = useState(false);
   const [subStep, setSubStep] = useState<'location' | 'review'>(order.location ? 'review' : 'location');
   const [footerVisible] = useScrollFooterVisibility({ enabled: subStep === 'review' });
   const [phoneDialogOpen, setPhoneDialogOpen] = useState(false);
@@ -120,139 +121,120 @@ export default function PickPlanPage() {
   }
 
   const essentialsPlan = bundles[0];
-  const selectedPlanTheme = order.bundle
-    ? planTierColors[order.bundle.id] || planTierColors.essentials
-    : null;
+  const enabledFeatures = order.bundle
+    ? Object.entries(order.bundle.features).filter(([, enabled]) => enabled).map(([key]) => key)
+    : [];
 
   return (
-    <div className="signup-shell px-4 pt-4 pb-64 lg:px-8 lg:pt-8" data-testid="pick-plan-page">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-3 sm:mb-6">
-          <ProgressIndicator currentStep={2} />
-        </div>
+    <VStack className="signup-shell px-4 pt-4 pb-64 lg:px-8 lg:pt-8" hAlign="center" data-testid="pick-plan-page">
+      <VStack gap={5} width="100%" maxWidth={1024}>
+        <ProgressIndicator currentStep={2} />
 
-        <div
-          className="signup-surface mb-5 overflow-hidden"
-          data-testid="review-package-card"
-        >
-          <div
-            className="flex items-center justify-between gap-x-3 px-5 py-4 sm:gap-x-5 sm:px-6 sm:py-5"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            <div className="min-w-0">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-2xl" data-testid="review-office-heading">
-                Your new office details
-              </h1>
-            </div>
-
+        <Card className="signup-surface overflow-hidden" padding={0} data-testid="review-package-card">
+          <HStack gap={3} hAlign="between" vAlign="center" wrap="wrap" padding={5} aria-live="polite" aria-atomic="true">
+            <Heading level={1} data-testid="review-office-heading">Your new office details</Heading>
             {order.bundle && (
-              <div className="shrink-0 text-right">
-                <p className="flex items-baseline justify-end gap-1.5 text-gray-900" data-testid="selected-plan-price">
-                  <span className="text-2xl font-bold tabular-nums">${order.bundle.price}</span>
-                  <span className="text-sm text-gray-600">/mo</span>
-                </p>
-                <p className="mt-1 text-sm font-semibold" style={{ color: selectedPlanTheme?.accent }} data-testid="selected-plan-name">
+              <VStack gap={0} hAlign="end" style={tierScope(order.bundle.id)}>
+                <Text size="2xl" weight="bold" hasTabularNumbers className="whitespace-nowrap" data-testid="selected-plan-price">
+                  ${order.bundle.price}<Text type="supporting" color="secondary"> /mo</Text>
+                </Text>
+                <Text type="supporting" weight="semibold" color="accent" data-testid="selected-plan-name">
                   {order.bundle.tier}
-                </p>
-              </div>
+                </Text>
+              </VStack>
             )}
-          </div>
+          </HStack>
 
-          <div
-            className="flex flex-col gap-2 border-t border-gray-100 px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-x-5 sm:px-6"
-            data-testid="review-location-card"
-          >
-            <div className="flex min-w-0 items-start gap-2.5 sm:flex-1">
-              <MapPin className="mt-1 h-4 w-4 flex-shrink-0 text-gray-500" aria-hidden="true" />
-              <div className="min-w-0">
-                <p className="text-xs font-medium text-gray-600">Your new office address</p>
-                <p className="min-w-0 break-words text-sm leading-6" data-testid="heading-pick-plan">
-                  <span className="font-semibold text-gray-900">{order.location.address}</span>
-                  <span className="text-gray-600">
+          <Divider />
+
+          <HStack gap={3} hAlign="between" vAlign="center" wrap="wrap" paddingInline={5} paddingBlock={3} data-testid="review-location-card">
+            <HStack gap={2} vAlign="start">
+              <Icon icon={MapPin} size="sm" color="secondary" />
+              <VStack gap={0}>
+                <Text type="supporting" color="secondary">Your new office address</Text>
+                <Text data-testid="heading-pick-plan">
+                  <Text weight="semibold">{order.location.address}</Text>
+                  <Text color="secondary">
                     {order.location.addressLine2 ? `, ${order.location.addressLine2}` : ''}
                     {`, ${order.location.city}, ${order.location.stateCode} ${order.location.zipCode}`}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-shrink-0 items-center gap-1 self-start sm:gap-2 sm:self-auto">
-              <button
-                type="button"
-                onClick={handleChangeLocation}
-                className="inline-flex min-h-11 items-center whitespace-nowrap rounded-md px-2 text-sm font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 transition-[color,transform] duration-150 ease-out hover:text-gray-900 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
-                data-testid="button-change-location"
-              >
-                Change location
-              </button>
+                  </Text>
+                </Text>
+              </VStack>
+            </HStack>
+            <HStack gap={1} vAlign="center">
+              <Button type="button" variant="ghost" label="Change location" onClick={handleChangeLocation} data-testid="button-change-location" />
               {order.bundle && order.bundle.id !== essentialsPlan.id && (
-                <>
-                  <span className="h-4 w-px bg-gray-200" aria-hidden="true" />
-                  <button
-                    type="button"
-                    onClick={handleChangePlan}
-                    className="inline-flex min-h-11 items-center whitespace-nowrap rounded-md px-2 text-sm font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 transition-[color,transform] duration-150 ease-out hover:text-gray-900 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
-                    data-testid="button-change-plan"
-                  >
-                    Change Bundle
-                  </button>
-                </>
+                <Button type="button" variant="ghost" label="Change Bundle" onClick={handleChangePlan} data-testid="button-change-plan" />
               )}
-            </div>
-          </div>
+            </HStack>
+          </HStack>
 
-          <div className="flex items-center justify-between gap-3 border-t border-gray-100 px-5 py-3 sm:px-6" data-testid="review-phone-row">
-            <div className="flex min-w-0 items-start gap-2.5">
-              <Phone className="mt-1 h-4 w-4 shrink-0 text-gray-500" aria-hidden="true" />
-              <div className="min-w-0" aria-live="polite">
-                <p className="text-xs font-medium text-gray-600">Your new office phone number</p>
+          <Divider />
+
+          <HStack gap={3} hAlign="between" vAlign="center" paddingInline={5} paddingBlock={3} data-testid="review-phone-row">
+            <StackItem size="fill" className="min-w-0">
+            <HStack gap={2} vAlign="start">
+              <Icon icon={Phone} size="sm" color="secondary" />
+              <VStack gap={1} aria-live="polite">
+                <Text type="supporting" color="secondary">Your new office phone number</Text>
                 {assignedPhone ? (
-                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <p className="shrink-0 text-sm font-semibold tabular-nums text-gray-900" data-testid="review-business-phone">{assignedPhone.number}</p>
-                    <p
-                      className="flex items-start gap-2 rounded-md bg-amber-50 px-3 py-2 text-xs leading-5 text-amber-900"
+                  <HStack gap={3} vAlign="center" wrap="wrap">
+                    <Text weight="semibold" hasTabularNumbers data-testid="review-business-phone">{assignedPhone.number}</Text>
+                    <HStack
+                      gap={2}
+                      vAlign="start"
+                      className="rounded-[var(--radius-element)] bg-[var(--color-warning-muted)] px-3 py-2 text-[var(--color-on-warning-muted)]"
                       data-testid="phone-lock-notice"
                     >
-                      <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden="true" />
-                      <span>Phone numbers locked for another <strong className="font-semibold">30 minutes</strong></span>
-                    </p>
-                  </div>
+                      <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+                      <Text type="supporting" color="inherit">
+                        Phone numbers locked for another <Text weight="semibold" color="inherit">30 minutes</Text>
+                      </Text>
+                    </HStack>
+                  </HStack>
                 ) : (
-                  <p className="mt-1 text-sm text-gray-700" role="status">No local numbers are currently available. Choose another location to continue.</p>
+                  <Text role="status">No local numbers are currently available. Choose another location to continue.</Text>
                 )}
-              </div>
-            </div>
-            <button
+              </VStack>
+            </HStack>
+            </StackItem>
+            <StackItem size="static">
+            <Button
               type="button"
-              onClick={() => setPhoneDialogOpen(true)}
-              disabled={phoneNumbers.length === 0}
+              variant="ghost"
+              label="Edit"
               aria-label="Edit business phone number"
-              className="inline-flex min-h-11 shrink-0 items-center rounded-md px-2 text-sm font-medium text-gray-600 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              isDisabled={phoneNumbers.length === 0}
+              onClick={() => setPhoneDialogOpen(true)}
               data-testid="button-edit-review-phone"
-            >Edit</button>
-          </div>
+            />
+            </StackItem>
+          </HStack>
 
           {order.bundle && (
-            <details open className="group border-t border-gray-100" data-testid="details-included-services">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-5 text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#345b91] sm:px-6">
-                View included services
-                <ChevronDown className="h-4 w-4 flex-shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none" />
-              </summary>
-              <ul className="grid grid-cols-1 gap-x-5 gap-y-2 border-t border-gray-100 px-5 py-4 sm:grid-cols-2 sm:px-6">
-                {Object.entries(order.bundle.features)
-                  .filter(([, enabled]) => enabled)
-                  .map(([key]) => (
-                    <li key={key} className="flex items-start gap-2 text-sm" data-testid={`feature-${key}`}>
-                      <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-gray-600" />
-                      <span className="leading-snug text-gray-700">
+            <>
+              <Divider />
+              <VStack paddingInline={5} paddingBlock={3}>
+              <Collapsible
+                defaultIsOpen
+                trigger={<Text weight="semibold">View included services</Text>}
+                data-testid="details-included-services"
+              >
+                <Grid columns={{ minWidth: 240, max: 2 }} gap={2} className="pt-3">
+                  {enabledFeatures.map((key) => (
+                    <HStack key={key} gap={2} vAlign="start" data-testid={`feature-${key}`}>
+                      <Icon icon={Check} size="sm" color="secondary" />
+                      <Text type="supporting">
                         {featureLabels[key] || key}{key === 'appointmentMaking' && ' (20/mo)'}
-                      </span>
-                    </li>
+                      </Text>
+                    </HStack>
                   ))}
-              </ul>
-            </details>
+                </Grid>
+              </Collapsible>
+              </VStack>
+            </>
           )}
-        </div>
+        </Card>
 
         <LocalPhoneNumberDialog
           open={phoneDialogOpen}
@@ -263,23 +245,25 @@ export default function PickPlanPage() {
           onSave={setPhoneNumber}
         />
 
-        <section className="mb-5" aria-labelledby="bundle-cards-title">
-          <div ref={bundleCardsRef} tabIndex={-1} className="scroll-mt-6 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2">
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
-              <h2 id="bundle-cards-title" className="text-lg font-semibold text-gray-900">
-                Bundle &amp; Save
-              </h2>
+        <VStack as="section" aria-labelledby="bundle-cards-title">
+          <VStack
+            ref={bundleCardsRef}
+            tabIndex={-1}
+            gap={3}
+            className="scroll-mt-6 rounded-[var(--radius-element)] focus-visible:outline focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]"
+          >
+            <HStack gap={4} hAlign="between" vAlign="center" wrap="wrap">
+              <Heading level={2} id="bundle-cards-title">Bundle &amp; Save</Heading>
               {order.bundle && order.bundle.id !== essentialsPlan.id && (
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  label={`Return to Essentials · $${essentialsPlan.price}/mo`}
                   onClick={() => setBundle(essentialsPlan)}
-                  className="inline-flex min-h-11 items-center rounded-md text-sm font-medium text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
                   data-testid="button-return-to-essentials"
-                >
-                  Return to Essentials · ${essentialsPlan.price}/mo
-                </button>
+                />
               )}
-            </div>
+            </HStack>
             <BundleInlineSelector
               bundles={upgradeBundles}
               selectedBundleId={order.bundle?.id}
@@ -288,33 +272,29 @@ export default function PickPlanPage() {
               comparisonOpen={comparisonOpen}
               comparisonId="bundle-comparison-content"
               comparisonControl={
-          <h2 id="bundle-comparison-title" className="mt-2">
-            <button
-              type="button"
-              aria-expanded={comparisonOpen}
-              aria-controls="bundle-comparison-content"
-              onClick={(event) => {
-                setComparisonPointerMotion(event.detail !== 0);
-                setComparisonOpen(open => !open);
-              }}
-              className="inline-flex min-h-11 scroll-mt-6 items-center gap-2 rounded-md text-sm font-semibold text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
-              data-testid="button-toggle-bundle-comparison"
-            >
-              Compare Bundles
-              <ChevronDown className={`h-4 w-4 shrink-0 ${feedbackStyles.chevron} ${comparisonPointerMotion ? feedbackStyles.pointer : ''} ${comparisonOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
-            </button>
-          </h2>
+                <Heading level={2} id="bundle-comparison-title">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    label="Compare Bundles"
+                    aria-expanded={comparisonOpen}
+                    aria-controls="bundle-comparison-content"
+                    endContent={<Icon icon={comparisonOpen ? ChevronUp : ChevronDown} size="sm" />}
+                    onClick={() => setComparisonOpen(open => !open)}
+                    data-testid="button-toggle-bundle-comparison"
+                  />
+                </Heading>
               }
             />
-          </div>
-        </section>
+          </VStack>
+        </VStack>
+      </VStack>
 
-      </div>
-      <div
+      <VStack
         className={`fixed inset-x-0 z-50 transition-[bottom] duration-300 ease-in-out motion-reduce:transition-none ${footerVisible ? 'bottom-0' : '-bottom-full pointer-events-none'}`}
         data-testid="footer-wrapper"
         aria-hidden={!footerVisible}
-        ref={(element) => { if (element) element.inert = !footerVisible; }}
+        ref={(element: HTMLElement | null) => { if (element) element.inert = !footerVisible; }}
       >
         <EnrollmentSummaryFooter
           phoneNumber={assignedPhone}
@@ -324,7 +304,7 @@ export default function PickPlanPage() {
           continueLabel="Continue to add-ons"
           compactWidth
         />
-      </div>
-    </div>
+      </VStack>
+    </VStack>
   );
 }

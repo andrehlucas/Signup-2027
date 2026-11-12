@@ -223,7 +223,7 @@
     --color-text-error: light-dark(#c0262c, #ffaea7);
     --color-on-info-muted: light-dark(#003978, #a1caff);
     --color-on-success-muted: light-dark(#00490b, #90ca90);
-    --color-on-warning-muted: light-dark(#4b3900, #eec448);
+    --color-on-warning-muted: #b54708;
     --color-on-error-muted: #b42318;
     --color-icon-accent: #006d91;
     --color-icon-primary: #101828;
@@ -234,7 +234,7 @@
     --color-error: light-dark(#c9303a, #ff705d);
     --color-success-muted: light-dark(#bce0bb, #90ca903D);
     --color-error-muted: #fef3f2;
-    --color-warning-muted: light-dark(#fae19e, #e2b6233D);
+    --color-warning-muted: #fffaeb;
     --color-border: #eaecf0;
     --color-border-emphasized: hsl(214 20% 85%);
     --color-skeleton: light-dark(#f1f1f1, #525252);
@@ -308,6 +308,21 @@
     --color-border-error: var(--color-text-error);
     --duration-exit: var(--duration-fast);
     --astryx-theme-neutral-color-status-fill-accent: light-dark(#0074e2, #6d9cfe);
+    --opus-tier-essentials-surface: #f2f4f6;
+    --opus-tier-essentials-accent: #596579;
+    --opus-tier-essentials-border: #dfe3e8;
+    --opus-tier-plus-surface: #edf6f4;
+    --opus-tier-plus-accent: #185f58;
+    --opus-tier-plus-border: #b9d7d1;
+    --opus-tier-pro-surface: #eef2f8;
+    --opus-tier-pro-accent: #345b91;
+    --opus-tier-pro-border: #bdcbe0;
+    --opus-tier-premium-surface: #f7f2e9;
+    --opus-tier-premium-accent: #80591e;
+    --opus-tier-premium-border: #d9c8a7;
+    --opus-tier-prestige-surface: #f5eef3;
+    --opus-tier-prestige-accent: #754965;
+    --opus-tier-prestige-border: #d6c0cf;
   }
 
   :scope {
