@@ -109,6 +109,11 @@ export const opusTheme = defineTheme({
     '--color-background-muted': mutedGray,
 
     '--color-border': borderSubtle, // cards, dividers
+
+    // Validation messages: a soft red panel with dark red text (about 6:1),
+    // rather than the neutral theme's saturated pink.
+    '--color-error-muted': '#fef3f2',
+    '--color-on-error-muted': '#b42318',
     '--color-border-emphasized': fieldBorder, // input outlines
 
     // ---- Focus: restrained blue ring ----

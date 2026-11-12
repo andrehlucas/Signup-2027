@@ -224,7 +224,7 @@
     --color-on-info-muted: light-dark(#003978, #a1caff);
     --color-on-success-muted: light-dark(#00490b, #90ca90);
     --color-on-warning-muted: light-dark(#4b3900, #eec448);
-    --color-on-error-muted: light-dark(#76000c, #ffaea7);
+    --color-on-error-muted: #b42318;
     --color-icon-accent: #006d91;
     --color-icon-primary: #101828;
     --color-icon-secondary: #667085;
@@ -233,7 +233,7 @@
     --color-warning: #ffce2f;
     --color-error: light-dark(#c9303a, #ff705d);
     --color-success-muted: light-dark(#bce0bb, #90ca903D);
-    --color-error-muted: light-dark(#ffc4be, #ff98903D);
+    --color-error-muted: #fef3f2;
     --color-warning-muted: light-dark(#fae19e, #e2b6233D);
     --color-border: #eaecf0;
     --color-border-emphasized: hsl(214 20% 85%);
