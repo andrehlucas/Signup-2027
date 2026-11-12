@@ -51,7 +51,6 @@ RULES:
 - **Cascade order** (lowest to highest): `reset` → `tw-base` (Tailwind preflight) → `astryx-base` → `astryx-theme` → unlayered Tailwind utilities.
   - Tailwind utilities in `className` can override Astryx components.
   - Keep `@tailwind base` inside `@layer tw-base` in `globals.css`. If it is unlayered, Tailwind's reset overrides Astryx components.
-- **Legacy compatibility block.** `globals.css` has a block that stops the theme restyling bare `<p>`, `<h1>`–`<h6>` and `<small>` in pre-Astryx pages.
-  - Use Astryx `Text` and `Heading` components instead of bare tags in new UI.
-  - Delete the block once no legacy markup remains.
+- **Text elements.** The signup flow is fully on Astryx, and the theme styles bare `<p>`, `<h1>`–`<h6>` and `<small>`. Use Astryx `Text` and `Heading` rather than bare tags.
+- **Remaining shadcn/Tailwind UI.** Only `/admin/analytics` (button, card, chart), the toast system (`toast`, `toaster`, `use-toast`) and the `input` under `ContactPhoneInput` still use `app/components/ui/`. Prefer Astryx for anything new.
 - **Sandbox.** `/astryx-sandbox` (`app/astryx-sandbox/page.tsx`) is a scratch page for trying components.

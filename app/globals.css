@@ -27,12 +27,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .all-\[unset\] {
-    all: unset;
-  }
-}
-
 :root {
   --basewhite: rgba(255, 255, 255, 1);
   --black-900: rgba(0, 0, 0, 1);
@@ -206,108 +200,12 @@
   --animate-spin: spin 1s linear infinite;
 }
 
-.animate-fade-in {
-  animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
-}
-
-.animate-fade-up {
-  animation: fade-up 1s var(--animation-delay, 0s) ease forwards;
-}
-
-.animate-marquee {
-  animation: marquee var(--duration) infinite linear;
-}
-
-.animate-marquee-vertical {
-  animation: marquee-vertical var(--duration) linear infinite;
-}
-
-.animate-shimmer {
-  animation: shimmer 8s infinite;
-}
-
-.animate-spin {
-  animation: var(--animate-spin);
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(1turn);
-  }
-}
-
-@keyframes image-glow {
-  0% {
-    opacity: 0;
-    animation-timing-function: cubic-bezier(0.74, 0.25, 0.76, 1);
-  }
-  10% {
-    opacity: 0.7;
-    animation-timing-function: cubic-bezier(0.12, 0.01, 0.08, 0.99);
-  }
-  to {
-    opacity: 0.4;
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes fade-up {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes shimmer {
-  0%, 90%, to {
-    background-position: calc(-100% - var(--shimmer-width)) 0;
-  }
-  30%, 60% {
-    background-position: calc(100% + var(--shimmer-width)) 0;
-  }
-}
-
-@keyframes marquee {
-  0% {
-    transform: translate(0);
-  }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-  }
-}
-
-@keyframes marquee-vertical {
-  0% {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
-  }
-}
-
 @layer base {
   :root {
     --opus-page: #f7f9fb;
     --opus-surface: #ffffff;
     --opus-blue: #36bff9;
-    --opus-blue-hover: #2aa8e0;
     --opus-blue-ink: #006d91;
-    --opus-action: var(--opus-blue);
-    --opus-action-hover: var(--opus-blue-hover);
     --opus-ink: #101828;
     --opus-muted: #475467;
     --opus-rule: #dfe5eb;
@@ -355,33 +253,6 @@
     --destructive-foreground: 0 0% 100%;
     --ring: 197 93% 59%;
     --radius: 0.625rem;
-  }
-}
-
-/*
- * Astryx compatibility for the existing (pre-Astryx) pages.
- * The Astryx theme gives bare <p>, <h1>-<h6> and <small> elements Astryx
- * typography (size, leading, colour, font). Tailwind's preflight leaves those
- * properties alone, so without this block legacy text that relies on
- * inheritance would change size and colour. Astryx's own <Text>/<Heading>
- * components style themselves via classes and are unaffected.
- * Delete this block once the redesign no longer has legacy markup.
- */
-@layer base {
-  p {
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-    color: inherit;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: inherit;
-  }
-  small {
-    font-weight: inherit;
-    line-height: inherit;
-    color: inherit;
   }
 }
 
@@ -460,29 +331,6 @@
       backdrop-filter: none;
     }
   }
-}
-
-.signup-primary {
-  background: var(--opus-action);
-  color: #ffffff;
-  font-weight: 600;
-  box-shadow: none;
-}
-
-.signup-primary:hover {
-  background: var(--opus-action-hover);
-  color: #ffffff;
-}
-
-.signup-secondary {
-  border: 1px solid var(--opus-rule);
-  background: var(--opus-surface);
-  color: var(--opus-ink);
-  box-shadow: none;
-}
-
-.signup-secondary:hover {
-  background: #f2f7fa;
 }
 
 .signup-shell ::selection {

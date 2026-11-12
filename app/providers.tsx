@@ -1,7 +1,6 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TooltipProvider } from '@/app/components/ui/tooltip';
 import { useState } from 'react';
 import Link from 'next/link';
 import { Theme } from '@astryxdesign/core/theme';
@@ -28,11 +27,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <Theme theme={opusTheme} mode="light">
       <LinkProvider component={Link}>
         <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <OrderProvider>
-              {children}
-            </OrderProvider>
-          </TooltipProvider>
+          <OrderProvider>
+            {children}
+          </OrderProvider>
         </QueryClientProvider>
       </LinkProvider>
     </Theme>

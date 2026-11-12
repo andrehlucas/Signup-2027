@@ -236,7 +236,10 @@ export const opusTheme = {
     "--opus-tier-premium-border": "#d9c8a7",
     "--opus-tier-prestige-surface": "#f5eef3",
     "--opus-tier-prestige-accent": "#754965",
-    "--opus-tier-prestige-border": "#d6c0cf"
+    "--opus-tier-prestige-border": "#d6c0cf",
+    "--opus-progress-current": "#36bff9",
+    "--opus-progress-complete": "#94a3b8",
+    "--opus-progress-upcoming": "#e5e7eb"
   },
   __localTokenOwners: {
     "--astryx-theme-neutral-color-status-fill-accent": "neutral",
@@ -254,7 +257,10 @@ export const opusTheme = {
     "--opus-tier-premium-border": "opus",
     "--opus-tier-prestige-surface": "opus",
     "--opus-tier-prestige-accent": "opus",
-    "--opus-tier-prestige-border": "opus"
+    "--opus-tier-prestige-border": "opus",
+    "--opus-progress-current": "opus",
+    "--opus-progress-complete": "opus",
+    "--opus-progress-upcoming": "opus"
   },
   __localTokenLineage: ["neutral","opus"],
   components: {

@@ -81,7 +81,13 @@ const tierTokens = Object.fromEntries(
 export const opusTheme = defineTheme({
   name: 'opus',
   extends: neutralTheme,
-  localTokens: tierTokens,
+  localTokens: {
+    ...tierTokens,
+    // Enrollment progress bars (DESIGN.md Navigation > Progress).
+    '--opus-progress-current': brandBlue,
+    '--opus-progress-complete': '#94a3b8',
+    '--opus-progress-upcoming': '#e5e7eb',
+  },
 
   typography: {
     // Body is 16px in DESIGN.md (Astryx default base is 14px).

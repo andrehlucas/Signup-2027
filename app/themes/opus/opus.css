@@ -323,6 +323,9 @@
     --opus-tier-prestige-surface: #f5eef3;
     --opus-tier-prestige-accent: #754965;
     --opus-tier-prestige-border: #d6c0cf;
+    --opus-progress-current: #36bff9;
+    --opus-progress-complete: #94a3b8;
+    --opus-progress-upcoming: #e5e7eb;
   }
 
   :scope {
