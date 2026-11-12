@@ -26,7 +26,7 @@ export default function AstryxSandbox() {
         <VStack gap={4}>
           <HStack gap={2} vAlign="center">
             <Heading level={2}>Astryx sandbox</Heading>
-            <Badge label="Neutral theme" />
+            <Badge label="Opus theme" />
           </HStack>
           <Text>
             Astryx components rendered inside the signup app&apos;s own

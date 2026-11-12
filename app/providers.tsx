@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Theme } from '@astryxdesign/core/theme';
 import { LinkProvider } from '@astryxdesign/core/Link';
-import { neutralTheme } from '@astryxdesign/theme-neutral/built';
+import { opusTheme } from '@/app/themes/opus/opus';
 import { OrderProvider } from '@/app/add-location/context';
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -23,8 +23,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    // Astryx theme. Pinned to light mode: the site has no dark styles yet.
-    <Theme theme={neutralTheme} mode="light">
+    // Opus Astryx theme (app/themes/opus). Pinned to light mode: the theme
+    // and the site have no dark styles yet.
+    <Theme theme={opusTheme} mode="light">
       <LinkProvider component={Link}>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>

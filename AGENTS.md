@@ -38,8 +38,12 @@ RULES:
 
 - **Already set up.** Do not add the CSS imports from SETUP above to an entry file.
   - `app/layers.css` declares the cascade layer order and is imported first by `app/layout.tsx`.
-  - `app/globals.css` imports the Astryx reset, components and neutral theme.
-  - `app/providers.tsx` wraps the app in `<Theme theme={neutralTheme} mode="light">` and a `LinkProvider` that uses `next/link`.
+  - `app/globals.css` imports the Astryx reset, components and the Opus theme CSS.
+  - `app/providers.tsx` wraps the app in `<Theme theme={opusTheme} mode="light">` and a `LinkProvider` that uses `next/link`.
+- **Theme is Opus** (`app/themes/opus/opusTheme.ts`, extends the neutral theme with DESIGN.md values).
+  - Change brand colours, type, radius or control sizes there, never with `:root` overrides.
+  - After editing it, rebuild the CSS/JS the app loads: `npx astryx theme build app/themes/opus/opusTheme.ts`. Never edit `opus.css` or `opus.js` by hand.
+  - It is light-only: colours are single values. Add `[light, dark]` tuples before enabling dark mode.
 - **Tailwind is v3, not v4.** Astryx's Tailwind bridge (`tailwind-theme.css`) is not installed.
   - Class names such as `text-primary`, `bg-card`, `border-border`, `rounded-lg` and `shadow-sm` are the app's existing Tailwind theme colours, not Astryx tokens.
   - In redesigned UI, style with Astryx component props first.

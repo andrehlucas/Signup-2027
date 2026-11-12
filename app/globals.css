@@ -3,7 +3,7 @@
  *   reset        Astryx reset
  *   tw-base      Tailwind v3 preflight + this file's `@layer base` rules
  *   astryx-base  Astryx component styles
- *   astryx-theme Astryx theme tokens (neutral)
+ *   astryx-theme Astryx theme tokens (Opus, app/themes/opus)
  *   (unlayered)  Tailwind components/utilities and the rest of this file
  *
  * Tailwind v3 emits unlayered CSS, and unlayered rules beat every layer, so
@@ -19,7 +19,7 @@
 
 @import '@astryxdesign/core/reset.css';
 @import '@astryxdesign/core/astryx.css';
-@import '@astryxdesign/theme-neutral/theme.css';
+@import './themes/opus/opus.css';
 
 @layer tw-base {
   @tailwind base;
@@ -360,7 +360,7 @@
 
 /*
  * Astryx compatibility for the existing (pre-Astryx) pages.
- * The neutral theme gives bare <p>, <h1>-<h6> and <small> elements Astryx
+ * The Astryx theme gives bare <p>, <h1>-<h6> and <small> elements Astryx
  * typography (size, leading, colour, font). Tailwind's preflight leaves those
  * properties alone, so without this block legacy text that relies on
  * inheritance would change size and colour. Astryx's own <Text>/<Heading>
