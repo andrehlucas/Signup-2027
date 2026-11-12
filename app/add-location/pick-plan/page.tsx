@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import type { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { VStack } from '@astryxdesign/core/VStack';
 import { Check, ChevronDown, MapPin, Phone, TriangleAlert } from 'lucide-react';
 import { BundleInlineSelector } from '@/app/components/ui/bundle-inline-selector';
 import feedbackStyles from '@/app/components/ui/bundle-feedback.module.css';
@@ -102,18 +103,15 @@ export default function PickPlanPage() {
 
   if (subStep === 'location') {
     return (
-      <div className="signup-shell p-4 lg:p-8" data-testid="pick-plan-page-location">
-        <div className="max-w-4xl lg:max-w-6xl mx-auto">
-          <div className="mb-3 sm:mb-8">
-            <ProgressIndicator currentStep={2} />
-          </div>
-
+      <VStack className="signup-shell p-4 lg:p-8" hAlign="center" data-testid="pick-plan-page-location">
+        <VStack gap={6} width="100%" maxWidth={1152}>
+          <ProgressIndicator currentStep={2} />
           <LocationSelector
             onSelect={handleLocationSelect}
             onCancel={order.location ? handleCancelLocationChange : undefined}
           />
-        </div>
-      </div>
+        </VStack>
+      </VStack>
     );
   }
 
