@@ -2,9 +2,19 @@
 
 import { useMemo, useState } from 'react';
 import { Building2, Check, MapPin, Star } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
-import { SearchableLocationFilter } from './SearchableLocationFilter';
-import { MobileCountrySelector } from './MobileCountrySelector';
+import { AspectRatio } from '@astryxdesign/core/AspectRatio';
+import { Badge } from '@astryxdesign/core/Badge';
+import { Button } from '@astryxdesign/core/Button';
+import { Card } from '@astryxdesign/core/Card';
+import { EmptyState } from '@astryxdesign/core/EmptyState';
+import { Grid } from '@astryxdesign/core/Grid';
+import { Heading } from '@astryxdesign/core/Heading';
+import { HStack } from '@astryxdesign/core/HStack';
+import { Icon } from '@astryxdesign/core/Icon';
+import { Selector } from '@astryxdesign/core/Selector';
+import { StackItem } from '@astryxdesign/core/Stack';
+import { Text } from '@astryxdesign/core/Text';
+import { VStack } from '@astryxdesign/core/VStack';
 import { useOrder } from '../context';
 import {
   AvailableLocation,
@@ -17,6 +27,13 @@ interface LocationSelectorProps {
   onSelect: (location: AvailableLocation) => void;
   onCancel?: () => void;
 }
+
+const flag = (country: string) => (
+  // Decorative: the option label names the country.
+  <img src={`/flags/${country.toLowerCase()}.svg`} alt="" aria-hidden="true" width={24} height={16} />
+);
+
+const countryOptions = LOCATION_COUNTRIES.map(country => ({ ...country, icon: flag(country.value) }));
 
 function LocationCard({
   location,
@@ -31,62 +48,63 @@ function LocationCard({
   const hasImage = Boolean(location.imageUrl && location.imageUrl !== '/placeholder-building.jpg' && !imageFailed);
 
   return (
-    <article
-      className={`flex flex-col overflow-hidden rounded-xl border transition-colors ${
-        isSelected ? 'border-gray-500' : 'border-gray-200 hover:border-gray-400'
-      }`}
+    <Card
+      padding={0}
+      // DESIGN.md: the selected card takes a thin blue-ink outline. An outline
+      // (not an inset shadow) so it paints over the photo at the top edge.
+      className={`overflow-hidden ${isSelected ? '[outline:2px_solid_var(--color-text-accent)] [outline-offset:-2px]' : ''}`}
       data-testid={`location-card-${location.id}`}
     >
-      <div className="flex w-full items-center justify-center overflow-hidden bg-gray-100" style={{ aspectRatio: '1.85 / 1' }}>
-        {hasImage ? (
-          <img
-            src={location.imageUrl}
-            alt={location.name}
-            loading="lazy"
-            className="h-full w-full object-cover"
-            onError={() => setImageFailed(true)}
-          />
-        ) : (
-          <div className="flex flex-col items-center gap-1 text-gray-600">
-            <Building2 className="h-12 w-12" aria-hidden="true" />
-            <span className="text-xs">Image unavailable</span>
-          </div>
-        )}
-      </div>
+      <VStack height="100%">
+        <AspectRatio ratio={1.85} fit="cover" className="bg-[var(--color-background-muted)]">
+          {hasImage ? (
+            <img src={location.imageUrl} alt={location.name} loading="lazy" onError={() => setImageFailed(true)} />
+          ) : (
+            <VStack gap={1} hAlign="center" vAlign="center" height="100%">
+              <Icon icon={Building2} size="lg" color="secondary" />
+              <Text type="supporting" color="secondary">Image unavailable</Text>
+            </VStack>
+          )}
+        </AspectRatio>
 
-      <div className="flex flex-1 flex-col gap-3 p-4">
-        <div className="min-w-0 flex-1">
-          <div className="mb-1 flex flex-wrap items-center gap-2">
-            <h3 className="font-medium text-gray-900">{location.name}</h3>
-            {location.isPremium && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700">
-                <Star className="h-3 w-3 fill-amber-500" aria-hidden="true" />
-                Premium Location
-              </span>
-            )}
-          </div>
-          <div className="text-sm text-gray-600">
-            <p className="flex items-center gap-1">
-              <MapPin className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
-              {location.address}
-            </p>
-            {location.addressLine2 && <p className="ml-5">{location.addressLine2}</p>}
-            <p className="ml-5">{location.city}, {location.stateCode} {location.zipCode}</p>
-          </div>
-        </div>
+        <StackItem size="fill">
+          <VStack gap={3} padding={4} height="100%">
+            <VStack gap={1}>
+              <HStack gap={2} vAlign="center" wrap="wrap">
+                <Heading level={4}>{location.name}</Heading>
+                {location.isPremium && (
+                  <Badge variant="yellow" icon={<Icon icon={Star} size="sm" />} label="Premium Location" />
+                )}
+              </HStack>
+              <HStack gap={1} vAlign="start">
+                <Icon icon={MapPin} size="sm" color="secondary" aria-hidden="true" />
+                <VStack gap={0}>
+                  <Text type="supporting" color="secondary">{location.address}</Text>
+                  {location.addressLine2 && <Text type="supporting" color="secondary">{location.addressLine2}</Text>}
+                  <Text type="supporting" color="secondary">
+                    {location.city}, {location.stateCode} {location.zipCode}
+                  </Text>
+                </VStack>
+              </HStack>
+            </VStack>
 
-        <Button
-          type="button"
-          aria-pressed={isSelected}
-          onClick={() => onSelect(location)}
-          className={`${isSelected ? 'signup-secondary' : 'signup-primary'} w-full`}
-          data-testid={`button-select-location-${location.id}`}
-        >
-          {isSelected && <Check className="mr-2 h-4 w-4" aria-hidden="true" />}
-          {isSelected ? 'Selected' : 'Select'}
-        </Button>
-      </div>
-    </article>
+            {/* Pushes the action to the bottom so buttons line up across a row. */}
+            <StackItem size="fill" />
+
+            <Button
+              type="button"
+              variant={isSelected ? 'secondary' : 'primary'}
+              label={isSelected ? 'Selected' : 'Select'}
+              icon={isSelected ? <Icon icon={Check} size="sm" /> : undefined}
+              aria-pressed={isSelected}
+              onClick={() => onSelect(location)}
+              width="100%"
+              data-testid={`button-select-location-${location.id}`}
+            />
+          </VStack>
+        </StackItem>
+      </VStack>
+    </Card>
   );
 }
 
@@ -126,121 +144,124 @@ export function LocationSelector({ onSelect, onCancel }: LocationSelectorProps) 
     if (option) setLocationFilters({ country: selectedCountry, state: option.state, city: option.city });
   };
 
-  const handleCountryChange = (country: LocationCountry) => {
-    setLocationFilters({ country, state: '', city: 'all' });
+  const handleCountryChange = (country: string) => {
+    setLocationFilters({ country: country as LocationCountry, state: '', city: 'all' });
   };
 
   return (
-    <div className="signup-surface mb-6 p-5 md:p-6">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-x-2 gap-y-3 md:gap-4">
-        <h2 className="min-w-0 flex-1 text-lg font-semibold text-gray-900">Select Your Location</h2>
-        <div className="md:hidden">
-          <MobileCountrySelector value={selectedCountry} onChange={handleCountryChange} />
-        </div>
-        {onCancel && (
-          <div className="flex w-full justify-end md:w-auto">
-            <Button
-              type="button"
-              variant="outline"
-              className="signup-secondary"
-              onClick={onCancel}
-              data-testid="button-cancel-location"
-            >
-              Cancel
-            </Button>
-          </div>
-        )}
-      </div>
-
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div>
-          <label htmlFor="location-city" className="mb-2 block text-sm font-medium text-gray-700">
-            City
-          </label>
-          <SearchableLocationFilter
-            id="location-city"
-            label="City"
-            value={selectedCity}
-            onChange={handleCityChange}
-            options={[
-              { value: 'all', label: 'All cities' },
-              ...cities,
-            ]}
-            placeholder="All cities"
-            testId="select-city"
-          />
-        </div>
-        <div>
-          <label htmlFor="location-state" className="mb-2 block text-sm font-medium text-gray-700">
-            {regionLabel}
-          </label>
-          <SearchableLocationFilter
-            id="location-state"
-            label={regionLabel}
-            value={selectedState || 'all'}
-            onChange={handleStateChange}
-            options={[
-              { value: 'all', label: allRegionsLabel },
-              ...states.map(state => ({ value: state, label: state })),
-            ]}
-            placeholder={allRegionsLabel}
-            testId="select-state"
-          />
-        </div>
-        <div className="hidden md:block">
-          <label htmlFor="location-country" className="mb-2 block text-sm font-medium text-gray-700">
-            Country / region
-          </label>
-          <SearchableLocationFilter
-            id="location-country"
-            label="Country / region"
-            value={selectedCountry}
-            onChange={country => handleCountryChange(country as LocationCountry)}
-            options={LOCATION_COUNTRIES}
-            placeholder="United States"
-            testId="select-country"
-          />
-        </div>
-      </div>
-
-      {!hasLocationSearch ? (
-        <div className="py-10 text-center text-gray-600" role="status" data-testid="locations-search-prompt">
-          <MapPin className="mx-auto mb-3 h-10 w-10 text-gray-400" aria-hidden="true" />
-          <p className="text-sm">Select a {regionLabel.toLowerCase()} or city to see available locations.</p>
-        </div>
-      ) : locations.length > 0 ? (
-        <div data-testid="locations-list">
-          <h3 className="mb-3 text-sm font-medium text-gray-700">
-            {selectedState
-              ? `Available locations in ${selectedCity === 'all' ? selectedState : `${selectedCity}, ${selectedState}`}`
-              : `Available locations in ${countryName}`}
-          </h3>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {locations.map((location) => (
-              <LocationCard
-                key={location.id}
-                location={location}
-                isSelected={order.location?.id === location.id}
-                onSelect={onSelect}
+    <Card className="signup-surface md:p-6" padding={5}>
+      <VStack gap={6}>
+        <VStack gap={4}>
+          <HStack gap={2} vAlign="center" wrap="wrap">
+            <StackItem size="fill">
+              <Heading level={2}>Select Your Location</Heading>
+            </StackItem>
+            {/* Phones: a compact flag picker in the header replaces the third filter. */}
+            <StackItem className="md:hidden">
+              <Selector
+                label="Country / region"
+                isLabelHidden
+                options={countryOptions}
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                renderValue={option => flag(option.value)}
+                width={88}
+                data-testid="select-country-mobile"
               />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="py-10 text-center text-gray-500" data-testid="locations-empty">
-          <Building2 className="mx-auto mb-3 h-10 w-10 text-gray-300" aria-hidden="true" />
-          <p>No locations are currently listed in {selectedState ? `${selectedState}, ` : ''}{countryName}.</p>
-          <Button
-            type="button"
-            variant="link"
-            className="mt-2 text-gray-700 underline underline-offset-4"
-            onClick={() => setLocationFilters({ country: selectedCountry, state: '', city: 'all' })}
-            data-testid="button-search-all-states"
-          >
-            Clear filters
-          </Button>
-        </div>
-      )}
-    </div>
+            </StackItem>
+            {onCancel && (
+              // When the row wraps on phones, keep Cancel at the end.
+              <StackItem className="ml-auto">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  label="Cancel"
+                  onClick={onCancel}
+                  data-testid="button-cancel-location"
+                />
+              </StackItem>
+            )}
+          </HStack>
+
+          <Grid columns={{ minWidth: 220, max: 3, repeat: 'fit' }} gap={4}>
+            <Selector
+              label="City"
+              options={[{ value: 'all', label: 'All cities' }, ...cities]}
+              value={selectedCity}
+              onChange={handleCityChange}
+              hasSearch
+              searchPlaceholder="Search city…"
+              emptySearchText="No matching cities."
+              data-testid="select-city"
+            />
+            <Selector
+              label={regionLabel}
+              options={[{ value: 'all', label: allRegionsLabel }, ...states.map(state => ({ value: state, label: state }))]}
+              value={selectedState || 'all'}
+              onChange={handleStateChange}
+              hasSearch
+              searchPlaceholder={`Search ${regionLabel.toLowerCase()}…`}
+              emptySearchText={`No matching ${regionLabel.toLowerCase()}.`}
+              data-testid="select-state"
+            />
+            <VStack className="hidden md:flex">
+              <Selector
+                label="Country / region"
+                options={countryOptions}
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                data-testid="select-country"
+              />
+            </VStack>
+          </Grid>
+        </VStack>
+
+        {!hasLocationSearch ? (
+          <EmptyState
+            role="status"
+            icon={<Icon icon={MapPin} size="lg" color="secondary" />}
+            title="Find your office location"
+            description={`Select a ${regionLabel.toLowerCase()} or city to see available locations.`}
+            headingLevel={3}
+            data-testid="locations-search-prompt"
+          />
+        ) : locations.length > 0 ? (
+          <VStack gap={3} data-testid="locations-list">
+            <Heading level={3}>
+              {selectedState
+                ? `Available locations in ${selectedCity === 'all' ? selectedState : `${selectedCity}, ${selectedState}`}`
+                : `Available locations in ${countryName}`}
+            </Heading>
+            <Grid columns={{ minWidth: 260, max: 3 }} gap={4}>
+              {locations.map((location) => (
+                <LocationCard
+                  key={location.id}
+                  location={location}
+                  isSelected={order.location?.id === location.id}
+                  onSelect={onSelect}
+                />
+              ))}
+            </Grid>
+          </VStack>
+        ) : (
+          <EmptyState
+            icon={<Icon icon={Building2} size="lg" color="secondary" />}
+            title="No locations listed"
+            description={`No locations are currently listed in ${selectedState ? `${selectedState}, ` : ''}${countryName}.`}
+            headingLevel={3}
+            actions={
+              <Button
+                type="button"
+                variant="secondary"
+                label="Clear filters"
+                onClick={() => setLocationFilters({ country: selectedCountry, state: '', city: 'all' })}
+                data-testid="button-search-all-states"
+              />
+            }
+            data-testid="locations-empty"
+          />
+        )}
+      </VStack>
+    </Card>
   );
 }

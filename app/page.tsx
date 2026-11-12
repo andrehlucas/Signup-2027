@@ -2,17 +2,42 @@
 
 import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { Button } from '@astryxdesign/core/Button';
+import { Card } from '@astryxdesign/core/Card';
+import { CheckboxInput } from '@astryxdesign/core/CheckboxInput';
+import { Field } from '@astryxdesign/core/Field';
+import { FormLayout } from '@astryxdesign/core/FormLayout';
+import { Grid } from '@astryxdesign/core/Grid';
+import { Heading } from '@astryxdesign/core/Heading';
+import { Link } from '@astryxdesign/core/Link';
+import { Text } from '@astryxdesign/core/Text';
+import { TextInput } from '@astryxdesign/core/TextInput';
+import { VStack } from '@astryxdesign/core/VStack';
 import { ContactPhoneInput } from './components/ContactPhoneInput';
 import { getCountryCallingCode, type E164Number } from 'libphonenumber-js/max';
 import { phoneCountries, phoneCountry, phoneValue, nationalPhone, phoneExample } from './lib/phone';
 import { SIGNUP_LIMITS, validateSignup, type SignupField } from './lib/signup-validation';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
-import { Checkbox } from '@/app/components/ui/checkbox';
 import { ProgressIndicator } from './add-location/components/ProgressIndicator';
 import { useOrder } from './add-location/context';
 import { useFunnelTracking } from './hooks/use-funnel-tracking';
+
+// Astryx TextInput has no maxLength prop; set it on the native input so
+// typing stops at the limit (validateSignup enforces it as well).
+const maxLength = (limit: number) => (input: HTMLInputElement | null) => {
+  if (input) input.maxLength = limit;
+};
+
+const errorStatus = (message: string | undefined) =>
+  message ? { type: 'error' as const, message } : undefined;
+
+// The phone composite (native country select + formatted tel input) stays
+// custom, so it is styled with the same Astryx tokens the TextInputs use.
+const phoneControl =
+  'h-[var(--size-element-md)] border bg-[var(--color-background-surface)] text-[length:var(--text-body-size)] md:text-[length:var(--text-body-size)] text-[var(--color-text-primary)] ' +
+  'focus-visible:outline focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)] focus-visible:ring-0';
+const phoneBorder = (hasError: boolean) =>
+  hasError ? 'border-[var(--color-border-error)]' : 'border-[var(--color-border-emphasized)]';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -73,88 +98,60 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="signup-shell p-4 lg:p-8" data-testid="signup-page">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900" data-testid="heading-signup">
+    <VStack className="signup-shell p-4 lg:p-8" hAlign="center" data-testid="signup-page">
+      <VStack gap={6} width="100%" maxWidth={672}>
+        <VStack gap={2}>
+          <Heading level={1} justify="center" data-testid="heading-signup">
             Set up your virtual office
-          </h1>
-          <p className="mt-2 text-sm md:text-base text-gray-600">
+          </Heading>
+          <Text color="secondary" justify="center">
             Enter your business contact details to begin enrollment.
-          </p>
-        </div>
+          </Text>
+        </VStack>
 
-        <div className="mb-3 sm:mb-6">
-          <ProgressIndicator currentStep={1} />
-        </div>
+        <ProgressIndicator currentStep={1} />
 
-        <div className="max-w-2xl mx-auto">
-          <div className="signup-surface p-5 md:p-8">
-            <form
-              className="space-y-4"
-              noValidate
-              onSubmit={(event) => {
-                event.preventDefault();
-                handleContinue();
-              }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="first-name" className="mb-1.5 block text-sm font-medium text-gray-700">
-                    First name
-                  </label>
-                  <Input
-                    id="first-name"
-                    name="given-name"
-                    type="text"
-                    required
-                    maxLength={SIGNUP_LIMITS.name}
-                    autoCapitalize="words"
-                    spellCheck={false}
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    onBlur={() => markTouched('firstName')}
-                    className={`h-12 ${errors.firstName ? 'border-red-500' : ''}`}
-                    autoComplete="given-name"
-                    aria-invalid={Boolean(errors.firstName)}
-                    aria-describedby={errors.firstName ? 'error-first-name' : undefined}
-                    data-testid="input-first-name"
-                  />
-                  {errors.firstName && (
-                    <p id="error-first-name" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-first-name">{errors.firstName}</p>
-                  )}
-                </div>
-                <div>
-                  <label htmlFor="last-name" className="mb-1.5 block text-sm font-medium text-gray-700">
-                    Last name
-                  </label>
-                  <Input
-                    id="last-name"
-                    name="family-name"
-                    type="text"
-                    required
-                    maxLength={SIGNUP_LIMITS.name}
-                    autoCapitalize="words"
-                    spellCheck={false}
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    onBlur={() => markTouched('lastName')}
-                    className={`h-12 ${errors.lastName ? 'border-red-500' : ''}`}
-                    autoComplete="family-name"
-                    aria-invalid={Boolean(errors.lastName)}
-                    aria-describedby={errors.lastName ? 'error-last-name' : undefined}
-                    data-testid="input-last-name"
-                  />
-                  {errors.lastName && (
-                    <p id="error-last-name" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-last-name">{errors.lastName}</p>
-                  )}
-                </div>
-              </div>
+        <Card className="signup-surface md:p-8" padding={5}>
+          <form
+            noValidate
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleContinue();
+            }}
+          >
+            <FormLayout defaultOptionality="required">
+              <Grid columns={{ minWidth: 240 }} gap={4}>
+                <TextInput
+                  id="first-name"
+                  htmlName="given-name"
+                  label="First name"
+                  ref={maxLength(SIGNUP_LIMITS.name)}
+                  autoCapitalize="words"
+                  hasSpellCheck={false}
+                  value={firstName}
+                  onChange={setFirstName}
+                  onBlur={() => markTouched('firstName')}
+                  autoComplete="given-name"
+                  status={errorStatus(errors.firstName)}
+                  data-testid="input-first-name"
+                />
+                <TextInput
+                  id="last-name"
+                  htmlName="family-name"
+                  label="Last name"
+                  ref={maxLength(SIGNUP_LIMITS.name)}
+                  autoCapitalize="words"
+                  hasSpellCheck={false}
+                  value={lastName}
+                  onChange={setLastName}
+                  onBlur={() => markTouched('lastName')}
+                  autoComplete="family-name"
+                  status={errorStatus(errors.lastName)}
+                  data-testid="input-last-name"
+                />
+              </Grid>
 
-              <div>
-                <label htmlFor="phone-number" className="mb-1.5 block text-sm font-medium text-gray-700">
-                  Phone number
-                </label>
+              <Field label="Phone number" inputID="phone-number" status={errorStatus(errors.phone)}>
                 <div className="flex flex-col gap-2 min-[380px]:flex-row min-[380px]:gap-0">
                   <div className="relative w-full min-[380px]:w-36 min-[380px]:shrink-0">
                   <select
@@ -167,9 +164,7 @@ export default function SignUpPage() {
                       setPhone(phoneValue(national, region));
                     }}
                     aria-label={`Country and calling code: ${selectedCountry.name} (${countryCode})`}
-                    className={`h-12 w-full appearance-none rounded-md border bg-gray-50 pl-3 pr-10 text-sm text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#006d91] min-[380px]:rounded-r-none min-[380px]:border-r-0 ${
-                      errors.phone ? 'border-red-500' : 'border-input'
-                    }`}
+                    className={`${phoneControl} ${phoneBorder(Boolean(errors.phone))} w-full appearance-none rounded-[var(--radius-element)] !bg-[var(--color-background-muted)] pl-3 pr-10 min-[380px]:rounded-r-none min-[380px]:border-r-0`}
                     data-testid="select-country-region"
                   >
                     {phoneCountries.map((country) => (
@@ -180,7 +175,7 @@ export default function SignUpPage() {
                   </select>
                   <ChevronDown
                     aria-hidden="true"
-                    className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600"
+                    className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-icon-secondary)]"
                   />
                   </div>
                   <ContactPhoneInput
@@ -202,141 +197,91 @@ export default function SignUpPage() {
                     autoCorrect="off"
                     spellCheck={false}
                     aria-invalid={Boolean(errors.phone)}
-                    aria-describedby={errors.phone ? 'error-phone' : undefined}
-                    className={`h-12 rounded-md flex-1 min-w-0 min-[380px]:rounded-l-none ${errors.phone ? 'border-red-500' : ''}`}
+                    // <Field> renders its status message as `${inputID}-status`.
+                    aria-describedby={errors.phone ? 'phone-number-status' : undefined}
+                    className={`${phoneControl} ${phoneBorder(Boolean(errors.phone))} flex-1 min-w-0 rounded-[var(--radius-element)] px-3 shadow-none min-[380px]:rounded-l-none`}
                     data-testid="input-phone"
                   />
                 </div>
-                {errors.phone && (
-                  <p id="error-phone" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-phone">{errors.phone}</p>
-                )}
-              </div>
+              </Field>
 
-              <div>
-                <label htmlFor="email-address" className="mb-1.5 block text-sm font-medium text-gray-700">
-                  Email address
-                </label>
-                <Input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  inputMode="email"
-                  required
-                  maxLength={SIGNUP_LIMITS.email}
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                  spellCheck={false}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onBlur={() => markTouched('email')}
-                  className={`h-12 ${errors.email ? 'border-red-500' : ''}`}
-                  autoComplete="email"
-                  aria-invalid={Boolean(errors.email)}
-                  aria-describedby={errors.email ? 'error-email' : undefined}
-                  data-testid="input-email"
+              <TextInput
+                id="email-address"
+                htmlName="email"
+                label="Email address"
+                type="email"
+                inputMode="email"
+                ref={maxLength(SIGNUP_LIMITS.email)}
+                autoCapitalize="none"
+                hasAutoCorrect={false}
+                hasSpellCheck={false}
+                value={email}
+                onChange={setEmail}
+                onBlur={() => markTouched('email')}
+                autoComplete="email"
+                status={errorStatus(errors.email)}
+                data-testid="input-email"
+              />
+
+              <TextInput
+                id="confirm-email"
+                htmlName="confirm-email"
+                label="Confirm email address"
+                type="email"
+                inputMode="email"
+                ref={maxLength(SIGNUP_LIMITS.email)}
+                autoCapitalize="none"
+                hasAutoCorrect={false}
+                hasSpellCheck={false}
+                placeholder="Re-enter your email address"
+                value={confirmEmail}
+                onChange={setConfirmEmail}
+                onBlur={() => markTouched('confirmEmail')}
+                autoComplete="off"
+                status={errorStatus(errors.confirmEmail)}
+                data-testid="input-confirm-email"
+              />
+
+              <TextInput
+                id="company-name"
+                htmlName="organization"
+                label="Company name"
+                ref={maxLength(SIGNUP_LIMITS.company)}
+                value={company}
+                onChange={setCompany}
+                onBlur={() => markTouched('company')}
+                autoComplete="organization"
+                status={errorStatus(errors.company)}
+                data-testid="input-company"
+              />
+
+              <VStack gap={1}>
+                <CheckboxInput
+                  id="terms"
+                  htmlName="terms"
+                  label="I agree to the Terms of Use"
+                  isRequired
+                  value={termsAccepted}
+                  onChange={setTermsAccepted}
+                  onBlur={() => markTouched('terms')}
+                  status={errorStatus(errors.terms)}
+                  data-testid="checkbox-terms"
                 />
-                {errors.email && (
-                  <p id="error-email" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-email">{errors.email}</p>
-                )}
-              </div>
+                <Link
+                  href="https://www.opusvirtualoffices.com/opus-virtual-offices-terms-of-use/"
+                  isExternalLink
+                  size="sm"
+                  data-testid="link-terms"
+                >
+                  Read the Terms of Use
+                </Link>
+              </VStack>
 
-              <div>
-                <label htmlFor="confirm-email" className="mb-1.5 block text-sm font-medium text-gray-700">
-                  Confirm email address
-                </label>
-                <Input
-                  id="confirm-email"
-                  name="confirm-email"
-                  type="email"
-                  inputMode="email"
-                  required
-                  maxLength={SIGNUP_LIMITS.email}
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                  spellCheck={false}
-                  placeholder="Re-enter your email address"
-                  value={confirmEmail}
-                  onChange={(e) => setConfirmEmail(e.target.value)}
-                  onBlur={() => markTouched('confirmEmail')}
-                  className={`h-12 ${errors.confirmEmail ? 'border-red-500' : ''}`}
-                  autoComplete="off"
-                  aria-invalid={Boolean(errors.confirmEmail)}
-                  aria-describedby={errors.confirmEmail ? 'error-confirm-email' : undefined}
-                  data-testid="input-confirm-email"
-                />
-                {errors.confirmEmail && (
-                  <p id="error-confirm-email" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-confirm-email">{errors.confirmEmail}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="company-name" className="mb-1.5 block text-sm font-medium text-gray-700">
-                  Company name
-                </label>
-                <Input
-                  id="company-name"
-                  name="organization"
-                  type="text"
-                  required
-                  maxLength={SIGNUP_LIMITS.company}
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  onBlur={() => markTouched('company')}
-                  className={`h-12 ${errors.company ? 'border-red-500' : ''}`}
-                  autoComplete="organization"
-                  aria-invalid={Boolean(errors.company)}
-                  aria-describedby={errors.company ? 'error-company' : undefined}
-                  data-testid="input-company"
-                />
-                {errors.company && (
-                  <p id="error-company" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-company">{errors.company}</p>
-                )}
-              </div>
-
-              <div>
-                <div className="flex items-start gap-3">
-                  <Checkbox
-                    id="terms"
-                    name="terms"
-                    required
-                    checked={termsAccepted}
-                    onCheckedChange={(checked) => setTermsAccepted(checked === true)}
-                    onBlur={() => markTouched('terms')}
-                    className="mt-0.5"
-                    aria-invalid={Boolean(errors.terms)}
-                    aria-describedby={errors.terms ? 'error-terms' : undefined}
-                    data-testid="checkbox-terms"
-                  />
-                  <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
-                    I agree to the{' '}
-                    <a
-                      href="https://www.opusvirtualoffices.com/opus-virtual-offices-terms-of-use/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-800 underline underline-offset-2 hover:text-gray-950"
-                      data-testid="link-terms"
-                    >
-                      Terms of Use
-                    </a>
-                    .
-                  </label>
-                </div>
-                {errors.terms && (
-                  <p id="error-terms" role="alert" className="text-red-600 text-xs mt-1" data-testid="error-terms">{errors.terms}</p>
-                )}
-              </div>
-
-              <Button
-                type="submit"
-                className="signup-primary w-full h-12 text-lg font-semibold"
-                data-testid="button-continue"
-              >
-                Continue
-              </Button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+              <Button type="submit" variant="primary" label="Continue" width="100%" data-testid="button-continue" />
+            </FormLayout>
+          </form>
+        </Card>
+      </VStack>
+    </VStack>
   );
 }
