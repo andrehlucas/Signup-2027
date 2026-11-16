@@ -1,15 +1,18 @@
 'use client';
 
 import { Check } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/app/components/ui/dialog';
+import { Button } from '@astryxdesign/core/Button';
+import { Dialog, DialogHeader } from '@astryxdesign/core/Dialog';
+import { Divider } from '@astryxdesign/core/Divider';
+import { Grid } from '@astryxdesign/core/Grid';
+import { Heading } from '@astryxdesign/core/Heading';
+import { HStack } from '@astryxdesign/core/HStack';
+import { Icon } from '@astryxdesign/core/Icon';
+import { ScrollableArea } from '@astryxdesign/core/ScrollableArea';
+import { StackItem } from '@astryxdesign/core/Stack';
+import { Text } from '@astryxdesign/core/Text';
+import { VStack } from '@astryxdesign/core/VStack';
+import { tierScope } from '../bundle-theme';
 import type { Addon, Bundle } from '../types';
 
 export interface BundleSuggestion {
@@ -29,13 +32,6 @@ interface BundleSuggestionDialogProps {
   onKeepCurrent: () => void;
   onCompare: () => void;
 }
-
-const tierAccents: Record<string, string> = {
-  plus: '#185f58',
-  pro: '#345b91',
-  premium: '#80591e',
-  prestige: '#754965',
-};
 
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat('en-US', {
@@ -63,7 +59,6 @@ export function BundleSuggestionDialog({
   onCompare,
 }: BundleSuggestionDialogProps) {
   const monthlyDifference = currentMonthly - upgradedMonthly;
-  const tierAccent = suggestion ? tierAccents[suggestion.bundle.id] || '#344054' : '#344054';
 
   const title = !suggestion
     ? 'Bundle suggestion unavailable'
@@ -78,118 +73,108 @@ export function BundleSuggestionDialog({
     : `${suggestion.bundle.tier} includes the add-ons below in one plan. Your other selections stay the same.`;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg flex-col gap-0 overflow-hidden border border-gray-200 bg-white p-0 text-gray-900 shadow-xl sm:rounded-xl"
-        data-testid="bundle-suggestion-modal"
-      >
-        <DialogHeader className="shrink-0 border-b border-gray-100 px-5 py-5 pr-12 text-left sm:px-6 sm:pr-12">
-          <DialogTitle className="text-xl font-bold leading-tight text-gray-900 sm:text-2xl">
-            {title}
-          </DialogTitle>
-          <DialogDescription className="mt-2 max-w-[58ch] text-sm leading-relaxed text-gray-600">
-            {description}
-          </DialogDescription>
-        </DialogHeader>
+    <Dialog
+      isOpen={open}
+      onOpenChange={onOpenChange}
+      width={512}
+      maxHeight="calc(100dvh - 2rem)"
+      data-testid="bundle-suggestion-modal"
+    >
+      <VStack gap={4} style={suggestion ? tierScope(suggestion.bundle.id) : undefined}>
+        <DialogHeader title={title} subtitle={description} onOpenChange={onOpenChange} />
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-4 sm:px-6">
-          {suggestion ? (
-            <>
-              <section className="grid grid-cols-2 divide-x divide-gray-200 border-b border-gray-200 pb-4" aria-label="Monthly total comparison">
-                <div className="pr-3">
-                  <p className="text-xs font-medium leading-5 text-gray-600">Your current setup</p>
-                  <p className="mt-1 text-2xl font-bold tabular-nums text-gray-900" data-testid="suggestion-current-total">
-                    {formatCurrency(currentMonthly)}
-                    <span className="ml-1 text-xs font-medium text-gray-500">/mo</span>
-                  </p>
-                </div>
-                <div className="pl-3">
-                  <p className="text-xs font-semibold leading-5" style={{ color: tierAccent }}>With {suggestion.bundle.tier}</p>
-                  <p className="mt-1 text-2xl font-bold tabular-nums text-gray-900" data-testid="suggestion-upgraded-total">
-                    {formatCurrency(upgradedMonthly)}
-                    <span className="ml-1 text-xs font-medium text-gray-500">/mo</span>
-                  </p>
-                  {upgradedMonthly > suggestion.bundle.price && (
-                    <p className="mt-1 text-xs leading-relaxed text-gray-600">
-                      {formatCurrency(suggestion.bundle.price)} bundle + {formatCurrency(upgradedMonthly - suggestion.bundle.price)} other monthly extras
-                    </p>
-                  )}
-                </div>
-              </section>
+        {/* Scrolls on short screens so the title and actions stay visible. */}
+        <ScrollableArea label="Bundle suggestion details" overscroll="contain" className="max-h-[min(28rem,35dvh)]">
+        {suggestion ? (
+          <VStack gap={4}>
+            <Grid columns={2} gap={4} role="group" aria-label="Monthly total comparison">
+              <VStack gap={1}>
+                <Text type="supporting" color="secondary">Your current setup</Text>
+                <Text size="2xl" weight="bold" hasTabularNumbers data-testid="suggestion-current-total">
+                  {formatCurrency(currentMonthly)}<Text type="supporting" color="secondary"> /mo</Text>
+                </Text>
+              </VStack>
+              <VStack gap={1}>
+                <Text type="supporting" weight="semibold" color="accent">With {suggestion.bundle.tier}</Text>
+                <Text size="2xl" weight="bold" hasTabularNumbers data-testid="suggestion-upgraded-total">
+                  {formatCurrency(upgradedMonthly)}<Text type="supporting" color="secondary"> /mo</Text>
+                </Text>
+                {upgradedMonthly > suggestion.bundle.price && (
+                  <Text type="supporting" color="secondary">
+                    {formatCurrency(suggestion.bundle.price)} bundle + {formatCurrency(upgradedMonthly - suggestion.bundle.price)} other monthly extras
+                  </Text>
+                )}
+              </VStack>
+            </Grid>
 
-              <section className="pt-4">
-                <h3 className="mb-2 text-sm font-semibold text-gray-900">
-                  Add-ons included in this bundle
-                </h3>
-                <ul className="divide-y divide-gray-100" data-testid="suggestion-included-addons">
-                  {suggestion.matchingAddons.map((addon) => (
-                    <li
-                      key={addon.id}
-                      className="flex items-start gap-2.5 py-2.5 text-sm"
-                      data-testid={`suggestion-addon-${addon.id}`}
-                    >
-                      <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-gray-600" aria-hidden="true" />
-                      <span className="min-w-0 break-words leading-snug text-gray-800">
-                        {addon.name}
-                      </span>
-                      <span className="ml-auto flex-shrink-0 text-xs font-medium text-gray-500">
-                        Included
-                      </span>
-                    </li>
+            <Divider />
+
+            <VStack as="section" gap={2}>
+              <Heading level={3}>Add-ons included in this bundle</Heading>
+              <VStack as="ul" gap={2} data-testid="suggestion-included-addons">
+                {suggestion.matchingAddons.map((addon) => (
+                  <HStack as="li" key={addon.id} gap={2} vAlign="start" data-testid={`suggestion-addon-${addon.id}`}>
+                    <Icon icon={Check} size="sm" color="secondary" />
+                    <StackItem size="fill">
+                      <Text type="supporting">{addon.name}</Text>
+                    </StackItem>
+                    <Text type="supporting" color="secondary">Included</Text>
+                  </HStack>
+                ))}
+              </VStack>
+            </VStack>
+
+            {suggestion.bonusFeatures.length > 0 && (
+              <VStack as="section" gap={2}>
+                <Heading level={3}>Also included</Heading>
+                <VStack as="ul" gap={2}>
+                  {suggestion.bonusFeatures.map((feature) => (
+                    <HStack as="li" key={feature} gap={2} vAlign="start">
+                      <Icon icon={Check} size="sm" color="accent" />
+                      <Text type="supporting">{bonusFeatureLabel(feature)}</Text>
+                    </HStack>
                   ))}
-                </ul>
-              </section>
+                </VStack>
+              </VStack>
+            )}
+          </VStack>
+        ) : (
+          <Text>
+            Your current monthly total is {formatCurrency(currentMonthly)}/mo. You can keep this plan or review the available bundles.
+          </Text>
+        )}
+        </ScrollableArea>
 
-              {suggestion.bonusFeatures.length > 0 && (
-                <section className="border-t border-gray-100 pt-3">
-                  <h3 className="mb-2 text-sm font-semibold text-gray-900">Also included</h3>
-                  <ul className="space-y-2">
-                    {suggestion.bonusFeatures.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2.5 text-sm">
-                        <Check className="mt-0.5 h-4 w-4 flex-shrink-0" style={{ color: tierAccent }} aria-hidden="true" />
-                        <span className="leading-snug text-gray-700">{bonusFeatureLabel(feature)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )}
-            </>
-          ) : (
-            <p className="text-sm leading-relaxed text-gray-700">
-              Your current monthly total is {formatCurrency(currentMonthly)}/mo. You can keep this plan or review the available bundles.
-            </p>
-          )}
-        </div>
-
-        <DialogFooter className="grid shrink-0 grid-cols-1 gap-2 border-t border-gray-100 px-5 py-4 sm:grid-cols-2 sm:space-x-0 sm:px-6">
-          <Button
-            type="button"
-            onClick={onUpgrade}
-            disabled={!suggestion}
-            className="signup-primary min-h-11 w-full focus-visible:ring-[#006d91]"
-            data-testid="button-suggestion-proceed-bundle"
-          >
-            {suggestion ? `Continue with ${suggestion.bundle.tier}` : 'Upgrade unavailable'}
-          </Button>
-          <Button
-            type="button"
-            onClick={onKeepCurrent}
-            className="signup-primary min-h-11 w-full focus-visible:ring-[#006d91]"
-            data-testid="button-suggestion-dismiss"
-          >
-            Keep current setup
-          </Button>
+        <VStack gap={2}>
+          <Grid columns={{ minWidth: 180, max: 2 }} gap={2}>
+            <Button
+              type="button"
+              variant="primary"
+              label={suggestion ? `Continue with ${suggestion.bundle.tier}` : 'Upgrade unavailable'}
+              width="100%"
+              isDisabled={!suggestion}
+              onClick={onUpgrade}
+              data-testid="button-suggestion-proceed-bundle"
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              label="Keep current setup"
+              width="100%"
+              onClick={onKeepCurrent}
+              data-testid="button-suggestion-dismiss"
+            />
+          </Grid>
           <Button
             type="button"
             variant="ghost"
+            label="Compare all bundles"
+            width="100%"
             onClick={onCompare}
-            className="min-h-11 w-full text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 sm:col-span-2"
             data-testid="button-suggestion-see-bundles"
-          >
-            Compare all bundles
-          </Button>
-        </DialogFooter>
-      </DialogContent>
+          />
+        </VStack>
+      </VStack>
     </Dialog>
   );
 }

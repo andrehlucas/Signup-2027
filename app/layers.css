@@ -1,0 +1,7 @@
+/*
+ * Cascade layer order. Must be the first stylesheet the page loads: the
+ * first `@layer` statement the browser sees fixes the order, and Next.js
+ * emits each @import from globals.css as its own stylesheet ahead of it.
+ * Imported first in app/layout.tsx. See globals.css for why.
+ */
+@layer reset, tw-base, astryx-base, astryx-theme;

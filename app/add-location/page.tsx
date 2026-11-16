@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { VStack } from '@astryxdesign/core/VStack';
 import { ProgressIndicator } from './components/ProgressIndicator';
 import { LocationSelector } from './components/LocationSelector';
 import { useOrder } from './context';
@@ -22,14 +23,11 @@ export default function LocationSelectionPage() {
   };
 
   return (
-    <div className="signup-shell p-4 lg:p-8" data-testid="location-selection-page">
-      <div className="max-w-4xl lg:max-w-6xl mx-auto">
-        <div className="mb-3 sm:mb-8">
-          <ProgressIndicator currentStep={2} />
-        </div>
-
+    <VStack className="signup-shell p-4 lg:p-8" hAlign="center" data-testid="location-selection-page">
+      <VStack gap={6} width="100%" maxWidth={1152}>
+        <ProgressIndicator currentStep={2} />
         <LocationSelector onSelect={handleLocationSelect} />
-      </div>
-    </div>
+      </VStack>
+    </VStack>
   );
 }

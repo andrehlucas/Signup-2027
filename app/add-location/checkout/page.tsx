@@ -1,12 +1,25 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
-import { MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, ChevronRight, Check, Lock, Clock, HelpCircle, Tag, X, Loader2 } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
-import { Checkbox } from '@/app/components/ui/checkbox';
-import { Input } from '@/app/components/ui/input';
+import type { ComponentType, ReactNode, SVGProps } from 'react';
+import { MapPin, Package, Phone, Plus, Trash2, CreditCard, FileText, Check, Lock, Clock, HelpCircle, Tag, X } from 'lucide-react';
+import { Button } from '@astryxdesign/core/Button';
+import { Card } from '@astryxdesign/core/Card';
+import { CheckboxInput } from '@astryxdesign/core/CheckboxInput';
+import { Divider } from '@astryxdesign/core/Divider';
+import { Grid } from '@astryxdesign/core/Grid';
+import { Heading } from '@astryxdesign/core/Heading';
+import { HStack } from '@astryxdesign/core/HStack';
+import { Icon } from '@astryxdesign/core/Icon';
+import { IconButton } from '@astryxdesign/core/IconButton';
+import { Popover } from '@astryxdesign/core/Popover';
+import { RadioList, RadioListItem } from '@astryxdesign/core/RadioList';
+import { StackItem } from '@astryxdesign/core/Stack';
+import { Text } from '@astryxdesign/core/Text';
+import { TextInput } from '@astryxdesign/core/TextInput';
+import { VStack } from '@astryxdesign/core/VStack';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { useOrder } from '../context';
 import { useToast } from '@/app/hooks/use-toast';
@@ -49,6 +62,93 @@ function getBundleIncludedAddons(bundle: Bundle): { name: string; label: string 
   return included;
 }
 
+type LucideIcon = ComponentType<SVGProps<SVGSVGElement>>;
+
+/** Section card with an icon heading, shared by every checkout section. */
+function Section({ title, icon, testId, children }: { title: string; icon?: LucideIcon; testId: string; children: ReactNode }) {
+  return (
+    <Card className="signup-surface md:p-6" padding={5} data-testid={testId}>
+      <VStack gap={4}>
+        <HStack gap={2} vAlign="center">
+          {icon && <Icon icon={icon} color="secondary" />}
+          <Heading level={2}>{title}</Heading>
+        </HStack>
+        {children}
+      </VStack>
+    </Card>
+  );
+}
+
+/** Soft success row (included items, applied promo, term savings). */
+const successRow = 'rounded-[var(--radius-element)] bg-[var(--color-success-muted)] px-3 py-2';
+const successText = 'text-[var(--color-on-success-muted)]';
+
+interface PromoCodeFieldProps {
+  suffix: '' | '-top';
+  appliedPromo: AppliedPromo | null;
+  promoCode: string;
+  promoError: string;
+  isValidating: boolean;
+  onChange: (value: string) => void;
+  onApply: () => void;
+  onRemove: () => void;
+}
+
+/** Promo entry / applied state. Rendered in the main column and the summary. */
+function PromoCodeField({ suffix, appliedPromo, promoCode, promoError, isValidating, onChange, onApply, onRemove }: PromoCodeFieldProps) {
+  if (appliedPromo) {
+    return (
+      <HStack gap={2} vAlign="center" className={successRow}>
+        <Icon icon={Tag} size="sm" className={successText} />
+        <StackItem size="fill">
+          <VStack gap={0}>
+            <Text type="supporting" weight="semibold" color="inherit" className={successText}>{appliedPromo.code}</Text>
+            <Text type="supporting" color="inherit" className={successText}>{appliedPromo.description}</Text>
+          </VStack>
+        </StackItem>
+        <IconButton
+          variant="ghost"
+          size="sm"
+          label={`Remove promo code ${appliedPromo.code}`}
+          icon={<Icon icon={X} size="sm" />}
+          onClick={onRemove}
+          data-testid={`button-remove-promo${suffix}`}
+        />
+      </HStack>
+    );
+  }
+  return (
+    <HStack gap={2} vAlign="start">
+      <StackItem size="fill">
+        <TextInput
+          id={`promo-code${suffix}`}
+          label="Promo code"
+          isLabelHidden
+          placeholder="Enter promo code"
+          value={promoCode}
+          onChange={onChange}
+          onEnter={onApply}
+          autoCapitalize="characters"
+          hasSpellCheck={false}
+          status={promoError ? { type: 'error', message: promoError } : undefined}
+          data-testid={`input-promo-code${suffix}`}
+        />
+      </StackItem>
+      <StackItem size="static">
+        <Button
+          type="button"
+          variant="secondary"
+          label="Apply"
+          isLoading={isValidating}
+          isDisabled={!promoCode.trim() || isValidating}
+          onClick={onApply}
+          data-testid={`button-apply-promo${suffix}`}
+        />
+      </StackItem>
+    </HStack>
+  );
+}
+
 export default function CheckoutPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -67,67 +167,9 @@ export default function CheckoutPage() {
   const [billingState, setBillingState] = useState('');
   const [billingZip, setBillingZip] = useState('');
   const [saveCard, setSaveCard] = useState(false);
-  const [bundleTooltipOpen, setBundleTooltipOpen] = useState(false);
   const [paymentTerm, setPaymentTerm] = useState<PaymentTerm>(1);
   const { trackComplete } = useFunnelTracking('checkout');
   
-  // Sticky payment summary logic
-  const summaryContainerRef = useRef<HTMLDivElement>(null);
-  const [isSticky, setIsSticky] = useState(false);
-  const [summaryWidth, setSummaryWidth] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (!order.location || !order.bundle || !order.phoneNumber) {
-      router.push('/add-location');
-    }
-  }, [order, router]);
-
-  // Handle sticky scroll behavior
-  useEffect(() => {
-    const mainElement = document.querySelector('main');
-    if (!summaryContainerRef.current) return;
-
-    const handleScroll = () => {
-      const container = summaryContainerRef.current;
-      if (!container) return;
-
-      const containerRect = container.getBoundingClientRect();
-      const stickyOffset = 24; // top-6 = 1.5rem = 24px
-      
-      // Check if we've scrolled past the container's top position
-      if (containerRect.top <= stickyOffset) {
-        setIsSticky(true);
-        setSummaryWidth(container.offsetWidth);
-      } else {
-        setIsSticky(false);
-        setSummaryWidth(null);
-      }
-    };
-
-    const handleResize = () => {
-      // Update width on resize if sticky
-      if (isSticky && summaryContainerRef.current) {
-        setSummaryWidth(summaryContainerRef.current.offsetWidth);
-      }
-    };
-
-    // Listen to both main element scroll and window scroll
-    if (mainElement) {
-      mainElement.addEventListener('scroll', handleScroll, { passive: true });
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize, { passive: true });
-    handleScroll(); // Check initial position
-    
-    return () => {
-      if (mainElement) {
-        mainElement.removeEventListener('scroll', handleScroll);
-      }
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isSticky]);
-
   const { monthly, oneTime } = getCartTotal();
   
   const selectedTermOption = paymentTermOptions.find(opt => opt.months === paymentTerm)!;
@@ -256,459 +298,306 @@ export default function CheckoutPage() {
     return null;
   }
 
+  const promoProps = {
+    appliedPromo: order.appliedPromo,
+    promoCode,
+    promoError,
+    isValidating: isValidatingPromo,
+    onChange: (value: string) => {
+      setPromoCode(value.toUpperCase());
+      setPromoError('');
+    },
+    onApply: handleApplyPromo,
+    onRemove: handleRemovePromo,
+  };
+  const bundleExtras = Object.entries(order.bundle.features)
+    .filter(([key, included]) => {
+      const base = ['businessAddress', 'liveCallAnswering', 'callTransferring', 'businessPhoneFax', 'mailReceipt', 'voicemailToEmail'];
+      return included && !base.includes(key);
+    })
+    .map(([key]) => featureLabels[key]);
+
   return (
-    <div className="signup-shell p-4 lg:p-8" data-testid="checkout-page">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-3 sm:mb-8">
-          <ProgressIndicator currentStep={4} />
-        </div>
+    <VStack className="signup-shell p-4 lg:p-8" hAlign="center" data-testid="checkout-page">
+      <VStack gap={6} width="100%" maxWidth={1152}>
+        <ProgressIndicator currentStep={4} />
 
-        <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-testid="heading-checkout">
-            Complete Your Order
-          </h1>
-          <p className="text-sm md:text-base text-gray-600">
-            Review your selections and complete checkout
-          </p>
-        </div>
+        <VStack gap={2}>
+          <Heading level={1} justify="center" data-testid="heading-checkout">Complete Your Order</Heading>
+          <Text color="secondary" justify="center">Review your selections and complete checkout</Text>
+        </VStack>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-start">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="signup-surface p-5 md:p-6" data-testid="order-summary-section">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
-
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="h-5 w-5 text-gray-600" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-gray-900">Location</p>
-                        <p className="text-sm text-gray-600">{order.location.name}</p>
-                        <p className="text-sm text-gray-500">{order.location.address}</p>
-                        <p className="text-sm text-gray-500">{order.location.addressLine2}</p>
-                        <p className="text-sm text-gray-500">{order.location.city}, {order.location.stateCode} {order.location.zipCode}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <Package className="h-5 w-5 text-gray-600" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-gray-900">Office Package</p>
-                        <p className="text-sm text-gray-600">
-                          {order.bundle.name} {order.bundle.tier !== 'The Essentials' ? order.bundle.tier : ''}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-gray-900">${order.bundle.price}/mo</p>
+        {/* One column on phones; on large screens a 2:1 split with a sticky summary. */}
+        <Grid columns={1} gap={6} className="lg:grid-cols-3 lg:items-start">
+          <VStack gap={6} className="min-w-0 lg:col-span-2">
+            <Section title="Order Summary" testId="order-summary-section">
+              <VStack gap={4}>
+                {[
+                  {
+                    icon: MapPin,
+                    title: 'Location',
+                    lines: [order.location.name, order.location.address, order.location.addressLine2, `${order.location.city}, ${order.location.stateCode} ${order.location.zipCode}`],
+                    end: null as ReactNode,
+                  },
+                  {
+                    icon: Package,
+                    title: 'Office Package',
+                    lines: [`${order.bundle.name} ${order.bundle.tier !== 'The Essentials' ? order.bundle.tier : ''}`],
+                    end: (
+                      <VStack gap={0} hAlign="end">
+                        <Text weight="semibold" hasTabularNumbers>${order.bundle.price}/mo</Text>
                         {order.bundle.originalPrice && (
-                          <p className="text-sm text-gray-400 line-through">${order.bundle.originalPrice}/mo</p>
+                          <Text type="supporting" color="secondary" hasStrikethrough>${order.bundle.originalPrice}/mo</Text>
                         )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                      </VStack>
+                    ),
+                  },
+                  {
+                    icon: Phone,
+                    title: 'Phone Number',
+                    lines: [order.phoneNumber.number, 'Local number'],
+                    end: <Text weight="semibold" className="text-[var(--color-text-success)]">Included</Text>,
+                  },
+                ].map(row => (
+                  <VStack key={row.title} gap={4}>
+                    <HStack gap={3} vAlign="start">
+                      <VStack hAlign="center" vAlign="center" className="h-10 w-10 shrink-0 rounded-[var(--radius-element)] bg-[var(--color-background-muted)]">
+                        <Icon icon={row.icon} color="secondary" />
+                      </VStack>
+                      <StackItem size="fill">
+                        <VStack gap={0}>
+                          <Text weight="medium">{row.title}</Text>
+                          {row.lines.filter(Boolean).map((line, index) => (
+                            <Text key={index} type="supporting" color="secondary">{line}</Text>
+                          ))}
+                        </VStack>
+                      </StackItem>
+                      {row.end}
+                    </HStack>
+                    <Divider />
+                  </VStack>
+                ))}
 
-                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 pb-4 border-b border-gray-100">
-                  <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <Phone className="h-5 w-5 text-gray-600" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-gray-900">Phone Number</p>
-                        <p className="text-sm text-gray-600">{order.phoneNumber.number}</p>
-                        <p className="text-sm text-gray-500">Local number</p>
-                      </div>
-                      <p className="font-semibold text-green-600">Included</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <p className="font-medium text-gray-900 mb-3 flex items-center gap-2">
-                    <Plus className="h-4 w-4" />
-                    Add-ons
-                  </p>
-                  <div className="space-y-3">
+                <VStack gap={3}>
+                  <HStack gap={2} vAlign="center">
+                    <Icon icon={Plus} size="sm" />
+                    <Text weight="medium">Add-ons</Text>
+                  </HStack>
+                  <VStack gap={2}>
                     {bundleIncludedAddons.map((addon) => (
-                      <div key={addon.name} className="flex items-center justify-between bg-green-50 rounded-lg px-3 py-2">
-                        <div className="flex items-center gap-2">
-                          <Check className="h-3.5 w-3.5 text-green-600" />
-                          <p className="text-sm font-medium text-gray-900">{addon.label}</p>
-                        </div>
-                        <p className="text-sm font-medium text-green-600">Included</p>
-                      </div>
+                      <HStack key={addon.name} gap={2} vAlign="center" className={successRow}>
+                        <Icon icon={Check} size="sm" className={successText} />
+                        <StackItem size="fill"><Text type="supporting" weight="medium">{addon.label}</Text></StackItem>
+                        <Text type="supporting" weight="medium" color="inherit" className={successText}>Included</Text>
+                      </HStack>
                     ))}
                     {order.addons.map((addon) => (
-                      <div key={addon.id} className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
-                        <p className="text-sm font-medium text-gray-900">{addon.name}</p>
-                        <div className="flex items-center gap-2">
-                          <p className="text-sm font-medium text-gray-900">${addon.price}/mo</p>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-7 w-7 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                            onClick={() => handleRemoveAddon(addon.id)}
-                            data-testid={`button-remove-addon-${addon.id}`}
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        </div>
-                      </div>
+                      <HStack key={addon.id} gap={2} vAlign="center" className="rounded-[var(--radius-element)] bg-[var(--color-background-muted)] py-1 pl-3 pr-1">
+                        <StackItem size="fill"><Text type="supporting" weight="medium">{addon.name}</Text></StackItem>
+                        <Text type="supporting" weight="medium" hasTabularNumbers>${addon.price}/mo</Text>
+                        <IconButton
+                          variant="ghost"
+                          size="sm"
+                          label={`Remove ${addon.name}`}
+                          icon={<Icon icon={Trash2} size="sm" className="text-[var(--color-text-error)]" />}
+                          onClick={() => handleRemoveAddon(addon.id)}
+                          data-testid={`button-remove-addon-${addon.id}`}
+                        />
+                      </HStack>
                     ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+                  </VStack>
+                </VStack>
+              </VStack>
+            </Section>
 
-            <div className="signup-surface p-5 md:p-6" data-testid="promo-code-section">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Tag className="h-5 w-5" />
-                Promo Code
-              </h2>
-              {order.appliedPromo ? (
-                <div className="flex items-center justify-between bg-green-50 rounded-lg px-3 py-2">
-                  <div className="flex items-center gap-2">
-                    <Tag className="h-3.5 w-3.5 text-green-600" />
-                    <div>
-                      <p className="text-sm font-medium text-green-700">{order.appliedPromo.code}</p>
-                      <p className="text-xs text-green-600">{order.appliedPromo.description}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={handleRemovePromo}
-                    className="text-green-600 hover:text-green-800 p-1"
-                    data-testid="button-remove-promo-top"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <div className="flex gap-2">
-                    <Input
-                      type="text"
-                      placeholder="Enter promo code"
-                      value={promoCode}
-                      onChange={(e) => {
-                        setPromoCode(e.target.value.toUpperCase());
-                        setPromoError('');
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleApplyPromo();
-                      }}
-                      className={`flex-1 text-sm ${promoError ? 'border-red-300' : ''}`}
-                      data-testid="input-promo-code-top"
-                    />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleApplyPromo}
-                      disabled={!promoCode.trim() || isValidatingPromo}
-                      className="shrink-0"
-                      data-testid="button-apply-promo-top"
-                    >
-                      {isValidatingPromo ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        'Apply'
-                      )}
-                    </Button>
-                  </div>
-                  {promoError && (
-                    <p className="text-xs text-red-500 mt-1" data-testid="text-promo-error-top">{promoError}</p>
-                  )}
-                </div>
-              )}
-            </div>
+            <Section title="Promo Code" icon={Tag} testId="promo-code-section">
+              <PromoCodeField suffix="-top" {...promoProps} />
+            </Section>
 
-            <div className="signup-surface p-5 md:p-6" data-testid="payment-term-section">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Clock className="h-5 w-5" />
-                Payment Term
-              </h2>
-              <p className="text-sm text-gray-600 mb-4">Choose your billing cycle and save with longer terms</p>
-
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <Section title="Payment Term" icon={Clock} testId="payment-term-section">
+              <Text color="secondary">Choose your billing cycle and save with longer terms</Text>
+              <RadioList
+                label="Payment term"
+                isLabelHidden
+                value={String(paymentTerm)}
+                onChange={(value) => setPaymentTerm(Number(value) as PaymentTerm)}
+              >
                 {paymentTermOptions.map((option) => (
-                  <div
+                  <RadioListItem
                     key={option.months}
-                    onClick={() => setPaymentTerm(option.months)}
-                    className={`relative p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                      paymentTerm === option.months
-                        ? 'border-[#006d91] bg-gray-50'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
+                    value={String(option.months)}
+                    label={option.label}
+                    description={option.badge}
                     data-testid={`payment-term-${option.months}`}
-                  >
-                    {option.badge && (
-                      <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap bg-green-100 text-green-700">
-                        {option.badge}
-                      </span>
-                    )}
-                    <div className="text-center">
-                      <p className="font-semibold text-gray-900">{option.label}</p>
-                    </div>
-                    {paymentTerm === option.months && (
-                      <div className="absolute top-2 right-2">
-                        <Check className="h-4 w-4 text-gray-600" />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {termSavings > 0 && (
-                <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
-                  <p className="text-sm text-green-700 font-medium flex items-center gap-2">
-                    <Check className="h-4 w-4" />
-                    You save ${termSavings} with the {paymentTerm}-month plan!
-                  </p>
-                </div>
-              )}
-            </div>
-
-            <div className="signup-surface p-5 md:p-6" data-testid="payment-method-section">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <CreditCard className="h-5 w-5" />
-                Payment Method
-              </h2>
-
-              <div className="flex items-center gap-3 mb-6 p-3 bg-gray-50 border border-gray-200 rounded-lg">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gray-200">
-                  <CreditCard className="h-5 w-5 text-gray-700" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">Credit / Debit Card</p>
-                  <p className="text-xs text-gray-500">Visa, Mastercard, Amex</p>
-                </div>
-              </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="cardholderName" className="block text-sm font-medium text-gray-700 mb-1">
-                      Cardholder Name
-                    </label>
-                    <Input
-                      id="cardholderName"
-                      type="text"
-                      placeholder="John Doe"
-                      value={cardholderName}
-                      onChange={(e) => setCardholderName(e.target.value)}
-                      className="w-full"
-                      data-testid="input-cardholder-name"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                      Card Number
-                    </label>
-                  <div className="relative">
-                    <Input
-                      id="cardNumber"
-                      type="text"
-                      placeholder="1234 5678 9012 3456"
-                      value={cardNumber}
-                      onChange={(e) => {
-                        const value = e.target.value.replace(/\D/g, '').slice(0, 16);
-                        const formatted = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-                        setCardNumber(formatted);
-                      }}
-                      className="w-full pr-10"
-                      data-testid="input-card-number"
-                    />
-                    <Lock className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700 mb-1">
-                      Expiry Date
-                    </label>
-                    <Input
-                      id="expiryDate"
-                      type="text"
-                      placeholder="MM/YY"
-                      value={expiryDate}
-                      onChange={(e) => {
-                        const value = e.target.value.replace(/\D/g, '').slice(0, 4);
-                        if (value.length >= 2) {
-                          setExpiryDate(value.slice(0, 2) + '/' + value.slice(2));
-                        } else {
-                          setExpiryDate(value);
-                        }
-                      }}
-                      className="w-full"
-                      data-testid="input-expiry-date"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="cvv" className="block text-sm font-medium text-gray-700 mb-1">
-                      CVV
-                    </label>
-                    <Input
-                      id="cvv"
-                      type="text"
-                      placeholder="123"
-                      value={cvv}
-                      onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                      className="w-full"
-                      data-testid="input-cvv"
-                    />
-                  </div>
-                </div>
-
-                <div className="border-t border-gray-200 pt-4 mt-4">
-                  <h3 className="text-sm font-medium text-gray-900 mb-3">Billing Address</h3>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label htmlFor="billingAddress" className="block text-sm font-medium text-gray-700 mb-1">
-                        Street Address
-                      </label>
-                      <Input
-                        id="billingAddress"
-                        type="text"
-                        placeholder="123 Main Street"
-                        value={billingAddress}
-                        onChange={(e) => setBillingAddress(e.target.value)}
-                        className="w-full"
-                        data-testid="input-billing-address"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="billingCity" className="block text-sm font-medium text-gray-700 mb-1">
-                          City
-                        </label>
-                        <Input
-                          id="billingCity"
-                          type="text"
-                          placeholder="New York"
-                          value={billingCity}
-                          onChange={(e) => setBillingCity(e.target.value)}
-                          className="w-full"
-                          data-testid="input-billing-city"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="billingState" className="block text-sm font-medium text-gray-700 mb-1">
-                          State
-                        </label>
-                        <Input
-                          id="billingState"
-                          type="text"
-                          placeholder="NY"
-                          value={billingState}
-                          onChange={(e) => setBillingState(e.target.value.toUpperCase().slice(0, 2))}
-                          className="w-full"
-                          data-testid="input-billing-state"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="w-1/2">
-                      <label htmlFor="billingZip" className="block text-sm font-medium text-gray-700 mb-1">
-                        ZIP Code
-                      </label>
-                      <Input
-                        id="billingZip"
-                        type="text"
-                        placeholder="10001"
-                        value={billingZip}
-                        onChange={(e) => setBillingZip(e.target.value.replace(/\D/g, '').slice(0, 5))}
-                        className="w-full"
-                        data-testid="input-billing-zip"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 pt-2">
-                  <Checkbox
-                    id="saveCard"
-                    checked={saveCard}
-                    onCheckedChange={(checked) => setSaveCard(checked as boolean)}
-                    data-testid="checkbox-save-card"
                   />
-                  <label htmlFor="saveCard" className="text-sm text-gray-600 cursor-pointer">
-                    Save this card for future purchases
-                  </label>
-                </div>
+                ))}
+              </RadioList>
+              {termSavings > 0 && (
+                <HStack gap={2} vAlign="center" className={successRow}>
+                  <Icon icon={Check} size="sm" className={successText} />
+                  <Text type="supporting" weight="medium" color="inherit" className={successText}>
+                    You save ${termSavings} with the {paymentTerm}-month plan!
+                  </Text>
+                </HStack>
+              )}
+            </Section>
 
-                <p className="text-xs text-gray-500 flex items-center gap-1 mt-2">
-                    <Lock className="h-3 w-3" />
-                    Your payment information is encrypted and secure
-                  </p>
-                </div>
-            </div>
+            <Section title="Payment Method" icon={CreditCard} testId="payment-method-section">
+              <Card variant="muted" padding={3}>
+                <HStack gap={3} vAlign="center">
+                  <Icon icon={CreditCard} />
+                  <VStack gap={0}>
+                    <Text weight="medium">Credit / Debit Card</Text>
+                    <Text type="supporting" color="secondary">Visa, Mastercard, Amex</Text>
+                  </VStack>
+                </HStack>
+              </Card>
 
-            <div className="signup-surface p-5 md:p-6" data-testid="agreement-section">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Terms & Agreements
-              </h2>
-
-              <div className="flex items-start gap-3">
-                <Checkbox
-                  id="agreement"
-                  checked={order.agreementAccepted}
-                  onCheckedChange={(checked) => setAgreementAccepted(checked as boolean)}
-                  className="mt-1"
-                  data-testid="checkbox-agreement"
+              <VStack gap={4}>
+                <TextInput
+                  id="cardholderName"
+                  label="Cardholder Name"
+                  placeholder="John Doe"
+                  autoComplete="cc-name"
+                  value={cardholderName}
+                  onChange={setCardholderName}
+                  data-testid="input-cardholder-name"
                 />
-                <label htmlFor="agreement" className="text-sm text-gray-600 cursor-pointer space-y-3">
-                  <p>
-                    I, <span className="font-medium">(Full name)</span> of <span className="font-medium">(Company Name)</span> agree to subscribe to the OPUS VIRTUAL OFFICES VIRTUAL OFFICE PROGRAM as stated above. I understand that my {paymentTerm === 1 ? 'monthly recurring charges must be paid in advance' : `${paymentTerm}-month term payment is due upfront`} and that services will be billed 5 business days prior to its {paymentTerm === 1 ? 'monthly' : 'term'} due date. Late payment may result in suspension of service and may be subject to a US$50 reinstatement fee.
-                  </p>
-                  <p>
-                    This agreement is for an initial {paymentTerm} month{paymentTerm > 1 ? 's' : ''} term. After the initial term this agreement shall automatically renew on a {paymentTerm === 1 ? 'month to month' : `${paymentTerm}-month`} basis provided CLIENT does not give OPUS written notice of cancellation at least 30 days prior to the term renewal. In the event Opus Virtual Offices is required to employ an attorney to enforce any provision of this Agreement; Client shall pay to Opus Virtual Offices, all attorney fees and court costs incurred.
-                  </p>
-                </label>
-              </div>
-            </div>
-          </div>
+                <TextInput
+                  id="cardNumber"
+                  label="Card Number"
+                  placeholder="1234 5678 9012 3456"
+                  inputMode="numeric"
+                  autoComplete="cc-number"
+                  startIcon={Lock}
+                  value={cardNumber}
+                  onChange={(value) => {
+                    const digits = value.replace(/\D/g, '').slice(0, 16);
+                    setCardNumber(digits.replace(/(\d{4})(?=\d)/g, '$1 '));
+                  }}
+                  data-testid="input-card-number"
+                />
+                <Grid columns={2} gap={4}>
+                  <TextInput
+                    id="expiryDate"
+                    label="Expiry Date"
+                    placeholder="MM/YY"
+                    inputMode="numeric"
+                    autoComplete="cc-exp"
+                    value={expiryDate}
+                    onChange={(value) => {
+                      const digits = value.replace(/\D/g, '').slice(0, 4);
+                      setExpiryDate(digits.length >= 2 ? digits.slice(0, 2) + '/' + digits.slice(2) : digits);
+                    }}
+                    data-testid="input-expiry-date"
+                  />
+                  <TextInput
+                    id="cvv"
+                    label="CVV"
+                    placeholder="123"
+                    inputMode="numeric"
+                    autoComplete="cc-csc"
+                    value={cvv}
+                    onChange={(value) => setCvv(value.replace(/\D/g, '').slice(0, 4))}
+                    data-testid="input-cvv"
+                  />
+                </Grid>
 
-          <div className="lg:col-span-1" ref={summaryContainerRef}>
-            <div 
-              className={`signup-surface p-5 md:p-6 transition-none ${
-                isSticky ? 'lg:fixed lg:top-6' : ''
-              }`}
-              style={isSticky && summaryWidth ? { width: summaryWidth } : undefined}
-              data-testid="payment-summary"
-            >
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Summary</h2>
+                <Divider />
+                <Heading level={3}>Billing Address</Heading>
+                <TextInput
+                  id="billingAddress"
+                  label="Street Address"
+                  placeholder="123 Main Street"
+                  autoComplete="billing street-address"
+                  value={billingAddress}
+                  onChange={setBillingAddress}
+                  data-testid="input-billing-address"
+                />
+                <Grid columns={2} gap={4}>
+                  <TextInput
+                    id="billingCity"
+                    label="City"
+                    placeholder="New York"
+                    autoComplete="billing address-level2"
+                    value={billingCity}
+                    onChange={setBillingCity}
+                    data-testid="input-billing-city"
+                  />
+                  <TextInput
+                    id="billingState"
+                    label="State"
+                    placeholder="NY"
+                    autoComplete="billing address-level1"
+                    value={billingState}
+                    onChange={(value) => setBillingState(value.toUpperCase().slice(0, 2))}
+                    data-testid="input-billing-state"
+                  />
+                  <TextInput
+                    id="billingZip"
+                    label="ZIP Code"
+                    placeholder="10001"
+                    inputMode="numeric"
+                    autoComplete="billing postal-code"
+                    value={billingZip}
+                    onChange={(value) => setBillingZip(value.replace(/\D/g, '').slice(0, 5))}
+                    data-testid="input-billing-zip"
+                  />
+                </Grid>
 
-              <div className="space-y-3 mb-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600 flex items-center gap-1">
-                    Office Package ({order.bundle.tier})
-                    <button
-                          className="inline-flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors"
-                          data-testid="bundle-breakdown-trigger"
-                          onClick={() => setBundleTooltipOpen((v) => !v)}
-                        >
-                          <HelpCircle className="h-3.5 w-3.5" />
-                        </button>
-                    {bundleTooltipOpen && (
-                      <>
-                        <div className="fixed inset-0 z-40" onClick={() => setBundleTooltipOpen(false)} />
-                        <div className="fixed left-1/2 -translate-x-1/2 top-1/3 z-50 w-72 rounded-lg border border-gray-200 bg-white p-4 shadow-lg" data-testid="bundle-breakdown-popover">
-                          <div className="space-y-3">
-                            <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide">All Plans Include</p>
-                            <div className="space-y-2">
+                <CheckboxInput
+                  id="saveCard"
+                  label="Save this card for future purchases"
+                  value={saveCard}
+                  onChange={setSaveCard}
+                  data-testid="checkbox-save-card"
+                />
+                <HStack gap={1} vAlign="center">
+                  <Icon icon={Lock} size="sm" color="secondary" />
+                  <Text type="supporting" color="secondary">Your payment information is encrypted and secure</Text>
+                </HStack>
+              </VStack>
+            </Section>
+
+            <Section title="Terms & Agreements" icon={FileText} testId="agreement-section">
+              <VStack gap={3} id="agreement-text">
+                <Text type="supporting" color="secondary">
+                  I, <Text weight="medium" color="inherit">(Full name)</Text> of <Text weight="medium" color="inherit">(Company Name)</Text> agree to subscribe to the OPUS VIRTUAL OFFICES VIRTUAL OFFICE PROGRAM as stated above. I understand that my {paymentTerm === 1 ? 'monthly recurring charges must be paid in advance' : `${paymentTerm}-month term payment is due upfront`} and that services will be billed 5 business days prior to its {paymentTerm === 1 ? 'monthly' : 'term'} due date. Late payment may result in suspension of service and may be subject to a US$50 reinstatement fee.
+                </Text>
+                <Text type="supporting" color="secondary">
+                  This agreement is for an initial {paymentTerm} month{paymentTerm > 1 ? 's' : ''} term. After the initial term this agreement shall automatically renew on a {paymentTerm === 1 ? 'month to month' : `${paymentTerm}-month`} basis provided CLIENT does not give OPUS written notice of cancellation at least 30 days prior to the term renewal. In the event Opus Virtual Offices is required to employ an attorney to enforce any provision of this Agreement; Client shall pay to Opus Virtual Offices, all attorney fees and court costs incurred.
+                </Text>
+              </VStack>
+              <CheckboxInput
+                id="agreement"
+                label="I agree to the terms above"
+                aria-describedby="agreement-text"
+                isRequired
+                value={order.agreementAccepted}
+                onChange={setAgreementAccepted}
+                data-testid="checkbox-agreement"
+              />
+            </Section>
+          </VStack>
+
+          <VStack className="lg:sticky lg:top-6">
+            <Card className="signup-surface md:p-6" padding={5} data-testid="payment-summary">
+              <VStack gap={4}>
+                <Heading level={2}>Payment Summary</Heading>
+
+                <VStack gap={3}>
+                  <HStack gap={2} hAlign="between" vAlign="center">
+                    <HStack gap={1} vAlign="center">
+                      <Text type="supporting" color="secondary">Office Package ({order.bundle.tier})</Text>
+                      <Popover
+                        label={`What's included in ${order.bundle.tier}`}
+                        padding={4}
+                        width={288}
+                        data-testid="bundle-breakdown-popover"
+                        content={
+                          <VStack gap={3}>
+                            <Text type="supporting" weight="semibold">All Plans Include</Text>
+                            <VStack as="ul" gap={2}>
                               {[
                                 'Prestigious Business Address',
                                 'Live Call Answering',
@@ -717,179 +606,120 @@ export default function CheckoutPage() {
                                 'Business Phone/Fax Number',
                                 'Voicemail/Fax Converted to Email',
                               ].map((feature) => (
-                                <div key={feature} className="flex items-center gap-1.5 text-xs text-gray-600">
-                                  <Check className="h-3 w-3 text-green-500 shrink-0" />
-                                  {feature}
-                                </div>
+                                <HStack as="li" key={feature} gap={2} vAlign="start">
+                                  <Icon icon={Check} size="sm" color="secondary" />
+                                  <Text type="supporting">{feature}</Text>
+                                </HStack>
                               ))}
-                            </div>
-                            {(() => {
-                              const bundleExtras = Object.entries(order.bundle!.features)
-                                .filter(([key, included]) => {
-                                  const base = ['businessAddress', 'liveCallAnswering', 'callTransferring', 'businessPhoneFax', 'mailReceipt', 'voicemailToEmail'];
-                                  return included && !base.includes(key);
-                                })
-                                .map(([key]) => featureLabels[key]);
-                              return bundleExtras.length > 0 ? (
-                                <div className="border-t border-gray-200 pt-2 mt-1">
-                                  <p className="text-xs font-semibold text-gray-900 uppercase tracking-wide mb-2">Included in {order.bundle.tier} Bundle</p>
-                                  <div className="space-y-2">
-                                    {bundleExtras.map((label) => (
-                                      <div key={label} className="flex items-center gap-1.5 text-xs text-gray-600">
-                                        <Check className="h-3 w-3 text-gray-600 shrink-0" />
-                                        {label}
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              ) : null;
-                            })()}
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </span>
-                  <span className="font-medium">${order.bundle.price}/mo</span>
-                </div>
-                {order.addons.map((addon) => (
-                  <div key={addon.id} className="flex justify-between text-sm">
-                    <span className="text-gray-600">{addon.name}</span>
-                    <span className="font-medium">${addon.price}/mo</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t border-gray-200 pt-4 mb-4">
-                {order.appliedPromo ? (
-                  <div className="flex items-center justify-between bg-green-50 rounded-lg px-3 py-2 mb-3">
-                    <div className="flex items-center gap-2">
-                      <Tag className="h-3.5 w-3.5 text-green-600" />
-                      <div>
-                        <p className="text-sm font-medium text-green-700">{order.appliedPromo.code}</p>
-                        <p className="text-xs text-green-600">{order.appliedPromo.description}</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={handleRemovePromo}
-                      className="text-green-600 hover:text-green-800 p-1"
-                      data-testid="button-remove-promo"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="mb-3">
-                    <div className="flex gap-2">
-                      <Input
-                        type="text"
-                        placeholder="Enter promo code"
-                        value={promoCode}
-                        onChange={(e) => {
-                          setPromoCode(e.target.value.toUpperCase());
-                          setPromoError('');
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') handleApplyPromo();
-                        }}
-                        className={`flex-1 text-sm ${promoError ? 'border-red-300' : ''}`}
-                        data-testid="input-promo-code"
-                      />
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={handleApplyPromo}
-                        disabled={!promoCode.trim() || isValidatingPromo}
-                        className="shrink-0"
-                        data-testid="button-apply-promo"
+                            </VStack>
+                            {bundleExtras.length > 0 && (
+                              <>
+                                <Divider />
+                                <Text type="supporting" weight="semibold">Included in {order.bundle.tier} Bundle</Text>
+                                <VStack as="ul" gap={2}>
+                                  {bundleExtras.map((label) => (
+                                    <HStack as="li" key={label} gap={2} vAlign="start">
+                                      <Icon icon={Check} size="sm" color="secondary" />
+                                      <Text type="supporting">{label}</Text>
+                                    </HStack>
+                                  ))}
+                                </VStack>
+                              </>
+                            )}
+                          </VStack>
+                        }
                       >
-                        {isValidatingPromo ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          'Apply'
-                        )}
-                      </Button>
-                    </div>
-                    {promoError && (
-                      <p className="text-xs text-red-500 mt-1" data-testid="text-promo-error">{promoError}</p>
-                    )}
-                  </div>
-                )}
-              </div>
+                        <IconButton
+                          variant="ghost"
+                          size="sm"
+                          label={`What's included in ${order.bundle.tier}`}
+                          icon={<Icon icon={HelpCircle} size="sm" />}
+                          data-testid="bundle-breakdown-trigger"
+                        />
+                      </Popover>
+                    </HStack>
+                    <Text type="supporting" weight="medium" hasTabularNumbers>${order.bundle.price}/mo</Text>
+                  </HStack>
+                  {order.addons.map((addon) => (
+                    <HStack key={addon.id} gap={2} hAlign="between">
+                      <Text type="supporting" color="secondary">{addon.name}</Text>
+                      <Text type="supporting" weight="medium" hasTabularNumbers>${addon.price}/mo</Text>
+                    </HStack>
+                  ))}
+                </VStack>
 
-              <div className="border-t border-gray-200 pt-4 mb-4">
-                <div className="flex justify-between mb-2">
-                  <span className="text-gray-600">Monthly Rate</span>
-                  <span className="font-semibold text-gray-900">${monthly}/mo</span>
-                </div>
-                <div className="flex justify-between mb-2">
-                  <span className="text-gray-600">Billing Term</span>
-                  <span className="font-semibold text-gray-900">{paymentTerm} month{paymentTerm > 1 ? 's' : ''}</span>
-                </div>
-                {termSavings > 0 && (
-                  <div className="flex justify-between mb-2 text-green-600">
-                    <span>Discount ({selectedTermOption.freeMonths} month{selectedTermOption.freeMonths > 1 ? 's' : ''} free)</span>
-                    <span className="font-semibold">-${termSavings}</span>
-                  </div>
-                )}
-                {promoDiscount > 0 && (
-                  <div className="flex justify-between mb-2 text-green-600">
-                    <span className="flex items-center gap-1">
-                      <Tag className="h-3 w-3" />
-                      Promo: {order.appliedPromo?.code}
-                    </span>
-                    <span className="font-semibold">-${promoDiscount}</span>
-                  </div>
-                )}
-                {oneTime > 0 && (
-                  <div className="flex justify-between mb-2">
-                    <span className="text-gray-600">One-time Fees</span>
-                    <span className="font-semibold text-gray-900">${oneTime}</span>
-                  </div>
-                )}
-              </div>
+                <Divider />
+                <PromoCodeField suffix="" {...promoProps} />
+                <Divider />
 
-              <div className="border-t border-gray-200 pt-4 mb-4">
-                <div className="flex justify-between mb-1">
-                  <span className="text-lg font-semibold text-gray-900">Due Today</span>
-                  <span className="text-2xl font-bold text-gray-900">${totalDueToday}</span>
-                </div>
-                {paymentTerm > 1 && (
-                  <p className="text-sm text-gray-500">
-                    Effective rate: ${effectiveMonthlyRate}/mo
-                  </p>
-                )}
-                <p className="text-sm text-gray-500 mt-1">
-                  {paymentTerm === 1 
-                    ? `Then $${monthly}/mo starting next billing cycle`
-                    : `Next payment: $${termTotal} in ${paymentTerm} months`
-                  }
-                </p>
-              </div>
+                <VStack gap={2}>
+                  <HStack gap={2} hAlign="between">
+                    <Text color="secondary">Monthly Rate</Text>
+                    <Text weight="semibold" hasTabularNumbers>${monthly}/mo</Text>
+                  </HStack>
+                  <HStack gap={2} hAlign="between">
+                    <Text color="secondary">Billing Term</Text>
+                    <Text weight="semibold">{paymentTerm} month{paymentTerm > 1 ? 's' : ''}</Text>
+                  </HStack>
+                  {termSavings > 0 && (
+                    <HStack gap={2} hAlign="between" className="text-[var(--color-text-success)]">
+                      <Text color="inherit">Discount ({selectedTermOption.freeMonths} month{selectedTermOption.freeMonths > 1 ? 's' : ''} free)</Text>
+                      <Text weight="semibold" color="inherit" hasTabularNumbers>-${termSavings}</Text>
+                    </HStack>
+                  )}
+                  {promoDiscount > 0 && (
+                    <HStack gap={2} hAlign="between" className="text-[var(--color-text-success)]">
+                      <HStack gap={1} vAlign="center">
+                        <Icon icon={Tag} size="sm" color="inherit" />
+                        <Text color="inherit">Promo: {order.appliedPromo?.code}</Text>
+                      </HStack>
+                      <Text weight="semibold" color="inherit" hasTabularNumbers>-${promoDiscount}</Text>
+                    </HStack>
+                  )}
+                  {oneTime > 0 && (
+                    <HStack gap={2} hAlign="between">
+                      <Text color="secondary">One-time Fees</Text>
+                      <Text weight="semibold" hasTabularNumbers>${oneTime}</Text>
+                    </HStack>
+                  )}
+                </VStack>
 
-              <Button
-                onClick={handleCheckout}
-                disabled={!order.agreementAccepted || isProcessing}
-                className="signup-primary w-full"
-                data-testid="button-complete-checkout"
-              >
-                {isProcessing ? (
-                  'Processing...'
-                ) : (
-                  <>
-                    <CreditCard className="h-4 w-4 mr-2" />
-                    Complete Checkout
-                  </>
-                )}
-              </Button>
+                <Divider />
 
-              <p className="text-xs text-gray-500 text-center mt-3">
-                Secure payment processed by our payment provider
-              </p>
-            </div>
-          </div>
-        </div>
+                <VStack gap={1}>
+                  <HStack gap={2} hAlign="between" vAlign="center">
+                    <Text size="lg" weight="semibold">Due Today</Text>
+                    <Text size="2xl" weight="bold" hasTabularNumbers>${totalDueToday}</Text>
+                  </HStack>
+                  {paymentTerm > 1 && (
+                    <Text type="supporting" color="secondary">Effective rate: ${effectiveMonthlyRate}/mo</Text>
+                  )}
+                  <Text type="supporting" color="secondary">
+                    {paymentTerm === 1
+                      ? `Then $${monthly}/mo starting next billing cycle`
+                      : `Next payment: $${termTotal} in ${paymentTerm} months`}
+                  </Text>
+                </VStack>
 
-      </div>
-    </div>
+                <Button
+                  type="button"
+                  variant="primary"
+                  label={isProcessing ? 'Processing...' : 'Complete Checkout'}
+                  icon={isProcessing ? undefined : <Icon icon={CreditCard} size="sm" />}
+                  isLoading={isProcessing}
+                  isDisabled={!order.agreementAccepted || isProcessing}
+                  onClick={handleCheckout}
+                  width="100%"
+                  data-testid="button-complete-checkout"
+                />
+                <Text type="supporting" color="secondary" justify="center">
+                  Secure payment processed by our payment provider
+                </Text>
+              </VStack>
+            </Card>
+          </VStack>
+        </Grid>
+      </VStack>
+    </VStack>
   );
 }

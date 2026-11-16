@@ -2,23 +2,21 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Check, Phone, ShoppingCart, X, ChevronRight, ChevronDown, ChevronUp, Pencil, DollarSign, Star } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/app/components/ui/dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/app/components/ui/select';
+import { Phone, ShoppingCart, X, ChevronDown, ChevronUp, Pencil, DollarSign, Star } from 'lucide-react';
+import { Button } from '@astryxdesign/core/Button';
+import { Card } from '@astryxdesign/core/Card';
+import { Dialog, DialogHeader } from '@astryxdesign/core/Dialog';
+import { Divider } from '@astryxdesign/core/Divider';
+import { Grid } from '@astryxdesign/core/Grid';
+import { Heading } from '@astryxdesign/core/Heading';
+import { HStack } from '@astryxdesign/core/HStack';
+import { Icon } from '@astryxdesign/core/Icon';
+import { IconButton } from '@astryxdesign/core/IconButton';
+import { RadioList, RadioListItem } from '@astryxdesign/core/RadioList';
+import { Selector } from '@astryxdesign/core/Selector';
+import { StackItem } from '@astryxdesign/core/Stack';
+import { Text } from '@astryxdesign/core/Text';
+import { VStack } from '@astryxdesign/core/VStack';
 import { ProgressIndicator } from '../components/ProgressIndicator';
 import { BundleSuggestionDialog } from '../components/BundleSuggestionDialog';
 import { EnrollmentSummaryFooter } from '../components/EnrollmentSummaryFooter';
@@ -40,14 +38,13 @@ import {
 } from '../types';
 import { useToast } from '@/app/hooks/use-toast';
 import { getInitialCustomizationAddons, partitionCustomizationAddons, sortCustomizationAddons } from '../addon-presentation';
-import { bundleThemes } from '../bundle-theme';
+import { tierScope } from '../bundle-theme';
 
 export default function CustomizePage() {
   const router = useRouter();
   const { order, setBundle, setPhoneNumber, setTollFreePhoneNumber, addAddon, removeAddon, updateAddon, getCartTotal } = useOrder();
   const { toast } = useToast();
   const selectedBundle = order.bundle;
-  const includedTheme = selectedBundle ? bundleThemes[selectedBundle.id] : undefined;
   const [selectedPhone, setSelectedPhone] = useState<PhoneNumber | null>(order.phoneNumber);
   const [expandedAddons, setExpandedAddons] = useState<Set<string>>(new Set());
   const [showAllAddons, setShowAllAddons] = useState(false);
@@ -57,7 +54,7 @@ export default function CustomizePage() {
   const [bundleComparisonOpen, setBundleComparisonOpen] = useState(false);
   const [bundleSuggestionOpen, setBundleSuggestionOpen] = useState(false);
   const [suggestionTriggeredFromContinue, setSuggestionTriggeredFromContinue] = useState(false);
-  const bundleSectionRef = useRef<HTMLDivElement>(null);
+  const bundleSectionRef = useRef<HTMLElement>(null);
   const { trackComplete } = useFunnelTracking('customize');
 
   const [footerPulse, setFooterPulse] = useState(false);
@@ -305,227 +302,171 @@ export default function CustomizePage() {
   }
 
   const displayBundleName = selectedBundle.tier !== 'The Essentials' ? selectedBundle.tier : 'The Essentials';
+  const hasActiveBundle = selectedBundle.id !== 'essentials';
 
   return (
-    <div className="signup-shell px-4 pt-4 pb-64 lg:px-8 lg:pt-8" data-testid="customize-page">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-3 sm:mb-8">
-          <ProgressIndicator currentStep={3} />
-        </div>
+    <VStack className="signup-shell px-4 pt-4 pb-64 lg:px-8 lg:pt-8" hAlign="center" data-testid="customize-page">
+      <VStack gap={6} width="100%" maxWidth={1152}>
+        <ProgressIndicator currentStep={3} />
 
-        <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-testid="heading-customize">
+        <VStack gap={2}>
+          <Heading level={1} justify="center" data-testid="heading-customize">
             Customize Your Office
-          </h1>
-          <p className="text-sm md:text-base text-gray-600">
-            for <span className="font-medium">{order.location.name}</span>, {order.location.city}
-          </p>
-        </div>
+          </Heading>
+          <Text color="secondary" justify="center">
+            for <Text weight="medium" color="inherit">{order.location.name}</Text>, {order.location.city}
+          </Text>
+        </VStack>
 
-        <div className="signup-surface p-5 md:p-6 mb-6" data-testid="addons-section">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">Add-ons</h2>
-          <p className="text-sm text-gray-600 mb-6">
-            Enhance your plan with additional features. Some add-ons may already be included in your bundle.
-          </p>
+        <Card className="signup-surface md:p-6" padding={5} data-testid="addons-section">
+          <VStack gap={5}>
+            <VStack gap={1}>
+              <Heading level={2}>Add-ons</Heading>
+              <Text color="secondary">
+                Enhance your plan with additional features. Some add-ons may already be included in your bundle.
+              </Text>
+            </VStack>
 
-          {includedAddons.length > 0 && (
-            <div
-              role="region"
-              aria-labelledby="included-addons-label"
-              tabIndex={0}
-              className="mb-5 max-w-full rounded-md py-1 text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2 md:overflow-x-auto md:overscroll-x-contain"
-              data-testid="included-addons-summary"
-            >
-              <div className="flex w-full flex-col items-start gap-3 md:w-max md:flex-row md:items-center md:whitespace-nowrap">
-                <span id="included-addons-label" className="text-base font-semibold md:text-sm">
-                  Included on {selectedBundle.tier}:
-                </span>
-                <ul role="list" className="flex w-full flex-wrap items-center gap-2 md:w-auto md:flex-nowrap">
+            {includedAddons.length > 0 && (
+              <HStack
+                as="section"
+                gap={2}
+                vAlign="center"
+                wrap="wrap"
+                aria-labelledby="included-addons-label"
+                style={tierScope(selectedBundle.id)}
+                data-testid="included-addons-summary"
+              >
+                <Text id="included-addons-label" weight="semibold">Included on {selectedBundle.tier}:</Text>
+                <HStack as="ul" gap={2} wrap="wrap">
                   {includedAddons.map(addon => (
-                    <li
+                    <HStack
+                      as="li"
                       key={addon.id}
-                      className="inline-flex min-w-0 max-w-full shrink-0 items-center whitespace-normal break-words rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-base font-medium md:max-w-none md:whitespace-nowrap md:py-1 md:text-sm"
-                      style={includedTheme ? {
-                        backgroundColor: includedTheme.surface,
-                        borderColor: includedTheme.border,
-                        color: includedTheme.accent,
-                      } : undefined}
+                      // Tier chip: the scoped tier surface, border and accent.
+                      className="rounded-[var(--radius-full)] border border-[var(--color-border)] bg-[var(--color-background-card)] px-3 py-1"
                       data-testid={`included-addon-${addon.id}`}
                     >
-                      {addon.name}
-                    </li>
+                      <Text type="supporting" weight="medium" color="accent">{addon.name}</Text>
+                    </HStack>
                   ))}
-                </ul>
-              </div>
-            </div>
-          )}
+                </HStack>
+              </HStack>
+            )}
 
-          <div className="relative">
-            <h3 className="mb-3 text-base font-semibold text-gray-900 md:hidden" data-testid="optional-addons-title">
-              Optional add-ons
-            </h3>
-            <div 
-              className="grid grid-cols-1 gap-4 md:grid-cols-2"
-              data-testid="addons-grid"
-            >
-              {visibleAddons.map((addon) => {
-                const isInCart = order.addons.find(a => a.id === addon.id);
-                const isExpanded = expandedAddons.has(addon.id);
+            <VStack gap={3}>
+              <Heading level={3} className="md:hidden" data-testid="optional-addons-title">Optional add-ons</Heading>
+              <Grid columns={{ minWidth: 300, max: 2 }} gap={4} data-testid="addons-grid">
+                {visibleAddons.map((addon) => {
+                  const isInCart = order.addons.find(a => a.id === addon.id);
+                  const isExpanded = expandedAddons.has(addon.id);
+                  const hasPackages = Boolean(addon.packages && addon.packages.length > 0);
 
-                return (
-                  <div
-                    key={addon.id}
-                    className={`rounded-lg border transition-colors ${
-                      isInCart
-                        ? 'border-[#006d91] bg-gray-50'
-                        : 'border-gray-200 bg-white'
-                    }`}
-                    data-addon-status={isInCart ? 'selected' : 'available'}
-                    data-testid={`addon-card-${addon.id}`}
-                  >
-                    <div className="flex h-full flex-col p-4">
-                      <div className="mb-2 flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-                        <h3 className="min-w-0 font-medium text-gray-900">
-                          {addon.name}
-                        </h3>
-                        {addon.packages && addon.packages.length > 0 ? (
-                          <span className="shrink-0 text-sm font-semibold text-gray-900">
-                            From ${addon.packages[0].price}/mo
-                          </span>
-                        ) : (
-                          <span className="shrink-0 text-sm font-semibold text-gray-900">
-                            ${addon.price}/mo
-                          </span>
-                        )}
-                      </div>
-                      <p
-                        id={`addon-description-${addon.id}`}
-                        className={`min-h-10 text-sm leading-5 text-gray-600 ${isExpanded ? '' : 'line-clamp-2'}`}
-                        data-testid={`addon-details-${addon.id}`}
-                      >
-                        {addon.detailedDescription || addon.description}
-                      </p>
-                      <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
-                        <button
-                          type="button"
-                          onClick={() => toggleAddonExpanded(addon.id)}
-                          aria-expanded={isExpanded}
-                          aria-controls={`addon-description-${addon.id}`}
-                          aria-label={`${isExpanded ? 'Show less about' : 'Read more about'} ${addon.name}`}
-                          className="flex min-h-11 items-center gap-1 rounded-sm text-sm text-gray-700 underline decoration-gray-300 underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] focus-visible:ring-offset-2"
-                          data-testid={`button-learn-more-${addon.id}`}
+                  return (
+                    <Card
+                      key={addon.id}
+                      padding={4}
+                      height="100%"
+                      // Selected: the same blue-ink outline as selected locations.
+                      className={isInCart ? '[outline:2px_solid_var(--color-text-accent)] [outline-offset:-2px]' : undefined}
+                      data-addon-status={isInCart ? 'selected' : 'available'}
+                      data-testid={`addon-card-${addon.id}`}
+                    >
+                      <VStack gap={2} height="100%">
+                        <HStack gap={3} hAlign="between" vAlign="start" wrap="wrap">
+                          <StackItem size="fill">
+                            <Heading level={3}>{addon.name}</Heading>
+                          </StackItem>
+                          <Text type="supporting" weight="semibold" hasTabularNumbers>
+                            {hasPackages ? `From $${addon.packages![0].price}/mo` : `$${addon.price}/mo`}
+                          </Text>
+                        </HStack>
+                        <Text
+                          id={`addon-description-${addon.id}`}
+                          type="supporting"
+                          color="secondary"
+                          maxLines={isExpanded ? undefined : 2}
+                          data-testid={`addon-details-${addon.id}`}
                         >
-                          {isExpanded ? (
-                            <>
-                              Show less
-                              <ChevronUp className="h-3 w-3" />
-                            </>
-                          ) : (
-                            <>
-                              Read more
-                              <ChevronDown className="h-3 w-3" />
-                            </>
-                          )}
-                        </button>
-                        <Button
-                            variant={isInCart ? 'outline' : 'default'}
+                          {addon.detailedDescription || addon.description}
+                        </Text>
+
+                        <StackItem size="fill" />
+
+                        <HStack gap={2} hAlign="between" vAlign="center" wrap="wrap">
+                          <Button
+                            type="button"
+                            variant="ghost"
                             size="sm"
-                            className={`min-h-11 ${isInCart ? 'border-red-300 text-red-600 hover:bg-red-50' : 'signup-primary'}`}
+                            label={isExpanded ? 'Show less' : 'Read more'}
+                            aria-label={`${isExpanded ? 'Show less about' : 'Read more about'} ${addon.name}`}
+                            aria-expanded={isExpanded}
+                            aria-controls={`addon-description-${addon.id}`}
+                            endContent={<Icon icon={isExpanded ? ChevronUp : ChevronDown} size="sm" />}
+                            onClick={() => toggleAddonExpanded(addon.id)}
+                            data-testid={`button-learn-more-${addon.id}`}
+                          />
+                          <Button
+                            type="button"
+                            variant={isInCart ? 'destructive' : 'primary'}
+                            label={isInCart ? 'Remove' : 'Add to Cart'}
+                            icon={<Icon icon={isInCart ? X : ShoppingCart} size="sm" />}
                             onClick={() => handleAddonToggle(addon)}
                             data-testid={`button-addon-${addon.id}`}
-                          >
-                            {isInCart ? (
-                              <>
-                                <X className="h-3 w-3 mr-1" />
-                                Remove
-                              </>
-                            ) : (
-                              <>
-                                <ShoppingCart className="h-3 w-3 mr-1" />
-                                Add to Cart
-                              </>
-                            )}
-                        </Button>
-                      </div>
+                          />
+                        </HStack>
 
-                      <div className="space-y-3">
-                          {isInCart && addon.packages && addon.packages.length > 0 && (
-                            <div className="pt-2 border-t border-gray-200">
-                              <label className="text-xs font-medium text-gray-700 mb-1 block">
-                                Select Package
-                              </label>
-                              <Select
-                                value={isInCart.selectedPackage?.id || addon.packages[0].id}
-                                onValueChange={(value) => handlePackageChange(addon, value)}
-                              >
-                                <SelectTrigger 
-                                  className="w-full bg-white"
-                                  data-testid={`select-package-${addon.id}`}
-                                >
-                                  <SelectValue placeholder="Select a package" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {addon.packages.map((pkg) => (
-                                    <SelectItem 
-                                      key={pkg.id} 
-                                      value={pkg.id}
-                                      data-testid={`package-option-${pkg.id}`}
-                                    >
-                                      {pkg.name} - ${pkg.price}/mo
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+                        {isInCart && hasPackages && (
+                          <>
+                            <Divider />
+                            <Selector
+                              label="Select Package"
+                              options={addon.packages!.map(pkg => ({ value: pkg.id, label: `${pkg.name} - $${pkg.price}/mo` }))}
+                              value={isInCart.selectedPackage?.id || addon.packages![0].id}
+                              onChange={(value) => handlePackageChange(addon, value)}
+                              data-testid={`select-package-${addon.id}`}
+                            />
+                          </>
+                        )}
+                      </VStack>
+                    </Card>
+                  );
+                })}
+              </Grid>
 
-            </div>
+              {hasMoreAddons && (
+                <HStack hAlign="center">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    label={showAllAddons ? 'Show fewer add-ons' : 'Show all add-ons'}
+                    endContent={<Icon icon={showAllAddons ? ChevronUp : ChevronDown} size="sm" />}
+                    onClick={() => setShowAllAddons(!showAllAddons)}
+                    data-testid="button-show-all-addons"
+                  />
+                </HStack>
+              )}
+            </VStack>
+          </VStack>
+        </Card>
 
-            {hasMoreAddons && (
-              <div className="mt-4 flex justify-center">
-                <Button
-                  variant="outline"
-                  onClick={() => setShowAllAddons(!showAllAddons)}
-                  className="bg-white border-gray-300 hover:bg-gray-50"
-                  data-testid="button-show-all-addons"
-                >
-                  {showAllAddons ? (
-                    <>
-                      Show fewer add-ons
-                      <ChevronUp className="h-4 w-4 ml-2" />
-                    </>
-                  ) : (
-                    <>
-                      Show all add-ons
-                      <ChevronDown className="h-4 w-4 ml-2" />
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div
+        <VStack
+          as="section"
           ref={bundleSectionRef}
-          className="mb-6 scroll-mt-6 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]"
           tabIndex={-1}
           aria-labelledby="customize-bundle-title"
+          className="scroll-mt-6 rounded-[var(--radius-container)] focus-visible:outline focus-visible:outline-[length:var(--focus-outline-width)] focus-visible:outline-[var(--focus-outline-color)] focus-visible:outline-offset-[var(--focus-outline-offset)]"
           data-testid="bundle-inline-section"
         >
-          <div className="signup-surface px-4 py-6">
-            <div className="flex items-center justify-between mb-2">
-              <h2 id="customize-bundle-title" className="text-lg font-semibold text-gray-900">Bundle & Save</h2>
-            </div>
-            <p className="text-sm text-gray-600 mb-2">
-              Upgrade your plan and save on popular features.<span className="md:hidden"> Swipe to compare bundles.</span>
-            </p>
-            <div className="-mx-4 md:mx-0">
+          <Card className="signup-surface md:p-6" padding={5}>
+            <VStack gap={3}>
+              <VStack gap={1}>
+                <Heading level={2} id="customize-bundle-title">Bundle &amp; Save</Heading>
+                <Text color="secondary">
+                  Upgrade your plan and save on popular features.
+                  <Text color="inherit" className="md:hidden"> Swipe to compare bundles.</Text>
+                </Text>
+              </VStack>
               <BundleInlineSelector
                 bundles={upgradeBundles}
                 selectedBundleId={selectedBundle?.id}
@@ -534,103 +475,93 @@ export default function CustomizePage() {
                 comparisonOpen={bundleComparisonOpen}
                 comparisonId="customize-bundle-comparison"
                 comparisonControl={
-                  <button
-                    type="button"
-                    onClick={() => setBundleComparisonOpen(open => !open)}
-                    aria-expanded={bundleComparisonOpen}
-                    aria-controls="customize-bundle-comparison"
-                    className="my-3 inline-flex min-h-11 items-center gap-1 rounded-sm pl-2 text-sm font-medium text-gray-700 underline underline-offset-4 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91] md:pl-0"
-                    data-testid="button-toggle-customize-bundle-comparison"
-                  >
-                    Compare Bundles
-                    {bundleComparisonOpen ? <ChevronUp className="h-4 w-4" aria-hidden="true" /> : <ChevronDown className="h-4 w-4" aria-hidden="true" />}
-                  </button>
+                  <HStack>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      label="Compare Bundles"
+                      aria-expanded={bundleComparisonOpen}
+                      aria-controls="customize-bundle-comparison"
+                      endContent={<Icon icon={bundleComparisonOpen ? ChevronUp : ChevronDown} size="sm" />}
+                      onClick={() => setBundleComparisonOpen(open => !open)}
+                      data-testid="button-toggle-customize-bundle-comparison"
+                    />
+                  </HStack>
                 }
               />
-            </div>
-            {selectedBundle && selectedBundle.id !== 'essentials' && (
-              <div className="mt-3 flex justify-center">
-                <button
-                  onClick={() => {
-                    handleBundleSelect(bundles[0]);
-                  }}
-                  className="text-xs text-gray-500 hover:text-gray-700 underline"
-                  data-testid="button-revert-to-essentials"
-                >
-                  Revert to Essentials
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+              {hasActiveBundle && (
+                <HStack hAlign="center">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    label="Revert to Essentials"
+                    onClick={() => handleBundleSelect(bundles[0])}
+                    data-testid="button-revert-to-essentials"
+                  />
+                </HStack>
+              )}
+            </VStack>
+          </Card>
+        </VStack>
 
         {hasTollFree && selectedTollFree && (
-        <div className="signup-surface p-5 md:p-6 mb-6" data-testid="phone-section">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-1">Additional Phone Services</h2>
-              <p className="text-sm text-gray-600">
-                Manage your toll-free number.
-              </p>
-            </div>
-          </div>
-
-            <div className="mt-3 flex items-center justify-between bg-gray-50 rounded-lg p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-                  <Phone className="h-5 w-5 text-gray-600" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900" data-testid="selected-tollfree-number">
-                    {selectedTollFree.number}
-                  </p>
-                  <p className="text-sm text-gray-500">Toll-Free Number</p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleOpenTollFreeModal}
-                aria-label="Change toll-free number"
-                data-testid="button-change-tollfree"
-              >
-                <Pencil className="h-4 w-4 text-gray-500" />
-              </Button>
-            </div>
-        </div>
+          <Card className="signup-surface md:p-6" padding={5} data-testid="phone-section">
+            <VStack gap={3}>
+              <VStack gap={1}>
+                <Heading level={2}>Additional Phone Services</Heading>
+                <Text color="secondary">Manage your toll-free number.</Text>
+              </VStack>
+              <Card variant="muted" padding={4}>
+                <HStack gap={3} vAlign="center">
+                  <Icon icon={Phone} color="secondary" />
+                  <StackItem size="fill">
+                    <VStack gap={0}>
+                      <Text weight="medium" hasTabularNumbers data-testid="selected-tollfree-number">{selectedTollFree.number}</Text>
+                      <Text type="supporting" color="secondary">Toll-Free Number</Text>
+                    </VStack>
+                  </StackItem>
+                  <IconButton
+                    variant="ghost"
+                    label="Change toll-free number"
+                    icon={<Icon icon={Pencil} size="sm" />}
+                    onClick={handleOpenTollFreeModal}
+                    data-testid="button-change-tollfree"
+                  />
+                </HStack>
+              </Card>
+            </VStack>
+          </Card>
         )}
-      </div>
+      </VStack>
 
-      <div
+      <VStack
         className={`fixed inset-x-0 z-50 transition-[bottom] duration-300 ease-in-out motion-reduce:transition-none ${footerVisible ? 'bottom-0' : '-bottom-full pointer-events-none'}`}
         data-testid="footer-wrapper"
         aria-hidden={!footerVisible}
-        ref={(element) => { if (element) element.inert = !footerVisible; }}
+        ref={(element: HTMLElement | null) => { if (element) element.inert = !footerVisible; }}
       >
-        <button
+        {/* Bar above the footer: jumps to Bundle & Save. */}
+        <Button
           type="button"
+          variant="secondary"
+          width="100%"
+          label={hasActiveBundle ? `Active Bundle: ${displayBundleName}. Edit` : 'Bundle & Save: upgrade your plan and save on popular features'}
           onClick={focusBundles}
-          className="w-full cursor-pointer border-y border-gray-200 bg-gray-50 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#345b91]"
+          className="rounded-none border-x-0"
           data-testid="bundle-save-banner"
         >
-          <span className="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2">
-            {selectedBundle && selectedBundle.id !== 'essentials' ? (
-              <>
-                <Star className="h-4 w-4 text-gray-600" />
-                <span className="text-sm font-semibold text-[#101828]">Active Bundle</span>
-                <span className="text-xs text-[#475467] hidden sm:inline">- {displayBundleName}</span>
-                <span className="text-xs font-medium text-gray-700 ml-1">Edit</span>
-              </>
-            ) : (
-              <>
-                <DollarSign className="h-4 w-4 text-gray-600" />
-                <span className="text-sm font-semibold text-[#101828]">Bundle & Save</span>
-                <span className="text-xs text-[#475467] hidden sm:inline">- Upgrade your plan and save on popular features</span>
-                <ChevronUp className="h-4 w-4 text-gray-600 ml-1" />
-              </>
-            )}
-          </span>
-        </button>
+          <HStack gap={2} vAlign="center" hAlign="center">
+            <Icon icon={hasActiveBundle ? Star : DollarSign} size="sm" color="secondary" />
+            <Text type="supporting" weight="semibold">{hasActiveBundle ? 'Active Bundle' : 'Bundle & Save'}</Text>
+            <Text type="supporting" color="secondary" className="hidden sm:inline">
+              {hasActiveBundle ? `- ${displayBundleName}` : '- Upgrade your plan and save on popular features'}
+            </Text>
+            {hasActiveBundle
+              ? <Text type="supporting" weight="medium">Edit</Text>
+              : <Icon icon={ChevronUp} size="sm" color="secondary" />}
+          </HStack>
+        </Button>
 
         <EnrollmentSummaryFooter
           phoneNumber={selectedPhone}
@@ -640,7 +571,7 @@ export default function CustomizePage() {
           continueLabel="Continue to checkout"
           pulse={footerPulse}
         />
-      </div>
+      </VStack>
 
       <BundleSuggestionDialog
         open={bundleSuggestionOpen}
@@ -663,54 +594,55 @@ export default function CustomizePage() {
         onCompare={handleSuggestionSeeBundles}
       />
 
-      <Dialog open={tollFreeModalOpen} onOpenChange={setTollFreeModalOpen}>
-        <DialogContent className="sm:max-w-md" data-testid="tollfree-selection-modal">
-          <DialogHeader>
-            <DialogTitle>Select Toll-Free Number</DialogTitle>
-            <DialogDescription>
-              Choose a toll-free number for your business. Customers can call you at no charge.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-2 py-4 max-h-60 overflow-y-auto">
+      <Dialog
+        isOpen={tollFreeModalOpen}
+        onOpenChange={setTollFreeModalOpen}
+        purpose="form"
+        width={448}
+        data-testid="tollfree-selection-modal"
+      >
+        <VStack gap={4}>
+          <DialogHeader
+            title="Select Toll-Free Number"
+            subtitle="Choose a toll-free number for your business. Customers can call you at no charge."
+            onOpenChange={setTollFreeModalOpen}
+          />
+          <RadioList
+            label="Toll-free numbers"
+            isLabelHidden
+            value={tempSelectedTollFree?.id ?? ''}
+            onChange={(id) => setTempSelectedTollFree(sampleTollFreeNumbers.find(phone => phone.id === id) ?? null)}
+          >
             {sampleTollFreeNumbers.map((phone) => (
-              <div
+              <RadioListItem
                 key={phone.id}
-                onClick={() => setTempSelectedTollFree(phone)}
-                className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
-                  tempSelectedTollFree?.id === phone.id
-                    ? 'bg-gray-50 border-2 border-[#006d91]'
-                    : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
-                }`}
+                value={phone.id}
+                label={<Text weight="medium" hasTabularNumbers>{phone.number}</Text>}
+                aria-label={phone.number}
                 data-testid={`tollfree-option-${phone.id}`}
-              >
-                <Phone className="h-4 w-4 text-gray-500" />
-                <span className="font-medium">{phone.number}</span>
-                {tempSelectedTollFree?.id === phone.id && (
-                  <Check className="h-4 w-4 text-gray-700 ml-auto" />
-                )}
-              </div>
+              />
             ))}
-          </div>
-
-          <DialogFooter>
+          </RadioList>
+          <Grid columns={2} gap={2}>
             <Button
-              variant="outline"
+              type="button"
+              variant="secondary"
+              label="Cancel"
+              width="100%"
               onClick={() => setTollFreeModalOpen(false)}
               data-testid="button-cancel-tollfree"
-            >
-              Cancel
-            </Button>
+            />
             <Button
+              type="button"
+              variant="primary"
+              label="Confirm Selection"
+              width="100%"
               onClick={handleTollFreeConfirm}
-              className="signup-primary"
               data-testid="button-confirm-tollfree"
-            >
-              Confirm Selection
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+            />
+          </Grid>
+        </VStack>
       </Dialog>
-    </div>
+    </VStack>
   );
 }

@@ -3,7 +3,15 @@
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { CheckCircle2 } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
+import { Button } from '@astryxdesign/core/Button';
+import { Card } from '@astryxdesign/core/Card';
+import { Divider } from '@astryxdesign/core/Divider';
+import { Heading } from '@astryxdesign/core/Heading';
+import { HStack } from '@astryxdesign/core/HStack';
+import { Icon } from '@astryxdesign/core/Icon';
+import { StackItem } from '@astryxdesign/core/Stack';
+import { Text } from '@astryxdesign/core/Text';
+import { VStack } from '@astryxdesign/core/VStack';
 import { useOrder } from '../context';
 import Image from 'next/image';
 
@@ -13,6 +21,8 @@ function Fireworks() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    // Decorative celebration: skip it entirely for people who reduce motion.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const context = canvas.getContext('2d');
     if (!context) return;
     const ctx = context!;
@@ -184,15 +194,8 @@ function Fireworks() {
   return (
     <canvas
       ref={canvasRef}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-        zIndex: 50,
-      }}
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 z-50 h-full w-full"
     />
   );
 }
@@ -216,95 +219,94 @@ export default function ThankYouPage() {
     return null;
   }
 
+  const steps = [
+    { title: 'Confirmation', text: 'Confirm your address and business type.' },
+    { title: 'Document Upload', text: 'Provide us with 2 required documents.*' },
+    { title: 'Review and Sign', text: 'Review your details and sign.' },
+  ];
+
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-[#f7f9fb]" data-testid="thank-you-page">
+    <VStack className="signup-shell px-4 py-8 lg:py-12" hAlign="center" data-testid="thank-you-page">
       <Fireworks />
 
-      <div className="max-w-6xl mx-auto px-4 py-8 lg:py-12">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12 mb-10">
-          <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-5 leading-tight" data-testid="heading-thank-you">
-              Congratulations on your new office!
-            </h1>
+      <VStack gap={10} width="100%" maxWidth={1152}>
+        {/* Message first; the photo sits beside it on large screens, below on phones. */}
+        <VStack gap={8} className="lg:flex-row lg:items-start lg:gap-12">
+          <StackItem size="fill">
+            <VStack gap={6}>
+              <Heading level={1} data-testid="heading-thank-you">Congratulations on your new office!</Heading>
 
-            <p className="text-sm sm:text-base font-semibold text-gray-800 mb-6 leading-relaxed">
-              You&apos;re Only a Few Steps Away From Setting Everything Up! Don&apos;t Worry, We&apos;ve Simplified The Process and Most Customers Complete All 3 Steps in Only a Few Minutes.
-            </p>
+              <Text weight="semibold">
+                You&apos;re Only a Few Steps Away From Setting Everything Up! Don&apos;t Worry, We&apos;ve Simplified The Process and Most Customers Complete All 3 Steps in Only a Few Minutes.
+              </Text>
 
-            <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
-                <p className="text-gray-800">
-                  <strong>Confirmation:</strong> Confirm your address and business type.
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
-                <p className="text-gray-800">
-                  <strong>Document Upload:</strong> Provide us with 2 required documents.*
-                </p>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="h-6 w-6 text-green-500 flex-shrink-0 mt-0.5" />
-                <p className="text-gray-800">
-                  <strong>Review and Sign:</strong> Review your details and sign.
-                </p>
-              </div>
-            </div>
+              <VStack as="ol" gap={4}>
+                {steps.map(step => (
+                  <HStack as="li" key={step.title} gap={3} vAlign="start">
+                    <Icon icon={CheckCircle2} size="lg" className="shrink-0 text-[var(--color-text-success)]" />
+                    <Text>
+                      <Text weight="semibold">{step.title}:</Text> {step.text}
+                    </Text>
+                  </HStack>
+                ))}
+              </VStack>
 
-            <p className="font-semibold text-gray-900 mb-4">
-              What are you waiting for? It&apos;s as easy as 1, 2, 3...
-            </p>
+              <VStack gap={4} hAlign="start">
+                <Text weight="semibold">What are you waiting for? It&apos;s as easy as 1, 2, 3...</Text>
+                <Button
+                  type="button"
+                  variant="primary"
+                  label="Click Here To Begin The Process Now"
+                  onClick={handleStartOver}
+                  className="w-full sm:w-auto"
+                  data-testid="button-begin-process"
+                />
+              </VStack>
+            </VStack>
+          </StackItem>
 
-            <Button
-              onClick={handleStartOver}
-              className="signup-primary h-12 w-full whitespace-normal px-6 text-base rounded-md sm:w-auto"
-              data-testid="button-begin-process"
-            >
-              Click Here To Begin The Process Now
-            </Button>
-          </div>
+          <VStack className="shrink-0 lg:w-[25rem]">
+            <Image
+              src="/images/celebration.webp"
+              alt="Team celebrating new office"
+              width={400}
+              height={500}
+              className="h-auto w-full rounded-[var(--radius-container)] object-cover"
+              data-testid="img-celebration"
+            />
+          </VStack>
+        </VStack>
 
-          <div className="mt-8 lg:mt-0 lg:w-[400px] flex-shrink-0">
-            <div className="rounded-xl overflow-hidden">
-              <Image
-                src="/images/celebration.webp"
-                alt="Team celebrating new office"
-                width={400}
-                height={500}
-                className="w-full h-auto object-cover rounded-xl"
-                data-testid="img-celebration"
-              />
-            </div>
-          </div>
-        </div>
+        <Card variant="muted" padding={6} className="sm:p-8" data-testid="fileforms-banner">
+          <HStack gap={6} hAlign="between" vAlign="center" wrap="wrap">
+            <VStack gap={1}>
+              <Text size="2xl" weight="bold">Click here</Text>
+              <Text size="lg" color="secondary">
+                for the simplest way to<br />
+                incorporate or form an LLC through our partner
+              </Text>
+            </VStack>
+            {/* Partner wordmark, unchanged. */}
+            <HStack gap={2} vAlign="center">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true" className="shrink-0">
+                <rect width="36" height="36" rx="4" fill="#2D7D6F" />
+                <path d="M8 10h6v2H8v-2zm0 4h10v2H8v-2zm0 4h8v2H8v-2zm0 4h12v2H8v-2zm14-10h6v12h-6V12z" fill="white" />
+              </svg>
+              <Text size="3xl" weight="bold" className="text-[#2D7D6F]">FileForms</Text>
+            </HStack>
+          </HStack>
+        </Card>
 
-        <div className="bg-gray-100 rounded-xl p-6 sm:p-8 mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6" data-testid="fileforms-banner">
-          <div>
-            <p className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Click here</p>
-            <p className="text-lg sm:text-xl text-gray-700">
-              for the simplest way to<br />
-              incorporate or form an LLC through our partner
-            </p>
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" className="flex-shrink-0">
-              <rect width="36" height="36" rx="4" fill="#2D7D6F" />
-              <path d="M8 10h6v2H8v-2zm0 4h10v2H8v-2zm0 4h8v2H8v-2zm0 4h12v2H8v-2zm14-10h6v12h-6V12z" fill="white" />
-            </svg>
-            <span className="text-2xl sm:text-3xl font-bold text-[#2D7D6F]">FileForms</span>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-200 pt-6 space-y-4 text-xs text-gray-500 leading-relaxed" data-testid="disclaimers">
-          <p>
+        <VStack gap={4} data-testid="disclaimers">
+          <Divider />
+          <Text type="supporting" color="secondary">
             *Examples of acceptable documents include driver&apos;s license, passport, auto registration, or auto insurance policy (see a complete list of accepted documents as you complete the setup process).
-          </p>
-          <p>
+          </Text>
+          <Text type="supporting" color="secondary">
             **As part of our commitment to providing you with top-notch virtual office services, we are required to submit USPS Form 1583 to the post office. This form includes your home address, which is necessary for compliance with postal regulations. Please be assured that your privacy is of utmost importance to us. The information provided on USPS Form 1583 will be used solely by the post office for verification purposes and will not be shared with any other parties. Thank you for your understanding and cooperation.
-          </p>
-        </div>
-      </div>
-    </div>
+          </Text>
+        </VStack>
+      </VStack>
+    </VStack>
   );
 }

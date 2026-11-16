@@ -1,0 +1,8 @@
+# docker compose up --build   → http://localhost:3000
+services:
+  web:
+    build: .
+    image: opus-signup
+    ports:
+      - "3000:5000"
+    restart: unless-stopped
