@@ -1,0 +1,16 @@
+.git
+node_modules
+.next
+.next-dev
+dist
+generated-artifacts
+artifacts
+attached_assets
+.agents
+.claude
+.codex
+.impeccable
+*.tar.gz
+.DS_Store
+Dockerfile
+docker-compose.yml
